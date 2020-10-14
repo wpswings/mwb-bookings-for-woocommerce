@@ -155,25 +155,25 @@ class Mwb_Wc_Bk_Admin {
 	public function mwb_general_settings_fields() {
 		?>
 		<div id="mwb_product_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-			<div class="mwb_booking_setting_heading" >
-				<h1><?php esc_html_e( 'General Settings', 'mwb-wc-bk' ); ?></h1>
+			<div class="options_group">
+				<p class="form-field">
+					<label for="mwb_booking_unit"><?php esc_html_e( 'Booking Unit', 'mwb-wc-bk' ); ?></label>
+					<select name="mwb_booking_unit" id="mwb_booking_unit" class="" style="width: auto; margin-right: 7px;">
+						<option value="fixed"><?php esc_html_e( 'Fixed unit', 'mwb-wc-bk' ); ?></option>
+						<option value="customer"><?php esc_html_e( 'Customer selected unit', 'mwb-wc-bk' ); ?></option>
+					</select>
+					<input type="number" name="_wc_booking_duration" id="_wc_booking_duration" value="1" step="1" min="1" style="margin-right: 7px; width: 4em;">
+					<select name="mwb_booking_unit_duration" id="mwb_booking_unit_duration" class="" style="width: auto; margin-right: 7px;">
+						<option value="month" ><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
+						<option value="day" ><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
+						<option value="hour" ><?php esc_html_e( 'Hour(s)', 'mwb-wc-bk' ); ?></option>
+						<option value="minute"><?php esc_html_e( 'Minute(s)', 'mwb-wc-bk' ); ?></option>
+					</select>
+				</p>
 			</div>
-			<p class="form_fields">
-				<label for="mwb_booking_unit"><?php esc_html_e( 'Booking Unit', 'mwb-wc-bk' ); ?></label>
-				<select name="mwb_booking_unit" id="mwb_booking_unit" class="" style="width: auto; margin-right: 7px;">
-					<option value="fixed"><?php esc_html_e( 'Fixed unit', 'mwb-wc-bk' ); ?></option>
-					<option value="customer"><?php esc_html_e( 'Customer selected unit', 'mwb-wc-bk' ); ?></option>
-				</select>
-				<input type="number" name="_wc_booking_duration" id="_wc_booking_duration" value="1" step="1" min="1" style="margin-right: 7px; width: 4em;">
-				<select name="mwb_booking_unit_duration" id="mwb_booking_unit_duration" class="" style="width: auto; margin-right: 7px;">
-					<option value="month" ><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
-					<option value="day" ><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
-					<option value="hour" ><?php esc_html_e( 'Hour(s)', 'mwb-wc-bk' ); ?></option>
-					<option value="minute"><?php esc_html_e( 'Minute(s)', 'mwb-wc-bk' ); ?></option>
-				</select>
-			</p>
-			<div class="mwb_start_booking_from">
-				<p class="form_fields">
+			
+			<div class="mwb_start_booking_from options_group">
+				<p class="form-field">
 					<label for="start_booking_date_from"><?php esc_html_e( 'Start Booking on date', 'mwb-wc-bk' ); ?></label>
 					<select name="start_booking_date_from" id="start_booking_date_from">
 						<option value="none"><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
@@ -187,11 +187,11 @@ class Mwb_Wc_Bk_Admin {
 						<option value="none"><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
 						<option value="initially_available"><?php esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option>
 					</select>
+					<label for="mwb_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
+					<input id="mwb_booking_custom_date" type="text">
 				</p>
-				<label for="mwb_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
-				<input id="mwb_booking_custom_date" type="text">
 			</div>
-			<div class="mwb_calendar_range">
+			<div class="mwb_calendar_range options_group">
 				<?php
 					woocommerce_wp_checkbox(
 						array(
@@ -203,7 +203,7 @@ class Mwb_Wc_Bk_Admin {
 					);
 				?>
 			</div>
-			<div class="mwb_full_day_select">
+			<div class="mwb_full_day_select options_group">
 				<?php
 					woocommerce_wp_checkbox(
 						array(
@@ -215,7 +215,7 @@ class Mwb_Wc_Bk_Admin {
 					);
 				?>
 			</div>
-			<div class="mwb_admin_confirmation">
+			<div class="mwb_admin_confirmation options_group">
 				<?php
 					woocommerce_wp_checkbox(
 						array(
@@ -227,7 +227,7 @@ class Mwb_Wc_Bk_Admin {
 					);
 				?>
 			</div>
-			<div class="mwb_booking_cancellation">
+			<div class="mwb_booking_cancellation options_group">
 				<?php
 					woocommerce_wp_checkbox(
 						array(

@@ -160,7 +160,7 @@ class Mwb_Wc_Bk {
 		// create new product type booking.
 		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'register_booking_product_type' );
 
-		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'mwb_general_settings_fields' );
+		$this->loader->add_action( 'woocommerce_product_write_panels', $plugin_admin, 'mwb_general_settings_fields' );
 
 		$this->loader->add_filter( 'product_type_selector', $plugin_admin, 'add_mwb_booking_product_selector', 10, 1 );
 

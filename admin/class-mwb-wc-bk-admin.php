@@ -105,7 +105,7 @@ class Mwb_Wc_Bk_Admin {
 	/**
 	 * Add General Settings Tab for bookable product type
 	 *
-	 * @param array $tabs 
+	 * @param array $tabs Product Panel Tabs.
 	 * @return array
 	 */
 	public function mwb_add_general_settings( $tabs ) {
@@ -115,31 +115,31 @@ class Mwb_Wc_Bk_Admin {
 			array(
 				'general_settings' => array(
 					'label'    => 'General Settings',
-					'target'   => 'mwb_product_general_data',
+					'target'   => 'mwb_booking_product_general_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 10,
 				),
 				'cost'             => array(
 					'label'    => 'Costs',
-					'target'   => 'mwb_product_cost_data',
+					'target'   => 'mwb_booking_product_cost_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 20,
 				),
 				'availability'     => array(
 					'label'    => 'Availability',
-					'target'   => 'mwb_product_availability_data',
+					'target'   => 'mwb_booking_product_availability_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 30,
 				),
 				'people'           => array(
 					'label'    => 'People',
-					'target'   => 'mwb_product_people_data',
+					'target'   => 'mwb_booking_product_people_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 40,
 				),
 				'services'         => array(
 					'label'    => 'Services',
-					'target'   => 'mwb_product_services_data',
+					'target'   => 'mwb_booking_product_services_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 50,
 				),
@@ -147,23 +147,15 @@ class Mwb_Wc_Bk_Admin {
 		);
 		return $tabs;
 	}
+	/**
+	 * General Settings fields.
+	 *
+	 * @return void
+	 */
 	public function mwb_general_settings_fields() {
-		echo '<div id="mwb_product_general_data" class="panel woocommerce_options_panel hidden">';
-		woocommerce_wp_text_input(
-			array(
-				'id'                => '_wc_booking_min_duration',
-				'label'             => __( 'Minimum duration', 'woocommerce-bookings' ),
-				'description'       => __( 'The minimum allowed duration the user can input.', 'woocommerce-bookings' ),
-				'value'             => '',
-				'desc_tip'          => true,
-				'type'              => 'number',
-				'custom_attributes' => array(
-					'min'  => '',
-					'step' => '1',
-				),
-			)
-		);
-		echo '</div>';
+
+		include MWB_WC_BK_BASEPATH . 'admin/partials/product-data-tabs/general-setting-fields-tab.php';
+		include MWB_WC_BK_BASEPATH . 'admin/partials/product-data-tabs/availability-fields-tab.php';
 	}
 
 }

@@ -105,7 +105,7 @@ class Mwb_Wc_Bk_Admin {
 	/**
 	 * Add General Settings Tab for bookable product type
 	 *
-	 * @param array $tabs 
+	 * @param array $tabs Product Panel Tabs.
 	 * @return array
 	 */
 	public function mwb_add_general_settings( $tabs ) {
@@ -115,31 +115,31 @@ class Mwb_Wc_Bk_Admin {
 			array(
 				'general_settings' => array(
 					'label'    => 'General Settings',
-					'target'   => 'mwb_product_general_data',
+					'target'   => 'mwb_booking_general_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 10,
 				),
 				'cost'             => array(
 					'label'    => 'Costs',
-					'target'   => 'mwb_product_cost_data',
+					'target'   => 'mwb_booking_cost_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 20,
 				),
 				'availability'     => array(
 					'label'    => 'Availability',
-					'target'   => 'mwb_product_availability_data',
+					'target'   => 'mwb_booking_availability_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 30,
 				),
 				'people'           => array(
 					'label'    => 'People',
-					'target'   => 'mwb_product_people_data',
+					'target'   => 'mwb_booking_people_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 40,
 				),
 				'services'         => array(
 					'label'    => 'Services',
-					'target'   => 'mwb_product_services_data',
+					'target'   => 'mwb_booking_services_data',
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 50,
 				),
@@ -153,110 +153,9 @@ class Mwb_Wc_Bk_Admin {
 	 * @return void
 	 */
 	public function mwb_general_settings_fields() {
-		?>
-		<div id="mwb_product_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-			<div class="options_group">
-				<p class="form-field">
-					<label for="mwb_booking_unit"><?php esc_html_e( 'Booking Unit', 'mwb-wc-bk' ); ?></label>
-					<select name="mwb_booking_unit" id="mwb_booking_unit" class="" style="width: auto; margin-right: 7px;">
-						<option value="fixed"><?php esc_html_e( 'Fixed unit', 'mwb-wc-bk' ); ?></option>
-						<option value="customer"><?php esc_html_e( 'Customer selected unit', 'mwb-wc-bk' ); ?></option>
-					</select>
-					<input type="number" name="_wc_booking_duration" id="_wc_booking_duration" value="1" step="1" min="1" style="margin-right: 7px; width: 4em;">
-					<select name="mwb_booking_unit_duration" id="mwb_booking_unit_duration" class="" style="width: auto; margin-right: 7px;">
-						<option value="month" ><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
-						<option value="day" ><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
-						<option value="hour" ><?php esc_html_e( 'Hour(s)', 'mwb-wc-bk' ); ?></option>
-						<option value="minute"><?php esc_html_e( 'Minute(s)', 'mwb-wc-bk' ); ?></option>
-					</select>
-				</p>
-			</div>
-			
-			<div class="mwb_start_booking_from options_group">
-				<p class="form-field">
-					<label for="start_booking_date_from"><?php esc_html_e( 'Start Booking on date', 'mwb-wc-bk' ); ?></label>
-					<select name="start_booking_date_from" id="start_booking_date_from">
-						<option value="none"><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
-						<option value="today"><?php esc_html_e( 'Today', 'mwb-wc-bk' ); ?></option>
-						<option value="tomorrow"><?php esc_html_e( 'Tomorrow', 'mwb-wc-bk' ); ?></option>
-						<option value="initially_available"><?php esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option>
-						<option value="custom_date"><?php esc_html_e( 'Custom Date', 'mwb-wc-bk' ); ?></option>
-					</select>
-					<label for="start_booking_time_from"><?php esc_html_e( 'Time:', 'mwb-wc-bk' ); ?></label>
-					<select name="start_booking_time_from" id="start_booking_time_from">
-						<option value="none"><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
-						<option value="initially_available"><?php esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option>
-					</select>
-					<label for="mwb_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
-					<input id="mwb_booking_custom_date" type="text">
-				</p>
-			</div>
-			<div class="mwb_calendar_range options_group">
-				<?php
-					woocommerce_wp_checkbox(
-						array(
-							'id'          => 'mwb_enable_range_picker',
-							'label'       => __( 'Enable Calendar Range Picker', 'mwb-wc-bk' ),
-							'value'       => 'yes',
-							'description' => __( 'To select the start and end date on the calendar.', 'mwb-wc-bk' ),
-						)
-					);
-				?>
-			</div>
-			<div class="mwb_full_day_select options_group">
-				<?php
-					woocommerce_wp_checkbox(
-						array(
-							'id'          => 'mwb_full_day_booking',
-							'label'       => __( 'Full Day Booking', 'mwb-wc-bk' ),
-							'value'       => 'no',
-							'description' => __( 'Booking for full day.', 'mwb-wc-bk' ),
-						)
-					);
-				?>
-			</div>
-			<div class="mwb_admin_confirmation options_group">
-				<?php
-					woocommerce_wp_checkbox(
-						array(
-							'id'          => 'mwb_admin_confirmation_required',
-							'label'       => __( 'Confirmation Required', 'mwb-wc-bk' ),
-							'value'       => 'no',
-							'description' => __( 'Enable booking confirmation by the admin.', 'mwb-wc-bk' ),
-						)
-					);
-				?>
-			</div>
-			<div class="mwb_booking_cancellation options_group">
-				<?php
-					woocommerce_wp_checkbox(
-						array(
-							'id'          => 'mwb_allow_booking_cancellation',
-							'label'       => __( 'Cancellation Allowed', 'mwb-wc-bk' ),
-							'value'       => 'no',
-							'description' => __( 'Allows user to cancel their booking.', 'mwb-wc-bk' ),
-							'desc_tip'    => true,
-						)
-					);
-					woocommerce_wp_text_input(
-						array(
-							'id'                => 'mwb_max_day_for_cancellation',
-							'label'             => __( 'Max days to allow cancellation', 'mwb-wc-bk' ),
-							'description'       => __( 'Maximum Day after which booking cancellation cannot be allowed.', 'mwb-wc-bk' ),
-							'value'             => '',
-							'desc_tip'          => true,
-							'type'              => 'number',
-							'style'             => 'width: auto; margin-right: 7px;',
-							'custom_attributes' => array(
-								'step' => '1',
-								'min'  => '1',
-							),
-						)
-					);
-				?>
-			</div>
-		</div>	
-		<?php
+
+		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/general-setting-fields-tab.php';
+		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/availability-fields-tab.php';
 	}
 
 }

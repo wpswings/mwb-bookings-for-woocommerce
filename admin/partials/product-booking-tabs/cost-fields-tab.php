@@ -5,6 +5,15 @@
  * @package Mwb_Wc_Bk
  */
 
+	$this->mwb_booking_setting_fields['unit_cost'] = isset( $_POST['mwb_booking_unit_cost_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_cost_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['unit_cost_multiply'] = isset( $_POST['mwb_booking_unit_cost_multiply'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_cost_multiply'] ) ) : 'no';
+	$this->mwb_booking_setting_fields['base_cost'] = isset( $_POST['mwb_booking_base_cost_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_base_cost_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['base_cost_multiply'] = isset( $_POST['mwb_booking_base_cost_multiply'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_base_cost_multiply'] ) ) : 'no';
+	$this->mwb_booking_setting_fields['monthly_discount'] = isset( $_POST['mwb_booking_monthly_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_monthly_discount_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['weekly_discount'] = isset( $_POST['mwb_booking_weekly_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_weekly_discount_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['custom_discount_days'] = isset( $_POST['mwb_booking_custom_discount_days'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_custom_discount_days'] ) ) : '';
+	$this->mwb_booking_setting_fields['custom_discount'] = isset( $_POST['mwb_booking_custom_days_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_custom_days_discount_input'] ) ) : '';
+
 ?>
 <div id="mwb_booking_cost_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 	<div id="mwb_cost_heading">
@@ -16,31 +25,6 @@
 		</div>
 		<div id="mwb_booking_normal_cost_fields">
 			<p class="form-field">
-			<?php
-				// woocommerce_wp_text_input(
-				// 	array(
-				// 		'id'                => 'mwb_booking_unit_cost_input',
-				// 		'label'             => __( 'Unit Cost', 'mwb-wc-bk' ),
-				// 		'description'       => __( 'Cost of the booking unit .', 'mwb-wc-bk' ),
-				// 		'value'             => '',
-				// 		'desc_tip'          => true,
-				// 		'type'              => 'number',
-				// 		'style'             => 'width: 30%; margin-right: 7px;',
-				// 		'custom_attributes' => array(
-				// 			'step' => '1',
-				// 			'min'  => '1',
-				// 		),
-				// 	)
-				// );
-				// woocommerce_wp_checkbox(
-				// 	array(
-				// 		'id'          => 'mwb_full_day_booking',
-				// 		'label'       => __( 'Full Day Booking', 'mwb-wc-bk' ),
-				// 		'value'       => 'no',
-				// 		'description' => __( 'Booking for full day.', 'mwb-wc-bk' ),
-				// 	)
-				// );
-				?>
 				<label for="mwb_booking_unit_cost_input"><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label>
 				<input type="number" name="mwb_booking_unit_cost_input" id="mwb_booking_unit_cost_input" value="1" step="1" min="1" style="margin-right: 7px; width: 4em;">
 				<input type="checkbox" name="mwb_booking_unit_cost_multiply" id="mwb_booking_unit_cost_multiply" value="">

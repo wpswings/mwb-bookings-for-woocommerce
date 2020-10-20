@@ -40,6 +40,13 @@ class Mwb_Wc_Bk_Admin {
 	private $version;
 
 	/**
+	 * MWB Booking Fields
+	 *
+	 * @var array
+	 */
+	public $mwb_booking_setting_fields = array();
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -61,6 +68,7 @@ class Mwb_Wc_Bk_Admin {
 	public function enqueue_styles() {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -72,7 +80,7 @@ class Mwb_Wc_Bk_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**

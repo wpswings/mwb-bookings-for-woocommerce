@@ -122,6 +122,11 @@ class Mwb_Wc_Bk {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-mwb-wc-bk-public.php';
 
+		/**
+		 * The class responsible for defining global functions.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-booking-global-functions.php';
+
 		$this->loader = new Mwb_Wc_Bk_Loader();
 
 	}

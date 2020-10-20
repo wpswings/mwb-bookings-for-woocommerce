@@ -4,6 +4,12 @@
  *
  * @package Mwb_Wc_Bk
  */
+	$booking_start_time = $_POST['']
+	$this->mwb_booking_setting_fields['max_booking_per_unit'] = isset( $_POST['mwb_max_bookings_per_unit'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_max_bookings_per_unit'] ) ) : '';
+	$this->mwb_booking_setting_fields['']
+
+
+
 
 ?>
 <div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
@@ -12,7 +18,7 @@
 	</div>
 	<div id="mwb_availability_preferences" class="options_group">
 		<div id="mwb_preferences_heading">
-			<h3><?php esc_html_e( 'Availability Preferences', '' ); ?></h3>
+			<h3><?php esc_html_e( 'Availability Preferences', 'mwb-wc-bk' ); ?></h3>
 		</div>
 		<?php
 			woocommerce_wp_text_input(
@@ -32,8 +38,8 @@
 			);
 			?>
 		<p class="form-field">
-			<label for=""><?php esc_html_e( 'Booking starts', '' ); ?></label>
-			<select name="" id="">
+			<label for=""><?php esc_html_e( 'Booking starts', 'mwb-wc-bk' ); ?></label>
+			<select name="mwb_" id="">
 				<option value="00" default selected>hrs</option>
 				<?php
 				for ( $i = 1; $i <= 12; $i++ ) {
@@ -82,7 +88,7 @@
 			<?php esc_html_e( 'Time when the booking ends', '' ); ?>
 		</p>
 		<p class="form-field">
-			<label for="mwb_booking_buffer_input"><?php esc_html_e( 'Booking Buffer', '' ); ?></label>
+			<label for="mwb_booking_buffer_input"><?php esc_html_e( 'Booking Buffer', 'mwb-wc-bk' ); ?></label>
 			<input type="number" name="mwb_booking_buffer_input" id="mwb_booking_buffer_input" value="1" step="1" min="1" style="margin-right: 7px; width: 4em;">
 			<select name="mwb_booking_buffer_duration" id="mwb_booking_buffer_duration" class="" style="width: auto; margin-right: 7px;">
 				<option value="month" ><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
@@ -99,7 +105,7 @@
 		<dl>
 			<dt>
 				<p class="form-field">
-					<label for="mwb_advance_booking_max_input"><?php esc_html_e( 'Maximum advance booking', '' ); ?></label>
+					<label for="mwb_advance_booking_max_input"><?php esc_html_e( 'Maximum advance booking', 'mwb-wc-bk' ); ?></label>
 					<input type="number" name="mwb_advance_booking_max_input" id="mwb_advance_booking_max_input" value="1" step="1" min="1" style="margin-right: 7px; width: 4em;">
 					<select name="mwb_advance_booking_max_duration" id="mwb_advance_booking_max_duration" class="" style="width: auto; margin-right: 7px;">
 						<option value="month" ><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
@@ -122,27 +128,39 @@
 			<dd><?php esc_html_e( 'Min days before which the product can be booked', 'mwb-wc-bk' ); ?></dd>
 		</dl>
 		<?php
-			woocommerce_wp_radio(
-				array(
-					'id'          => 'mwb_booking_not_allowed_days',
-					'label'       => __( 'Booking not allowed', 'mwb-wc-bk' ),
-					'class'       => 'mwb_booking_restricted_days',
-					'value'       => '',
-					'description' => __( 'Weekdays on which booking is not allowed.', 'mwb-wc-bk' ),
-					'name'        => '',
-					'options'     => array(
-						'sunday'    => __( 'Sunday', 'mwb-wc-bk' ),
-						'monday'    => __( 'Monday', 'mwb-wc-bk' ),
-						'tuesday'   => __( 'Tuesday', 'mwb-wc-bk' ),
-						'wednesday' => __( 'Wednesday', 'mwb-wc-bk' ),
-						'thursday'  => __( 'Thursday', 'mwb-wc-bk' ),
-						'friday'    => __( 'Friday', 'mwb-wc-bk' ),
-						'sataurday' => __( 'Saturday', 'mwb-wc-bk' ),
-					),
-					'desc_tip'    => 'true',
-				)
-			);
+			// woocommerce_wp_radio(
+			// 	array(
+			// 		'id'          => 'mwb_booking_not_allowed_days',
+			// 		'label'       => __( 'Booking not allowed', 'mwb-wc-bk' ),
+			// 		'class'       => 'mwb_booking_restricted_days',
+			// 		'value'       => '',
+			// 		'description' => __( 'Weekdays on which booking is not allowed.', 'mwb-wc-bk' ),
+			// 		'name'        => '',
+			// 		'options'     => array(
+			// 			'sunday'    => __( 'Sunday', 'mwb-wc-bk' ),
+			// 			'monday'    => __( 'Monday', 'mwb-wc-bk' ),
+			// 			'tuesday'   => __( 'Tuesday', 'mwb-wc-bk' ),
+			// 			'wednesday' => __( 'Wednesday', 'mwb-wc-bk' ),
+			// 			'thursday'  => __( 'Thursday', 'mwb-wc-bk' ),
+			// 			'friday'    => __( 'Friday', 'mwb-wc-bk' ),
+			// 			'sataurday' => __( 'Saturday', 'mwb-wc-bk' ),
+			// 		),
+			// 		'desc_tip'    => 'true',
+			// 	)
+			// );
 			?>
+			<p class="form-field">
+				<label for="mwb_booking_not_allowed_days"><?php esc_html_e( 'Booking not allowed', '' ); ?></label>
+				<select name="mwb_booking_not_allowed_days" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Weekdays on which booking is not allowed', 'mwb-wc-bk' ); ?>">
+					<option value="sunday"><?php esc_html_e( 'Sunday', 'mwb-wc-bk' ); ?></option>
+					<option value="monday"><?php esc_html_e( 'Monday', 'mwb-wc-bk' ); ?></option>
+					<option value="tuesday"><?php esc_html_e( 'Tuesday', 'mwb-wc-bk' ); ?></option>
+					<option value="wednesday"><?php esc_html_e( 'Wednesday', 'mwb-wc-bk' ); ?></option>
+					<option value="thursday"><?php esc_html_e( 'Thursday', 'mwb-wc-bk' ); ?></option>
+					<option value="friday"><?php esc_html_e( 'Friday', 'mwb-wc-bk' ); ?></option>
+					<option value="saturday"><?php esc_html_e( 'Saturday', 'mwb-wc-bk' ); ?></option>
+				</select>
+			</p>
 	</div>
 	<div id="mwb_local_availability_rules" class="options_group">
 		<div id="mwb_local_availability_rules_heading">

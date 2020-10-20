@@ -5,6 +5,18 @@
  * @package Mwb_Wc_Bk
  */
 
+$this->mwb_booking_setting_fields['booking_unit_select']       = isset( $_POST['mwb_booking_unit_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_select'] ) ) : 'customer';
+$this->mwb_booking_setting_fields['booking_unit_input']        = isset( $_POST['mwb_booking_unit_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_input'] ) ) : '';
+$this->mwb_booking_setting_fields['booking_unit_duration']     = isset( $_POST['mwb_booking_unit_duration'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_duration'] ) ) : 'day';
+$this->mwb_booking_setting_fields['start_booking_date']        = isset( $_POST['start_booking_date_from'] ) ? sanitize_text_field( wp_unslash( $_POST['start_booking_date_from'] ) ) : '';
+$this->mwb_booking_setting_fields['start_booking_time']        = isset( $_POST['start_booking_time_from'] ) ? sanitize_text_field( wp_unslash( $_POST['start_booking_time_from'] ) ) : '';
+$this->mwb_booking_setting_fields['start_booking_custom_date'] = isset( $_POST['mwb_booking_custom_date'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_custom_date'] ) ) : '';
+$this->mwb_booking_setting_fields['enable_range_picker']       = isset( $_POST['mwb_enable_range_picker'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_enable_range_picker'] ) ) : 'no';
+$this->mwb_booking_setting_fields['full_day_booking']          = isset( $_POST['mwb_full_day_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_full_day_booking'] ) ) : 'no';
+$this->mwb_booking_setting_fields['admin_confirmation']        = isset( $_POST['mwb_admin_confirmation_required'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_admin_confirmation_required'] ) ) : 'no';
+$this->mwb_booking_setting_fields['allow_cancellation']        = isset( $_POST['mwb_allow_booking_cancellation'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_allow_booking_cancellation'] ) ) : 'no';
+$this->mwb_booking_setting_fields['max_days_for_cancellation'] = isset( $_POST['mwb_max_day_for_cancellation'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_max_day_for_cancellation'] ) ) : '';
+
 ?>
 <div id="mwb_booking_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 	<div id="mwb_general_settings_heading">
@@ -44,7 +56,7 @@
 		</p>	
 		<p class="form-field">	
 			<label for="mwb_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
-			<input id="mwb_booking_custom_date" type="text">
+			<input id="mwb_booking_custom_date" name="mwb_booking_custom_date" type="text">
 		</p>
 	</div>
 	<div id="mwb_calendar_range" class="options_group">

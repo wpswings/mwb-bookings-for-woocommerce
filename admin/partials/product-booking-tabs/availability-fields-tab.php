@@ -5,6 +5,8 @@
  * @package Mwb_Wc_Bk
  */
 
+
+
 if ( isset( $_POST['mwb_booking_start_hrs'], $_POST['mwb_booking_start_mins'], $_POST['mwb_booking_start_interval'] ) ) {
 	$booking_start_time = sanitize_text_field( wp_unslash( $_POST['mwb_booking_start_hrs'] ) ) . ':' . sanitize_text_field( wp_unslash( $_POST['mwb_booking_start_mins'] ) ) . ' ' . sanitize_text_field( wp_unslash( $_POST['mwb_booking_start_interval'] ) );
 } else {
@@ -26,9 +28,6 @@ if ( isset( $_POST['mwb_booking_end_hrs'], $_POST['mwb_booking_end_mins'], $_POS
 	$this->mwb_booking_setting_fields['min_advance_booking_days']     = isset( $_POST['mwb_advance_booking_min_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_advance_booking_min_input'] ) ) : '';
 	$this->mwb_booking_setting_fields['min_advance_booking_interval'] = isset( $_POST['mwb_advance_booking_min_duration'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_advance_booking_min_duration'] ) ) : '';
 	$this->mwb_booking_setting_fields['booking_not_allowed_on']       = isset( $_POST['mwb_booking_not_allowed_days'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_not_allowed_days'] ) ) : '';
-
-
-
 
 ?>
 <div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">

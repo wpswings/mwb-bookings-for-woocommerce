@@ -5,11 +5,11 @@
  * @package Mwb_Wc_Bk
  */
 
-	$this->mwb_booking_setting_fields['enable_people'] = isset( $_POST['mwb_people_enable_checkbox'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_people_enable_checkbox'] ) ) : 'no';
-	$this->mwb_booking_setting_fields['min_people_per_booking'] = isset( $_POST['mwb_min_people_per_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_min_people_per_booking'] ) ) : '';
-	$this->mwb_booking_setting_fields['max_people_per_booking'] = isset( $_POST['mwb_max_people_per_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_max_people_per_booking'] ) ) : '';
+	$this->mwb_booking_setting_fields['enable_people']              = isset( $_POST['mwb_people_enable_checkbox'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_people_enable_checkbox'] ) ) : 'no';
+	$this->mwb_booking_setting_fields['min_people_per_booking']     = isset( $_POST['mwb_min_people_per_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_min_people_per_booking'] ) ) : '';
+	$this->mwb_booking_setting_fields['max_people_per_booking']     = isset( $_POST['mwb_max_people_per_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_max_people_per_booking'] ) ) : '';
 	$this->mwb_booking_setting_fields['people_as_seperate_booking'] = isset( $_POST['mwb_people_as_seperate_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_people_as_seperate_booking'] ) ) : 'no';
-	$this->mwb_booking_setting_fields['enable_people_types'] = isset( $_POST['mwb_enable_people_types'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_enable_people_types'] ) ) : 'no';
+	$this->mwb_booking_setting_fields['enable_people_types']        = isset( $_POST['mwb_enable_people_types'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_enable_people_types'] ) ) : 'no';
 
 ?>
 <div id="mwb_booking_people_data" class="panel woocommerce_options_panel show_if_mwb_booking">

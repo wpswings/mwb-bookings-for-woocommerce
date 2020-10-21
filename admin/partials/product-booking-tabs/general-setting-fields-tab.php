@@ -5,7 +5,8 @@
  * @package Mwb_Wc_Bk
  */
 
-$this->mwb_booking_setting_fields['booking_unit_select']       = isset( $_POST['mwb_booking_unit_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_select'] ) ) : 'customer';
+
+$this->mwb_booking_setting_fields['booking_unit_select']       = ! empty( $_POST['mwb_booking_unit_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_select'] ) ) : 'customer';
 $this->mwb_booking_setting_fields['booking_unit_input']        = isset( $_POST['mwb_booking_unit_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_input'] ) ) : '';
 $this->mwb_booking_setting_fields['booking_unit_duration']     = isset( $_POST['mwb_booking_unit_duration'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_duration'] ) ) : 'day';
 $this->mwb_booking_setting_fields['start_booking_date']        = isset( $_POST['start_booking_date_from'] ) ? sanitize_text_field( wp_unslash( $_POST['start_booking_date_from'] ) ) : '';
@@ -56,7 +57,7 @@ $this->mwb_booking_setting_fields['max_days_for_cancellation'] = isset( $_POST['
 		</p>	
 		<p class="form-field">	
 			<label for="mwb_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
-			<input id="mwb_booking_custom_date" name="mwb_booking_custom_date" type="text">
+			<input id="mwb_booking_custom_date" name="mwb_booking_custom_date" type="time">
 		</p>
 	</div>
 	<div id="mwb_calendar_range" class="options_group">

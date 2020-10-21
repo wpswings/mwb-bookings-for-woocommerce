@@ -5,14 +5,14 @@
  * @package Mwb_Wc_Bk
  */
 
-	$this->mwb_booking_setting_fields['unit_cost'] = isset( $_POST['mwb_booking_unit_cost_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_cost_input'] ) ) : '';
-	$this->mwb_booking_setting_fields['unit_cost_multiply'] = isset( $_POST['mwb_booking_unit_cost_multiply'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_cost_multiply'] ) ) : 'no';
-	$this->mwb_booking_setting_fields['base_cost'] = isset( $_POST['mwb_booking_base_cost_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_base_cost_input'] ) ) : '';
-	$this->mwb_booking_setting_fields['base_cost_multiply'] = isset( $_POST['mwb_booking_base_cost_multiply'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_base_cost_multiply'] ) ) : 'no';
-	$this->mwb_booking_setting_fields['monthly_discount'] = isset( $_POST['mwb_booking_monthly_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_monthly_discount_input'] ) ) : '';
-	$this->mwb_booking_setting_fields['weekly_discount'] = isset( $_POST['mwb_booking_weekly_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_weekly_discount_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['unit_cost']            = isset( $_POST['mwb_booking_unit_cost_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_cost_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['unit_cost_multiply']   = isset( $_POST['mwb_booking_unit_cost_multiply'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_unit_cost_multiply'] ) ) : 'no';
+	$this->mwb_booking_setting_fields['base_cost']            = isset( $_POST['mwb_booking_base_cost_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_base_cost_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['base_cost_multiply']   = isset( $_POST['mwb_booking_base_cost_multiply'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_base_cost_multiply'] ) ) : 'no';
+	$this->mwb_booking_setting_fields['monthly_discount']     = isset( $_POST['mwb_booking_monthly_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_monthly_discount_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['weekly_discount']      = isset( $_POST['mwb_booking_weekly_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_weekly_discount_input'] ) ) : '';
 	$this->mwb_booking_setting_fields['custom_discount_days'] = isset( $_POST['mwb_booking_custom_discount_days'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_custom_discount_days'] ) ) : '';
-	$this->mwb_booking_setting_fields['custom_discount'] = isset( $_POST['mwb_booking_custom_days_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_custom_days_discount_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['custom_discount']      = isset( $_POST['mwb_booking_custom_days_discount_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_custom_days_discount_input'] ) ) : '';
 
 ?>
 <div id="mwb_booking_cost_data" class="panel woocommerce_options_panel show_if_mwb_booking">

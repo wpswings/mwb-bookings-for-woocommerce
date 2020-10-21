@@ -6,8 +6,8 @@
  */
 
 // if( isset( get_post_meta( 'mwb_booking' ) ) )
-	$this->mwb_booking_setting_fields['enable_services'] = isset( $_POST['mwb_services_enable_checkbox'] ) ? sanitize_text_field( $_POST['mwb_services_enable_checkbox'] ) : 'no';
-	$this->mwb_booking_setting_fields['booking_services'] = isset( $_POST['mwb_booking_services_select'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_booking_services_select'] ) ) : '';
+	$this->mwb_booking_setting_fields['enable_services']         = isset( $_POST['mwb_services_enable_checkbox'] ) ? sanitize_text_field( $_POST['mwb_services_enable_checkbox'] ) : 'no';
+	$this->mwb_booking_setting_fields['booking_services']        = isset( $_POST['mwb_booking_services_select'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_booking_services_select'] ) ) : '';
 	$this->mwb_booking_setting_fields['mandatory_service_check'] = isset( $_POST['mwb_services_mandatory_check'] ) ? sanitize_text_field( $_POST['mwb_services_mandatory_check'] ) : 'no';
 
 ?>

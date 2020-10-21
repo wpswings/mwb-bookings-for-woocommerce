@@ -4,9 +4,28 @@
  *
  * @package Mwb_Wc_Bk
  */
-	$booking_start_time = $_POST['']
-	$this->mwb_booking_setting_fields['max_booking_per_unit'] = isset( $_POST['mwb_max_bookings_per_unit'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_max_bookings_per_unit'] ) ) : '';
-	$this->mwb_booking_setting_fields['']
+
+if ( isset( $_POST['mwb_booking_start_hrs'], $_POST['mwb_booking_start_mins'], $_POST['mwb_booking_start_interval'] ) ) {
+	$booking_start_time = sanitize_text_field( wp_unslash( $_POST['mwb_booking_start_hrs'] ) ) . ':' . sanitize_text_field( wp_unslash( $_POST['mwb_booking_start_mins'] ) ) . ' ' . sanitize_text_field( wp_unslash( $_POST['mwb_booking_start_interval'] ) );
+} else {
+	$booking_start_time = '09:00 AM';
+}
+if ( isset( $_POST['mwb_booking_end_hrs'], $_POST['mwb_booking_end_mins'], $_POST['mwb_booking_end_interval'] ) ) {
+	$booking_end_time = sanitize_text_field( wp_unslash( $_POST['mwb_booking_end_hrs'] ) ) . ':' . sanitize_text_field( wp_unslash( $_POST['mwb_booking_end_mins'] ) ) . ' ' . sanitize_text_field( wp_unslash( $_POST['mwb_booking_end_interval'] ) );
+} else {
+	$booking_end_time = '09:00 PM';
+}
+
+	$this->mwb_booking_setting_fields['max_booking_per_unit']         = isset( $_POST['mwb_max_bookings_per_unit'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_max_bookings_per_unit'] ) ) : '';
+	$this->mwb_booking_setting_fields['booking_start_time']           = $booking_start_time;
+	$this->mwb_booking_setting_fields['booking_start_time']           = $booking_end_time;
+	$this->mwb_booking_setting_fields['booking_buffer_days']          = isset( $_POST['mwb_booking_buffer_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_buffer_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['booking_buffer_interval']      = isset( $_POST['mwb_booking_buffer_duration'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_buffer_duration'] ) ) : '';
+	$this->mwb_booking_setting_fields['max_advance_booking_days']     = isset( $_POST['mwb_advance_booking_max_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_advance_booking_max_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['max_advance_booking_interval'] = isset( $_POST['mwb_advance_booking_max_duration'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_advance_booking_max_duration'] ) ) : '';
+	$this->mwb_booking_setting_fields['min_advance_booking_days']     = isset( $_POST['mwb_advance_booking_min_input'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_advance_booking_min_input'] ) ) : '';
+	$this->mwb_booking_setting_fields['min_advance_booking_interval'] = isset( $_POST['mwb_advance_booking_min_duration'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_advance_booking_min_duration'] ) ) : '';
+	$this->mwb_booking_setting_fields['booking_not_allowed_on']       = isset( $_POST['mwb_booking_not_allowed_days'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_not_allowed_days'] ) ) : '';
 
 
 
@@ -38,8 +57,8 @@
 			);
 			?>
 		<p class="form-field">
-			<label for=""><?php esc_html_e( 'Booking starts', 'mwb-wc-bk' ); ?></label>
-			<select name="mwb_" id="">
+			<label for="mwb_booking_start_hrs"><?php esc_html_e( 'Booking starts', 'mwb-wc-bk' ); ?></label>
+			<select name="mwb_booking_start_hrs" id="mwb_booking_start_hrs">
 				<option value="00" default selected>hrs</option>
 				<?php
 				for ( $i = 1; $i <= 12; $i++ ) {
@@ -49,22 +68,22 @@
 				}
 				?>
 			</select>
-			<select name="" id="">
+			<select name="mwb_booking_start_mins" id="mwb_booking_start_mins">
 				<option value="" default selected>mins</option>
 				<option value="00"><?php esc_html_e( '00' ); ?></option>
 				<option value="15"><?php esc_html_e( '15' ); ?></option>
 				<option value="30"><?php esc_html_e( '30' ); ?></option>
 				<option value="45"><?php esc_html_e( '45' ); ?></option>
 			</select>
-			<select name="" id="">
+			<select name="mwb_booking_start_interval" id="mwb_booking_start_interval">
 				<option value="am"><?php esc_html_e( 'AM' ); ?></option>
 				<option value="pm"><?php esc_html_e( 'PM' ); ?></option>
 			</select>
 			<?php esc_html_e( 'Time when the booking starts', 'mwb-wc-bk' ); ?>
 		</p>
 		<p class="form-field">
-			<label for=""><?php esc_html_e( 'Booking ends', 'mwb-wc-bk' ); ?></label>
-			<select name="" id="">
+			<label for="mwb_booking_end_hrs"><?php esc_html_e( 'Booking ends', 'mwb-wc-bk' ); ?></label>
+			<select name="mwb_booking_end_hrs" id="mwb_booking_end_hrs">
 				<option value="00" default selected>hrs</option>
 				<?php
 				for ( $i = 1; $i <= 12; $i++ ) {
@@ -74,14 +93,14 @@
 				}
 				?>
 			</select>
-			<select name="" id="">
+			<select name="mwb_booking_end_mins" id="mwb_booking_end_mins">
 				<option value="" default selected>mins</option>
 				<option value="00"><?php esc_html_e( '00' ); ?></option>
 				<option value="15"><?php esc_html_e( '15' ); ?></option>
 				<option value="30"><?php esc_html_e( '30' ); ?></option>
 				<option value="45"><?php esc_html_e( '45' ); ?></option>
 			</select>
-			<select name="" id="">
+			<select name="mwb_booking_end_interval" id="mwb_booking_end_interval">
 				<option value="am"><?php esc_html_e( 'AM' ); ?></option>
 				<option value="pm"><?php esc_html_e( 'PM' ); ?></option>
 			</select>
@@ -116,7 +135,7 @@
 			<dd><?php esc_html_e( 'Max days before which the product can be booked', 'mwb-wc-bk' ); ?></dd>
 			<dt>
 				<p class="form-field">
-					<label for="mwb_advance_booking_min_input"><?php esc_html_e( 'Maximum advance booking', 'mwb-wc-bk' ); ?></label>
+					<label for="mwb_advance_booking_min_input"><?php esc_html_e( 'Minimum advance booking', 'mwb-wc-bk' ); ?></label>
 					<input type="number" name="mwb_advance_booking_min_input" id="mwb_advance_booking_min_input" value="1" step="1" min="1" style="margin-right: 7px; width: 4em;">
 					<select name="mwb_advance_booking_min_duration" id="mwb_advance_booking_min_duration" class="" style="width: auto; margin-right: 7px;">
 						<option value="month" ><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
@@ -126,29 +145,7 @@
 				</p>
 			</dt>
 			<dd><?php esc_html_e( 'Min days before which the product can be booked', 'mwb-wc-bk' ); ?></dd>
-		</dl>
-		<?php
-			// woocommerce_wp_radio(
-			// 	array(
-			// 		'id'          => 'mwb_booking_not_allowed_days',
-			// 		'label'       => __( 'Booking not allowed', 'mwb-wc-bk' ),
-			// 		'class'       => 'mwb_booking_restricted_days',
-			// 		'value'       => '',
-			// 		'description' => __( 'Weekdays on which booking is not allowed.', 'mwb-wc-bk' ),
-			// 		'name'        => '',
-			// 		'options'     => array(
-			// 			'sunday'    => __( 'Sunday', 'mwb-wc-bk' ),
-			// 			'monday'    => __( 'Monday', 'mwb-wc-bk' ),
-			// 			'tuesday'   => __( 'Tuesday', 'mwb-wc-bk' ),
-			// 			'wednesday' => __( 'Wednesday', 'mwb-wc-bk' ),
-			// 			'thursday'  => __( 'Thursday', 'mwb-wc-bk' ),
-			// 			'friday'    => __( 'Friday', 'mwb-wc-bk' ),
-			// 			'sataurday' => __( 'Saturday', 'mwb-wc-bk' ),
-			// 		),
-			// 		'desc_tip'    => 'true',
-			// 	)
-			// );
-			?>
+		</dl>			
 			<p class="form-field">
 				<label for="mwb_booking_not_allowed_days"><?php esc_html_e( 'Booking not allowed', '' ); ?></label>
 				<select name="mwb_booking_not_allowed_days" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Weekdays on which booking is not allowed', 'mwb-wc-bk' ); ?>">

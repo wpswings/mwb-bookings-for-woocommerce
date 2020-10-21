@@ -39,6 +39,8 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	private $version;
 
+	public $check;
+
 	/**
 	 * MWB Booking Fields
 	 *
@@ -57,6 +59,7 @@ class Mwb_Wc_Bk_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		register_activation_hook( __FILE__, array( $this, 'install' ) );
 
 	}
 
@@ -68,7 +71,7 @@ class Mwb_Wc_Bk_Admin {
 	public function enqueue_styles() {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -80,7 +83,12 @@ class Mwb_Wc_Bk_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'select2_js', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+
+		wp_enqueue_script( 'mwb_booking_select2', plugin_dir_url( __FILE__ ) . 'js/mwb_select2.js', array( 'jquery' ), $this->version, false );
+
+		wp_localize_script( 'mwb_booking_select2', 'ajax_url', admin_url( 'admin-ajax.php' ) );
+
 	}
 
 	/**
@@ -155,18 +163,72 @@ class Mwb_Wc_Bk_Admin {
 		);
 		return $tabs;
 	}
+
+	/**
+	 * Installing on activation
+	 *
+	 * @return void
+	 */
+	public function install() {
+		// If there is no advanced product type taxonomy, add it.
+		if ( ! get_term_by( 'slug', 'mwb_booking', 'product_type' ) ) {
+			wp_insert_term( 'mwb_booking', 'product_type' );
+		}
+	}
 	/**
 	 * General Settings fields.
 	 *
 	 * @return void
 	 */
-	public function mwb_general_settings_fields() {
+	public function product_booking_fields() {
 
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/general-setting-fields-tab.php';
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/availability-fields-tab.php';
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/people-fields-tab.php';
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/services-fields-tab.php';
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/cost-fields-tab.php';
+		// echo '<pre>';
+		// print_r( $this->mwb_booking_setting_fields );
+		// echo '</pre>';
+		//die("here");
+		//	$this->check = 'hcvs';
+
+	}
+
+	/**
+	 * Saving the booking fields
+	 *
+	 * @return void
+	 */
+	public function save_product_booking_fields( $post_id ) {
+
+		// echo '<pre>';
+		// print_r( $this->mwb_booking_setting_fields );
+		// echo '</pre>';
+		// die("here");
+
+		update_post_meta( $post_id, 'mwb_booking', $this->check );
+	}
+
+	/**
+	 * Ajax Handler to search weekdays
+	 *
+	 * @return void
+	 */
+	public function mwb_booking_search_weekdays() {
+		$arr = array(
+			'sunday'    => __( 'Sunday', '' ),
+			'monday'    => __( 'Monday', '' ),
+			'tuesday'   => __( 'Tuesday', '' ),
+			'wednesday' => __( 'Wednesday', '' ),
+			'thursday'  => __( 'Thursday', '' ),
+			'friday'    => __( 'Friday', '' ),
+			'saturday'  => __( 'Saturday', '' ),
+		);
+		if ( ! empty( $_GET['search'] ) ) {
+			$return = array_search( $_GET['search'], $arr );
+		}
+		return json_encode( $arr[ $return ] );
 	}
 
 }

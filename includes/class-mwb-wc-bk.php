@@ -170,7 +170,7 @@ class Mwb_Wc_Bk {
 		$this->loader->add_filter( 'product_type_selector', $plugin_admin, 'add_mwb_booking_product_selector', 10, 1 );
 
 		$this->loader->add_filter( 'product_type_options', $plugin_admin, 'mwb_booking_virtual_product_options' );
-		
+
 		$this->loader->add_filter( 'woocommerce_product_data_tabs', $plugin_admin, 'mwb_add_general_settings' );
 
 		$this->loader->add_action( 'woocommerce_process_product_meta_mwb_booking', $plugin_admin, 'save_product_booking_fields' );

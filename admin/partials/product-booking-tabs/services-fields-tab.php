@@ -5,11 +5,6 @@
  * @package Mwb_Wc_Bk
  */
 
-// if( isset( get_post_meta( 'mwb_booking' ) ) )
-	$this->mwb_booking_setting_fields['enable_services']         = isset( $_POST['mwb_services_enable_checkbox'] ) ? sanitize_text_field( $_POST['mwb_services_enable_checkbox'] ) : 'no';
-	$this->mwb_booking_setting_fields['booking_services']        = isset( $_POST['mwb_booking_services_select'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_booking_services_select'] ) ) : '';
-	$this->mwb_booking_setting_fields['mandatory_service_check'] = isset( $_POST['mwb_services_mandatory_check'] ) ? sanitize_text_field( $_POST['mwb_services_mandatory_check'] ) : 'no';
-
 ?>
 <div id="mwb_booking_services_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 	<div id="mwb_servives_heading">
@@ -21,7 +16,7 @@
 			array(
 				'id'          => 'mwb_services_enable_checkbox',
 				'label'       => __( 'Enable/Disable Services', 'mwb-wc-bk' ),
-				'value'       => 'no',
+				'value'       => $this->setting_fields['mwb_services_enable_checkbox'],
 				'description' => __( 'Enable if services are to be included in booking.', 'mwb-wc-bk' ),
 			)
 		);
@@ -38,7 +33,7 @@
 			array(
 				'id'          => 'mwb_services_mandatory_check',
 				'label'       => __( 'Services are', 'mwb-wc-bk' ),
-				'value'       => '',
+				'value'       => $this->setting_fields['mwb_services_mandatory_check'],
 				'options'     => array(
 					'mandatory'         => __( 'Mandatory', 'mwb-wc-bk' ),
 					'customer_selected' => __( 'Selected by Customer', 'mwb-wc-bk' ),

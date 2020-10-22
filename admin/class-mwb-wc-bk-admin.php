@@ -39,8 +39,6 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	private $version;
 
-	public $check;
-
 	/**
 	 * MWB Booking Fields
 	 *
@@ -183,16 +181,15 @@ class Mwb_Wc_Bk_Admin {
 	public function product_booking_fields() {
 
 		global $post;
-		$product = wc_get_product($post->ID);
+		$product    = wc_get_product( $post->ID );
 		$product_id = $product->get_id();
-		$this->set_prouduct_settings_fields($product_id);
+		$this->set_prouduct_settings_fields( $product_id );
 
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/general-setting-fields-tab.php';
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/availability-fields-tab.php';
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/people-fields-tab.php';
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/services-fields-tab.php';
 		include MWB_WC_BK_BASEPATH . 'admin/partials/product-booking-tabs/cost-fields-tab.php';
-		
 
 	}
 
@@ -203,37 +200,65 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function save_product_booking_fields( $post_id ) {
 
-		foreach ($this->get_product_settings() as $key => $value) {
-			$posted_data = ! empty( $_POST[$key] ) ? sanitize_text_field( wp_unslash( $_POST[$key] ) ) : $value['default'];
-		 	update_post_meta( $post_id , $key , $posted_data) ; 
-		} 
+		foreach ( $this->get_product_settings() as $key => $value ) {
+			if ( in_array( 'mwb_booking_not_allowed_days', $this->get_product_settings() ) ) {
+				$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default'];
+			} else {
+				$posted_data = ! empty( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : $value['default'];
+			}
+
+			update_post_meta( $post_id, $key, $posted_data );
+		}
 	}
 
-	public function get_product_settings(){
+	public function get_product_settings() {
 		return array(
-			'mwb_booking_unit_select' => array('default' => 'customer'),
-			'mwb_booking_unit_input' => array('default' => '1'),
-			'mwb_booking_unit_duration' => array('default' => 'day'),
-			'start_booking_date' => array('default' => ''),
-			'start_booking_time' => array('default' => ''),
-			'start_booking_custom_date' => array('default' => ''),
-			'enable_range_picker'=> array('default' => 'no') ,
-			'full_day_booking' => array('default' => 'no') ,
-			'admin_confirmation' => array('default' => 'no') ,
-			'allow_cancellation' => array('default' => 'no'),
-			'max_days_for_cancellation' => array('default' => ''),
-			'mwb_enable_range_picker' => array('default' => 'no') , 
-			'mwb_full_day_booking' => array('default' => 'no') ,
-			'mwb_admin_confirmation_required' => array('default' => 'no') ,
-			'mwb_allow_booking_cancellation' => array('default' => 'no'),
-			'mwb_max_day_for_cancellation' => array('default' => '') 
+			'mwb_booking_unit_select'                => array( 'default' => 'customer' ),
+			'mwb_booking_unit_input'                 => array( 'default' => '1' ),
+			'mwb_booking_unit_duration'              => array( 'default' => 'day' ),
+			'mwb_start_booking_date'                 => array( 'default' => '' ),
+			'mwb_start_booking_time'                 => array( 'default' => '' ),
+			'mwb_start_booking_custom_date'          => array( 'default' => '' ),
+			'mwb_enable_range_picker'                => array( 'default' => 'no' ),
+			'mwb_full_day_booking'                   => array( 'default' => 'no' ),
+			'mwb_admin_confirmation'                 => array( 'default' => 'no' ),
+			'mwb_allow_booking_cancellation'         => array( 'default' => 'no' ),
+			'mwb_max_days_for_cancellation'          => array( 'default' => '' ),
+			'mwb_booking_unit_cost_input'            => array( 'default' => '' ),
+			'mwb_booking_unit_cost_multiply'         => array( 'default' => 'no' ),
+			'mwb_booking_base_cost_input'            => array( 'default' => '' ),
+			'mwb_booking_base_cost_multiply'         => array( 'default' => 'no' ),
+			'mwb_booking_monthly_discount_type'      => array( 'default' => '' ),
+			'mwb_booking_monthly_discount_input'     => array( 'default' => '' ),
+			'mwb_booking_weekly_discount_input'      => array( 'default' => '' ),
+			'mwb_booking_custom_days_discount_input' => array( 'default' => '' ),
+			'mwb_booking_custom_discount_days'       => array( 'default' => '' ),
+			'mwb_services_enable_checkbox'           => array( 'default' => 'no' ),
+			'mwb_booking_services_select'            => array( 'default' => '' ),
+			'mwb_services_mandatory_check'           => array( 'default' => '' ),
+			'mwb_people_enable_checkbox'             => array( 'default' => 'no' ),
+			'mwb_min_people_per_booking'             => array( 'default' => '' ),
+			'mwb_max_people_per_booking'             => array( 'default' => '' ),
+			'mwb_people_as_seperate_booking'         => array( 'default' => 'no' ),
+			'mwb_enable_people_types'                => array( 'default' => 'no' ),
+			'mwb_max_bookings_per_unit'              => array( 'default' => '' ),
+			'mwb_booking_start_time'                 => array( 'default' => '' ),
+			'mwb_booking_end_time'                   => array( 'default' => '' ),
+			'mwb_booking_buffer_input'               => array( 'default' => '' ),
+			'mwb_booking_buffer_duration'            => array( 'default' => '' ),
+			'mwb_advance_booking_max_input'          => array( 'default' => '' ),
+			'mwb_advance_booking_max_duration'       => array( 'default' => '' ),
+			'mwb_advance_booking_min_input'          => array( 'default' => '' ),
+			'mwb_advance_booking_min_duration'       => array( 'default' => '' ),
+			'mwb_booking_not_allowed_days'           => array( 'default' => '' ),
+
 		);
 	}
 
 	/**
 	 * Ajax Handler to search weekdays
 	 *
-	 * @return void
+	 * @return array arr Weekdays.
 	 */
 	public function mwb_booking_search_weekdays() {
 		$arr = array(
@@ -245,22 +270,24 @@ class Mwb_Wc_Bk_Admin {
 			'friday'    => __( 'Friday', 'mwb-wc-bk' ),
 			'saturday'  => __( 'Saturday', 'mwb-wc-bk' ),
 		);
-		return $arr ; 
+		return $arr;
 	}
 
-	public function set_prouduct_settings_fields($product_id){
-		foreach ($this->get_product_settings() as $key => $value) {
-			$data = get_post_meta( $product_id , $key , true) ; 
-			$this->setting_fields[$key] = !empty( $data ) ? $data : $value['default'] ; 
+	public function set_prouduct_settings_fields( $product_id ) {
+
+		foreach ( $this->get_product_settings() as $key => $value ) {
+
+			$data                         = get_post_meta( $product_id, $key, true );
+			$this->setting_fields[ $key ] = ! empty( $data ) ? $data : $value['default'];
 		}
 	}
 
-	public function get_booking_unit_duration_options(){
+	public function get_booking_duration_options() {
 		return array(
-			'month' => __('Month(s)' , 'mwb-wc-bk') , 
-			'day' => __('Day(s)' , 'mwb-wc-bk') , 
-			'hour' => __('Hour(s)' , 'mwb-wc-bk') , 
-			'minute' => __('Minute(s)' , 'mwb-wc-bk') , 
+			'month'  => __( 'Month(s)', 'mwb-wc-bk' ),
+			'day'    => __( 'Day(s)', 'mwb-wc-bk' ),
+			'hour'   => __( 'Hour(s)', 'mwb-wc-bk' ),
+			'minute' => __( 'Minute(s)', 'mwb-wc-bk' ),
 		);
 	}
 

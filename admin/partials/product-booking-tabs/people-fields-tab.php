@@ -5,12 +5,6 @@
  * @package Mwb_Wc_Bk
  */
 
-	$this->mwb_booking_setting_fields['enable_people']              = isset( $_POST['mwb_people_enable_checkbox'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_people_enable_checkbox'] ) ) : 'no';
-	$this->mwb_booking_setting_fields['min_people_per_booking']     = isset( $_POST['mwb_min_people_per_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_min_people_per_booking'] ) ) : '';
-	$this->mwb_booking_setting_fields['max_people_per_booking']     = isset( $_POST['mwb_max_people_per_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_max_people_per_booking'] ) ) : '';
-	$this->mwb_booking_setting_fields['people_as_seperate_booking'] = isset( $_POST['mwb_people_as_seperate_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_people_as_seperate_booking'] ) ) : 'no';
-	$this->mwb_booking_setting_fields['enable_people_types']        = isset( $_POST['mwb_enable_people_types'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_enable_people_types'] ) ) : 'no';
-
 ?>
 <div id="mwb_booking_people_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 	<div id="mwb_people_heading">
@@ -22,7 +16,7 @@
 				array(
 					'id'          => 'mwb_people_enable_checkbox',
 					'label'       => __( 'Enable/Disable People option', 'mwb-wc-bk' ),
-					'value'       => 'no',
+					'value'       => $this->setting_fields['mwb_people_enable_checkbox'],
 					'description' => __( 'Enable if extra peoples are to be included per booking.', 'mwb-wc-bk' ),
 				)
 			);
@@ -31,7 +25,7 @@
 					'id'                => 'mwb_min_people_per_booking',
 					'label'             => __( 'Min People per booking', 'mwb-wc-bk' ),
 					'description'       => __( 'Minimum number of peoples allowed per bookings.', 'mwb-wc-bk' ),
-					'value'             => '',
+					'value'             => $this->setting_fields['mwb_min_people_per_booking'],
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'style'             => 'width: 30%; margin-right: 7px;',
@@ -46,7 +40,7 @@
 					'id'                => 'mwb_max_people_per_booking',
 					'label'             => __( 'Max People per booking', 'mwb-wc-bk' ),
 					'description'       => __( 'Maximum number of peoples allowed per bookings.', 'mwb-wc-bk' ),
-					'value'             => '',
+					'value'             => $this->setting_fields['mwb_max_people_per_booking'],
 					'desc_tip'          => true,
 					'type'              => 'number',
 					'style'             => 'width: 30%; margin-right: 7px;',
@@ -60,7 +54,7 @@
 				array(
 					'id'          => 'mwb_people_as_seperate_booking',
 					'label'       => __( 'Allow Peoples as seperate booking', 'mwb-wc-bk' ),
-					'value'       => 'no',
+					'value'       => $this->setting_fields['mwb_people_as_seperate_booking'],
 					'description' => __( 'Check if peoples are to be counted as seperate bookings.', 'mwb-wc-bk' ),
 				)
 			);
@@ -68,7 +62,7 @@
 				array(
 					'id'          => 'mwb_enable_people_types',
 					'label'       => __( 'Enable people types', 'mwb-wc-bk' ),
-					'value'       => 'no',
+					'value'       => $this->setting_fields['mwb_enable_people_types'],
 					'description' => __( 'If people types are to be created.', 'mwb-wc-bk' ),
 				)
 			);

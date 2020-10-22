@@ -148,13 +148,9 @@ if ( isset( $_POST['mwb_booking_end_hrs'], $_POST['mwb_booking_end_mins'], $_POS
 			<p class="form-field">
 				<label for="mwb_booking_not_allowed_days"><?php esc_html_e( 'Booking not allowed', '' ); ?></label>
 				<select name="mwb_booking_not_allowed_days" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Weekdays on which booking is not allowed', 'mwb-wc-bk' ); ?>">
-					<option value="sunday"><?php esc_html_e( 'Sunday', 'mwb-wc-bk' ); ?></option>
-					<option value="monday"><?php esc_html_e( 'Monday', 'mwb-wc-bk' ); ?></option>
-					<option value="tuesday"><?php esc_html_e( 'Tuesday', 'mwb-wc-bk' ); ?></option>
-					<option value="wednesday"><?php esc_html_e( 'Wednesday', 'mwb-wc-bk' ); ?></option>
-					<option value="thursday"><?php esc_html_e( 'Thursday', 'mwb-wc-bk' ); ?></option>
-					<option value="friday"><?php esc_html_e( 'Friday', 'mwb-wc-bk' ); ?></option>
-					<option value="saturday"><?php esc_html_e( 'Saturday', 'mwb-wc-bk' ); ?></option>
+					<?php foreach ($this->mwb_booking_search_weekdays() as $key => $value) : ?>
+						<option value="<?php echo $key ?>"><?php esc_html_e($value) ?></option>
+					<?php endforeach ; ?>
 				</select>
 			</p>
 	</div>

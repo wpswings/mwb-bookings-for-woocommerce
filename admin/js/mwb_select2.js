@@ -1,7 +1,7 @@
 jQuery(document).ready( function($) {
-
+	//jQuery('#mwb_booking_not_allowed_days').select2();
 	// Target product search.
-	jQuery('#mwb_booking_not_allowed_days').select2({
+/*	jQuery('#mwb_booking_not_allowed_days').select2({
   		ajax:{
     			url: ajaxurl,
     			dataType: 'json',
@@ -29,5 +29,5 @@ jQuery(document).ready( function($) {
 			cache: true
 		},
 		minimumInputLength: 3 // The minimum of symbols to input before perform a search.
-    });
+    });*/
 });

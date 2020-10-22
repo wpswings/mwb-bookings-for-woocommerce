@@ -71,7 +71,7 @@ class Mwb_Wc_Bk_Admin {
 	public function enqueue_styles() {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+		//wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -83,11 +83,11 @@ class Mwb_Wc_Bk_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( 'select2_js', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+		/*wp_enqueue_script( 'select2_js', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 
 		wp_enqueue_script( 'mwb_booking_select2', plugin_dir_url( __FILE__ ) . 'js/mwb_select2.js', array( 'jquery' ), $this->version, false );
 
-		wp_localize_script( 'mwb_booking_select2', 'ajax_url', admin_url( 'admin-ajax.php' ) );
+		wp_localize_script( 'mwb_booking_select2', 'ajax_url', admin_url( 'admin-ajax.php' ) );*/
 
 	}
 
@@ -237,18 +237,15 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function mwb_booking_search_weekdays() {
 		$arr = array(
-			'sunday'    => __( 'Sunday', '' ),
-			'monday'    => __( 'Monday', '' ),
-			'tuesday'   => __( 'Tuesday', '' ),
-			'wednesday' => __( 'Wednesday', '' ),
-			'thursday'  => __( 'Thursday', '' ),
-			'friday'    => __( 'Friday', '' ),
-			'saturday'  => __( 'Saturday', '' ),
+			'sunday'    => __( 'Sunday', 'mwb-wc-bk' ),
+			'monday'    => __( 'Monday', 'mwb-wc-bk' ),
+			'tuesday'   => __( 'Tuesday', 'mwb-wc-bk' ),
+			'wednesday' => __( 'Wednesday', 'mwb-wc-bk' ),
+			'thursday'  => __( 'Thursday', 'mwb-wc-bk' ),
+			'friday'    => __( 'Friday', 'mwb-wc-bk' ),
+			'saturday'  => __( 'Saturday', 'mwb-wc-bk' ),
 		);
-		if ( ! empty( $_GET['search'] ) ) {
-			$return = array_search( $_GET['search'], $arr );
-		}
-		return json_encode( $arr[ $return ] );
+		return $arr ; 
 	}
 
 	public function set_prouduct_settings_fields($product_id){

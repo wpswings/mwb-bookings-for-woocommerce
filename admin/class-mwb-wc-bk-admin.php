@@ -201,7 +201,7 @@ class Mwb_Wc_Bk_Admin {
 	public function save_product_booking_fields( $post_id ) {
 
 		foreach ( $this->get_product_settings() as $key => $value ) {
-			if ( in_array( 'mwb_booking_not_allowed_days', $this->get_product_settings() ) ) {
+			if ( is_array( $_POST[ $key ] ) ) {
 				$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default'];
 			} else {
 				$posted_data = ! empty( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : $value['default'];

@@ -83,7 +83,7 @@
 			<label for="mwb_booking_not_allowed_days"><?php esc_html_e( 'Booking not allowed', 'mwb-wc-bk' ); ?></label>
 			<select name="mwb_booking_not_allowed_days[]" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Weekday(s)', 'mwb-wc-bk' ); ?>">
 				<?php foreach ( $this->mwb_booking_search_weekdays() as $key => $value ) : ?>
-					<option <?php selected( $key, $this->setting_fields['mwb_booking_not_allowed_days'] ); ?> value="<?php echo esc_html( $key ); ?>"><?php esc_html_e( $value ); ?></option>
+					<option <?php echo in_array( $key, $this->setting_fields['mwb_booking_not_allowed_days'], true ) ? 'selected' : ''; ?> value="<?php echo esc_html( $key ); ?>"><?php esc_html_e( $value ); ?></option>
 				<?php endforeach; ?>
 			</select>
 			<?php mwb_booking_help_tip( esc_html__( 'Select weekday(s) on which booking is not allowed', 'mwb-wc-bk' ) ); ?>

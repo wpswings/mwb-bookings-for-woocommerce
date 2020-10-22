@@ -24,7 +24,7 @@
 			<p class="form-field">
 				<label for="mwb_booking_base_cost_input"><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label>
 				<input type="number" name="mwb_booking_base_cost_input" id="mwb_booking_base_cost_input" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_base_cost_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
-				<input type="checkbox" name="mwb_booking_base_cost_multiply" id="mwb_booking_base_cost_multiply" value="yes" <?php checked( 'yes', $this->setting_fields['mwb_booking_base_cost_multiply'] ); ?>/>
+				<input type="checkbox" name="mwb_booking_base_cost_multiply" id="mwb_booking_base_cost_multiply" value="no" <?php checked( 'yes', $this->setting_fields['mwb_booking_base_cost_multiply'] ); ?>/>
 				<label for="mwb_booking_base_cost_multiply"><?php esc_html_e( 'Count per people', 'mwb-wc-bk' ); ?></label>
 			</p>
 		</div>

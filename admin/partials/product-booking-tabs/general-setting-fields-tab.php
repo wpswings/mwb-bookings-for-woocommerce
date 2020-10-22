@@ -20,10 +20,10 @@ $this->mwb_booking_setting_fields['max_days_for_cancellation'] = isset( $_POST['
 
 ?>
 <div id="mwb_booking_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-	<div id="mwb_general_settings_heading">
+	<div id="mwb_general_settings_heading" class="options_group">
 		<h1><em><?php esc_html_e( 'General Settings', 'mwb-wc-bk' ); ?></em></h1>
 	</div>
-	<div id="mwb_booking_unit" class="options_group">
+	<div id="mwb_booking_unit" >
 		<p class="form-field">
 			<label for="mwb_booking_unit_select"><?php esc_html_e( 'Booking Unit', 'mwb-wc-bk' ); ?></label>
 			<select name="mwb_booking_unit_select" id="mwb_booking_unit_select" class="" style="width: auto; margin-right: 7px;">
@@ -39,7 +39,7 @@ $this->mwb_booking_setting_fields['max_days_for_cancellation'] = isset( $_POST['
 			</select>
 		</p>
 	</div>
-	<div id="mwb_start_booking_from" class="options_group">
+	<div id="mwb_start_booking_from">
 		<p class="form-field">
 			<label for="start_booking_date_from"><?php esc_html_e( 'Start Booking on date', 'mwb-wc-bk' ); ?></label>
 			<select name="start_booking_date_from" id="start_booking_date_from">
@@ -57,10 +57,10 @@ $this->mwb_booking_setting_fields['max_days_for_cancellation'] = isset( $_POST['
 		</p>	
 		<p class="form-field">	
 			<label for="mwb_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
-			<input id="mwb_booking_custom_date" name="mwb_booking_custom_date" type="time">
+			<input id="mwb_booking_custom_date" name="mwb_booking_custom_date" type="date">
 		</p>
 	</div>
-	<div id="mwb_calendar_range" class="options_group">
+	<div id="mwb_calendar_range">
 		<?php
 			woocommerce_wp_checkbox(
 				array(
@@ -72,7 +72,7 @@ $this->mwb_booking_setting_fields['max_days_for_cancellation'] = isset( $_POST['
 			);
 			?>
 	</div>
-	<div id="mwb_full_day_select" class="options_group">
+	<div id="mwb_full_day_select">
 		<?php
 			woocommerce_wp_checkbox(
 				array(
@@ -84,7 +84,7 @@ $this->mwb_booking_setting_fields['max_days_for_cancellation'] = isset( $_POST['
 			);
 			?>
 	</div>
-	<div id="mwb_admin_confirmation" class="options_group">
+	<div id="mwb_admin_confirmation">
 		<?php
 			woocommerce_wp_checkbox(
 				array(
@@ -96,7 +96,7 @@ $this->mwb_booking_setting_fields['max_days_for_cancellation'] = isset( $_POST['
 			);
 			?>
 	</div>
-	<div id="mwb_booking_cancellation" class="options_group">
+	<div id="mwb_booking_cancellation">
 		<?php
 			woocommerce_wp_checkbox(
 				array(

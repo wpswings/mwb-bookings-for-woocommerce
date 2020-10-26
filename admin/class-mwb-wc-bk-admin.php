@@ -58,6 +58,7 @@ class Mwb_Wc_Bk_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 		register_activation_hook( __FILE__, array( $this, 'install' ) );
+		register_activation_hook( __FILE__, array( $this, 'my_rewrite_flush' ) );
 
 	}
 
@@ -112,17 +113,17 @@ class Mwb_Wc_Bk_Admin {
 	 * @param array $options Contains the default virtual and downloadable options.
 	 * @return array
 	 */
-	public function mwb_booking_virtual_product_options( $options ) {
+	public function booking_virtual_product_options( $options ) {
 		$options['virtual']['wrapper_class'] .= 'show_if_mwb_booking';
 		return $options;
 	}
 	/**
-	 * Add General Settings Tab for bookable product type
+	 * Add various Setting Tabs under Product settings for bookable product type
 	 *
 	 * @param array $tabs Product Panel Tabs.
 	 * @return array
 	 */
-	public function mwb_add_general_settings( $tabs ) {
+	public function booking_add_product_data_tabs( $tabs ) {
 
 		$tabs = array_merge(
 			$tabs,
@@ -168,7 +169,7 @@ class Mwb_Wc_Bk_Admin {
 	 * @return void
 	 */
 	public function install() {
-		// If there is no advanced product type taxonomy, add it.
+
 		if ( ! get_term_by( 'slug', 'mwb_booking', 'product_type' ) ) {
 			wp_insert_term( 'mwb_booking', 'product_type' );
 		}
@@ -194,8 +195,9 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	/**
-	 * Saving the booking fields
+	 * Save the booking fields
 	 *
+	 * @param [type] $post_id ID of the post.
 	 * @return void
 	 */
 	public function save_product_booking_fields( $post_id ) {
@@ -211,6 +213,11 @@ class Mwb_Wc_Bk_Admin {
 		}
 	}
 
+	/**
+	 * Define booking's default setting fields
+	 *
+	 * @return array
+	 */
 	public function get_product_settings() {
 		return array(
 			'mwb_booking_unit_select'                => array( 'default' => 'customer' ),
@@ -256,7 +263,7 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	/**
-	 * Ajax Handler to search weekdays
+	 * Search weekdays
 	 *
 	 * @return array arr Weekdays.
 	 */
@@ -273,6 +280,12 @@ class Mwb_Wc_Bk_Admin {
 		return $arr;
 	}
 
+	/**
+	 * Set booking's default settings fields
+	 *
+	 * @param [type] $product_id ID of the booking.
+	 * @return void
+	 */
 	public function set_prouduct_settings_fields( $product_id ) {
 
 		foreach ( $this->get_product_settings() as $key => $value ) {
@@ -282,6 +295,11 @@ class Mwb_Wc_Bk_Admin {
 		}
 	}
 
+	/**
+	 * Mwb Booking Durations
+	 *
+	 * @return array
+	 */
 	public function get_booking_duration_options() {
 		return array(
 			'month'  => __( 'Month(s)', 'mwb-wc-bk' ),
@@ -289,6 +307,215 @@ class Mwb_Wc_Bk_Admin {
 			'hour'   => __( 'Hour(s)', 'mwb-wc-bk' ),
 			'minute' => __( 'Minute(s)', 'mwb-wc-bk' ),
 		);
+	}
+
+	/**
+	 * Custom-Post Type Booking
+	 *
+	 * @return void
+	 */
+	public function booking_custom_post_type() {
+		$labels = array(
+			'name'                  => _x( 'Bookings', 'Post type general name', 'mwb-wc-bk' ),
+			'singular_name'         => _x( 'Booking', 'Post type singular name', 'mwb-wc-bk' ),
+			'menu_name'             => _x( 'Bookings', 'Admin Menu text', 'mwb-wc-bk' ),
+			'add_new'               => _x( 'Add Booking', 'Booking', 'mwb-wc-bk' ),
+			'add_new_item '         => __( 'Add New Booking', 'mwb-wc-bk' ),
+			'edit_item'             => __( 'Edit Boooking', 'mwb-wc-bk' ),
+			'new_item'              => __( 'New Booking', 'mwb-wc-bk' ),
+			'name_admin_bar'        => _x( 'Bookings', 'Add new on toolbar', 'mwb-wc-bk' ),
+			'view_item'             => __( 'View Bookings', 'mwb-wc-bk' ),
+			'all_items'             => __( 'All Bookings', 'mwb-wc-bk' ),
+			'search_items'          => __( 'Search Bookings', 'mwb-wc-bk' ),
+			'not_found'             => __( 'No booking found', 'mwb-wc-bk' ),
+			'not_found_in_trash'    => __( 'No bookings found in trash', 'mwb-wc-bk' ),
+		//	'parent_items_colon'    => __( 'Parent Booking:', 'mwb-wc-bk' ),
+			'archives'              => __( 'Archives', 'mwb-wc-bk' ),
+			'attributes'            => __( 'Attributes', 'mwb-wc-bk' ),
+			'insert_into_item'      => __( 'Insert into Product', 'mwb-wc-bk' ),
+			'uploaded_to_this_item' => __( 'Upload to this Product', 'mwb-wc-bk' ),
+			'featured_image'        => _x( 'Booking Cover Image', 'Overrides the featured image phrase for this post type', 'mwb-wc-bk' ),
+		);
+		$args   = array(
+			'labels'             => $labels,
+			'public'             => true,
+			'description'        => __( 'Bookings are described here', 'mwb-wc-bk' ),
+			'has_archive'        => true,
+			'rewrite'            => array( 'slug' => 'booking' ), // my custom slug.
+			'publicly_queryable' => false,
+			'show_ui'            => true,
+			'show_in_menu'       => false,
+			'show_in_nav_menu'   => true,
+			'show_in_admin_bar'  => true,
+			'capability_type'    => 'post',
+			'hierarchical'       => false,
+			'show_in_rest'       => false,
+			'supports'           => array( 'title', 'editor', 'thumbnail', 'comments' ),
+			'taxonomies'         => array(),
+			'map_meta_cap'       => true,
+			'query-var'          => true,
+		);
+		register_post_type( 'mwb_cpt_booking', $args );
+	}
+
+	/**
+	 * Rewrite Rules
+	 *
+	 * @return void
+	 */
+	public function my_rewrite_flush() {
+
+		$this->booking_custom_post_type();
+		$this->booking_register_taxonomy_services();
+		$this->booking_register_taxonomy_people_type();
+
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * Our Custom Taxonomy.
+	 *
+	 * @return void
+	 */
+	public function booking_register_taxonomy_services() {
+		$labels = array(
+			'name'              => _x( 'Services', 'taxonomy general name', 'mwb-wc-bk' ),
+			'singular_name'     => _x( 'Service', 'taxonomy singular name', 'mwb-wc-bk' ),
+			'search_items'      => __( 'Search Services', 'mwb-wc-bk' ),
+			'all_items'         => __( 'All Services', 'mwb-wc-bk' ),
+			'parent_item'       => __( 'Parent Service', 'mwb-wc-bk' ),
+			'parent_item_colon' => __( 'Parent Service:', 'mwb-wc-bk' ),
+			'edit_item'         => __( 'Edit Service', 'mwb-wc-bk' ),
+			'view_item'         => __( 'View Service', 'mwb-wc-bk' ),
+			'update_item'       => __( 'Update Service', 'mwb-wc-bk' ),
+			'add_new_item'      => __( 'Add New Service', 'mwb-wc-bk' ),
+			'new_item_name'     => __( 'New Service Name', 'mwb-wc-bk' ),
+			'menu_name'         => __( 'Services', 'mwb-wc-bk' ),
+		);
+		$args   = array(
+			'hierarchical'      => true,
+			'labels'            => $labels,
+			'description'       => 'Services or resources which are to be included in booking',
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'show_in_rest'      => true,
+			'rewrite'           => array( 'slug' => 'services' ),
+		);
+		register_taxonomy( 'mwb_ct_services', array( 'mwb_cpt_booking' ), $args );
+	}
+
+	/**
+	 * Our Custom Taxonomy.
+	 *
+	 * @return void
+	 */
+	public function booking_register_taxonomy_people_type() {
+		$labels = array(
+			'name'              => _x( 'People Types', 'taxonomy general name', 'mwb-wc-bk' ),
+			'singular_name'     => _x( 'People Type', 'taxonomy singular name', 'mwb-wc-bk' ),
+			'search_items'      => __( 'Search People Types', 'mwb-wc-bk' ),
+			'all_items'         => __( 'All People Types', 'mwb-wc-bk' ),
+			'parent_item'       => __( 'Parent Type', 'mwb-wc-bk' ),
+			'parent_item_colon' => __( 'Parent Type:', 'mwb-wc-bk' ),
+			'edit_item'         => __( 'Edit People Type', 'mwb-wc-bk' ),
+			'view_item'         => __( 'View People Type', 'mwb-wc-bk' ),
+			'update_item'       => __( 'Update People Type', 'mwb-wc-bk' ),
+			'add_new_item'      => __( 'Add New People Type', 'mwb-wc-bk' ),
+			'new_item_name'     => __( 'New Type Name', 'mwb-wc-bk' ),
+			'menu_name'         => __( 'People Types', 'mwb-wc-bk' ),
+		);
+		$args   = array(
+			'hierarchical'      => true,
+			'labels'            => $labels,
+			'description'       => 'Types of Peoples which are to be included per booking',
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'show_in_rest'      => true,
+			'rewrite'           => array( 'slug' => 'people-types' ),
+		);
+		register_taxonomy( 'mwb_ct_people_type', array( 'mwb_cpt_booking' ), $args );
+	}
+
+	/**
+	 * Our Custom Taxonomy.
+	 *
+	 * @return void
+	 */
+	public function booking_register_taxonomy_cost() {
+		$labels = array(
+			'name'              => _x( 'Additional Costs', 'taxonomy general name', 'mwb-wc-bk' ),
+			'singular_name'     => _x( 'Cost', 'taxonomy singular name', 'mwb-wc-bk' ),
+			'search_items'      => __( 'Search Costs', 'mwb-wc-bk' ),
+			'all_items'         => __( 'All Costs', 'mwb-wc-bk' ),
+			'parent_item'       => __( 'Parent Cost', 'mwb-wc-bk' ),
+			'parent_item_colon' => __( 'Parent Cost:', 'mwb-wc-bk' ),
+			'edit_item'         => __( 'Edit Cost', 'mwb-wc-bk' ),
+			'view_item'         => __( 'View Costs', 'mwb-wc-bk' ),
+			'update_item'       => __( 'Update Cost', 'mwb-wc-bk' ),
+			'add_new_item'      => __( 'Add New Cost', 'mwb-wc-bk' ),
+			'new_item_name'     => __( 'New Cost Name', 'mwb-wc-bk' ),
+			'menu_name'         => __( 'Costs', 'mwb-wc-bk' ),
+		);
+		$args   = array(
+			'hierarchical'      => true,
+			'labels'            => $labels,
+			'description'       => 'Additional Costs which are to be included in booking',
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'show_in_rest'      => true,
+			'rewrite'           => array( 'slug' => 'cost' ),
+		);
+		register_taxonomy( 'mwb_ct_costs', array( 'mwb_cpt_booking' ), $args );
+	}
+
+	public function booking_submenu_active() {
+
+		global $parent_file, $post_type;
+
+		if ( ! empty( $post_type ) && 'mwb_cpt_booking' === $post_type ) {
+			;
+		}
+	}
+
+	/**
+	 * "Bookings" Admin Menu.
+	 *
+	 * @return void
+	 */
+	public function booking_admin_menu() {
+
+		add_menu_page(
+			__( 'Bookings', 'mwb-wc-bk' ),
+			'Bookings',
+			'manage_options',
+			'edit.php?post_type=mwb_cpt_booking',
+			'',
+			'',
+			30
+		);
+
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Services', 'mwb-wc-bk' ), 'Services', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_services&post_type=mwb_cpt_booking', '' );
+
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'People Types', 'mwb-wc-bk' ), 'People Types', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_people_type&post_type=mwb_cpt_booking', '' );
+
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Costs', 'mwb-wc-bk' ), 'Costs', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_costs&post_type=mwb_cpt_booking', '' );
+
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Create Booking', 'mwb-wc-bk' ), 'Create Booking', 'manage_options', 'create-booking', array( $this, 'menu_page_create_booking' ) );
+
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Global booking Settings', 'mwb-wc-bk' ), 'Settings', 'manage_options', 'global-settings', array( $this, 'menu_page_booking_settings' ) );
+
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Calendar', 'mwb-wc-bk' ), 'Calendar', 'manage_options', '', '' );
+	}
+
+	public function menu_page_create_booking() {
+		echo 'Test booking';
+	}
+
+	public function menu_page_booking_settings() {
+		echo 'settings';
 	}
 
 }

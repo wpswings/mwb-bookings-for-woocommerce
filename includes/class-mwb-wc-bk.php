@@ -165,15 +165,27 @@ class Mwb_Wc_Bk {
 		// create new product type booking.
 		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'register_booking_product_type' );
 
-		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'product_booking_fields' );
-
 		$this->loader->add_filter( 'product_type_selector', $plugin_admin, 'add_mwb_booking_product_selector', 10, 1 );
 
-		$this->loader->add_filter( 'product_type_options', $plugin_admin, 'mwb_booking_virtual_product_options' );
+		$this->loader->add_filter( 'product_type_options', $plugin_admin, 'booking_virtual_product_options' );
 
-		$this->loader->add_filter( 'woocommerce_product_data_tabs', $plugin_admin, 'mwb_add_general_settings' );
+		$this->loader->add_filter( 'woocommerce_product_data_tabs', $plugin_admin, 'booking_add_product_data_tabs' );
+
+		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'product_booking_fields' );
 
 		$this->loader->add_action( 'woocommerce_process_product_meta_mwb_booking', $plugin_admin, 'save_product_booking_fields' );
+
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'booking_admin_menu' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'booking_custom_post_type' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'booking_register_taxonomy_services' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'booking_register_taxonomy_people_type' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'booking_register_taxonomy_cost' );
+
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'booking_submenu_active' );
 
 	}
 

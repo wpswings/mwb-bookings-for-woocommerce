@@ -351,7 +351,7 @@ class Mwb_Wc_Bk_Admin {
 			'hierarchical'       => false,
 			'show_in_rest'       => false,
 			'supports'           => array( 'title', 'editor', 'thumbnail', 'comments' ),
-			'taxonomies'         => array(),
+			'taxonomies'         => array( 'mwb_ct_services', 'mwb_ct_people_type' ),
 			'map_meta_cap'       => true,
 			'query-var'          => true,
 		);
@@ -471,15 +471,6 @@ class Mwb_Wc_Bk_Admin {
 		register_taxonomy( 'mwb_ct_costs', array( 'mwb_cpt_booking' ), $args );
 	}
 
-	public function booking_submenu_active() {
-
-		global $parent_file, $post_type;
-
-		if ( ! empty( $post_type ) && 'mwb_cpt_booking' === $post_type ) {
-			;
-		}
-	}
-
 	/**
 	 * "Bookings" Admin Menu.
 	 *
@@ -497,17 +488,17 @@ class Mwb_Wc_Bk_Admin {
 			30
 		);
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Services', 'mwb-wc-bk' ), 'Services', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_services&post_type=mwb_cpt_booking', '' );
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Services', 'mwb-wc-bk' ), 'Services', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_services&post_type=mwb_cpt_booking' );
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'People Types', 'mwb-wc-bk' ), 'People Types', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_people_type&post_type=mwb_cpt_booking', '' );
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'People Types', 'mwb-wc-bk' ), 'People Types', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_people_type&post_type=mwb_cpt_booking' );
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Costs', 'mwb-wc-bk' ), 'Costs', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_costs&post_type=mwb_cpt_booking', '' );
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Costs', 'mwb-wc-bk' ), 'Costs', 'manage_options', 'edit-tags.php?taxonomy=mwb_ct_costs&post_type=mwb_cpt_booking' );
 
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Create Booking', 'mwb-wc-bk' ), 'Create Booking', 'manage_options', 'create-booking', array( $this, 'menu_page_create_booking' ) );
 
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Global booking Settings', 'mwb-wc-bk' ), 'Settings', 'manage_options', 'global-settings', array( $this, 'menu_page_booking_settings' ) );
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Calendar', 'mwb-wc-bk' ), 'Calendar', 'manage_options', '', '' );
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Calendar', 'mwb-wc-bk' ), 'Calendar', 'manage_options', 'calendar', array( $this, 'menu_page_calendar' ) );
 	}
 
 	public function menu_page_create_booking() {
@@ -518,4 +509,313 @@ class Mwb_Wc_Bk_Admin {
 		echo 'settings';
 	}
 
+	public function menu_page_calendar() {
+		echo 'calendar';
+	}
+
+	/**
+	 * Adding the custom fields in our custom taxonomy "mwb_ct_services"
+	 *
+	 * @return void
+	 */
+	public function add_custom_fields_ct_booking_services() {
+		?>
+		<div class="form-field term-cost-wrap">
+			<label for="mwb_ct_booking_service_cost"><?php esc_html_e( 'Service Cost', 'mwb-wc-bk' ); ?></label>
+			<input type="number" id="mwb_ct_booking_service_cost" class="postform" name="mwb_ct_booking_service_cost" />
+			<p class="description"><?php esc_html_e( 'Enter the cost for the services to be included', 'mwb-wc-bk' ); ?></p>
+		</div>
+		<div class="form-field" id="mwb_booking_ct_services_custom_fields">
+			<?php
+				woocommerce_wp_checkbox(
+					array(
+						'id'          => 'mwb_booking_ct_services_multiply_units',
+						'value'       => '',
+						'description' => __( 'Multiply cost by booking units', 'mwb-wc-bk' ),
+					)
+				);
+				woocommerce_wp_checkbox(
+					array(
+						'id'          => 'mwb_booking_ct_services_multiply_people',
+						'value'       => '',
+						'description' => __( 'Multiply cost by number of peoples per booking', 'mwb-wc-bk' ),
+					)
+				);
+				woocommerce_wp_checkbox(
+					array(
+						'id'          => 'mwb_booking_ct_services_has_quantity',
+						'value'       => '',
+						'description' => __( 'If has quantity', 'mwb-wc-bk' ),
+					)
+				);
+				woocommerce_wp_checkbox(
+					array(
+						'id'          => 'mwb_booking_ct_services_hidden',
+						'value'       => '',
+						'description' => __( 'If Hidden', 'mwb-wc-bk' ),
+					)
+				);
+				woocommerce_wp_checkbox(
+					array(
+						'id'          => 'mwb_booking_ct_services_optional',
+						'value'       => '',
+						'description' => __( 'If Optional', 'mwb-wc-bk' ),
+					)
+				);
+			?>
+		</div>
+		<div class="form-field term-has-quantity-checked-wrap">
+
+			<label for="mwb_booking_ct_services_min_quantity"><?php esc_html_e( 'Minimum Quantity', 'mwb-wc-bk' ); ?></label>
+			<input type="number" id="mwb_booking_ct_services_min_quantity" class="postform" name="mwb_booking_ct_services_min_quantity" />
+			<p class="description"><?php esc_html_e( 'Minimum Quantity if the service has quantity', 'mwb-wc-bk' ); ?></p>
+
+			<label for="mwb_booking_ct_services_max_quantity"><?php esc_html_e( 'Maximum Quantity', 'mwb-wc-bk' ); ?></label>
+			<input type="number" id="mwb_booking_ct_services_max_quantity" class="postform" name="mwb_booking_ct_services_max_quantity" />
+			<p class="description"><?php esc_html_e( 'Maximum Quantity if the service has quantity', 'mwb-wc-bk' ); ?></p>
+
+		</div>
+		<div class="form-field term-has-people-checked-wrap">
+		<?php
+			$booking_people_taxonomy_terms = get_terms(
+				array(
+					'taxonomy'   => 'mwb_ct_people_type',
+					'hide_empty' => false,
+				)
+			);
+		foreach ( $booking_people_taxonomy_terms as $term ) {
+			$term_name = $term->slug;
+			?>
+			<label for="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"><?php echo esc_html( 'Service Cost for ' . $term->name ); ?></label>
+			<input type="number" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"  class="postform" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" />
+			<p class="description"><?php esc_html_e( 'Enter the service cost for respective people type.', 'mwb-wc-bk' ); ?></p>
+		<?php } ?>
+
+		</div>
+		<?php
+	}
+
+	/**
+	 * Save the Custom fields in our custom taxonomy "mwb_ct_services"
+	 *
+	 * @param mixed $term_id Term ID to bbe saved.
+	 * @param mixed $tt_id Term Taxonomy ID.
+	 * @return void
+	 */
+	public function save_custom_fields_ct_booking_services( $term_id, $tt_id ) {
+
+		update_term_meta( $term_id, 'mwb_ct_booking_service_cost', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_ct_booking_service_cost'] ) ? $_POST['mwb_ct_booking_service_cost'] : '' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_services_multiply_units', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_multiply_units'] ) ? $_POST['mwb_booking_ct_services_multiply_units'] : 'no' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_services_multiply_people', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_multiply_people'] ) ? $_POST['mwb_booking_ct_services_multiply_people'] : 'no' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_services_has_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_has_quantity'] ) ? $_POST['mwb_booking_ct_services_has_quantity'] : 'no' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_services_hidden', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_hidden'] ) ? $_POST['mwb_booking_ct_services_hidden'] : 'no' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_services_optional', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_optional'] ) ? $_POST['mwb_booking_ct_services_optional'] : 'no' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_services_min_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_min_quantity'] ) ? $_POST['mwb_booking_ct_services_min_quantity'] : '' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_services_max_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_max_quantity'] ) ? $_POST['mwb_booking_ct_services_max_quantity'] : '' ) ) ) );
+
+		$booking_people_taxonomy_terms = get_terms(
+			array(
+				'taxonomy'   => 'mwb_ct_people_type',
+				'hide_empty' => false,
+			)
+		);
+		foreach ( $booking_people_taxonomy_terms as $term ) {
+			$term_name = $term->slug;
+			update_term_meta( $term_id, 'mwb_ct_booking_service_cost_' . $term_name, esc_attr( sanitize_text_field( wp_unslash( isset( $_POST[ 'mwb_ct_booking_service_cost_' . $term_name ] ) ? $_POST[ 'mwb_ct_booking_service_cost_' . $term_name ] : '' ) ) ) );
+		}
+	}
+
+	/**
+	 * Editing the custom fields in our custom taxonomy "mwb_ct_services"
+	 *
+	 * @return void
+	 */
+	public function edit_custom_fields_ct_booking_services( $term ) {
+
+		$service_cost          = get_term_meta( $term->term_id, 'mwb_ct_booking_service_cost', true );
+		$multiply_unit_check   = get_term_meta( $term->term_id, 'mwb_booking_ct_services_multiply_units', true );
+		$multiply_people_check = get_term_meta( $term->term_id, 'mwb_booking_ct_services_multiply_people', true );
+		$has_quantity          = get_term_meta( $term->term_id, 'mwb_booking_ct_services_has_quantity', true );
+		$if_hidden             = get_term_meta( $term->term_id, 'mwb_booking_ct_services_hidden', true );
+		$if_optional           = get_term_meta( $term->term_id, 'mwb_booking_ct_services_optional', true );
+		$min_quantity          = get_term_meta( $term->term_id, 'mwb_booking_ct_services_min_quantity', true );
+		$max_quantity          = get_term_meta( $term->term_id, 'mwb_booking_ct_services_max_quantity', true );
+
+		?>
+		<tr class="form-field term-cost-wrap">
+			<th><label for="mwb_ct_booking_service_cost"><?php esc_html_e( 'Service Cost', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_ct_booking_service_cost" name="mwb_ct_booking_service_cost" value="<?php echo esc_html( ! empty( $service_cost ) ? $service_cost : '' ); ?>" />
+				<p class="description"><?php esc_html_e( 'Enter the cost for the services to be included', 'mwb-wc-bk' ); ?></p>
+			</td>	
+		</tr>
+		<tr class="form-field term-custom-checks-wrap">
+			<th><label for="mwb_booking_ct_services_multiply_units"><?php esc_html_e( 'Multiply cost by booking units', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="checkbox" id="mwb_booking_ct_services_multiply_units" name="mwb_booking_ct_services_multiply_units" value="yes" <?php checked( 'yes', ! empty( $multiply_unit_check ) ? $multiply_unit_check : 'no' ); ?>>
+				<p class="description"><?php esc_html_e( 'Select to multiply the service cost by the number of booking units.', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
+		<tr class="form-field term-custom-checks-wrap">
+			<th><label for="mwb_booking_ct_services_multiply_people"><?php esc_html_e( 'Multiply cost by number of peoples per booking', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="checkbox" id="mwb_booking_ct_services_multiply_people" name="mwb_booking_ct_services_multiply_people" value="yes" <?php checked( 'yes', ! empty( $multiply_people_check ) ? $multiply_people_check : 'no' ); ?>>
+				<p class="description"><?php esc_html_e( 'Select to multiply the service cost by the number of people selected.', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
+		<tr class="form-field term-custom-checks-wrap">
+			<th><label for="mwb_booking_ct_services_has_quantity"><?php esc_html_e( 'If has quantity', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="checkbox" id="mwb_booking_ct_services_has_quantity" name="mwb_booking_ct_services_has_quantity" value="yes" <?php checked( 'yes', ! empty( $has_quantity ) ? $has_quantity : 'no' ); ?>>
+				<p class="description"><?php esc_html_e( 'Check if Quantity has to be included in the services', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
+		<tr class="form-field term-custom-checks-wrap">
+			<th><label for="mwb_booking_ct_services_hidden"><?php esc_html_e( 'If Hidden', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="checkbox" id="mwb_booking_ct_services_hidden" name="mwb_booking_ct_services_hidden" value="yes" <?php checked( 'yes', ! empty( $if_hidden ) ? $if_hidden : 'no' ); ?>>
+				<p class="description"><?php esc_html_e( 'Check if the service is hidden in booking to the user', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
+		<tr class="form-field term-custom-checks-wrap">
+			<th><label for="mwb_booking_ct_services_optional"><?php esc_html_e( 'If Optional', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="checkbox" id="mwb_booking_ct_services_optional" name="mwb_booking_ct_services_optional" value="yes" <?php checked( 'yes', ! empty( $if_optional ) ? $if_optional : 'no' ); ?>>
+				<p class="description"><?php esc_html_e( 'Check if the service is optional for the user', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
+		<tr class="form-field term-has-quantity-check-wrap">
+			<th><label for="mwb_booking_ct_services_min_quantity"><?php esc_html_e( 'Min Quantity', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_booking_ct_services_min_quantity" name="mwb_booking_ct_services_min_quantity" value="<?php echo esc_html( ! empty( $min_quantity ) ? $min_quantity : '' ); ?>">
+				<p class="description"><?php esc_html_e( 'Enter the minimum quantity of the service to be included', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
+		<tr class="form-field term-has-quantity-check-wrap">
+			<th><label for="mwb_booking_ct_services_max_quantity"><?php esc_html_e( 'Max Quantity', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_booking_ct_services_max_quantity" name="mwb_booking_ct_services_max_quantity" value="<?php echo esc_html( ! empty( $max_quantity ) ? $max_quantity : '' ); ?>">
+				<p class="description"><?php esc_html_e( 'Enter the maximum quantity of the service to be included', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
+		<?php
+		$booking_people_taxonomy_terms = get_terms(
+			array(
+				'taxonomy'   => 'mwb_ct_people_type',
+				'hide_empty' => false,
+			)
+		);
+		foreach ( $booking_people_taxonomy_terms as $t ) {
+				$term_name = $t->slug;
+			?>
+		<tr class="form-field term-has-people-check-wrap">
+			<th><label for="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"><?php echo esc_html( 'Service Cost for ' . $t->name ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" value="<?php echo esc_html( get_term_meta( $term->term_id, 'mwb_ct_booking_service_cost_' . $term_name, true ) ); ?>">
+				<p class="description"><?php esc_html_e( 'Enter the service cost for respective people type.', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
+			<?php
+		}
+	}
+
+	/**
+	 * Adding the custom fields in our custom taxonomy "mwb_ct_people_type"
+	 *
+	 * @return void
+	 */
+	public function add_custom_fields_ct_booking_people() {
+		?>
+		<div class="form-field term-people-cost-wrap">
+			<label for="mwb_ct_booking_people_unit_cost"><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label>
+			<input type="number" id="mwb_ct_booking_people_unit_cost" class="postform" name="mwb_ct_booking_people_unit_cost" />
+			<p class="description"><?php esc_html_e( 'Enter the unit cost for the people type.', 'mwb-wc-bk' ); ?></p>
+
+			<label for="mwb_ct_booking_people_base_cost"><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label>
+			<input type="number" id="mwb_ct_booking_people_base_cost" class="postform" name="mwb_ct_booking_people_base_cost" />
+			<p class="description"><?php esc_html_e( 'Enter the base cost for the people type.', 'mwb-wc-bk' ); ?></p>
+
+		</div>
+		<div class="form-field term-people-quantity-wrap">
+
+			<label for="mwb_booking_ct_people_min_quantity"><?php esc_html_e( 'Minimum Quantity', 'mwb-wc-bk' ); ?></label>
+			<input type="number" id="mwb_booking_ct_people_min_quantity" class="postform" name="mwb_booking_ct_people_min_quantity" />
+			<p class="description"><?php esc_html_e( 'Minimum Quantity of peoples allowed for respective people type', 'mwb-wc-bk' ); ?></p>
+
+			<label for="mwb_booking_ct_people_max_quantity"><?php esc_html_e( 'Maximum Quantity', 'mwb-wc-bk' ); ?></label>
+			<input type="number" id="mwb_booking_ct_people_max_quantity" class="postform" name="mwb_booking_ct_people_max_quantity" />
+			<p class="description"><?php esc_html_e( 'Maximum Quantity of peoples allowed for respective people type', 'mwb-wc-bk' ); ?></p>
+
+		</div>
+		<?php
+	}
+
+	/**
+	 * Save the Custom fields in our custom taxonomy "mwb_ct_people_type"
+	 *
+	 * @param mixed $term_id Term ID to bbe saved.
+	 * @param mixed $tt_id Term Taxonomy ID.
+	 * @return void
+	 */
+	public function save_custom_fields_ct_booking_people( $term_id, $tt_id ) {
+
+		update_term_meta( $term_id, 'mwb_ct_booking_people_unit_cost', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_ct_booking_people_unit_cost'] ) ? $_POST['mwb_ct_booking_people_unit_cost'] : '' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_ct_booking_people_base_cost', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_ct_booking_people_base_cost'] ) ? $_POST['mwb_ct_booking_people_base_cost'] : '' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_people_min_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_people_min_quantity'] ) ? $_POST['mwb_booking_ct_people_min_quantity'] : '' ) ) ) );
+
+		update_term_meta( $term_id, 'mwb_booking_ct_people_max_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_people_max_quantity'] ) ? $_POST['mwb_booking_ct_people_max_quantity'] : '' ) ) ) );
+	}
+
+	/**
+	 * Editing the custom fields in our custom taxonomy "mwb_ct_services"
+	 *
+	 * @return void
+	 */
+	public function edit_custom_fields_ct_booking_people( $term ) {
+
+		$people_unit_cost    = get_term_meta( $term->term_id, 'mwb_ct_booking_people_unit_cost', true );
+		$people_base_cost    = get_term_meta( $term->term_id, 'mwb_ct_booking_people_base_cost', true );
+		$people_max_qunatity = get_term_meta( $term->term_id, 'mwb_booking_ct_people_max_quantity', true );
+		$people_min_qunatity = get_term_meta( $term->term_id, 'mwb_booking_ct_people_min_quantity', true );
+
+		?>
+		<tr class="form-field term-cost-wrap">
+			<th><label for="mwb_ct_booking_people_unit_cost"><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_ct_booking_people_unit_cost" name="mwb_ct_booking_people_unit_cost" value="<?php echo esc_html( ! empty( $people_unit_cost ) ? $people_unit_cost : '' ); ?>" />
+				<p class="description"><?php esc_html_e( 'Enter the unit cost for the people type.', 'mwb-wc-bk' ); ?></p>
+			</td>	
+		</tr>
+		<tr class="form-field term-cost-wrap">
+			<th><label for="mwb_ct_booking_people_base_cost"><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_ct_booking_people_base_cost" name="mwb_ct_booking_people_base_cost" value="<?php echo esc_html( ! empty( $people_base_cost ) ? $people_base_cost : '' ); ?>" />
+				<p class="description"><?php esc_html_e( 'Enter the base cost for the people type.', 'mwb-wc-bk' ); ?></p>
+			</td>	
+		</tr>
+		<tr class="form-field term-cost-wrap">
+			<th><label for="mwb_booking_ct_people_min_quantity"><?php esc_html_e( 'Min Qunatity', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_booking_ct_people_min_quantity" name="mwb_booking_ct_people_min_quantity" value="<?php echo esc_html( ! empty( $people_min_qunatity ) ? $people_min_qunatity : '' ); ?>" />
+				<p class="description"><?php esc_html_e( 'Minimum Quantity of peoples allowed for respective people type.', 'mwb-wc-bk' ); ?></p>
+			</td>	
+		</tr>
+		<tr class="form-field term-cost-wrap">
+			<th><label for="mwb_booking_ct_people_max_quantity"><?php esc_html_e( 'Max Quantity', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_booking_ct_people_max_quantity" name="mwb_booking_ct_people_max_quantity" value="<?php echo esc_html( ! empty( $people_max_qunatity ) ? $people_max_qunatity : '' ); ?>" />
+				<p class="description"><?php esc_html_e( 'Maximum Quantity of peoples allowed for respective people type.', 'mwb-wc-bk' ); ?></p>
+			</td>	
+		</tr>
+		<?php
+	}
 }

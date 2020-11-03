@@ -186,18 +186,23 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'init', $plugin_admin, 'booking_register_taxonomy_cost' );
 
 		$this->loader->add_action( 'mwb_ct_services_add_form_fields', $plugin_admin, 'add_custom_fields_ct_booking_services' );
-
 		$this->loader->add_action( 'created_mwb_ct_services', $plugin_admin, 'save_custom_fields_ct_booking_services', 10, 2 );
 		$this->loader->add_action( 'edited_mwb_ct_services', $plugin_admin, 'save_custom_fields_ct_booking_services', 10, 2 );
-
 		$this->loader->add_action( 'mwb_ct_services_edit_form_fields', $plugin_admin, 'edit_custom_fields_ct_booking_services' );
 
 		$this->loader->add_action( 'mwb_ct_people_type_add_form_fields', $plugin_admin, 'add_custom_fields_ct_booking_people' );
-
 		$this->loader->add_action( 'created_mwb_ct_people_type', $plugin_admin, 'save_custom_fields_ct_booking_people', 10, 2 );
 		$this->loader->add_action( 'edited_mwb_ct_people_type', $plugin_admin, 'save_custom_fields_ct_booking_people', 10, 2 );
-
 		$this->loader->add_action( 'mwb_ct_people_type_edit_form_fields', $plugin_admin, 'edit_custom_fields_ct_booking_people' );
+
+		$this->loader->add_action( 'mwb_ct_costs_add_form_fields', $plugin_admin, 'add_custom_fields_ct_booking_cost' );
+		$this->loader->add_action( 'created_mwb_ct_costs', $plugin_admin, 'save_custom_fields_ct_booking_cost', 10, 2 );
+		$this->loader->add_action( 'edited_mwb_ct_costs', $plugin_admin, 'save_custom_fields_ct_booking_cost', 10, 2 );
+		$this->loader->add_action( 'mwb_ct_costs_edit_form_fields', $plugin_admin, 'edit_custom_fields_ct_booking_cost' );
+
+		$this->loader->add_action( 'manage_edit-mwb_ct_services_columns', $plugin_admin, 'add_columns_ct_cost' );
+
+		$this->loader->add_filter( 'manage_mwb_ct_services_custom_column', $plugin_admin, 'manage_columns_ct_cost', 10, 3 );
 
 	}
 

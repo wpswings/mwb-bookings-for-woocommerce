@@ -200,9 +200,13 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'edited_mwb_ct_costs', $plugin_admin, 'save_custom_fields_ct_booking_cost', 10, 2 );
 		$this->loader->add_action( 'mwb_ct_costs_edit_form_fields', $plugin_admin, 'edit_custom_fields_ct_booking_cost' );
 
-		$this->loader->add_action( 'manage_edit-mwb_ct_services_columns', $plugin_admin, 'add_columns_ct_cost' );
+		$this->loader->add_action( 'manage_edit-mwb_ct_services_columns', $plugin_admin, 'add_columns_ct_services' );
+		$this->loader->add_filter( 'manage_mwb_ct_services_custom_column', $plugin_admin, 'manage_columns_ct_services', 10, 3 );
 
-		$this->loader->add_filter( 'manage_mwb_ct_services_custom_column', $plugin_admin, 'manage_columns_ct_cost', 10, 3 );
+		$this->loader->add_action( 'manage_edit-mwb_ct_costs_columns', $plugin_admin, 'add_columns_ct_costs' );
+		$this->loader->add_filter( 'manage_mwb_ct_costs_custom_column', $plugin_admin, 'manage_columns_ct_costs', 10, 3 );
+
+		$this->loader->add_action( 'wp_ajax_dachicon_change_handler', $plugin_admin, 'dachicon_change_handler' );
 
 	}
 

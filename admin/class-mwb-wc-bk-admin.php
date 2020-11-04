@@ -82,6 +82,16 @@ class Mwb_Wc_Bk_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
+
+		wp_localize_script(
+			$this->plugin_name,
+			'mwb_booking_obj',
+			array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'ajax-nonce' ),
+			)
+		);
+
 		/*wp_enqueue_script( 'select2_js', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 
 		wp_enqueue_script( 'mwb_booking_select2', plugin_dir_url( __FILE__ ) . 'js/mwb_select2.js', array( 'jquery' ), $this->version, false );
@@ -905,17 +915,17 @@ class Mwb_Wc_Bk_Admin {
 	 * @param array $columns taxonomy columns.
 	 * @return $columns
 	 */
-	public function add_columns_ct_cost( $columns ) {
+	public function add_columns_ct_services( $columns ) {
 		$columns = array(
 			'cb'              => '<input type="checkbox" />',
 			'name'            => __( 'Name', 'mwb-wc-bk' ),
 			'description'     => __( 'Description', 'mwb-wc-bk' ),
 			'cost'            => __( 'Cost', 'mwb-wc-bk' ),
-			'multiply_units'  => '<span class="dashicons dashicons-dismiss"></span><p>' . mwb_booking_help_tip( esc_html__( 'Multiply by units', 'mwb-wc-bk' ) ) . '</p>',
+			'multiply_units'  => '<span class="dashicons dashicons-money-alt"></span><p>' . mwb_booking_help_tip( esc_html__( 'Multiply by units', 'mwb-wc-bk' ) ) . '</p>',
 			'multiply_people' => '<span class="dashicons dashicons-groups"></span>',
 			'has_quantity'    => '<span class="dashicons dashicons-images-alt2"></span>',
-			'hidden_service'  => '<span class="dashicons dashicons-hidden"></span>',
-			'optional'        => '<span class="dashicons dashicons-editor-help"></span>',
+			'if_hidden'       => '<span class="dashicons dashicons-hidden"></span>',
+			'if_optional'     => '<span class="dashicons dashicons-editor-help"></span>',
 		);
 		return $columns;
 	}
@@ -928,34 +938,99 @@ class Mwb_Wc_Bk_Admin {
 	 * @param int    $term_id     Id of the term taxonomy.
 	 * @return string
 	 */
-	public function manage_columns_ct_cost( $out, $column_name, $term_id ) {
+	public function manage_columns_ct_services( $out, $column_name, $term_id ) {
 
 		switch ( $column_name ) {
 			case 'cost':
 				$price = get_term_meta( $term_id, 'mwb_ct_booking_service_cost', true );
 				$out   = ! empty( $price ) ? $price : '-';
 				break;
-			case 'hidden_service':
+			case 'if_hidden':
 				$option = get_term_meta( $term_id, 'mwb_booking_ct_services_hidden', true );
-				$out    = ! empty( $option ) ? $option : 'no';
+				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
 				break;
-			case 'optional':
+			case 'if_optional':
 				$option = get_term_meta( $term_id, 'mwb_booking_ct_services_optional', true );
-				$out    = ! empty( $option ) ? $option : 'no';
+				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
 				break;
 			case 'has_quantity':
 				$option = get_term_meta( $term_id, 'mwb_booking_ct_services_has_quantity', true );
-				$out    = ! empty( $option ) ? $option : 'no';
+				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
 				break;
 			case 'multiply_people':
 				$option = get_term_meta( $term_id, 'mwb_booking_ct_services_multiply_people', true );
-				$out    = ! empty( $option ) ? $option : 'no';
+				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
 				break;
 			case 'multiply_units':
 				$option = get_term_meta( $term_id, 'mwb_booking_ct_services_multiply_units', true );
-				$out    = ! empty( $option ) ? $option : 'no';
+				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
 				break;
 		}
 		return $out;
+	}
+
+	/**
+	 * Adding custom columns of the "mwb_ct_costs"
+	 *
+	 * @param array $columns taxonomy columns.
+	 * @return $columns
+	 */
+	public function add_columns_ct_costs( $columns ) {
+		$columns = array(
+			'cb'              => '<input type="checkbox" />',
+			'name'            => __( 'Name', 'mwb-wc-bk' ),
+			'description'     => __( 'Description', 'mwb-wc-bk' ),
+			'slug'            => __( 'Slug', 'mwb-wc-bk' ),
+			'multiply_units'  => '<span class="dashicons dashicons-money-alt"></span><p>' . mwb_booking_help_tip( esc_html__( 'Multiply by units', 'mwb-wc-bk' ) ) . '</p>',
+			'multiply_people' => '<span class="dashicons dashicons-groups"></span>',
+		);
+		return $columns;
+	}
+
+	/**
+	 * Managing custom columns of the "mwb_ct_costs".
+	 *
+	 * @param mixed  $out         Output.
+	 * @param string $column_name Name of the Column.
+	 * @param int    $term_id     Id of the term taxonomy.
+	 * @return string
+	 */
+	public function manage_columns_ct_costs( $out, $column_name, $term_id ) {
+
+		switch ( $column_name ) {
+			case 'multiply_people':
+				$option = get_term_meta( $term_id, 'mwb_booking_ct_cost_multiply_people', true );
+				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
+				break;
+			case 'multiply_units':
+				$option = get_term_meta( $term_id, 'mwb_booking_ct_cost_multiply_units', true );
+				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
+				break;
+		}
+		return $out;
+	}
+
+	public function dachicon_change_handler() {
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+
+		if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+			die( 'Nonce value cannot be verified' );
+		}
+
+		$class_name = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
+		$term_id    = isset( $_POST['term_id'] ) ? sanitize_text_field( wp_unslash( $_POST['term_id'] ) ) : '';
+		$term       = get_term( $term_id );
+		//$taxonomy   = $term->taxonomy->slug;
+		//var_dump($term);
+		$s_check    = get_term_meta( $term_id, 'mwb_booking_ct_services_' . $class_name, true );
+		$c_check    = get_term_meta( $term_id, 'mwb_booking_ct_cost_' . $class_name, true );
+		if ( ! empty( $class_check ) ) {
+			if ( 'yes' === $class_check ) {
+				update_term_meta( $term_id, 'mwb_booking_ct_services_' . $class_name, 'no' );
+			} else {
+				update_term_meta( $term_id, 'mwb_booking_ct_services_' . $class_name, 'yes' );
+			}
+		}
+		die;
 	}
 }

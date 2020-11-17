@@ -269,7 +269,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_advance_booking_max_duration'       => array( 'default' => '' ),
 			'mwb_advance_booking_min_input'          => array( 'default' => '' ),
 			'mwb_advance_booking_min_duration'       => array( 'default' => '' ),
-			'mwb_booking_not_allowed_days'           => array( 'default' => '' ),
+			'mwb_booking_not_allowed_days'           => array( 'default' => array() ),
 
 		);
 	}
@@ -333,7 +333,7 @@ class Mwb_Wc_Bk_Admin {
 			'singular_name'         => _x( 'Booking', 'Post type singular name', 'mwb-wc-bk' ),
 			'menu_name'             => _x( 'Bookings', 'Admin Menu text', 'mwb-wc-bk' ),
 			'add_new'               => _x( 'Add Booking', 'Booking', 'mwb-wc-bk' ),
-			'add_new_item '         => __( 'Add New Booking', 'mwb-wc-bk' ),
+			'add_new_item'          => __( 'Add New Booking', 'mwb-wc-bk' ),
 			'edit_item'             => __( 'Edit Boooking', 'mwb-wc-bk' ),
 			'new_item'              => __( 'New Booking', 'mwb-wc-bk' ),
 			'name_admin_bar'        => _x( 'Bookings', 'Add new on toolbar', 'mwb-wc-bk' ),
@@ -520,7 +520,7 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	public function menu_page_booking_settings() {
-		echo 'settings';
+		require_once plugin_dir_path( __FILE__ ) . 'partials/mwb-wc-bk-admin-display.php';
 	}
 
 	public function menu_page_calendar() {
@@ -847,14 +847,14 @@ class Mwb_Wc_Bk_Admin {
 		<?php
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => 'mwb_booking_ct_cost_multiply_units',
+					'id'          => 'mwb_booking_ct_costs_multiply_units',
 					'value'       => '',
 					'description' => __( 'Multiply cost by booking unit duration', 'mwb-wc-bk' ),
 				)
 			);
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => 'mwb_booking_ct_cost_multiply_people',
+					'id'          => 'mwb_booking_ct_costs_multiply_people',
 					'value'       => '',
 					'description' => __( 'Multiply cost by the number of people', 'mwb-wc-bk' ),
 				)
@@ -873,9 +873,9 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function save_custom_fields_ct_booking_cost( $term_id, $tt_id ) {
 
-		update_term_meta( $term_id, 'mwb_booking_ct_cost_multiply_units', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_cost_multiply_units'] ) ? $_POST['mwb_booking_ct_cost_multiply_units'] : 'no' ) ) ) );
+		update_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_units', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_costs_multiply_units'] ) ? $_POST['mwb_booking_ct_costs_multiply_units'] : 'no' ) ) ) );
 
-		update_term_meta( $term_id, 'mwb_booking_ct_cost_multiply_people', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_cost_multiply_people'] ) ? $_POST['mwb_booking_ct_cost_multiply_people'] : 'no' ) ) ) );
+		update_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_people', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_costs_multiply_people'] ) ? $_POST['mwb_booking_ct_costs_multiply_people'] : 'no' ) ) ) );
 
 	}
 
@@ -886,23 +886,23 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function edit_custom_fields_ct_booking_cost( $term ) {
 
-		$multiply_unit   = get_term_meta( $term->term_id, 'mwb_booking_ct_cost_multiply_units', true );
-		$multiply_people = get_term_meta( $term->term_id, 'mwb_booking_ct_cost_multiply_people', true );
+		$multiply_unit   = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_multiply_units', true );
+		$multiply_people = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_multiply_people', true );
 		// echo '<pre>';
 		// print_r( get_current_screen() );
 		// echo '</pre>';
 		?>
 		<tr class="form-field term-extra-cost-wrap">
-			<th><label for="mwb_booking_ct_cost_multiply_units"><?php esc_html_e( 'Multiply cost by booking units', 'mwb-wc-bk' ); ?></label></th>
+			<th><label for="mwb_booking_ct_costs_multiply_units"><?php esc_html_e( 'Multiply cost by booking units', 'mwb-wc-bk' ); ?></label></th>
 			<td>
-				<input type="checkbox" id="mwb_booking_ct_cost_multiply_units" name="mwb_booking_ct_cost_multiply_units" value="yes" <?php checked( 'yes', ! empty( $multiply_unit ) ? $multiply_unit : 'no' ); ?>>
+				<input type="checkbox" id="mwb_booking_ct_costs_multiply_units" name="mwb_booking_ct_costs_multiply_units" value="yes" <?php checked( 'yes', ! empty( $multiply_unit ) ? $multiply_unit : 'no' ); ?>>
 				<p class="description"><?php esc_html_e( 'Select to multiply the extra added cost by the number of booking units.', 'mwb-wc-bk' ); ?></p>
 			</td>
 		</tr>
 		<tr class="form-field term-extra-cost-wrap">
-			<th><label for="mwb_booking_ct_cost_multiply_people"><?php esc_html_e( 'Multiply cost by the number of people', 'mwb-wc-bk' ); ?></label></th>
+			<th><label for="mwb_booking_ct_costs_multiply_people"><?php esc_html_e( 'Multiply cost by the number of people', 'mwb-wc-bk' ); ?></label></th>
 			<td>
-				<input type="checkbox" id="mwb_booking_ct_cost_multiply_people" name="mwb_booking_ct_cost_multiply_people" value="yes" <?php checked( 'yes', ! empty( $multiply_people ) ? $multiply_people : 'no' ); ?>>
+				<input type="checkbox" id="mwb_booking_ct_costs_multiply_people" name="mwb_booking_ct_costs_multiply_people" value="yes" <?php checked( 'yes', ! empty( $multiply_people ) ? $multiply_people : 'no' ); ?>>
 				<p class="description"><?php esc_html_e( 'Select to multiply the extra added cost by the number of people.', 'mwb-wc-bk' ); ?></p>
 			</td>
 		</tr>
@@ -999,17 +999,22 @@ class Mwb_Wc_Bk_Admin {
 
 		switch ( $column_name ) {
 			case 'multiply_people':
-				$option = get_term_meta( $term_id, 'mwb_booking_ct_cost_multiply_people', true );
+				$option = get_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_people', true );
 				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
 				break;
 			case 'multiply_units':
-				$option = get_term_meta( $term_id, 'mwb_booking_ct_cost_multiply_units', true );
+				$option = get_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_units', true );
 				$out    = ( 'yes' === $option ) ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
 				break;
 		}
 		return $out;
 	}
 
+	/**
+	 * Custom Taxonomy terms table columns dashicons handler
+	 *
+	 * @return void
+	 */
 	public function dachicon_change_handler() {
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
@@ -1017,18 +1022,20 @@ class Mwb_Wc_Bk_Admin {
 			die( 'Nonce value cannot be verified' );
 		}
 
-		$class_name = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
-		$term_id    = isset( $_POST['term_id'] ) ? sanitize_text_field( wp_unslash( $_POST['term_id'] ) ) : '';
-		$term       = get_term( $term_id );
-		//$taxonomy   = $term->taxonomy->slug;
-		//var_dump($term);
-		$s_check    = get_term_meta( $term_id, 'mwb_booking_ct_services_' . $class_name, true );
-		$c_check    = get_term_meta( $term_id, 'mwb_booking_ct_cost_' . $class_name, true );
-		if ( ! empty( $class_check ) ) {
-			if ( 'yes' === $class_check ) {
-				update_term_meta( $term_id, 'mwb_booking_ct_services_' . $class_name, 'no' );
+		$class_name    = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
+		$term_id       = isset( $_POST['term_id'] ) ? sanitize_text_field( wp_unslash( $_POST['term_id'] ) ) : '';
+		$term          = get_term( $term_id );
+		$taxonomy      = $term->taxonomy;
+		$class_name    = preg_replace( '/if_/i', '', $class_name );
+		$taxonomy_slug = preg_replace( '/mwb_ct_/i', '', $taxonomy );
+	//	echo 'mwb_booking_' . $taxonomy_slug . '_' . $class_name;
+		$check = get_term_meta( $term_id, 'mwb_booking_ct_' . $taxonomy_slug . '_' . $class_name, true );
+
+		if ( ! empty( $check ) ) {
+			if ( 'yes' === $check ) {
+				update_term_meta( $term_id, 'mwb_booking_ct_' . $taxonomy_slug . '_' . $class_name, 'no' );
 			} else {
-				update_term_meta( $term_id, 'mwb_booking_ct_services_' . $class_name, 'yes' );
+				update_term_meta( $term_id, 'mwb_booking_ct_' . $taxonomy_slug . '_' . $class_name, 'yes' );
 			}
 		}
 		die;

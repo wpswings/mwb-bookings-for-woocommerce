@@ -486,6 +486,23 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	/**
+	 * Settings tab Default Global Options
+	 *
+	 * @return array
+	 */
+	public function booking_settings_tab_default_global_options() {
+
+		return array(
+			'mwb_booking_setting_go_enable'          => 'yes',
+			'mwb_booking_setting_go_complete_status' => '',
+			'mwb_booking_setting_go_reject'          => '',
+			'mwb_booking_setting_bo_service_enable'  => 'yes',
+			'mwb_booking_setting_bo_service_cost'    => 'yes',
+			'mwb_booking_setting_bo_service_desc'    => 'yes',
+		);
+	}
+
+	/**
 	 * "Bookings" Admin Menu.
 	 *
 	 * @return void

@@ -208,6 +208,8 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_dachicon_change_handler', $plugin_admin, 'dachicon_change_handler' );
 
+		$this->loader->add_action( 'wp_ajax_add_global_availability_rule', $plugin_admin, 'add_global_availability_rule' );
+
 	}
 
 	/**

@@ -35,9 +35,7 @@ if ( isset( $_POST['mwb_booking_settings_save'] ) ) {
 }
 
 $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booking_settings_tab_default_global_options() );
-// echo "<pre>";
-// print_r( $mwb_booking_settings );
-// echo "</pre>";
+
 ?>
 <!-- For Global options Setting -->
 <form action="" method="POST">

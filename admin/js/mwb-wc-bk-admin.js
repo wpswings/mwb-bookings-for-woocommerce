@@ -40,6 +40,17 @@ function dashicons_ajax_change($) {
 }
 
 function global_availability_rules($) {
+	// $.ajax({
+	// 	url: mwb_booking_obj.ajaxurl,
+	// 	type: 'POST',
+	// 	data: {
+	// 		'action'  : 'add_global_availability_rule_save',
+	// 		'nonce'   : mwb_booking_obj.nonce,
+	// 	},
+	// 	success: function( data ) {
+	// 		$( '.mwb_booking_global_availability_rules #mwb_global_availability_rules' ).append(data);
+	// 	},
+	// });
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_add_avialability_rule', function(e){
 		//e.preventDefault();
 		count++;

@@ -1078,40 +1078,44 @@ class Mwb_Wc_Bk_Admin {
 		}
 		$rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash( $_POST['rule_count'] ) ) : '';
 
-		$this->global_availability_rule_arr[ $rule_count ] = '<div id="mwb_global_availability_rule_"' . $rule_count . '>
+		$data = '<div id="mwb_global_availability_rule_' . $rule_count . '">
 										<table class="form-table mwb_global_availability_rule_fields" >
 											<tbody>
-												<div id="mwb_global_availability_rule_heading">
-													<p><h2>Rule No-' . $rule_count . '</h2><input type="checkbox" id="mwb_global_availability_rule_heading_switch_"' . $rule_count . ' name="mwb_global_availability_rule_heading_switch_"' . $rule_count . ' class="" ></p>
+												<div class="mwb_global_availability_rule_heading">
+													<h2>
+													<label>Rule No-' . $rule_count . '</label>
+													<input type="hidden" name="mwb_availability_rule_count" value="' . $rule_count . '" >
+													<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[' . $rule_count . ']" checked  >
+													</h2>
 												</div>
 												<tr valign="top">
 													<th scope="row" class="">
-														<label for="mwb_global_availability_rule_name_"' . $rule_count . '>Rule Name</label>
+														<label>Rule Name</label>
 													</th>
 													<td class="forminp forminp-text">
-														<input type="text" id="mwb_global_availability_rule_name_"' . $rule_count . ' name="mwb_global_availability_rule_name_"' . $rule_count . ' class="" >
+														<input type="text" class="mwb_global_availability_rule_name" name="mwb_global_availability_rule_name[' . $rule_count . ']" >
 													</td>
 												</tr>
 												<tr valign="top">
 													<th scope="row" class="">
-														<label for="mwb_global_availability_rule_type_"' . $rule_count . '>Rule Type</label>
+														<label>Rule Type</label>
 													</th>
 													<td class="forminp forminp-text">
-														<input type="radio" id="mwb_global_availability_rule_type_specific_"' . $rule_count . ' name="mwb_global_availability_rule_type_"' . $rule_count . ' value="specific">
-														<label for="mwb_global_availability_rule_type_specific_"' . $rule_count . '>Specific Dates</label><br>
-														<input type="radio" id="mwb_global_availability_rule_type_generic_"' . $rule_count . ' name="mwb_global_availability_rule_type_"' . $rule_count . ' value="generic">
-														<label for="mwb_global_availability_rule_type_generic_"' . $rule_count . '>Generic Dates</label><br>
+														<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[' . $rule_count . ']" value="specific">
+														<label>Specific Dates</label><br>
+														<input type="radio" class="mwb_global_availability_rule_type_generic" name="mwb_global_availability_rule_type[' . $rule_count . ']" value="generic">
+														<label>Generic Dates</label><br>
 													</td>
 												</tr>
 												<tr valign="top">
 													<th scope="row" class="">
-														<label for="mwb_global_availability_rule_range_from">From</label>
+														<label>From</label>
 													</th>
 													<td class="forminp forminp-text">
 														<p>
-															<input type="date" id="mwb_global_availability_rule_range_from_"' . $rule_count . ' name="mwb_global_availability_rule_range_from_"' . $rule_count . ' class="" >
-															<label for="mwb_global_availability_rule_range_to">To</label>
-															<input type="date" id="mwb_global_availability_rule_range_to_"' . $rule_count . ' name="mwb_global_availability_rule_range_to_"' . $rule_count . ' class="" >
+															<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[' . $rule_count . ']" >
+															<label>To</label>
+															<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[' . $rule_count . ']" >
 														</p>
 													</td>
 												</tr>
@@ -1119,10 +1123,19 @@ class Mwb_Wc_Bk_Admin {
 										</table>
 									</div>';
 
-		//print_r( $this->global_availability_rule_arr );
-		$global_availability_rule                        = implode( '', $this->global_availability_rule_arr );
-
-		echo $global_availability_rule;
-		die;
+		echo $data;
+		wp_die();
 	}
+
+	/**
+	 * Add Global Availability Rule Save Ajax Handler
+	 *
+	 * @return void
+	 */
+	// public function add_global_availability_rule_save() {
+	// 	$global_availability_rule = ! empty( $this->global_availability_rule_arr ) ? implode( '', $this->global_availability_rule_arr ) : '';
+
+	// 	echo $global_availability_rule;
+	// 	wp_die();
+	// }
 }

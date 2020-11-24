@@ -68,7 +68,7 @@ echo '</pre>';
 						</div>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Rule Name', '' ); ?></label>
+								<label><?php esc_html_e( 'Rule Name', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<input type="text" class="mwb_global_cost_rule_name" name="mwb_global_cost_rule_name[<?php echo esc_html( $cost_rule_count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_name[ $count ] ); ?>">
@@ -76,23 +76,23 @@ echo '</pre>';
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Rule Type', '' ); ?></label>
+								<label><?php esc_html_e( 'Rule Type', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<input type="radio" class="mwb_global_cost_rule_type_specific" name="mwb_global_cost_rule_type[<?php echo esc_html( $cost_rule_count ); ?>]" value="specific" <?php checked( 'specific', $mwb_cost_rule_type[ $count ] ); ?> >
-								<label><?php esc_html_e( 'Specific Dates', '' ); ?></label><br>
+								<label><?php esc_html_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label><br>
 								<input type="radio" class="mwb_global_cost_rule_type_generic" name="mwb_global_cost_rule_type[<?php echo esc_html( $cost_rule_count ); ?>]" value="generic" <?php checked( 'generic', $mwb_cost_rule_type[ $count ] ); ?>>
-								<label><?php esc_html_e( 'Generic Dates', '' ); ?></label><br>
+								<label><?php esc_html_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label><br>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'From', '' ); ?></label>
+								<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<p>
 									<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $cost_rule_count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>" >
-									<label><?php esc_html_e( 'To', '' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $cost_rule_count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" >
 								</p>
 							</td>
@@ -106,7 +106,7 @@ echo '</pre>';
 		?>
 		</div>
 		<div id="mwb_global_cost_button">
-			<button type="button" id="mwb_add_avialability_rule" class="button"><?php esc_html_e( 'Add New Avialability Rule', 'mwb-wc-bk' ); ?></button>
+			<button type="button" id="mwb_add_cost_rule" class="button"><?php esc_html_e( 'Add New Cost Rule', 'mwb-wc-bk' ); ?></button>
 		</div>
 	</div>
 	<!-- Save Settings -->

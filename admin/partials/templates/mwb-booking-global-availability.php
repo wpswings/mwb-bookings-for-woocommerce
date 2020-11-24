@@ -37,9 +37,9 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 }
 $availability_rules = get_option( 'mwb_avialability_rules', array() );
 
-echo '<pre>';
-print_r( $availability_rules );
-echo '</pre>';
+// echo '<pre>';
+// print_r( $availability_rules );
+// echo '</pre>';
 ?>
 
 <!-- For Global options Setting -->
@@ -47,7 +47,7 @@ echo '</pre>';
 	<div class="mwb_booking_global_availability_rules">
 		<div id="mwb_global_availability_rules">
 		<?php
-		if ( ! empty( $availability_rules ) && $rule_count > 0 ) {
+		if ( ! empty( $availability_rules ) ) {
 			$mwb_availability_rule_switch     = ! empty( $availability_rules['rule_switch'] ) ? $availability_rules['rule_switch'] : '';
 			$mwb_availability_rule_name       = ! empty( $availability_rules['rule_name'] ) ? $availability_rules['rule_name'] : '';
 			$mwb_availability_rule_type       = ! empty( $availability_rules['rule_type'] ) ? $availability_rules['rule_type'] : '';
@@ -56,7 +56,7 @@ echo '</pre>';
 
 			for ( $count = 1; $count <= $rule_count; $count++ ) {
 				?>
-			<div id="mwb_global_availability_rule_$rule_count">
+			<div id="mwb_global_availability_rule_<?php echo esc_html( $rule_count ); ?>" data-id="<?php echo esc_html( $rule_count ); ?>">
 				<table class="form-table mwb_global_availability_rule_fields" >
 					<tbody>
 						<div class="mwb_global_availability_rule_heading">
@@ -68,7 +68,7 @@ echo '</pre>';
 						</div>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Rule Name', '' ); ?></label>
+								<label><?php esc_html_e( 'Rule Name', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<input type="text" class="mwb_global_availability_rule_name" name="mwb_global_availability_rule_name[<?php echo esc_html( $rule_count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_name[ $count ] ); ?>">
@@ -76,23 +76,23 @@ echo '</pre>';
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Rule Type', '' ); ?></label>
+								<label><?php esc_html_e( 'Rule Type', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count ); ?>]" value="specific" <?php checked( 'specific', $mwb_availability_rule_type[ $count ] ); ?> >
-								<label><?php esc_html_e( 'Specific Dates', '' ); ?></label><br>
+								<label><?php esc_html_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label><br>
 								<input type="radio" class="mwb_global_availability_rule_type_generic" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count ); ?>]" value="generic" <?php checked( 'generic', $mwb_availability_rule_type[ $count ] ); ?>>
-								<label><?php esc_html_e( 'Generic Dates', '' ); ?></label><br>
+								<label><?php esc_html_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label><br>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'From', '' ); ?></label>
+								<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<p>
 									<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_from[ $count ] ); ?>" >
-									<label><?php esc_html_e( 'To', '' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_to[ $count ] ); ?>" >
 								</p>
 							</td>

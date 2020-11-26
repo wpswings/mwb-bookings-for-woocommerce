@@ -61,7 +61,7 @@ echo '</pre>';
 					<tbody>
 						<div class="mwb_global_cost_rule_heading">
 							<h2>
-							<label><?php echo esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count ); ?></label>
+							<label><?php echo ! empty( $mwb_cost_rule_name[ $count ] ) ? esc_html( $mwb_cost_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count ); ?></label>
 							<input type="hidden" name="mwb_cost_rule_count" value="<?php echo esc_html( $count ); ?>" >
 							<input type="checkbox" class="mwb_global_cost_rule_heading_switch" name="mwb_global_cost_rule_heading_switch[<?php echo esc_html( $cost_rule_count ); ?>]" <?php checked( 'on', $mwb_cost_rule_switch[ $count ] ); ?>>
 							</h2>
@@ -79,10 +79,15 @@ echo '</pre>';
 								<label><?php esc_html_e( 'Rule Type', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
-								<input type="radio" class="mwb_global_cost_rule_type_specific" name="mwb_global_cost_rule_type[<?php echo esc_html( $cost_rule_count ); ?>]" value="specific" <?php checked( 'specific', $mwb_cost_rule_type[ $count ] ); ?> >
-								<label><?php esc_html_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label><br>
-								<input type="radio" class="mwb_global_cost_rule_type_generic" name="mwb_global_cost_rule_type[<?php echo esc_html( $cost_rule_count ); ?>]" value="generic" <?php checked( 'generic', $mwb_cost_rule_type[ $count ] ); ?>>
-								<label><?php esc_html_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label><br>
+								<select name="mwb_global_cost_rule_conditions" id="mwb_booking_global_cost_conditions" class="" style="width: auto; margin-right: 7px;">
+									<option value="month" <?php selected( '', 'day_range' ); ?>><?php esc_html_e( 'Day Range', 'mwb-wc-bk' ); ?></option>
+									<option value="day" <?php selected( '', 'week_range' ); ?>><?php esc_html_e( 'Week Range', 'mwb-wc-bk' ); ?></option>
+									<option value="year" <?php selected( '', 'month_range' ); ?>><?php esc_html_e( 'Month Range', 'mwb-wc-bk' ); ?></option>
+									<option value="year" <?php selected( '', 'date_range' ); ?>><?php esc_html_e( 'Custom Date Range', 'mwb-wc-bk' ); ?></option>
+									<option value="year" <?php selected( '', 'time_range' ); ?>><?php esc_html_e( 'Time Range', 'mwb-wc-bk' ); ?></option>
+									<option value="year" <?php selected( '', 'unit_range' ); ?>><?php esc_html_e( 'Booking Unit Range', 'mwb-wc-bk' ); ?></option>
+									<option value="year" <?php selected( '', 'people_range' ); ?>><?php esc_html_e( 'People Range', 'mwb-wc-bk' ); ?></option>
+								</select>
 							</td>
 						</tr>
 						<tr valign="top">

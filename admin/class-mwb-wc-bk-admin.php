@@ -1085,7 +1085,7 @@ class Mwb_Wc_Bk_Admin {
 								<h2>
 								<label>Rule No-' . $rule_count . '</label>
 								<input type="hidden" name="mwb_availability_rule_count" value="' . $rule_count . '" >
-								<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[' . $rule_count . ']" checked  >
+								<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[' . ( $rule_count - 1 ) . ']" checked  >
 								</h2>
 							</div>
 							<tr valign="top">
@@ -1093,7 +1093,7 @@ class Mwb_Wc_Bk_Admin {
 									<label>Rule Name</label>
 								</th>
 								<td class="forminp forminp-text">
-									<input type="text" class="mwb_global_availability_rule_name" name="mwb_global_availability_rule_name[' . $rule_count . ']" >
+									<input type="text" class="mwb_global_availability_rule_name" name="mwb_global_availability_rule_name[' . ( $rule_count - 1 ) . ']" >
 								</td>
 							</tr>
 							<tr valign="top">
@@ -1101,9 +1101,9 @@ class Mwb_Wc_Bk_Admin {
 									<label>Rule Type</label>
 								</th>
 								<td class="forminp forminp-text">
-									<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[' . $rule_count . ']" value="specific">
+									<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[' . ( $rule_count - 1 ) . ']" value="specific">
 									<label>Specific Dates</label><br>
-									<input type="radio" class="mwb_global_availability_rule_type_generic" name="mwb_global_availability_rule_type[' . $rule_count . ']" value="generic">
+									<input type="radio" class="mwb_global_availability_rule_type_generic" name="mwb_global_availability_rule_type[' . ( $rule_count - 1 ) . ']" value="generic">
 									<label>Generic Dates</label><br>
 								</td>
 							</tr>
@@ -1113,18 +1113,62 @@ class Mwb_Wc_Bk_Admin {
 								</th>
 								<td class="forminp forminp-text">
 									<p>
-										<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[' . $rule_count . ']" >
+										<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[' . ( $rule_count - 1 ) . ']" >
 										<label>To</label>
-										<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[' . $rule_count . ']" >
+										<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[' . ( $rule_count - 1 ) . ']" >
 									</p>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+					<button type="button" id="mwb_delete_avialability_rule" class="button" rule_count="' . $rule_count . '" >Delete Rule</button>
 				</div>';
 
 		echo $data;
 		wp_die();
+	}
+
+	/**
+	 * Delete Global Availability Rule
+	 *
+	 * @return void
+	 */
+	public function delete_global_availability_rule() {
+
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+			die( 'Nonce value cannot be verified' );
+		}
+
+		$del_count = isset( $_POST['del_count'] ) ? sanitize_text_field( wp_unslash( $_POST['del_count'] ) ) : '';
+
+		$availability_rules = get_option( 'mwb_global_avialability_rules', array() );
+		if ( ! empty( $del_count ) && $del_count > 0 ) {
+			unset( $availability_rules['rule_switch'][ $del_count - 1 ] );
+			unset( $availability_rules['rule_name'][ $del_count - 1 ] );
+			unset( $availability_rules['rule_type'][ $del_count - 1 ] );
+			unset( $availability_rules['rule_range_from'][ $del_count - 1 ] );
+			unset( $availability_rules['rule_range_to'][ $del_count - 1 ] );
+
+			$availability_rules['rule_switch']     = array_values( $availability_rules['rule_switch'] );
+			$availability_rules['rule_name']       = array_values( $availability_rules['rule_name'] );
+			$availability_rules['rule_type']       = array_values( $availability_rules['rule_type'] );
+			$availability_rules['rule_range_from'] = array_values( $availability_rules['rule_range_from'] );
+			$availability_rules['rule_range_to']   = array_values( $availability_rules['rule_range_to'] );
+
+			// $count = count( $availability_rules['rule_switch'] );
+			// for ( $c = 0; $c < $count; $c++ ) {
+			// 	$inc = 1;
+
+			// 	$availability_rules1['rule_switch'][ $inc ]     = $availability_rules['rule_switch'][ $c ];
+			// 	$availability_rules1['rule_name'][ $inc ]       = $availability_rules['rule_name'][ $c ];
+			// 	$availability_rules1['rule_type'][ $inc ]       = $availability_rules['rule_type'][ $c ];
+			// 	$availability_rules1['rule_range_from'][ $inc ] = $availability_rules['rule_range_from'][ $c ];
+			// 	$availability_rules1['rule_range_to'][ $inc ]   = $availability_rules['rule_range_to'][ $c ];
+			// 	$inc++;
+			// }
+		}
+		update_option( 'mwb_global_avialability_rules', $availability_rules );
 	}
 
 	/**

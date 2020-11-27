@@ -24,17 +24,21 @@ $rule_count         = ! empty( $availability_rules['rule_name'] ) ? count( $avai
 
 if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 
-	$rule_count = isset( $_POST['mwb_availability_rule_count'] ) ? $_POST['mwb_availability_rule_count'] : $rule_count;
+	// Nonce verification.
+	check_admin_referer( 'mwb_booking_global_options_availability_nonce', 'mwb_booking_availability_nonce' );
+
+	$rule_count = isset( $_POST['mwb_availability_rule_count'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_availability_rule_count'] ) ) : $rule_count;
 
 	if ( $rule_count > 0 ) {
-		$rule_arr['rule_switch']     = isset( $_POST['mwb_global_availability_rule_heading_switch'] ) ? $_POST['mwb_global_availability_rule_heading_switch'] : array();
-		$rule_arr['rule_name']       = isset( $_POST['mwb_global_availability_rule_name'] ) ? $_POST['mwb_global_availability_rule_name'] : array();
-		$rule_arr['rule_type']       = isset( $_POST['mwb_global_availability_rule_type'] ) ? $_POST['mwb_global_availability_rule_type'] : array();
-		$rule_arr['rule_range_from'] = isset( $_POST['mwb_global_availability_rule_range_from'] ) ? $_POST['mwb_global_availability_rule_range_from'] : array();
-		$rule_arr['rule_range_to']   = isset( $_POST['mwb_global_availability_rule_range_to'] ) ? $_POST['mwb_global_availability_rule_range_to'] : array();
+		$rule_arr['rule_switch']     = isset( $_POST['mwb_global_availability_rule_heading_switch'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_heading_switch'] ) : array();
+		$rule_arr['rule_name']       = isset( $_POST['mwb_global_availability_rule_name'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_name'] ) : array();
+		$rule_arr['rule_type']       = isset( $_POST['mwb_global_availability_rule_type'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_type'] ) : array();
+		$rule_arr['rule_range_from'] = isset( $_POST['mwb_global_availability_rule_range_from'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_range_from'] ) : array();
+		$rule_arr['rule_range_to']   = isset( $_POST['mwb_global_availability_rule_range_to'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_range_to'] ) : array();
 
-		for ( $count = 1; $count <= $rule_count; $count++ ) {
+		for ( $count = 0; $count < $rule_count; $count++ ) {
 			$rule_arr['rule_switch'][ $count ] = isset( $rule_arr['rule_switch'][ $count ] ) ? $rule_arr['rule_switch'][ $count ] : 'off';
+			$rule_arr['rule_type'][ $count ]   = isset( $rule_arr['rule_type'][ $count ] ) ? $rule_arr['rule_type'][ $count ] : 'specific';
 		}
 		update_option( 'mwb_global_avialability_rules', $rule_arr );
 	} else {
@@ -43,10 +47,10 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 }
 
 $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
-echo '<pre>';
-echo $rule_count;
-print_r( $availability_rules );
-echo '</pre>';
+// echo '<pre>';
+// echo $rule_count;
+// print_r( $availability_rules );
+// echo '</pre>';
 ?>
 
 <!-- For Global options Setting -->
@@ -54,6 +58,9 @@ echo '</pre>';
 	<div class="mwb_booking_global_availability_rules">
 		<div id="mwb_global_availability_rules">
 		<?php
+
+		wp_nonce_field( 'mwb_booking_global_options_availability_nonce', 'mwb_booking_availability_nonce' );
+
 		if ( ! empty( $availability_rules ) ) {
 			$mwb_availability_rule_switch     = ! empty( $availability_rules['rule_switch'] ) ? $availability_rules['rule_switch'] : array();
 			$mwb_availability_rule_name       = ! empty( $availability_rules['rule_name'] ) ? $availability_rules['rule_name'] : array();
@@ -61,16 +68,19 @@ echo '</pre>';
 			$mwb_availability_rule_range_from = ! empty( $availability_rules['rule_range_from'] ) ? $availability_rules['rule_range_from'] : array();
 			$mwb_availability_rule_range_to   = ! empty( $availability_rules['rule_range_to'] ) ? $availability_rules['rule_range_to'] : array();
 
-			for ( $count = 1; $count <= $rule_count; $count++ ) {
+			for ( $count = 0; $count < $rule_count; $count++ ) {
+				// if ( empty( $mwb_availability_rule_switch[ $count ] ) ) {
+				// 	continue;
+				// }
 				// $mwb_availability_rule_switch[ $count ] = isset( $mwb_availability_rule_switch[ $count ] ) ? $mwb_availability_rule_switch[ $count ] : 'off';
 				?>
-			<div id="mwb_global_availability_rule_<?php echo esc_html( $count ); ?>" data-id="<?php echo esc_html( $count ); ?>">
+			<div id="mwb_global_availability_rule_<?php echo esc_html( $count + 1 ); ?>" data-id="<?php echo esc_html( $count + 1 ); ?>">
 				<table class="form-table mwb_global_availability_rule_fields" >
 					<tbody>
 						<div class="mwb_global_availability_rule_heading">
 							<h2>
-							<label><?php echo ! empty( $mwb_availability_rule_name[ $count ] ) ? esc_html( $mwb_availability_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count ); ?></label>
-							<input type="hidden" name="mwb_availability_rule_count" value="<?php echo esc_html( $count ); ?>" >
+							<label data-id="<?php echo esc_html( $count + 1 ); ?>" ><?php echo ! empty( $mwb_availability_rule_name[ $count ] ) ? esc_html( $mwb_availability_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count + 1 ); ?></label>
+							<input type="hidden" name="mwb_availability_rule_count" value="<?php echo esc_html( $count + 1 ); ?>" >
 							<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[<?php echo esc_html( $count ); ?>]" <?php checked( 'on', $mwb_availability_rule_switch[ $count ] ); ?>>
 							</h2>
 						</div>
@@ -107,9 +117,9 @@ echo '</pre>';
 						</tr>
 					</tbody>
 				</table>
-				<div id="mwb_delete_availability_rule_button">
-					<button type="button" id="mwb_delete_avialability_rule" class="button"><?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?></button>
-				</div>
+				<!-- <div id="mwb_delete_availability_rule_button"> -->
+					<button type="button" id="mwb_delete_avialability_rule" class="button" rule_count="<?php echo esc_html( $count + 1 ); ?>" ><?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?></button>
+				<!-- </div> -->
 			</div>
 				<?php
 			}

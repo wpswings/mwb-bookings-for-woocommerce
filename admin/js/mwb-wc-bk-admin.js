@@ -68,17 +68,7 @@ function dashicons_ajax_change($) {
 }
 
 function global_availability_rules($) {
-	// $.ajax({
-	// 	url: mwb_booking_obj.ajaxurl,
-	// 	type: 'POST',
-	// 	data: {
-	// 		'action'  : 'add_global_availability_rule_save',
-	// 		'nonce'   : mwb_booking_obj.nonce,
-	// 	},
-	// 	success: function( data ) {
-	// 		$( '.mwb_booking_global_availability_rules #mwb_global_availability_rules' ).append(data);
-	// 	},
-	// });
+
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_add_avialability_rule', function(e){
 		//e.preventDefault();
 		if ( availability_count < parseInt(jQuery(this).attr('rule_count')) ) {
@@ -89,21 +79,8 @@ function global_availability_rules($) {
 		}
 		
 		alert( "count: " + availability_count );
-		// console.log( $( '#mwb_global_availability_form #mwb_global_availability_rules').length );
-		// if ( $( '#mwb_global_availability_form #mwb_global_availability_rules').length > 1 ) {
-		// 	var id = $( '.mwb_booking_global_availability_rules #mwb_global_availability_rules div:last-child' ).attr( "id" );
-		// 	alert("id" + id);
+
 		// 	var pattern = /[0-9]$/;
-		// 	var count_reset = id.match(pattern);
-		// 	//var count_reset = $( '#mwb_global_availability_form #mwb_global_availability_rules div' ).data('id');
-		// 	alert("count-reset: " + count_reset);
-		// 	if ( availability_count <= count_reset ) {
-		// 		availability_count = count_reset;
-		// 		availability_count++;
-		// 	}
-		// 	// availability_count = parseInt(jQuery(this).attr('rule_count')) ;
-		// }
-		// alert("final-count: " + availability_count);
 		$.ajax({
 			url: mwb_booking_obj.ajaxurl,
 			type: 'POST',
@@ -120,8 +97,17 @@ function global_availability_rules($) {
 
 	jQuery('#mwb_global_availability_form .mwb_global_availability_rule_heading').on('click', 'label', function(e){
 		var count = $(this).attr('data-id');
-		$( '#mwb_global_availability_rule_' + count ).toggle();
+		$( '#mwb_global_availability_rule_' + count ).find('table').toggle();
 	});
+
+	if ( jQuery( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays' ).prop( 'checked' ) ) {
+		$( '#mwb_global_availability_form .mwb_global_availability_rule_bookable' ).parentsUntil( 'tr' ).hide();
+	} else {
+		jQuery( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays_book' ).each( function(){
+			$(this).hide();
+		});
+	}
+
 
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_delete_avialability_rule', function(e){
 		

@@ -301,6 +301,30 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	/**
+	 * Search Months
+	 *
+	 * @return array arr Weekdays.
+	 */
+	public function mwb_booking_months() {
+		$arr = array(
+			'january'   => __( 'January', 'mwb-wc-bk' ),
+			'february'  => __( 'February', 'mwb-wc-bk' ),
+			'march'     => __( 'March', 'mwb-wc-bk' ),
+			'april'     => __( 'April', 'mwb-wc-bk' ),
+			'may'       => __( 'May', 'mwb-wc-bk' ),
+			'june'      => __( 'June', 'mwb-wc-bk' ),
+			'july'      => __( 'July', 'mwb-wc-bk' ),
+			'august'    => __( 'August', 'mwb-wc-bk' ),
+			'september' => __( 'September', 'mwb-wc-bk' ),
+			'october'   => __( 'October', 'mwb-wc-bk' ),
+			'november'  => __( 'November', 'mwb-wc-bk' ),
+			'december'  => __( 'December', 'mwb-wc-bk' ),
+		);
+		apply_filters( 'mwb_booking_months', $arr );
+		return $arr;
+	}
+
+	/**
 	 * Set booking's default settings fields
 	 *
 	 * @param [type] $product_id ID of the booking.
@@ -1083,7 +1107,7 @@ class Mwb_Wc_Bk_Admin {
 						<tbody>
 							<div class="mwb_global_availability_rule_heading">
 								<h2>
-								<label>Rule No-' . $rule_count . '</label>
+								<label>' . sprintf( 'Rule No- %u', $rule_count ) . '</label>
 								<input type="hidden" name="mwb_availability_rule_count" value="' . $rule_count . '" >
 								<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[' . ( $rule_count - 1 ) . ']" checked  >
 								</h2>
@@ -1101,7 +1125,7 @@ class Mwb_Wc_Bk_Admin {
 									<label>Rule Type</label>
 								</th>
 								<td class="forminp forminp-text">
-									<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[' . ( $rule_count - 1 ) . ']" value="specific">
+									<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[' . ( $rule_count - 1 ) . ']" value="specific" checked >
 									<label>Specific Dates</label><br>
 									<input type="radio" class="mwb_global_availability_rule_type_generic" name="mwb_global_availability_rule_type[' . ( $rule_count - 1 ) . ']" value="generic">
 									<label>Generic Dates</label><br>
@@ -1116,6 +1140,26 @@ class Mwb_Wc_Bk_Admin {
 										<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[' . ( $rule_count - 1 ) . ']" >
 										<label>To</label>
 										<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[' . ( $rule_count - 1 ) . ']" >
+									</p>
+								</td>
+							</tr>
+							<tr valign="top" class="bookable">
+							<th scope="row" class=""></th>
+								<td class="forminp forminp-text">
+									<p>
+									<input type="radio" class="mwb_global_availability_rule_bookable" name="mwb_global_availability_rule_bookable[' . ( $rule_count - 1 ) . ']" value="bookable" checked >
+									<label>Bookable</label><br>
+									<input type="radio" class="mwb_global_availability_rule_non_bookable" name="mwb_global_availability_rule_bookable[' . ( $rule_count - 1 ) . ']" value="non-bookable" >
+									<label>Non-Bookable</label><br>
+									</p>
+								</td>
+							</tr>
+							<tr valign="top">
+								<th scope="row" class=""></th>
+								<td class="forminp forminp-text" >
+									<p>
+										<input type="checkbox" class="mwb_global_availability_rule_weekdays" name="mwb_global_availability_rule_weekdays[' . ( $rule_count - 1 ) . ']"  >
+										Rules for weekdays
 									</p>
 								</td>
 							</tr>
@@ -1149,12 +1193,14 @@ class Mwb_Wc_Bk_Admin {
 			unset( $availability_rules['rule_type'][ $del_count - 1 ] );
 			unset( $availability_rules['rule_range_from'][ $del_count - 1 ] );
 			unset( $availability_rules['rule_range_to'][ $del_count - 1 ] );
+			unset( $availability_rules['rule_bookable'][ $del_count - 1 ] );
 
 			$availability_rules['rule_switch']     = array_values( $availability_rules['rule_switch'] );
 			$availability_rules['rule_name']       = array_values( $availability_rules['rule_name'] );
 			$availability_rules['rule_type']       = array_values( $availability_rules['rule_type'] );
 			$availability_rules['rule_range_from'] = array_values( $availability_rules['rule_range_from'] );
 			$availability_rules['rule_range_to']   = array_values( $availability_rules['rule_range_to'] );
+			$availability_rules['rule_bookable']   = array_values( $availability_rules['rule_bookable'] );
 
 			// $count = count( $availability_rules['rule_switch'] );
 			// for ( $c = 0; $c < $count; $c++ ) {

@@ -16,19 +16,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	exit;
 }
-$cost_rule_arr   = array();
-$cost_rule_count = 0;
+$cost_rule_arr = array();
+
+$this->global_cost_conditions();
+
+$cost_rules      = get_option( 'mwb_global_avialability_rules', array() );
+$cost_rule_count = ! empty( $cost_rules['rule_name'] ) ? count( $cost_rules['rule_name'] ) : 0;
+
 
 if ( isset( $_POST['mwb_booking_global_cost_rules_save'] ) ) {
 
-	$cost_rule_count = isset( $_POST['mwb_cost_rule_count'] ) ? $_POST['mwb_cost_rule_count'] : $cost_rule_count;
+	check_admin_referer( 'mwb_booking_global_options_cost_nonce', 'mwb_booking_cost_nonce' );
+
+	$cost_rule_count = isset( $_POST['mwb_cost_rule_count'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_cost_rule_count'] ) ) : $cost_rule_count;
 
 	if ( $cost_rule_count > 0 ) {
 		$cost_rule_arr['rule_switch']     = isset( $_POST['mwb_global_cost_rule_heading_switch'] ) ? $_POST['mwb_global_cost_rule_heading_switch'] : array();
 		$cost_rule_arr['rule_name']       = isset( $_POST['mwb_global_cost_rule_name'] ) ? $_POST['mwb_global_cost_rule_name'] : array();
-		$cost_rule_arr['rule_type']       = isset( $_POST['mwb_global_cost_rule_type'] ) ? $_POST['mwb_global_cost_rule_type'] : array();
+		$cost_rule_arr['rule_condition']  = isset( $_POST['mwb_global_cost_rule_condition'] ) ? $_POST['mwb_global_cost_rule_condition'] : array();
 		$cost_rule_arr['rule_range_from'] = isset( $_POST['mwb_global_cost_rule_range_from'] ) ? $_POST['mwb_global_cost_rule_range_from'] : array();
 		$cost_rule_arr['rule_range_to']   = isset( $_POST['mwb_global_cost_rule_range_to'] ) ? $_POST['mwb_global_cost_rule_range_to'] : array();
+		$cost_rule_arr['rule_base_cal']   = isset( $_POST['mwb_global_cost_rule_base_cal'] ) ? $_POST['mwb_global_cost_rule_base_cal'] : array();
+		$cost_rule_arr['rule_base_cost']   = isset( $_POST['mwb_global_cost_rule_base_cost'] ) ? $_POST['mwb_global_cost_rule_base_cost'] : array();
+		$cost_rule_arr['rule_unit_cal']   = isset( $_POST['mwb_global_cost_rule_unit_cal'] ) ? $_POST['mwb_global_cost_rule_unit_cal'] : array();
+		$cost_rule_arr['rule_unit_cost']   = isset( $_POST['mwb_global_cost_rule_unit_cost'] ) ? $_POST['mwb_global_cost_rule_unit_cost'] : array();
 
 		update_option( 'mwb_global_cost_rules', $cost_rule_arr );
 	} else {
@@ -47,12 +58,19 @@ echo '</pre>';
 	<div class="mwb_booking_global_cost_rules">
 		<div id="mwb_global_cost_rules">
 		<?php
+
+		wp_nonce_field( 'mwb_booking_global_options_cost_nonce', 'mwb_booking_cost_nonce' );
+
 		if ( ! empty( $cost_rules ) && $cost_rule_count > 0 ) {
 			$mwb_cost_rule_switch     = ! empty( $cost_rules['rule_switch'] ) ? $cost_rules['rule_switch'] : '';
 			$mwb_cost_rule_name       = ! empty( $cost_rules['rule_name'] ) ? $cost_rules['rule_name'] : '';
-			$mwb_cost_rule_type       = ! empty( $cost_rules['rule_type'] ) ? $cost_rules['rule_type'] : '';
+			$mwb_cost_rule_condition  = ! empty( $cost_rules['rule_condition'] ) ? $cost_rules['rule_condition'] : '';
 			$mwb_cost_rule_range_from = ! empty( $cost_rules['rule_range_from'] ) ? $cost_rules['rule_range_from'] : '';
 			$mwb_cost_rule_range_to   = ! empty( $cost_rules['rule_range_to'] ) ? $cost_rules['rule_range_to'] : '';
+			$mwb_cost_rule_base_cal   = ! empty( $cost_rules['rule_base_cal'] ) ? $cost_rules['rule_base_cal'] : '';
+			$mwb_cost_rule_base_cost  = ! empty( $cost_rules['rule_base_cost'] ) ? $cost_rules['rule_base_cost'] : '';
+			$mwb_cost_rule_unit_cal   = ! empty( $cost_rules['rule_unit_cal'] ) ? $cost_rules['rule_unit_cal'] : '';
+			$mwb_cost_rule_unit_cost  = ! empty( $cost_rules['rule_unit_cost'] ) ? $cost_rules['rule_unit_cost'] : '';
 
 			for ( $count = 1; $count <= $cost_rule_count; $count++ ) {
 				?>
@@ -63,7 +81,7 @@ echo '</pre>';
 							<h2>
 							<label><?php echo ! empty( $mwb_cost_rule_name[ $count ] ) ? esc_html( $mwb_cost_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count ); ?></label>
 							<input type="hidden" name="mwb_cost_rule_count" value="<?php echo esc_html( $count ); ?>" >
-							<input type="checkbox" class="mwb_global_cost_rule_heading_switch" name="mwb_global_cost_rule_heading_switch[<?php echo esc_html( $cost_rule_count ); ?>]" <?php checked( 'on', $mwb_cost_rule_switch[ $count ] ); ?>>
+							<input type="checkbox" class="mwb_global_cost_rule_heading_switch" name="mwb_global_cost_rule_heading_switch[<?php echo esc_html( $count ); ?>]" <?php checked( 'on', $mwb_cost_rule_switch[ $count ] ); ?>>
 							</h2>
 						</div>
 						<tr valign="top">
@@ -71,34 +89,76 @@ echo '</pre>';
 								<label><?php esc_html_e( 'Rule Name', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
-								<input type="text" class="mwb_global_cost_rule_name" name="mwb_global_cost_rule_name[<?php echo esc_html( $cost_rule_count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_name[ $count ] ); ?>">
+								<input type="text" class="mwb_global_cost_rule_name" name="mwb_global_cost_rule_name[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_name[ $count ] ); ?>">
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Rule Type', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Conditions', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
-								<select name="mwb_global_cost_rule_conditions" id="mwb_booking_global_cost_conditions" class="" style="width: auto; margin-right: 7px;">
-									<option value="month" <?php selected( '', 'day_range' ); ?>><?php esc_html_e( 'Day Range', 'mwb-wc-bk' ); ?></option>
-									<option value="day" <?php selected( '', 'week_range' ); ?>><?php esc_html_e( 'Week Range', 'mwb-wc-bk' ); ?></option>
-									<option value="year" <?php selected( '', 'month_range' ); ?>><?php esc_html_e( 'Month Range', 'mwb-wc-bk' ); ?></option>
-									<option value="year" <?php selected( '', 'date_range' ); ?>><?php esc_html_e( 'Custom Date Range', 'mwb-wc-bk' ); ?></option>
-									<option value="year" <?php selected( '', 'time_range' ); ?>><?php esc_html_e( 'Time Range', 'mwb-wc-bk' ); ?></option>
-									<option value="year" <?php selected( '', 'unit_range' ); ?>><?php esc_html_e( 'Booking Unit Range', 'mwb-wc-bk' ); ?></option>
-									<option value="year" <?php selected( '', 'people_range' ); ?>><?php esc_html_e( 'People Range', 'mwb-wc-bk' ); ?></option>
+								<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $count ); ?>]" id="mwb_booking_global_cost_condition" class="mwb_booking_global_cost_condition" style="width: auto; margin-right: 7px;">
+								<?php
+								foreach ( $this->global_cost_conditions() as $k => $v ) {
+									if ( ! is_array( $v ) ) {
+										?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_condition[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+										<?php
+									} else {
+										foreach ( $v as $peoples => $people ) {
+											?>
+										<option value="<?php echo esc_html( $peoples ); ?>" <?php selected( $peoples, $mwb_cost_rule_condition[ $count ] ); ?>><?php echo esc_html( $people ); ?></option>
+											<?php
+										}
+									}
+								}
+								?>
 								</select>
+							</td>
+							<td class="forminp forminp-text">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>">
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" >
+								</p>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<p>
-									<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $cost_rule_count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>" >
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
-									<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $cost_rule_count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" >
+									<select name="mwb_global_cost_rule_base_cal[<?php echo esc_html( $count ); ?>]" id="mwb_global_cost_rule_base_cal" class="mwb_global_cost_rule_base_cal">
+										<?php
+										foreach ( $this->mwb_booking_global_cost_cal() as $k => $v ) {
+											?>
+											<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_base_cal[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+											<?php
+										}
+										?>
+									</select>
+									<input type="number" class="mwb_global_cost_rule_base_cost" name="mwb_global_cost_rule_base_cost[<?php echo esc_html( $count ); ?>]" step="1" min="1" value="<?php echo esc_html( $mwb_cost_rule_base_cost[ $count ] ); ?>" >
+								</p>
+							</td>
+						</tr>
+						<tr valign="top">
+							<th scope="row" class="">
+								<label><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label>
+							</th>
+							<td class="forminp forminp-text">
+								<p>
+									<select name="mwb_global_cost_rule_unit_cal[<?php echo esc_html( $count ); ?>]" id="mwb_global_cost_rule_unit_cal" class="mwb_global_cost_rule_unit_cal">
+										<?php
+										foreach ( $this->mwb_booking_global_cost_cal() as $k => $v ) {
+											?>
+											<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_unit_cal[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+											<?php
+										}
+										?>
+									</select>
+									<input type="number" class="mwb_global_cost_rule_unit_cost" name="mwb_global_cost_rule_unit_cost[<?php echo esc_html( $count ); ?>]" step="1" min="1" value="<?php echo esc_html( $mwb_cost_rule_unit_cost[ $count ] ); ?>" >
 								</p>
 							</td>
 						</tr>

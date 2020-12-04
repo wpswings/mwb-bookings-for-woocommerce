@@ -69,12 +69,14 @@ function dashicons_ajax_change($) {
 
 function global_availability_rules($) {
 
-	if ( $( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays' ).is( ':checked' ) ) {
-		$( '#mwb_global_availability_form .mwb_global_availability_rule_bookable' ).parentsUntil( 'tr' ).hide();
-	} else {
-		jQuery( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays_book' ).hide();
-	}
+	// if ( $( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays' ).is( ':checked' ) ) {
+	// 	$( '#mwb_global_availability_form .bookable' ).hide();
+	// } else {
+	// 	jQuery( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays_book' ).hide();
+	// }
+	//var $('#mwb_global_availability_form table').parent().attr('data-id');
 
+	
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_add_avialability_rule', function(e){
 		//e.preventDefault();
 		if ( availability_count < parseInt(jQuery(this).attr('rule_count')) ) {
@@ -101,6 +103,21 @@ function global_availability_rules($) {
 		});
 	});
 
+	for( var c = 0; c < availability_count; c++ ) {
+		$( '#mwb_global_availability_form').on( 'change', "input[name='mwb_global_availability_rule_weekdays[" + availability_count + "]']", function(){
+
+			var weekdays_rule_check = $(this).is(':checked');
+			//alert(weekdays_rule_check);
+			if( weekdays_rule_check ) {
+				$( '#mwb_global_availability_form .bookable' ).hide();
+				$( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays_book' ).show();
+			} else {
+				$( '#mwb_global_availability_form .bookable' ).show();
+				$( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays_book' ).hide();
+			}	
+		});
+	}
+
 	jQuery('#mwb_global_availability_form .mwb_global_availability_rule_heading').on('click', 'label', function(e){
 		var count = $(this).attr('data-id');
 		$( '#mwb_global_availability_rule_' + count ).find('table').toggle();
@@ -126,26 +143,22 @@ function global_availability_rules($) {
 		});
 	});
 }
+
 function global_cost_rules($) {
 
 	jQuery('#mwb_global_cost_form').on('click', '#mwb_add_cost_rule', function(e){
 		//e.preventDefault();
-		cost_count++;
-		alert("count: " + cost_count);
-		
-		if ( $( '#mwb_global_cost_form #mwb_global_cost_rules div').length > 1 ) {
-			var id = $( '.mwb_booking_global_cost_rules #mwb_global_cost_rules div' ).attr( "id" );
-			alert("id" + id);
-			var pattern = /[0-9]$/;
-			var count_reset = id.match(pattern);
-			//var count_reset = $( '#mwb_global_cost_form #mwb_global_cost_rules div' ).data('id');
-			alert("count-reset: " + count_reset);
-			if ( cost_count <= count_reset ) {
-				cost_count = count_reset;
-				cost_count++;
-			}
+
+		if ( cost_count < parseInt(jQuery(this).attr('rule_count')) ) {
+			cost_count= parseInt(jQuery(this).attr('rule_count'));
+			cost_count++;
+		} else {
+			cost_count++;
 		}
-		alert("final-count: " + cost_count);
+		
+		alert( "count: " + cost_count );
+
+		// 	var pattern = /[0-9]$/;
 		$.ajax({
 			url: mwb_booking_obj.ajaxurl,
 			type: 'POST',
@@ -157,6 +170,25 @@ function global_cost_rules($) {
 			success: function( data ) {
 				$( '.mwb_booking_global_cost_rules #mwb_global_cost_rules' ).append(data);
 			},
+		});
+	});
+	$('#mwb_global_cost_form').on('click', '#mwb_delete_cost_rule', function(e){
+		
+		alert('pressed');
+		var del_count = parseInt($(this).attr('rule_count'));
+		alert(del_count);
+
+		$.ajax({
+			url  : mwb_booking_obj.ajaxurl,
+			type : 'POST',
+			data : {
+				'action'    : 'delete_global_cost_rule',
+				'nonce'     : mwb_booking_obj.nonce,
+				'del_count' : del_count,
+			},
+			success: function( data ){
+				$( '#mwb_global_cost_rule_' + del_count ).remove();
+			}
 		});
 	});
 }

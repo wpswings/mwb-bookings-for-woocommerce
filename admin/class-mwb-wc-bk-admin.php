@@ -307,10 +307,10 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function mwb_booking_global_cost_cal() {
 		$arr = array(
-			'addition'    => '+',
-			'subtraction' => '-',
-			'multiply'    => '*',
-			'divide'      => '/',
+			'add'      => '+',
+			'subtract' => '-',
+			'multiply' => '*',
+			'divide'   => '/',
 		);
 		apply_filters( 'mwb_booking_cost_cal_symbols', $arr );
 		return $arr;
@@ -1273,13 +1273,17 @@ class Mwb_Wc_Bk_Admin {
 			unset( $availability_rules['rule_range_from'][ $del_count - 1 ] );
 			unset( $availability_rules['rule_range_to'][ $del_count - 1 ] );
 			unset( $availability_rules['rule_bookable'][ $del_count - 1 ] );
+			unset( $availability_rules['rule_weekdays'][ $del_count - 1 ] );
+			unset( $availability_rules['rule_weekdays_book'][ $del_count - 1 ] );
 
-			$availability_rules['rule_switch']     = array_values( $availability_rules['rule_switch'] );
-			$availability_rules['rule_name']       = array_values( $availability_rules['rule_name'] );
-			$availability_rules['rule_type']       = array_values( $availability_rules['rule_type'] );
-			$availability_rules['rule_range_from'] = array_values( $availability_rules['rule_range_from'] );
-			$availability_rules['rule_range_to']   = array_values( $availability_rules['rule_range_to'] );
-			$availability_rules['rule_bookable']   = array_values( $availability_rules['rule_bookable'] );
+			$availability_rules['rule_switch']        = array_values( $availability_rules['rule_switch'] );
+			$availability_rules['rule_name']          = array_values( $availability_rules['rule_name'] );
+			$availability_rules['rule_type']          = array_values( $availability_rules['rule_type'] );
+			$availability_rules['rule_range_from']    = array_values( $availability_rules['rule_range_from'] );
+			$availability_rules['rule_range_to']      = array_values( $availability_rules['rule_range_to'] );
+			$availability_rules['rule_bookable']      = array_values( $availability_rules['rule_bookable'] );
+			$availability_rules['rule_weekdays']      = array_values( $availability_rules['rule_weekdays'] );
+			$availability_rules['rule_weekdays_book'] = array_values( $availability_rules['rule_weekdays_book'] );
 
 			// $count = count( $availability_rules['rule_switch'] );
 			// for ( $c = 0; $c < $count; $c++ ) {
@@ -1311,14 +1315,14 @@ class Mwb_Wc_Bk_Admin {
 
 		?>
 
-		<div id="mwb_global_cost_rule_' <?php echo esc_html( $rule_count ); ?>'" data-id="' . $rule_count . '">
+		<div id="mwb_global_cost_rule_' <?php echo esc_html( $rule_count ); ?>'" data-id="<?php echo esc_html( $rule_count ); ?>">
 			<table class="form-table mwb_global_cost_rule_fields" >
 				<tbody>
 					<div class="mwb_global_cost_rule_heading">
 						<h2>
 						<label><?php echo esc_html( sprintf( 'Rule No- %u', $rule_count ) ); ?></label>
 						<input type="hidden" name="mwb_cost_rule_count" value="<?php echo esc_html( $rule_count ); ?>" >
-						<input type="checkbox" class="mwb_global_cost_rule_heading_switch" name="mwb_global_cost_rule_heading_switch[<?php echo esc_html( $rule_count ); ?>]" checked  >
+						<input type="checkbox" class="mwb_global_cost_rule_heading_switch" name="mwb_global_cost_rule_heading_switch[<?php echo esc_html( $rule_count - 1 ); ?>]" checked  >
 						</h2>
 					</div>
 					<tr valign="top">
@@ -1326,7 +1330,7 @@ class Mwb_Wc_Bk_Admin {
 							<label><?php esc_html_e( 'Rule Name', 'mwb-wc-bk' ); ?></label>
 						</th>
 						<td class="forminp forminp-text">
-							<input type="text" class="mwb_global_cost_rule_name" name="mwb_global_cost_rule_name[<?php echo esc_html( $rule_count ); ?>]" >
+							<input type="text" class="mwb_global_cost_rule_name" name="mwb_global_cost_rule_name[<?php echo esc_html( $rule_count - 1 ); ?>]" >
 						</td>
 					</tr>
 					<tr valign="top">
@@ -1334,7 +1338,7 @@ class Mwb_Wc_Bk_Admin {
 							<label><?php esc_html_e( 'Conditions', 'mwb-wc-bk' ); ?></label>
 						</th>
 						<td class="forminp forminp-text">
-							<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $rule_count ); ?>]" id="mwb_booking_global_cost_condition" class="mwb_booking_global_cost_condition" style="width: auto; margin-right: 7px;">
+							<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $rule_count - 1 ); ?>]" id="mwb_booking_global_cost_condition" class="mwb_booking_global_cost_condition" style="width: auto; margin-right: 7px;">
 								<option value="" selected><?php esc_html_e( 'none', 'mwb-wc-bk' ); ?></option>
 							<?php
 							foreach ( $this->global_cost_conditions() as $k => $v ) {
@@ -1356,9 +1360,9 @@ class Mwb_Wc_Bk_Admin {
 						<td class="forminp forminp-text">
 							<p>
 								<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
-								<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count ); ?>]" >
+								<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" >
 								<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
-								<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count ); ?>]" >
+								<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" >
 							</p>
 						</td>
 					</tr>
@@ -1368,7 +1372,7 @@ class Mwb_Wc_Bk_Admin {
 						</th>
 						<td class="forminp forminp-text">
 							<p>
-								<select name="mwb_global_cost_rule_base_cal[<?php echo esc_html( $rule_count ); ?>]" id="mwb_global_cost_rule_base_cal" class="mwb_global_cost_rule_base_cal">
+								<select name="mwb_global_cost_rule_base_cal[<?php echo esc_html( $rule_count - 1 ); ?>]" id="mwb_global_cost_rule_base_cal" class="mwb_global_cost_rule_base_cal">
 									<?php
 									foreach ( $this->mwb_booking_global_cost_cal() as $k => $v ) {
 										?>
@@ -1377,7 +1381,7 @@ class Mwb_Wc_Bk_Admin {
 									}
 									?>
 								</select>
-								<input type="number" class="mwb_global_cost_rule_base_cost" name="mwb_global_cost_rule_base_cost[<?php echo esc_html( $rule_count ); ?>]" step="1" min="1" >
+								<input type="number" class="mwb_global_cost_rule_base_cost" name="mwb_global_cost_rule_base_cost[<?php echo esc_html( $rule_count - 1 ); ?>]" step="1" min="1" >
 							</p>
 						</td>
 					</tr>
@@ -1387,7 +1391,7 @@ class Mwb_Wc_Bk_Admin {
 						</th>
 						<td class="forminp forminp-text">
 							<p>
-								<select name="mwb_global_cost_rule_unit_cal[<?php echo esc_html( $rule_count ); ?>]" id="mwb_global_cost_rule_unit_cal" class="mwb_global_cost_rule_unit_cal">
+								<select name="mwb_global_cost_rule_unit_cal[<?php echo esc_html( $rule_count - 1 ); ?>]" id="mwb_global_cost_rule_unit_cal" class="mwb_global_cost_rule_unit_cal">
 									<?php
 									foreach ( $this->mwb_booking_global_cost_cal() as $k => $v ) {
 										?>
@@ -1396,17 +1400,59 @@ class Mwb_Wc_Bk_Admin {
 									}
 									?>
 								</select>
-								<input type="number" class="mwb_global_cost_rule_unit_cost" name="mwb_global_cost_rule_unit_cost[<?php echo esc_html( $rule_count ); ?>]" step="1" min="1" >
+								<input type="number" class="mwb_global_cost_rule_unit_cost" name="mwb_global_cost_rule_unit_cost[<?php echo esc_html( $rule_count - 1 ); ?>]" step="1" min="1" >
 							</p>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<!-- <div id="mwb_delete_availability_rule_button"> -->
+				<button type="button" id="mwb_delete_cost_rule" class="button" rule_count="<?php echo esc_html( $rule_count ); ?>" ><?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?></button>
+			<!-- </div> -->
 		</div>
 
 			<?php
 
-			// echo $data;
 			wp_die();
+	}
+
+	/**
+	 * Delete Global Cost Rule
+	 *
+	 * @return void
+	 */
+	public function delete_global_cost_rule() {
+
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+			die( 'Nonce value cannot be verified' );
+		}
+
+		$del_count = isset( $_POST['del_count'] ) ? sanitize_text_field( wp_unslash( $_POST['del_count'] ) ) : '';
+
+		$cost_rules = get_option( 'mwb_global_cost_rules', array() );
+		if ( ! empty( $del_count ) && $del_count > 0 ) {
+			unset( $cost_rules['rule_switch'][ $del_count - 1 ] );
+			unset( $cost_rules['rule_name'][ $del_count - 1 ] );
+			unset( $cost_rules['rule_condition'][ $del_count - 1 ] );
+			unset( $cost_rules['rule_range_from'][ $del_count - 1 ] );
+			unset( $cost_rules['rule_range_to'][ $del_count - 1 ] );
+			unset( $cost_rules['rule_base_cal'][ $del_count - 1 ] );
+			unset( $cost_rules['rule_base_cost'][ $del_count - 1 ] );
+			unset( $cost_rules['rule_unit_cal'][ $del_count - 1 ] );
+			unset( $cost_rules['rule_unit_cost'][ $del_count - 1 ] );
+
+			$cost_rules['rule_switch']     = array_values( $cost_rules['rule_switch'] );
+			$cost_rules['rule_name']       = array_values( $cost_rules['rule_name'] );
+			$cost_rules['rule_condition']  = array_values( $cost_rules['rule_condition'] );
+			$cost_rules['rule_range_from'] = array_values( $cost_rules['rule_range_from'] );
+			$cost_rules['rule_range_to']   = array_values( $cost_rules['rule_range_to'] );
+			$cost_rules['rule_base_cal']   = array_values( $cost_rules['rule_base_cal'] );
+			$cost_rules['rule_base_cost']  = array_values( $cost_rules['rule_base_cost'] );
+			$cost_rules['rule_unit_cal']   = array_values( $cost_rules['rule_unit_cal'] );
+			$cost_rules['rule_unit_cost']  = array_values( $cost_rules['rule_unit_cost'] );
+
+		}
+		update_option( 'mwb_global_cost_rules', $cost_rules );
 	}
 }

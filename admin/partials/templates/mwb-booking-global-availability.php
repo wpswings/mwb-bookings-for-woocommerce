@@ -30,14 +30,14 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 	$rule_count = isset( $_POST['mwb_availability_rule_count'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_availability_rule_count'] ) ) : $rule_count;
 
 	if ( $rule_count > 0 ) {
-		$rule_arr['rule_switch']        = isset( $_POST['mwb_global_availability_rule_heading_switch'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_heading_switch'] ) : array();
-		$rule_arr['rule_name']          = isset( $_POST['mwb_global_availability_rule_name'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_name'] ) : array();
-		$rule_arr['rule_type']          = isset( $_POST['mwb_global_availability_rule_type'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_type'] ) : array();
-		$rule_arr['rule_range_from']    = isset( $_POST['mwb_global_availability_rule_range_from'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_range_from'] ) : array();
-		$rule_arr['rule_range_to']      = isset( $_POST['mwb_global_availability_rule_range_to'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_range_to'] ) : array();
-		$rule_arr['rule_bookable']      = isset( $_POST['mwb_global_availability_rule_bookable'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_bookable'] ) : array();
-		$rule_arr['rule_weekdays']      = isset( $_POST['mwb_global_availability_rule_weekdays'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_weekdays'] ) : array();
-		$rule_arr['rule_weekdays_book'] = isset( $_POST['mwb_global_availability_rule_weekdays_book'] ) ? array_map( 'sanitize_text_field', $_POST['mwb_global_availability_rule_weekdays_book'] ) : array();
+		$rule_arr['rule_switch']        = isset( $_POST['mwb_global_availability_rule_heading_switch'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_heading_switch'] ) ) : array();
+		$rule_arr['rule_name']          = isset( $_POST['mwb_global_availability_rule_name'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_name'] ) ) : array();
+		$rule_arr['rule_type']          = isset( $_POST['mwb_global_availability_rule_type'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_type'] ) ) : array();
+		$rule_arr['rule_range_from']    = isset( $_POST['mwb_global_availability_rule_range_from'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_range_from'] ) ) : array();
+		$rule_arr['rule_range_to']      = isset( $_POST['mwb_global_availability_rule_range_to'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_range_to'] ) ) : array();
+		$rule_arr['rule_bookable']      = isset( $_POST['mwb_global_availability_rule_bookable'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_bookable'] ) ) : array();
+		$rule_arr['rule_weekdays']      = isset( $_POST['mwb_global_availability_rule_weekdays'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_weekdays'] ) ) : array();
+		$rule_arr['rule_weekdays_book'] = isset( $_POST['mwb_global_availability_rule_weekdays_book'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_weekdays_book'] ) ) : array();
 
 		for ( $count = 0; $count < $rule_count; $count++ ) {
 			$rule_arr['rule_switch'][ $count ]   = isset( $rule_arr['rule_switch'][ $count ] ) ? $rule_arr['rule_switch'][ $count ] : 'off';

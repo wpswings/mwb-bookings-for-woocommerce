@@ -18,9 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $cost_rule_arr = array();
 
-$this->global_cost_conditions();
-
-$cost_rules      = get_option( 'mwb_global_avialability_rules', array() );
+$cost_rules      = get_option( 'mwb_global_cost_rules', array() );
 $cost_rule_count = ! empty( $cost_rules['rule_name'] ) ? count( $cost_rules['rule_name'] ) : 0;
 
 
@@ -31,15 +29,19 @@ if ( isset( $_POST['mwb_booking_global_cost_rules_save'] ) ) {
 	$cost_rule_count = isset( $_POST['mwb_cost_rule_count'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_cost_rule_count'] ) ) : $cost_rule_count;
 
 	if ( $cost_rule_count > 0 ) {
-		$cost_rule_arr['rule_switch']     = isset( $_POST['mwb_global_cost_rule_heading_switch'] ) ? $_POST['mwb_global_cost_rule_heading_switch'] : array();
-		$cost_rule_arr['rule_name']       = isset( $_POST['mwb_global_cost_rule_name'] ) ? $_POST['mwb_global_cost_rule_name'] : array();
-		$cost_rule_arr['rule_condition']  = isset( $_POST['mwb_global_cost_rule_condition'] ) ? $_POST['mwb_global_cost_rule_condition'] : array();
-		$cost_rule_arr['rule_range_from'] = isset( $_POST['mwb_global_cost_rule_range_from'] ) ? $_POST['mwb_global_cost_rule_range_from'] : array();
-		$cost_rule_arr['rule_range_to']   = isset( $_POST['mwb_global_cost_rule_range_to'] ) ? $_POST['mwb_global_cost_rule_range_to'] : array();
-		$cost_rule_arr['rule_base_cal']   = isset( $_POST['mwb_global_cost_rule_base_cal'] ) ? $_POST['mwb_global_cost_rule_base_cal'] : array();
-		$cost_rule_arr['rule_base_cost']   = isset( $_POST['mwb_global_cost_rule_base_cost'] ) ? $_POST['mwb_global_cost_rule_base_cost'] : array();
-		$cost_rule_arr['rule_unit_cal']   = isset( $_POST['mwb_global_cost_rule_unit_cal'] ) ? $_POST['mwb_global_cost_rule_unit_cal'] : array();
-		$cost_rule_arr['rule_unit_cost']   = isset( $_POST['mwb_global_cost_rule_unit_cost'] ) ? $_POST['mwb_global_cost_rule_unit_cost'] : array();
+		$cost_rule_arr['rule_switch']     = isset( $_POST['mwb_global_cost_rule_heading_switch'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_heading_switch'] ) ) : array();
+		$cost_rule_arr['rule_name']       = isset( $_POST['mwb_global_cost_rule_name'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_name'] ) ) : array();
+		$cost_rule_arr['rule_condition']  = isset( $_POST['mwb_global_cost_rule_condition'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_condition'] ) ) : array();
+		$cost_rule_arr['rule_range_from'] = isset( $_POST['mwb_global_cost_rule_range_from'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_range_from'] ) ) : array();
+		$cost_rule_arr['rule_range_to']   = isset( $_POST['mwb_global_cost_rule_range_to'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_range_to'] ) ) : array();
+		$cost_rule_arr['rule_base_cal']   = isset( $_POST['mwb_global_cost_rule_base_cal'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_base_cal'] ) ) : array();
+		$cost_rule_arr['rule_base_cost']  = isset( $_POST['mwb_global_cost_rule_base_cost'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_base_cost'] ) ) : array();
+		$cost_rule_arr['rule_unit_cal']   = isset( $_POST['mwb_global_cost_rule_unit_cal'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_unit_cal'] ) ) : array();
+		$cost_rule_arr['rule_unit_cost']  = isset( $_POST['mwb_global_cost_rule_unit_cost'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_unit_cost'] ) ) : array();
+
+		for ( $count = 0; $count < $cost_rule_count; $count++ ) {
+			$cost_rule_arr['rule_switch'][ $count ] = isset( $cost_rule_arr['rule_switch'][ $count ] ) ? $cost_rule_arr['rule_switch'][ $count ] : 'off';
+		}
 
 		update_option( 'mwb_global_cost_rules', $cost_rule_arr );
 	} else {
@@ -72,15 +74,15 @@ echo '</pre>';
 			$mwb_cost_rule_unit_cal   = ! empty( $cost_rules['rule_unit_cal'] ) ? $cost_rules['rule_unit_cal'] : '';
 			$mwb_cost_rule_unit_cost  = ! empty( $cost_rules['rule_unit_cost'] ) ? $cost_rules['rule_unit_cost'] : '';
 
-			for ( $count = 1; $count <= $cost_rule_count; $count++ ) {
+			for ( $count = 0; $count < $cost_rule_count; $count++ ) {
 				?>
-			<div id="mwb_global_cost_rule_$rule_count">
+			<div id="mwb_global_cost_rule_<?php echo esc_html( $count + 1 ); ?>" data-id="<?php echo esc_html( $count + 1 ); ?>">
 				<table class="form-table mwb_global_cost_rule_fields" >
 					<tbody>
 						<div class="mwb_global_cost_rule_heading">
 							<h2>
-							<label><?php echo ! empty( $mwb_cost_rule_name[ $count ] ) ? esc_html( $mwb_cost_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count ); ?></label>
-							<input type="hidden" name="mwb_cost_rule_count" value="<?php echo esc_html( $count ); ?>" >
+							<label data-id="<?php echo esc_html( $count + 1 ); ?>"><?php echo ! empty( $mwb_cost_rule_name[ $count ] ) ? esc_html( $mwb_cost_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count + 1 ); ?></label>
+							<input type="hidden" name="mwb_cost_rule_count" value="<?php echo esc_html( $count + 1 ); ?>" >
 							<input type="checkbox" class="mwb_global_cost_rule_heading_switch" name="mwb_global_cost_rule_heading_switch[<?php echo esc_html( $count ); ?>]" <?php checked( 'on', $mwb_cost_rule_switch[ $count ] ); ?>>
 							</h2>
 						</div>
@@ -164,6 +166,9 @@ echo '</pre>';
 						</tr>
 					</tbody>
 				</table>
+				<!-- <div id="mwb_delete_cost_rule_button"> -->
+					<button type="button" id="mwb_delete_cost_rule" class="button" rule_count="<?php echo esc_html( $count + 1 ); ?>" ><?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?></button>
+				<!-- </div> -->
 			</div>
 				<?php
 			}
@@ -171,7 +176,7 @@ echo '</pre>';
 		?>
 		</div>
 		<div id="mwb_global_cost_button">
-			<button type="button" id="mwb_add_cost_rule" class="button"><?php esc_html_e( 'Add New Cost Rule', 'mwb-wc-bk' ); ?></button>
+			<button type="button" id="mwb_add_cost_rule" class="button" rule_count="<?php echo esc_html( $cost_rule_count ); ?>"><?php esc_html_e( 'Add New Cost Rule', 'mwb-wc-bk' ); ?></button>
 		</div>
 	</div>
 	<!-- Save Settings -->

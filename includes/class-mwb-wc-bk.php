@@ -171,7 +171,7 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_filter( 'woocommerce_product_data_tabs', $plugin_admin, 'booking_add_product_data_tabs' );
 
-		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'product_booking_fields' );
+		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'product_booking_fields' );	
 
 		$this->loader->add_action( 'woocommerce_process_product_meta_mwb_booking', $plugin_admin, 'save_product_booking_fields' );
 
@@ -205,6 +205,8 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'manage_edit-mwb_ct_costs_columns', $plugin_admin, 'add_columns_ct_costs' );
 		$this->loader->add_filter( 'manage_mwb_ct_costs_custom_column', $plugin_admin, 'manage_columns_ct_costs', 10, 3 );
+
+		$this->loader->add_action( 'wp_ajax_selected_services_search', $plugin_admin, 'selected_services_search' );
 
 		$this->loader->add_action( 'wp_ajax_dachicon_change_handler', $plugin_admin, 'dachicon_change_handler' );
 

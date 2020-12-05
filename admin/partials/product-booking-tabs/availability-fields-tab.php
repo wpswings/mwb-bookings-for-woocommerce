@@ -33,21 +33,21 @@
 			?>
 		<p class="form-field">
 			<label for="mwb_booking_start_time"><?php esc_html_e( 'Booking starts', 'mwb-wc-bk' ); ?></label>
-			<input type="time" name="mwb_booking_start_time" id="mwb_booking_start_time" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_start_time'] ); ?>"/>
+			<input type="time" name="mwb_booking_start_time" id="mwb_booking_start_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_start_time'] ); ?>"/>
 			<?php mwb_booking_help_tip( esc_html__( 'Time when the booking starts', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
 			<label for="mwb_booking_end_time"><?php esc_html_e( 'Booking ends', 'mwb-wc-bk' ); ?></label>
-			<input type="time" name="mwb_booking_end_time" id="mwb_booking_end_time" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_end_time'] ); ?>"/>
+			<input type="time" name="mwb_booking_end_time" id="mwb_booking_end_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_end_time'] ); ?>"/>
 			<?php mwb_booking_help_tip( esc_html__( 'Time when the booking ends', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
 			<label for="mwb_booking_buffer_input"><?php esc_html_e( 'Booking Buffer', 'mwb-wc-bk' ); ?></label>
-			<input type="number" name="mwb_booking_buffer_input" id="mwb_booking_buffer_input" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_buffer_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+			<input type="number" name="mwb_booking_buffer_input" id="mwb_booking_buffer_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_buffer_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 			<select name="mwb_booking_buffer_duration" id="mwb_booking_buffer_duration" class="" style="width: auto; margin-right: 7px;">
 
 				<?php foreach ( $this->get_booking_duration_options() as $key => $value ) : ?>
-					<option <?php selected( $key, $this->setting_fields['mwb_booking_buffer_duration'] ); ?> value="<?php echo esc_html( $key ); ?>"><?php echo esc_html__( $value ); ?></option>
+					<option <?php selected( $key, $this->setting_fields['mwb_booking_buffer_duration'] ); ?> value="<?php echo esc_html( $key ); ?>"><?php echo esc_html( $value ); ?></option>
 				<?php endforeach; ?>
 
 			</select>
@@ -60,7 +60,7 @@
 		</div>
 		<p class="form-field">
 			<label for="mwb_advance_booking_max_input"><?php esc_html_e( 'Maximum advance booking', 'mwb-wc-bk' ); ?></label>
-			<input type="number" name="mwb_advance_booking_max_input" id="mwb_advance_booking_max_input" value="<?php esc_attr_e( $this->setting_fields['mwb_advance_booking_max_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+			<input type="number" name="mwb_advance_booking_max_input" id="mwb_advance_booking_max_input" value="<?php echo esc_attr( $this->setting_fields['mwb_advance_booking_max_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 			<select name="mwb_advance_booking_max_duration" id="mwb_advance_booking_max_duration" class="" style="width: auto; margin-right: 7px;">
 				<option value="month" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'month' ); ?>><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
 				<option value="day" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'day' ); ?>><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
@@ -70,7 +70,7 @@
 
 		<p class="form-field">
 			<label for="mwb_advance_booking_min_input"><?php esc_html_e( 'Minimum advance booking', 'mwb-wc-bk' ); ?></label>
-			<input type="number" name="mwb_advance_booking_min_input" id="mwb_advance_booking_min_input" value="<?php esc_attr_e( $this->setting_fields['mwb_advance_booking_min_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+			<input type="number" name="mwb_advance_booking_min_input" id="mwb_advance_booking_min_input" value="<?php echo esc_attr( $this->setting_fields['mwb_advance_booking_min_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 			<select name="mwb_advance_booking_min_duration" id="mwb_advance_booking_min_duration" class="" style="width: auto; margin-right: 7px;">
 				<option value="month" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'month' ); ?>><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
 				<option value="day" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'day' ); ?>><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
@@ -83,7 +83,9 @@
 			<label for="mwb_booking_not_allowed_days"><?php esc_html_e( 'Booking not allowed', 'mwb-wc-bk' ); ?></label>
 			<select name="mwb_booking_not_allowed_days[]" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Weekday(s)', 'mwb-wc-bk' ); ?>">
 				<?php foreach ( $this->mwb_booking_search_weekdays() as $key => $value ) : ?>
-					<option <?php echo in_array( $key, $this->setting_fields['mwb_booking_not_allowed_days'], true ) ? 'selected' : ''; ?> value="<?php echo esc_html( $key ); ?>"><?php esc_html_e( $value ); ?></option>
+					<?php if ( ! empty( $this->setting_fields['mwb_booking_not_allowed_days'] ) ) { ?>
+					<option <?php echo in_array( $key, $this->setting_fields['mwb_booking_not_allowed_days'], true ) ? 'selected' : ''; ?> value="<?php echo esc_html( $key ); ?>"><?php echo esc_html( $value ); ?></option>
+					<?php } ?>
 				<?php endforeach; ?>
 			</select>
 			<?php mwb_booking_help_tip( esc_html__( 'Select weekday(s) on which booking is not allowed', 'mwb-wc-bk' ) ); ?>

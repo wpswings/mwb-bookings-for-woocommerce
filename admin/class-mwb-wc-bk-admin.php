@@ -260,7 +260,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_custom_days_discount_input' => array( 'default' => '' ),
 			'mwb_booking_custom_discount_days'       => array( 'default' => '' ),
 			'mwb_services_enable_checkbox'           => array( 'default' => 'no' ),
-			'mwb_booking_services_select'            => array( 'default' => '' ),
+			'mwb_booking_services_select'            => array( 'default' => array() ),
 			'mwb_services_mandatory_check'           => array( 'default' => '' ),
 			'mwb_people_enable_checkbox'             => array( 'default' => 'no' ),
 			'mwb_min_people_per_booking'             => array( 'default' => '' ),
@@ -279,6 +279,28 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_not_allowed_days'           => array( 'default' => array() ),
 
 		);
+	}
+
+	/**
+	 * Set booking's default settings fields
+	 *
+	 * @param [type] $product_id ID of the booking.
+	 * @return void
+	 */
+	public function set_prouduct_settings_fields( $product_id ) {
+
+		foreach ( $this->get_product_settings() as $key => $value ) {
+
+			$data                         = get_post_meta( $product_id, $key, true );
+			$this->setting_fields[ $key ] = ! empty( $data ) ? $data : $value['default'];
+		}
+
+		// if( isset( $this->setting_fields ) ) {
+		// 	echo "<pre>";
+		// 	print_r( $this->setting_fields );
+		// 	echo "</pre>";
+		// 	die;
+		// }
 	}
 
 	/**
@@ -403,19 +425,36 @@ class Mwb_Wc_Bk_Admin {
 		return $arr;
 	}
 
+
 	/**
-	 * Set booking's default settings fields
+	 * Select2 search for services which are selected.
 	 *
-	 * @param [type] $product_id ID of the booking.
-	 * @return void
+	 * @since    1.0.0
 	 */
-	public function set_prouduct_settings_fields( $product_id ) {
+	public function selected_services_search() {
+		$return = array();
+		$args   = array(
+			'search'     => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+			'taxonomy'   => 'mwb_ct_people_type',
+			'hide_empty' => false,
+			'order_by'   => 'name',
+		);
+		$terms  = get_terms( $args );
 
-		foreach ( $this->get_product_settings() as $key => $value ) {
+		if ( ! empty( $terms ) && is_array( $terms ) && count( $terms ) ) {
 
-			$data                         = get_post_meta( $product_id, $key, true );
-			$this->setting_fields[ $key ] = ! empty( $data ) ? $data : $value['default'];
+			foreach ( $terms as $term ) {
+
+				$cat_name = ( mb_strlen( $term->name ) > 50 ) ? mb_substr( $term->name, 0, 49 ) . '...' : $term->name;
+
+				$return[] = array( $term->term_id, $term->name );
+			}
 		}
+
+		echo wp_json_encode( $return );
+
+		wp_die();
+
 	}
 
 	/**
@@ -1181,74 +1220,81 @@ class Mwb_Wc_Bk_Admin {
 		}
 		$rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash( $_POST['rule_count'] ) ) : 0;
 
-		$data = '<div id="mwb_global_availability_rule_' . $rule_count . '" data-id="' . $rule_count . '">
-					<table class="form-table mwb_global_availability_rule_fields" >
-						<tbody>
-							<div class="mwb_global_availability_rule_heading">
-								<h2>
-								<label>' . sprintf( 'Rule No- %u', $rule_count ) . '</label>
-								<input type="hidden" name="mwb_availability_rule_count" value="' . $rule_count . '" >
-								<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[' . ( $rule_count - 1 ) . ']" checked  >
-								</h2>
-							</div>
-							<tr valign="top">
-								<th scope="row" class="">
-									<label>Rule Name</label>
-								</th>
-								<td class="forminp forminp-text">
-									<input type="text" class="mwb_global_availability_rule_name" name="mwb_global_availability_rule_name[' . ( $rule_count - 1 ) . ']" >
-								</td>
-							</tr>
-							<tr valign="top">
-								<th scope="row" class="">
-									<label>Rule Type</label>
-								</th>
-								<td class="forminp forminp-text">
-									<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[' . ( $rule_count - 1 ) . ']" value="specific" checked >
-									<label>Specific Dates</label><br>
-									<input type="radio" class="mwb_global_availability_rule_type_generic" name="mwb_global_availability_rule_type[' . ( $rule_count - 1 ) . ']" value="generic">
-									<label>Generic Dates</label><br>
-								</td>
-							</tr>
-							<tr valign="top">
-								<th scope="row" class="">
-									<label>From</label>
-								</th>
-								<td class="forminp forminp-text">
-									<p>
-										<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[' . ( $rule_count - 1 ) . ']" >
-										<label>To</label>
-										<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[' . ( $rule_count - 1 ) . ']" >
-									</p>
-								</td>
-							</tr>
-							<tr valign="top" class="bookable">
-							<th scope="row" class=""></th>
-								<td class="forminp forminp-text">
-									<p>
-									<input type="radio" class="mwb_global_availability_rule_bookable" name="mwb_global_availability_rule_bookable[' . ( $rule_count - 1 ) . ']" value="bookable" checked >
-									<label>Bookable</label><br>
-									<input type="radio" class="mwb_global_availability_rule_non_bookable" name="mwb_global_availability_rule_bookable[' . ( $rule_count - 1 ) . ']" value="non-bookable" >
-									<label>Non-Bookable</label><br>
-									</p>
-								</td>
-							</tr>
-							<tr valign="top">
-								<th scope="row" class=""></th>
-								<td class="forminp forminp-text" >
-									<p>
-										<input type="checkbox" class="mwb_global_availability_rule_weekdays" name="mwb_global_availability_rule_weekdays[' . ( $rule_count - 1 ) . ']"  >
-										Rules for weekdays
-									</p>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<button type="button" id="mwb_delete_avialability_rule" class="button" rule_count="' . $rule_count . '" >Delete Rule</button>
-				</div>';
+		?>
 
-		echo $data;
-		wp_die();
+		<div id="mwb_global_availability_rule_<?php echo esc_html( $rule_count ); ?>" data-id="<?php echo esc_html( $rule_count ); ?>">
+			<table class="form-table mwb_global_availability_rule_fields" >
+				<tbody>
+					<div class="mwb_global_availability_rule_heading">
+						<h2>
+						<label><?php echo esc_html( sprintf( 'Rule No- %u', $rule_count ) ); ?></label>
+						<input type="hidden" name="mwb_availability_rule_count" value="<?php echo esc_html( $rule_count ); ?>" >
+						<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[<?php echo esc_html( $rule_count - 1 ); ?>]" checked  >
+						</h2>
+					</div>
+					<tr valign="top">
+						<th scope="row" class="">
+							<label><?php esc_attr_e( 'Rule Name', 'mwb-wc-bk' ); ?></label>
+						</th>
+						<td class="forminp forminp-text">
+							<input type="text" class="mwb_global_availability_rule_name" name="mwb_global_availability_rule_name[<?php echo esc_html( $rule_count - 1 ); ?>]" >
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row" class="">
+							<label><?php esc_attr_e( 'Rule Type', 'mwb-wc-bk' ); ?></label>
+						</th>
+						<td class="forminp forminp-text">
+							<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="specific" checked >
+							<label><?php esc_attr_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label><br>
+							<input type="radio" class="mwb_global_availability_rule_type_generic" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="generic">
+							<label><?php esc_attr_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label><br>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row" class="">
+							<label><?php esc_attr_e( 'From', 'mwb-wc-bk' ); ?></label>
+						</th>
+						<td class="forminp forminp-text">
+							<p>
+								<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" >
+								<label><?php esc_attr_e( 'To', 'mwb-wc-bk' ); ?></label>
+								<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" >
+							</p>
+						</td>
+					</tr>
+					<tr valign="top" class="bookable">
+					<th scope="row" class=""></th>
+						<td class="forminp forminp-text">
+							<p>
+							<input type="radio" class="mwb_global_availability_rule_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $rule_count - 1 ); ?>]" value="bookable" checked >
+							<label><?php esc_attr_e( 'Bookable', 'mwb-wc-bk' ); ?>Bookable</label><br>
+							<input type="radio" class="mwb_global_availability_rule_non_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $rule_count - 1 ); ?>]" value="non-bookable" >
+							<label><?php esc_attr_e( 'Non-Bookable', 'mwb-wc-bk' ); ?></label><br>
+							</p>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row" class=""></th>
+						<td class="forminp forminp-text" >
+							<p>
+								<input type="checkbox" class="mwb_global_availability_rule_weekdays" name="mwb_global_availability_rule_weekdays[<?php echo esc_html( $rule_count - 1 ); ?>]"  >
+								<?php esc_attr_e( 'Rules for weekdays', 'mwb-wc-bk' ); ?>
+							</p>
+						</td>
+						<?php foreach ( $this->mwb_booking_search_weekdays() as $key => $values ) { ?>
+							<td class="forminp forminp-text mwb_global_availability_rule_weekdays_book" style="display:none">
+								<?php echo esc_html( $values ); ?>
+								<input type="button" class="mwb_global_availability_rule_weekdays_book button" name="mwb_global_availability_rule_weekdays_book[<?php echo esc_html( $rule_count - 1 ); ?>][<?php echo esc_html( $key ); ?>]" value="bookable">
+							</td>
+						<?php } ?>
+					</tr>
+				</tbody>
+			</table>
+			<button type="button" id="mwb_delete_avialability_rule" class="button" rule_count="<?php echo esc_html( $rule_count ); ?>" >Delete Rule</button>
+		</div>
+			<?php
+			wp_die();
 	}
 
 	/**
@@ -1315,7 +1361,7 @@ class Mwb_Wc_Bk_Admin {
 
 		?>
 
-		<div id="mwb_global_cost_rule_' <?php echo esc_html( $rule_count ); ?>'" data-id="<?php echo esc_html( $rule_count ); ?>">
+		<div id="mwb_global_cost_rule_<?php echo esc_html( $rule_count ); ?>" data-id="<?php echo esc_html( $rule_count ); ?>">
 			<table class="form-table mwb_global_cost_rule_fields" >
 				<tbody>
 					<div class="mwb_global_cost_rule_heading">

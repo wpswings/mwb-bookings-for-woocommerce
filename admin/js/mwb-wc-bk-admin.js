@@ -61,6 +61,8 @@ function product_settings_js($) {
 				$('#mwb_booking_general_data #mwb_start_booking_time').show();
 				break;
 			case 'month':
+				$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
+				$('#mwb_booking_general_data #mwb_start_booking_time').hide();
 				break;
 			case 'day':
 				$( '#mwb_full_day_select' ).show();
@@ -107,14 +109,73 @@ function global_availability_rules($) {
 
 	$( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays' ).each(function() {
 		if ( $(this).is( ':checked' ) ) {
-			alert( 'checked' );
+			//alert( 'checked' );
 			$(this).closest( '.mwb_global_availability_rule_fields' ).find('.bookable').hide();
 			$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').show();
 		} else {
-			alert( 'un-checked' );
+			//alert( 'un-checked' );
 			$(this).closest( '.mwb_global_availability_rule_fields' ).find('.bookable').show();
 			$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').hide();
 		}
+
+		$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_weekdays_book_button' ).each( function() {
+			if( $(this).val() == 'bookable' ) {
+				$(this).css('color', 'green');
+			}
+			$( this ).on( 'click', function() {
+
+				var book = $(this).val();
+
+				switch ( book ) {
+					case 'bookable':
+						$(this).val('non-bookable');
+						$(this).css('color', 'red');
+						break;
+					case 'non-bookable':
+						$(this).val('no-change');
+						$(this).css('color', 'grey');
+						break;
+					case 'no-change':
+						$(this).val('bookable');
+						$(this).css('color', 'green');
+						break;
+				}
+				// var weekday = $(this).parent().find('p').text();
+				// switch ( weekday ) {
+				// 	case 'Sunday':
+				// 		alert('sunday');
+				// 		break;
+				// }
+			} );
+		});
+		$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_type' ).each(function(){
+			if ( $(this).is(":checked") ) {
+				var rule_type_check = $(this).val();
+				switch( rule_type_check ) {
+					case 'generic':
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_from').attr('type', 'month');
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_to').attr('type', 'month');
+						break;
+					case 'specific':
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_from').attr('type', 'date');
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_to').attr('type', 'date');
+						break;
+				}
+			}
+		});
+		$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_type' ).on( 'change', function(){
+			var rule_type = $(this).val();
+			switch( rule_type ) {
+				case 'generic':
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_from').attr('type', 'month');
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_to').attr('type', 'month');
+					break;
+				case 'specific':
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_from').attr('type', 'date');
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_to').attr('type', 'date');
+					break;
+			}
+		} );
 	});
 	
 	//var $('#mwb_global_availability_form table').parent().attr('data-id');
@@ -153,6 +214,7 @@ function global_availability_rules($) {
 		if( weekdays_rule_check ) {
 			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.bookable').hide();
 			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').show();
+			
 		} else {
 			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.bookable').show();
 			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').hide();

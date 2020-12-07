@@ -682,7 +682,8 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	public function menu_page_create_booking() {
-		echo 'Test booking';
+
+		require_once plugin_dir_path( __FILE__ ) . 'partials/mwb_create_booking.php';
 	}
 
 	public function menu_page_booking_settings() {
@@ -1251,7 +1252,7 @@ class Mwb_Wc_Bk_Admin {
 							<label><?php esc_attr_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label><br>
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr valign="top" class="range">
 						<th scope="row" class="">
 							<label><?php esc_attr_e( 'From', 'mwb-wc-bk' ); ?></label>
 						</th>
@@ -1264,7 +1265,7 @@ class Mwb_Wc_Bk_Admin {
 						</td>
 					</tr>
 					<tr valign="top" class="bookable">
-					<th scope="row" class=""></th>
+						<th scope="row" class=""></th>
 						<td class="forminp forminp-text">
 							<p>
 							<input type="radio" class="mwb_global_availability_rule_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $rule_count - 1 ); ?>]" value="bookable" checked >
@@ -1284,14 +1285,14 @@ class Mwb_Wc_Bk_Admin {
 						</td>
 						<?php foreach ( $this->mwb_booking_search_weekdays() as $key => $values ) { ?>
 							<td class="forminp forminp-text mwb_global_availability_rule_weekdays_book" style="display:none">
-								<?php echo esc_html( $values ); ?>
+								<p><?php echo esc_html( $values ); ?></p>
 								<input type="button" class="mwb_global_availability_rule_weekdays_book button" name="mwb_global_availability_rule_weekdays_book[<?php echo esc_html( $rule_count - 1 ); ?>][<?php echo esc_html( $key ); ?>]" value="bookable">
 							</td>
 						<?php } ?>
 					</tr>
 				</tbody>
 			</table>
-			<button type="button" id="mwb_delete_avialability_rule" class="button" rule_count="<?php echo esc_html( $rule_count ); ?>" >Delete Rule</button>
+			<button type="button" id="mwb_delete_avialability_rule" class="button" rule_count="<?php echo esc_html( $rule_count ); ?>" ><?php esc_attr_e( 'Delete Rule', 'mwb-wc-bk' ); ?></button>
 		</div>
 			<?php
 			wp_die();

@@ -27,9 +27,9 @@
 					<?php
 					if ( ! empty( $this->setting_fields['mwb_booking_services_select'] ) ) {
 						$selected_services = is_array( $this->setting_fields['mwb_booking_services_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_services_select'] ) : null;
-						echo "<pre>";
-						print_r( $selected_services );
-						echo "</pre>";
+						// echo "<pre>";
+						// print_r( $selected_services );
+						// echo "</pre>";
 						foreach ( $selected_services as $service_id ) {
 							$service_name = get_term( $service_id )->name;
 							?>

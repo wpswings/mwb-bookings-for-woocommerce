@@ -177,6 +177,8 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'booking_admin_menu' );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'remove_add_booking_submenu' );
+
 		$this->loader->add_action( 'init', $plugin_admin, 'booking_custom_post_type' );
 
 		$this->loader->add_action( 'init', $plugin_admin, 'booking_register_taxonomy_services' );
@@ -215,6 +217,12 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_add_global_cost_rule', $plugin_admin, 'add_global_cost_rule' );
 		$this->loader->add_action( 'wp_ajax_delete_global_cost_rule', $plugin_admin, 'delete_global_cost_rule' );
+
+		$this->loader->add_action( 'wp_ajax_create_booking_user_search', $plugin_admin, 'create_booking_user_search' );
+
+		$this->loader->add_action( 'wp_ajax_create_booking_product_search', $plugin_admin, 'create_booking_product_search' );
+
+		$this->loader->add_action( 'wp_ajax_create_booking_order_search', $plugin_admin, 'create_booking_order_search' );
 
 	}
 

@@ -7,6 +7,9 @@ jQuery(document).ready( function($) {
 	dashicons_ajax_change($);
 	global_availability_rules($);
 	global_cost_rules($);
+	create_booking_user_select2($);
+	create_booking_product_select2($);
+	create_booking_order_select2($);
 });
 
 function availability_not_allowed_days_select2($) {
@@ -15,10 +18,10 @@ function availability_not_allowed_days_select2($) {
 }
 
 function selected_services_select2($) {
-	if( ! jQuery('#mwb_booking_not_allowed_days').length > 0 ) {
+	if( ! jQuery('#mwb_create_booking_user_select').length > 0 ) {
 		return;
 	}
-	jQuery('#mwb_booking_services_select_search').select2({
+	jQuery('#mwb_create_booking_user_select').select2({
 		ajax:{
 			  url: mwb_booking_obj.ajaxurl,
 			  dataType: 'json',
@@ -27,6 +30,110 @@ function selected_services_select2($) {
 					return {
 					  q: params.term,
 					  action: 'selected_services_search'
+					};
+			  },
+			  processResults: function( data ) {
+			  var options = [];
+			  if ( data ) 
+			  {
+				  $.each( data, function( index, text )
+				  {
+					  text[1]+='(#'+text[0]+')';
+					  options.push( { id: text[0], text: text[1] } );
+				  });
+			  }
+			  return {
+				  results:options
+			  };
+		  },
+		  cache: true
+	  },
+	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+  });
+}
+
+function create_booking_user_select2($) {
+	if( ! jQuery('#mwb_create_booking_user_select').length > 0 ) {
+		return;
+	}
+	jQuery('#mwb_create_booking_user_select').select2({
+		ajax:{
+			  url: mwb_booking_obj.ajaxurl,
+			  dataType: 'json',
+			  delay: 200,
+			  data: function (params) {
+					return {
+					  q: params.term,
+					  action: 'create_booking_user_search'
+					};
+			  },
+			  processResults: function( data ) {
+			  var options = [];
+			  if ( data ) 
+			  {
+				  $.each( data, function( index, text )
+				  {
+					  text[1]+='( #'+text[0]+')';
+					  options.push( { id: text[0], text: text[1] } );
+				  });
+			  }
+			  return {
+				  results:options
+			  };
+		  },
+		  cache: true
+	  },
+	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+  });
+}
+
+function create_booking_product_select2($) {
+	if( ! jQuery('#mwb_create_booking_product_select').length > 0 ) {
+		return;
+	}
+	jQuery('#mwb_create_booking_product_select').select2({
+		ajax:{
+			  url: mwb_booking_obj.ajaxurl,
+			  dataType: 'json',
+			  delay: 200,
+			  data: function (params) {
+					return {
+					  q: params.term,
+					  action: 'create_booking_product_search'
+					};
+			  },
+			  processResults: function( data ) {
+			  var options = [];
+			  if ( data ) 
+			  {
+				  $.each( data, function( index, text )
+				  {
+					  text[1]+='( #'+text[0]+')';
+					  options.push( { id: text[0], text: text[1] } );
+				  });
+			  }
+			  return {
+				  results:options
+			  };
+		  },
+		  cache: true
+	  },
+	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+  });
+}
+function create_booking_order_select2($) {
+	if( ! jQuery('#mwb_create_booking_order_select').length > 0 ) {
+		return;
+	}
+	jQuery('#mwb_create_booking_order_select').select2({
+		ajax:{
+			  url: mwb_booking_obj.ajaxurl,
+			  dataType: 'json',
+			  delay: 200,
+			  data: function (params) {
+					return {
+					  q: params.term,
+					  action: 'create_booking_order_search'
 					};
 			  },
 			  processResults: function( data ) {

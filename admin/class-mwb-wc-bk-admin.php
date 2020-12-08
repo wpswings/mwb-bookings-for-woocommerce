@@ -77,7 +77,7 @@ class Mwb_Wc_Bk_Admin {
 	public function enqueue_styles() {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
-		//wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -99,11 +99,11 @@ class Mwb_Wc_Bk_Admin {
 			)
 		);
 
-		/*wp_enqueue_script( 'select2_js', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'select2_js', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 
-		wp_enqueue_script( 'mwb_booking_select2', plugin_dir_url( __FILE__ ) . 'js/mwb_select2.js', array( 'jquery' ), $this->version, false );
+		// wp_enqueue_script( 'mwb_booking_select2', plugin_dir_url( __FILE__ ) . 'js/mwb_select2.js', array( 'jquery' ), $this->version, false );
 
-		wp_localize_script( 'mwb_booking_select2', 'ajax_url', admin_url( 'admin-ajax.php' ) );*/
+		// wp_localize_script( 'mwb_booking_select2', 'ajax_url', admin_url( 'admin-ajax.php' ) );
 
 		wp_enqueue_script( 'iconify', 'https://code.iconify.design/1/1.0.7/iconify.min.js', array(), '1.0.7', false );
 
@@ -408,18 +408,18 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function mwb_booking_months() {
 		$arr = array(
-			'january'   => __( 'January', 'mwb-wc-bk' ),
-			'february'  => __( 'February', 'mwb-wc-bk' ),
-			'march'     => __( 'March', 'mwb-wc-bk' ),
-			'april'     => __( 'April', 'mwb-wc-bk' ),
-			'may'       => __( 'May', 'mwb-wc-bk' ),
-			'june'      => __( 'June', 'mwb-wc-bk' ),
-			'july'      => __( 'July', 'mwb-wc-bk' ),
-			'august'    => __( 'August', 'mwb-wc-bk' ),
-			'september' => __( 'September', 'mwb-wc-bk' ),
-			'october'   => __( 'October', 'mwb-wc-bk' ),
-			'november'  => __( 'November', 'mwb-wc-bk' ),
-			'december'  => __( 'December', 'mwb-wc-bk' ),
+			'jan' => __( 'January', 'mwb-wc-bk' ),
+			'feb' => __( 'February', 'mwb-wc-bk' ),
+			'mar' => __( 'March', 'mwb-wc-bk' ),
+			'apr' => __( 'April', 'mwb-wc-bk' ),
+			'may' => __( 'May', 'mwb-wc-bk' ),
+			'jun' => __( 'June', 'mwb-wc-bk' ),
+			'jul' => __( 'July', 'mwb-wc-bk' ),
+			'aug' => __( 'August', 'mwb-wc-bk' ),
+			'sep' => __( 'September', 'mwb-wc-bk' ),
+			'oct' => __( 'October', 'mwb-wc-bk' ),
+			'nov' => __( 'November', 'mwb-wc-bk' ),
+			'dec' => __( 'December', 'mwb-wc-bk' ),
 		);
 		apply_filters( 'mwb_booking_months', $arr );
 		return $arr;
@@ -445,12 +445,135 @@ class Mwb_Wc_Bk_Admin {
 
 			foreach ( $terms as $term ) {
 
-				$cat_name = ( mb_strlen( $term->name ) > 50 ) ? mb_substr( $term->name, 0, 49 ) . '...' : $term->name;
+				$term->name = ( mb_strlen( $term->name ) > 50 ) ? mb_substr( $term->name, 0, 49 ) . '...' : $term->name;
 
 				$return[] = array( $term->term_id, $term->name );
 			}
 		}
 
+		echo wp_json_encode( $return );
+
+		wp_die();
+
+	}
+
+	/**
+	 * Select2 search for services which are selected.
+	 *
+	 * @since    1.0.0
+	 */
+	public function create_booking_user_search() {
+
+		$return    = array();
+		$args      = array(
+			'search'         => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+			'search_columns' => array(
+				'user_login',
+				'user_email',
+				'display_name',
+			),
+		);
+		$get_users = new WP_User_Query( $args );
+		$users     = $get_users->get_results();
+
+		if ( ! empty( $users ) ) {
+			foreach ( $users as $user ) {
+				$user_name = $user->data->user_login;
+				$user_name = ( mb_strlen( $user_name ) > 50 ) ? mb_substr( $user_name, 0, 49 ) . '...' : $user_name;
+
+				$return[] = array( $user->ID, $user_name );
+			}
+		}
+
+		echo wp_json_encode( $return );
+
+		wp_die();
+
+	}
+
+	/**
+	 * Select2 search for Product which are selected.
+	 *
+	 * @since    1.0.0
+	 */
+	public function create_booking_product_search() {
+		$return   = array();
+		$args     = array(
+			's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+			'post_type'           => array( 'product' ),
+			'post_status'         => 'publish',
+			'ignore_sticky_posts' => true,
+			'posts_per_page'      => -1,
+		);
+		$products = new WP_Query( $args );
+
+		if ( $products->have_posts() ) {
+			while ( $products->have_posts() ) {
+				$products->the_post();
+				$product_title = ( mb_strlen( $products->post->post_title ) > 50 ) ? mb_substr( $products->post->post_title, 0, 49 ) . '...' : $products->post->post_title;
+				/**
+				 * Check for post type as query sometimes returns posts even after mentioning post_type.
+				 * As some plugins alter query which causes issues.
+				 */
+				$post_type = get_post_type( $products->post->ID );
+
+				if ( 'product' !== $post_type ) {
+					continue;
+				}
+				$product      = wc_get_product( $products->post->ID );
+				$product_type = $product->get_type();
+
+				$unsupported_product_types = array(
+					'grouped',
+					'external',
+					'subscription',
+					'variable-subscription',
+					'subscription_variation',
+				);
+
+				if ( in_array( $product_type, $unsupported_product_types ) ) {
+					continue;
+				}
+				$return[] = array( $products->post->ID, $product_title );
+			}
+		}
+		echo wp_json_encode( $return );
+
+		wp_die();
+
+	}
+
+	/**
+	 * Select2 search for Product which are selected.
+	 *
+	 * @since    1.0.0
+	 */
+	public function create_booking_order_search() {
+		$return = array();
+		$loop   = new WP_Query(
+			array(
+				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+				'post_type'           => 'shop_order',
+				'post_status'         => array_keys( wc_get_order_statuses() ),
+				'posts_per_page'      => -1,
+			)
+		);
+
+		// The WordPress post loop.
+		if ( $loop->have_posts() ) {
+			while ( $loop->have_posts() ) {
+				$loop->the_post();
+
+				// The order ID.
+				$order_id = $loop->post->ID;
+
+				$order = wc_get_order( $order_id );
+
+				if ( ! empty( $order ) ) {
+					$return[] = array( $order->ID, '' );
+				}
+			}
+		}
 		echo wp_json_encode( $return );
 
 		wp_die();
@@ -509,10 +632,13 @@ class Mwb_Wc_Bk_Admin {
 			'show_in_menu'       => true,
 			'show_in_nav_menu'   => true,
 			'show_in_admin_bar'  => true,
-			'capability_type'    => 'post',
 			'hierarchical'       => false,
+			'capability_type'    => 'post',
+			'capabilities'       => array(
+				'create_posts' => false,
+			),
 			'show_in_rest'       => false,
-			'supports'           => array( 'title', 'editor', 'thumbnail', 'comments' ),
+			'supports'           => array( 'thumbnail' ),
 			'taxonomies'         => array( 'mwb_ct_services', 'mwb_ct_people_type' ),
 			'map_meta_cap'       => true,
 			'query-var'          => true,
@@ -679,6 +805,17 @@ class Mwb_Wc_Bk_Admin {
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Global booking Settings', 'mwb-wc-bk' ), 'Settings', 'manage_options', 'global-settings', array( $this, 'menu_page_booking_settings' ) );
 
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Calendar', 'mwb-wc-bk' ), 'Calendar', 'manage_options', 'calendar', array( $this, 'menu_page_calendar' ) );
+	}
+
+	/**
+	 * Remove the default add booking submenu page.
+	 *
+	 * @return void
+	 */
+	public function remove_add_booking_submenu() {
+		if ( post_type_exists( 'mwb_cpt_booking' ) ) {
+			remove_submenu_page( 'edit.php?post_type=mwb_cpt_booking', 'post-new.php?post_type=mwb_cpt_booking' );
+		}
 	}
 
 	public function menu_page_create_booking() {

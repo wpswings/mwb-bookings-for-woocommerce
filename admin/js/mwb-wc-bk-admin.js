@@ -10,18 +10,19 @@ jQuery(document).ready( function($) {
 	create_booking_user_select2($);
 	create_booking_product_select2($);
 	create_booking_order_select2($);
+	create_booking_product_details($);
 });
 
 function availability_not_allowed_days_select2($) {
-	if( jQuery('#mwb_booking_not_allowed_days').length > 0 )
-		jQuery('#mwb_booking_not_allowed_days').select2();
+	if( $('#mwb_booking_not_allowed_days').length > 0 )
+		$('#mwb_booking_not_allowed_days').select2();
 }
 
 function selected_services_select2($) {
-	if( ! jQuery('#mwb_create_booking_user_select').length > 0 ) {
+	if( ! jQuery('#mwb_booking_services_select_search').length > 0 ) {
 		return;
 	}
-	jQuery('#mwb_create_booking_user_select').select2({
+	jQuery('#mwb_booking_services_select_search').select2({
 		ajax:{
 			  url: mwb_booking_obj.ajaxurl,
 			  dataType: 'json',
@@ -399,6 +400,29 @@ function global_cost_rules($) {
 			},
 			success: function( data ){
 				$( '#mwb_global_cost_rule_' + del_count ).remove();
+			}
+		});
+	});
+
+}
+
+function create_booking_product_details($) {
+	// var form = $('#mwb_create_booking_form');
+	// var selected_option = form.find( '#mwb_create_booking_product_select' );
+
+	$('#mwb_create_booking_form').on( 'change', '#mwb_create_booking_product_select', function() {
+		//alert( $(this).val() );
+		var product_id = $(this).val();
+		$.ajax({
+			url  : mwb_booking_obj.ajaxurl,
+			type : 'POST',
+			data : {
+				'action'     : 'create_booking_product_details',
+				'nonce'      : mwb_booking_obj.nonce,
+				'product_id' : product_id,
+			},
+			success: function( data ) {
+				
 			}
 		});
 	});

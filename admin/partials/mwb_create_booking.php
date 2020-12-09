@@ -15,55 +15,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// $loop   = new WP_Query(
-// 	array(
-// 		'post_type'      => 'shop_order',
-// 		'post_status'    => array_keys( wc_get_order_statuses() ),
-// 		'posts_per_page' => -1,
-// 	)
-// );
-// if ( $loop->have_posts() ) {
-// 	while ( $loop->have_posts() ) {
-// 		$loop->the_post();
+if ( isset( $_POST['mwb_create_booking_submit_button'] ) ) {
 
-// 		// The order ID.
-// 		$order_id = $loop->post->ID;
+	$user_id            = isset( $_POST['mwb_create_booking_user_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_user_select'] ) ) : '';
+	$product_id         = isset( $_POST['mwb_create_booking_product_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_product_select'] ) ) : '';
+	$assign_order       = isset( $_POST['mwb_create_booking_assign_order'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_assign_order'] ) ) : '';
+	$order_id_to_assign = isset( $_POST['mwb_create_booking_order_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_order_select'] ) ) : '';
+	// $new_post = array(
+	// 	'post_type'      => 'mwb_cpt_booking',
+	// 	'post_title'     => '',
+	// 	'post_date_gmt'  => gmdate( 'Y-m-d H:i:s' ),
+	// 	'post_content'   => '',
+	// 	'post_status'    => 'publish',
+	// 	'comment_status' => 'closed',
+	// 	'ping_status'    => 'closed',
+	// );
 
-// 		$order = wc_get_order( $order_id );
+	// $postid = wp_insert_post( $new_post );
 
-// 		if ( ! empty( $order ) ) {
-// 			$return[] = array( $order->ID, '' );
-// 		}
-// 	}
-// }
-// print_r($return);
+	$create_booking = array(
+		'user_id'      => $user_id,
+		'product_id'   => $product_id,
+		'assign_order' => $assign_order,
+		'order_id'     => $order_id_to_assign,
+	);
 
-// if ( isset( $_POST['mwb_create_booking_submit_button'] ) ) {
+	//update_post_meta( '' )
+	echo "<pre>";
+	print_r( $create_booking );
+	echo "</pre>";
 
-// 	$user_id         = isset( $_POST['mwb_create_booking_user_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_user_select'] ) ) : '';
-// 	$product         = isset( $_POST['mwb_create_booking_product_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_product_select'] ) ) : '';
-// 	$assign_order    = isset( $_POST['mwb_create_booking_assign_order'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_assign_order'] ) ) : '';
-// 	$order_to_assign = isset( $_POST['mwb_create_booking_order_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_order_select'] ) ) : '';
-// 	// $new_post = array(
-// 	// 	'post_type'      => 'mwb_cpt_booking',
-// 	// 	'post_title'     => '',
-// 	// 	'post_date_gmt'  => gmdate( 'Y-m-d H:i:s' ),
-// 	// 	'post_content'   => '',
-// 	// 	'post_status'    => 'publish',
-// 	// 	'comment_status' => 'closed',
-// 	// 	'ping_status'    => 'closed',
-// 	// );
 
-// 	// $postid = wp_insert_post( $new_post );
-
-// 	$create_booking = array(
-// 		'user'         => $user_id,
-// 		'product'      => $product,
-// 		'assign_order' => $assign_order,
-// 		'order'        => $order_to_assign,
-// 	);
-// 	print_r( $create_booking );
-// }
+}
 
 ?>
 <form id="mwb_create_booking_form" method="POST" action="">
@@ -80,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<select name="mwb_create_booking_user_select" id="mwb_create_booking_user_select" data-placeholder="<?php esc_html_e( 'Guest', 'mwb-wc-bk' ); ?>">
-								<option value="<?php //echo esc_html( $user_id ); ?>" selected="selected"><?php //echo esc_html( $user_id ); ?></option>
+								<option value="<?php // echo esc_html( $create_booking['user_id'] ); ?>" selected="selected"><?php //echo esc_html( $create_booking['user_id'] ); ?></option>
 							</select>
 						</td>
 					</tr>
@@ -90,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</th>
 						<td class="forminp forminp-text">
 							<select name="mwb_create_booking_product_select" id="mwb_create_booking_product_select" data-placeholder="<?php esc_html_e( 'Choose Product', 'mwb-wc-bk' ); ?>">
-								<option value=""></option>
+								<option value="" ></option>
 							</select>
 						</td>
 					</tr>
@@ -110,18 +93,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</select>
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr valign="top" class="product_ajax">
 						<th scope="row" class="">
 							<label><h3><?php esc_html_e( 'Details', 'mwb-wc-bk' ); ?></h3></label>
 						</th>
+						<?php //if ( ! isset( $product_id ) ) { ?>
 						<td class="forminp forminp-text">
+							<p><?php esc_html_e( 'Select the Product above to see the details', '' ); ?></p>
+						</td>
+						<?php //} else { ?>
+							<?php
+								$product_meta = get_post_meta( $product_id );
+								echo "<pre>";
+								print_r( $product_meta );
+								echo "</pre>";
+								?>
+						<!-- <td class="forminp forminp-text">
 							<p>
-								<label for=""><?php esc_html_e( 'Start Date', '' ); ?></label>
+								<label for=""><?php //esc_html_e( 'Start Date', '' ); ?></label>
 								<input type="date" name="mwb_create_booking_" data-placeholder="Start Date">
-								<label for=""><?php esc_html_e( 'End Date', '' ); ?></label>
+								<label for=""><?php //esc_html_e( 'End Date', '' ); ?></label>
 								<input type="date" data-placeholder="End Date">
 							</p>
-						</td>
+						</td> -->
+						<?php //} ?>
 					</tr>
 				</tbody>
 			</table>

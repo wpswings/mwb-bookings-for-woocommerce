@@ -88,8 +88,11 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function enqueue_scripts() {
 
+		//wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ) );
+
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
 
+		//wp_enqueue_script( 'woocommerce_admin' );
 		wp_localize_script(
 			$this->plugin_name,
 			'mwb_booking_obj',
@@ -224,12 +227,19 @@ class Mwb_Wc_Bk_Admin {
 		foreach ( $this->get_product_settings() as $key => $value ) {
 			if ( is_array( $_POST[ $key ] ) ) {
 				$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default'];
+				echo $key . "->";
+				print_r( $posted_data );
+				echo '<br>';
 			} else {
-				$posted_data = ! empty( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : $value['default'];
+				$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default'];
+				echo $key. "->";
+				print_r( $posted_data );
+				echo '<br>';
 			}
-
+			//print_r( $_POST[ $key ] );
 			update_post_meta( $post_id, $key, $posted_data );
 		}
+		//die;
 	}
 
 	/**
@@ -242,7 +252,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_unit_select'                => array( 'default' => 'customer' ),
 			'mwb_booking_unit_input'                 => array( 'default' => '1' ),
 			'mwb_booking_unit_duration'              => array( 'default' => 'day' ),
-			'mwb_start_booking_date'                 => array( 'default' => '' ),
+			'mwb_start_booking_from'                 => array( 'default' => '' ),
 			'mwb_start_booking_time'                 => array( 'default' => '' ),
 			'mwb_start_booking_custom_date'          => array( 'default' => '' ),
 			'mwb_enable_range_picker'                => array( 'default' => 'no' ),
@@ -435,7 +445,7 @@ class Mwb_Wc_Bk_Admin {
 		$return = array();
 		$args   = array(
 			'search'     => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-			'taxonomy'   => 'mwb_ct_people_type',
+			'taxonomy'   => 'mwb_ct_services',
 			'hide_empty' => false,
 			'order_by'   => 'name',
 		);
@@ -464,17 +474,18 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function create_booking_user_search() {
 
-		$return    = array();
-		$args      = array(
-			'search'         => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+		$return      = array();
+		$search_term = ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '';
+		$args        = array(
+			'search'         => '*' . $search_term . '*',
 			'search_columns' => array(
 				'user_login',
 				'user_email',
 				'display_name',
 			),
 		);
-		$get_users = new WP_User_Query( $args );
-		$users     = $get_users->get_results();
+		$get_users   = new WP_User_Query( $args );
+		$users       = $get_users->get_results();
 
 		if ( ! empty( $users ) ) {
 			foreach ( $users as $user ) {
@@ -549,13 +560,14 @@ class Mwb_Wc_Bk_Admin {
 	 * @since    1.0.0
 	 */
 	public function create_booking_order_search() {
-		$return = array();
-		$loop   = new WP_Query(
+		$return   = array();
+		$order_id = ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '';
+		$loop     = new WP_Query(
 			array(
-				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-				'post_type'           => 'shop_order',
-				'post_status'         => array_keys( wc_get_order_statuses() ),
-				'posts_per_page'      => -1,
+				'post__in'       => array( $order_id ),
+				'post_type'      => 'shop_order',
+				'post_status'    => array( 'completed' ),
+				'posts_per_page' => -1,
 			)
 		);
 
@@ -570,7 +582,7 @@ class Mwb_Wc_Bk_Admin {
 				$order = wc_get_order( $order_id );
 
 				if ( ! empty( $order ) ) {
-					$return[] = array( $order->ID, '' );
+					$return[] = array( $order->ID, $loop->post->post_title );
 				}
 			}
 		}
@@ -578,6 +590,22 @@ class Mwb_Wc_Bk_Admin {
 
 		wp_die();
 
+	}
+	/**
+	 * Product Details for create booking.
+	 *
+	 * @since    1.0.0
+	 */
+	public function create_booking_product_details() {
+
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+
+		if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+			die( 'Nonce value cannot be verified' );
+		}
+
+		$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+		$product_meta = get_post_meta( $product_id );
 	}
 
 	/**

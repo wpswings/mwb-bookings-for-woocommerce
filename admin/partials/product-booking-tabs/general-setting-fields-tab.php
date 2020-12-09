@@ -30,12 +30,12 @@
 	<div id="mwb_start_booking_from" class="options_group">
 		<p class="form-field">
 			<label for="mwb_start_booking_date"><?php esc_html_e( 'Start Booking on date', 'mwb-wc-bk' ); ?></label>
-			<select name="mwb_start_booking_date" id="mwb_start_booking_date">
-				<option value="none" <?php selected( $this->setting_fields['mwb_start_booking_date'], 'none' ); ?>><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
-				<option value="today" <?php selected( $this->setting_fields['mwb_start_booking_date'], 'today' ); ?>><?php esc_html_e( 'Today', 'mwb-wc-bk' ); ?></option>
-				<option value="tomorrow" <?php selected( $this->setting_fields['mwb_start_booking_date'], 'tomorrow' ); ?>><?php esc_html_e( 'Tomorrow', 'mwb-wc-bk' ); ?></option>
-				<option value="initially_available" <?php selected( $this->setting_fields['mwb_start_booking_date'], 'initially_available' ); ?>><?php esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option>
-				<option value="custom_date" <?php selected( $this->setting_fields['mwb_start_booking_date'], 'custom_date' ); ?>><?php esc_html_e( 'Custom Date', 'mwb-wc-bk' ); ?></option>
+			<select name="mwb_start_booking_from" id="mwb_start_booking_date">
+				<option value="none" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'none' ); ?>><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
+				<option value="today" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'today' ); ?>><?php esc_html_e( 'Today', 'mwb-wc-bk' ); ?></option>
+				<option value="tomorrow" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'tomorrow' ); ?>><?php esc_html_e( 'Tomorrow', 'mwb-wc-bk' ); ?></option>
+				<option value="initially_available" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'initially_available' ); ?>><?php esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option>
+				<option value="custom_date" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'custom_date' ); ?>><?php esc_html_e( 'Custom Date', 'mwb-wc-bk' ); ?></option>
 			</select>
 			<select name="mwb_start_booking_time" id="mwb_start_booking_time" style="display:none">
 				<option value="none" <?php selected( $this->setting_fields['mwb_start_booking_time'], 'none' ); ?> ><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
@@ -48,7 +48,7 @@
 			<input id="mwb_start_booking_custom_date" name="mwb_start_booking_custom_date" type="date" value="<?php esc_attr( $this->setting_fields['mwb_start_booking_custom_date'] ); ?>">
 		</p>
 	</div>
-	<div id="mwb_calendar_range" class="options_group" style="display:none">
+	<div id="mwb_calendar_range" class="options_group" style="display:block">
 		<?php
 			woocommerce_wp_checkbox(
 				array(

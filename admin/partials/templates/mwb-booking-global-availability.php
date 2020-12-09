@@ -154,7 +154,7 @@ echo '</pre>';
 						<?php foreach ( $this->mwb_booking_search_weekdays() as $key => $values ) { ?>
 							<td class="forminp forminp-text mwb_global_availability_rule_weekdays_book">
 								<p><?php echo esc_html( $values ); ?></p>
-								<input type="hidden" >
+								<input type="hidden" name="mwb_global_availability_rule_weekdays_book[<?php echo esc_html( $count ); ?>][<?php echo esc_html( $key ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_weekdays_book[ $count ][ $key ] ); ?>">
 								<input type="button" class="mwb_global_availability_rule_weekdays_book_button button" name="mwb_global_availability_rule_weekdays_book[<?php echo esc_html( $count ); ?>][<?php echo esc_html( $key ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_weekdays_book[ $count ][ $key ] ); ?>" book="bookable">
 							</td>
 						<?php } ?>

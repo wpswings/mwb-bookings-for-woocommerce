@@ -252,7 +252,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_unit_select'                => array( 'default' => 'customer' ),
 			'mwb_booking_unit_input'                 => array( 'default' => '1' ),
 			'mwb_booking_unit_duration'              => array( 'default' => 'day' ),
-			'mwb_start_booking_from'                 => array( 'default' => '' ),
+			'mwb_start_booking_from'                 => array( 'default' => 'none' ),
 			'mwb_start_booking_time'                 => array( 'default' => '' ),
 			'mwb_start_booking_custom_date'          => array( 'default' => '' ),
 			'mwb_enable_range_picker'                => array( 'default' => 'no' ),
@@ -606,6 +606,8 @@ class Mwb_Wc_Bk_Admin {
 
 		$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
 		$product_meta = get_post_meta( $product_id );
+
+
 	}
 
 	/**
@@ -661,18 +663,91 @@ class Mwb_Wc_Bk_Admin {
 			'show_in_nav_menu'   => true,
 			'show_in_admin_bar'  => true,
 			'hierarchical'       => false,
-			'capability_type'    => 'post',
+			'capability_type'    => 'shop_order',
 			'capabilities'       => array(
 				'create_posts' => false,
 			),
 			'show_in_rest'       => false,
-			'supports'           => array( 'thumbnail' ),
+			'supports'           => false,
 			'taxonomies'         => array( 'mwb_ct_services', 'mwb_ct_people_type' ),
 			'map_meta_cap'       => true,
 			'query-var'          => true,
 			'menu_icon'          => 'dashicons-calendar-alt',
+			//'add_order_meta_boxes' => true,
 		);
-		register_post_type( 'mwb_cpt_booking', $args );
+	//	register_post_type( 'mwb_cpt_booking', $args );
+		unregister_post_type( 'mwb_cpt_booking' );
+	}
+	/**
+	 * Custom-Post Order Type Booking
+	 *
+	 * @return void
+	 */
+	public function booking_custom_post_order_type() {
+		$labels = array(
+			'name'                  => _x( 'Bookings', 'Post type general name', 'mwb-wc-bk' ),
+			'singular_name'         => _x( 'Booking', 'Post type singular name', 'mwb-wc-bk' ),
+			'menu_name'             => _x( 'Bookings', 'Admin Menu text', 'mwb-wc-bk' ),
+			'add_new'               => _x( 'Add Booking', 'Booking', 'mwb-wc-bk' ),
+			'add_new_item'          => __( 'Add New Booking', 'mwb-wc-bk' ),
+			'edit_item'             => __( 'Edit Boooking', 'mwb-wc-bk' ),
+			'new_item'              => __( 'New Booking', 'mwb-wc-bk' ),
+			'name_admin_bar'        => _x( 'Bookings', 'Add new on toolbar', 'mwb-wc-bk' ),
+			'view_item'             => __( 'View Bookings', 'mwb-wc-bk' ),
+			'all_items'             => __( 'All Bookings', 'mwb-wc-bk' ),
+			'search_items'          => __( 'Search Bookings', 'mwb-wc-bk' ),
+			'not_found'             => __( 'No booking found', 'mwb-wc-bk' ),
+			'not_found_in_trash'    => __( 'No bookings found in trash', 'mwb-wc-bk' ),
+		//	'parent_items_colon'    => __( 'Parent Booking:', 'mwb-wc-bk' ),
+			'archives'              => __( 'Archives', 'mwb-wc-bk' ),
+			'attributes'            => __( 'Attributes', 'mwb-wc-bk' ),
+			'insert_into_item'      => __( 'Insert into Product', 'mwb-wc-bk' ),
+			'uploaded_to_this_item' => __( 'Upload to this Product', 'mwb-wc-bk' ),
+			'featured_image'        => _x( 'Booking Cover Image', 'Overrides the featured image phrase for this post type', 'mwb-wc-bk' ),
+		);
+		$args   = array(
+			'labels'                           => $labels,
+			'public'                           => true,
+			'description'                      => __( 'Bookings are described here', 'mwb-wc-bk' ),
+			'has_archive'                      => true,
+			'rewrite'                          => array( 'slug' => 'booking' ), // my custom slug.
+			// 'publicly_queryable'               => false,
+			// 'show_ui'                          => true,
+			// 'show_in_menu'                     => true,
+			// 'show_in_nav_menu'                 => true,
+			// 'show_in_admin_bar'                => true,
+			'hierarchical'                     => false,
+			'capability_type'                  => 'shop_order', // important.
+			'capabilities'                     => array(
+				'create_posts' => false,
+			),
+			'show_in_rest'                     => false,
+			'supports'                         => false,
+			'taxonomies'                       => array( 'mwb_ct_services', 'mwb_ct_people_type', 'mwb_ct_costs' ),
+			// 'map_meta_cap'                     => true,
+			// 'query-var'                        => true,
+			'menu_icon'                        => 'dashicons-calendar-alt',
+			'exclude_from_orders_screen'       => true,
+			'add_order_meta_boxes'             => true,
+			'exclude_from_order_count'         => true,
+			'exclude_from_order_views'         => true,
+			'exclude_from_order_reports'       => true,
+			'exclude_from_order_sales_reports' => true,
+			'class_name'                       => 'WC_Order',
+		);
+		wc_register_order_type( 'mwb_cpt_booking', $args );
+	}
+
+	/**
+	 * Remove meta boxes from the mwb_cpt_booking order type post edit screen
+	 */
+	public function remove_meta_box_cpt() {
+
+		$screen    = get_current_screen();
+		$screen_id = $screen ? $screen->id : '';
+	//	remove_meta_box( 'postcustom', 'shop_order', 'normal' );
+		remove_meta_box( 'woocommerce-order-downloads', 'mwb_cpt_booking', 'normal' );
+
 	}
 
 	/**
@@ -682,7 +757,7 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function my_rewrite_flush() {
 
-		$this->booking_custom_post_type();
+		$this->booking_custom_post_order_type();
 		$this->booking_register_taxonomy_services();
 		$this->booking_register_taxonomy_people_type();
 
@@ -877,6 +952,7 @@ class Mwb_Wc_Bk_Admin {
 					array(
 						'id'          => 'mwb_booking_ct_services_multiply_units',
 						'value'       => '',
+						'label'       => '',
 						'description' => __( 'Multiply cost by booking units', 'mwb-wc-bk' ),
 					)
 				);
@@ -884,6 +960,7 @@ class Mwb_Wc_Bk_Admin {
 					array(
 						'id'          => 'mwb_booking_ct_services_multiply_people',
 						'value'       => '',
+						'label'       => '',
 						'description' => __( 'Multiply cost by number of peoples per booking', 'mwb-wc-bk' ),
 					)
 				);
@@ -891,6 +968,7 @@ class Mwb_Wc_Bk_Admin {
 					array(
 						'id'          => 'mwb_booking_ct_services_has_quantity',
 						'value'       => '',
+						'label'       => '',
 						'description' => __( 'If has quantity', 'mwb-wc-bk' ),
 					)
 				);
@@ -898,6 +976,7 @@ class Mwb_Wc_Bk_Admin {
 					array(
 						'id'          => 'mwb_booking_ct_services_hidden',
 						'value'       => '',
+						'label'       => '',
 						'description' => __( 'If Hidden', 'mwb-wc-bk' ),
 					)
 				);
@@ -905,6 +984,7 @@ class Mwb_Wc_Bk_Admin {
 					array(
 						'id'          => 'mwb_booking_ct_services_optional',
 						'value'       => '',
+						'label'       => '',
 						'description' => __( 'If Optional', 'mwb-wc-bk' ),
 					)
 				);
@@ -1181,6 +1261,7 @@ class Mwb_Wc_Bk_Admin {
 				array(
 					'id'          => 'mwb_booking_ct_costs_multiply_units',
 					'value'       => '',
+					'label'       => '',
 					'description' => __( 'Multiply cost by booking unit duration', 'mwb-wc-bk' ),
 				)
 			);
@@ -1188,6 +1269,7 @@ class Mwb_Wc_Bk_Admin {
 				array(
 					'id'          => 'mwb_booking_ct_costs_multiply_people',
 					'value'       => '',
+					'label'       => '',
 					'description' => __( 'Multiply cost by the number of people', 'mwb-wc-bk' ),
 				)
 			);
@@ -1199,7 +1281,7 @@ class Mwb_Wc_Bk_Admin {
 	/**
 	 * Save the Custom fields in our custom taxonomy "mwb_ct_costs"
 	 *
-	 * @param mixed $term_id Term ID to bbe saved.
+	 * @param mixed $term_id Term ID to be saved.
 	 * @param mixed $tt_id Term Taxonomy ID.
 	 * @return void
 	 */
@@ -1411,9 +1493,9 @@ class Mwb_Wc_Bk_Admin {
 							<label><?php esc_attr_e( 'Rule Type', 'mwb-wc-bk' ); ?></label>
 						</th>
 						<td class="forminp forminp-text">
-							<input type="radio" class="mwb_global_availability_rule_type_specific" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="specific" checked >
+							<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="specific" checked >
 							<label><?php esc_attr_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label><br>
-							<input type="radio" class="mwb_global_availability_rule_type_generic" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="generic">
+							<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="generic">
 							<label><?php esc_attr_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label><br>
 						</td>
 					</tr>
@@ -1421,11 +1503,26 @@ class Mwb_Wc_Bk_Admin {
 						<th scope="row" class="">
 							<label><?php esc_attr_e( 'From', 'mwb-wc-bk' ); ?></label>
 						</th>
-						<td class="forminp forminp-text">
+						<td class="forminp forminp-text specific">
 							<p>
 								<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" >
 								<label><?php esc_attr_e( 'To', 'mwb-wc-bk' ); ?></label>
 								<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" >
+							</p>
+						</td>
+						<td class="forminp forminp-text generic">
+							<p>
+								<select class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]">
+								<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+									<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
+								<?php } ?>
+								</select>
+								<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+								<select class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
+								<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+									<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
+								<?php } ?>
+								</select>
 							</p>
 						</td>
 					</tr>
@@ -1440,7 +1537,7 @@ class Mwb_Wc_Bk_Admin {
 							</p>
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr valign="top" class="weekdays_rule">
 						<th scope="row" class=""></th>
 						<td class="forminp forminp-text" >
 							<p>
@@ -1451,7 +1548,8 @@ class Mwb_Wc_Bk_Admin {
 						<?php foreach ( $this->mwb_booking_search_weekdays() as $key => $values ) { ?>
 							<td class="forminp forminp-text mwb_global_availability_rule_weekdays_book" style="display:none">
 								<p><?php echo esc_html( $values ); ?></p>
-								<input type="button" class="mwb_global_availability_rule_weekdays_book button" name="mwb_global_availability_rule_weekdays_book[<?php echo esc_html( $rule_count - 1 ); ?>][<?php echo esc_html( $key ); ?>]" value="bookable">
+								<input type="hidden" name="mwb_global_availability_rule_weekdays_book[<?php echo esc_html( $rule_count - 1 ); ?>][<?php echo esc_html( $key ); ?>]"  value="bookable" >
+								<input type="button" class="mwb_global_availability_rule_weekdays_book_button button" value="bookable">
 							</td>
 						<?php } ?>
 					</tr>

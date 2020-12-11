@@ -29,7 +29,7 @@
 	</div>
 	<div id="mwb_start_booking_from" class="options_group">
 		<p class="form-field">
-			<label for="mwb_start_booking_date"><?php esc_html_e( 'Start Booking on date', 'mwb-wc-bk' ); ?></label>
+			<label for="mwb_start_booking_date"><?php esc_html_e( 'Start Booking From', 'mwb-wc-bk' ); ?></label>
 			<select name="mwb_start_booking_from" id="mwb_start_booking_date">
 				<option value="none" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'none' ); ?>><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
 				<option value="today" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'today' ); ?>><?php esc_html_e( 'Today', 'mwb-wc-bk' ); ?></option>

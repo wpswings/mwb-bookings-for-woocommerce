@@ -108,9 +108,15 @@ echo '</pre>';
 										<?php
 									} else {
 										foreach ( $v as $peoples => $people ) {
-											?>
-										<option value="<?php echo esc_html( $peoples ); ?>" <?php selected( $peoples, $mwb_cost_rule_condition[ $count ] ); ?>><?php echo esc_html( $people ); ?></option>
-											<?php
+											if ( 'heading' === $peoples ) {
+												?>
+												<option value="" disabled><h5><?php echo esc_html( $people ); ?></h5></option>';
+												<?php
+											} else {
+												?>
+											<option value="<?php echo esc_html( $peoples ); ?>" <?php selected( $peoples, $mwb_cost_rule_condition[ $count ] ); ?>><?php echo esc_html( printf( ' - %s', $people ) ); ?></option>
+												<?php
+											}
 										}
 									}
 								}

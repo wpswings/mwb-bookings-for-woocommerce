@@ -179,7 +179,10 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'remove_add_booking_submenu' );
 
-		$this->loader->add_action( 'init', $plugin_admin, 'booking_custom_post_type' );
+	//	$this->loader->add_action( 'init', $plugin_admin, 'booking_custom_post_type' );
+
+		$this->loader->add_action( 'woocommerce_init', $plugin_admin, 'booking_custom_post_order_type' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_meta_box_cpt', 90 );
 
 		$this->loader->add_action( 'init', $plugin_admin, 'booking_register_taxonomy_services' );
 

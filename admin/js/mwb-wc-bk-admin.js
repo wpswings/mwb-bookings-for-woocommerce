@@ -229,6 +229,10 @@ function global_availability_rules($) {
 		$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_weekdays_book_button' ).each( function() {
 			if( $(this).val() == 'bookable' ) {
 				$(this).css('color', 'green');
+			} else if( $(this).val() == 'non-bookable' ) {
+				$(this).css('color', 'red');
+			} else if( $(this).val() == 'no-change' ) {
+				$(this).css('color', 'grey');
 			}
 			$( this ).on( 'click', function() {
 
@@ -237,14 +241,17 @@ function global_availability_rules($) {
 				switch ( book ) {
 					case 'bookable':
 						$(this).val('non-bookable');
+						$(this).siblings().val('non-bookable');
 						$(this).css('color', 'red');
 						break;
 					case 'non-bookable':
 						$(this).val('no-change');
+						$(this).siblings().val('no-change');
 						$(this).css('color', 'grey');
 						break;
 					case 'no-change':
 						$(this).val('bookable');
+						$(this).siblings().val('bookable');
 						$(this).css('color', 'green');
 						break;
 				}
@@ -261,12 +268,12 @@ function global_availability_rules($) {
 				var rule_type_check = $(this).val();
 				switch( rule_type_check ) {
 					case 'generic':
-						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_from').attr('type', 'month');
-						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_to').attr('type', 'month');
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').hide();
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').show();
 						break;
 					case 'specific':
-						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_from').attr('type', 'date');
-						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_to').attr('type', 'date');
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').show();
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').hide();
 						break;
 				}
 			}
@@ -275,15 +282,15 @@ function global_availability_rules($) {
 			var rule_type = $(this).val();
 			switch( rule_type ) {
 				case 'generic':
-					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_from').attr('type', 'month');
-					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_to').attr('type', 'month');
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').hide();
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').show();
 					break;
 				case 'specific':
-					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_from').attr('type', 'date');
-					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_range_to').attr('type', 'date');
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').show();
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').hide();
 					break;
 			}
-		} );
+		});
 	});
 	
 	//var $('#mwb_global_availability_form table').parent().attr('data-id');
@@ -310,7 +317,72 @@ function global_availability_rules($) {
 				'rule_count' : availability_count,
 			},
 			success: function( data ) {
+				
 				$( '.mwb_booking_global_availability_rules #mwb_global_availability_rules' ).append(data);
+
+				$( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays' ).each(function() {
+
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_weekdays_book_button' ).each( function() {
+						if( $(this).val() == 'bookable' ) {
+							$(this).css('color', 'green');
+						} else if( $(this).val() == 'non-bookable' ) {
+							$(this).css('color', 'red');
+						} else if( $(this).val() == 'no-change' ) {
+							$(this).css('color', 'grey');
+						}
+						$( this ).on( 'click', function() {
+			
+							var book = $(this).val();
+			
+							switch ( book ) {
+								case 'bookable':
+									$(this).val('non-bookable');
+									$(this).siblings().val('non-bookable');
+									$(this).css('color', 'red');
+									break;
+								case 'non-bookable':
+									$(this).val('no-change');
+									$(this).siblings().val('no-change');
+									$(this).css('color', 'grey');
+									break;
+								case 'no-change':
+									$(this).val('bookable');
+									$(this).siblings().val('bookable');
+									$(this).css('color', 'green');
+									break;
+							}
+						} );
+					});
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_type' ).each(function(){
+						if ( $(this).is(":checked") ) {
+							var rule_type_check = $(this).val();
+							switch( rule_type_check ) {
+								case 'generic':
+									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').hide();
+									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').show();
+									break;
+								case 'specific':
+									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').show();
+									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').hide();
+									break;
+							}
+						}
+					});
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_type' ).on( 'change', function(){
+						alert("hi");
+						var rule_type = $(this).val();
+						switch( rule_type ) {
+							case 'generic':
+								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').hide();
+								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').show();
+								break;
+							case 'specific':
+								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').show();
+								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').hide();
+								break;
+						}
+					});
+				});
 			},
 		});
 	});
@@ -422,7 +494,7 @@ function create_booking_product_details($) {
 				'product_id' : product_id,
 			},
 			success: function( data ) {
-				
+
 			}
 		});
 	});

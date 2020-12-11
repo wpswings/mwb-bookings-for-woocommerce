@@ -27,11 +27,11 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 	// Nonce verification.
 	check_admin_referer( 'mwb_booking_global_options_availability_nonce', 'mwb_booking_availability_nonce' );
 
-	if ( isset( $_POST['mwb_global_availability_rule_weekdays_book'] ) ) {
-		echo "<pre>";
-		print_r( $_POST['mwb_global_availability_rule_weekdays_book'] );
-		echo "</pre>";
-	}
+	// if ( isset( $_POST['mwb_global_availability_rule_weekdays_book'] ) ) {
+	// 	echo "<pre>";
+	// 	print_r( $_POST['mwb_global_availability_rule_weekdays_book'] );
+	// 	echo "</pre>";
+	// }
 
 	$rule_count = isset( $_POST['mwb_availability_rule_count'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_availability_rule_count'] ) ) : $rule_count;
 
@@ -43,7 +43,7 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 		$rule_arr['rule_range_to']      = isset( $_POST['mwb_global_availability_rule_range_to'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_range_to'] ) ) : array();
 		$rule_arr['rule_bookable']      = isset( $_POST['mwb_global_availability_rule_bookable'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_bookable'] ) ) : array();
 		$rule_arr['rule_weekdays']      = isset( $_POST['mwb_global_availability_rule_weekdays'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_weekdays'] ) ) : array();
-		$rule_arr['rule_weekdays_book'] = isset( $_POST['mwb_global_availability_rule_weekdays_book'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_availability_rule_weekdays_book'] ) ) : array();
+		$rule_arr['rule_weekdays_book'] = isset( $_POST['mwb_global_availability_rule_weekdays_book'] ) ? $_POST['mwb_global_availability_rule_weekdays_book'] : array();
 
 		for ( $count = 0; $count < $rule_count; $count++ ) {
 			$rule_arr['rule_switch'][ $count ]   = isset( $rule_arr['rule_switch'][ $count ] ) ? $rule_arr['rule_switch'][ $count ] : 'off';
@@ -61,10 +61,10 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 }
 
 $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
-echo '<pre>';
-echo $rule_count;
-print_r( $availability_rules );
-echo '</pre>';
+// echo '<pre>';
+// echo $rule_count;
+// print_r( $availability_rules );
+// echo '</pre>';
 ?>
 
 <!-- For Global options Setting -->
@@ -124,11 +124,26 @@ echo '</pre>';
 							<th scope="row" class="">
 								<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 							</th>
-							<td class="forminp forminp-text">
+							<td class="forminp forminp-text specific">
 								<p>
 									<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_from[ $count ] ); ?>" >
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_to[ $count ] ); ?>" >
+								</p>
+							</td>
+							<td class="forminp forminp-text generic">
+								<p>
+									<select class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $count ); ?>]">
+									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_availability_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php }	?>
+									</select>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $count ); ?>]">
+									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_availability_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php }	?>
+									</select>
 								</p>
 							</td>
 						</tr>
@@ -155,7 +170,7 @@ echo '</pre>';
 							<td class="forminp forminp-text mwb_global_availability_rule_weekdays_book">
 								<p><?php echo esc_html( $values ); ?></p>
 								<input type="hidden" name="mwb_global_availability_rule_weekdays_book[<?php echo esc_html( $count ); ?>][<?php echo esc_html( $key ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_weekdays_book[ $count ][ $key ] ); ?>">
-								<input type="button" class="mwb_global_availability_rule_weekdays_book_button button" name="mwb_global_availability_rule_weekdays_book[<?php echo esc_html( $count ); ?>][<?php echo esc_html( $key ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_weekdays_book[ $count ][ $key ] ); ?>" book="bookable">
+								<input type="button" class="mwb_global_availability_rule_weekdays_book_button button" value="<?php echo esc_html( $mwb_availability_rule_weekdays_book[ $count ][ $key ] ); ?>" book="bookable">
 							</td>
 						<?php } ?>
 						</tr>

@@ -270,10 +270,14 @@ function global_availability_rules($) {
 					case 'generic':
 						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').hide();
 						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').show();
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific input').each(function(){$(this).prop('disabled', true)});
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic select').each(function(){$(this).prop('disabled', false)});
 						break;
 					case 'specific':
 						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').show();
 						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').hide();
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific input').each(function(){$(this).prop('disabled', false)});
+						$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic select').each(function(){$(this).prop('disabled', true)});
 						break;
 				}
 			}
@@ -284,10 +288,14 @@ function global_availability_rules($) {
 				case 'generic':
 					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').hide();
 					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').show();
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific input').each(function(){$(this).prop('disabled', true)});
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic select').each(function(){$(this).prop('disabled', false)});
 					break;
 				case 'specific':
 					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').show();
 					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').hide();
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific input').each(function(){$(this).prop('disabled', false)});
+					$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic select').each(function(){$(this).prop('disabled', true)});
 					break;
 			}
 		});
@@ -360,10 +368,14 @@ function global_availability_rules($) {
 								case 'generic':
 									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').hide();
 									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').show();
+									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific input').each(function(){$(this).prop('disabled', true)});
+									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic select').each(function(){$(this).prop('disabled', false)});
 									break;
 								case 'specific':
 									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').show();
 									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').hide();
+									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific input').each(function(){$(this).prop('disabled', false)});
+									$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic select').each(function(){$(this).prop('disabled', true)});
 									break;
 							}
 						}
@@ -375,10 +387,14 @@ function global_availability_rules($) {
 							case 'generic':
 								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').hide();
 								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').show();
+								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific input').each(function(){$(this).prop('disabled', true)});
+								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic select').each(function(){$(this).prop('disabled', false)});
 								break;
 							case 'specific':
 								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific').show();
 								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic').hide();
+								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.specific input').each(function(){$(this).prop('disabled', false)});
+								$(this).closest( '.mwb_global_availability_rule_fields' ).find('.generic select').each(function(){$(this).prop('disabled', true)});
 								break;
 						}
 					});
@@ -428,7 +444,122 @@ function global_availability_rules($) {
 	});
 }
 
+function global_cost_conditions(obj, $) {
+	var condition = obj.val();
+	alert(condition);
+	switch (condition) {
+		case 'day':
+			obj.closest('.mwb_global_cost_rule_fields').find('.days').show();
+			obj.closest('.mwb_global_cost_rule_fields').find('.date').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.months').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.time').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.days select').each(function(){$(this).prop("disabled", false)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.date input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.months select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.time input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit input').each(function(){$(this).prop("disabled", true)});
+			break;
+		case 'date':
+			obj.closest('.mwb_global_cost_rule_fields').find('.days').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.date').show();
+			obj.closest('.mwb_global_cost_rule_fields').find('.months').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.time').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.days select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.date input').each(function(){$(this).prop("disabled", false)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.months select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.time input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit input').each(function(){$(this).prop("disabled", true)});
+			break;
+		case 'month':
+			obj.closest('.mwb_global_cost_rule_fields').find('.days').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.date').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.months').show();
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.time').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.days select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.date input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.months select').each(function(){$(this).prop("disabled", false)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.time input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit input').each(function(){$(this).prop("disabled", true)});
+			break;
+		case 'week':
+			obj.closest('.mwb_global_cost_rule_fields').find('.days').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.date').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.months').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks').show();
+			obj.closest('.mwb_global_cost_rule_fields').find('.time').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.days select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.date input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.months select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks select').each(function(){$(this).prop("disabled", false)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.time input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit input').each(function(){$(this).prop("disabled", true)});
+			break;
+		case 'time':
+			obj.closest('.mwb_global_cost_rule_fields').find('.days').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.date').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.months').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.time').show();
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.days select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.date input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.months select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.time input').each(function(){$(this).prop("disabled", false)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit input').each(function(){$(this).prop("disabled", true)});
+			break;
+		case 'unit':
+			obj.closest('.mwb_global_cost_rule_fields').find('.days').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.date').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.months').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.time').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit').show();
+			obj.closest('.mwb_global_cost_rule_fields').find('.days select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.date input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.months select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.time input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit input').each(function(){$(this).prop("disabled", false)});
+			break;
+		default:
+			obj.closest('.mwb_global_cost_rule_fields').find('.days').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.date').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.months').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.time').hide();
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit').show();
+			obj.closest('.mwb_global_cost_rule_fields').find('.days select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.date input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.months select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.weeks select').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.time input').each(function(){$(this).prop("disabled", true)});
+			obj.closest('.mwb_global_cost_rule_fields').find('.unit input').each(function(){$(this).prop("disabled", false)});
+			break;
+
+	}
+}
+
 function global_cost_rules($) {
+
+	$( '#mwb_global_cost_form .mwb_booking_global_cost_condition' ).each(function(){
+		var obj = $(this);
+		global_cost_conditions(obj, $);
+		$(this).on('change', function(){
+			global_cost_conditions($(this), $);
+		});
+
+	});
 
 	jQuery('#mwb_global_cost_form').on('click', '#mwb_add_cost_rule', function(e){
 		//e.preventDefault();
@@ -453,6 +584,13 @@ function global_cost_rules($) {
 			},
 			success: function( data ) {
 				$( '.mwb_booking_global_cost_rules #mwb_global_cost_rules' ).append(data);
+				$( '#mwb_global_cost_form .mwb_booking_global_cost_condition' ).each(function(){
+					var obj = $(this);
+					global_cost_conditions(obj, $);
+					$(this).on('change', function(){
+						global_cost_conditions($(this), $);
+					});
+				});
 			},
 		});
 	});

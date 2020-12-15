@@ -32,8 +32,8 @@ if ( isset( $_POST['mwb_booking_global_cost_rules_save'] ) ) {
 		$cost_rule_arr['rule_switch']     = isset( $_POST['mwb_global_cost_rule_heading_switch'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_heading_switch'] ) ) : array();
 		$cost_rule_arr['rule_name']       = isset( $_POST['mwb_global_cost_rule_name'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_name'] ) ) : array();
 		$cost_rule_arr['rule_condition']  = isset( $_POST['mwb_global_cost_rule_condition'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_condition'] ) ) : array();
-		$cost_rule_arr['rule_range_from'] = isset( $_POST['mwb_global_cost_rule_range_from'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_range_from'] ) ) : array();
-		$cost_rule_arr['rule_range_to']   = isset( $_POST['mwb_global_cost_rule_range_to'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_range_to'] ) ) : array();
+		$cost_rule_arr['rule_range_from'] = isset( $_POST['mwb_global_cost_rule_range_from'] ) ? $_POST['mwb_global_cost_rule_range_from'] : array();
+		$cost_rule_arr['rule_range_to']   = isset( $_POST['mwb_global_cost_rule_range_to'] ) ? $_POST['mwb_global_cost_rule_range_to'] : array();
 		$cost_rule_arr['rule_base_cal']   = isset( $_POST['mwb_global_cost_rule_base_cal'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_base_cal'] ) ) : array();
 		$cost_rule_arr['rule_base_cost']  = isset( $_POST['mwb_global_cost_rule_base_cost'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_base_cost'] ) ) : array();
 		$cost_rule_arr['rule_unit_cal']   = isset( $_POST['mwb_global_cost_rule_unit_cal'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_unit_cal'] ) ) : array();
@@ -99,7 +99,7 @@ echo '</pre>';
 								<label><?php esc_html_e( 'Conditions', 'mwb-wc-bk' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
-								<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $count ); ?>]" id="mwb_booking_global_cost_condition" class="mwb_booking_global_cost_condition" style="width: auto; margin-right: 7px;">
+								<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $count ); ?>]" class="mwb_booking_global_cost_condition" style="width: auto; margin-right: 7px;">
 								<?php
 								foreach ( $this->global_cost_conditions() as $k => $v ) {
 									if ( ! is_array( $v ) ) {
@@ -123,12 +123,82 @@ echo '</pre>';
 								?>
 								</select>
 							</td>
-							<td class="forminp forminp-text">
+							<td class="forminp forminp-text date">
 								<p>
 									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 									<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>">
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" >
+								</p>
+							</td>
+							<td class="forminp forminp-text days">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_search_weekdays() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_search_weekdays() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+								</p>
+							</td>
+							<td class="forminp forminp-text months">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+								</p>
+							</td>
+							<td class="forminp forminp-text weeks">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_search_weeks() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_search_weeks() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+								</p>
+							</td>
+							<td class="forminp forminp-text time">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<input type="time" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>">
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<input type="time" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" >
+								</p>
+							</td>
+							<td class="forminp forminp-text unit">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<input type="number" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>" step="1" min="1">
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<input type="number" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" step="1" min="1">
 								</p>
 							</td>
 						</tr>

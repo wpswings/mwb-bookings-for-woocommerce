@@ -333,6 +333,20 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	/**
+	 * Search weeks
+	 *
+	 * @return array arr Weekdays.
+	 */
+	public function mwb_booking_search_weeks() {
+
+		for ( $i = 1; $i <= 52; $i++ ) {
+			$arr[ $i ] = __( 'Week-', 'mwb-wc-bk' ) . $i;
+		}
+		apply_filters( 'mwb_booking_weeks', $arr );
+		return $arr;
+	}
+
+	/**
 	 * Global Cost Calculation Symbols
 	 *
 	 * @return array arr
@@ -607,6 +621,8 @@ class Mwb_Wc_Bk_Admin {
 		$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
 		$product_meta = get_post_meta( $product_id );
 
+		echo wp_json_encode( $product_meta );
+
 
 	}
 
@@ -719,7 +735,7 @@ class Mwb_Wc_Bk_Admin {
 			'hierarchical'                     => false,
 			'capability_type'                  => 'shop_order', // important.
 			'capabilities'                     => array(
-				'create_posts' => false,
+				'create_posts' => true,
 			),
 			'show_in_rest'                     => false,
 			'supports'                         => false,
@@ -921,15 +937,30 @@ class Mwb_Wc_Bk_Admin {
 		}
 	}
 
+	/**
+	 * Create Booking Page
+	 *
+	 * @return void
+	 */
 	public function menu_page_create_booking() {
 
 		require_once plugin_dir_path( __FILE__ ) . 'partials/mwb_create_booking.php';
 	}
 
+	/**
+	 * Global settings for the plugin
+	 *
+	 * @return void
+	 */
 	public function menu_page_booking_settings() {
 		require_once plugin_dir_path( __FILE__ ) . 'partials/mwb-wc-bk-admin-display.php';
 	}
 
+	/**
+	 * Calendar
+	 *
+	 * @return void
+	 */
 	public function menu_page_calendar() {
 		echo 'calendar';
 	}
@@ -948,47 +979,40 @@ class Mwb_Wc_Bk_Admin {
 		</div>
 		<div class="form-field" id="mwb_booking_ct_services_custom_fields">
 			<?php
-				woocommerce_wp_checkbox(
-					array(
-						'id'          => 'mwb_booking_ct_services_multiply_units',
-						'value'       => '',
-						'label'       => '',
-						'description' => __( 'Multiply cost by booking units', 'mwb-wc-bk' ),
-					)
-				);
-				woocommerce_wp_checkbox(
-					array(
-						'id'          => 'mwb_booking_ct_services_multiply_people',
-						'value'       => '',
-						'label'       => '',
-						'description' => __( 'Multiply cost by number of peoples per booking', 'mwb-wc-bk' ),
-					)
-				);
-				woocommerce_wp_checkbox(
-					array(
-						'id'          => 'mwb_booking_ct_services_has_quantity',
-						'value'       => '',
-						'label'       => '',
-						'description' => __( 'If has quantity', 'mwb-wc-bk' ),
-					)
-				);
-				woocommerce_wp_checkbox(
-					array(
-						'id'          => 'mwb_booking_ct_services_hidden',
-						'value'       => '',
-						'label'       => '',
-						'description' => __( 'If Hidden', 'mwb-wc-bk' ),
-					)
-				);
-				woocommerce_wp_checkbox(
-					array(
-						'id'          => 'mwb_booking_ct_services_optional',
-						'value'       => '',
-						'label'       => '',
-						'description' => __( 'If Optional', 'mwb-wc-bk' ),
-					)
-				);
+				// woocommerce_wp_checkbox(
+				// 	array(
+				// 		'label'       => '',
+				// 		'id'          => 'mwb_booking_ct_services_multiply_units',
+				// 		'value'       => '',
+				// 		'description' => __( 'Multiply cost by booking units', 'mwb-wc-bk' ),
+				// 	)
+				// );
 			?>
+			<p class="form-field">
+				<label for=""></label>
+				<input type="checkbox" id="mwb_booking_ct_services_multiply_units" class="checkbox" name="mwb_booking_ct_services_multiply_units" >
+				<p class="description"><?php esc_html_e( 'Multiply cost by booking units', 'mwb-wc-bk' ); ?></p>
+			</p>
+			<p class="form-field">
+				<label for=""></label>
+				<input type="checkbox" id="mwb_booking_ct_services_multiply_people" class="checkbox" name="mwb_booking_ct_services_multiply_people">
+				<p class="description"><?php esc_html_e( 'Multiply cost by number of peoples per booking', 'mwb-wc-bk' ); ?></p>
+			</p>
+			<p class="form-field">
+				<label for=""></label>
+				<input type="checkbox" id="mwb_booking_ct_services_has_quantity" class="checkbox" name="mwb_booking_ct_services_has_quantity" >
+				<p class="description"><?php esc_html_e( 'If has quantity', 'mwb-wc-bk' ); ?></p>
+			</p>
+			<p class="form-field">
+				<label for=""></label>
+				<input type="checkbox" id="mwb_booking_ct_services_hidden" class="checkbox" name="mwb_booking_ct_services_hidden" >
+				<p class="description"><?php esc_html_e( 'If Hidden', 'mwb-wc-bk' ); ?></p>
+			</p>
+			<p class="form-field">
+				<label for=""></label>
+				<input type="checkbox" id="mwb_booking_ct_services_optional" class="checkbox" name="mwb_booking_ct_services_optional" >
+				<p class="description"><?php esc_html_e( 'If Optional', 'mwb-wc-bk' ); ?></p>
+			</p>
 		</div>
 		<div class="form-field term-has-quantity-checked-wrap">
 
@@ -1256,24 +1280,14 @@ class Mwb_Wc_Bk_Admin {
 	public function add_custom_fields_ct_booking_cost() {
 		?>
 		<div class="form-field term-extra-cost-wrap">
-		<?php
-			woocommerce_wp_checkbox(
-				array(
-					'id'          => 'mwb_booking_ct_costs_multiply_units',
-					'value'       => '',
-					'label'       => '',
-					'description' => __( 'Multiply cost by booking unit duration', 'mwb-wc-bk' ),
-				)
-			);
-			woocommerce_wp_checkbox(
-				array(
-					'id'          => 'mwb_booking_ct_costs_multiply_people',
-					'value'       => '',
-					'label'       => '',
-					'description' => __( 'Multiply cost by the number of people', 'mwb-wc-bk' ),
-				)
-			);
-		?>
+			<p>
+				<input type="checkbox" id="mwb_booking_ct_costs_multiply_units" name="mwb_booking_ct_costs_multiply_units">
+				<p class="description"><?php esc_html_e( 'Multiply cost by booking unit duration', 'mwb-wc-bk' ); ?></p>
+			</p>
+			<p>
+				<input type="checkbox" id="mwb_booking_ct_costs_multiply_people" name="mwb_booking_ct_costs_multiply_people">
+				<p class="description"><?php esc_html_e( 'Multiply cost by the number of people', 'mwb-wc-bk' ); ?></p>
+			</p>
 		</div>
 		<?php
 	}
@@ -1658,16 +1672,22 @@ class Mwb_Wc_Bk_Admin {
 									<?php
 								} else {
 									foreach ( $v as $peoples => $people ) {
-										?>
-									<option value="<?php echo esc_html( $peoples ); ?>"><?php echo esc_html( $people ); ?></option>
-										<?php
+										if ( 'heading' === $peoples ) {
+											?>
+											<option value="" disabled><h5><?php echo esc_html( $people ); ?></h5></option>';
+											<?php
+										} else {
+											?>
+										<option value="<?php echo esc_html( $peoples ); ?>" ><?php echo esc_html( printf( ' - %s', $people ) ); ?></option>
+											<?php
+										}
 									}
 								}
 							}
 							?>
 							</select>
 						</td>
-						<td class="forminp forminp-text">
+						<td class="forminp forminp-text date">
 							<p>
 								<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 								<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" >
@@ -1675,6 +1695,76 @@ class Mwb_Wc_Bk_Admin {
 								<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" >
 							</p>
 						</td>
+						<td class="forminp forminp-text days">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_search_weekdays() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_search_weekdays() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+								</p>
+							</td>
+							<td class="forminp forminp-text months">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
+									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?> -->
+										<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+								</p>
+							</td>
+							<td class="forminp forminp-text weeks">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_search_weeks() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
+										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+									<?php foreach ( $this->mwb_booking_search_weeks() as $k => $v ) { ?>
+										<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
+									<?php } ?>
+									</select>
+								</p>
+							</td>
+							<td class="forminp forminp-text time">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<input type="time" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" >
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<input type="time" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" >
+								</p>
+							</td>
+							<td class="forminp forminp-text unit">
+								<p>
+									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<input type="number" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" step="1" min="1">
+									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<input type="number" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" step="1" min="1">
+								</p>
+							</td>
 					</tr>
 					<tr valign="top">
 						<th scope="row" class="">

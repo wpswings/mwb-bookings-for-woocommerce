@@ -239,7 +239,6 @@ class Mwb_Wc_Bk_Admin {
 			//print_r( $_POST[ $key ] );
 			update_post_meta( $post_id, $key, $posted_data );
 		}
-		//die;
 	}
 
 	/**
@@ -735,7 +734,7 @@ class Mwb_Wc_Bk_Admin {
 			'hierarchical'                     => false,
 			'capability_type'                  => 'shop_order', // important.
 			'capabilities'                     => array(
-				'create_posts' => true,
+				'create_posts' => false,
 			),
 			'show_in_rest'                     => false,
 			'supports'                         => false,
@@ -763,6 +762,7 @@ class Mwb_Wc_Bk_Admin {
 		$screen_id = $screen ? $screen->id : '';
 	//	remove_meta_box( 'postcustom', 'shop_order', 'normal' );
 		remove_meta_box( 'woocommerce-order-downloads', 'mwb_cpt_booking', 'normal' );
+		remove_meta_box( 'woocommerce-order-items', 'mwb_cpt_booking', 'normal' );
 
 	}
 
@@ -776,6 +776,7 @@ class Mwb_Wc_Bk_Admin {
 		$this->booking_custom_post_order_type();
 		$this->booking_register_taxonomy_services();
 		$this->booking_register_taxonomy_people_type();
+		$this->booking_register_taxonomy_cost();
 
 		flush_rewrite_rules();
 	}
@@ -978,39 +979,29 @@ class Mwb_Wc_Bk_Admin {
 			<p class="description"><?php esc_html_e( 'Enter the cost for the services to be included', 'mwb-wc-bk' ); ?></p>
 		</div>
 		<div class="form-field" id="mwb_booking_ct_services_custom_fields">
-			<?php
-				// woocommerce_wp_checkbox(
-				// 	array(
-				// 		'label'       => '',
-				// 		'id'          => 'mwb_booking_ct_services_multiply_units',
-				// 		'value'       => '',
-				// 		'description' => __( 'Multiply cost by booking units', 'mwb-wc-bk' ),
-				// 	)
-				// );
-			?>
 			<p class="form-field">
 				<label for=""></label>
-				<input type="checkbox" id="mwb_booking_ct_services_multiply_units" class="checkbox" name="mwb_booking_ct_services_multiply_units" >
+				<input type="checkbox" id="mwb_booking_ct_services_multiply_units" class="checkbox" name="mwb_booking_ct_services_multiply_units" value="yes">
 				<p class="description"><?php esc_html_e( 'Multiply cost by booking units', 'mwb-wc-bk' ); ?></p>
 			</p>
 			<p class="form-field">
 				<label for=""></label>
-				<input type="checkbox" id="mwb_booking_ct_services_multiply_people" class="checkbox" name="mwb_booking_ct_services_multiply_people">
+				<input type="checkbox" id="mwb_booking_ct_services_multiply_people" class="checkbox" name="mwb_booking_ct_services_multiply_people" value="yes">
 				<p class="description"><?php esc_html_e( 'Multiply cost by number of peoples per booking', 'mwb-wc-bk' ); ?></p>
 			</p>
 			<p class="form-field">
 				<label for=""></label>
-				<input type="checkbox" id="mwb_booking_ct_services_has_quantity" class="checkbox" name="mwb_booking_ct_services_has_quantity" >
+				<input type="checkbox" id="mwb_booking_ct_services_has_quantity" class="checkbox" name="mwb_booking_ct_services_has_quantity" value="yes">
 				<p class="description"><?php esc_html_e( 'If has quantity', 'mwb-wc-bk' ); ?></p>
 			</p>
 			<p class="form-field">
 				<label for=""></label>
-				<input type="checkbox" id="mwb_booking_ct_services_hidden" class="checkbox" name="mwb_booking_ct_services_hidden" >
+				<input type="checkbox" id="mwb_booking_ct_services_hidden" class="checkbox" name="mwb_booking_ct_services_hidden" value="yes">
 				<p class="description"><?php esc_html_e( 'If Hidden', 'mwb-wc-bk' ); ?></p>
 			</p>
 			<p class="form-field">
 				<label for=""></label>
-				<input type="checkbox" id="mwb_booking_ct_services_optional" class="checkbox" name="mwb_booking_ct_services_optional" >
+				<input type="checkbox" id="mwb_booking_ct_services_optional" class="checkbox" name="mwb_booking_ct_services_optional" value="yes" >
 				<p class="description"><?php esc_html_e( 'If Optional', 'mwb-wc-bk' ); ?></p>
 			</p>
 		</div>
@@ -1281,11 +1272,11 @@ class Mwb_Wc_Bk_Admin {
 		?>
 		<div class="form-field term-extra-cost-wrap">
 			<p>
-				<input type="checkbox" id="mwb_booking_ct_costs_multiply_units" name="mwb_booking_ct_costs_multiply_units">
+				<input type="checkbox" id="mwb_booking_ct_costs_multiply_units" name="mwb_booking_ct_costs_multiply_units" value="yes">
 				<p class="description"><?php esc_html_e( 'Multiply cost by booking unit duration', 'mwb-wc-bk' ); ?></p>
 			</p>
 			<p>
-				<input type="checkbox" id="mwb_booking_ct_costs_multiply_people" name="mwb_booking_ct_costs_multiply_people">
+				<input type="checkbox" id="mwb_booking_ct_costs_multiply_people" name="mwb_booking_ct_costs_multiply_people" value="yes">
 				<p class="description"><?php esc_html_e( 'Multiply cost by the number of people', 'mwb-wc-bk' ); ?></p>
 			</p>
 		</div>

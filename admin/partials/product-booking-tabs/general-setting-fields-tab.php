@@ -43,12 +43,12 @@
 			</select>
 			<label for="mwb_start_booking_time" style="display:none"><?php esc_html_e( 'Time:', 'mwb-wc-bk' ); ?></label>
 		</p>	
-		<p class="form-field">	
+		<p class="form-field" id="mwb_start_booking_custom_date_field">	
 			<label for="mwb_start_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
 			<input id="mwb_start_booking_custom_date" name="mwb_start_booking_custom_date" type="date" value="<?php esc_attr( $this->setting_fields['mwb_start_booking_custom_date'] ); ?>">
 		</p>
 	</div>
-	<div id="mwb_calendar_range" class="options_group" style="display:block">
+	<div id="mwb_calendar_range" class="options_group" style="display:none">
 		<?php
 			woocommerce_wp_checkbox(
 				array(
@@ -95,6 +95,10 @@
 					'desc_tip'    => true,
 				)
 			);
+			?>
+	</div>
+	<div id="mwb_booking_cancellation_days" class="options_group" style="display:none">
+		<?php
 			woocommerce_wp_text_input(
 				array(
 					'id'                => 'mwb_max_days_for_cancellation',

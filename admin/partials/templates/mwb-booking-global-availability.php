@@ -126,20 +126,20 @@ echo '</pre>';
 							</th>
 							<td class="forminp forminp-text specific">
 								<p>
-									<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_from[ $count ] ); ?>" >
+									<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_from[ $count ] ); ?>" required >
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
-									<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_to[ $count ] ); ?>" >
+									<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_to[ $count ] ); ?>" required>
 								</p>
 							</td>
 							<td class="forminp forminp-text generic">
 								<p>
-									<select class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $count ); ?>]">
+									<select class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $count ); ?>]" required>
 									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_availability_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
-									<select class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $count ); ?>]">
+									<select class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $count ); ?>]" required>
 									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_availability_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>

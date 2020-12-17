@@ -17,7 +17,7 @@
 				<option value="fixed" <?php selected( $this->setting_fields['mwb_booking_unit_select'], 'fixed' ); ?>><?php esc_html_e( 'Fixed unit', 'mwb-wc-bk' ); ?></option>
 				<option value="customer" <?php selected( $this->setting_fields['mwb_booking_unit_select'], 'customer' ); ?>><?php esc_html_e( 'Customer selected unit', 'mwb-wc-bk' ); ?></option>
 			</select>
-			<input type="number" name="mwb_booking_unit_input" id="mwb_booking_unit_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_unit_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+			<input type="number" name="mwb_booking_unit_input" id="mwb_booking_unit_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_unit_input'] ); ?>" step="1" min="1" required style="margin-right: 7px; width: 4em;">
 			<select name="mwb_booking_unit_duration" id="mwb_booking_unit_duration" class="booking_unit_duration" style="width: auto; margin-right: 7px;">
 
 				<?php foreach ( $this->get_booking_duration_options() as $key => $value ) : ?>
@@ -45,7 +45,7 @@
 		</p>	
 		<p class="form-field" id="mwb_start_booking_custom_date_field">	
 			<label for="mwb_start_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
-			<input id="mwb_start_booking_custom_date" name="mwb_start_booking_custom_date" type="date" value="<?php esc_attr( $this->setting_fields['mwb_start_booking_custom_date'] ); ?>">
+			<input id="mwb_start_booking_custom_date" name="mwb_start_booking_custom_date" type="date" value="<?php esc_attr( $this->setting_fields['mwb_start_booking_custom_date'] ); ?>" required >
 		</p>
 	</div>
 	<div id="mwb_calendar_range" class="options_group" style="display:none">
@@ -79,6 +79,7 @@
 					'id'          => 'mwb_admin_confirmation',
 					'label'       => __( 'Confirmation Required', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_admin_confirmation'],
+				//	'cbvalue'     => $this->setting_fields['mwb_admin_confirmation'],
 					'description' => __( 'Enable booking confirmation by the admin.', 'mwb-wc-bk' ),
 				)
 			);
@@ -91,6 +92,7 @@
 					'id'          => 'mwb_allow_booking_cancellation',
 					'label'       => __( 'Cancellation Allowed', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_allow_booking_cancellation'],
+				//	'cbvalue'     => $this->setting_fields['mwb_allow_booking_cancellation'],
 					'description' => __( 'Allows user to cancel their booking.', 'mwb-wc-bk' ),
 					'desc_tip'    => true,
 				)

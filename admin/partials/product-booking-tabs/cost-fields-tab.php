@@ -34,8 +34,8 @@
 			<h3><?php esc_html_e( 'Discount', 'mwb-wc-bk' ); ?></h3>
 		</div>
 		<div id="mwb_booking_discount_cost_fields">
-			<?php
-
+			<div id="mwb_booking_discount_type_field" >
+				<?php
 				woocommerce_wp_radio(
 					array(
 						'label'       => __( 'Discount Type', 'mwb-wc-bk' ),
@@ -51,6 +51,10 @@
 						'description' => __( 'Type of discount for the booking', 'mwb-wc-bk' ),
 					)
 				);
+				?>
+			</div>
+			<div id="mwb_booking_monthly_discount_field" style="display: none;">
+				<?php
 				woocommerce_wp_text_input(
 					array(
 						'id'                => 'mwb_booking_monthly_discount_input',
@@ -66,6 +70,10 @@
 						),
 					)
 				);
+				?>
+			</div>
+			<div id="mwb_booking_weekly_discount_field" style="display: none;">
+				<?php
 				woocommerce_wp_text_input(
 					array(
 						'id'                => 'mwb_booking_weekly_discount_input',
@@ -82,13 +90,16 @@
 					)
 				);
 				?>
-			<p class="form-field">
-				<label for="mwb_booking_custom_days_discount_input"><?php esc_html_e( 'Discount for custom days', 'mwb-wc-bk' ); ?></label>
-				<input type="number" name="mwb_booking_custom_days_discount_input" id="mwb_booking_custom_days_discount_input" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_custom_days_discount_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
-				<?php esc_html_e( 'Discount for random days in %', 'mwb-wc-bk' ); ?>
-				<input type="number" name="mwb_booking_custom_discount_days" id="mwb_booking_custom_discount_days" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_custom_discount_days'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
-				<label for="mwb_booking_custom_discount_days_input"><?php esc_html_e( 'Custom days', 'mwb-wc-bk' ); ?></label>
-			</p>
+			</div>
+			<div id="mwb_booking_custom_discount_field" style="display: none;">
+				<p class="form-field">
+					<label for="mwb_booking_custom_days_discount_input"><?php esc_html_e( 'Discount for custom days', 'mwb-wc-bk' ); ?></label>
+					<input type="number" name="mwb_booking_custom_days_discount_input" id="mwb_booking_custom_days_discount_input" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_custom_days_discount_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+					<?php esc_html_e( 'Discount for random days in %', 'mwb-wc-bk' ); ?>
+					<input type="number" name="mwb_booking_custom_discount_days" id="mwb_booking_custom_discount_days" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_custom_discount_days'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+					<label for="mwb_booking_custom_discount_days_input"><?php esc_html_e( 'Custom days', 'mwb-wc-bk' ); ?></label>
+				</p>
+			</div>
 		</div>
 	</div>
 	<div id="mwb_booking_added_costs" class="options_group">

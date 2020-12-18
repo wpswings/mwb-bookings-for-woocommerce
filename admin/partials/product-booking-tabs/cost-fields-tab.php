@@ -17,13 +17,13 @@
 		<div id="mwb_booking_normal_cost_fields">
 			<p class="form-field">
 				<label for="mwb_booking_unit_cost_input"><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label>
-				<input type="number" name="mwb_booking_unit_cost_input" id="mwb_booking_unit_cost_input" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_unit_cost_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+				<input type="number" name="mwb_booking_unit_cost_input" id="mwb_booking_unit_cost_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_unit_cost_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 				<input type="checkbox" name="mwb_booking_unit_cost_multiply" id="mwb_booking_unit_cost_multiply" value="yes" <?php checked( 'yes', $this->setting_fields['mwb_booking_unit_cost_multiply'] ); ?>/>
 				<label for="mwb_booking_unit_cost_multiply"><?php esc_html_e( 'Count per people', 'mwb-wc-bk' ); ?></label>
 			</p>
 			<p class="form-field">
 				<label for="mwb_booking_base_cost_input"><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label>
-				<input type="number" name="mwb_booking_base_cost_input" id="mwb_booking_base_cost_input" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_base_cost_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+				<input type="number" name="mwb_booking_base_cost_input" id="mwb_booking_base_cost_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_base_cost_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 				<input type="checkbox" name="mwb_booking_base_cost_multiply" id="mwb_booking_base_cost_multiply" value="no" <?php checked( 'yes', $this->setting_fields['mwb_booking_base_cost_multiply'] ); ?>/>
 				<label for="mwb_booking_base_cost_multiply"><?php esc_html_e( 'Count per people', 'mwb-wc-bk' ); ?></label>
 			</p>
@@ -94,9 +94,9 @@
 			<div id="mwb_booking_custom_discount_field" style="display: none;">
 				<p class="form-field">
 					<label for="mwb_booking_custom_days_discount_input"><?php esc_html_e( 'Discount for custom days', 'mwb-wc-bk' ); ?></label>
-					<input type="number" name="mwb_booking_custom_days_discount_input" id="mwb_booking_custom_days_discount_input" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_custom_days_discount_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+					<input type="number" name="mwb_booking_custom_days_discount_input" id="mwb_booking_custom_days_discount_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_custom_days_discount_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 					<?php esc_html_e( 'Discount for random days in %', 'mwb-wc-bk' ); ?>
-					<input type="number" name="mwb_booking_custom_discount_days" id="mwb_booking_custom_discount_days" value="<?php esc_attr_e( $this->setting_fields['mwb_booking_custom_discount_days'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+					<input type="number" name="mwb_booking_custom_discount_days" id="mwb_booking_custom_discount_days" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_custom_discount_days'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 					<label for="mwb_booking_custom_discount_days_input"><?php esc_html_e( 'Custom days', 'mwb-wc-bk' ); ?></label>
 				</p>
 			</div>
@@ -106,8 +106,27 @@
 		<div id="mwb_booking_added_costs_heading">
 			<h3><?php esc_html_e( 'Added Costs', 'mwb-wc-bk' ); ?></h3>
 		</div>
+		<div id="mwb_booking_added_cost_select_field">
+			<p class="form-field">
+				<label for="mwb_booking_added_cost_select_search"><?php esc_html_e( 'Add Extra Costs', 'mwb-wc-bk' ); ?></label>
+				<select id="mwb_booking_added_cost_select_search" multiple ='multiple' name="mwb_booking_added_cost_select[]" data-placeholder="<?php esc_html_e( 'Add the Extra Costs you want to include in booking', 'mwb-wc-bk' ); ?>">
+					<?php
+					if ( ! empty( $this->setting_fields['mwb_booking_added_cost_select'] ) ) {
+						$selected_costs = is_array( $this->setting_fields['mwb_booking_added_cost_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_added_cost_select'] ) : null;
+						foreach ( $selected_costs as $cost_id ) {
+							$cost_name = get_term( $cost_id )->name;
+							?>
+							<option value="<?php echo esc_html( $cost_id ); ?>" selected="selected"><?php echo( esc_html( $cost_name ) . '(#' . esc_html( $cost_id ) . ')' ); ?></option>
+							<?php
+						}
+					}
+					?>
+				</select>
+				<?php mwb_booking_help_tip( esc_html__( 'Add Extra Costs you want to include in booking', 'mwb-wc-bk' ) ); ?>
+			</p>
+		</div>
 		<div id="mwb_booking_added_costs_btn" style="margin-bottom: 10px;">
-			<button class="btn btn-primary"><?php esc_html_e( 'New Added Cost', 'mwb-wc-bk' ); ?></button>
+			<button class="btn btn-primary"><a href="edit-tags.php?taxonomy=mwb_ct_costs&post_type=mwb_cpt_booking" target="blank"><?php esc_html_e( 'New Added Cost', 'mwb-wc-bk' ); ?></a></button>
 		</div>
 	</div>
 	<div id="mwb_booking_local_cost_rules" class="options_group">

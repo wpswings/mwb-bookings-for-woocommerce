@@ -57,7 +57,7 @@
 		);
 		?>
 		<div id="mwb_booking_service_add" style="margin-bottom: 7px;">
-			<button class=""><?php esc_html_e( 'Add New Service', 'mwb-wc-bk' ); ?></button>
+			<button class=""><a href="edit-tags.php?taxonomy=mwb_ct_services&post_type=mwb_cpt_booking" target="blank"><?php esc_html_e( 'Add New Service', 'mwb-wc-bk' ); ?></a></button>
 		</div>
 	</div>
 </div>

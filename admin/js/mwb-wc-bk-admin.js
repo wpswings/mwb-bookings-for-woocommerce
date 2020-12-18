@@ -2,6 +2,7 @@ var availability_count = 0;
 var cost_count = 0;
 jQuery(document).ready( function($) {
 	availability_not_allowed_days_select2($);
+	selected_added_cost_select2($);
 	selected_services_select2($);
 	product_general_settings_js($);
 	product_cost_settings_js($);
@@ -19,6 +20,41 @@ jQuery(document).ready( function($) {
 function availability_not_allowed_days_select2($) {
 	if( $('#mwb_booking_not_allowed_days').length > 0 )
 		$('#mwb_booking_not_allowed_days').select2();
+}
+
+function selected_added_cost_select2($) {
+	if( ! jQuery('#mwb_booking_added_cost_select_search').length > 0 ) {
+		return;
+	}
+	jQuery('#mwb_booking_added_cost_select_search').select2({
+		ajax:{
+			  url: mwb_booking_obj.ajaxurl,
+			  dataType: 'json',
+			  delay: 200,
+			  data: function (params) {
+					return {
+					  q: params.term,
+					  action: 'selected_added_costs_search'
+					};
+			  },
+			  processResults: function( data ) {
+			  var options = [];
+			  if ( data ) 
+			  {
+				  $.each( data, function( index, text )
+				  {
+					  text[1]+='(#'+text[0]+')';
+					  options.push( { id: text[0], text: text[1] } );
+				  });
+			  }
+			  return {
+				  results:options
+			  };
+		  },
+		  cache: true
+	  },
+	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+  });
 }
 
 function selected_services_select2($) {

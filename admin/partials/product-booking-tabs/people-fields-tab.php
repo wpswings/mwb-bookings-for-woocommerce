@@ -73,7 +73,7 @@
 			<h3><?php esc_html_e( 'People Types', 'mwb-wc-bk' ); ?></h3>
 		</div>
 		<div id="mwb_people_type_add" style="margin-bottom: 7px;">
-			<button class="btn"><?php esc_html_e( 'Add New Type', 'mwb-wc-bk' ); ?></button>
+			<button class="btn"><a href="edit-tags.php?taxonomy=mwb_ct_people_type&post_type=mwb_cpt_booking" target="blank"><?php esc_html_e( 'Add New Type', 'mwb-wc-bk' ); ?></a></button>
 		</div>
 	</div>
 </div>

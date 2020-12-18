@@ -227,14 +227,14 @@ class Mwb_Wc_Bk_Admin {
 		foreach ( $this->get_product_settings() as $key => $value ) {
 			if ( is_array( $_POST[ $key ] ) ) {
 				$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default'];
-				echo $key . "->";
-				print_r( $posted_data );
-				echo '<br>';
+				// echo $key . "->";
+				// print_r( $posted_data );
+				// echo '<br>';
 			} else {
 				$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default'];
-				echo $key. "->";
-				print_r( $posted_data );
-				echo '<br>';
+				// echo $key. "->";
+				// print_r( $posted_data );
+				// echo '<br>';
 			}
 			//print_r( $_POST[ $key ] );
 			update_post_meta( $post_id, $key, $posted_data );
@@ -268,6 +268,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_weekly_discount_input'      => array( 'default' => '' ),
 			'mwb_booking_custom_days_discount_input' => array( 'default' => '' ),
 			'mwb_booking_custom_discount_days'       => array( 'default' => '' ),
+			'mwb_booking_added_cost_select'          => array( 'default' => array() ),
 			'mwb_services_enable_checkbox'           => array( 'default' => 'no' ),
 			'mwb_booking_services_select'            => array( 'default' => array() ),
 			'mwb_services_mandatory_check'           => array( 'default' => '' ),
@@ -448,6 +449,35 @@ class Mwb_Wc_Bk_Admin {
 		return $arr;
 	}
 
+	/**
+	 * Select2 search for Added Costs which are selected.
+	 *
+	 * @return void
+	 */
+	public function selected_added_costs_search() {
+
+		$return = array();
+		$args   = array(
+			'search'     => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+			'taxonomy'   => 'mwb_ct_costs',
+			'hide_empty' => false,
+			'order_by'   => 'name',
+		);
+		$terms  = get_terms( $args );
+
+		if ( ! empty( $terms ) && is_array( $terms ) && count( $terms ) ) {
+
+			foreach ( $terms as $term ) {
+
+				$term->name = ( mb_strlen( $term->name ) > 50 ) ? mb_substr( $term->name, 0, 49 ) . '...' : $term->name;
+
+				$return[] = array( $term->term_id, $term->name );
+			}
+		}
+		echo wp_json_encode( $return );
+		wp_die();
+	}
+
 
 	/**
 	 * Select2 search for services which are selected.
@@ -455,6 +485,7 @@ class Mwb_Wc_Bk_Admin {
 	 * @since    1.0.0
 	 */
 	public function selected_services_search() {
+
 		$return = array();
 		$args   = array(
 			'search'     => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
@@ -473,9 +504,7 @@ class Mwb_Wc_Bk_Admin {
 				$return[] = array( $term->term_id, $term->name );
 			}
 		}
-
 		echo wp_json_encode( $return );
-
 		wp_die();
 
 	}
@@ -521,6 +550,7 @@ class Mwb_Wc_Bk_Admin {
 	 * @since    1.0.0
 	 */
 	public function create_booking_product_search() {
+
 		$return   = array();
 		$args     = array(
 			's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
@@ -573,6 +603,7 @@ class Mwb_Wc_Bk_Admin {
 	 * @since    1.0.0
 	 */
 	public function create_booking_order_search() {
+
 		$return   = array();
 		$order_id = ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '';
 		$loop     = new WP_Query(
@@ -617,12 +648,26 @@ class Mwb_Wc_Bk_Admin {
 			die( 'Nonce value cannot be verified' );
 		}
 
-		$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
-		$product_meta = get_post_meta( $product_id );
+		$product_id      = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+		$product_meta    = get_post_meta( $product_id );
+		$global_settings = get_option( 'mwb_booking_settings_options' );
 
-		echo wp_json_encode( $product_meta );
+		if ( ! empty( $global_settings['mwb_booking_setting_go_enable'] ) && 'yes' === $global_settings['mwb_booking_setting_go_enable'] ) {
+			if ( ! empty( $product_meta['mwb_booking_unit_select'][0] ) && 'fixed' === $product_meta['mwb_booking_unit_select'][0] ) {
+				?>
+				<td>
+					<div id="mwb_create_booking_start_date">
+						<label for=""><?php esc_html_e( 'Start Date', '' ); ?></label>
+						<h5><?php echo esc_html( printf( '%d %s', $product_meta['mwb_booking_unit_input'][0], $product_meta['mwb_booking_unit_duration'][0] ) ); ?></h5>
+					</div>
+				</td>
+				<?php
 
-
+			}
+		}
+		
+		wp_die();
+		//echo wp_json_encode( $product_meta );
 	}
 
 	/**
@@ -893,7 +938,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_setting_go_reject'          => '',
 			'mwb_booking_setting_bo_service_enable'  => 'yes',
 			'mwb_booking_setting_bo_service_cost'    => 'yes',
-			'mwb_booking_setting_bo_service_desc'    => 'yes',
+			'mwb_booking_setting_bo_service_desc'    => 'no',
 		);
 	}
 
@@ -1272,6 +1317,11 @@ class Mwb_Wc_Bk_Admin {
 		?>
 		<div class="form-field term-extra-cost-wrap">
 			<p>
+				<label for="mwb_booking_ct_costs_custom_price"><?php esc_html_e( 'Cost Price', 'mwb-wc-bk' ); ?></label>
+				<input type="number" id="mwb_booking_ct_costs_custom_price" name="mwb_booking_ct_costs_custom_price" step="1" min="1"/>
+				<p class="description"><?php esc_html_e( 'Cost price of the added cost', 'mwb-wc-bk' ); ?></p>
+			</p>
+			<p>
 				<input type="checkbox" id="mwb_booking_ct_costs_multiply_units" name="mwb_booking_ct_costs_multiply_units" value="yes">
 				<p class="description"><?php esc_html_e( 'Multiply cost by booking unit duration', 'mwb-wc-bk' ); ?></p>
 			</p>
@@ -1296,6 +1346,8 @@ class Mwb_Wc_Bk_Admin {
 
 		update_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_people', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_costs_multiply_people'] ) ? $_POST['mwb_booking_ct_costs_multiply_people'] : 'no' ) ) ) );
 
+		update_term_meta( $term_id, 'mwb_booking_ct_costs_custom_price', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_costs_custom_price'] ) ? $_POST['mwb_booking_ct_costs_custom_price'] : 0 ) ) ) );
+
 	}
 
 	/**
@@ -1307,10 +1359,18 @@ class Mwb_Wc_Bk_Admin {
 
 		$multiply_unit   = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_multiply_units', true );
 		$multiply_people = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_multiply_people', true );
+		$cost_price      = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_custom_price', true );
 		// echo '<pre>';
 		// print_r( get_current_screen() );
 		// echo '</pre>';
 		?>
+		<tr class="form-field term-extra-cost-wrap">
+			<th><label for="mwb_booking_ct_costs_custom_price"><?php esc_html_e( 'Cost price', 'mwb-wc-bk' ); ?></label></th>
+			<td>
+				<input type="number" id="mwb_booking_ct_costs_custom_price" name="mwb_booking_ct_costs_custom_price" value="<?php echo esc_html( ! empty( $cost_price ) ? $cost_price : 0 ); ?>" step="1" min="1">
+				<p class="description"><?php esc_html_e( 'Cost price of the added cost', 'mwb-wc-bk' ); ?></p>
+			</td>
+		</tr>
 		<tr class="form-field term-extra-cost-wrap">
 			<th><label for="mwb_booking_ct_costs_multiply_units"><?php esc_html_e( 'Multiply cost by booking units', 'mwb-wc-bk' ); ?></label></th>
 			<td>

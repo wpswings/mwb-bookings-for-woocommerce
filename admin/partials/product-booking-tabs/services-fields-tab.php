@@ -39,7 +39,7 @@
 					}
 					?>
 			</select>
-			<?php mwb_booking_help_tip( esc_html__( 'Add services you want to include in booking', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Add services you want to include in booking', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<?php
 		woocommerce_wp_select(

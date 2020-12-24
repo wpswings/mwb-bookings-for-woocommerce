@@ -39,6 +39,8 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	private $version;
 
+	public $global_func;
+
 	/**
 	 * MWB Booking Fields
 	 *
@@ -61,6 +63,8 @@ class Mwb_Wc_Bk_Admin {
 	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
+
+		$this->global_func = Mwb_Booking_Global_Functions::get_global_instance();
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
@@ -278,6 +282,8 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_people_as_seperate_booking'         => array( 'default' => 'no' ),
 			'mwb_enable_people_types'                => array( 'default' => 'no' ),
 			'mwb_max_bookings_per_unit'              => array( 'default' => '' ),
+			'mwb_booking_min_duration'               => array( 'default' => '' ),
+			'mwb_booking_max_duration'               => array( 'default' => '' ),
 			'mwb_booking_start_time'                 => array( 'default' => '' ),
 			'mwb_booking_end_time'                   => array( 'default' => '' ),
 			'mwb_booking_buffer_input'               => array( 'default' => '' ),
@@ -652,20 +658,63 @@ class Mwb_Wc_Bk_Admin {
 		$product_meta    = get_post_meta( $product_id );
 		$global_settings = get_option( 'mwb_booking_settings_options' );
 
-		if ( ! empty( $global_settings['mwb_booking_setting_go_enable'] ) && 'yes' === $global_settings['mwb_booking_setting_go_enable'] ) {
-			if ( ! empty( $product_meta['mwb_booking_unit_select'][0] ) && 'fixed' === $product_meta['mwb_booking_unit_select'][0] ) {
+		?>
+		<th scope="row" class="">
+			<label><h3><?php esc_html_e( 'Details', 'mwb-wc-bk' ); ?></h3></label>
+		</th>
+		<?php
+		// if ( ! empty( $global_settings['mwb_booking_setting_go_enable'] ) && 'yes' === $global_settings['mwb_booking_setting_go_enable'] ) {
+		if ( ! empty( $product_meta['mwb_booking_unit_select'][0] ) && 'fixed' === $product_meta['mwb_booking_unit_select'][0] ) {
+			?>
+			<td>
+				<div id="mwb_create_booking_start_date">
+					<label for=""><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label>
+					<p><?php echo esc_html( printf( '%d-%s', $product_meta['mwb_booking_unit_input'][0], $product_meta['mwb_booking_unit_duration'][0] ) ); ?></p>
+				</div>
+			</td>
+			<?php
+		} elseif ( ! empty( $product_meta['mwb_booking_unit_select'][0] ) && 'customer' === $product_meta['mwb_booking_unit_select'][0] ) {
+			if ( ! empty( $product_meta['mwb_booking_unit_duration'][0] ) && 'day' === $product_meta['mwb_booking_unit_duration'][0] && ! empty( $product_meta['mwb_enable_range_picker'] ) && 'yes' === $product_meta['mwb_enable_range_picker'][0] ) {
 				?>
 				<td>
-					<div id="mwb_create_booking_start_date">
-						<label for=""><?php esc_html_e( 'Start Date', '' ); ?></label>
-						<h5><?php echo esc_html( printf( '%d %s', $product_meta['mwb_booking_unit_input'][0], $product_meta['mwb_booking_unit_duration'][0] ) ); ?></h5>
+					<div id="mwb_create_booking_start_date_field">
+						<label for=""><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label>
+						<input type="date" id="mwb_create_booking_start_date">
+						<label for=""><?php esc_html_e( 'End Date', 'mwb-wc-bk' ); ?></label>
+						<input type="date" id="mwb_create_booking_end_date">
+					</div>
+				</td>
+					<?php
+			} elseif ( ! empty( $product_meta['mwb_booking_unit_duration'][0] ) && ( 'hour' == $product_meta['mwb_booking_unit_duration'][0] || 'minute' == $product_meta['mwb_booking_unit_duration'][0] ) ) {
+				?>
+				<td>
+					<div id="mwb_create_booking_start_date_field">
+						<label for="mwb_create_booking_start_date"><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label>
+						<input type="date" id="mwb_create_booking_start_date">
+					</div>
+					<div id="mwb_create_booking_start_time_field">
+						<label for=""><?php esc_html__( 'Start Time', 'mwb-wc-bk' ); ?></label>
+						<select name="mwb_create_booking_start_time" id="mwb_create_booking_start_time"></select>
 					</div>
 				</td>
 				<?php
-
+			} elseif ( ! empty( $product_meta['mwb_booking_unit_duration'][0] ) && 'month' == $product_meta['mwb_booking_unit_duration'][0] ) {
+				?>
+				<td>
+					<div id="mwb_create_booking_start_month_field">
+						<label for=""><?php esc_html_e( 'Start Month', 'mwb-wc-bk' ); ?></label>
+						<input type="month" id="mwb_create_booking_start_month">
+					</div>
+				</td>
+				<?php
 			}
 		}
-		
+		?>
+		<!-- <pre>
+			<?php // print_r( $product_meta ); ?>
+		</pre> -->
+		<?php
+		// }
 		wp_die();
 		//echo wp_json_encode( $product_meta );
 	}

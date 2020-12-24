@@ -229,6 +229,8 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_create_booking_order_search', $plugin_admin, 'create_booking_order_search' );
 
+		$this->loader->add_action( 'wp_ajax_create_booking_product_details', $plugin_admin, 'create_booking_product_details' );
+
 	}
 
 	/**

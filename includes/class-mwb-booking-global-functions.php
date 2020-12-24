@@ -9,25 +9,64 @@
  * @subpackage Mwb_Wc_Bk/admin
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
- * Function for adding description as a tooltip.
- *
- * @param   string $description        Tooltip message.
- *
- * @since    1.0.0
+ * Global Functions Class For MWB Booking Plugin
  */
-function mwb_booking_help_tip( $description = '' ) {
+class Mwb_Booking_Global_Functions {
 
-	// Run only if description message is present.
-	if ( ! empty( $description ) ) {
+	/**
+	 * Undocumented variable
+	 *
+	 * @var [type]
+	 */
+	public static $instance;
 
-		$allowed_html = array(
-			'span' => array(
-				'class'    => array(),
-				'data-tip' => array(),
-			),
-		);
+	/**
+	 * Undocumented function
+	 */
+	public function __construct() {
 
-		echo wp_kses( wc_help_tip( $description ), $allowed_html );
+		self::$instance = $this;
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @return obj
+	 */
+	public static function get_global_instance() {
+
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+	/**
+	 * Function for adding description as a tooltip.
+	 *
+	 * @param   string $description        Tooltip message.
+	 *
+	 * @since    1.0.0
+	 */
+	public function mwb_booking_help_tip( $description = '' ) {
+
+		// Run only if description message is present.
+		if ( ! empty( $description ) ) {
+
+			$allowed_html = array(
+				'span' => array(
+					'class'    => array(),
+					'data-tip' => array(),
+				),
+			);
+
+			echo wp_kses( wc_help_tip( $description ), $allowed_html );
+		}
 	}
 }
+

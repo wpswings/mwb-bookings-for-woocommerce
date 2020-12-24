@@ -7,6 +7,8 @@
 
 //  print_r( $this->mwb_booking_search_weekdays() );
 // //  die;
+
+//$global_func = Mwb_Booking_Global_Functions::get_global_instance();
 ?>
 <div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 	<div id="mwb_availability_heading">
@@ -34,14 +36,24 @@
 			);
 			?>
 		<p class="form-field">
+			<label for="mwb_booking_min_duration"><?php esc_html_e( 'Minimum duaration for booking', 'mwb-wc-bk' ); ?></label>
+			<input type="number" name="mwb_booking_min_duration" id="mwb_booking_min_duration" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_min_duration'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Minimum Duartion for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
+		</p>
+		<p class="form-field">
+			<label for="mwb_booking_max_duration"><?php esc_html_e( 'Maximum uaration for booking', 'mwb-wc-bk' ); ?></label>
+			<input type="number" name="mwb_booking_max_duration" id="mwb_booking_max_duration" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_max_duration'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Maximum Duartion for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
+		</p>
+		<p class="form-field">
 			<label for="mwb_booking_start_time"><?php esc_html_e( 'Booking starts', 'mwb-wc-bk' ); ?></label>
 			<input type="time" name="mwb_booking_start_time" id="mwb_booking_start_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_start_time'] ); ?>"/>
-			<?php mwb_booking_help_tip( esc_html__( 'Time when the booking starts', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time when the booking starts', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
 			<label for="mwb_booking_end_time"><?php esc_html_e( 'Booking ends', 'mwb-wc-bk' ); ?></label>
 			<input type="time" name="mwb_booking_end_time" id="mwb_booking_end_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_end_time'] ); ?>"/>
-			<?php mwb_booking_help_tip( esc_html__( 'Time when the booking ends', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time when the booking ends', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
 			<label for="mwb_booking_buffer_input"><?php esc_html_e( 'Booking Buffer', 'mwb-wc-bk' ); ?></label>
@@ -53,7 +65,7 @@
 				<?php endforeach; ?>
 
 			</select>
-			<?php mwb_booking_help_tip( esc_html__( 'Time or days between two adjacent booking', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time or days between two adjacent booking', 'mwb-wc-bk' ) ); ?>
 		</p>
 	</div>
 	<div id="mwb_advance_booking" class="options_group">
@@ -67,7 +79,7 @@
 				<option value="month" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'month' ); ?>><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
 				<option value="day" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'day' ); ?>><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
 			</select>
-			<?php mwb_booking_help_tip( esc_html__( 'Max days before which the product can be booked', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Max days before which the product can be booked', 'mwb-wc-bk' ) ); ?>
 		</p>
 
 		<p class="form-field">
@@ -78,7 +90,7 @@
 				<option value="day" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'day' ); ?>><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
 				<option value="year" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'year' ); ?>><?php esc_html_e( 'Year(s)', 'mwb-wc-bk' ); ?></option>
 			</select>
-			<?php mwb_booking_help_tip( esc_html__( 'Min days before which the product can be booked', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Min days before which the product can be booked', 'mwb-wc-bk' ) ); ?>
 		</p>
 
 		<p class="form-field">
@@ -90,7 +102,7 @@
 					<?php //} ?>
 				<?php endforeach; ?>
 			</select>
-			<?php mwb_booking_help_tip( esc_html__( 'Select weekday(s) on which booking is not allowed', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Select weekday(s) on which booking is not allowed', 'mwb-wc-bk' ) ); ?>
 		</p>
 	</div>
 	<div id="mwb_local_availability_rules" class="options_group">

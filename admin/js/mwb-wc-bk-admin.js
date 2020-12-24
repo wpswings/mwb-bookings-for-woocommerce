@@ -921,7 +921,8 @@ function create_booking_product_details($) {
 				'product_id' : product_id,
 			},
 			success: function( data ) {
-
+				console.log( data );
+				$( '#mwb_create_booking_form' ).find( '.product_ajax' ).html( data );
 			}
 		});
 	});

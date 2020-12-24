@@ -122,7 +122,7 @@
 					}
 					?>
 				</select>
-				<?php mwb_booking_help_tip( esc_html__( 'Add Extra Costs you want to include in booking', 'mwb-wc-bk' ) ); ?>
+				<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Add Extra Costs you want to include in booking', 'mwb-wc-bk' ) ); ?>
 			</p>
 		</div>
 		<div id="mwb_booking_added_costs_btn" style="margin-bottom: 10px;">

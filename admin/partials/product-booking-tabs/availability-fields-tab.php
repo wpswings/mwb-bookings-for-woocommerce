@@ -5,7 +5,7 @@
  * @package Mwb_Wc_Bk
  */
 
-//  print_r( $this->mwb_booking_search_weekdays() );
+//  print_r( $this->global_func->booking_search_weekdays() );
 // //  die;
 
 //$global_func = Mwb_Booking_Global_Functions::get_global_instance();
@@ -41,7 +41,7 @@
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Minimum Duartion for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
-			<label for="mwb_booking_max_duration"><?php esc_html_e( 'Maximum uaration for booking', 'mwb-wc-bk' ); ?></label>
+			<label for="mwb_booking_max_duration"><?php esc_html_e( 'Maximum duaration for booking', 'mwb-wc-bk' ); ?></label>
 			<input type="number" name="mwb_booking_max_duration" id="mwb_booking_max_duration" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_max_duration'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Maximum Duartion for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
 		</p>
@@ -96,7 +96,7 @@
 		<p class="form-field">
 			<label for="mwb_booking_not_allowed_days"><?php esc_html_e( 'Booking not allowed', 'mwb-wc-bk' ); ?></label>
 			<select name="mwb_booking_not_allowed_days[]" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Weekday(s)', 'mwb-wc-bk' ); ?>">
-				<?php foreach ( $this->mwb_booking_search_weekdays() as $key => $value ) : ?>
+				<?php foreach ( $this->global_func->booking_search_weekdays() as $key => $value ) : ?>
 					<?php //if ( ! empty( $this->setting_fields['mwb_booking_not_allowed_days'] ) ) { ?>
 					<option <?php echo in_array( $key, $this->setting_fields['mwb_booking_not_allowed_days'], true ) ? 'selected' : ''; ?> value="<?php echo esc_html( $key ); ?>"><?php echo esc_html( $value ); ?></option>
 					<?php //} ?>

@@ -136,14 +136,14 @@ echo '</pre>';
 									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
 										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
-									<?php foreach ( $this->mwb_booking_search_weekdays() as $k => $v ) { ?>
+									<?php foreach ( $this->global_func->booking_search_weekdays() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
 										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
-									<?php foreach ( $this->mwb_booking_search_weekdays() as $k => $v ) { ?>
+									<?php foreach ( $this->global_func->booking_search_weekdays() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
@@ -154,14 +154,14 @@ echo '</pre>';
 									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
 										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
-									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+									<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
 										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
-									<?php foreach ( $this->mwb_booking_months() as $k => $v ) { ?>
+									<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
@@ -172,14 +172,14 @@ echo '</pre>';
 									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
 										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
-									<?php foreach ( $this->mwb_booking_search_weeks() as $k => $v ) { ?>
+									<?php foreach ( $this->global_func->booking_search_weeks() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
 										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
-									<?php foreach ( $this->mwb_booking_search_weeks() as $k => $v ) { ?>
+									<?php foreach ( $this->global_func->booking_search_weeks() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
@@ -210,7 +210,7 @@ echo '</pre>';
 								<p>
 									<select name="mwb_global_cost_rule_base_cal[<?php echo esc_html( $count ); ?>]" id="mwb_global_cost_rule_base_cal" class="mwb_global_cost_rule_base_cal">
 										<?php
-										foreach ( $this->mwb_booking_global_cost_cal() as $k => $v ) {
+										foreach ( $this->global_func->booking_global_cost_cal() as $k => $v ) {
 											?>
 											<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_base_cal[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 											<?php
@@ -229,7 +229,7 @@ echo '</pre>';
 								<p>
 									<select name="mwb_global_cost_rule_unit_cal[<?php echo esc_html( $count ); ?>]" id="mwb_global_cost_rule_unit_cal" class="mwb_global_cost_rule_unit_cal">
 										<?php
-										foreach ( $this->mwb_booking_global_cost_cal() as $k => $v ) {
+										foreach ( $this->global_func->booking_global_cost_cal() as $k => $v ) {
 											?>
 											<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_unit_cal[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 											<?php

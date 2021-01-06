@@ -4,6 +4,7 @@ jQuery(document).ready( function($) {
 	availability_not_allowed_days_select2($);
 	selected_added_cost_select2($);
 	selected_services_select2($);
+	selected_people_type_select2($);
 	product_general_settings_js($);
 	product_cost_settings_js($);
 	product_people_settings_js($);
@@ -70,6 +71,41 @@ function selected_services_select2($) {
 					return {
 					  q: params.term,
 					  action: 'selected_services_search'
+					};
+			  },
+			  processResults: function( data ) {
+			  var options = [];
+			  if ( data )
+			  {
+				  $.each( data, function( index, text )
+				  {
+					  text[1]+='(#'+text[0]+')';
+					  options.push( { id: text[0], text: text[1] } );
+				  });
+			  }
+			  return {
+				  results:options
+			  };
+		  },
+		  cache: true
+	  },
+	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+  });
+}
+
+function selected_people_type_select2($) {
+	if( ! jQuery('#mwb_booking_people_select_search').length > 0 ) {
+		return;
+	}
+	jQuery('#mwb_booking_people_select_search').select2({
+		ajax:{
+			  url: mwb_booking_obj.ajaxurl,
+			  dataType: 'json',
+			  delay: 200,
+			  data: function (params) {
+					return {
+					  q: params.term,
+					  action: 'selected_people_type_search'
 					};
 			  },
 			  processResults: function( data ) {

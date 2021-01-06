@@ -124,6 +124,7 @@ function define_mwb_wc_bk() {
 	mwb_wc_bk_constant( 'MWB_WC_BK_BASEPATH', plugin_dir_path( __FILE__ ) );
 	mwb_wc_bk_constant( 'MWB_WC_BK_BASEURL', plugin_dir_url( __FILE__ ) );
 	mwb_wc_bk_constant( 'MWB_WC_BK_VERSION', '1.0.0' );
+	mwb_wc_bk_constant( 'MWB_WC_BK_TEMPLATE_PATH', plugin_dir_path( __FILE__ ) . 'public/templates/' );
 }
 /**
  * Defining Constants

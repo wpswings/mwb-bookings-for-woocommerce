@@ -87,7 +87,7 @@ class Mwb_Wc_Bk_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'js-calender-css', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'js-calender-css', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.css', array(), '5.5.0', 'all' );
 
 	}
 
@@ -101,7 +101,7 @@ class Mwb_Wc_Bk_Admin {
 		//wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ) );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( 'js-calender', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.js', array(), $this->version, false );
+		wp_enqueue_script( 'js-calendar', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.js', array( 'jquery' ), '5.5.0', false );
 		wp_localize_script(
 			$this->plugin_name,
 			'mwb_booking_obj',
@@ -110,6 +110,8 @@ class Mwb_Wc_Bk_Admin {
 				'nonce'   => wp_create_nonce( 'ajax-nonce' ),
 			)
 		);
+
+		wp_enqueue_script( 'calendar-my-js', plugin_dir_path( __FILE__ ) . 'js/calendar.js', array( 'jquery' ), $this->version, false );
 
 		wp_enqueue_script( 'select2_js', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 
@@ -248,6 +250,17 @@ class Mwb_Wc_Bk_Admin {
 			//print_r( $_POST[ $key ] );
 			update_post_meta( $post_id, $key, $posted_data );
 		}
+		$product = wc_get_product( $post_id );
+		if ( $product && $product->is_type( 'mwb_booking' ) ) {
+			$product->set_regular_price( '' );
+			$product->set_sale_price( '' );
+			$product->set_manage_stock( false );
+			$product->set_stock_status( 'instock' );
+			$price = get_post_meta( $product->get_id(), 'mwb_booking_unit_cost_input', true );
+			if ( $price ) {
+				update_post_meta( $product->get_id(), '_price', $price );
+			}
+		}
 	}
 
 	/**
@@ -286,6 +299,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_max_people_per_booking'             => array( 'default' => '' ),
 			'mwb_people_as_seperate_booking'         => array( 'default' => 'no' ),
 			'mwb_enable_people_types'                => array( 'default' => 'no' ),
+			'mwb_booking_people_select'              => array( 'default' => array() ),
 			'mwb_max_bookings_per_unit'              => array( 'default' => '' ),
 			'mwb_booking_min_duration'               => array( 'default' => '' ),
 			'mwb_booking_max_duration'               => array( 'default' => '' ),
@@ -422,6 +436,36 @@ class Mwb_Wc_Bk_Admin {
 		$args   = array(
 			'search'     => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
 			'taxonomy'   => 'mwb_ct_services',
+			'hide_empty' => false,
+			'order_by'   => 'name',
+		);
+		$terms  = get_terms( $args );
+
+		if ( ! empty( $terms ) && is_array( $terms ) && count( $terms ) ) {
+
+			foreach ( $terms as $term ) {
+
+				$term->name = ( mb_strlen( $term->name ) > 50 ) ? mb_substr( $term->name, 0, 49 ) . '...' : $term->name;
+
+				$return[] = array( $term->term_id, $term->name );
+			}
+		}
+		echo wp_json_encode( $return );
+		wp_die();
+
+	}
+
+	/**
+	 * Select2 search for people_type which are selected.
+	 *
+	 * @since    1.0.0
+	 */
+	public function selected_people_type_search() {
+
+		$return = array();
+		$args   = array(
+			'search'     => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+			'taxonomy'   => 'mwb_ct_people_type',
 			'hide_empty' => false,
 			'order_by'   => 'name',
 		);
@@ -967,7 +1011,7 @@ class Mwb_Wc_Bk_Admin {
 	 * @return void
 	 */
 	public function menu_page_calendar() {
-		echo 'calendar';
+		echo '<div id="calendar"></div>';
 	}
 
 	/**

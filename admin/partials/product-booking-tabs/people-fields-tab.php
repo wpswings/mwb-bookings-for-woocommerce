@@ -68,6 +68,29 @@
 			);
 			?>
 	</div>
+	<div id="mwb_add_people_type">
+		<p class="form-field">
+			<label for="mwb_booking_people_select_search"><?php esc_html_e( 'Add People Type', 'mwb-wc-bk' ); ?></label>
+			<select id="mwb_booking_people_select_search" multiple ='multiple' name="mwb_booking_people_select[]" data-placeholder="<?php esc_html_e( 'Add the people type you want to include in booking', 'mwb-wc-bk' ); ?>">
+				<?php
+				if ( ! empty( $this->setting_fields['mwb_booking_people_select'] ) ) {
+					$selected_people_type = is_array( $this->setting_fields['mwb_booking_people_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_people_select'] ) : null;
+					// echo "<pre>";
+					// print_r( $selected_services );
+					// echo "</pre>";
+					foreach ( $selected_people_type as $people_type_id ) {
+						$people_type = get_term( $people_type_id )->name;
+						?>
+						<option value="<?php echo esc_html( $people_type_id ); ?>" selected="selected"><?php echo( esc_html( $people_type ) . '(#' . esc_html( $people_type_id ) . ')' ); ?></option>
+						<?php
+					}
+				}
+				?>
+			</select>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Add people type you want to include in booking', 'mwb-wc-bk' ) ); ?>
+		</p>
+	</div>
+
 	<div id="mwb_enabled_people_type" class="options_group">
 		<div id="mwb_people_type_heading">
 			<h3><?php esc_html_e( 'People Types', 'mwb-wc-bk' ); ?></h3>

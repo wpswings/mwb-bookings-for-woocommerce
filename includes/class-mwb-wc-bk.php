@@ -213,6 +213,8 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_selected_services_search', $plugin_admin, 'selected_services_search' );
 
+		$this->loader->add_action( 'wp_ajax_selected_people_type_search', $plugin_admin, 'selected_people_type_search' );
+
 		$this->loader->add_action( 'wp_ajax_selected_added_costs_search', $plugin_admin, 'selected_added_costs_search' );
 
 		$this->loader->add_action( 'wp_ajax_dachicon_change_handler', $plugin_admin, 'dachicon_change_handler' );
@@ -246,6 +248,28 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		$this->loader->add_action( 'woocommerce_mwb_booking_add_to_cart', $plugin_public, 'mwb_include_booking_add_to_cart' );
+
+		$this->loader->add_action( 'mwb_booking_add_to_cart_form_content', $plugin_public, 'mwb_booking_add_to_cart_form_fields' );
+
+		$this->loader->add_action( 'wp_ajax_mwb_wc_bk_update_add_to_cart', $plugin_public, 'mwb_wc_bk_update_add_to_cart' );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wc_bk_update_add_to_cart', $plugin_public, 'mwb_wc_bk_update_add_to_cart' );
+
+		$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'mwb_wc_bk_add_cart_item_data', 10, 2 );
+
+		$this->loader->add_filter( 'woocommerce_add_cart_item', $plugin_public, 'mwb_wc_bk_add_cart_item', 10, 2 );
+
+		$this->loader->add_filter( 'woocommerce_get_cart_item_from_session', $plugin_public, 'mwb_wc_bk_get_cart_item_from_session', 99, 3 );
+
+		$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'mwb_wc_bk_get_item_data', 10, 2 );
+
+		$this->loader->add_filter( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'mwb_wc_bk_checkout_create_order_line_item', 10, 4 );
+
+		$this->loader->add_action( 'woocommerce_checkout_order_processed', $plugin_public, 'mwb_wc_bk_check_order_booking', 999, 2 );
+
+		// $this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'change_on_sale_badge' );
 
 	}
 

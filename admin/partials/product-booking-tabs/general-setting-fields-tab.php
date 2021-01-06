@@ -45,7 +45,7 @@
 		</p>	
 		<p class="form-field" id="mwb_start_booking_custom_date_field">	
 			<label for="mwb_start_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>
-			<input id="mwb_start_booking_custom_date" name="mwb_start_booking_custom_date" type="date" value="<?php esc_attr( $this->setting_fields['mwb_start_booking_custom_date'] ); ?>" required >
+			<input id="mwb_start_booking_custom_date" name="mwb_start_booking_custom_date" type="date" value="<?php echo esc_attr( $this->setting_fields['mwb_start_booking_custom_date'] ); ?>" required >
 		</p>
 	</div>
 	<div id="mwb_calendar_range" class="options_group" style="display:none">

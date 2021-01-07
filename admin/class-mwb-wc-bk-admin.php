@@ -256,7 +256,9 @@ class Mwb_Wc_Bk_Admin {
 			$product->set_sale_price( '' );
 			$product->set_manage_stock( false );
 			$product->set_stock_status( 'instock' );
-			$price = get_post_meta( $product->get_id(), 'mwb_booking_unit_cost_input', true );
+			$base_price = get_post_meta( $product->get_id(), 'mwb_booking_base_cost_input', true );
+			$unit_price = get_post_meta( $product->get_id(), 'mwb_booking_unit_cost_input', true );
+			$price      = $base_price + $unit_price;
 			if ( $price ) {
 				update_post_meta( $product->get_id(), '_price', $price );
 			}

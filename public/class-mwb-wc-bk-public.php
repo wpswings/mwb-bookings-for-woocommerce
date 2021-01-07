@@ -44,8 +44,8 @@ class Mwb_Wc_Bk_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param    string $plugin_name The name of the plugin.
+	 * @param    string $version     The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -130,7 +130,13 @@ class Mwb_Wc_Bk_Public {
 	public function mwb_booking_add_to_cart_form_fields() {
 		global $product;
 		if ( $product && $product->is_type( 'mwb_booking' ) ) {
-			wc_get_template( 'single-product/add-to-cart/form/fields.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
+			?>
+			<div id="mwb_create_booking_form">
+				<?php
+					wc_get_template( 'single-product/add-to-cart/form/duration-check.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
+				?>
+			</div>
+			<?php
 		}
 	}
 
@@ -383,20 +389,4 @@ class Mwb_Wc_Bk_Public {
 		return $booking_id;
 	}
 
-	/**
-	 * Undocumented function
-	 *
-	 * @param [type] $badge_html
-	 * @param [type] $post
-	 * @return void
-	 */
-	public function change_on_sale_badge() {
-		$product = wc_get_product( $post->ID );
-		if ( $product && $product->is_type( 'mwb_booking' ) ) {
-			$price = $product->get_price();
-		}
-		$price = wc_price( $price );
-		//$html = '<span class="onsale">' . wc_price( $price ) . ' </span>';
-		return $price;
-	}
 }

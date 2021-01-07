@@ -44,10 +44,10 @@ function mwb_wc_bk_add_to_cart_form_update($){
 		var duration       = duration_input.val();
 		var request_data   = {
 			'product_id' : product_id,
-			'duration' : duration,
-			'action' : 'mwb_wc_bk_update_add_to_cart'
+			'duration'   : duration,
+			'action'     : 'mwb_wc_bk_update_add_to_cart'
 		}
-		$.post(ajaxurl , request_data).done(function(response){
+		$.post( ajaxurl, request_data ).done(function( response ){
 			response = JSON.parse(response);
 			var price_html = response.price_html ; 
 			$('.price').html(price_html);

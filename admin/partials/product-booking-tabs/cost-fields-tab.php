@@ -43,6 +43,7 @@
 						'id'          => 'mwb_booking_monthly_discount_type',
 						'value'       => $this->setting_fields['mwb_booking_monthly_discount_type'],
 						'options'     => array(
+							'none'             => __( 'No Discount', 'mwb-wc-bk' ),
 							'weekly_discount'  => __( 'Weekly Discount', 'mwb-wc-bk' ),
 							'monthly_discount' => __( 'Monthly Discount', 'mwb-wc-bk' ),
 							'custom_discount'  => __( 'Custom Discount', 'mwb-wc-bk' ),

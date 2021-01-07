@@ -68,16 +68,13 @@
 			);
 			?>
 	</div>
-	<div id="mwb_add_people_type">
+	<div id="mwb_add_people_type_select">
 		<p class="form-field">
 			<label for="mwb_booking_people_select_search"><?php esc_html_e( 'Add People Type', 'mwb-wc-bk' ); ?></label>
 			<select id="mwb_booking_people_select_search" multiple ='multiple' name="mwb_booking_people_select[]" data-placeholder="<?php esc_html_e( 'Add the people type you want to include in booking', 'mwb-wc-bk' ); ?>">
 				<?php
 				if ( ! empty( $this->setting_fields['mwb_booking_people_select'] ) ) {
 					$selected_people_type = is_array( $this->setting_fields['mwb_booking_people_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_people_select'] ) : null;
-					// echo "<pre>";
-					// print_r( $selected_services );
-					// echo "</pre>";
 					foreach ( $selected_people_type as $people_type_id ) {
 						$people_type = get_term( $people_type_id )->name;
 						?>

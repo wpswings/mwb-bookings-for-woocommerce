@@ -33,6 +33,7 @@
 var ajaxurl = mwb_wc_bk_public.ajaxurl ; 
 jQuery(document).ready( function($) {
 	mwb_wc_bk_add_to_cart_form_update($);
+	people_dialog($);
 })
 
 function mwb_wc_bk_add_to_cart_form_update($){
@@ -53,4 +54,18 @@ function mwb_wc_bk_add_to_cart_form_update($){
 			$('.price').html(price_html);
 		});
 	});
+
+	function people_dialog($) {
+
+		$( "#mwb-wc-bk-create-booking-form #mwb-wc-bk-people-input" ).on( 'change', '#mwb-wc-bk-people-input', function() {
+			$( "#mwb_membership_buy_now_modal_form" ).dialog( "open" );
+		} );
+		$( "#mwb_membership_buy_now_modal_form" ).dialog({
+			modal    : true,
+			autoOpen : false,
+			show     : {effect: "blind", duration: 800},
+			width    : 700,
+		}); 
+	}
+
 }

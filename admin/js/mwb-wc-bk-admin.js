@@ -287,12 +287,13 @@ function product_general_settings_js($) {
 	var duration_input = $( '#mwb_booking_general_data #mwb_booking_unit_input' ).val();
 
 	$( '#mwb_booking_general_data #mwb_booking_unit input' ).bind( 'keyup mouseup', function(){
-		if( $(this).val() > 1 ) {
-			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', true );
-			$('#mwb_booking_general_data #mwb_calendar_range').hide();
-		} else {
+		var duration = $( '#mwb_booking_general_data #mwb_booking_unit_duration' ).val();
+		if( $(this).val() == 1 && duration == 'day' ) {
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', false );
 			$('#mwb_booking_general_data #mwb_calendar_range').show();
+		} else {
+			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', true );
+			$('#mwb_booking_general_data #mwb_calendar_range').hide();
 		}
 	});
 

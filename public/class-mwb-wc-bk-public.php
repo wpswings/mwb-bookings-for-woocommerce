@@ -75,6 +75,7 @@ class Mwb_Wc_Bk_Public {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-public.css', array(), $this->version, 'all' );
 
+		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 	}
 
 	/**
@@ -97,6 +98,8 @@ class Mwb_Wc_Bk_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-public.js', array( 'jquery' ), $this->version, false );
+
+		wp_enqueue_script( 'jquery-ui-dialog' );
 
 		wp_localize_script(
 			$this->plugin_name,
@@ -131,9 +134,11 @@ class Mwb_Wc_Bk_Public {
 		global $product;
 		if ( $product && $product->is_type( 'mwb_booking' ) ) {
 			?>
-			<div id="mwb_create_booking_form">
+			<div id="mwb-wc-bk-create-booking-form">
 				<?php
 					wc_get_template( 'single-product/add-to-cart/form/duration-check.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
+					wc_get_template( 'single-product/add-to-cart/form/dates-check.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
+					wc_get_template( 'single-product/add-to-cart/form/people-check.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
 				?>
 			</div>
 			<?php

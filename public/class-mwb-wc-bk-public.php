@@ -110,6 +110,8 @@ class Mwb_Wc_Bk_Public {
 			)
 		);
 
+		add_thickbox();
+
 	}
 
 	/**
@@ -139,6 +141,7 @@ class Mwb_Wc_Bk_Public {
 					wc_get_template( 'single-product/add-to-cart/form/duration-check.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
 					wc_get_template( 'single-product/add-to-cart/form/dates-check.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
 					wc_get_template( 'single-product/add-to-cart/form/people-check.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
+					wc_get_template( 'single-product/add-to-cart/form/service-check.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
 				?>
 			</div>
 			<?php
@@ -151,8 +154,8 @@ class Mwb_Wc_Bk_Public {
 	 * @return void
 	 */
 	public function mwb_wc_bk_update_add_to_cart() {
-		$product_id = $_POST['product_id'];
-		$duration   = $_POST['duration'];
+		$product_id = sanitize_text_field( wp_unslash( $_POST['product_id'] ) );
+		$duration   = sanitize_text_field( wp_unslash( $_POST['duration'] ) );
 		$price      = get_post_meta( $product_id, 'mwb_booking_unit_cost_input', true );
 		$price      = $price * $duration;
 		$product    = wc_get_product( $product_id );
@@ -394,4 +397,26 @@ class Mwb_Wc_Bk_Public {
 		return $booking_id;
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	public function mwb_people_set() {
+		$people_select = ! empty( $_POST['people'] ) ?  $_POST['people'] : array();
+		if ( is_array( $people_select ) ) {
+			foreach ( $people_select as $k => $v ) {
+				$people_term = get_term( $v );
+				$people_name = $people_term->name;
+				?>
+		<div>
+			<label for=""><?php echo esc_html( $people_name ); ?></label>
+			<input type="number" id="mwb_people_type_<?php echo esc_html( $people_name ); ?>" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" >
+		</div>
+				<?php
+				wp_die();
+				// echo '<pre>'; print_r( $people_term->name ); echo '</pre>';
+			}
+		}
+	}
 }

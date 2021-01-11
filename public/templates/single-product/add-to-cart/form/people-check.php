@@ -16,66 +16,86 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 $product_meta = get_post_meta( $product->get_id() );
-$product_data = array(
-	'product_id' => $product->get_id(),
-);
 
-if ( ! empty( $product_meta['mwb_booking_people_select'][0] ) ) {
-	$people_ids = $product_meta['mwb_booking_people_select'][0];
-	foreach ( $people_ids as $k => $v ) {
-		echo '<pre>'; print_r( $k . "=>" . $v ); echo '</pre>';
-		$people_term = get_term_by( 'id', $v );
-		echo '<pre>'; print_r( $people_term ); echo '</pre>';
-	}
-}
+
+$people_enable_check = ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) ? $product_meta['mwb_people_enable_checkbox'][0] : '';
+$seperate_booking    = ! empty( $product_meta['mwb_people_as_seperate_booking'][0] ) ? $product_meta['mwb_people_as_seperate_booking'][0] : '';
+$people_type_check   = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? $product_meta['mwb_enable_people_types'][0] : '';
+$min_people          = ! empty( $product_meta['mwb_min_people_per_booking'][0] ) ? $product_meta['mwb_min_people_per_booking'][0] : '';
+$max_people          = ! empty( $product_meta['mwb_max_people_per_booking'][0] ) ? $product_meta['mwb_max_people_per_booking'][0] : '';
+$people_select       = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : '';
+
+$product_data = array(
+	'product_id'                 => $product->get_id(),
+	'people-as-seperate-booking' => $seperate_booking,
+);
 ?>
-<div id="mwb-wc-bk-date-field" class="mwb-wc-bk-form-section">
+<div id="mwb-wc-bk-people-section" class="mwb-wc-bk-form-section" product-data = "<?php echo esc_html( htmlspecialchars( wp_json_encode( $product_data ) ) ); ?>">
 	<?php
-	if ( ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) && 'yes' === $product_meta['mwb_people_enable_checkbox'][0] ) {
+	if ( 'yes' === $people_enable_check ) {
 		?>
 		<div id="mwb-wc-bk-people-field">
 			<?php
-			if ( ! empty( $product_meta['mwb_people_as_seperate_booking'][0] ) && 'no' === $product_meta['mwb_people_as_seperate_booking'][0] ) {
-				if ( ! empty( $product_meta['mwb_enable_people_types'] ) && 'no' === $product_meta['mwb_enable_people_types'] ) {
-					if ( ! empty( $product_meta['mwb_min_people_per_booking'] ) && ! empty( $product_meta['mwb_max_people_per_booking'] ) ) {
-						?>
-						<label for="mwb-wc-bk-people-input"><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></label>
-						<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" name="people" value="1" step="1" min="<?php $product_meta['mwb_min_people_per_booking']; ?>" max="<?php $product_meta['mwb_max_people_per_booking']; ?>">
+			if ( 'no' === $people_type_check ) {
+				?>
+				<label for="mwb-wc-bk-people-input"><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></label>
+				<input type="hidden" id="mwb-wc-bk-people-input-hidden" name="people" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
+				<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" name="people" value="1" step="1" min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>">
+				<?php
+			} elseif ( 'yes' === $people_type_check ) {
+				// if ( 'no' === $seperate_booking ) {
+				?>
+				<label for="mwb-wc-bk-people-input-div"><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></label>
+				<div id="mwb-wc-bk-people-input-div">
+					<!-- <option value="none"><?php // esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
+					<span id="mwb-wc-bk-people-input-span" ><?php esc_html_e( 'Select Peoples', 'mwb-wc-bk' ); ?></span>
+					<span class="mwb-wc-bk-form-dropdown"></span>
+					<input type="hidden" id="mwb-wc-bk-people-input-hidden" name="people" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
+					<div class="mwb-wc-bk-people-type-popup">
+						<ul class="mwb-wc-bk-people-type-list">
 						<?php
-					} else {
-						?>
-						<label for="mwb-wc-bk-people-input"><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></label>
-						<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" name="people" value="1" step="1" min="0">
-						<?php
-					}
-				} else {
-					?>
-						<label for="mwb-wc-bk-people-input"><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></label>
-						<select name="people" id="mwb-wc-bk-people-input">
-							<option value="none"><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
-							<option value="people"><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></option>
-						</select>
-						<div>
-							<form id="mwb-wc-bk-people-form" method="POST">
-								<?php
-								if ( ! empty( $product_meta['mwb_booking_people_select'][0] ) ) {
-									$people_ids = $product_meta['mwb_booking_people_select'][0];
-									foreach ( $people_ids as $k => $v ) {
-										$people_term = get_term_by( 'id', $v );
-										echo '<pre>'; print_r( $people_term ); echo '</pre>';
-
-									}
-								}
+						if ( is_array( $people_select ) ) {
+							foreach ( $people_select as $k => $v ) {
+								$people_term = get_term( $v );
+								$people_name = $people_term->name;
 								?>
-								<input type="number" id="mwb-wc-bk-people-form-">
-							</form>
-						</div>
+								<li>
+									<label for="mwb-wc-bk-people-input-<?php echo esc_html( $people_name ); ?>"><?php echo esc_html( $people_name ); ?></label>
+									<input type="number" id="mwb-wc-bk-people-input-<?php echo esc_html( $people_name ); ?>" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number people-input" value="1" step="1" min="" max="" >
+								</li>
+								<?php
+							}
+						}
+						?>
+						</ul>
+					</div>
+				</div>
 					<?php
-				}
+				// }
+				// elseif ( 'yes' === $seperate_booking ) {
+					?>
+				<!-- <label for="mwb-wc-bk-people-input-hidden"><?php // esc_html_e( 'People', 'mwb-wc-bk' ); ?></label>
+				<input type="hidden" id="mwb-wc-bk-people-input-hidden" data-min="<?php // echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php //echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>">
+				<ul class="mwb-wc-bk-people-type-list"> -->
+					<?php
+					// if ( is_array( $people_select ) ) {
+					// 	foreach ( $people_select as $k => $v ) {
+					// 		$people_term = get_term( $v );
+					// 		$people_name = $people_term->name;
+							?>
+							<!-- <li>
+								<label for="mwb-wc-bk-people-input-<?php //echo esc_html( $people_name ); ?>"><?php //echo esc_html( $people_name ); ?></label>
+								<input type="number" id="mwb-wc-bk-people-input-<?php //echo esc_html( $people_name ); ?>" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" value="1" step="1" min="" max="" >
+							</li> -->
+							<?php
+					// 	}
+					// }
+					?>
+				<!-- </ul> -->
+					<?php
+				// }
 			}
-			?>
-		</div>
-		<?php
 	}
 	?>
-</div>
+		</div>
+	</div>

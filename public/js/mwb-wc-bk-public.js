@@ -33,12 +33,12 @@
 var ajaxurl = mwb_wc_bk_public.ajaxurl ; 
 jQuery(document).ready( function($) {
 	mwb_wc_bk_add_to_cart_form_update($);
-	people_dialog($);
+	people_conditions($);
 })
 
 function mwb_wc_bk_add_to_cart_form_update($){
-	$('.mwb-wc-bk-form-section').on('change' , 'input' , function(e){
-		var product_data   = $('.mwb-wc-bk-form-section').attr('product-data');
+	$('.mwb-wc-bk-form-section #mwb-wc-bk-duration-div').on('change' , 'input' , function(e){
+		var product_data   = $('#mwb-wc-bk-duration-section').attr('product-data');
 		product_data       = JSON.parse(product_data);
 		var product_id     = product_data.product_id ; 
 		var duration_input = $('#mwb-wc-bk-duration-input') ; 
@@ -54,18 +54,86 @@ function mwb_wc_bk_add_to_cart_form_update($){
 			$('.price').html(price_html);
 		});
 	});
-
-	function people_dialog($) {
-
-		$( "#mwb-wc-bk-create-booking-form #mwb-wc-bk-people-input" ).on( 'change', '#mwb-wc-bk-people-input', function() {
-			$( "#mwb_membership_buy_now_modal_form" ).dialog( "open" );
-		} );
-		$( "#mwb_membership_buy_now_modal_form" ).dialog({
-			modal    : true,
-			autoOpen : false,
-			show     : {effect: "blind", duration: 800},
-			width    : 700,
-		}); 
-	}
-
 }
+
+function people_conditions($) {
+	var people_count = 0;
+	var max_people = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div input[type=hidden]' ).attr('data-max');
+	var min_people = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div input[type=hidden]' ).attr('data-min');
+
+	$( document ).on('change', '.people-input', function(e) {
+
+		const people_input = $( '.people-input' );
+		const currentObj = $( this );
+		var total_input = 0;
+		console.log(currentObj);
+
+		for ( var i = 0, len = people_input.length; i < len; i++ ) {
+			total_input += parseInt( people_input[i].value );
+		}3
+		
+		if( total_input > max_people ) {
+
+			var val = parseInt( currentObj.val() );
+			val -= 1;
+			currentObj.val( val );
+		}
+	});
+
+	// $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-input' ).each(function() {
+	// 	// alert($(this).val());
+	// 	people_count += parseInt( $(this).val() );
+		
+	// 	// $(this).bind('keyup mouseup', function(){
+	// 	// 	people_count += parseInt( $(this).val() );
+	// 	// 		// alert(people_count);
+	// 	// });
+	// 	// $(this).bind('keydown mousedown', function(){
+	// 	// 	people_count -= parseInt( $(this).val() );
+	// 	// 	alert(people_count);
+	// 	// });
+	// 	// people_count =+ $(this).val();
+	// });
+	
+	// $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-input' ).each(function() {
+	// 	$(this).bind('keyup mouseup', function(){
+	// 		var value = $(this).val();
+	// 		people_count += parseInt( value );
+	// 		// people_count ++;
+	// 			// alert(people_count);
+	// 			console.log(people_count);
+	// 	});
+	// 	$(this).bind('keydown mousedown', function(){
+	// 		var value = $(this).val();
+	// 		people_count -= parseInt( value );
+	// 		// people_count --;
+	// 			// console.log(people_count);
+	// 			console.log(people_count);
+	// 	});
+	// 	if( people_count > max_people ) {
+	// 		$( this ).off( 'keyup mouseup' );
+	// 	}
+	// });
+	
+	// $( "#mwb-wc-bk-people-section" ).on( 'click', '#mwb-wc-bk-people-input-div', function() {
+	// 	// alert("working");
+	// 	// $(this).find( '.mwb-wc-bk-people-type-popup' ).toggle();
+	// 	var min_people = $(this).find( 'input[type=hidden]' ).attr('data-min');
+	// 	var max_people = $(this).find( 'input[type=hidden]' ).attr('data-max');
+		
+	// 	// alert( min_people + " " + max_people );
+	// 	$(this).find( '.people-input' ).each(function() {
+	// 		// alert($(this).val());
+	// 		people_count += parseInt( $(this).val() );
+	// 		$(this).bind('keyup mouseup', function(){
+	// 			people_count += parseInt( $(this).val() );
+	// 		});
+	// 		$(this).bind('keydown mousedown', function(){
+	// 			people_count -= parseInt( $(this).val() );
+	// 		});
+	// 		// people_count =+ $(this).val();
+	// 	});
+	// 	alert(people_count);
+	// });
+}
+3

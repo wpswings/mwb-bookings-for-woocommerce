@@ -30,7 +30,7 @@ $product_data = array(
 	'people-as-seperate-booking' => $seperate_booking,
 );
 ?>
-<div id="mwb-wc-bk-people-section" class="mwb-wc-bk-form-section" product-data = "<?php echo esc_html( htmlspecialchars( wp_json_encode( $product_data ) ) ); ?>">
+<div id="mwb-wc-bk-people-section" class="mwb-wc-bk-form-section" product-data="<?php echo esc_html( htmlspecialchars( wp_json_encode( $product_data ) ) ); ?>">
 	<?php
 	if ( 'yes' === $people_enable_check ) {
 		?>
@@ -50,7 +50,7 @@ $product_data = array(
 					<!-- <option value="none"><?php // esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 					<span id="mwb-wc-bk-people-input-span" ><?php esc_html_e( 'Select Peoples', 'mwb-wc-bk' ); ?></span>
 					<span class="mwb-wc-bk-form-dropdown"></span>
-					<input type="hidden" id="mwb-wc-bk-people-input-hidden" name="people" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
+					<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="mwb-wc-bk-form-input-hidden" name="people" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
 					<div class="mwb-wc-bk-people-type-popup">
 						<ul class="mwb-wc-bk-people-type-list">
 						<?php
@@ -61,7 +61,7 @@ $product_data = array(
 								?>
 								<li>
 									<label for="mwb-wc-bk-people-input-<?php echo esc_html( $people_name ); ?>"><?php echo esc_html( $people_name ); ?></label>
-									<input type="number" id="mwb-wc-bk-people-input-<?php echo esc_html( $people_name ); ?>" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number people-input" value="1" step="1" min="" max="" >
+									<input type="number" id="mwb-wc-bk-people-input-<?php echo esc_html( $people_name ); ?>" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number people-input" value="1" step="1" min="0" max="" >
 								</li>
 								<?php
 							}

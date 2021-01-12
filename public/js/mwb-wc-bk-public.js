@@ -61,23 +61,36 @@ function people_conditions($) {
 	var max_people = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div input[type=hidden]' ).attr('data-max');
 	var min_people = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div input[type=hidden]' ).attr('data-min');
 
+	$( '#mwb-wc-bk-people-section' ).on( 'click', "label[for='mwb-wc-bk-people-input-div']", function(){
+		// alert("working");
+		// console.log( $(this).siblings() );
+		var div = $(this).siblings();
+		if( 'mwb-wc-bk-people-input-div' === div.attr('id') ){
+			div.toggle();
+		}
+	});
+
 	$( document ).on('change', '.people-input', function(e) {
 
 		const people_input = $( '.people-input' );
 		const currentObj = $( this );
 		var total_input = 0;
-		console.log(currentObj);
+		// console.log(currentObj);
+		// console.log(people_input);
 
 		for ( var i = 0, len = people_input.length; i < len; i++ ) {
 			total_input += parseInt( people_input[i].value );
-		}3
+		}
 		
 		if( total_input > max_people ) {
 
 			var val = parseInt( currentObj.val() );
 			val -= 1;
+			total_input--;
 			currentObj.val( val );
 		}
+		// alert(total_input);
+		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-span').text( total_input + '-Peoples')
 	});
 
 	// $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-input' ).each(function() {

@@ -295,7 +295,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_added_cost_select'          => array( 'default' => array() ),
 			'mwb_services_enable_checkbox'           => array( 'default' => 'no' ),
 			'mwb_booking_services_select'            => array( 'default' => array() ),
-			'mwb_services_mandatory_check'           => array( 'default' => '' ),
+			'mwb_services_mandatory_check'           => array( 'default' => 'customer_selected' ),
 			'mwb_people_enable_checkbox'             => array( 'default' => 'no' ),
 			'mwb_min_people_per_booking'             => array( 'default' => '' ),
 			'mwb_max_people_per_booking'             => array( 'default' => '' ),
@@ -954,12 +954,12 @@ class Mwb_Wc_Bk_Admin {
 	public function booking_settings_tab_default_global_options() {
 
 		return array(
-			'mwb_booking_setting_go_enable'          => 'yes',
-			'mwb_booking_setting_go_complete_status' => '',
-			'mwb_booking_setting_go_reject'          => '',
-			'mwb_booking_setting_bo_service_enable'  => 'yes',
-			'mwb_booking_setting_bo_service_cost'    => 'yes',
-			'mwb_booking_setting_bo_service_desc'    => 'no',
+			'mwb_booking_setting_go_enable'             => 'yes',
+			'mwb_booking_setting_go_complete_status'    => '',
+			'mwb_booking_setting_go_reject'             => '',
+			'mwb_booking_setting_bo_inc_service_enable' => 'yes',
+			'mwb_booking_setting_bo_service_cost'       => 'yes',
+			'mwb_booking_setting_bo_service_desc'       => 'no',
 		);
 	}
 

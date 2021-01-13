@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$term_name = $term->slug;
 			?>
 		<label for="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"><?php echo esc_html( 'Service Cost for ' . $term->name ); ?></label>
-		<input type="number" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"  class="postform" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" />
+		<input type="number" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"  class="postform mwb_ct_service_multiply_people" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" />
 		<p class="description"><?php esc_html_e( 'Enter the service cost for respective people type.', 'mwb-wc-bk' ); ?></p>
 	<?php } ?>
 

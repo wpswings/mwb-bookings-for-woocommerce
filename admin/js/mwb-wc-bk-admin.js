@@ -16,6 +16,8 @@ jQuery(document).ready( function($) {
 	create_booking_product_select2($);
 	create_booking_order_select2($);
 	create_booking_product_details($);
+	ct_custom_fields($);
+	
 });
 
 function availability_not_allowed_days_select2($) {
@@ -997,6 +999,51 @@ function global_cost_rules($) {
 		});
 	});
 
+}
+
+function ct_custom_fields($){
+
+	var has_quantity    = $( '#mwb_booking_ct_services_has_quantity' );
+	var multiply_people = $( '#mwb_booking_ct_services_multiply_people' );
+	// alert( has_quantity.val() );
+	if( has_quantity.is(":checked") ) {
+		// alert('checked');
+		$( '#mwb_booking_ct_services_min_quantity' ).prop( 'disabled', false );
+		$( '#mwb_booking_ct_services_max_quantity' ).prop( 'disabled', false );
+	} else {
+		$( '#mwb_booking_ct_services_min_quantity' ).prop( 'disabled', true );
+		$( '#mwb_booking_ct_services_max_quantity' ).prop( 'disabled', true );
+	}
+	if( multiply_people.is( ":checked" ) ) {
+		$( '.mwb_ct_service_multiply_people' ).each( function() {
+			$(this).prop( 'disabled', false );
+		});
+	} else {
+		$( '.mwb_ct_service_multiply_people' ).each( function() {
+			$(this).prop( 'disabled', true );
+		});
+	}
+	$( document ).on( 'change', '#mwb_booking_ct_services_has_quantity', function(){
+		if( $(this).is(":checked") ) {
+			// alert('checked');
+			$( '#mwb_booking_ct_services_min_quantity' ).prop( 'disabled', false );
+			$( '#mwb_booking_ct_services_max_quantity' ).prop( 'disabled', false );
+		} else {
+			$( '#mwb_booking_ct_services_min_quantity' ).prop( 'disabled', true );
+			$( '#mwb_booking_ct_services_max_quantity' ).prop( 'disabled', true );
+		}
+	});
+	$( document ).on( 'change', '#mwb_booking_ct_services_multiply_people', function(){
+		if( $(this).is( ":checked" ) ) {
+			$( '.mwb_ct_service_multiply_people' ).each( function() {
+				$(this).prop( 'disabled', false );
+			});
+		} else {
+			$( '.mwb_ct_service_multiply_people' ).each( function() {
+				$(this).prop( 'disabled', true );
+			});
+		}
+	});
 }
 
 function create_booking_product_details($) {

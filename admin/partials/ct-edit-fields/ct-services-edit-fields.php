@@ -95,7 +95,7 @@ foreach ( $booking_people_taxonomy_terms as $t ) {
 <tr class="form-field term-has-people-check-wrap">
 	<th><label for="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"><?php echo esc_html( 'Service Cost for ' . $t->name ); ?></label></th>
 	<td>
-		<input type="number" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" value="<?php echo esc_html( get_term_meta( $term->term_id, 'mwb_ct_booking_service_cost_' . $term_name, true ) ); ?>">
+		<input type="number" class="mwb_ct_service_multiply_people" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" value="<?php echo esc_html( get_term_meta( $term->term_id, 'mwb_ct_booking_service_cost_' . $term_name, true ) ); ?>">
 		<p class="description"><?php esc_html_e( 'Enter the service cost for respective people type.', 'mwb-wc-bk' ); ?></p>
 	</td>
 </tr>

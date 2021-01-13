@@ -87,7 +87,7 @@ class Mwb_Wc_Bk_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'js-calender-css', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.css', array(), '5.5.0', 'all' );
+		// wp_enqueue_style( 'js-calender-css', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.css', array(), '5.5.0', 'all' );
 
 	}
 
@@ -101,7 +101,7 @@ class Mwb_Wc_Bk_Admin {
 		//wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ) );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( 'js-calendar', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.js', array( 'jquery' ), '5.5.0', false );
+		// wp_enqueue_script( 'js-calendar', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.js', array( 'jquery' ), '5.5.0', false );
 		wp_localize_script(
 			$this->plugin_name,
 			'mwb_booking_obj',
@@ -111,7 +111,7 @@ class Mwb_Wc_Bk_Admin {
 			)
 		);
 
-		wp_enqueue_script( 'calendar-my-js', plugin_dir_path( __FILE__ ) . 'js/calendar.js', array( 'jquery' ), $this->version, false );
+		// wp_enqueue_script( 'calendar-my-js', plugin_dir_path( __FILE__ ) . 'js/calendar.js', array( 'jquery' ), $this->version, false );
 
 		wp_enqueue_script( 'select2_js', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 

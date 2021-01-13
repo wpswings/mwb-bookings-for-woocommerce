@@ -30,6 +30,7 @@ if ( isset( $_POST['mwb_booking_settings_save'] ) ) {
 	$mwb_booking_setting_options['mwb_booking_setting_bo_inc_service_enable'] = ! empty( $_POST['mwb_booking_setting_bo_inc_service_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_inc_service_enable'] ) ) : 'no';
 	$mwb_booking_setting_options['mwb_booking_setting_bo_service_cost']       = ! empty( $_POST['mwb_booking_setting_bo_service_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_cost'] ) ) : 'no';
 	$mwb_booking_setting_options['mwb_booking_setting_bo_service_desc']       = ! empty( $_POST['mwb_booking_setting_bo_service_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_desc'] ) ) : 'no';
+	$mwb_booking_setting_options['mwb_booking_setting_bo_service_total']      = ! empty( $_POST['mwb_booking_setting_bo_service_total'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_total'] ) ) : 'no';
 
 	update_option( 'mwb_booking_settings_options', $mwb_booking_setting_options );
 }
@@ -56,7 +57,7 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booki
 				<!-- General Options Fields start.-->
 				<tr valign="top">
 
-					<th scope="row" class="titledesc">
+					<th scope="row" class="">
 						<label for="mwb_booking_setting_go_enable_input"><?php esc_html_e( 'Enable/Disable Booking', 'mwb-wc-bk' ); ?></label>
 					</th>
 
@@ -67,7 +68,7 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booki
 				</tr>
 				<tr valign="top">
 
-					<th scope="row" class="titledesc">
+					<th scope="row" class="">
 						<label for="mwb_booking_setting_go_complete_input"><?php esc_html_e( 'Change Status to Complete after days', 'mwb-wc-bk' ); ?></label>
 					</th>
 
@@ -78,7 +79,7 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booki
 				</tr>
 				<tr valign="top">
 
-					<th scope="row" class="titledesc">
+					<th scope="row" class="">
 						<label for="mwb_booking_setting_go_reject_input"><?php esc_html_e( 'Reject Unpaid Booking after days', 'mwb-wc-bk' ); ?></label>
 					</th>
 
@@ -98,7 +99,7 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booki
 				<!-- General Options Fields start.-->
 				<tr valign="top">
 
-					<th scope="row" class="titledesc">
+					<th scope="row" class="">
 						<label for="mwb_booking_setting_bo_inc_service_enable_input"><?php esc_html_e( 'Show Included Services', 'mwb-wc-bk' ); ?></label>
 					</th>
 
@@ -109,7 +110,7 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booki
 				</tr>
 				<tr valign="top">
 
-					<th scope="row" class="titledesc">
+					<th scope="row" class="">
 						<label for="mwb_booking_setting_bo_service_cost_input"><?php esc_html_e( 'Show Service Cost', 'mwb-wc-bk' ); ?></label>
 					</th>
 
@@ -127,6 +128,17 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booki
 					<td class="forminp forminp-text">
 						<input type="checkbox" id="mwb_booking_setting_bo_service_desc_input" name="mwb_booking_setting_bo_service_desc" value="yes" <?php checked( 'yes', $mwb_booking_settings['mwb_booking_setting_bo_service_desc'] ); ?> class="" >
 						<p><?php esc_html_e( 'If enabled, Service description is shown in the form.', 'mwb-wc-bk' ); ?></p>
+					</td>
+				</tr>
+				<tr valign="top">
+
+					<th scope="row" class="">
+						<label for="mwb_booking_setting_bo_service_total_input"><?php esc_html_e( 'Show Totals', 'mwb-wc-bk' ); ?></label>
+					</th>
+
+					<td class="forminp forminp-text">
+						<input type="checkbox" id="mwb_booking_setting_bo_service_total_input" name="mwb_booking_setting_bo_service_total" value="yes" <?php checked( 'yes', $mwb_booking_settings['mwb_booking_setting_bo_service_total'] ); ?> class="" >
+						<p><?php esc_html_e( 'If enabled, totals are shown in the form.', 'mwb-wc-bk' ); ?></p>
 					</td>
 				</tr>
 			</tbody>

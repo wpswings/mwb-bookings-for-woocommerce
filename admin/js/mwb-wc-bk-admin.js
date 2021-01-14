@@ -384,6 +384,29 @@ function product_general_settings_js($) {
 
 function product_cost_settings_js($) {
 
+	var unit_cost_check = $( '#mwb_booking_cost_data .unit-cost #mwb_booking_unit_cost_multiply' )
+	if( unit_cost_check.is( ':checked' ) ) {
+		// alert('checked');
+		$( '#mwb_booking_cost_data .extra-cost' ).hide();
+		$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_input' ).prop( 'disabled', true );
+		$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_people_input' ).prop( 'disabled', true );
+	} else {
+		$( '#mwb_booking_cost_data .extra-cost' ).show();
+		$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_input' ).prop( 'disabled', false );
+		$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_people_input' ).prop( 'disabled', false );
+	}
+	$( '#mwb_booking_cost_data ' ).on( 'change', '#mwb_booking_unit_cost_multiply', function() {
+		if( $(this).is( ':checked' )) {
+			$( '#mwb_booking_cost_data .extra-cost' ).hide();
+			$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_input' ).prop( 'disabled', true );
+			$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_people_input' ).prop( 'disabled', true );
+		} else {
+			$( '#mwb_booking_cost_data .extra-cost' ).show();
+			$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_input' ).prop( 'disabled', false );
+			$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_people_input' ).prop( 'disabled', false );
+		}
+	});
+
 	$( '#mwb_booking_cost_data .mwb_discount_type').each(function() {
 		if( $(this).is(':checked') ) {
 			var discount_type = $(this).val();

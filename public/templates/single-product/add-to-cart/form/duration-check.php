@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Check duration settings for the booking
  *

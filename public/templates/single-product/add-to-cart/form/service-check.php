@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Check Service settings for the booking.
  *

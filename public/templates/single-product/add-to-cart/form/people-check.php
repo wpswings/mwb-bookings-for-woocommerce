@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Check People type settings for the booking
  *

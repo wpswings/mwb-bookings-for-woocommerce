@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Check Calendar Range Picker and date settings for the booking
  *

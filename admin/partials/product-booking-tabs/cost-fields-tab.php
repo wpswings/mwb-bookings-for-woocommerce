@@ -15,17 +15,27 @@
 			<h3><?php esc_html_e( 'Normal Cost', 'mwb-wc-bk' ); ?></h3>
 		</div>
 		<div id="mwb_booking_normal_cost_fields">
-			<p class="form-field">
+			<p class="form-field unit-cost">
 				<label for="mwb_booking_unit_cost_input"><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label>
 				<input type="number" name="mwb_booking_unit_cost_input" id="mwb_booking_unit_cost_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_unit_cost_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 				<input type="checkbox" name="mwb_booking_unit_cost_multiply" id="mwb_booking_unit_cost_multiply" value="yes" <?php checked( 'yes', $this->setting_fields['mwb_booking_unit_cost_multiply'] ); ?>/>
 				<label for="mwb_booking_unit_cost_multiply"><?php esc_html_e( 'Count per people', 'mwb-wc-bk' ); ?></label>
+				<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Unit cost is main cost for your booking', 'mwb-wc-bk' ) ); ?>
 			</p>
-			<p class="form-field">
+			<p class="form-field base-cost">
 				<label for="mwb_booking_base_cost_input"><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label>
 				<input type="number" name="mwb_booking_base_cost_input" id="mwb_booking_base_cost_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_base_cost_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 				<input type="checkbox" name="mwb_booking_base_cost_multiply" id="mwb_booking_base_cost_multiply" value="no" <?php checked( 'yes', $this->setting_fields['mwb_booking_base_cost_multiply'] ); ?>/>
 				<label for="mwb_booking_base_cost_multiply"><?php esc_html_e( 'Count per people', 'mwb-wc-bk' ); ?></label>
+				<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Base cost is the base rental for the booking', 'mwb-wc-bk' ) ); ?>
+			</p>
+			<p class="form-field extra-cost">
+				<label for="mwb_booking_extra_cost_input"><?php esc_html_e( 'Extra Cost', 'mwb-wc-bk' ); ?></label>
+				<input type="number" id="mwb_booking_extra_cost_input" name="mwb_booking_extra_cost_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_extra_cost_input'] ); ?>" step="1" min="1">
+				<label for="mwb_booking_extra_cost_people_input"><?php esc_html_e( 'for every', 'mwb-wc-bk' ); ?></label>
+				<input type="number" id="mwb_booking_extra_cost_people_input" name="mwb_booking_extra_cost_people_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_extra_cost_people_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+				<label for="mwb_booking_extra_cost_people_input"><?php esc_html_e( 'peoples', 'mwb-wc-bk' ); ?></label>
+				<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Extra cost is the cost for x extra peoples added to booking', 'mwb-wc-bk' ) ); ?>
 			</p>
 		</div>
 	</div>
@@ -40,7 +50,7 @@
 					array(
 						'label'       => __( 'Discount Type', 'mwb-wc-bk' ),
 						'class'       => 'mwb_discount_type',
-						'id'          => 'mwb_booking_monthly_discount_type',
+						'id'          => 'mwb_booking_cost_discount_type',
 						'value'       => $this->setting_fields['mwb_booking_monthly_discount_type'],
 						'options'     => array(
 							'none'             => __( 'No Discount', 'mwb-wc-bk' ),

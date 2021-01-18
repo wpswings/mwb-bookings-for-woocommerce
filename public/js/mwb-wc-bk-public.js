@@ -90,7 +90,36 @@ function people_conditions($) {
 			currentObj.val( val );
 		}
 		// alert(total_input);
-		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-span').text( total_input + '-Peoples')
+		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-span').text( total_input + '-Peoples');
+		var product_data   = $('#mwb-wc-bk-create-booking-form').attr('product-data');
+		product_data       = JSON.parse(product_data);
+		var product_id     = product_data.product_id ; 
+		var ajax_data = {
+			'action'       : 'booking_price_cal',
+			'nonce'        : mwb_wc_bk_public.nonce,
+			'people_total' : total_input,
+			// 'formdata' : jQuery( '.cart' ).serialize()
+			'product_id'   : product_id,
+		}
+		$( '#mwb-wc-bk-people-section .people-input' ).each(function(){
+			// alert($(this).val());
+			var val = $(this).val();
+			var id  = $(this).attr( 'data-id' );
+			var people_count_obj = {
+				[id] : val,
+			}
+			Object.assign( ajax_data, people_count_obj );
+		});
+		console.log( ajax_data );
+		$.ajax({
+			url      : mwb_wc_bk_public.ajaxurl,
+			dataType : 'application/json',
+			type     : 'POST',
+			data     : ajax_data,
+			success: function( data ) {
+				
+			},
+		});
 	});
 
 	// $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-input' ).each(function() {
@@ -149,4 +178,9 @@ function people_conditions($) {
 	// 	alert(people_count);
 	// });
 }
-3
+
+function price_update_ajax(){
+
+	var input_div_obj = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div' );
+	var total_people  = input_div_obj.find( '#mwb-wc-bk-people-input-span' ).text();
+}

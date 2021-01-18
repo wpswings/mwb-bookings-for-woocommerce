@@ -1,4 +1,4 @@
-<?php
+<?php   
 /**
  * Check Service settings for the booking.
  *
@@ -14,12 +14,13 @@
 defined( 'ABSPATH' ) || exit;
 
 $global_func = Mwb_Booking_Global_Functions::get_global_instance();
-
+$instance = MWB_Woocommerce_Booking::get_booking_instance();
 global $product;
 $product_data = array(
 	'product_id' => $product->get_id(),
 );
 
+// echo '<pre>'; print_r( $instance ); echo '</pre>';
 $product_meta    = get_post_meta( $product->get_id() );
 $setting_options = get_option( 'mwb_booking_settings_options' );
 

@@ -6,15 +6,23 @@
  * @since      1.0.0
  *
  * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/admin
+ * @subpackage Mwb_Wc_Bk/includes
  */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 /**
- * Global Functions Class For MWB Booking Plugin
+ * Global Functions Class For MWB Booking Plugin.
+ *
+ * This class defines the global functions to be used anywhere in the plugin.
+ *
+ * @since      1.0.0
+ * @package    Mwb_Wc_Bk
+ * @subpackage Mwb_Wc_Bk/includes
+ * @author     MakeWebBetter <webmaster@makewebbetter.com>
  */
 class Mwb_Booking_Global_Functions {
 

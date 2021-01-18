@@ -51,7 +51,7 @@
 						'label'       => __( 'Discount Type', 'mwb-wc-bk' ),
 						'class'       => 'mwb_discount_type',
 						'id'          => 'mwb_booking_cost_discount_type',
-						'value'       => $this->setting_fields['mwb_booking_monthly_discount_type'],
+						'value'       => $this->setting_fields['mwb_booking_cost_discount_type'],
 						'options'     => array(
 							'none'             => __( 'No Discount', 'mwb-wc-bk' ),
 							'weekly_discount'  => __( 'Weekly Discount', 'mwb-wc-bk' ),

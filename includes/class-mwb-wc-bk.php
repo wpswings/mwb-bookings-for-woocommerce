@@ -127,6 +127,11 @@ class Mwb_Wc_Bk {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-booking-global-functions.php';
 
+		/**
+		 * The class responsible for defining Booking and Booking product.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-woocommerce-booking.php';
+
 		$this->loader = new Mwb_Wc_Bk_Loader();
 
 	}
@@ -270,7 +275,7 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'woocommerce_checkout_order_processed', $plugin_public, 'mwb_wc_bk_check_order_booking', 999, 2 );
 
 		// $this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'change_on_sale_badge' );
-
+		$this->loader->add_action( 'wp_ajax_booking_price_cal', $plugin_public, 'booking_price_cal' );
 	}
 
 	/**

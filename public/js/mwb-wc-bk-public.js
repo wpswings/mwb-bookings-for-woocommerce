@@ -101,7 +101,7 @@ function people_conditions($) {
 			// 'formdata' : jQuery( '.cart' ).serialize()
 			'product_id'   : product_id,
 		}
-		$( '#mwb-wc-bk-people-section .people-input' ).each(function(){
+		$( '#mwb-wc-bk-people-section .people-input' ).each(function() {
 			// alert($(this).val());
 			var val = $(this).val();
 			var id  = $(this).attr( 'data-id' );
@@ -110,14 +110,17 @@ function people_conditions($) {
 			}
 			Object.assign( ajax_data, people_count_obj );
 		});
-		console.log( ajax_data );
+		// console.log( ajax_data );
 		$.ajax({
 			url      : mwb_wc_bk_public.ajaxurl,
-			dataType : 'application/json',
 			type     : 'POST',
 			data     : ajax_data,
-			success: function( data ) {
-				
+			success : function( response ) {
+				response = JSON.parse(response);
+				// console.log( response );
+				// alert( "khbf" );
+				var price_html = response.price_html ; 
+				$('.price').html(price_html);
 			},
 		});
 	});

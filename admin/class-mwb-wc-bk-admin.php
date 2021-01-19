@@ -1370,4 +1370,6 @@ class Mwb_Wc_Bk_Admin {
 		}
 		update_option( 'mwb_global_cost_rules', $cost_rules );
 	}
+
+
 }

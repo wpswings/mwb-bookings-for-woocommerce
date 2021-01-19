@@ -422,26 +422,30 @@ class Mwb_Wc_Bk_Public {
 		$people_select       = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : '';
 		$people_enable_check = ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) ? $product_meta['mwb_people_enable_checkbox'][0] : '';
 		$people_type_check   = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? $product_meta['mwb_enable_people_types'][0] : '';
+		$added_cost          = ! empty( $product_meta['mwb_booking_added_cost_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_added_cost_select'][0] ) : '';
 
-		$people      = array();
-		$people_data = array();
+		$people          = array();
+		$people_data     = array();
+		$added_cost_data = array();
 
 		$booking_people_cost = 0;
+		$booking_added_cost  = 0;
+		$booking_cost        = 0;
 
 		if ( is_array( $people_select ) ) {
 			foreach ( $people_select as $k => $v ) {
 				$people_term      = get_term( $v );
 				$people_term_meta = get_term_meta( $v );
 				$people_name      = $people_term->name;
-				$people[ $v ]     = ! empty( $_POST[ $v ] ) ? sanitize_text_field( wp_unslash( $_POST[ $v ] ) ) : array();
+				$people[ $v ]     = ! empty( $_POST[ $v ] ) ? sanitize_text_field( wp_unslash( $_POST[ $v ] ) ) : '';
 
-				$people_data[ $people_name ] = array(
+				$people_data[ $v ] = array(
 					'name'         => $people_term->name,
 					'term_id'      => $v,
-					'people_count' => $people[ $v ],
+					'people_count' => isset( $people[ $v ] ) ? $people[ $v ] : 0,
 				);
 				foreach ( $people_term_meta as $key => $value ) {
-					$people_data[ $people_name ]['people_meta'][ $key ] = ! empty( $value[0] ) ? $value[0] : '';
+					$people_data[ $v ]['people_meta'][ $key ] = ! empty( $value[0] ) ? $value[0] : '';
 				}
 			}
 		}
@@ -459,11 +463,75 @@ class Mwb_Wc_Bk_Public {
 		$custom_discount  = ! empty( $product_meta['mwb_booking_custom_days_discount_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_custom_days_discount_input'][0] ) ) : '';
 		$custom_disc_days = ! empty( $product_meta['mwb_booking_custom_discount_days'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_custom_discount_days'][0] ) ) : '';
 
-		if ( ! empty( $unit_cost_multiply ) && 'yes' === $unit_cost_multiply ) {
-			if ( is_array( $people_select ) && ! empty( $people_select ) ) {
-
+		if ( is_array( $people_select ) && ! empty( $people_select ) ) {
+			foreach ( $people_select as $id ) {
+				if ( ! empty( $unit_cost_multiply ) && 'yes' === $unit_cost_multiply ) {
+					if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
+						if ( isset( $people_data[ $id ]['people_meta'] ) ) {
+							$booking_people_cost += ( isset( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] ) ? $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] : $unit_cost ) * $people_data[ $id ]['people_count'];
+						} else {
+							$booking_people_cost += $unit_cost * $people_data[ $id ]['people_count'];
+						}
+					}
+				}
+				if ( ! empty( $base_cost_multiply ) && 'yes' === $base_cost_multiply ) {
+					if ( $people_data[ $id ]['people_count'] ) {
+						if ( isset( $people_data[ $id ]['people_meta'] ) ) {
+							$booking_people_cost += ( isset( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] ) ? $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] : $base_cost ) * $people_data[ $id ]['people_count'];
+						} else {
+							$booking_people_cost += $base_cost * $people_data[ $id ]['people_count'];
+						}
+					}
+				}
 			}
 		}
+		if ( empty( $unit_cost_multiply ) || 'no' === $unit_cost_multiply ) {
+
+			$booking_people_cost += $unit_cost;
+
+			if ( ! empty( $extra_cost ) ) {
+				if ( ! empty( $people_total ) ) {
+					if ( ! empty( $extra_cost_people ) ) {
+						$booking_people_cost += $extra_cost * floor( $people_total / $extra_cost_people );
+					} else {
+						$booking_people_cost += $extra_cost;
+					}
+				}
+			}
+		}
+		if ( empty( $base_cost_multiply ) || 'no' === $base_cost_multiply ) {
+			$booking_people_cost += $base_cost;
+		}
+
+		if ( is_array( $added_cost ) && ! empty( $added_cost ) ) {
+			foreach ( $added_cost as $cost_id ) {
+				$cost_term      = get_term( $cost_id );
+				$cost_term_meta = get_term_meta( $cost_id );
+
+				$added_cost_data[ $cost_id ] = array(
+					'name'    => $cost_term->name,
+					'term_id' => $cost_id,
+				);
+				foreach ( $cost_term_meta as $k => $v ) {
+					$added_cost_data[ $cost_id ]['cost_meta'][ $k ] = ! empty( $v[0] ) ? $v[0] : '';
+					// if ( ! empty( $v[0] ) &&  ) )
+				}
+				// if ( isset( $cost_term_meta-> ) )
+				// echo '<pre>'; print_r( $cost_term_meta ); echo '</pre>';die("ok");
+			}
+		}
+		if ( is_array( $added_cost ) && ! empty( $added_cost ) ) {
+			foreach ( $added_cost as $cost_id ) {
+				if ( isset( $added_cost_data[ $cost_id ]['mwb_booking_ct_costs_multiply_people'] ) && 'yes' === $added_cost_data[ $cost_id ]['mwb_booking_ct_costs_multiply_people'] ) {
+					if ( ! empty( $people_total ) ) {
+						$booking_added_cost += ( isset( $added_cost_data[ $cost_id ]['mwb_booking_ct_costs_custom_price'] ) ? $added_cost_data[ $cost_id ]['mwb_booking_ct_costs_custom_price'] : 0 ) * $people_total;
+					}
+				}
+			}
+		}
+
+		$booking_cost = $booking_people_cost + $booking_added_cost;
+		// echo '<pre>'; print_r( $added_cost_data ); echo '</pre>';die("ok");
 		// $id = $this->mwb_booking->get_booking_product_id();
 
 		// $formdata = ! empty( $_POST[ 'formdata' ] ) ? $_POST[ 'formdata' ] : array();
@@ -482,8 +550,30 @@ class Mwb_Wc_Bk_Public {
 		// }
 		// $arr['people_total'] = $people_total;
 
-		echo wp_json_encode( $people_data );
+		$product    = wc_get_product( $product_id );
+		$price_html = wc_price( $booking_cost );
+		echo wp_json_encode(
+			array(
+				'price_html' => $price_html,
+				'success'    => true,
+			)
+		);
 		wp_die();
-
 	}
+
+	// public function bl_cron_exec( $schedules ) {
+	// 	$schedules['key'] = array(
+	// 		'interval' => 50,
+	// 		'display'  => esc_html__( 'Every Five Seconds' ),
+	// 	);
+	// 	return $schedules;
+	// }
+	// public function sched() {
+	// 	if ( ! wp_next_scheduled( 'bl_cron_hook' ) ) {
+	// 		wp_schedule_event( time(), 'key', 'bl_cron_hook' );
+	// 	}
+	// }
+	// public function schd_event() {
+	// 	echo "<script>alert('hello');</script>";
+	// }
 }

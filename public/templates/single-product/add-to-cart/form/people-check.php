@@ -18,11 +18,11 @@ $product_meta = get_post_meta( $product->get_id() );
 
 $booking_people_price = '';
 
-$people_enable_check = ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) ? $product_meta['mwb_people_enable_checkbox'][0] : '';
-$seperate_booking    = ! empty( $product_meta['mwb_people_as_seperate_booking'][0] ) ? $product_meta['mwb_people_as_seperate_booking'][0] : '';
-$people_type_check   = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? $product_meta['mwb_enable_people_types'][0] : '';
-$min_people          = ! empty( $product_meta['mwb_min_people_per_booking'][0] ) ? $product_meta['mwb_min_people_per_booking'][0] : '';
-$max_people          = ! empty( $product_meta['mwb_max_people_per_booking'][0] ) ? $product_meta['mwb_max_people_per_booking'][0] : '';
+$people_enable_check = ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_people_enable_checkbox'][0] ) ) : '';
+$seperate_booking    = ! empty( $product_meta['mwb_people_as_seperate_booking'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_people_as_seperate_booking'][0] ) ) : '';
+$people_type_check   = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_people_types'][0] ) ) : '';
+$min_people          = ! empty( $product_meta['mwb_min_people_per_booking'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_min_people_per_booking'][0] ) ) : '';
+$max_people          = ! empty( $product_meta['mwb_max_people_per_booking'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_max_people_per_booking'][0] ) ) : '';
 $people_select       = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : '';
 $unit_price          = ! empty( $product_meta['mwb_booking_unit_cost_input'] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_input'] ) ) : sanitize_text_field( wp_unslash( $product_meta['_price'] ) );
 $base_price          = ! empty( $product_meta['mwb_booking_base_cost_input'] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_base_cost_input'] ) ) : '';
@@ -59,11 +59,15 @@ $product_data = array(
 						<?php
 						if ( is_array( $people_select ) ) {
 							foreach ( $people_select as $k => $v ) {
-								$people_term = get_term( $v );
-								$people_name = $people_term->name;
+								$people_term      = get_term( $v );
+								$people_name      = $people_term->name;
+								$people_term_meta = get_term_meta( $v );
+								$max_quant        = ! empty( $people_term_meta['mwb_booking_ct_people_max_quantity'][0] ) ? $people_term_meta['mwb_booking_ct_people_max_quantity'][0] : '';
+								$min_quant        = ! empty( $people_term_meta['mwb_booking_ct_people_min_quantity'][0] ) ? $people_term_meta['mwb_booking_ct_people_min_quantity'][0] : '';
 								?>
 								<li>
 									<label for="mwb-wc-bk-people-input-<?php echo esc_html( $v ); ?>"><?php echo esc_html( $people_name ); ?></label>
+									<input type="hidden" class="people-input-hidden" data-max="<?php echo esc_html( $max_quant ); ?>" data-min="<?php echo esc_html( $min_quant ); ?>">
 									<input type="number" id="mwb-wc-bk-people-input-<?php echo esc_html( $v ); ?>" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number people-input" data-id="<?php echo esc_html( $v ); ?>" value="0" step="1" min="0" max="" >
 								</li>
 								<?php

@@ -167,8 +167,6 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		
-
 		// create new product type booking.
 		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'register_booking_product_type' );
 
@@ -279,10 +277,7 @@ class Mwb_Wc_Bk {
 		// $this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'change_on_sale_badge' );
 		$this->loader->add_action( 'wp_ajax_booking_price_cal', $plugin_public, 'booking_price_cal' );
 
-		// $this->loader->add_filter( 'cron_schedules', $plugin_public, 'bl_cron_exec' );
-		// $this->loader->add_action( 'init', $plugin_public, 'sched' );
-		// $this->loader->add_action( 'bl_cron_hook', $plugin_public, 'schd_event' );
-		// $this->loader->add_action( 'wp_ajax_booking_price_cal', $plugin_public, 'booking_price_cal' );
+		$this->loader->add_action( 'wp_ajax_booking_service_cal', $plugin_public, 'booking_service_cal' );
 	}
 
 	/**

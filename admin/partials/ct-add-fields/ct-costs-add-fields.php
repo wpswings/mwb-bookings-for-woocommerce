@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="form-field term-extra-cost-wrap">
 	<p>
 		<label for="mwb_booking_ct_costs_custom_price"><?php esc_html_e( 'Cost Price', 'mwb-wc-bk' ); ?></label>
-		<input type="number" id="mwb_booking_ct_costs_custom_price" name="mwb_booking_ct_costs_custom_price" step="1" min="1"/>
+		<input type="number" id="mwb_booking_ct_costs_custom_price" name="mwb_booking_ct_costs_custom_price" step="1" min="1" required/>
 		<p class="description"><?php esc_html_e( 'Cost price of the added cost', 'mwb-wc-bk' ); ?></p>
 	</p>
 	<p>

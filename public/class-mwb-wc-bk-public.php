@@ -473,24 +473,27 @@ class Mwb_Wc_Bk_Public {
 				$people_term      = get_term( $v );
 				$people_term_meta = get_term_meta( $v );
 				$people_name      = $people_term->name;
-				$people[ $v ]     = ! empty( $_POST[ $v ] ) ? sanitize_text_field( wp_unslash( $_POST[ $v ] ) ) : '';
+				$people[ $v ]     = ! empty( $_POST['people_count'][ $v ] ) ? sanitize_text_field( wp_unslash( $_POST['people_count'][ $v ] ) ) : '';
 
 				$people_data[ $v ] = array(
 					'name'         => $people_term->name,
 					'term_id'      => $v,
-					'people_count' => isset( $people[ $v ] ) ? $people[ $v ] : 0,
+					'people_count' => ! empty( $people[ $v ] ) ? $people[ $v ] : 0,
 				);
 				foreach ( $people_term_meta as $key => $value ) {
 					$people_data[ $v ]['people_meta'][ $key ] = ! empty( $value[0] ) ? $value[0] : '';
 				}
 			}
 		}
+		// echo '<pre>'; print_r( $people_data ); echo '</pre>';
 		$unit_cost          = ! empty( $product_meta['mwb_booking_unit_cost_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_input'][0] ) ) : '';
 		$unit_cost_multiply = ! empty( $product_meta['mwb_booking_unit_cost_multiply'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_multiply'][0] ) ) : '';
 		$base_cost          = ! empty( $product_meta['mwb_booking_base_cost_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_base_cost_input'][0] ) ) : '';
 		$base_cost_multiply = ! empty( $product_meta['mwb_booking_base_cost_multiply'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_base_cost_multiply'][0] ) ) : '';
 		$extra_cost         = ! empty( $product_meta['mwb_booking_extra_cost_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_extra_cost_input'][0] ) ) : '';
 		$extra_cost_people  = ! empty( $product_meta['mwb_booking_extra_cost_people_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_extra_cost_people_input'][0] ) ) : '1';
+
+		$enabled_services = ! empty( $product_meta['mwb_booking_services_select'][0] ) ? maybe_unserialize( sanitize_text_field( wp_unslash( $product_meta['mwb_booking_services_select'][0] ) ) ) : '';
 
 		$discount_type = ! empty( $product_meta['mwb_booking_cost_discount_type'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_cost_discount_type'][0] ) ) : '';
 
@@ -569,7 +572,46 @@ class Mwb_Wc_Bk_Public {
 			}
 		}
 
-		$booking_cost = $booking_people_cost + $booking_added_cost;
+		$booking_service_cost = 0;
+
+		$enable_people_type  = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_people_types'][0] ) ) : '';
+		if ( ! empty( $enabled_services ) && is_array( $enabled_services ) ) {
+			foreach ( $enabled_services as $service_id ) {
+
+				$service_term_meta = get_term_meta( $service_id );
+				$service_cost      = ! empty( $service_term_meta['mwb_ct_booking_service_cost'][0] ) ? $service_term_meta['mwb_ct_booking_service_cost'][0] : 0;
+				$if_optional       = ! empty( $service_term_meta['mwb_booking_ct_services_optional'][0] ) ? $service_term_meta['mwb_booking_ct_services_optional'][0] : 'no';
+				$has_quantity      = ! empty( $service_term_meta['mwb_booking_ct_services_has_quantity'][0] ) ? $service_term_meta['mwb_booking_ct_services_has_quantity'][0] : 'no';
+				// echo '<pre>'; print_r( $service_cost ); echo '</pre>';
+				if ( 'yes' === $has_quantity ) {
+					if ( 'yes' === $if_optional ) {
+						$service_count = ! empty( $_POST['add_service_count'][ $service_id ] ) ? sanitize_text_field( wp_unslash( $_POST['add_service_count'][ $service_id ] ) ) : 1;
+					} else {
+						$service_count = ! empty( $_POST['inc_service_count'][ $service_id ] ) ? sanitize_text_field( wp_unslash( $_POST['inc_service_count'][ $service_id ] ) ) : 1;
+					}
+				} else {
+					$service_count = 1;
+				}
+				// echo '<pre>'; print_r( $service_cost ); echo '</pre>';
+				if ( 'yes' === $enable_people_type ) {
+					if ( isset( $service_term_meta['mwb_booking_ct_services_multiply_people'][0] ) && ( 'yes' === $service_term_meta['mwb_booking_ct_services_multiply_people'][0] ) ) {
+						if ( ! empty( $people_select ) ) {
+							foreach ( $people_select as $people_id ) {
+								$people_term           = get_term( $people_id );
+								$service_people_cost   = ! empty( $service_term_meta[ 'mwb_ct_booking_service_cost_' . $people_term->slug ][0] ) ? $service_term_meta[ 'mwb_ct_booking_service_cost_' . $people_term->slug ][0] : $service_cost;
+								$booking_service_cost += $service_count * $service_people_cost;
+								$booking_service_cost += $people_data[ $people_id ]['people_count'] * $service_people_cost;
+							}
+						}
+						// $service_people_cost = ! empty( $service_term_meta[''] );
+					} else {
+						$booking_service_cost += $service_count * $service_cost;
+					}
+				}
+			}
+		}
+
+		$booking_cost = $booking_people_cost + $booking_added_cost + $booking_service_cost;
 		// echo '<pre>'; print_r( $added_cost_data ); echo '</pre>';die("ok");
 		// $id = $this->mwb_booking->get_booking_product_id();
 
@@ -593,8 +635,10 @@ class Mwb_Wc_Bk_Public {
 		$price_html = wc_price( $booking_cost );
 		echo wp_json_encode(
 			array(
-				'price_html' => $price_html,
-				'success'    => true,
+				'price_html'           => $price_html,
+				'success'              => true,
+				'booking_people_cost'  => $booking_people_cost,
+				'booking_service_cost' => $booking_service_cost,
 			)
 		);
 		wp_die();
@@ -626,7 +670,7 @@ class Mwb_Wc_Bk_Public {
 		if ( ! empty( $enabled_services ) && is_array( $enabled_services ) ) {
 			foreach ( $enabled_services as $service_id ) {
 				$service_term_meta = get_term_meta( $service_id );
-				$service_cost      = ! empty( $service_term_meta['mwb_booking_ct_service_custom_price'] ) ? $service_term_meta['mwb_booking_ct_service_custom_price'] : 0;
+				$service_cost      = ! empty( $service_term_meta['mwb_ct_booking_service_cost'] ) ? $service_term_meta['mwb_ct_booking_service_cost'] : 0;
 				// echo '<pre>'; print_r( $service_term_meta ); echo '</pre>';die("ok");
 				if ( 'yes' === $enable_people_type ) {
 					if ( isset( $service_term_meta['mwb_booking_ct_services_multiply_people'][0] ) && ( 'yes' === $service_term_meta['mwb_booking_ct_services_multiply_people'][0] ) ) {

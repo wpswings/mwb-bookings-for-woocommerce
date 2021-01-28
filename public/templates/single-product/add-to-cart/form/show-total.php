@@ -19,11 +19,11 @@ $setting_options = get_option( 'mwb_booking_settings_options' );
 $total_check = ! empty( $setting_options['mwb_booking_setting_bo_service_total'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_service_total'] ) ) : '';
 ?>
 
-<div id="mwb-wc-bk-service-section" class="mwb-wc-bk-form-section">
+<div id="mwb-wc-bk-total-section" class="mwb-wc-bk-form-section">
 	<?php if ( 'yes' === $total_check ) { ?>
-		<ul class="show-total" >
+		<div id="mwb-wc-bk-total-fields" >
 
-		</ul>	
+		</div>	
 	<?php } ?>
 </div>
 

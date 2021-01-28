@@ -40,7 +40,7 @@ $product_data = array(
 			<?php
 			if ( 'no' === $people_type_check ) {
 				?>
-				<label for="mwb-wc-bk-people-input"><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></label>
+				<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
 				<input type="hidden" id="mwb-wc-bk-people-input-hidden" name="people" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
 				<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" name="people" value="1" step="1" min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>">
 				<?php
@@ -48,7 +48,7 @@ $product_data = array(
 			} elseif ( 'yes' === $people_type_check ) {
 				// if ( 'no' === $seperate_booking ) {
 				?>
-				<label for="mwb-wc-bk-people-input-div"><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></label>
+				<label for="mwb-wc-bk-people-input-div"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
 				<div id="mwb-wc-bk-people-input-div">
 					<!-- <option value="none"><?php // esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 					<span id="mwb-wc-bk-people-input-span" ><?php esc_html_e( 'Select Peoples', 'mwb-wc-bk' ); ?></span>

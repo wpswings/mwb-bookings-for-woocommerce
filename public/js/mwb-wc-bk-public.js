@@ -31,14 +31,21 @@
 
 })( jQuery );
 // var ajaxurl = mwb_wc_bk_public.ajaxurl ; 
+// var booking_total_cost = 0;
+// var booking_people_cost = 0;
+// var booking_added_cost = 0;
+// var booking_service_cost = 0;
+// var indiv_added_cost_arr = [];
 jQuery(document).ready( function($) {
 
-	mwb_wc_bk_add_to_cart_form_update($);
+	
+	// mwb_wc_bk_add_to_cart_form_update($);
 	people_conditions($);
-	booking_service_conditions($);
+	// booking_service_conditions($);
 	booking_price_cal($);
+	// show_total($)
 
-	//console.log( mwb_wc_bk_public.product_settings );
+	console.log( mwb_wc_bk_public.global_settings );
 })
 
 function mwb_wc_bk_add_to_cart_form_update($){
@@ -196,6 +203,11 @@ function booking_price_cal($) {
 				// alert( "khbf" );
 				var price_html = response.price_html ; 
 				$('.price').html(price_html);
+				total_cost     = response.booking_total_cost;
+				base_cost      = response.booking_people_cost;
+				service_cost   = response.booking_service_cost;
+				added_cost_arr = response.indiv_added_cost_arr;
+				show_total($, total_cost, base_cost, service_cost, added_cost_arr);
 			},
 		});
 	});
@@ -290,10 +302,40 @@ function price_cal_func($) {
 			response = JSON.parse(response);
 			var price_html = response.price_html ; 
 			$('.price').html(price_html);
+			total_cost     = response.booking_total_cost;
+			base_cost      = response.booking_people_cost;
+			service_cost   = response.booking_service_cost;
+			added_cost_arr = response.indiv_added_cost_arr;
+			show_total($, total_cost, base_cost, service_cost, added_cost_arr);
 		},
 	});
 }
 
+function show_total($, total_cost, base_cost, service_cost, added_cost_arr) {
+	if ( 'yes' == mwb_wc_bk_public.global_settings.mwb_booking_setting_bo_service_total ) {
+		alert("working");
+		// if(  booking_total_cost > 0 ) {
+			var data = {
+				'action'         : 'show_booking_total',
+				'nonce'          : mwb_wc_bk_public.nonce,
+				'total_cost'     : total_cost,
+				'service_cost'   : service_cost,
+				'base_cost'      : base_cost,
+				'added_cost_arr' : added_cost_arr,
+			}
+			console.log( data );
+			$.ajax({
+				url     : mwb_wc_bk_public.ajaxurl,
+				type    : 'POST',
+				data    : data,
+				success : function( response ) {
+					console.log( response );
+					$( '#mwb-wc-bk-total-fields' ).html( response );
+				}
+			});
+		// }
+	}
+}
 function booking_service_conditions($){
 
 	// var input_div_obj = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div' );

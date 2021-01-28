@@ -277,7 +277,7 @@ class Mwb_Wc_Bk {
 		// $this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'change_on_sale_badge' );
 		$this->loader->add_action( 'wp_ajax_booking_price_cal', $plugin_public, 'booking_price_cal' );
 
-		$this->loader->add_action( 'wp_ajax_booking_service_cal', $plugin_public, 'booking_service_cal' );
+		$this->loader->add_action( 'wp_ajax_show_booking_total', $plugin_public, 'show_booking_total' );
 	}
 
 	/**

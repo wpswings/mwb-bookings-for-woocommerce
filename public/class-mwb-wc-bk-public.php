@@ -82,7 +82,9 @@ class Mwb_Wc_Bk_Public {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-public.css', array(), $this->version, 'all' );
 
-		wp_enqueue_style( 'wp-jquery-ui-dialog' );
+		// wp_enqueue_style( 'wp-jquery-ui-dialog' );
+
+		wp_enqueue_style( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css', array(), '1.12.0' );
 	}
 
 	/**
@@ -106,7 +108,10 @@ class Mwb_Wc_Bk_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-public.js', array( 'jquery' ), $this->version, false );
 
-		wp_enqueue_script( 'jquery-ui-dialog' );
+		// wp_enqueue_script( 'jquery-ui-dialog' );
+
+		// Load the datepicker script (pre-registered in WordPress).
+		wp_enqueue_script( 'jquery-ui-datepicker' );
 
 		$args = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -116,6 +121,7 @@ class Mwb_Wc_Bk_Public {
 		if ( is_product() ) {
 			$args['product_settings'] = get_post_meta( get_the_id() );
 			$args['global_settings']  = get_option( 'mwb_booking_settings_options' );
+			$args['current_date']     = gmdate( 'Y-m-d' );
 			// echo '<pre>'; print_r( $args['product_settings'] ); echo '</pre>'; die("ok");
 		}
 

@@ -38,21 +38,66 @@
 // var indiv_added_cost_arr = [];
 jQuery(document).ready( function($) {
 
-	
+	datepicker_check($);
 	// mwb_wc_bk_add_to_cart_form_update($);
 	people_conditions($);
 	// booking_service_conditions($);
 	booking_price_cal($);
 	// show_total($)
 
-	console.log( mwb_wc_bk_public.global_settings );
-})
+	console.log( mwb_wc_bk_public );
+});
+
+function datepicker_check($) {
+	max_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_input[0];
+	max_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_duration[0];
+	min_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_input[0];
+	min_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_duration[0];
+	current_date     = mwb_wc_bk_public.current_date;
+	// alert( current_date );
+	max_dur   = max_adv_duration.match(/\b(\w)/g);
+	arr = current_date.split("-");
+	min_date_yr = arr[0];
+	if( 'day' == min_adv_duration ) {
+	
+		min_date_mnth = arr[1];
+		min_date_day  = parseInt( arr[2] ) + parseInt( min_adv_input );
+	
+		if( min_date_day > 30 && min_date_day != 31 ) {
+			mai_date_day %= 30;
+			min_date_mnth += ( mai_date_day / 30 );
+		} else if(  min_date_day > 31 ) {
+			mai_date_day %= 31;
+			min_date_mnth += ( mai_date_day / 31 );
+		}
+	
+	} else if( 'month' == min_adv_duration ) {
+
+		min_date_mnth =  parseInt( arr[1] ) + parseInt( min_adv_input );
+		min_date_day = arr[2];
+
+		if ( min_date_mnth > 12 ) {
+			min_date_mnth %= 12;
+			min_date_yr += ( min_date_mnth / 12 );
+		}
+	}
+	console.log( new Date( min_date_yr, min_date_mnth, min_date_day ) );
+	// e.preventDefault();
+	$( '#mwb-wc-bk-start-date-input' ).datepicker({
+		dateFormat : "dd-mm-yy",
+		maxDate: "+" + max_adv_input + max_dur,
+		minDate: new Date( min_date_yr, min_date_mnth - min_date_mnth, min_date_day ),
+		// minDate:
+		// autoSize: true
+		// numberOfMonths: [ 2, 3 ]
+	});
+}
 
 function mwb_wc_bk_add_to_cart_form_update($){
 	$('.mwb-wc-bk-form-section #mwb-wc-bk-duration-div').on('change' , 'input' , function(e){
 		var product_data   = $('#mwb-wc-bk-duration-section').attr('product-data');
 		product_data       = JSON.parse(product_data);
-		var product_id     = product_data.product_id ; 
+		var product_id     = product_data.product_id ;
 		var duration_input = $('#mwb-wc-bk-duration-input');
 		var duration       = duration_input.val();
 		var request_data   = {

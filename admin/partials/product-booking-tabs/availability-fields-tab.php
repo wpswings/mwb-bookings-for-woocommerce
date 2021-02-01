@@ -73,19 +73,19 @@
 			<h3><?php esc_html_e( 'Adavance Booking', 'mwb-wc-bk' ); ?></h3>
 		</div>
 		<p class="form-field">
-			<label for="mwb_advance_booking_max_input"><?php esc_html_e( 'Maximum advance booking', 'mwb-wc-bk' ); ?></label>
-			<input type="number" name="mwb_advance_booking_max_input" id="mwb_advance_booking_max_input" value="<?php echo esc_attr( $this->setting_fields['mwb_advance_booking_max_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
-			<select name="mwb_advance_booking_max_duration" id="mwb_advance_booking_max_duration" class="" style="width: auto; margin-right: 7px;">
-				<option value="month" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'month' ); ?>><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
-				<option value="day" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'day' ); ?>><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
+			<label for="mwb_advance_booking_min_input"><?php esc_html_e( 'Minimum advance booking', 'mwb-wc-bk' ); ?></label>
+			<input type="number" name="mwb_advance_booking_min_input" id="mwb_advance_booking_min_input" value="<?php echo esc_attr( $this->setting_fields['mwb_advance_booking_min_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+			<select name="mwb_advance_booking_min_duration" id="mwb_advance_booking_min_duration" class="" style="width: auto; margin-right: 7px;">
+				<option value="month" <?php selected( $this->setting_fields['mwb_advance_booking_min_duration'], 'month' ); ?>><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
+				<option value="day" <?php selected( $this->setting_fields['mwb_advance_booking_min_duration'], 'day' ); ?>><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
 			</select>
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Max days before which the product can be booked', 'mwb-wc-bk' ) ); ?>
 		</p>
 
 		<p class="form-field">
-			<label for="mwb_advance_booking_min_input"><?php esc_html_e( 'Minimum advance booking', 'mwb-wc-bk' ); ?></label>
-			<input type="number" name="mwb_advance_booking_min_input" id="mwb_advance_booking_min_input" value="<?php echo esc_attr( $this->setting_fields['mwb_advance_booking_min_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
-			<select name="mwb_advance_booking_min_duration" id="mwb_advance_booking_min_duration" class="" style="width: auto; margin-right: 7px;">
+			<label for="mwb_advance_booking_max_input"><?php esc_html_e( 'Maximum advance booking', 'mwb-wc-bk' ); ?></label>
+			<input type="number" name="mwb_advance_booking_max_input" id="mwb_advance_booking_max_input" value="<?php echo esc_attr( $this->setting_fields['mwb_advance_booking_max_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
+			<select name="mwb_advance_booking_max_duration" id="mwb_advance_booking_max_duration" class="" style="width: auto; margin-right: 7px;">
 				<option value="month" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'month' ); ?>><?php esc_html_e( 'Month(s)', 'mwb-wc-bk' ); ?></option>
 				<option value="day" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'day' ); ?>><?php esc_html_e( 'Day(s)', 'mwb-wc-bk' ); ?></option>
 				<option value="year" <?php selected( $this->setting_fields['mwb_advance_booking_max_duration'], 'year' ); ?>><?php esc_html_e( 'Year(s)', 'mwb-wc-bk' ); ?></option>

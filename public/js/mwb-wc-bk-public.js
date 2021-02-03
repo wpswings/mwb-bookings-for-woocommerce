@@ -36,7 +36,13 @@
 // var booking_added_cost = 0;
 // var booking_service_cost = 0;
 // var indiv_added_cost_arr = [];
+
+var start_date;
+var end_date;
 jQuery(document).ready( function($) {
+
+	start_date = $( '#mwb-wc-bk-start-date-input' ).val();
+	end_date   = $( '#mwb-wc-bk-end-date-input' ).val();
 
 	datepicker_check($);
 	// mwb_wc_bk_add_to_cart_form_update($);
@@ -54,44 +60,202 @@ function datepicker_check($) {
 	min_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_input[0];
 	min_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_duration[0];
 	current_date     = mwb_wc_bk_public.current_date;
-	// alert( current_date );
+	// alert( min_adv_duration );
 	max_dur   = max_adv_duration.match(/\b(\w)/g);
-	arr = current_date.split("-");
-	min_date_yr = arr[0];
-	if( 'day' == min_adv_duration ) {
+	min_dur   = min_adv_duration.match( /\b(\w)/g );
+	// arr = current_date.split("-");
+	// min_date_yr = arr[0];
+	// if( 'day' == min_adv_duration ) {
 	
-		min_date_mnth = arr[1];
-		min_date_day  = parseInt( arr[2] ) + parseInt( min_adv_input );
-	
-		if( min_date_day > 30 && min_date_day != 31 ) {
-			mai_date_day %= 30;
-			min_date_mnth += ( mai_date_day / 30 );
-		} else if(  min_date_day > 31 ) {
-			mai_date_day %= 31;
-			min_date_mnth += ( mai_date_day / 31 );
-		}
-	
-	} else if( 'month' == min_adv_duration ) {
+	// 	min_date_mnth = arr[1];
+	// 	min_date_day  = parseInt( arr[2] ) + parseInt( min_adv_input );
+		
+	// 	if( min_date_day > 30 && min_date_day != 31 ) {
+	// 		mai_date_day %= 30;
+	// 		min_date_mnth += ( mai_date_day / 30 );
+	// 	} else if(  min_date_day > 31 ) {
+	// 		mai_date_day %= 31;
+	// 		min_date_mnth += ( mai_date_day / 31 );
+	// 	}
+		
+	// } else if( 'month' == min_adv_duration ) {
 
-		min_date_mnth =  parseInt( arr[1] ) + parseInt( min_adv_input );
-		min_date_day = arr[2];
+	// 	min_date_mnth =  parseInt( arr[1] ) + parseInt( min_adv_input );
+	// 	min_date_day = arr[2];
 
-		if ( min_date_mnth > 12 ) {
-			min_date_mnth %= 12;
-			min_date_yr += ( min_date_mnth / 12 );
+	// 	if ( min_date_mnth > 12 ) {
+	// 		min_date_mnth %= 12;
+	// 		min_date_yr += ( min_date_mnth / 12 );
+	// 	}
+	// }
+	// alert( min_date_day + "-" + min_date_mnth);
+	// console.log( new Date( min_date_yr, min_date_mnth, min_date_day ) );
+	console.log( "+" + max_adv_input + max_dur );
+	console.log( "+" + min_adv_input + min_dur );
+	var not_allowed_days = mwb_wc_bk_public.not_allowed_days;
+	
+	console.log( mwb_wc_bk_public.not_allowed_days );
+
+	$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
+
+		start_date = $(this).val();
+		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
+			end_date = $(this).val();
+		});
+		if ( start_date && end_date ) {
+
+			var arr = cal_booking_days( start_date, end_date );
+			console.log( arr );
 		}
-	}
-	console.log( new Date( min_date_yr, min_date_mnth, min_date_day ) );
+	});
+	$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
+
+		end_date = $(this).val();
+		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
+
+			start_date = $(this).val();
+		});
+		if ( start_date && end_date ) {
+
+			var arr = cal_booking_days( start_date, end_date );
+			console.log( arr );
+		}
+	});	
+	
+	// console.log( start_date + "  " + end_date );
+	
 	// e.preventDefault();
 	$( '#mwb-wc-bk-start-date-input' ).datepicker({
-		dateFormat : "dd-mm-yy",
+		dateFormat : "mm/dd/yy",
+		// firstDay: 0,
 		maxDate: "+" + max_adv_input + max_dur,
-		minDate: new Date( min_date_yr, min_date_mnth - min_date_mnth, min_date_day ),
-		// minDate:
+		// minDate: new Date( min_date_yr, min_date_mnth - min_date_mnth, min_date_day ),
+		minDate: "+" + min_adv_input + min_dur,
 		// autoSize: true
 		// numberOfMonths: [ 2, 3 ]
+
+		// beforeShowDay: function(date){ 
+		// 	var days = [1,2,3,4,5]; 
+		// 	return [days.includes(date.getDay())];
+		// }
+
+		beforeShowDay: function(date) {
+			var days = [0,1,2,3,4,5,6];
+			for( var l = 0; l < not_allowed_days.length; l++ ) {
+				switch( not_allowed_days[l] ) {
+					case 'sunday':
+						days.splice( $.inArray(0, days), 1 );
+						break;
+					case 'monday':
+						days.splice( $.inArray(1, days), 1 );
+						break;
+					case 'tuesday':
+						days.splice( $.inArray(2, days), 1 );
+						break;
+					case 'wednesday':
+						days.splice( $.inArray(3, days), 1 );
+						break;
+					case 'thursday':
+						days.splice( $.inArray(4, days), 1 );
+						break;
+					case 'friday':
+						days.splice( $.inArray(5, days), 1 );
+						break;
+					case 'saturday':
+						days.splice( $.inArray(6, days), 1 );
+						break;
+				}
+				// var day = date.getDay();
+				// return [(day != day_no)];
+			}
+			return [days.includes(date.getDay())];
+		},
+	});
+
+	$( '#mwb-wc-bk-end-date-input' ).datepicker({
+		dateFormat : "mm/dd/yy",
+
+		maxDate: "+" + max_adv_input + max_dur,
+		minDate: "+" + min_adv_input + min_dur,
+
+		beforeShowDay: function(date) {
+			var days = [0,1,2,3,4,5,6];
+			for( var l = 0; l < not_allowed_days.length; l++ ) {
+				switch( not_allowed_days[l] ) {
+					case 'sunday':
+						days.splice( $.inArray(0, days), 1 );
+						break;
+					case 'monday':
+						days.splice( $.inArray(1, days), 1 );
+						break;
+					case 'tuesday':
+						days.splice( $.inArray(2, days), 1 );
+						break;
+					case 'wednesday':
+						days.splice( $.inArray(3, days), 1 );
+						break;
+					case 'thursday':
+						days.splice( $.inArray(4, days), 1 );
+						break;
+					case 'friday':
+						days.splice( $.inArray(5, days), 1 );
+						break;
+					case 'saturday':
+						days.splice( $.inArray(6, days), 1 );
+						break;
+				}
+			}
+			return [days.includes(date.getDay())];
+		},
 	});
 }
+
+
+function cal_booking_days( start_date, end_date ) {
+
+	var tomorrow = new Date();
+	var date_arr = [];
+
+	date1 = new Date( start_date );
+	date2 = new Date( end_date );
+	
+	time_difference = date2.getTime() - date1.getTime();
+	day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+	
+	date_arr.push(date1.getDate() + '-' + ( date1.getMonth() + 1 ) + '-' + date1.getFullYear());
+	for( var day = 1; day < day_difference; day++ ) {
+
+		date1.setDate( date1.getDate() + day );
+		val = date1.getDate() + '-' + ( date1.getMonth() + 1 ) + '-' + date1.getFullYear();
+
+		date_arr.push( val );
+	}
+	// console.log( date_arr );
+	return date_arr;
+	// console.log( day_difference );
+
+
+	// console.log( start_date + "  " + end_date );
+	// console.log( date1 + "  " + date2 );
+	// start_arr = start_date.split("-");
+	// end_arr   = end_date.split( '-' );
+	// var count_days = 0;
+	
+	// if ( start_arr[0] < end_arr[0] ) {
+	// 	count_days = parseInt( end_arr[0] ) - parseInt( start_arr[0] );
+	// 	if ( start_arr[1] < end_arr[1] ) {
+	// 		count_days += ( parseInt( end_arr[1] ) - parseInt( start_arr[1] ) );
+	// 	} else if( start_arr[1] > end_arr[1] ) {
+	// 		count_days = parseInt( en )
+	// 	}
+	// }
+
+
+}
+
+// function unavailable( date ) {
+
+// }
 
 function mwb_wc_bk_add_to_cart_form_update($){
 	$('.mwb-wc-bk-form-section #mwb-wc-bk-duration-div').on('change' , 'input' , function(e){

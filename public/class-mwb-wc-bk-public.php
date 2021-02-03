@@ -122,6 +122,7 @@ class Mwb_Wc_Bk_Public {
 			$args['product_settings'] = get_post_meta( get_the_id() );
 			$args['global_settings']  = get_option( 'mwb_booking_settings_options' );
 			$args['current_date']     = gmdate( 'Y-m-d' );
+			$args['not_allowed_days'] = maybe_unserialize( $args['product_settings']['mwb_booking_not_allowed_days'][0] );
 			// echo '<pre>'; print_r( $args['product_settings'] ); echo '</pre>'; die("ok");
 		}
 

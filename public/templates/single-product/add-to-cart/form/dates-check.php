@@ -41,7 +41,7 @@ $range_picker = ! empty( $product_meta['mwb_enable_range_picker'][0] ) ? $produc
 		</div>
 		<div id="mwb-wc-bk-end-date-field">
 			<label for="mwb-wc-bk-end-date-input"><?php esc_html_e( 'End Date', 'mwb-wc-bk' ); ?></label><br>
-			<input type="date" id="mwb-wc-bk-end-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="end_date">
+			<input type="text" id="mwb-wc-bk-end-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="end_date">
 		</div>
 			<?php
 		} else {

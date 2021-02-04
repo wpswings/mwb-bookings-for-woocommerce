@@ -32,14 +32,14 @@ $custom_disc_days = ! empty( $product_meta['mwb_booking_custom_discount_days'] )
 
 $price = ! empty( $product_meta['_price'] ) ? sanitize_text_field( wp_unslash( $product_meta['_price'] ) ) : '';
 
-if ( ! empty( $unit_cost ) ) {
-	if ( ! empty( $base_cost ) ) {
-		$price = $unit_cost + $base_cost;
-	}
-	if ( ! empty( $extra_cost ) ) {
-		echo 'ljhd';
-	}
-}
+// if ( ! empty( $unit_cost ) ) {
+// 	if ( ! empty( $base_cost ) ) {
+// 		$price = $unit_cost + $base_cost;
+// 	}
+// 	// if ( ! empty( $extra_cost ) ) {
+// 	// 	echo 'ljhd';
+// 	// }
+// }
 
 
 

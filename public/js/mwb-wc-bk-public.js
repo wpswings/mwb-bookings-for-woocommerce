@@ -213,7 +213,7 @@ function datepicker_check($) {
 
 function cal_booking_days( start_date, end_date ) {
 
-	var tomorrow = new Date();
+	// var tomorrow = new Date();
 	var date_arr = [];
 
 	date1 = new Date( start_date );
@@ -346,6 +346,7 @@ function booking_price_cal($) {
 		}
 		// alert(total_input);
 		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-span').text( total_input + '-Peoples');
+		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden').val( total_input );
 		
 		var product_data   = $('#mwb-wc-bk-create-booking-form').attr('product-data');
 		var duration_input = $('#mwb-wc-bk-duration-input');

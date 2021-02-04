@@ -235,16 +235,16 @@ class Mwb_Wc_Bk_Public {
 		if ( $product && $product->is_type( 'mwb_booking' ) ) {
 			if ( ! isset( $cart_item_data['mwb_wc_bk_cart_data'] ) ) {
 				$posted_data                      = $_REQUEST;
-				$booking_data                     = $this->mwb_wc_bk_get_product_data( $posted_data );
+				$booking_data                     = $this->mwb_wc_bk_get_product_data( $posted_data, $product_id );
 				$cart_item_data['mwb_wc_bk_data'] = $booking_data;
 			}
 		}
-		// echo '<pre>';
-		// print_r( $cart_item_data );
+		echo '<pre>';
+		print_r( $booking_data );
 		// print_r( $_REQUEST );
-		// echo '</pre>';
+		echo '</pre>';
 
-		// die( "kjbh" );
+		die( "kjbh" );
 		return $cart_item_data;
 	}
 
@@ -254,12 +254,30 @@ class Mwb_Wc_Bk_Public {
 	 * @param array $posted_data parameter.
 	 * @return array
 	 */
-	public function mwb_wc_bk_get_product_data( $posted_data ) {
+	public function mwb_wc_bk_get_product_data( $posted_data, $product_id ) {
 
 		$booking_data = array( 'duration' => 1 );
-		$duration     = isset( $posted_data['duration'] ) ? $posted_data['duration'] : 1;
+		// $duration     = isset( $posted_data['duration'] ) ? $posted_data['duration'] : 1;
+		// $booking_data['duration'] = $duration;
 
-		$booking_data['duration'] = $duration;
+		$product_meta = get_post_meta( $product_id );
+
+		$booking_unit_dur   = isset( $product_meta['mwb_booking_unit_duration'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_duration'][0] ) ) : '';
+		$booking_unit_input = isset( $product_meta['mwb_booking_unit_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_input'][0] ) ) : 0;
+		if ( ! isset( $posted_data['end_date'] ) ) {
+			if ( isset( $posted_data['duration'] ) && ! empty( $booking_unit_dur ) && ! empty( $booking_unit_input ) && isset( $posted_data['start_date'] ) ) {
+				$total_dur = $posted_data['duration'] * $booking_unit_input;
+				if ( 'day' === $booking_unit_dur ) {
+					$end_date = strtotime( date( 'm/d/YY', strtotime( $posted_data['start_date'] ) ) . ' +' . $total_dur . ' ' . $booking_unit_dur );
+					$booking_data['end_date'] = $end_date;
+				}
+			}
+		}
+
+		$booking_data['posted_data'] = $posted_data;
+		$booking_data['unit_dur']       = $booking_unit_dur;
+		$booking_data['unit_dur_input'] = $booking_unit_input;
+
 		return $booking_data;
 	}
 
@@ -775,6 +793,7 @@ class Mwb_Wc_Bk_Public {
 				<li>
 					<label for=""><?php esc_html_e( 'Base Cost', '' ); ?></label>
 					<span>&emsp;&#8377;<?php echo esc_html( $base_cost ); ?></span>
+					<input type="hidden" name="base_cost" value="<?php echo esc_html( $base_cost ); ?>" >
 				</li>
 				<?php
 			}
@@ -783,17 +802,21 @@ class Mwb_Wc_Bk_Public {
 				<li>
 					<label for=""><?php esc_html_e( 'Service Cost', '' ); ?></label>
 					<span>&emsp;&#8377;<?php echo esc_html( $service_cost ); ?></span>
+					<input type="hidden" name="service_cost" value="<?php echo esc_html( $service_cost ); ?>" >
 				</li>
 				<?php
 			}
 			if ( ! empty( $added_cost_arr ) && is_array( $added_cost_arr ) ) {
 				foreach ( $added_cost_arr as $name => $cost ) {
-					?>
-					<li>
-						<label for=""><?php echo esc_html( $name ); ?></label>
-						<span>&emsp;&#8377;<?php echo esc_html( $cost ); ?></span>
-					</li>
-					<?php
+					if ( ! empty( $cost ) ) {
+						?>
+				<li>
+					<label for=""><?php echo esc_html( $name ); ?><?php esc_html_e( '-cost' ); ?></label>
+					<span>&emsp;&#8377;<?php echo esc_html( $cost ); ?></span>
+					<input type="hidden" name="added_cost-<?php echo esc_html( strtolower( $name ) ); ?>" value="<?php echo esc_html( $cost ); ?>" >
+				</li>
+						<?php
+					}
 				}
 			}
 			if ( ! empty( $total_cost ) ) {
@@ -801,6 +824,7 @@ class Mwb_Wc_Bk_Public {
 				<li>
 					<label for=""><b><?php esc_html_e( 'Total Cost', '' ); ?></b></label>
 					<span><b>&emsp;&#8377;<?php echo esc_html( $total_cost ); ?></b></span>
+					<input type="hidden" name="total_cost" value="<?php echo esc_html( $total_cost ); ?>">
 				</li>
 		<?php } ?>
 		</ul>

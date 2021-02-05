@@ -539,7 +539,7 @@ function show_total($, total_cost, base_cost, service_cost, added_cost_arr) {
 				type    : 'POST',
 				data    : data,
 				success : function( response ) {
-					console.log( response );
+					// console.log( response );
 					$( '#mwb-wc-bk-total-fields' ).html( response );
 				}
 			});

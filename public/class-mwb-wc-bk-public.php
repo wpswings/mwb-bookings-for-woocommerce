@@ -239,12 +239,12 @@ class Mwb_Wc_Bk_Public {
 				$cart_item_data['mwb_wc_bk_data'] = $booking_data;
 			}
 		}
-		echo '<pre>';
-		print_r( $booking_data );
-		// print_r( $_REQUEST );
-		echo '</pre>';
+		// echo '<pre>';
+		// print_r( $booking_data );
+		// // print_r( $_REQUEST );
+		// echo '</pre>';
 
-		die( "kjbh" );
+		// die( "kjbh" );
 		return $cart_item_data;
 	}
 
@@ -256,27 +256,95 @@ class Mwb_Wc_Bk_Public {
 	 */
 	public function mwb_wc_bk_get_product_data( $posted_data, $product_id ) {
 
-		$booking_data = array( 'duration' => 1 );
+		$booking_data = array();
 		// $duration     = isset( $posted_data['duration'] ) ? $posted_data['duration'] : 1;
 		// $booking_data['duration'] = $duration;
 
 		$product_meta = get_post_meta( $product_id );
 
-		$booking_unit_dur   = isset( $product_meta['mwb_booking_unit_duration'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_duration'][0] ) ) : '';
-		$booking_unit_input = isset( $product_meta['mwb_booking_unit_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_input'][0] ) ) : 0;
+		$booking_unit_dur   = ! empty( $product_meta['mwb_booking_unit_duration'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_duration'][0] ) ) : '';
+		$booking_unit_input = ! empty( $product_meta['mwb_booking_unit_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_input'][0] ) ) : 0;
+		$booking_people     = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : array();
+		$booking_service    = ! empty( $product_meta['mwb_booking_services_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_services_select'][0] ) : array();
+		$booking_add_cost   = ! empty( $product_meta['mwb_booking_added_cost_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_added_cost_select'][0] ) : array();
+
 		if ( ! isset( $posted_data['end_date'] ) ) {
 			if ( isset( $posted_data['duration'] ) && ! empty( $booking_unit_dur ) && ! empty( $booking_unit_input ) && isset( $posted_data['start_date'] ) ) {
-				$total_dur = $posted_data['duration'] * $booking_unit_input;
+
+				$booking_data['duration']        = $posted_data['duration'];
+				$start_timestamp                 = strtotime( $posted_data['start_date'] );
+				$booking_data['start_date']      = $posted_data['start_date'];
+				$booking_data['start_timestamp'] = $start_timestamp;
+				$total_dur                       = $posted_data['duration'] * $booking_unit_input;
+
+				if ( 'day' === $booking_unit_dur || 'month' === $booking_unit_dur ) {
+					$end_timestamp                 = strtotime( gmdate( 'm/d/Y', strtotime( $posted_data['start_date'] ) ) . ' +' . $total_dur . ' ' . $booking_unit_dur );
+					$booking_data['end_date']      = gmdate( 'm/d/Y', $end_timestamp );
+					$booking_data['end_timestamp'] = $end_timestamp;
+				} elseif ( 'hour' === $booking_unit_dur ) {
+					$end_timestamp                 = $start_timestamp + ( $booking_unit_input * 60 * 60 );
+					$booking_data['end_timestamp'] = $end_timestamp;
+				} elseif ( 'minute' === $booking_unit_dur ) {
+					$end_timestamp                 = $start_timestamp + ( $booking_unit_input * 60 );
+					$booking_data['end_timestamp'] = $end_timestamp;
+				}
+			}
+		} else {
+			if ( ! empty( $booking_unit_dur ) && ! empty( $booking_unit_input ) && isset( $posted_data['start_date'] ) ) {
+
+				$booking_data['start_date']      = $posted_data['start_date'];
+				$start_timestamp                 = strtotime( $posted_data['start_date'] );
+				$booking_data['start_timestamp'] = $start_timestamp;
+				$booking_data['end_date']        = $posted_data['end_date'];
+				$booking_data['end_timestamp']   = strtotime( $posted_data['end_date'] );
+
+				$duration_timestamp = strtotime( $posted_data['end_date'] ) - strtotime( $posted_data['start_date'] );
+
 				if ( 'day' === $booking_unit_dur ) {
-					$end_date = strtotime( date( 'm/d/YY', strtotime( $posted_data['start_date'] ) ) . ' +' . $total_dur . ' ' . $booking_unit_dur );
-					$booking_data['end_date'] = $end_date;
+					$booking_data['duration'] = $duration_timestamp / ( 24 * 60 * 60 * $booking_unit_input );
+				}
+			}
+		}
+		if ( isset( $posted_data['people_total'] ) ) {
+			$booking_data['people_total'] = ! empty( $posted_data['people_total'] ) ? $posted_data['people_total'] : 0;
+			if ( ! empty( $booking_people ) && is_array( $booking_people ) ) {
+				foreach ( $booking_people as $id ) {
+					$booking_data['people_count'][ $id ] = ! empty( $posted_data[ 'people-' . $id ] ) ? $posted_data[ 'people-' . $id ] : 0;
 				}
 			}
 		}
 
-		$booking_data['posted_data'] = $posted_data;
-		$booking_data['unit_dur']       = $booking_unit_dur;
-		$booking_data['unit_dur_input'] = $booking_unit_input;
+		if ( isset( $posted_data['service_cost'] ) ) {
+			if ( ! empty( $booking_service ) && is_array( $booking_service ) ) {
+				foreach ( $booking_service as $id ) {
+					$service_meta = get_term_meta( $id );
+					$service      = get_term( $id );
+					$service_name = $service->name;
+					if ( 'no' === $service_meta['mwb_booking_ct_services_optional'][0] ) {
+						$booking_data['inc_service'][ $service_name ] = ! empty( $posted_data[ 'inc-service-' . $id ] ) ? $posted_data[ 'inc-service-' . $id ] : 0;
+					} else {
+						if ( ! empty( $posted_data[ 'add-service-check-' . $id ] ) && 'on' === $posted_data[ 'add-service-check-' . $id ] ) {
+							$booking_data['add_service'][ $service_name ] = ! empty( $posted_data[ 'add-service-' . $id ] ) ? $posted_data[ 'add-service-' . $id ] : 0;
+						}
+					}
+				}
+			}
+		}
+
+		// if ( ! empty( $booking_add_cost ) && is_array( $booking_add_cost ) ) {
+		// 	foreach ( $booking_add_cost as $id ) {
+		// 		$added_cost = get_term( $id );
+		// 		$cost_name  = $added_cost->name;
+		// 		if(  )
+		// 	}
+		// }
+
+		// $booking_data['posted_data']     = $posted_data;
+		$booking_data['unit_dur']        = $booking_unit_dur;
+		$booking_data['unit_dur_input']  = $booking_unit_input;
+		// $booking_data['product_meta']    = $product_meta;
+		// $booking_data['product_people']  = $booking_people;
+		// $booking_data['product_service'] = $booking_service;
 
 		return $booking_data;
 	}

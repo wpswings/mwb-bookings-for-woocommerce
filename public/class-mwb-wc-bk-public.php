@@ -266,7 +266,7 @@ class Mwb_Wc_Bk_Public {
 		$booking_unit_input = ! empty( $product_meta['mwb_booking_unit_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_input'][0] ) ) : 0;
 		$booking_people     = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : array();
 		$booking_service    = ! empty( $product_meta['mwb_booking_services_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_services_select'][0] ) : array();
-		$booking_add_cost   = ! empty( $product_meta['mwb_booking_added_cost_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_added_cost_select'][0] ) : array();
+		// $booking_add_cost   = ! empty( $product_meta['mwb_booking_added_cost_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_added_cost_select'][0] ) : array();
 
 		if ( ! isset( $posted_data['end_date'] ) ) {
 			if ( isset( $posted_data['duration'] ) && ! empty( $booking_unit_dur ) && ! empty( $booking_unit_input ) && isset( $posted_data['start_date'] ) ) {
@@ -276,6 +276,7 @@ class Mwb_Wc_Bk_Public {
 				$booking_data['start_date']      = $posted_data['start_date'];
 				$booking_data['start_timestamp'] = $start_timestamp;
 				$total_dur                       = $posted_data['duration'] * $booking_unit_input;
+				// $booking_data['duration']        = $total_dur;
 
 				if ( 'day' === $booking_unit_dur || 'month' === $booking_unit_dur ) {
 					$end_timestamp                 = strtotime( gmdate( 'm/d/Y', strtotime( $posted_data['start_date'] ) ) . ' +' . $total_dur . ' ' . $booking_unit_dur );
@@ -309,7 +310,9 @@ class Mwb_Wc_Bk_Public {
 			$booking_data['people_total'] = ! empty( $posted_data['people_total'] ) ? $posted_data['people_total'] : 0;
 			if ( ! empty( $booking_people ) && is_array( $booking_people ) ) {
 				foreach ( $booking_people as $id ) {
-					$booking_data['people_count'][ $id ] = ! empty( $posted_data[ 'people-' . $id ] ) ? $posted_data[ 'people-' . $id ] : 0;
+					$people      = get_term( $id );
+					$people_name = $people->name;
+					$booking_data['people_count'][ $people_name ] = ! empty( $posted_data[ 'people-' . $id ] ) ? $posted_data[ 'people-' . $id ] : 0;
 				}
 			}
 		}
@@ -339,9 +342,14 @@ class Mwb_Wc_Bk_Public {
 		// 	}
 		// }
 
-		// $booking_data['posted_data']     = $posted_data;
-		$booking_data['unit_dur']        = $booking_unit_dur;
-		$booking_data['unit_dur_input']  = $booking_unit_input;
+		if ( ! empty( $posted_data['total_cost'] ) ) {
+
+			$booking_data['total_cost'] = $posted_data['total_cost'];
+		}
+
+		$booking_data['posted_data']    = $posted_data;
+		$booking_data['unit_dur']       = $booking_unit_dur;
+		$booking_data['unit_dur_input'] = $booking_unit_input;
 		// $booking_data['product_meta']    = $product_meta;
 		// $booking_data['product_people']  = $booking_people;
 		// $booking_data['product_service'] = $booking_service;
@@ -363,7 +371,8 @@ class Mwb_Wc_Bk_Public {
 		if ( $_product && $_product->is_type( 'mwb_booking' ) ) {
 			$product      = $cart_item_data['data'];
 			$booking_data = $cart_item_data['mwb_wc_bk_data'];
-			$price        = $this->get_booking_product_price( $product, $booking_data );
+			$price        = (int) $cart_item_data['mwb_wc_bk_data']['total_cost'];
+			// $price     = $this->get_booking_product_price( $product, $booking_data );
 			$product->set_price( $price );
 			$cart_item_data['data'] = $product;
 		}
@@ -371,7 +380,7 @@ class Mwb_Wc_Bk_Public {
 	}
 
 	/**
-	 * Getting tthe updated product price according to the form fields
+	 * Getting the updated product price according to the form fields
 	 *
 	 * @param object $product      Product object.
 	 * @param array  $booking_data Cart item data for 'mwb_booking'.
@@ -397,7 +406,8 @@ class Mwb_Wc_Bk_Public {
 		if ( $_product && $_product->is_type( 'mwb_booking' ) ) {
 			$product      = $session_data['data'];
 			$booking_data = $session_data['mwb_wc_bk_data'];
-			$price        = $this->get_booking_product_price( $product, $booking_data );
+			$price        = (int) $cart_item['mwb_wc_bk_data']['total_cost'];
+			// $price     = $this->get_booking_product_price( $product, $booking_data );
 			$product->set_price( $price );
 			$session_data['data'] = $product;
 		}
@@ -423,11 +433,61 @@ class Mwb_Wc_Bk_Public {
 			$booking_data      = $cart_item_data['mwb_wc_bk_data'];
 			$booking_item_data = array();
 
-			$booking_item_data['mwb_wc_bk_duration'] = array(
-				'key'     => 'duration',
-				'value'   => $booking_data['duration'],
-				'display' => '',
+			// $booking_item_data['mwb_wc_bk_duration'] = array(
+			// 	'key'     => 'duration',
+			// 	'value'   => $booking_data['duration'],
+			// 	'display' => '',
+			// );
+
+			$booking_item_data = array(
+				'mwb_wc_bk_duration' => array(
+					'key'     => 'Duration',
+					'value'   => $booking_data['duration'],
+					'display' => '',
+				),
+				'mwb_wc_bk_from'     => array(
+					'key'     => 'From',
+					'value'   => $booking_data['start_date'],
+					'display' => '',
+				),
+				'mwb_wc_bk_to'       => array(
+					'key'     => 'To',
+					'value'   => $booking_data['end_date'],
+					'display' => '',
+				),
 			);
+			if ( ! empty( $booking_data['people_count'] ) && is_array( $booking_data['people_count'] ) ) {
+
+				foreach ( $booking_data['people_count'] as $name => $count ) {
+					$booking_item_data[ 'mwb_wc_bk_' . $name ] = array(
+						'key'     => $name,
+						'value'   => $count,
+						'display' => '',
+					);
+				}
+			}
+			if ( ! empty( $booking_data['inc_service'] ) && is_array( $booking_data['inc_service'] ) ) {
+
+				foreach ( $booking_data['inc_service'] as $name => $count ) {
+					$str = $name . '-' . $count . ',';
+				}
+				$booking_item_data[ 'mwb_wc_bk_' . $name ] = array(
+					'key'     => 'Included Booking services',
+					'value'   => $str,
+					'display' => '',
+				);
+			}
+			if ( ! empty( $booking_data['add_service'] ) && is_array( $booking_data['add_service'] ) ) {
+
+				foreach ( $booking_data['add_service'] as $name => $count ) {
+					$str = $name . '-' . $count . ',';
+				}
+				$booking_item_data[ 'mwb_wc_bk_' . $name ] = array(
+					'key'     => 'Additional Booking services',
+					'value'   => $str,
+					'display' => '',
+				);
+			}
 
 			$item_data = array_merge( $item_data, $booking_item_data );
 		}

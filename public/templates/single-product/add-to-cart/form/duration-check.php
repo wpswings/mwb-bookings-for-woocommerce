@@ -49,7 +49,7 @@ $max_duration  = ! empty( $product_meta['mwb_booking_max_duration'][0] ) ? sanit
 				<label for="mwb-wc-bk-duration-input"><b><?php esc_html_e( 'Duration', 'mwb-wc-bk' ); ?></b></label>
 				<br>
 				<?php if ( ! empty( $min_duration ) && ( $min_duration !== $max_duration ) ) { ?>
-					<input id="mwb-wc-bk-duration-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" type="number" name="duration" value="1" step="1" min="<?php echo esc_html( $min_duration ); ?>" max="<?php echo esc_html( $max_duration ); ?>">
+					<input id="mwb-wc-bk-duration-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" type="number" name="duration" value="1" step="1" min="<?php echo esc_html( $min_duration ); ?>" max="<?php echo esc_html( $max_duration ); ?>" required>
 					<?php echo esc_html( sprintf( 'X %d %s', $unit_input, $unit_duration . ( ( $unit_input > 1 ) ? 's' : '' ) ) ); ?>
 						<?php
 				} elseif ( ( $min_duration === $max_duration ) && (int) $min_duration > 1 ) {
@@ -59,7 +59,7 @@ $max_duration  = ! empty( $product_meta['mwb_booking_max_duration'][0] ) ? sanit
 						<?php
 				} else {
 					?>
-					<input id="mwb-wc-bk-duration-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" type="number" name="duration" value="1" step="1" min="1" max="<?php echo esc_html( $max_duration ); ?>">
+					<input id="mwb-wc-bk-duration-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" type="number" name="duration" value="1" step="1" min="1" max="<?php echo esc_html( $max_duration ); ?>" required>
 					<?php echo esc_html( sprintf( 'X %d %s', $unit_input, $unit_duration . ( ( $unit_input > 1 ) ? 's' : '' ) ) ); ?>
 					<?php } ?>
 			</div>

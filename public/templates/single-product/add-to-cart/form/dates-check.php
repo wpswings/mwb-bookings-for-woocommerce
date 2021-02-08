@@ -29,7 +29,7 @@ $range_picker = ! empty( $product_meta['mwb_enable_range_picker'][0] ) ? $produc
 		?>
 		<div id="mwb-wc-bk-start-date-field">
 			<label for="mwb-wc-bk-start-date-input"><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label>
-			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy">
+			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy" required>
 		</div>
 		<?php
 	} elseif ( 'customer' === $unit_select ) {
@@ -37,18 +37,19 @@ $range_picker = ! empty( $product_meta['mwb_enable_range_picker'][0] ) ? $produc
 			?>
 		<div id="mwb-wc-bk-start-date-field">
 			<label for="mwb-wc-bk-start-date-input"><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label><br>
-			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy">
+			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy" required>
 		</div>
 		<div id="mwb-wc-bk-end-date-field">
 			<label for="mwb-wc-bk-end-date-input"><?php esc_html_e( 'End Date', 'mwb-wc-bk' ); ?></label><br>
-			<input type="text" id="mwb-wc-bk-end-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="end_date">
+			<input type="text" id="mwb-wc-bk-end-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="end_date" required>
 		</div>
+		<span class="mwb-wc-bk-form-error date-error" style="display:none; color:red;" ></span>
 			<?php
 		} else {
 			?>
 		<div id="mwb-wc-bk-start-date-field">
 			<label for="mwb-wc-bk-start-date-input"><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label><br>
-			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy">
+			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy" required>
 		</div>
 			<?php
 		}

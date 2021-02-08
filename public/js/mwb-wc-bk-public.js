@@ -44,7 +44,9 @@ jQuery(document).ready( function($) {
 	start_date = $( '#mwb-wc-bk-start-date-input' ).val();
 	end_date   = $( '#mwb-wc-bk-end-date-input' ).val();
 
-	datepicker_check($);
+	if ( mwb_wc_bk_public.hasOwnProperty( 'product_settings' ) ) {
+		datepicker_check($);
+	}
 	// mwb_wc_bk_add_to_cart_form_update($);
 	people_conditions($);
 	// booking_service_conditions($);
@@ -300,6 +302,19 @@ function people_conditions($) {
 			div.toggle();
 		}
 	});
+
+	// var people_total = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden' ).val();
+	// if ( people_total <= 0 ) {
+	// 	$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).show();
+	// 	$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( "Select atleast 1 people" );
+	// 	// $( '.cart' ).submit(function(e){
+	// 	// 	e.preventDefault();
+	// 	// });
+	// } else {
+	// 	$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).css( "display", "none" );
+	// 	$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( '' );
+	// }
+
 }
 
 function booking_price_cal($) {
@@ -420,6 +435,43 @@ function booking_price_cal($) {
 				show_total($, total_cost, base_cost, service_cost, added_cost_arr);
 			},
 		});
+	});
+
+	
+	$( document ).on( 'submit', '.cart', function(e) {
+		alert("submit working");
+
+		var people_total = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden' ).val();
+		if ( people_total <= 0 ) {
+			alert("people");
+			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).show();
+			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( "*Select at least 1 people" );
+				e.preventDefault();
+		} else {
+			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).hide();
+			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( '' );
+		}
+
+		if ( mwb_wc_bk_public.product_settings.hasOwnProperty( 'mwb_enable_range_picker' ) && 'yes' === mwb_wc_bk_public.product_settings.mwb_enable_range_picker[0] ) {
+
+			start_date = $( '#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
+			end_date   = $( '#mwb-wc-bk-date-section #mwb-wc-bk-end-date-input').val();
+			// console.log( start_date );
+			// console.log( end_date );
+			// console.log( new Date( start_date ) );
+			// console.log( new Date( end_date ) );
+			if ( new Date( start_date ) > new Date( end_date ) ) {
+				// alert( "more" );
+
+				e.preventDefault();
+				$('#mwb-wc-bk-date-section .date-error').show();
+				$('#mwb-wc-bk-date-section .date-error').text( '*End Date should be more than Start Date' );
+			} else {
+				// alert( "less" );
+				$('#mwb-wc-bk-date-section .date-error').hide();
+			}
+		}
+		
 	});
 	
 

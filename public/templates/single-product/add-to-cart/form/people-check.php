@@ -42,7 +42,7 @@ $product_data = array(
 				?>
 				<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
 				<input type="hidden" id="mwb-wc-bk-people-input-hidden" name="people" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
-				<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" name="people_total" value="1" step="1" min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>">
+				<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" name="people_total" value="1" step="1" min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" required>
 				<?php
 				// $booking_people_price = $unit_price + ( ! empty( $base_price ) ? $base_price : 0 );
 			} elseif ( 'yes' === $people_type_check ) {
@@ -51,9 +51,8 @@ $product_data = array(
 				<label for="mwb-wc-bk-people-input-div"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
 				<div id="mwb-wc-bk-people-input-div">
 					<!-- <option value="none"><?php // esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
-					<span id="mwb-wc-bk-people-input-span" ><?php esc_html_e( 'Select Peoples', 'mwb-wc-bk' ); ?></span>
-					<span class="mwb-wc-bk-form-dropdown"></span>
-					<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="mwb-wc-bk-form-input-hidden" value="" name="people_total" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
+					<span id="mwb-wc-bk-people-input-span" ><?php esc_html_e( 'Select Peoples', 'mwb-wc-bk' ); ?></span>	
+					<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="mwb-wc-bk-form-input-hidden" name="people_total" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" required >
 					<div class="mwb-wc-bk-people-type-popup">
 						<ul class="mwb-wc-bk-people-type-list">
 						<?php
@@ -75,6 +74,7 @@ $product_data = array(
 						}
 						?>
 						</ul>
+						<span class="mwb-wc-bk-form-error people-error" style="display:none; color:red;"></span>
 					</div>
 				</div>
 					<?php

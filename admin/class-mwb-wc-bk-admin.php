@@ -821,6 +821,36 @@ class Mwb_Wc_Bk_Admin {
 		wc_register_order_type( 'mwb_cpt_booking', $args );
 	}
 
+	public function mwb_wc_bk_booking_columns( $columns ) {
+
+		$columns = array(
+			'cb'            => '<input type="checkbox" />',
+			'booking_title' => __( 'Booking Title', '' ),
+			'services'      => __( 'Services', '' ),
+			'people'        => __( 'People Type', '' ),
+			'cost'          => __( 'Additional Cost', '' ),
+			'from'          => __( 'From', '' ),
+			'to'            => __( 'To', '' ),
+		);
+		return $columns;
+	}
+
+	public function mwb_wc_bk_manage_booking_columns( $columns, $post_id ) {
+
+		switch ( $columns ) {
+			case 'booking_title':
+				echo "title";
+				break;
+			case 'services':
+				echo "services";
+				break;
+			case 'people':
+				echo 'people';
+				break;
+				
+		}
+	}
+
 	/**
 	 * Remove meta boxes from the mwb_cpt_booking order type post edit screen
 	 */

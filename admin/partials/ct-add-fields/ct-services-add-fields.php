@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p class="form-field">
 		<label for=""></label>
 		<input type="checkbox" id="mwb_booking_ct_services_multiply_units" class="checkbox" name="mwb_booking_ct_services_multiply_units" value="yes">
-		<p class="description"><?php esc_html_e( 'Multiply cost by booking units', 'mwb-wc-bk' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Multiply cost by duration', 'mwb-wc-bk' ); ?></p>
 	</p>
 	<p class="form-field">
 		<label for=""></label>

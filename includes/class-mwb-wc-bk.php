@@ -238,6 +238,8 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_create_booking_product_details', $plugin_admin, 'create_booking_product_details' );
 
+		$this->loader->add_filter( 'manage_mwb_cpt_booking_posts_columns', $plugin_admin, 'mwb_wc_bk_booking_columns' );
+
 	}
 
 	/**
@@ -278,6 +280,7 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'wp_ajax_booking_price_cal', $plugin_public, 'booking_price_cal' );
 
 		$this->loader->add_action( 'wp_ajax_show_booking_total', $plugin_public, 'show_booking_total' );
+
 	}
 
 	/**

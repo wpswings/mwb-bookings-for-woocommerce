@@ -277,6 +277,7 @@ class Mwb_Wc_Bk_Public {
 				$booking_data['start_timestamp'] = $start_timestamp;
 				$total_dur                       = $posted_data['duration'] * $booking_unit_input;
 				// $booking_data['duration']        = $total_dur;
+				$booking_data['dura_param']      = $booking_unit_dur;
 
 				if ( 'day' === $booking_unit_dur || 'month' === $booking_unit_dur ) {
 					$end_timestamp                 = strtotime( gmdate( 'm/d/Y', strtotime( $posted_data['start_date'] ) ) . ' +' . $total_dur . ' ' . $booking_unit_dur );
@@ -298,6 +299,7 @@ class Mwb_Wc_Bk_Public {
 				$booking_data['start_timestamp'] = $start_timestamp;
 				$booking_data['end_date']        = $posted_data['end_date'];
 				$booking_data['end_timestamp']   = strtotime( $posted_data['end_date'] );
+				$booking_data['dura_param']      = $booking_unit_dur;
 
 				$duration_timestamp = strtotime( $posted_data['end_date'] ) - strtotime( $posted_data['start_date'] );
 
@@ -347,7 +349,7 @@ class Mwb_Wc_Bk_Public {
 			$booking_data['total_cost'] = $posted_data['total_cost'];
 		}
 
-		$booking_data['posted_data']    = $posted_data;
+		// $booking_data['posted_data']    = $posted_data;
 		$booking_data['unit_dur']       = $booking_unit_dur;
 		$booking_data['unit_dur_input'] = $booking_unit_input;
 		// $booking_data['product_meta']    = $product_meta;
@@ -438,11 +440,13 @@ class Mwb_Wc_Bk_Public {
 			// 	'value'   => $booking_data['duration'],
 			// 	'display' => '',
 			// );
+			$total_duration = $booking_data['duration'] * $booking_data['unit_dur_input'];
+			$duration_str   = $total_duration . ' ' . $booking_data['unit_dur'];
 
 			$booking_item_data = array(
 				'mwb_wc_bk_duration' => array(
 					'key'     => 'Duration',
-					'value'   => $booking_data['duration'],
+					'value'   => $total_duration > 1 ? $duration_str . 's' : $duration_str,
 					'display' => '',
 				),
 				'mwb_wc_bk_from'     => array(
@@ -450,12 +454,26 @@ class Mwb_Wc_Bk_Public {
 					'value'   => $booking_data['start_date'],
 					'display' => '',
 				),
-				'mwb_wc_bk_to'       => array(
+				// 'mwb_wc_bk_to'       => array(
+				// 	'key'     => 'To',
+				// 	'value'   => $booking_data['end_date'],
+				// 	'display' => '',
+				// ),
+			);
+
+			if ( 'hour' !== $booking_data['unit_dur'] && 'minute' !== $booking_data['unit_dur'] ) {
+				$booking_item_data['mwb_wc_bk_to'] = array(
 					'key'     => 'To',
 					'value'   => $booking_data['end_date'],
 					'display' => '',
-				),
-			);
+				);
+			} else {
+				$booking_item_data['mwb_wc_bk_from'] = array(
+					'key'     => 'On',
+					'value'   => $booking_data['start_date'],
+					'display' => '',
+				);
+			}
 			if ( ! empty( $booking_data['people_count'] ) && is_array( $booking_data['people_count'] ) ) {
 
 				foreach ( $booking_data['people_count'] as $name => $count ) {
@@ -519,6 +537,9 @@ class Mwb_Wc_Bk_Public {
 		if ( isset( $values['mwb_wc_bk_data'] ) && is_array( $values['mwb_wc_bk_data'] ) ) {
 			$booking_data = $values['mwb_wc_bk_data'];
 		}
+		// echo '<pre>'; print_r( $booking_data ); echo '</pre>';
+		// echo '<pre>'; print_r( $order ); echo '</pre>';
+		// die("ok");
 		if ( ! empty( $booking_data ) ) {
 			$item->add_meta_data( 'mwb_wc_bk_data', $booking_data, true );
 			if ( isset( $booking_data['mwb_wc_bk_id'] ) ) {
@@ -545,30 +566,37 @@ class Mwb_Wc_Bk_Public {
 			return;
 		}
 
+		$order_type = '';
+
 		foreach ( $order_items as $order_item_id => $order_item ) {
 			if ( $order_item->is_type( 'line_item' ) ) {
 				$product = $order_item->get_product();
 				if ( ! $product || ! ( $product->is_type( 'mwb_booking' ) ) ) {
 					continue;
 				}
-				$args = array(
-					'order_id'   => $order_id,
-					'product_id' => $product->get_id(),
-					'status'     => $order->get_status(),
-					'user_id'    => $order->get_user_id(),
-				);
+				$order_type = 'booking';
+				// $args = array(
+				// 	'order_id'   => $order_id,
+				// 	'product_id' => $product->get_id(),
+				// 	'status'     => $order->get_status(),
+				// 	'user_id'    => $order->get_user_id(),
+				// );
 
-				$booking_data = $order_item->get_meta( 'mwb_wc_bk_data' );
-				$booking_id   = $order_item->get_meta( 'mwb_wc_bk_id' );
-				if ( ! $booking_id && ! empty( $booking_data ) ) {
-					$booking_id = $this->mwb_wc_bk_create_booking( $args );
-					if ( $booking_id ) {
-						$order_item->add_meta_data( 'mwb_wc_bk_id', $booking_id, true );
-						$order_item->save_meta_data();
-						$order->add_order_note( sprintf( __( 'A new booking <a href="%s">#%s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );
-					}
-				}
+				// $booking_data = $order_item->get_meta( 'mwb_wc_bk_data' );
+				// $booking_id   = $order_item->get_meta( 'mwb_wc_bk_id' );
+				// if ( ! $booking_id && ! empty( $booking_data ) ) {
+				// 	$booking_id = $this->mwb_wc_bk_create_booking( $args );
+				// 	if ( $booking_id ) {
+				// 		$order_item->add_meta_data( 'mwb_wc_bk_id', $booking_id, true );
+				// 		$order_item->save_meta_data();
+				// 		$order->add_order_note( sprintf( __( 'A new booking <a href="%s">#%s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );
+				// 	}
+				// }
 			}
+		}
+
+		if ( 'booking' === $order_type ) {
+			update_post_meta( $order_id, 'booking_order', 'yes' );
 		}
 	}
 

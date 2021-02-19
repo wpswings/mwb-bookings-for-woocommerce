@@ -31,7 +31,7 @@ $cost_price      = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_custom_p
 	</td>
 </tr>
 <tr class="form-field term-extra-cost-wrap">
-	<th><label for="mwb_booking_ct_costs_multiply_units"><?php esc_html_e( 'Multiply cost by booking units', 'mwb-wc-bk' ); ?></label></th>
+	<th><label for="mwb_booking_ct_costs_multiply_units"><?php esc_html_e( 'Multiply cost by duration', 'mwb-wc-bk' ); ?></label></th>
 	<td>
 		<input type="checkbox" id="mwb_booking_ct_costs_multiply_units" name="mwb_booking_ct_costs_multiply_units" value="yes" <?php checked( 'yes', ! empty( $multiply_unit ) ? $multiply_unit : 'no' ); ?>>
 		<p class="description"><?php esc_html_e( 'Select to multiply the extra added cost by the number of booking units.', 'mwb-wc-bk' ); ?></p>

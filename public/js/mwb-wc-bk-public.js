@@ -96,7 +96,7 @@ function datepicker_check($) {
 	console.log( "+" + min_adv_input + min_dur );
 	var not_allowed_days = mwb_wc_bk_public.not_allowed_days;
 	
-	console.log( mwb_wc_bk_public.not_allowed_days );
+	// console.log( mwb_wc_bk_public.not_allowed_days );
 
 	$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
 
@@ -365,10 +365,28 @@ function booking_price_cal($) {
 		
 		var product_data   = $('#mwb-wc-bk-create-booking-form').attr('product-data');
 		var duration_input = $('#mwb-wc-bk-duration-input');
-		var duration       = duration_input.val();
+		if ( duration_input.length < 1 ){
+			// alert("no duration field");
+			if( mwb_wc_bk_public.product_settings.hasOwnProperty( 'mwb_enable_range_picker' ) && 'yes' == mwb_wc_bk_public.product_settings.mwb_enable_range_picker[0] ) {
+				start_date = $( '#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
+				end_date   = $( '#mwb-wc-bk-date-section #mwb-wc-bk-end-date-input').val();
+
+				date1 = new Date( start_date );
+				date2 = new Date( end_date );
+				
+				time_difference = date2.getTime() - date1.getTime();
+				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+
+				// alert( day_difference );
+				var duration = day_difference;
+			}
+		} else {
+			var duration = duration_input.val();
+		}
+		
 		// alert( duration );
 		product_data       = JSON.parse(product_data);
-		var product_id     = product_data.product_id ;
+		var product_id     = product_data.product_id;
 		var ajax_data = {
 			'action'       : 'booking_price_cal',
 			'nonce'        : mwb_wc_bk_public.nonce,
@@ -507,7 +525,30 @@ function price_cal_func($) {
 
 	var product_data   = $('#mwb-wc-bk-create-booking-form').attr('product-data');
 	var duration_input = $('#mwb-wc-bk-duration-input');
-	var duration       = duration_input.val();
+	if ( duration_input.length < 1 ){
+		// alert("no duration field");
+		if( mwb_wc_bk_public.product_settings.hasOwnProperty( 'mwb_enable_range_picker' ) && 'yes' == mwb_wc_bk_public.product_settings.mwb_enable_range_picker[0] ) {
+			start_date = $( '#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
+			end_date   = $( '#mwb-wc-bk-date-section #mwb-wc-bk-end-date-input').val();
+
+			date1 = new Date( start_date );
+			date2 = new Date( end_date );
+			
+			time_difference = date2.getTime() - date1.getTime();
+			day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+
+			// alert( day_difference );
+			var duration = day_difference;
+		}
+	} else {
+		var duration = duration_input.val();
+		// alert( mwb_wc_bk_public.product_settings.mwb_booking_unit_input[0] );
+		// if( 1 !== mwb_wc_bk_public.product_settings.mwb_booking_unit_input[0] && 'day' == mwb_wc_bk_public.product_settings.mwb_booking_unit_duration[0] ){
+		// 	// alert("okkbhj");
+		// 	var units = mwb_wc_bk_public.product_settings.mwb_booking_unit_input[0];
+		// 	var duration = duration / units;
+		// }
+	}
 	product_data       = JSON.parse(product_data);
 	var product_id     = product_data.product_id ;
 
@@ -541,7 +582,7 @@ function price_cal_func($) {
 		id  = $(this).attr( 'data-id' );
 		inc_service_count[id] = val;
 	});
-	Object.assign( ajax_data, { 'inc_service_count': inc_service_count});
+	Object.assign( ajax_data, { 'inc_service_count': inc_service_count });
 
 	$( '.mwb-wc-bk-add-service-quant' ).each(function(){
 		// alert($(this).val());

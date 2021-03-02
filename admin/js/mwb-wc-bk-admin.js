@@ -17,6 +17,8 @@ jQuery(document).ready( function($) {
 	create_booking_order_select2($);
 	create_booking_product_details($);
 	ct_custom_fields($);
+
+	render_calendar($);
 	
 });
 
@@ -1090,4 +1092,105 @@ function create_booking_product_details($) {
 			}
 		});
 	});
+}
+
+function render_calendar($) {
+
+	var calendarEl = document.getElementById('mwb-wc-bk-calendar');
+	// var calendarEL = $( '#mwb-wc-bk-calendar' )[0];
+	var calendar = new FullCalendar.Calendar(calendarEl, {
+
+		initialView: 'dayGridMonth',
+	//  initialView: 'timeGridWeek',
+	//  timeZone: 'UTC',
+
+		headerToolbar: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+		},
+		
+		navLinks: true, // can click day/week names to navigate views
+    	editable: true,
+     	selectable: true,
+     	selectMirror: true,
+     	nowIndicator: true,
+		// events: [
+		// 	{
+		// 	  title: 'All Day Event',
+		// 	  start: '2021-02-01',
+		// 	},
+		// 	{
+		// 	  title: 'Long Event',
+		// 	  start: '2021-02-07',
+		// 	  end: '2021-02-10'
+		// 	},
+		// 	{
+		// 	  groupId: 999,
+		// 	  title: 'Repeating Event',
+		// 	  start: '2021-02-09T16:00:00'
+		// 	},
+		// 	{
+		// 	  groupId: 999,
+		// 	  title: 'Repeating Event',
+		// 	  start: '2021-02-16T16:00:00'
+		// 	},
+		// 	{
+		// 	  title: 'Conference',
+		// 	  start: '2021-02-11',
+		// 	  end: '2021-02-13'
+		// 	},
+		// 	{
+		// 	  title: 'Meeting',
+		// 	  start: '2021-02-12T10:30:00',
+		// 	  end: '2021-02-12T12:30:00'
+		// 	},
+		// 	{
+		// 	  title: 'Lunch',
+		// 	  start: '2021-02-12T12:00:00'
+		// 	},
+		// 	{
+		// 	  title: 'Meeting',
+		// 	  start: '2021-02-12T14:30:00'
+		// 	},
+		// 	{
+		// 	  title: 'Happy Hour',
+		// 	  start: '2021-02-12T17:30:00'
+		// 	},
+		// 	{
+		// 	  title: 'Dinner',
+		// 	  start: '2021-02-12T20:00:00'
+		// 	},
+		// 	{
+		// 	  title: 'Birthday Party',
+		// 	  start: '2021-02-13T07:00:00'
+		// 	},
+		// 	{
+		// 	  title: 'Click for Google',
+		// 	  url: 'http://google.com/',
+		// 	  start: '2021-02-28'
+		// 	}
+		//   ],
+
+		
+		// events: mwb_booking_obj.ajaxurl,
+		
+		
+		// dateClick  : function() {
+		// 	alert('a day has been clicked!');
+		// }
+		  
+		views: {
+			dayGridMonth: { // name of view
+			//   titleFormat: { month: '2-digit', day: '2-digit', year: 'numeric' }
+			  // other view-specific options here
+			}
+		}
+
+	});
+	
+	calendar.on('dateClick', function(info) {
+		console.log('clicked on ' + info.dateStr);
+	  });
+	calendar.render();
 }

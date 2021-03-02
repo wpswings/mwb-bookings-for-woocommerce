@@ -565,8 +565,8 @@ class Mwb_Wc_Bk_Public {
 		if ( ! $order_items ) {
 			return;
 		}
-
-		$order_type = '';
+		// echo '<pre>'; print_r( $order_items ); echo '</pre>';die("ook");
+		// $order_type = '';
 
 		foreach ( $order_items as $order_item_id => $order_item ) {
 			if ( $order_item->is_type( 'line_item' ) ) {
@@ -574,29 +574,49 @@ class Mwb_Wc_Bk_Public {
 				if ( ! $product || ! ( $product->is_type( 'mwb_booking' ) ) ) {
 					continue;
 				}
-				$order_type = 'booking';
-				// $args = array(
-				// 	'order_id'   => $order_id,
-				// 	'product_id' => $product->get_id(),
-				// 	'status'     => $order->get_status(),
-				// 	'user_id'    => $order->get_user_id(),
-				// );
 
-				// $booking_data = $order_item->get_meta( 'mwb_wc_bk_data' );
-				// $booking_id   = $order_item->get_meta( 'mwb_wc_bk_id' );
-				// if ( ! $booking_id && ! empty( $booking_data ) ) {
-				// 	$booking_id = $this->mwb_wc_bk_create_booking( $args );
-				// 	if ( $booking_id ) {
-				// 		$order_item->add_meta_data( 'mwb_wc_bk_id', $booking_id, true );
-				// 		$order_item->save_meta_data();
-				// 		$order->add_order_note( sprintf( __( 'A new booking <a href="%s">#%s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );
-				// 	}
-				// }
+				// echo '<pre>'; print_r( $order_item_id ); echo '</pre>';
+				// echo '<pre>'; print_r( $order_item->get_meta( 'mwb_wc_bk_data' ) ); echo '</pre>';
+				// $order_type = 'booking';
+				$args = array(
+					'order_id'   => $order_id,
+					'product_id' => $product->get_id(),
+					'status'     => $order->get_status(),
+					'user_id'    => $order->get_user_id(),
+					'order_meta' => $order_item->get_meta( 'mwb_wc_bk_data' ),
+				);
+
+				$booking_data = $order_item->get_meta( 'mwb_wc_bk_data' );
+				$booking_id   = $order_item->get_meta( 'mwb_wc_bk_id' );
+				if ( ! $booking_id && ! empty( $booking_data ) ) {
+					$booking_id = $this->mwb_wc_bk_create_booking( $args );
+					if ( $booking_id ) {
+						$order_item->add_meta_data( 'mwb_wc_bk_id', $booking_id, true );
+						$this->save_booking_order_data( $order_id, $booking_id );
+						$order_item->save_meta_data();
+						$order->add_order_note( sprintf( __( 'A new booking <a href="%s">#%s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );
+					}
+				}
 			}
 		}
 
-		if ( 'booking' === $order_type ) {
-			update_post_meta( $order_id, 'booking_order', 'yes' );
+		// if ( 'booking' === $order_type ) {
+		// 	update_post_meta( $order_id, 'booking_order', 'yes' );
+		// }
+	}
+
+	/**
+	 * Update Order meta to the booking post meta.
+	 *
+	 * @param [int]  $order_id Order ID.
+	 * @param [type] $booking_id Booking ID after inserting post.
+	 * @return void
+	 */
+	public function save_booking_order_data( $order_id, $booking_id ) {
+
+		$meta_data = get_post_meta( $order_id );
+		foreach ( $meta_data as $key => $value ) {
+			update_post_meta( $booking_id, $key, $value[0] );
 		}
 	}
 
@@ -608,6 +628,8 @@ class Mwb_Wc_Bk_Public {
 	 * @return number $booking_id
 	 */
 	public function mwb_wc_bk_create_booking( $args ) {
+
+		echo '<pre>'; print_r( $args ); echo '</pre>';die("ok");
 		$title      = 'Booking for order #' . $args['order_id'];
 		$booking_id = wp_insert_post(
 			array(

@@ -87,7 +87,7 @@ class Mwb_Wc_Bk_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
-		// wp_enqueue_style( 'js-calender-css', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.css', array(), '5.5.0', 'all' );
+		wp_enqueue_style( 'js-calendar-css', plugin_dir_url( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.css', array(), '5.5.0', 'all' );
 
 	}
 
@@ -101,7 +101,7 @@ class Mwb_Wc_Bk_Admin {
 		//wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ) );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
-		// wp_enqueue_script( 'js-calendar', plugin_dir_path( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.js', array( 'jquery' ), '5.5.0', false );
+		wp_enqueue_script( 'js-calendar', plugin_dir_url( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.js', array(), '5.5.0', false );
 		wp_localize_script(
 			$this->plugin_name,
 			'mwb_booking_obj',
@@ -839,15 +839,16 @@ class Mwb_Wc_Bk_Admin {
 
 		switch ( $columns ) {
 			case 'booking_title':
-				echo "title";
+				echo 'title';
+				// print_r( get_post_meta( $post_id ) );
 				break;
 			case 'services':
-				echo "services";
+				echo 'services';
 				break;
 			case 'people':
 				echo 'people';
 				break;
-				
+
 		}
 	}
 
@@ -856,8 +857,8 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function remove_meta_box_cpt() {
 
-		$screen    = get_current_screen();
-		$screen_id = $screen ? $screen->id : '';
+		// $screen    = get_current_screen();
+		// $screen_id = $screen ? $screen->id : '';
 	//	remove_meta_box( 'postcustom', 'shop_order', 'normal' );
 		remove_meta_box( 'woocommerce-order-downloads', 'mwb_cpt_booking', 'normal' );
 		remove_meta_box( 'woocommerce-order-items', 'mwb_cpt_booking', 'normal' );
@@ -1045,7 +1046,21 @@ class Mwb_Wc_Bk_Admin {
 	 * @return void
 	 */
 	public function menu_page_calendar() {
-		echo '<div id="calendar"></div>';
+
+		global $woocommerce, $post, $order;
+
+		$order_id = $post->ID;
+		$order = new WC_Order( $order_id );
+
+		echo '<pre>'; print_r( $order->get_order_number() ); echo '</pre>';
+		$args = array(
+			'numberposts' => -1,
+			'post_type'   => 'mwb_cpt_booking',
+			'post_status' => 'wc-completed',
+		);
+		$bookings = get_posts( $args );
+		echo '<pre>'; print_r( $bookings ); echo '</pre>';die("bookings");
+		echo '<div id="mwb-wc-bk-calendar"></div>';
 	}
 
 	/**

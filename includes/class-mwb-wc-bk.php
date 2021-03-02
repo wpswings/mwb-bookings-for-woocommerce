@@ -238,8 +238,9 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_create_booking_product_details', $plugin_admin, 'create_booking_product_details' );
 
-		$this->loader->add_filter( 'manage_mwb_cpt_booking_posts_columns', $plugin_admin, 'mwb_wc_bk_booking_columns' );
+		// $this->loader->add_filter( 'manage_mwb_cpt_booking_posts_columns', $plugin_admin, 'mwb_wc_bk_booking_columns' );
 
+		// $this->loader->add_filter( 'manage_mwb_cpt_booking_posts_custom_column', $plugin_admin, 'mwb_wc_bk_manage_booking_columns', 10, 2 );
 	}
 
 	/**

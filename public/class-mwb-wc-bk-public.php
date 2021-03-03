@@ -211,6 +211,7 @@ class Mwb_Wc_Bk_Public {
 				}
 			}
 		}
+
 		$product    = wc_get_product( $product_id );
 		$price_html = wc_price( $duration_cost );
 		echo wp_json_encode(
@@ -417,6 +418,34 @@ class Mwb_Wc_Bk_Public {
 	}
 
 	/**
+	 * Change button text on product pages
+	 *
+	 * @param [string] $product Product Add to cart button text.
+	 * @return string
+	 */
+	public function mwb_wc_bk_add_to_cart_text( $product ) {
+
+		// echo '<pre>'; print_r( $product ); echo '</pre>';
+		// if ( $product && $product->is_type( 'mwb_booking' ) ) {
+		// 	return 'Book now';
+		// }
+		// return 'Add To Cart';
+
+		return 'Book now';
+	}
+
+	/**
+	 * Redirect add to cart to Checkout page.
+	 *
+	 * @param [string] $url for Cart page.
+	 * @return string
+	 */
+	public function mwb_wc_bk_skip_cart_redirect_checkout( $url ) {
+
+		return wc_get_checkout_url();
+	}
+
+	/**
 	 * Display the added product data in the cart.
 	 *
 	 * @param array $item_data      Array containing additional data for our cart item.
@@ -496,9 +525,9 @@ class Mwb_Wc_Bk_Public {
 				);
 			}
 			if ( ! empty( $booking_data['add_service'] ) && is_array( $booking_data['add_service'] ) ) {
-
+				$str = '';
 				foreach ( $booking_data['add_service'] as $name => $count ) {
-					$str = $name . '-' . $count . ',';
+					$str .= $name . '-' . $count . ', ';
 				}
 				$booking_item_data[ 'mwb_wc_bk_' . $name ] = array(
 					'key'     => 'Additional Booking services',
@@ -516,6 +545,78 @@ class Mwb_Wc_Bk_Public {
 		// // die( "kjbh" );
 
 		return $item_data;
+	}
+
+	/**
+	 * Empty the cart before Add Booking.
+	 *
+	 * @param [type] $passed
+	 * @param [int] $product_id ID of the product.
+	 * @param [type] $quantity 
+	 * @return void
+	 */
+	public function remove_cart_item_before_add_to_cart( $passed, $product_id, $quantity ) {
+
+		if ( ! WC()->cart->is_empty() ) {
+			WC()->cart->empty_cart();
+		}
+		return $passed;
+	}
+
+	public function mwb_wc_bk_single_cart_booking( $cart ) {
+
+		// echo '<pre>'; print_r( $cart ); echo '</pre>';die("cart");
+		// echo count( $cart );die("ok");
+
+		// $count      = 0;
+		// $cart_count = count( $cart );
+		// if ( $cart_count > 1 ) {
+		// 	// return $cart[ $cart_count - 1 ];
+		// 	foreach ( $cart as $cart_hash => $cart_data ) {
+		// 		$count ++;
+		// 		if ( $cart_count > ( $count ) ) {
+		// 			continue;
+		// 		} else {
+		// 			return array( $cart_hash => $cart_data );
+		// 		}
+		// 	}
+		// } else {
+		// 	return $cart;
+		// }
+
+		$cart_count = count( $cart );
+		if ( $cart_count > 1 ) {
+
+			$last_key = array_key_last( $cart );
+			$new_cart = array( $last_key => $cart[ $last_key ] );
+
+			return $new_cart;
+		}
+		return $cart;
+
+	}
+
+	public function mwb_change_booking_product_quantity( $cart ) {
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+
+		// if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) {
+		// 	return;
+		// }
+
+		$new_qty = 1;
+
+		// Checking cart items.
+		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
+
+			$product_id = $cart_item['data']->get_id();
+			$product    = wc_get_product( $product_id );
+
+			if ( $product && $product->is_type( 'mwb_booking' ) && $cart_item['quantity'] != $new_qty ) {
+				$cart->set_quantity( $cart_item_key, $new_qty ); // Change quantity.
+			}
+		}
 	}
 
 	/**
@@ -615,13 +716,14 @@ class Mwb_Wc_Bk_Public {
 	public function save_booking_order_data( $order_id, $booking_id ) {
 
 		$meta_data = get_post_meta( $order_id );
+		// echo '<pre>'; print_r( $meta_data ); echo '</pre>';die("save_booking");
 		foreach ( $meta_data as $key => $value ) {
 			update_post_meta( $booking_id, $key, $value[0] );
 		}
 	}
 
 	/**
-	 * Fetching the Order ID after inserting the post.
+	 * Fetching the Order(Booking Order) ID after inserting the post.
 	 *
 	 * @param array $args Arguments.
 	 *
@@ -629,7 +731,7 @@ class Mwb_Wc_Bk_Public {
 	 */
 	public function mwb_wc_bk_create_booking( $args ) {
 
-		echo '<pre>'; print_r( $args ); echo '</pre>';die("ok");
+		// echo '<pre>'; print_r( $args ); echo '</pre>';die("ok");
 		$title      = 'Booking for order #' . $args['order_id'];
 		$booking_id = wp_insert_post(
 			array(
@@ -637,7 +739,9 @@ class Mwb_Wc_Bk_Public {
 				'post_title' => $title,
 			)
 		);
+		
 		update_post_meta( $booking_id, '_customer_user', $args['user_id'] );
+		update_post_meta( $booking_id, 'mwb_meta_data', $args['order_meta'] );
 		return $booking_id;
 	}
 

@@ -282,6 +282,16 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_show_booking_total', $plugin_public, 'show_booking_total' );
 
+		// $this->loader->add_filter( 'woocommerce_get_cart_contents', $plugin_public, 'mwb_wc_bk_single_cart_booking' );
+
+		$this->loader->add_filter( 'woocommerce_add_to_cart_validation', $plugin_public, 'remove_cart_item_before_add_to_cart', 20, 3 );
+
+		$this->loader->add_filter( 'woocommerce_product_single_add_to_cart_text', $plugin_public, 'mwb_wc_bk_add_to_cart_text', 20, 3 );
+
+		$this->loader->add_filter( 'woocommerce_add_to_cart_redirect', $plugin_public, 'mwb_wc_bk_skip_cart_redirect_checkout', 20, 3 );
+
+		$this->loader->add_filter( 'woocommerce_before_calculate_totals', $plugin_public, 'mwb_change_booking_product_quantity', 20, 3 );
+
 	}
 
 	/**

@@ -1049,17 +1049,26 @@ class Mwb_Wc_Bk_Admin {
 
 		global $woocommerce, $post, $order;
 
-		$order_id = $post->ID;
-		$order = new WC_Order( $order_id );
+		// $order_id = $post->ID;
+		// $order = new WC_Order( $order_id );
 
-		echo '<pre>'; print_r( $order->get_order_number() ); echo '</pre>';
+		// echo '<pre>'; print_r( $order->get_order_number() ); echo '</pre>';
 		$args = array(
 			'numberposts' => -1,
 			'post_type'   => 'mwb_cpt_booking',
 			'post_status' => 'wc-completed',
 		);
 		$bookings = get_posts( $args );
-		echo '<pre>'; print_r( $bookings ); echo '</pre>';die("bookings");
+		// echo '<pre>'; print_r( $bookings ); echo '</pre>';die("bookings");
+
+		foreach ( $bookings as $booking => $booking_obj ) {
+			$b_id      = $booking_obj->ID;
+			$meta_data = get_post_meta( $b_id );
+			echo '<pre>'; print_r( $meta_data ); echo '</pre>';
+		}
+
+		// $meta_data = get_post_meta( $post->ID, 'mwb_meta_data' );
+
 		echo '<div id="mwb-wc-bk-calendar"></div>';
 	}
 

@@ -18,7 +18,7 @@ jQuery(document).ready( function($) {
 	create_booking_product_details($);
 	ct_custom_fields($);
 
-	render_calendar($);
+	// render_calendar($);
 	
 });
 
@@ -1180,12 +1180,12 @@ function render_calendar($) {
 		// 	alert('a day has been clicked!');
 		// }
 		  
-		views: {
-			dayGridMonth: { // name of view
-			//   titleFormat: { month: '2-digit', day: '2-digit', year: 'numeric' }
-			  // other view-specific options here
-			}
-		}
+		// views: {
+		// 	dayGridMonth: { // name of view
+		// 	//   titleFormat: { month: '2-digit', day: '2-digit', year: 'numeric' }
+		// 	  // other view-specific options here
+		// 	}
+		// }
 
 	});
 	

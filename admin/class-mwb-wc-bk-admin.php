@@ -102,12 +102,15 @@ class Mwb_Wc_Bk_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( 'js-calendar', plugin_dir_url( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.js', array(), '5.5.0', false );
+		$current_screen = get_current_screen();
+		// $current_screen_id = $curent_screen->id;
 		wp_localize_script(
 			$this->plugin_name,
 			'mwb_booking_obj',
 			array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'ajax-nonce' ),
+				'ajaxurl'   => admin_url( 'admin-ajax.php' ),
+				'nonce'     => wp_create_nonce( 'ajax-nonce' ),
+				'screen_id' => $current_screen->id,
 			)
 		);
 
@@ -1060,16 +1063,109 @@ class Mwb_Wc_Bk_Admin {
 		);
 		$bookings = get_posts( $args );
 		// echo '<pre>'; print_r( $bookings ); echo '</pre>';die("bookings");
-
+		$events = array();
 		foreach ( $bookings as $booking => $booking_obj ) {
 			$b_id      = $booking_obj->ID;
-			$meta_data = get_post_meta( $b_id );
-			echo '<pre>'; print_r( $meta_data ); echo '</pre>';
-		}
+			// $meta_data = get_post_meta( $b_id );
+			$book      = get_post( $b_id );
 
+			$meta_data = get_post_meta( $b_id, 'mwb_meta_data', true );
+			// echo '<pre>'; print_r( $meta_data ); echo '</pre>';
+			$id = 0;$product = '';
+			if ( isset( $meta_data['product_id'] ) ) {
+				$id      = $meta_data['product_id'];
+				$product = wc_get_product( $meta_data['product_id'] );
+			} else {
+				continue;
+			}
+			// echo '<pre>'; print_r( $meta_data ); echo '</pre>';die("ijudsfh");
+			// $date = str_replace( '/', '-', $meta_data['start_date'] );
+			// $date = date_create( $date );
+			// $date = date_format( $date, 'Y/-/d' );
+			// $originalDate = "2010-03-21";
+			$date = gmdate( 'Y-m-d', strtotime( $meta_data['start_date'] ) );
+			$events[] = array(
+				'id'    => $b_id,
+				'title' => $product->get_name(),
+				'start' => $date,
+				// 'end'   => isset( $meta_data['end_date'] ) ? $meta_data['end_date'] : $meta_data['start_date'],
+			);
+		}
+		echo '<pre>'; print_r( $events ); echo '</pre>';
 		// $meta_data = get_post_meta( $post->ID, 'mwb_meta_data' );
 
-		echo '<div id="mwb-wc-bk-calendar"></div>';
+		echo '<div id="mwb-wc-bk-calendar" ></div>';
+	}
+
+	/**
+	 * Set events
+	 *
+	 * @return void
+	 */
+	public function mwb_wc_bk_get_events() {
+
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+
+		if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+			die( 'Nonce value cannot be verified' );
+		}
+
+		if ( isset( $_POST['events'] ) ) {
+			$args = array(
+				'numberposts' => -1,
+				'post_type'   => 'mwb_cpt_booking',
+				'post_status' => 'wc-completed',
+			);
+			$bookings = get_posts( $args );
+			$events   = array();
+			foreach ( $bookings as $booking => $booking_obj ) {
+				$b_id = $booking_obj->ID;
+				$book = get_post( $b_id );
+
+				$meta_data = get_post_meta( $b_id, 'mwb_meta_data', true );
+				$id        = 0;
+				$product   = '';
+				if ( isset( $meta_data['product_id'] ) ) {
+					$id      = $meta_data['product_id'];
+					$product = wc_get_product( $id );
+				} else {
+					continue;
+				}
+				// echo '<pre>'; print_r( $meta_data ); echo '</pre>';
+				// die("ijudsfh");
+
+				// $date = str_replace( '/', '-', $meta_data['start_date'] );
+				// $date = date_create( $date );
+				// $date = date_format( $date, 'Y/m/d' );
+				$date = gmdate( 'Y-m-d', strtotime( $meta_data['start_date'] ) );
+
+				$arr['id']    = $b_id;
+				$arr['title'] = $product->get_name();
+				$arr['start'] = $date;
+				if ( ! empty( $meta_data['end_date'] ) ) {
+					$end_date   = gmdate( 'Y-m-d', strtotime( $meta_data['end_date'] ) );
+					$arr['end'] = $end_date;
+				} else {
+					if ( ! empty( $meta_data['start_timestamp'] ) && ! empty( $meta_data['end_timestamp'] ) ) {
+						$duration = $meta_data['end_timestamp'] - $meta_data['start_timestamp'];
+						$duration = date( 'H:i:s', $duration );
+						// date()
+					}
+				}
+				// echo '<pre>'; print_r( $duration ); echo '</pre>';
+				// if (  )
+
+				$events[] = array(
+					'id'    => $b_id,
+					'title' => $product->get_name(),
+					'start' => $date,
+					// 'end'   => isset( $meta_data['end_date'] ) ? $meta_data['end_date'] : $meta_data['start_date'],
+				);
+			}
+		}
+		echo json_encode( $events );
+		// echo 'khbsd';
+		wp_die();
 	}
 
 	/**

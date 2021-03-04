@@ -1,5 +1,7 @@
 var availability_count = 0;
 var cost_count = 0;
+var booking_events;
+var screen_id = mwb_booking_obj.screen_id;
 jQuery(document).ready( function($) {
 	availability_not_allowed_days_select2($);
 	selected_added_cost_select2($);
@@ -18,9 +20,37 @@ jQuery(document).ready( function($) {
 	create_booking_product_details($);
 	ct_custom_fields($);
 
-	// render_calendar($);
+	if ( screen_id == 'mwb_cpt_booking_page_calendar' ) {
+		get_events($);
+		render_calendar( $, booking_events );
+	}
+	
 	
 });
+
+function get_events($) {
+
+	$.ajax({
+		url: mwb_booking_obj.ajaxurl,
+		type: 'POST',
+
+		data: {
+			'action'  : 'mwb_wc_bk_get_events',
+			'nonce'   : mwb_booking_obj.nonce,
+			'events'  : 'events',
+		},
+		success: function( data ) {
+			// console.log( data );
+			booking_events = data;
+			// console.log( booking_events );
+		},
+		async: false
+	});
+	// window.onload = function () {
+	// 	alert("hi");
+		
+	// }
+}
 
 function availability_not_allowed_days_select2($) {
 	if( $('#mwb_booking_not_allowed_days').length > 0 )
@@ -1093,8 +1123,12 @@ function create_booking_product_details($) {
 		});
 	});
 }
+// console.log( booking_events );
+function render_calendar($ , booking_events) {
+	// console.table(booking_events);
+	// var booking_data = $('#mwb-wc-bk-calendar').attr('booking-data');
 
-function render_calendar($) {
+	var booking_events = JSON.parse(booking_events);
 
 	var calendarEl = document.getElementById('mwb-wc-bk-calendar');
 	// var calendarEL = $( '#mwb-wc-bk-calendar' )[0];
@@ -1105,9 +1139,9 @@ function render_calendar($) {
 	//  timeZone: 'UTC',
 
 		headerToolbar: {
-			left: 'prev,next today',
+			left  : 'prev,next today',
 			center: 'title',
-			right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+			right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		},
 		
 		navLinks: true, // can click day/week names to navigate views
@@ -1115,6 +1149,7 @@ function render_calendar($) {
      	selectable: true,
      	selectMirror: true,
      	nowIndicator: true,
+		events : booking_events,
 		// events: [
 		// 	{
 		// 	  title: 'All Day Event',

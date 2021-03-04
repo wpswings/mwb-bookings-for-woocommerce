@@ -241,6 +241,8 @@ class Mwb_Wc_Bk {
 		// $this->loader->add_filter( 'manage_mwb_cpt_booking_posts_columns', $plugin_admin, 'mwb_wc_bk_booking_columns' );
 
 		// $this->loader->add_filter( 'manage_mwb_cpt_booking_posts_custom_column', $plugin_admin, 'mwb_wc_bk_manage_booking_columns', 10, 2 );
+
+		$this->loader->add_action( 'wp_ajax_mwb_wc_bk_get_events', $plugin_admin, 'mwb_wc_bk_get_events' );
 	}
 
 	/**
@@ -291,6 +293,7 @@ class Mwb_Wc_Bk {
 		$this->loader->add_filter( 'woocommerce_add_to_cart_redirect', $plugin_public, 'mwb_wc_bk_skip_cart_redirect_checkout', 20, 3 );
 
 		$this->loader->add_filter( 'woocommerce_before_calculate_totals', $plugin_public, 'mwb_change_booking_product_quantity', 20, 3 );
+
 
 	}
 

@@ -461,8 +461,9 @@ class Mwb_Wc_Bk_Public {
 		$product_id = isset( $cart_item_data['product_id'] ) ? $cart_item_data['product_id'] : 0;
 		$product    = wc_get_product( $product_id );
 		if ( $product && $product->is_type( 'mwb_booking' ) ) {
-			$booking_data      = $cart_item_data['mwb_wc_bk_data'];
-			$booking_item_data = array();
+			$booking_data               = $cart_item_data['mwb_wc_bk_data'];
+			// $booking_data['product_id'] = $cart_item_data['product_id'];
+			$booking_item_data          = array();
 
 			// $booking_item_data['mwb_wc_bk_duration'] = array(
 			// 	'key'     => 'duration',
@@ -679,12 +680,15 @@ class Mwb_Wc_Bk_Public {
 				// echo '<pre>'; print_r( $order_item_id ); echo '</pre>';
 				// echo '<pre>'; print_r( $order_item->get_meta( 'mwb_wc_bk_data' ) ); echo '</pre>';
 				// $order_type = 'booking';
+
+				$order_meta               = $order_item->get_meta( 'mwb_wc_bk_data' );
+				$order_meta['product_id'] = $product->get_id();
 				$args = array(
 					'order_id'   => $order_id,
 					'product_id' => $product->get_id(),
 					'status'     => $order->get_status(),
 					'user_id'    => $order->get_user_id(),
-					'order_meta' => $order_item->get_meta( 'mwb_wc_bk_data' ),
+					'order_meta' => $order_meta,
 				);
 
 				$booking_data = $order_item->get_meta( 'mwb_wc_bk_data' );

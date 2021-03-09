@@ -241,16 +241,11 @@ class Mwb_Wc_Bk_Admin {
 		foreach ( $this->get_product_settings() as $key => $value ) {
 			if ( is_array( $_POST[ $key ] ) ) {
 				$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default'];
-				// echo $key . "->";
-				// print_r( $posted_data );
-				// echo '<br>';
+				
 			} else {
 				$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default'];
-				// echo $key. "->";
-				// print_r( $posted_data );
-				// echo '<br>';
+			
 			}
-			//print_r( $_POST[ $key ] );
 			update_post_meta( $post_id, $key, $posted_data );
 		}
 		$product = wc_get_product( $post_id );
@@ -292,7 +287,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_base_cost_multiply'         => array( 'default' => 'no' ),
 			'mwb_booking_extra_cost_input'           => array( 'default' => '' ),
 			'mwb_booking_extra_cost_people_input'    => array( 'default' => '' ),
-			'mwb_booking_cost_discount_type'      => array( 'default' => '' ),
+			'mwb_booking_cost_discount_type'         => array( 'default' => '' ),
 			'mwb_booking_monthly_discount_input'     => array( 'default' => '' ),
 			'mwb_booking_weekly_discount_input'      => array( 'default' => '' ),
 			'mwb_booking_custom_days_discount_input' => array( 'default' => '' ),
@@ -398,7 +393,7 @@ class Mwb_Wc_Bk_Admin {
 		// print_r( $arr );
 		// echo "</pre>";
 
-		apply_filters( 'mwb_global_cost_condotions', $arr );
+		$arr = apply_filters( 'mwb_global_cost_condotions', $arr, $terms );
 		return $arr;
 	}
 
@@ -702,11 +697,14 @@ class Mwb_Wc_Bk_Admin {
 	 * @return array
 	 */
 	public function get_booking_duration_options() {
-		return array(
-			'month'  => __( 'Month(s)', 'mwb-wc-bk' ),
-			'day'    => __( 'Day(s)', 'mwb-wc-bk' ),
-			'hour'   => __( 'Hour(s)', 'mwb-wc-bk' ),
-			'minute' => __( 'Minute(s)', 'mwb-wc-bk' ),
+		return apply_filters(
+			'mwb_wc_bk_duration_options',
+			array(
+				'month'  => __( 'Month(s)', 'mwb-wc-bk' ),
+				'day'    => __( 'Day(s)', 'mwb-wc-bk' ),
+				'hour'   => __( 'Hour(s)', 'mwb-wc-bk' ),
+				'minute' => __( 'Minute(s)', 'mwb-wc-bk' ),
+			)
 		);
 	}
 
@@ -1521,5 +1519,109 @@ class Mwb_Wc_Bk_Admin {
 		update_option( 'mwb_global_cost_rules', $cost_rules );
 	}
 
+	/**
+	 * @param array $emails
+	 *
+	 * @return array
+	 */
+	public function register_email( $emails ) {
+		require_once MWB_WC_BK_BASEPATH . 'includes/class-wc-booking-order.php';
+
+		$emails['WC_Customer_Cancel_Order'] = new WC_Booking_Order();
+
+		return $emails;
+	}
+
+	// /**
+	//  * Function to set gmail as SMTP
+	//  *
+	//  * @param [type] $phpmailer is the object of PHPmailer class.
+	//  */
+	// public function phpmailer_gmail_setup( $phpmailer ) {
+	// 	$phpmailer->isSMTP();
+	// 	$phpmailer->Host       = 'smtp.gmail.com';
+	// 	$phpmailer->SMTPAuth   = true; // Ask it to use authenticate using the Username and Password properties.
+	// 	$phpmailer->Port       = 25;
+	// 	$phpmailer->Username   = 'brijmohan11.1996@gmail.com';
+	// 	$phpmailer->Password   = '';
+	// 	$phpmailer->SMTPSecure = 'tls'; // Choose 'ssl' for SMTPS on port 465, or 'tls' for SMTP+STARTTLS on port 25 or 587.
+
+	// }
+	// // add_action( 'phpmailer_init', 'phpmailer_gmail_setup' );
+
+	/**
+	 * Defining Booking Statuses
+	 *
+	 * @return array
+	 */
+	public function mwb_booking_status() {
+
+		$booking_status = array(
+			'wc-booking-paid'         => __( 'Paid', '' ),
+			'wc-booking-unpaid'       => __( 'Unpaid', '' ),
+			'wc-booking-confirmation' => __( 'Confirmation Required', '' ),
+			'wc-booking-cancelled'    => __( 'Cancelled', '' ),
+			'wc-booking-confirmed'    => __( 'Confirmed', '' ),
+		);
+		return $booking_status;
+	}
+
+	/**
+	 * Add 'Booking Complete' post status.
+	 */
+	public function mwb_booking_custom_post_status() {
+
+		// echo '<pre>'; print_r( $_GET['post'] ); echo '</pre>';die("post");
+		if ( isset( $_GET['post'] ) ) {
+			$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
+			if ( 'mwb_cpt_booking' === $p->post_type ) {
+				$statuses = $this->mwb_booking_status();
+				$status   = array(
+					'wc-booking-paid'         => _nx_noop( 'Paid (%s)', 'Paid (%s)', 'Booking status', '' ),
+					'wc-booking-unpaid'       => _nx_noop( 'Unpaid (%s)', 'Unpaid (%s)', 'Booking status', '' ),
+					'wc-booking-confirmation' => _nx_noop( 'Confirmation required (%s)', 'Confirmation required (%s)', 'Booking status', '' ),
+					'wc-booking-cancelled'    => _nx_noop( 'Cancelled (%s)', 'Cancelled (%s)', 'Booking status', '' ),
+					'wc-booking-confirmed'    => _nx_noop( 'Confirmed (%s)', 'Confirmed (%s)', 'Booking status', '' ),
+				);
+				foreach ( $statuses as $status => $label ) {
+					register_post_status(
+						$status,
+						array(
+							'label'                     => $label,
+							'public'                    => true,
+							'exclude_from_search'       => false,
+							'show_in_admin_all_list'    => true,
+							'show_in_admin_status_list' => true,
+							// 'label_count'               => _n_noop( 'Awaiting shipment (%s)', 'Awaiting shipment (%s)' )
+						)
+					);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Show Booking Statuses on the order page
+	 *
+	 * @param [type] $order_status
+	 * @return void
+	 */
+	public function mwb_booking_show_status( $order_status ) {
+
+		// echo '<pre>'; print_r( $order_status ); echo '</pre>'; die("status");
+		if ( isset( $_GET['post'] ) ) {
+			$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
+			if ( 'mwb_cpt_booking' === $p->post_type ) {
+				$order_status                            = array();
+				$order_status['wc-booking-paid']         = esc_html__( 'Paid', '' );
+				$order_status['wc-booking-unpaid']       = esc_html__( 'Unpaid', '' );
+				$order_status['wc-booking-confirmation'] = esc_html__( 'Confirmation Required', '' );
+				$order_status['wc-booking-cancelled']    = esc_html__( 'Cancelled', '' );
+				$order_status['wc-booking-completed']    = esc_html__( 'Completed', '' );
+
+			}
+		}
+		return $order_status;
+	}
 
 }

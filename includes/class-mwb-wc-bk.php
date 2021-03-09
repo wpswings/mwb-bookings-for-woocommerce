@@ -128,6 +128,11 @@ class Mwb_Wc_Bk {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-booking-global-functions.php';
 
 		/**
+		 * The class responsible for defining Availability functions.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-wc-bk-availability-check.php';
+
+		/**
 		 * The class responsible for defining Booking and Booking product.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-woocommerce-booking.php';
@@ -243,6 +248,12 @@ class Mwb_Wc_Bk {
 		// $this->loader->add_filter( 'manage_mwb_cpt_booking_posts_custom_column', $plugin_admin, 'mwb_wc_bk_manage_booking_columns', 10, 2 );
 
 		$this->loader->add_action( 'wp_ajax_mwb_wc_bk_get_events', $plugin_admin, 'mwb_wc_bk_get_events' );
+
+		$this->loader->add_filter( 'woocommerce_email_classes', $plugin_admin, 'register_email', 90, 1 );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_booking_custom_post_status' );
+
+		$this->loader->add_action( 'wc_order_statuses', $plugin_admin, 'mwb_booking_show_status' );
 	}
 
 	/**
@@ -293,7 +304,6 @@ class Mwb_Wc_Bk {
 		$this->loader->add_filter( 'woocommerce_add_to_cart_redirect', $plugin_public, 'mwb_wc_bk_skip_cart_redirect_checkout', 20, 3 );
 
 		$this->loader->add_filter( 'woocommerce_before_calculate_totals', $plugin_public, 'mwb_change_booking_product_quantity', 20, 3 );
-
 
 	}
 

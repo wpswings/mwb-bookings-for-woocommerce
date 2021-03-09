@@ -322,12 +322,23 @@ function product_general_settings_js($) {
 
 	$( '#mwb_booking_general_data #mwb_booking_unit input' ).bind( 'keyup mouseup', function(){
 		var duration = $( '#mwb_booking_general_data #mwb_booking_unit_duration' ).val();
-		if( $(this).val() == 1 && duration == 'day' ) {
+		var unit_select = $( '#mwb_booking_general_data #mwb_booking_unit_select' ).val();
+		if( $(this).val() == 1 && duration == 'day' && unit_select == 'customer' ) {
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', false );
 			$('#mwb_booking_general_data #mwb_calendar_range').show();
+
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).closest( 'li' ).show();
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', false );
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).show();
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', false );
 		} else {
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', true );
 			$('#mwb_booking_general_data #mwb_calendar_range').hide();
+
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).closest( 'li' ).hide();
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', true );
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).hide();
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', true );
 		}
 	});
 
@@ -344,36 +355,101 @@ function product_general_settings_js($) {
 	if ( duration == 'day' && unit_select == 'customer' && duration_input == 1 ) {
 		$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', false );
 		$('#mwb_booking_general_data #mwb_calendar_range').show();
+
+		$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).closest( 'li' ).show();
+		$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', false );
+		$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).show();
+		$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', false );
 	} else {
 		$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', true );
 		$('#mwb_booking_general_data #mwb_calendar_range').hide();
+
+		$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).closest( 'li' ).hide();
+		$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', true );
+		$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).hide();
+		$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', true );
+	}
+	if ( unit_select == 'fixed' ) {
+		$( '#mwb_booking_min_duration' ).closest( 'p' ).hide();
+		$( '#mwb_booking_min_duration' ).prop( 'disabled', true );
+
+		$( '#mwb_booking_max_duration' ).closest( 'p' ).hide();
+		$( '#mwb_booking_max_duration' ).prop( 'disabled', true );
+	} else {
+		$( '#mwb_booking_min_duration' ).closest( 'p' ).show();
+		$( '#mwb_booking_min_duration' ).prop( 'disabled', false );
+
+		$( '#mwb_booking_max_duration' ).closest( 'p' ).show();
+		$( '#mwb_booking_max_duration' ).prop( 'disabled', false );
 	}
 	
 	$( '#mwb_booking_general_data' ).on( 'change', '#mwb_booking_unit_select', function(){
 		var duration = $( '#mwb_booking_general_data #mwb_booking_unit_duration' ).val();
 		var duration_input = $( '#mwb_booking_general_data #mwb_booking_unit_input' ).val();
 		if ( duration == 'day' && $(this).val() == 'customer' && duration_input == 1 ) {
+			
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', false );
 			$('#mwb_booking_general_data #mwb_calendar_range').show();
-			alert(duration + " " + unit_select);
+
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).closest( 'li' ).show();
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', false );
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).show();
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', false );
+
+			// alert(duration + " " + unit_select);
+
 		} else {
+			
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', true );
 			$('#mwb_booking_general_data #mwb_calendar_range').hide();
-			alert(duration + " " + unit_select);
+
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).closest( 'li' ).hide();
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', true );
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).hide();
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', true );
+			// alert(duration + " " + unit_select);
+
 		}
+
+		if ( $(this).val() == 'fixed' ) {
+			$( '#mwb_booking_min_duration' ).closest( 'p' ).hide();
+			$( '#mwb_booking_min_duration' ).prop( 'disabled', true );
+
+			$( '#mwb_booking_max_duration' ).closest( 'p' ).hide();
+			$( '#mwb_booking_max_duration' ).prop( 'disabled', true );
+		} else {
+			$( '#mwb_booking_min_duration' ).closest( 'p' ).show();
+			$( '#mwb_booking_min_duration' ).prop( 'disabled', false );
+			
+			$( '#mwb_booking_max_duration' ).closest( 'p' ).show();
+			$( '#mwb_booking_max_duration' ).prop( 'disabled', false );
+		}
+
 	});
 
 	$( '#mwb_booking_general_data' ).on( 'change', '#mwb_booking_unit_duration', function(){
 		var duration = $(this).val();
 		var unit_select = $( '#mwb_booking_general_data #mwb_booking_unit_select' ).val()
+		var duration_input = $( '#mwb_booking_general_data #mwb_booking_unit_input' ).val();
 		if ( duration == 'day' && unit_select == 'customer' && duration_input == 1 ) {
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', false );
 			$('#mwb_booking_general_data #mwb_calendar_range').show();
-			alert(duration + " " + unit_select);
+
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).closest( 'li' ).show();
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', false );
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).show();
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', false );
+			// alert(duration + " " + unit_select);
+			// alert("working");
 		} else {
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', true );
 			$('#mwb_booking_general_data #mwb_calendar_range').hide();
-			alert(duration + " " + unit_select);
+
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).closest( 'li' ).hide();
+			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', true );
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).hide();
+			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', true );
+			// alert(duration + " " + unit_select);
 		}
 		
 		switch( duration ) {

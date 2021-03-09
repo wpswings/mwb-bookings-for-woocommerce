@@ -27,10 +27,7 @@
 					<?php
 					if ( ! empty( $this->setting_fields['mwb_booking_services_select'] ) ) {
 						$selected_services = is_array( $this->setting_fields['mwb_booking_services_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_services_select'] ) : null;
-						// echo "<pre>";
-						// print_r( $selected_services );
-						// echo "</pre>";
-						foreach ( $selected_services as $service_id ) {
+						foreach ( apply_filters( 'mwb_wc_bk_services_select', $selected_services ) as $service_id ) {
 							$service_name = get_term( $service_id )->name;
 							?>
 							<option value="<?php echo esc_html( $service_id ); ?>" selected="selected"><?php echo( esc_html( $service_name ) . '(#' . esc_html( $service_id ) . ')' ); ?></option>
@@ -42,19 +39,19 @@
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Add services you want to include in booking', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<?php
-		woocommerce_wp_select(
-			array(
-				'id'          => 'mwb_services_mandatory_check',
-				'label'       => __( 'Services are', 'mwb-wc-bk' ),
-				'value'       => $this->setting_fields['mwb_services_mandatory_check'],
-				'options'     => array(
-					'mandatory'         => __( 'Mandatory', 'mwb-wc-bk' ),
-					'customer_selected' => __( 'Selected by Customer', 'mwb-wc-bk' ),
-				),
-				'description' => __( 'If services are mandatory in booking, enable this option.', 'mwb-wc-bk' ),
-				'desc_tip'    => true,
-			)
-		);
+		// woocommerce_wp_select(
+		// 	array(
+		// 		'id'          => 'mwb_services_mandatory_check',
+		// 		'label'       => __( 'Services are', 'mwb-wc-bk' ),
+		// 		'value'       => $this->setting_fields['mwb_services_mandatory_check'],
+		// 		'options'     => array(
+		// 			'mandatory'         => __( 'Mandatory', 'mwb-wc-bk' ),
+		// 			'customer_selected' => __( 'Selected by Customer', 'mwb-wc-bk' ),
+		// 		),
+		// 		'description' => __( 'If services are mandatory in booking, enable this option.', 'mwb-wc-bk' ),
+		// 		'desc_tip'    => true,
+		// 	)
+		// );
 		?>
 		<div id="mwb_booking_service_add" style="margin-bottom: 7px;">
 			<button class=""><a href="edit-tags.php?taxonomy=mwb_ct_services&post_type=mwb_cpt_booking" target="blank"><?php esc_html_e( 'Add New Service', 'mwb-wc-bk' ); ?></a></button>

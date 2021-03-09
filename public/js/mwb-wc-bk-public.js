@@ -442,7 +442,7 @@ function booking_price_cal($) {
 			data     : ajax_data,
 			success : function( response ) {
 				response = JSON.parse(response);
-				// console.log( response );
+				console.log( response );
 				// alert( "khbf" );
 				var price_html = response.price_html ; 
 				$('.price').html(price_html);
@@ -518,6 +518,11 @@ function booking_price_cal($) {
 		price_cal_func($);
 		
 	});
+
+	$( '#mwb-wc-bk-start-date-field' ).on( 'change', 'input', function(){
+
+		price_cal_func($);
+	} );
 
 }
 
@@ -603,6 +608,7 @@ function price_cal_func($) {
 		data     : ajax_data,
 		success : function( response ) {
 			response = JSON.parse(response);
+			console.log( response );
 			var price_html = response.price_html ; 
 			$('.price').html(price_html);
 			total_cost     = response.booking_total_cost;

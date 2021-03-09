@@ -46,12 +46,12 @@
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Maximum Duartion for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
-			<label for="mwb_booking_start_time"><?php esc_html_e( 'Booking starts', 'mwb-wc-bk' ); ?></label>
+			<label for="mwb_booking_start_time"><?php esc_html_e( 'Daily start time', 'mwb-wc-bk' ); ?></label>
 			<input type="time" name="mwb_booking_start_time" id="mwb_booking_start_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_start_time'] ); ?>"/>
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time when the booking starts', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
-			<label for="mwb_booking_end_time"><?php esc_html_e( 'Booking ends', 'mwb-wc-bk' ); ?></label>
+			<label for="mwb_booking_end_time"><?php esc_html_e( 'Daily end time', 'mwb-wc-bk' ); ?></label>
 			<input type="time" name="mwb_booking_end_time" id="mwb_booking_end_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_end_time'] ); ?>"/>
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time when the booking ends', 'mwb-wc-bk' ) ); ?>
 		</p>
@@ -60,7 +60,7 @@
 			<input type="number" name="mwb_booking_buffer_input" id="mwb_booking_buffer_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_buffer_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
 			<select name="mwb_booking_buffer_duration" id="mwb_booking_buffer_duration" class="" style="width: auto; margin-right: 7px;">
 
-				<?php foreach ( $this->get_booking_duration_options() as $key => $value ) : ?>
+				<?php foreach ( apply_filters( 'mwb_wc_bk_buffer_durations', $this->get_booking_duration_options() ) as $key => $value ) : ?>
 					<option <?php selected( $key, $this->setting_fields['mwb_booking_buffer_duration'] ); ?> value="<?php echo esc_html( $key ); ?>"><?php echo esc_html( $value ); ?></option>
 				<?php endforeach; ?>
 
@@ -96,7 +96,7 @@
 		<p class="form-field">
 			<label for="mwb_booking_not_allowed_days"><?php esc_html_e( 'Booking not allowed', 'mwb-wc-bk' ); ?></label>
 			<select name="mwb_booking_not_allowed_days[]" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Weekday(s)', 'mwb-wc-bk' ); ?>" data-day="<?php echo esc_html( $this->setting_fields['mwb_booking_not_allowed_days'] ); ?>">
-				<?php foreach ( $this->global_func->booking_search_weekdays() as $key => $value ) : ?>
+				<?php foreach ( apply_filters( 'mwb_wc_bk_not_allowed_days', $this->global_func->booking_search_weekdays() ) as $key => $value ) : ?>
 					<?php //if ( ! empty( $this->setting_fields['mwb_booking_not_allowed_days'] ) ) { ?>
 					<option <?php echo in_array( $key, $this->setting_fields['mwb_booking_not_allowed_days'], true ) ? 'selected' : ''; ?> value="<?php echo esc_html( $key ); ?>"><?php echo esc_html( $value ); ?></option>
 					<?php //} ?>

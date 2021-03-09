@@ -124,7 +124,7 @@
 					<?php
 					if ( ! empty( $this->setting_fields['mwb_booking_added_cost_select'] ) ) {
 						$selected_costs = is_array( $this->setting_fields['mwb_booking_added_cost_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_added_cost_select'] ) : null;
-						foreach ( $selected_costs as $cost_id ) {
+						foreach ( apply_filters( 'mwb_wc_bk_added_costs_select', $selected_costs ) as $cost_id ) {
 							$cost_name = get_term( $cost_id )->name;
 							?>
 							<option value="<?php echo esc_html( $cost_id ); ?>" selected="selected"><?php echo( esc_html( $cost_name ) . '(#' . esc_html( $cost_id ) . ')' ); ?></option>

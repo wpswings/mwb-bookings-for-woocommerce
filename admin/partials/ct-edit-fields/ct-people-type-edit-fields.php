@@ -36,13 +36,13 @@ $people_min_qunatity = get_term_meta( $term->term_id, 'mwb_booking_ct_people_min
 		<p class="description"><?php esc_html_e( 'Enter the base cost for the people type.', 'mwb-wc-bk' ); ?></p>
 	</td>	
 </tr>
-<tr class="form-field term-booking-fields-wrap">
-	<th><label for="mwb_booking_ct_people_min_quantity"><?php esc_html_e( 'Min Qunatity', 'mwb-wc-bk' ); ?></label></th>
+<!-- <tr class="form-field term-booking-fields-wrap">
+	<th><label for="mwb_booking_ct_people_min_quantity"><?php // esc_html_e( 'Min Qunatity', 'mwb-wc-bk' ); ?></label></th>
 	<td>
-		<input type="number" id="mwb_booking_ct_people_min_quantity" name="mwb_booking_ct_people_min_quantity" value="<?php echo esc_html( ! empty( $people_min_qunatity ) ? $people_min_qunatity : '' ); ?>" />
-		<p class="description"><?php esc_html_e( 'Minimum Quantity of peoples allowed for respective people type.', 'mwb-wc-bk' ); ?></p>
+		<input type="number" id="mwb_booking_ct_people_min_quantity" name="mwb_booking_ct_people_min_quantity" value="<?php // echo esc_html( ! empty( $people_min_qunatity ) ? $people_min_qunatity : '' ); ?>" />
+		<p class="description"><?php // esc_html_e( 'Minimum Quantity of peoples allowed for respective people type.', 'mwb-wc-bk' ); ?></p>
 	</td>	
-</tr>
+</tr> -->
 <tr class="form-field term-booking-fields-wrap">
 	<th><label for="mwb_booking_ct_people_max_quantity"><?php esc_html_e( 'Max Quantity', 'mwb-wc-bk' ); ?></label></th>
 	<td>

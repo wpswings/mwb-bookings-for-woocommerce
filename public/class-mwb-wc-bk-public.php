@@ -764,14 +764,14 @@ class Mwb_Wc_Bk_Public {
 
 		// echo '<pre>'; print_r( $_POST ); echo '</pre>';die("ok");
 		$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
-		$people_total = ! empty( $_POST['people_total'] ) ? sanitize_text_field( wp_unslash( $_POST['people_total'] ) ) : array();
+		$people_total = ! empty( $_POST['people_total'] ) ? sanitize_text_field( wp_unslash( $_POST['people_total'] ) ) : 0;
 		$duration     = isset( $_POST['duration'] ) ? sanitize_text_field( wp_unslash( $_POST['duration'] ) ) : '';
 
 		$product_meta = get_post_meta( $product_id );
 
 		$people_select       = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : '';
 		$people_enable_check = ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_people_enable_checkbox'][0] ) ) : '';
-		// $people_type_check   = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_people_types'][0] ) ) : '';
+		$enable_people_type  = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_people_types'][0] ) ) : '';
 		$added_costs         = ! empty( $product_meta['mwb_booking_added_cost_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_added_cost_select'][0] ) : '';
 
 		$people          = array();
@@ -786,23 +786,26 @@ class Mwb_Wc_Bk_Public {
 		$total_added_cost     = 0;
 		$total_service_cost   = 0;
 
-		if ( is_array( $people_select ) ) {
-			foreach ( $people_select as $k => $v ) {
-				$people_term      = get_term( $v );
-				$people_term_meta = get_term_meta( $v );
-				$people_name      = $people_term->name;
-				$people[ $v ]     = ! empty( $_POST['people_count'][ $v ] ) ? sanitize_text_field( wp_unslash( $_POST['people_count'][ $v ] ) ) : '';
-
-				$people_data[ $v ] = array(
-					'name'         => $people_term->name,
-					'term_id'      => $v,
-					'people_count' => ! empty( $people[ $v ] ) ? $people[ $v ] : 0,
-				);
-				foreach ( $people_term_meta as $key => $value ) {
-					$people_data[ $v ]['people_meta'][ $key ] = ! empty( $value[0] ) ? $value[0] : '';
+		if ( 'yes' === $people_enable_check ) {
+			if ( is_array( $people_select ) && ! empty( $people_select ) ) {
+				foreach ( $people_select as $k => $v ) {
+					$people_term      = get_term( $v );
+					$people_term_meta = get_term_meta( $v );
+					$people_name      = $people_term->name;
+					$people[ $v ]     = ! empty( $_POST['people_count'][ $v ] ) ? sanitize_text_field( wp_unslash( $_POST['people_count'][ $v ] ) ) : '';
+	
+					$people_data[ $v ] = array(
+						'name'         => $people_term->name,
+						'term_id'      => $v,
+						'people_count' => ! empty( $people[ $v ] ) ? $people[ $v ] : 0,
+					);
+					foreach ( $people_term_meta as $key => $value ) {
+						$people_data[ $v ]['people_meta'][ $key ] = ! empty( $value[0] ) ? $value[0] : '';
+					}
 				}
 			}
 		}
+		
 		// echo '<pre>'; print_r( $people_data ); echo '</pre>';
 		$unit_cost          = ! empty( $product_meta['mwb_booking_unit_cost_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_input'][0] ) ) : '';
 		$unit_cost_multiply = ! empty( $product_meta['mwb_booking_unit_cost_multiply'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_multiply'][0] ) ) : '';
@@ -820,28 +823,40 @@ class Mwb_Wc_Bk_Public {
 		$custom_discount  = ! empty( $product_meta['mwb_booking_custom_days_discount_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_custom_days_discount_input'][0] ) ) : '';
 		$custom_disc_days = ! empty( $product_meta['mwb_booking_custom_discount_days'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_custom_discount_days'][0] ) ) : '';
 
-		if ( is_array( $people_select ) && ! empty( $people_select ) ) {
-			foreach ( $people_select as $id ) {
-				if ( ! empty( $unit_cost_multiply ) && 'yes' === $unit_cost_multiply ) {
-					if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
-						if ( isset( $people_data[ $id ]['people_meta'] ) ) {
-							$booking_people_cost += ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] ) ? $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] : $unit_cost ) * $people_data[ $id ]['people_count'];
-						} else {
-							$booking_people_cost += $unit_cost * $people_data[ $id ]['people_count'];
+		if ( 'yes' === $people_enable_check ) {
+			if ( 'yes' === $people_type_check ) {
+				if ( is_array( $people_select ) && ! empty( $people_select ) ) {
+					foreach ( $people_select as $id ) {
+						if ( ! empty( $unit_cost_multiply ) && 'yes' === $unit_cost_multiply ) {
+							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
+								if ( isset( $people_data[ $id ]['people_meta'] ) ) {
+									$booking_people_cost += ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] ) ? $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] : $unit_cost ) * $people_data[ $id ]['people_count'];
+								} else {
+									$booking_people_cost += $unit_cost * $people_data[ $id ]['people_count'];
+								}
+							}
+						}
+						if ( ! empty( $base_cost_multiply ) && 'yes' === $base_cost_multiply ) {
+							if ( $people_data[ $id ]['people_count'] ) {
+								if ( isset( $people_data[ $id ]['people_meta'] ) ) {
+									$booking_people_cost += ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] ) ? $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] : $base_cost ) * $people_data[ $id ]['people_count'];
+								} else {
+									$booking_people_cost += $base_cost * $people_data[ $id ]['people_count'];
+								}
+							}
 						}
 					}
 				}
+			} else {
+				if ( ! empty( $unit_cost_multiply ) && 'yes' === $unit_cost_multiply ) {
+					$booking_people_cost = $people_total * $unit_cost;
+				}
 				if ( ! empty( $base_cost_multiply ) && 'yes' === $base_cost_multiply ) {
-					if ( $people_data[ $id ]['people_count'] ) {
-						if ( isset( $people_data[ $id ]['people_meta'] ) ) {
-							$booking_people_cost += ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] ) ? $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] : $base_cost ) * $people_data[ $id ]['people_count'];
-						} else {
-							$booking_people_cost += $base_cost * $people_data[ $id ]['people_count'];
-						}
-					}
+					$booking_people_cost += $people_total * $base_cost;
 				}
 			}
 		}
+		
 		// echo "people cost -" . $booking_people_cost . "<br>";
 
 		if ( empty( $unit_cost_multiply ) || 'no' === $unit_cost_multiply ) {
@@ -908,7 +923,7 @@ class Mwb_Wc_Bk_Public {
 		// echo '<pre>'; print_r( $added_cost_arr ); echo '</pre>';
 		// echo "people cost -" . $booking_people_cost . "  added cost-" . $total_added_cost;die;
 
-		$enable_people_type = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_people_types'][0] ) ) : '';
+		// $enable_people_type = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_people_types'][0] ) ) : '';
 		if ( ! empty( $enabled_services ) && is_array( $enabled_services ) ) {
 			foreach ( $enabled_services as $service_id ) {
 
@@ -935,7 +950,7 @@ class Mwb_Wc_Bk_Public {
 				// echo '<pre>'; print_r( $service_cost ); echo '</pre>';
 				if ( 'yes' === $enable_people_type ) {
 					if ( isset( $service_term_meta['mwb_booking_ct_services_multiply_people'][0] ) && ( 'yes' === $service_term_meta['mwb_booking_ct_services_multiply_people'][0] ) ) {
-						if ( ! empty( $people_select ) ) {
+						if ( ! empty( $people_select ) && is_array( $people_select ) ) {
 							foreach ( $people_select as $people_id ) {
 								$people_term           = get_term( $people_id );
 								$service_people_cost   = ! empty( $service_term_meta[ 'mwb_ct_booking_service_cost_' . $people_term->slug ][0] ) ? $service_term_meta[ 'mwb_ct_booking_service_cost_' . $people_term->slug ][0] : $service_cost;
@@ -952,6 +967,11 @@ class Mwb_Wc_Bk_Public {
 						if ( ! empty( $service_term_meta['mwb_booking_ct_services_multiply_units'][0] ) && 'yes' === $service_term_meta['mwb_booking_ct_services_multiply_units'][0] ) {
 							$booking_service_cost = $booking_service_cost * $duration;
 						}
+					}
+				} else {
+					$booking_service_cost = $service_count * $service_cost;
+					if ( ! empty( $service_term_meta['mwb_booking_ct_services_multiply_units'][0] ) && 'yes' === $service_term_meta['mwb_booking_ct_services_multiply_units'][0] ) {
+						$booking_service_cost = $booking_service_cost * $duration;
 					}
 				}
 				$total_service_cost  += $booking_service_cost;
@@ -1016,6 +1036,7 @@ class Mwb_Wc_Bk_Public {
 				'booking_service_cost' => $total_service_cost,
 				'booking_added_cost'   => $total_added_cost,
 				'indiv_added_cost_arr' => $added_cost_arr,
+				'posted_data'          => $_POST,
 			)
 		);
 		wp_die();
@@ -1114,7 +1135,15 @@ class Mwb_Wc_Bk_Public {
 				</li>
 		<?php } ?>
 		</ul>
+		<div>
+			<?php
+				// $availabilit_func = MWB_Woocommerce_Booking_Availability::get_availability_instance();
+
+				// $availabilit_func->
+			?>
+		</div>
 		<?php
 		wp_die();
 	}
+
 }

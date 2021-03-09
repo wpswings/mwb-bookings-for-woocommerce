@@ -50,14 +50,14 @@
 					),
 				)
 			);
-			woocommerce_wp_checkbox(
-				array(
-					'id'          => 'mwb_people_as_seperate_booking',
-					'label'       => __( 'Allow Peoples as seperate booking', 'mwb-wc-bk' ),
-					'value'       => $this->setting_fields['mwb_people_as_seperate_booking'],
-					'description' => __( 'Check if peoples are to be counted as seperate bookings.', 'mwb-wc-bk' ),
-				)
-			);
+			// woocommerce_wp_checkbox(
+			// 	array(
+			// 		'id'          => 'mwb_people_as_seperate_booking',
+			// 		'label'       => __( 'Allow Peoples as seperate booking', 'mwb-wc-bk' ),
+			// 		'value'       => $this->setting_fields['mwb_people_as_seperate_booking'],
+			// 		'description' => __( 'Check if peoples are to be counted as seperate bookings.', 'mwb-wc-bk' ),
+			// 	)
+			// );
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => 'mwb_enable_people_types',
@@ -75,7 +75,7 @@
 				<?php
 				if ( ! empty( $this->setting_fields['mwb_booking_people_select'] ) ) {
 					$selected_people_type = is_array( $this->setting_fields['mwb_booking_people_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_people_select'] ) : null;
-					foreach ( $selected_people_type as $people_type_id ) {
+					foreach ( apply_filters( 'mwb_wc_bk_people_type_select', $selected_people_type ) as $people_type_id ) {
 						$people_type = get_term( $people_type_id )->name;
 						?>
 						<option value="<?php echo esc_html( $people_type_id ); ?>" selected="selected"><?php echo( esc_html( $people_type ) . '(#' . esc_html( $people_type_id ) . ')' ); ?></option>

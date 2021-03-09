@@ -29,9 +29,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 <div class="form-field term-people-quantity-wrap">
 
-	<label for="mwb_booking_ct_people_min_quantity"><?php esc_html_e( 'Minimum Quantity', 'mwb-wc-bk' ); ?></label>
+	<!-- <label for="mwb_booking_ct_people_min_quantity"><?php // esc_html_e( 'Minimum Quantity', 'mwb-wc-bk' ); ?></label>
 	<input type="number" id="mwb_booking_ct_people_min_quantity" class="postform" name="mwb_booking_ct_people_min_quantity" />
-	<p class="description"><?php esc_html_e( 'Minimum Quantity of peoples allowed for respective people type', 'mwb-wc-bk' ); ?></p>
+	<p class="description"><?php // esc_html_e( 'Minimum Quantity of peoples allowed for respective people type', 'mwb-wc-bk' ); ?></p> -->
 
 	<label for="mwb_booking_ct_people_max_quantity"><?php esc_html_e( 'Maximum Quantity', 'mwb-wc-bk' ); ?></label>
 	<input type="number" id="mwb_booking_ct_people_max_quantity" class="postform" name="mwb_booking_ct_people_max_quantity" />

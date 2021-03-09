@@ -41,8 +41,8 @@ $product_data = array(
 			if ( 'no' === $people_type_check ) {
 				?>
 				<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
-				<input type="hidden" id="mwb-wc-bk-people-input-hidden" name="people" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
-				<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" name="people_total" value="1" step="1" min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" required>
+				<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="people-input-hidden" name="people" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
+				<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number people-input" name="people_total" value="1" step="1" min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" required>
 				<?php
 				// $booking_people_price = $unit_price + ( ! empty( $base_price ) ? $base_price : 0 );
 			} elseif ( 'yes' === $people_type_check ) {
@@ -102,6 +102,12 @@ $product_data = array(
 					<?php
 				// }
 			}
+	} else {
+		?>
+		<!-- <div id="mwb-wc-bk-people-field">
+			<input type="hidden" >
+		</div> -->
+		<?php
 	}
 	?>
 		</div>

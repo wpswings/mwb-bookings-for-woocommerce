@@ -1,15 +1,13 @@
 <?php
 /**
- * Customer completed Booking email
+ * Customer on-hold booking email
  *
  * @author  MWB
  * @package mwb-woocommerce-booking/admin/templates/emails
  * @version 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 /*
  * @hooked WC_Emails::email_header() Output the email header
@@ -18,7 +16,8 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: %s: Customer first name */ ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
-<p><?php esc_html_e( 'We have finished processing your order.', 'woocommerce' ); ?></p>
+<p><?php esc_html_e( 'Thanks for your booking. It’s on-hold until we confirm that payment has been received. In the meantime, here’s a reminder of what you booked:', 'woocommerce' ); ?></p>
+
 <?php
 /*
  * @hooked WC_Emails::order_details() Shows the order details table.
@@ -26,7 +25,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+do_action( 'woocommerce_booking_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 /*
  * @hooked WC_Emails::order_meta() Shows order meta data.
@@ -50,3 +49,4 @@ if ( $additional_content ) {
  * @hooked WC_Emails::email_footer() Output the email footer
  */
 do_action( 'woocommerce_email_footer', $email );
+

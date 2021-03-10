@@ -906,7 +906,7 @@ class Mwb_Wc_Bk_Admin {
 			'labels'            => $labels,
 			'description'       => 'Services or resources which are to be included in booking',
 			'show_ui'           => true,
-			'show_admin_column' => true,
+			'show_admin_column' => false,
 			'query_var'         => true,
 			'show_in_rest'      => true,
 			'rewrite'           => array( 'slug' => 'services' ),
@@ -939,7 +939,7 @@ class Mwb_Wc_Bk_Admin {
 			'labels'            => $labels,
 			'description'       => 'Types of Peoples which are to be included per booking',
 			'show_ui'           => true,
-			'show_admin_column' => true,
+			'show_admin_column' => false,
 			'query_var'         => true,
 			'show_in_rest'      => true,
 			'rewrite'           => array( 'slug' => 'people-types' ),
@@ -972,7 +972,7 @@ class Mwb_Wc_Bk_Admin {
 			'labels'            => $labels,
 			'description'       => 'Additional Costs which are to be included in booking',
 			'show_ui'           => true,
-			'show_admin_column' => true,
+			'show_admin_column' => false,
 			'query_var'         => true,
 			'show_in_rest'      => true,
 			'rewrite'           => array( 'slug' => 'cost' ),
@@ -1076,7 +1076,8 @@ class Mwb_Wc_Bk_Admin {
 			} else {
 				continue;
 			}
-			// echo '<pre>'; print_r( $meta_data ); echo '</pre>';die("ijudsfh");
+			$th = wc_get_order( $b_id );
+			echo '<pre>'; print_r( $th->get_data()['status'] ); echo '</pre>';die("ijudsfh");
 			// $date = str_replace( '/', '-', $meta_data['start_date'] );
 			// $date = date_create( $date );
 			// $date = date_format( $date, 'Y/-/d' );
@@ -1525,9 +1526,19 @@ class Mwb_Wc_Bk_Admin {
 	 * @return array
 	 */
 	public function register_email( $emails ) {
-		require_once MWB_WC_BK_BASEPATH . 'includes/class-wc-booking-order.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-completed-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-cancelled-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-confirmation-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-confirmed-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-expired-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-on-hold-booking.php';
 
-		$emails['WC_Customer_Cancel_Order'] = new WC_Booking_Order();
+		$emails['WC_Customer_Completed_Booking']    = new WC_Booking_Completed();
+		$emails['WC_Customer_Cancelled_Booking']    = new WC_Booking_Cancelled();
+		$emails['WC_Customer_Confirmation_Booking'] = new WC_Booking_Confirmation_Required();
+		$emails['WC_Customer_Confirmed_Booking']    = new WC_Booking_Confirmed();
+		$emails['WC_Customer_Expired_Booking']      = new WC_Booking_On_Hold();
+		$emails['WC_Customer_On_Hold_Booking']      = new WC_Booking_Expired();
 
 		return $emails;
 	}
@@ -1557,11 +1568,9 @@ class Mwb_Wc_Bk_Admin {
 	public function mwb_booking_status() {
 
 		$booking_status = array(
-			'wc-booking-paid'         => __( 'Paid', '' ),
-			'wc-booking-unpaid'       => __( 'Unpaid', '' ),
-			'wc-booking-confirmation' => __( 'Confirmation Required', '' ),
-			'wc-booking-cancelled'    => __( 'Cancelled', '' ),
-			'wc-booking-confirmed'    => __( 'Confirmed', '' ),
+			'wc-confirmation' => __( 'Confirmation Required', '' ),
+			'wc-confirmed'    => __( 'Confirmed', '' ),
+			'wc-expired'      => __( 'Expired', '' ),
 		);
 		return $booking_status;
 	}
@@ -1572,16 +1581,18 @@ class Mwb_Wc_Bk_Admin {
 	public function mwb_booking_custom_post_status() {
 
 		// echo '<pre>'; print_r( $_GET['post'] ); echo '</pre>';die("post");
-		if ( isset( $_GET['post'] ) ) {
-			$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
-			if ( 'mwb_cpt_booking' === $p->post_type ) {
+		// if ( isset( $_GET['post'] ) ) {
+		// 	$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
+		// 	if ( 'mwb_cpt_booking' === $p->post_type ) {
 				$statuses = $this->mwb_booking_status();
-				$status   = array(
-					'wc-booking-paid'         => _nx_noop( 'Paid (%s)', 'Paid (%s)', 'Booking status', '' ),
-					'wc-booking-unpaid'       => _nx_noop( 'Unpaid (%s)', 'Unpaid (%s)', 'Booking status', '' ),
-					'wc-booking-confirmation' => _nx_noop( 'Confirmation required (%s)', 'Confirmation required (%s)', 'Booking status', '' ),
-					'wc-booking-cancelled'    => _nx_noop( 'Cancelled (%s)', 'Cancelled (%s)', 'Booking status', '' ),
-					'wc-booking-confirmed'    => _nx_noop( 'Confirmed (%s)', 'Confirmed (%s)', 'Booking status', '' ),
+
+				$status = array(
+					/* translators: %s: Context */
+					'wc-confirmation' => _nx_noop( 'Confirmation required (%s)', 'Confirmation required (%s)', 'Booking status', '' ),
+					/* translators: %s: Context */
+					'wc-confirmed'    => _nx_noop( 'Confirmed (%s)', 'Confirmed (%s)', 'Booking status', '' ),
+					/* translators: %s: Context */
+					'wc-expired'      => _nx_noop( 'Expired (%s)', 'Confirmed (%s)', 'Booking status', '' ),
 				);
 				foreach ( $statuses as $status => $label ) {
 					register_post_status(
@@ -1596,32 +1607,104 @@ class Mwb_Wc_Bk_Admin {
 						)
 					);
 				}
-			}
-		}
+		// 	}
+		// }
 	}
 
 	/**
 	 * Show Booking Statuses on the order page
 	 *
-	 * @param [type] $order_status
-	 * @return void
+	 * @param [type] $order_status Array of all the statuses.
+	 * @return array
 	 */
 	public function mwb_booking_show_status( $order_status ) {
 
 		// echo '<pre>'; print_r( $order_status ); echo '</pre>'; die("status");
-		if ( isset( $_GET['post'] ) ) {
-			$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
-			if ( 'mwb_cpt_booking' === $p->post_type ) {
-				$order_status                            = array();
-				$order_status['wc-booking-paid']         = esc_html__( 'Paid', '' );
-				$order_status['wc-booking-unpaid']       = esc_html__( 'Unpaid', '' );
-				$order_status['wc-booking-confirmation'] = esc_html__( 'Confirmation Required', '' );
-				$order_status['wc-booking-cancelled']    = esc_html__( 'Cancelled', '' );
-				$order_status['wc-booking-completed']    = esc_html__( 'Completed', '' );
+		// if ( isset( $_GET['post'] ) ) {
+		// 	$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
+		// 	if ( 'mwb_cpt_booking' === $p->post_type ) {
+				$order_status['wc-confirmation'] = esc_html__( 'Confirmation Required', '' );
+				$order_status['wc-confirmed']    = esc_html__( 'Comfirmed', '' );
+				$order_status['wc-expired']      = esc_html__( 'Expired', '' );
+		// 	}
+		// }
 
-			}
-		}
+		// echo '<pre>'; print_r( wc_get_order_types( 'view-orders' ) ); echo '</pre>';
 		return $order_status;
+	}
+
+	public function mwb_booking_cahnge_order( $id, $from, $to, $obj ) {
+
+		echo '<pre>'; print_r( $id ); echo '</pre>';
+		echo '<pre>'; print_r( $from ); echo '</pre>';
+		echo '<pre>'; print_r( $to ); echo '</pre>';
+		echo '<pre>'; print_r( $obj ); echo '</pre>';die("kjkj");
+	}
+
+	// public function mwb_booking_set_new_status( $id, $new_status ) {
+	// 	echo '<pre>'; print_r( $id ); echo '</pre>';
+	// 	echo '<pre>'; print_r( $new_status ); echo '</pre>';die("new");
+	// }
+
+
+	/**
+	 * Showing Booking Listing Custom Columns
+	 *
+	 * @param [array] $columns Array of all the columns.
+	 * @return array
+	 */
+	public function mwb_booking_show_custom_columns( $columns ) {
+
+		// $date_val = $columns['date'];
+
+		// Unset date index.
+		unset( $columns['date'] );
+
+		$columns['from']   = __( 'From', '' );
+		$columns['to']     = __( 'To', '' );
+		$columns['status'] = __( 'Status', '' );
+
+		return $columns;
+	}
+
+	/**
+	 * Managing Booking Listing Custom Columns
+	 *
+	 * @param [string] $column Column Name.
+	 * @param [int]    $post_id ID of the current booking.
+	 *
+	 * @return void
+	 */
+	public function mwb_booking_manage_custom_columns( $column, $post_id ) {
+
+		$booking_meta = get_post_meta( $post_id, 'mwb_meta_data', true );
+		switch ( $column ) {
+			case 'from':
+				if ( isset( $booking_meta['start_date'] ) ) {
+					$start_date = $booking_meta['start_date'];
+					$from       = gmdate( 'Y/m/d H:i:s', strtotime( $start_date ) );
+					echo esc_html( $from );
+				} else {
+					echo '-';
+				}
+				break;
+			case 'to':
+				if ( isset( $booking_meta['end_timestamp'] ) ) {
+					$end_timestamp = $booking_meta['end_timestamp'];
+					$to            = gmdate( 'Y/m/d H:i:s', $end_timestamp );
+					echo esc_html( $to );
+				} else {
+					echo '-';
+				}
+				break;
+			case 'status':
+				$booking_order = wc_get_order( $post_id );
+				$booking_data  = $booking_order->get_data();
+				?>
+				<a href="javascript:void(0)"><?php echo esc_html( ucwords( $booking_data['status'] ) ); ?></a>
+				<?php
+				break;
+		}
 	}
 
 }

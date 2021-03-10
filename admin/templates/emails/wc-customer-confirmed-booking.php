@@ -1,6 +1,6 @@
 <?php
 /**
- * Customer completed Booking email
+ * Customer confirmed Booking email
  *
  * @author  MWB
  * @package mwb-woocommerce-booking/admin/templates/emails
@@ -18,7 +18,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: %s: Customer first name */ ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
-<p><?php esc_html_e( 'We have finished processing your order.', 'woocommerce' ); ?></p>
+<p><?php esc_html_e( 'We have confirmed your booking.', 'woocommerce' ); ?></p>
 <?php
 /*
  * @hooked WC_Emails::order_details() Shows the order details table.

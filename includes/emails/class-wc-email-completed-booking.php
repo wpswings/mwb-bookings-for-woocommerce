@@ -10,7 +10,7 @@ if ( ! class_exists( 'WC_Email' ) ) {
 /**
  * Class WC_Customer_Cancel_Order
  */
-class WC_Booking_Order extends WC_Email {
+class WC_Booking_Completed extends WC_Email {
 
 	/**
 	 * Create an instance of the class.
@@ -27,7 +27,6 @@ class WC_Booking_Order extends WC_Email {
 		// $this->customer_email = true;
 		// $this->heading     = __( 'Booking Completed', 'custom-wc-email' );
 		// // translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-		// $this->subject     = sprintf( _x( '[%s] Booking Completed', 'Congratulations your booking is complete', 'custom-wc-email' ), '{blogname}' );
 
 		// // Template paths.
 		// $this->template_html  = 'emails/wc-customer-complete-booking.php';
@@ -39,6 +38,10 @@ class WC_Booking_Order extends WC_Email {
 		$this->title          = __( 'Completed Booking', 'woocommerce' );
 		$this->description    = __( 'Booking complete emails are sent to customers when their orders are marked completed.', 'woocommerce' );
 		$this->heading        = __( 'Booking Completed', 'custom-wc-email' );
+
+		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
+		$this->subject = sprintf( _x( '[%s] Booking Complete', 'Congratulations your booking is complete', 'mwb-wc-bk' ), '{blogname}' );
+
 
 		$this->template_html  = 'emails/wc-customer-complete-booking.php';
 		$this->template_plain = 'emails/plain/wc-customer-complete-booking.php';
@@ -53,9 +56,10 @@ class WC_Booking_Order extends WC_Email {
 		// add_action( 'woocommerce_order_status_on-hold_to_cancelled_notification', array( $this, 'trigger' ) );
 
 		add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
+		add_action( 'woocommerce_order_status_expired', array( $this, 'trigger' ), 10, 2 );
+
 		// add_action( 'woocommerce_order_status__notification', array( $this, 'trigger' ), 10, 2 );
 		// add_action( 'woocommerce_order_status_booking-unpaid_to_booking-paid_notification', array( $this, 'trigger' ), 10, 2 );
-
 
 		parent::__construct();
 	}
@@ -101,41 +105,45 @@ class WC_Booking_Order extends WC_Email {
 		$this->restore_locale();
 	}
 
-	// /**
-	//  * Get content html.
-	//  *
-	//  * @return string
-	//  */
-	// public function get_content_html() {
-	// 	return wc_get_template_html(
-	// 		$this->template_html,
-	// 		array(
-	// 			'order'              => $this->object,
-	// 			'email_heading'      => $this->get_heading(),
-	// 			'additional_content' => $this->get_additional_content(),
-	// 			'sent_to_admin'      => false,
-	// 			'plain_text'         => false,
-	// 			'email'              => $this,
-	// 		)
-	// 	);
-	// }
+/**
+	 * Get content html.
+	 *
+	 * @return string
+	 */
+	public function get_content_html() {
+		return wc_get_template_html(
+			$this->template_html,
+			array(
+				'order'              => $this->object,
+				'email_heading'      => $this->get_heading(),
+				'additional_content' => $this->get_additional_content(),
+				'sent_to_admin'      => false,
+				'plain_text'         => false,
+				'email'              => $this,
+			),
+			'',
+			$this->template_base
+		);
+	}
 
-	// /**
-	//  * Get content plain.
-	//  *
-	//  * @return string
-	//  */
-	// public function get_content_plain() {
-	// 	return wc_get_template_html(
-	// 		$this->template_plain,
-	// 		array(
-	// 			'order'              => $this->object,
-	// 			'email_heading'      => $this->get_heading(),
-	// 			'additional_content' => $this->get_additional_content(),
-	// 			'sent_to_admin'      => false,
-	// 			'plain_text'         => true,
-	// 			'email'              => $this,
-	// 		)
-	// 	);
-	// }
+	/**
+	 * Get content plain.
+	 *
+	 * @return string
+	 */
+	public function get_content_plain() {
+		return wc_get_template_html(
+			$this->template_plain,
+			array(
+				'order'              => $this->object,
+				'email_heading'      => $this->get_heading(),
+				'additional_content' => $this->get_additional_content(),
+				'sent_to_admin'      => false,
+				'plain_text'         => true,
+				'email'              => $this,
+			),
+			'',
+			$this->template_base
+		);
+	}
 }

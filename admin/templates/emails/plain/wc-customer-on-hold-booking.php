@@ -1,6 +1,10 @@
 <?php
 /**
- * Customer completed Booking email (plain text)
+ * Customer on-hold Booking email
+ *
+ * @author  MWB
+ * @package mwb-woocommerce-booking/admin/templates/emails
+ * @version 1.0.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -11,8 +15,7 @@ echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 /* translators: %s: Customer first name */
 echo sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ) . "\n\n";
-/* translators: %s: Site title */
-echo esc_html__( 'We have finished processing your booking.', 'woocommerce' ) . "\n\n";
+echo esc_html__( 'Thanks for your booking. It’s on-hold until we confirm that payment has been received. In the meantime, here’s a reminder of what you booked:', 'woocommerce' ) . "\n\n";
 
 /*
  * @hooked WC_Emails::order_details() Shows the order details table.
@@ -20,7 +23,7 @@ echo esc_html__( 'We have finished processing your booking.', 'woocommerce' ) . 
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+do_action( 'woocommerce_booking_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 echo "\n----------------------------------------\n\n";
 
@@ -46,4 +49,3 @@ if ( $additional_content ) {
 }
 
 echo wp_kses_post( apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) ) );
-

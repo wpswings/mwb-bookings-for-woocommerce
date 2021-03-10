@@ -254,6 +254,13 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_booking_custom_post_status' );
 
 		$this->loader->add_action( 'wc_order_statuses', $plugin_admin, 'mwb_booking_show_status' );
+
+		// $this->loader->add_action( 'woocommerce_order_status_changed', $plugin_admin, 'mwb_booking_cahnge_order', 10, 4 );
+		// $this->loader->add_action( 'woocommerce_order_edit_status', $plugin_admin, 'mwb_booking_set_new_status', 10, 2 );
+
+		$this->loader->add_filter( 'manage_edit-mwb_cpt_booking_columns', $plugin_admin, 'mwb_booking_show_custom_columns' );
+
+		$this->loader->add_action( 'manage_mwb_cpt_booking_posts_custom_column', $plugin_admin, 'mwb_booking_manage_custom_columns', 10, 2 );
 	}
 
 	/**

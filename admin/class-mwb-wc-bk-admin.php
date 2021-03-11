@@ -124,6 +124,8 @@ class Mwb_Wc_Bk_Admin {
 
 		wp_enqueue_script( 'iconify', 'https://code.iconify.design/1/1.0.7/iconify.min.js', array(), '1.0.7', false );
 
+		add_thickbox();
+
 	}
 
 	/**
@@ -759,8 +761,8 @@ class Mwb_Wc_Bk_Admin {
 			'menu_icon'          => 'dashicons-calendar-alt',
 			//'add_order_meta_boxes' => true,
 		);
-	//	register_post_type( 'mwb_cpt_booking', $args );
-		unregister_post_type( 'mwb_cpt_booking' );
+		register_post_type( 'mwb_cpt_booking', $args );
+		// unregister_post_type( 'mwb_cpt_booking' );
 	}
 	/**
 	 * Custom-Post Order Type Booking
@@ -819,51 +821,93 @@ class Mwb_Wc_Bk_Admin {
 			'exclude_from_order_sales_reports' => true,
 			'class_name'                       => 'WC_Order',
 		);
-		wc_register_order_type( 'mwb_cpt_booking', $args );
+		// wc_register_order_type( 'mwb_cpt_booking', $args );
+		// unregister_post_type( 'mwb_cpt_booking' );
 	}
 
-	public function mwb_wc_bk_booking_columns( $columns ) {
+	// public function mwb_wc_bk_booking_columns( $columns ) {
 
-		$columns = array(
-			'cb'            => '<input type="checkbox" />',
-			'booking_title' => __( 'Booking Title', '' ),
-			'services'      => __( 'Services', '' ),
-			'people'        => __( 'People Type', '' ),
-			'cost'          => __( 'Additional Cost', '' ),
-			'from'          => __( 'From', '' ),
-			'to'            => __( 'To', '' ),
-		);
-		return $columns;
-	}
+	// 	$columns = array(
+	// 		'cb'            => '<input type="checkbox" />',
+	// 		'booking_title' => __( 'Booking Title', '' ),
+	// 		'services'      => __( 'Services', '' ),
+	// 		'people'        => __( 'People Type', '' ),
+	// 		'cost'          => __( 'Additional Cost', '' ),
+	// 		'from'          => __( 'From', '' ),
+	// 		'to'            => __( 'To', '' ),
+	// 	);
+	// 	return $columns;
+	// }
 
-	public function mwb_wc_bk_manage_booking_columns( $columns, $post_id ) {
+	// public function mwb_wc_bk_manage_booking_columns( $columns, $post_id ) {
 
-		switch ( $columns ) {
-			case 'booking_title':
-				echo 'title';
-				// print_r( get_post_meta( $post_id ) );
-				break;
-			case 'services':
-				echo 'services';
-				break;
-			case 'people':
-				echo 'people';
-				break;
+	// 	switch ( $columns ) {
+	// 		case 'booking_title':
+	// 			echo 'title';
+	// 			// print_r( get_post_meta( $post_id ) );
+	// 			break;
+	// 		case 'services':
+	// 			echo 'services';
+	// 			break;
+	// 		case 'people':
+	// 			echo 'people';
+	// 			break;
 
-		}
-	}
+	// 	}
+	// }
 
 	/**
 	 * Remove meta boxes from the mwb_cpt_booking order type post edit screen
 	 */
 	public function remove_meta_box_cpt() {
 
-		// $screen    = get_current_screen();
-		// $screen_id = $screen ? $screen->id : '';
-	//	remove_meta_box( 'postcustom', 'shop_order', 'normal' );
-		remove_meta_box( 'woocommerce-order-downloads', 'mwb_cpt_booking', 'normal' );
-		remove_meta_box( 'woocommerce-order-items', 'mwb_cpt_booking', 'normal' );
+		$screen    = get_current_screen();
+		$screen_id = $screen ? $screen->id : '';
 
+		// echo '<pre>'; print_r( $wc_order_types ); echo '</pre>';die('order');
+		// echo '<pre>'; print_r( $screen ); echo '</pre>';die("jk");
+		// remove_meta_box( 'postcustom', 'mwb_cpt_booking', 'advanced' );
+		// remove_meta_box( 'woocommerce-order-downloads', 'mwb_cpt_booking', 'advanced' );
+		// remove_meta_box( 'woocommerce-order-items', 'mwb_cpt_booking', 'advanced' );
+		// $order_type_object = get_post_type_object( 'mwb_cpt_booking' );
+		// add_meta_box( 'woocommerce-order-data', sprintf( __( '%s data', 'woocommerce' ), $order_type_object->labels->singular_name ), 'WC_Meta_Box_Order_Data::output', 'mwb_cpt_booking', 'normal', 'high' );
+
+
+		add_meta_box( 'mwb-wc-bk-booking-data', 'Booking Order', array( $this, 'mwb_booking_order_data_callback' ), 'mwb_cpt_booking' );
+
+	}
+
+	public function mwb_booking_order_data_callback() {
+		global $post;
+		echo '<pre>'; print_r( $post ); echo '</pre>';
+		$status         = isset( $post->post_status ) ? str_replace( 'wc-', '', $post->post_status ) : 'On-hold';
+		$created_date   = isset( $post->post_date ) ? gmdate( 'Y-m-d', strtotime( $post->post_date ) ) : '';
+		$created_time_h = isset( $post->post_date ) ? gmdate( 'H', strtotime( $post->post_date ) ) : '';
+		$created_time_m = isset( $post->post_date ) ? gmdate( 'i', strtotime( $post->post_date ) ) : '';
+
+		?>
+		<div class="panel woocommerce-order-data" >
+			<h1 class="woocommerce-order-data__heading"><?php echo esc_html( $post->post_title . '  ' ); ?><span><a href="javascript:void(0)"><?php echo esc_html( $status ); ?></a></span></h1>
+			<div class=mwb_booking_data_column_container>
+				<div class="mwb_booking_data_column">
+					<h3><?php esc_html_e( 'General data', '' ); ?></h3>
+					<p class="form-field form-field-wide" >
+						<label for=""><?php esc_html_e( 'Booking Created', '' ); ?></label>
+						<input type="text" id="" value="<?php echo esc_html( $created_date ); ?>" >
+						<span><?php esc_html_e( '@', '' ); ?></span>
+						<input type="number" id="" value="<?php echo esc_html( $created_time_h ); ?>">
+						<span><?php esc_html_e( ':', '' ); ?></span>
+						<input type="number" id="" value="<?php echo esc_html( $created_time_m ); ?>">
+					</p>
+				</div>
+			</div>
+		</div>
+		<?php
+
+	}
+
+	public function khbsdk() {
+		remove_post_type_support( 'mwb_cpt_booking', 'postcustom' );
 	}
 
 	/**
@@ -1077,7 +1121,7 @@ class Mwb_Wc_Bk_Admin {
 				continue;
 			}
 			$th = wc_get_order( $b_id );
-			echo '<pre>'; print_r( $th->get_data()['status'] ); echo '</pre>';die("ijudsfh");
+			echo '<pre>'; print_r( $th->get_meta_data( 'mwb_meta_data' ) ); echo '</pre>';die("ijudsfh");
 			// $date = str_replace( '/', '-', $meta_data['start_date'] );
 			// $date = date_create( $date );
 			// $date = date_format( $date, 'Y/-/d' );
@@ -1660,9 +1704,10 @@ class Mwb_Wc_Bk_Admin {
 		// Unset date index.
 		unset( $columns['date'] );
 
-		$columns['from']   = __( 'From', '' );
-		$columns['to']     = __( 'To', '' );
-		$columns['status'] = __( 'Status', '' );
+		$columns['from']   = __( 'From', 'mwb-wc-bk' );
+		$columns['to']     = __( 'To', 'mwb-wc-bk' );
+		$columns['status'] = __( 'Status', 'mwb-wc-bk' );
+		$columns['view']   = __( 'View', 'mwb-wc-bk' );
 
 		return $columns;
 	}
@@ -1691,20 +1736,121 @@ class Mwb_Wc_Bk_Admin {
 			case 'to':
 				if ( isset( $booking_meta['end_timestamp'] ) ) {
 					$end_timestamp = $booking_meta['end_timestamp'];
-					$to            = gmdate( 'Y/m/d H:i:s', $end_timestamp );
+					$to            = gmdate( 'Y-m-d h:i:s a', $end_timestamp );
 					echo esc_html( $to );
 				} else {
 					echo '-';
 				}
 				break;
 			case 'status':
-				$booking_order = wc_get_order( $post_id );
-				$booking_data  = $booking_order->get_data();
+				// $booking_order = wc_get_order( $post_id );
+				// $booking_data  = $booking_order->get_data();
+				echo '-';
 				?>
-				<a href="javascript:void(0)"><?php echo esc_html( ucwords( $booking_data['status'] ) ); ?></a>
+				<!-- <a href="javascript:void(0)"><?php // echo esc_html( ucwords( $booking_data['status'] ) ); ?></a> -->
 				<?php
 				break;
+			case 'view':
+				?>
+				<?php /*translators: %d: Booking details */ ?>
+				<a href="admin-ajax.php?action=get_booking_details&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'mwb-wc-bk-nonce' ) ); ?>" title="<?php echo esc_html( sprintf( __( 'Booking Details #%d', '' ), $post_id ) ); ?>" class="thickbox" ><img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt=""></a>
+				<?php
 		}
+	}
+
+	/**
+	 * Show Booking Details on the view icon click( Booking listing Page ).
+	 *
+	 * @return void
+	 */
+	public function get_booking_details() {
+		// echo "hbf";
+		// $nonce = isset( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '';
+		// if ( ! wp_verify_nonce( $nonce, 'mwb-wc-bk-nonce' ) ) {
+		// 	die( 'Nonce value cannot be verified' );
+		// }
+		check_ajax_referer( 'mwb-wc-bk-nonce', 'nonce' );
+
+		$post_id = isset( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
+
+		if ( ! empty( $post_id ) ) {
+			// $booking_order = get_post( $post_id );
+			$booking_data = get_post_meta( $post_id, 'mwb_meta_data', true );
+
+			// echo '<pre>'; print_r( $booking_data ); echo '</pre>';
+			$from = isset( $booking_data['start_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['start_timestamp'] ) : '-';
+			$to   = isset( $booking_data['end_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['end_timestamp'] ) : '-';
+			// $dur  = 
+			$peoples     = ( ! empty( $booking_data['people_count'] ) && is_array( $booking_data['people_count'] ) ) ? $booking_data['people_count'] : array();
+			$inc_service = ( ! empty( $booking_data['inc_service'] ) && is_array( $booking_data['inc_service'] ) ) ? $booking_data['inc_service'] : array();
+			$add_service = ( ! empty( $booking_data['add_service'] ) && is_array( $booking_data['add_service'] ) ) ? $booking_data['add_service'] : array();
+			$total_cost  = ! empty( $booking_data['total_cost'] ) ? $booking_data['total_cost'] : 0;
+			ob_start();
+			?>
+			<table>
+				<tr>
+					<th><?php esc_html_e( 'From:', '' ); ?></th>
+					<td><?php echo esc_html( $from ); ?></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'To:', '' ); ?></th>
+					<td><?php echo esc_html( $to ); ?></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Peoples:', '' ); ?></th>
+					<?php
+					if ( ! empty( $peoples ) && is_array( $peoples ) ) {
+						foreach ( $peoples as $name => $count ) {
+							?>
+							<td><?php echo esc_html( $name . '-' . $count . ',' ); ?></td>
+							<?php
+						}
+					}
+					?>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Included Services:', '' ); ?></th>
+					<?php
+					if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
+						foreach ( $inc_service as $name => $count ) {
+							?>
+							<td><?php echo esc_html( $name . '-' . $count . ',' ); ?></td>
+							<?php
+						}
+					} else {
+						?>
+						<td><?php esc_html_e( 'None', '' ); ?></td>
+						<?php
+					}
+					?>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Additional Services:', '' ); ?></th>
+					<?php
+					if ( ! empty( $add_service ) && is_array( $add_service ) ) {
+						foreach ( $add_service as $name => $count ) {
+							?>
+							<td><?php echo esc_html( $name . '-' . $count . ',' ); ?></td>
+							<?php
+						}
+					} else {
+						?>
+						<td><?php esc_html_e( 'None', '' ); ?></td>
+						<?php
+					}
+					?>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Total:', '' ); ?></th>
+					<td><?php echo wc_price( esc_html( $total_cost ) ); ?></td>
+				</tr>
+			</table>
+			<?php
+			$content = ob_get_clean();
+		}
+		echo wp_kses_post( wpautop( wptexturize( $content ) ) . PHP_EOL );
+		wp_die();
+		// wp_send_json( $content );
 	}
 
 }

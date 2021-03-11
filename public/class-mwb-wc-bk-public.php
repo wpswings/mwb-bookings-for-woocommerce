@@ -824,7 +824,7 @@ class Mwb_Wc_Bk_Public {
 		$custom_disc_days = ! empty( $product_meta['mwb_booking_custom_discount_days'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_custom_discount_days'][0] ) ) : '';
 
 		if ( 'yes' === $people_enable_check ) {
-			if ( 'yes' === $people_type_check ) {
+			if ( 'yes' === $enable_people_type ) {
 				if ( is_array( $people_select ) && ! empty( $people_select ) ) {
 					foreach ( $people_select as $id ) {
 						if ( ! empty( $unit_cost_multiply ) && 'yes' === $unit_cost_multiply ) {

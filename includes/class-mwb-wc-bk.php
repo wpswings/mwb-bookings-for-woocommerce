@@ -189,10 +189,12 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'remove_add_booking_submenu' );
 
-	//	$this->loader->add_action( 'init', $plugin_admin, 'booking_custom_post_type' );
+		$this->loader->add_action( 'init', $plugin_admin, 'booking_custom_post_type' );
 
-		$this->loader->add_action( 'woocommerce_init', $plugin_admin, 'booking_custom_post_order_type' );
+		// $this->loader->add_action( 'woocommerce_init', $plugin_admin, 'booking_custom_post_order_type' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_meta_box_cpt', 90 );
+
+		// $this->loader->add_action( 'init', $plugin_admin, 'khbsdk', 90 );
 
 		$this->loader->add_action( 'init', $plugin_admin, 'booking_register_taxonomy_services' );
 
@@ -261,6 +263,8 @@ class Mwb_Wc_Bk {
 		$this->loader->add_filter( 'manage_edit-mwb_cpt_booking_columns', $plugin_admin, 'mwb_booking_show_custom_columns' );
 
 		$this->loader->add_action( 'manage_mwb_cpt_booking_posts_custom_column', $plugin_admin, 'mwb_booking_manage_custom_columns', 10, 2 );
+
+		$this->loader->add_action( 'wp_ajax_get_booking_details', $plugin_admin, 'get_booking_details' );
 	}
 
 	/**

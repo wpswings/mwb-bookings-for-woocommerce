@@ -191,8 +191,11 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'init', $plugin_admin, 'booking_custom_post_type' );
 
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_booking_remove_support' );
 		// $this->loader->add_action( 'woocommerce_init', $plugin_admin, 'booking_custom_post_order_type' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_meta_box_cpt', 90 );
+
+		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_booking_save_post' );
 
 		// $this->loader->add_action( 'init', $plugin_admin, 'khbsdk', 90 );
 
@@ -253,9 +256,9 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_filter( 'woocommerce_email_classes', $plugin_admin, 'register_email', 90, 1 );
 
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_booking_custom_post_status' );
-
-		$this->loader->add_action( 'wc_order_statuses', $plugin_admin, 'mwb_booking_show_status' );
+		// $this->loader->add_action( 'init', $plugin_admin, 'mwb_booking_custom_post_status' );
+		// $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'add_to_post_status_dropdown' );
+		// $this->loader->add_action( 'wc_order_statuses', $plugin_admin, 'mwb_booking_show_status' );
 
 		// $this->loader->add_action( 'woocommerce_order_status_changed', $plugin_admin, 'mwb_booking_cahnge_order', 10, 4 );
 		// $this->loader->add_action( 'woocommerce_order_edit_status', $plugin_admin, 'mwb_booking_set_new_status', 10, 2 );

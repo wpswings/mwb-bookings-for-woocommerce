@@ -749,7 +749,7 @@ class Mwb_Wc_Bk_Admin {
 			'show_in_nav_menu'   => true,
 			'show_in_admin_bar'  => true,
 			'hierarchical'       => false,
-			'capability_type'    => 'shop_order',
+			'capability_type'    => 'post',
 			'capabilities'       => array(
 				'create_posts' => false,
 			),
@@ -872,18 +872,184 @@ class Mwb_Wc_Bk_Admin {
 		// $order_type_object = get_post_type_object( 'mwb_cpt_booking' );
 		// add_meta_box( 'woocommerce-order-data', sprintf( __( '%s data', 'woocommerce' ), $order_type_object->labels->singular_name ), 'WC_Meta_Box_Order_Data::output', 'mwb_cpt_booking', 'normal', 'high' );
 
+		remove_meta_box( 'submitdiv', 'mwb_cpt_booking', 'side' );
+		remove_meta_box( 'slugdiv', 'mwb_cpt_booking', 'normal' );
+		remove_meta_box( 'mwb_ct_costsdiv', 'mwb_cpt_booking', 'side' );
+		remove_meta_box( 'mwb_ct_people_typediv', 'mwb_cpt_booking', 'side' );
+		remove_meta_box( 'mwb_ct_servicesdiv', 'mwb_cpt_booking', 'side' );
 
 		add_meta_box( 'mwb-wc-bk-booking-data', 'Booking Order', array( $this, 'mwb_booking_order_data_callback' ), 'mwb_cpt_booking' );
+		add_meta_box( 'mwb-wc-bk-booking-status', 'Booking Actions', array( $this, 'mwb_booking_status_callback' ), 'mwb_cpt_booking', 'side' );
+		add_meta_box( 'mwb-wc-bk-booking-details', 'Booking Details', array( $this, 'mwb_booking_details_callback' ), 'mwb_cpt_booking', 'normal' );
 
+	}
+
+	public function mwb_booking_remove_support() {
+
+		remove_post_type_support( 'mwb_cpt_booking', 'title' );
+		remove_post_type_support( 'mwb_cpt_booking', 'editor' );
+
+	}
+
+	public function mwb_booking_details_callback() {
+		global $post;
+		$booking_data = get_post_meta( $post->ID, 'mwb_meta_data', true );
+		$from = isset( $booking_data['start_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['start_timestamp'] ) : '-';
+			$to   = isset( $booking_data['end_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['end_timestamp'] ) : '-';
+			// $dur  = 
+			$people_total = ! empty( $booking_data['people_total'] ) ? $booking_data['people_total'] : 0;
+			$peoples      = ( ! empty( $booking_data['people_count'] ) && is_array( $booking_data['people_count'] ) ) ? $booking_data['people_count'] : array();
+			$inc_service  = ( ! empty( $booking_data['inc_service'] ) && is_array( $booking_data['inc_service'] ) ) ? $booking_data['inc_service'] : array();
+			$add_service  = ( ! empty( $booking_data['add_service'] ) && is_array( $booking_data['add_service'] ) ) ? $booking_data['add_service'] : array();
+			$total_cost   = ! empty( $booking_data['total_cost'] ) ? $booking_data['total_cost'] : 0;
+			// ob_start();
+			?>
+			<table>
+				<tr>
+					<th><?php esc_html_e( 'From:', '' ); ?></th>
+					<td><?php echo esc_html( $from ); ?></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'To:', '' ); ?></th>
+					<td><?php echo esc_html( $to ); ?></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Total People', '' ); ?></th>
+					<td><?php echo esc_html( $people_total ); ?></td>
+				</tr>
+				<?php if ( ! empty( $peoples ) && is_array( $peoples ) ) { ?>
+					<tr>
+						<th><?php esc_html_e( 'Peoples:', '' ); ?></th>
+						<?php
+						$people_str = '';
+						foreach ( $peoples as $name => $count ) {
+							$people_str .= $name . '-' . $count . ', ';
+						}
+						$people_str = substr( $people_str, 0, -2 );
+						?>
+						<td><?php echo esc_html( $people_str ); ?></td>
+					</tr>
+				<?php } ?>
+				<tr>
+					<th><?php esc_html_e( 'Included Services:', '' ); ?></th>
+					<?php
+					$inc_services_str = '';
+					if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
+						foreach ( $inc_service as $name => $count ) {
+							$inc_services_str .= $name . '-' . $count . ', ';
+						}
+					} else {
+						$inc_services_str .= 'None  ';
+					}
+					$inc_services_str = substr( $inc_services_str, 0, -2 );
+					?>
+					<td><?php echo esc_html( $inc_services_str ); ?></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Additional Services:', '' ); ?></th>
+					<?php
+					$add_services_str = '';
+					if ( ! empty( $add_service ) && is_array( $add_service ) ) {
+						foreach ( $add_service as $name => $count ) {
+							$add_services_str .= $name . '-' . $count . ', ';
+						}
+					} else {
+						$add_services_str .= 'None  ';
+					}
+					$add_services_str = substr( $add_services_str, 0, -2 );
+					?>
+					<td><?php echo esc_html( $add_services_str ); ?></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Total:', '' ); ?></th>
+					<td><?php echo wc_price( esc_html( $total_cost ) ); ?></td>
+				</tr>
+			</table>
+			<?php
+			// $content = ob_get_clean();
+	}
+
+	public function mwb_booking_status_callback() {
+		global $post;
+		$statuses     = $this->mwb_booking_status();
+		$meta         = get_post_meta( $post->ID, 'mwb_meta_data', true );
+		$order_id     = $meta['order_id'];
+		$order        = wc_get_order( $order_id );
+		$order_status = $order->get_status();
+		echo '<pre>'; print_r( $order_status ); echo '</pre>';
+		// if ( 'pending' == $order_status ) {
+		// 	$new_status = 'pending';
+		// } else
+
+		switch ( $order_status ) {
+			case 'pending':
+				$new_status = 'pending';
+				break;
+			case 'processing':
+				$new_status = 'pending';
+				break;
+			case 'on-hold':
+				$new_status = 'on-hold';
+				break;
+			case 'completed':
+				$new_status = 'completed';
+				break;
+			case 'cancelled':
+				$new_status = 'expired';
+				break;
+			case 'failed':
+				$new_status = 'expired';
+				break;
+			case 'refunded':
+				$new_status = 'refunded';
+				break;
+			default:
+				$new_status = 'pending';
+				break;
+		}
+		update_post_meta( $post->ID, 'mwb_booking_status', $new_status );
+		$current_status = get_post_meta( $post->ID, 'mwb_booking_status', true );
+		$current_status = ! empty( $current_status ) ? $current_status : 'pending';
+		?>
+		<div class="mwb_booking_cpt_actions">
+			<div class="mwb_booking_cpt_status">
+				<label for="mwb_booking_status_select"><?php esc_html_e( 'Booking Status:', '' ); ?></label>
+				<select name="mwb_booking_status_select" id="mwb_booking_status_select">
+					<?php foreach ( $statuses as $status => $val ) { ?>
+					<option value="<?php echo esc_html( $status ); ?>" <?php selected( $status, $current_status, true ); ?>><?php echo esc_html( $val ); ?></option>
+					<?php } ?>
+				</select>
+			</div>
+			<div>
+				<label for="mwb_booking_action_select"><?php esc_html_e( 'Booking Actions:', '' ); ?></label>
+				<select name="mwb_booking_action_select" id="mwb_booking_action_select">
+					<option value="send_email"><?php esc_html_e( 'Send Email based on actions' ); ?></option>
+				</select>
+			</div>
+			<div class="mwb_booking_cpt_submit">
+				<input type="submit" name="save" id="publish" class="button button-primary button-large" value="<?php esc_html_e( 'Update', '' ); ?>" >
+			</div>
+		</div>
+		<?php
 	}
 
 	public function mwb_booking_order_data_callback() {
 		global $post;
+		$meta   = get_post_meta( $post->ID, 'mwb_meta_data', true );
+		$status = get_post_meta( $post->ID, 'mwb_booking_status', true );
 		echo '<pre>'; print_r( $post ); echo '</pre>';
-		$status         = isset( $post->post_status ) ? str_replace( 'wc-', '', $post->post_status ) : 'On-hold';
+		echo '<pre>'; print_r( $meta ); echo '</pre>';
+
+		$order_id       = isset( $meta['order_id'] ) ? $meta['order_id'] : '';
+		$product_id     = isset( $meta['product_id'] ) ? $meta['product_id'] : '';
+		$product_name   = get_post( $product_id )->post_name; 
+		$status         = isset( $status ) ? $status : 'pending';
 		$created_date   = isset( $post->post_date ) ? gmdate( 'Y-m-d', strtotime( $post->post_date ) ) : '';
 		$created_time_h = isset( $post->post_date ) ? gmdate( 'H', strtotime( $post->post_date ) ) : '';
 		$created_time_m = isset( $post->post_date ) ? gmdate( 'i', strtotime( $post->post_date ) ) : '';
+
+		// $statuses = get_post_stati();
+		// echo '<pre>'; print_r( $statuses ); echo '</pre>';
 
 		?>
 		<div class="panel woocommerce-order-data" >
@@ -899,11 +1065,29 @@ class Mwb_Wc_Bk_Admin {
 						<span><?php esc_html_e( ':', '' ); ?></span>
 						<input type="number" id="" value="<?php echo esc_html( $created_time_m ); ?>">
 					</p>
+					<p>
+						<label for=""><?php esc_html_e( 'Booking Product', '' ); ?><a href="<?php echo get_edit_post_link( $product_id ); ?>"><?php esc_html_e( 'View Product->', '' ); ?></a></label>
+						<select name="mwb_booking_product_select" id="mwb_booking_product_select" >
+							<option value="<?php echo esc_html( $product_id ); ?>" ><?php echo esc_html( $product_name ); ?></option>
+						</select>
+					</p>
 				</div>
 			</div>
 		</div>
 		<?php
 
+	}
+
+	public function mwb_booking_save_post( $post_id ) {
+		global $post;
+		if ( 'mwb_cpt_booking' !== $post->post_type ) {
+			return;
+		}
+		if ( ! isset( $_POST['save'] ) ) {
+			return;
+		}
+		$status = ! empty( $_POST['mwb_booking_status_select'] ) ? $_POST['mwb_booking_status_select'] : 'pending';
+		update_post_meta( $post->ID, 'mwb_booking_status', $status );
 	}
 
 	public function khbsdk() {
@@ -1606,15 +1790,19 @@ class Mwb_Wc_Bk_Admin {
 
 	/**
 	 * Defining Booking Statuses
-	 *
+	 * confiramtion required, confirmed, Expired, complete, pending payment, on-hold
 	 * @return array
 	 */
 	public function mwb_booking_status() {
 
 		$booking_status = array(
-			'wc-confirmation' => __( 'Confirmation Required', '' ),
-			'wc-confirmed'    => __( 'Confirmed', '' ),
-			'wc-expired'      => __( 'Expired', '' ),
+			'confirmation' => __( 'Confirmation Required', 'mwb-wc-bk' ),
+			'confirmed'    => __( 'Confirmed', 'mwb-wc-bk' ),
+			'expired'      => __( 'Expired', 'mwb-wc-bk' ),
+			'completed'    => __( 'Completed', 'mwb-wc-bk' ),
+			'pending'      => __( 'Pending Payment', 'mwb-wc-bk' ),
+			'on-hold'      => __( 'On Hold', 'mwb-wc-bk' ),
+			'refunded'     => __( 'Refunded', 'mwb-wc-bk' ),
 		);
 		return $booking_status;
 	}
@@ -1632,11 +1820,17 @@ class Mwb_Wc_Bk_Admin {
 
 				$status = array(
 					/* translators: %s: Context */
-					'wc-confirmation' => _nx_noop( 'Confirmation required (%s)', 'Confirmation required (%s)', 'Booking status', '' ),
+					'confirmation' => _nx_noop( 'Confirmation required (%s)', 'Confirmation required (%s)', 'Booking status', 'mwb-wc-bk' ),
 					/* translators: %s: Context */
-					'wc-confirmed'    => _nx_noop( 'Confirmed (%s)', 'Confirmed (%s)', 'Booking status', '' ),
+					'confirmed'    => _nx_noop( 'Confirmed (%s)', 'Confirmed (%s)', 'Booking status', 'mwb-wc-bk' ),
 					/* translators: %s: Context */
-					'wc-expired'      => _nx_noop( 'Expired (%s)', 'Confirmed (%s)', 'Booking status', '' ),
+					'expired'      => _nx_noop( 'Expired (%s)', 'Expired (%s)', 'Booking status', 'mwb-wc-bk' ),
+					/* translators: %s: Context */
+					'completed'    => _nx_noop( 'Completed (%s)', 'Completed (%s)', 'Booking status', 'mwb-wc-bk' ),
+					/* translators: %s: Context */
+					'pending'      => _nx_noop( 'Pending Payment (%s)', 'Pending Payment (%s)', 'Booking status', 'mwb-wc-bk' ),
+					/* translators: %s: Context */
+					'on-hold'      => _nx_noop( 'On Hold (%s)', 'On Hold (%s)', 'Booking status', 'mwb-wc-bk' ),
 				);
 				foreach ( $statuses as $status => $label ) {
 					register_post_status(
@@ -1655,6 +1849,61 @@ class Mwb_Wc_Bk_Admin {
 		// }
 	}
 
+	public function add_to_post_status_dropdown() {
+		global $post;
+		if ( $post->post_type != 'mwb_cpt_booking' ) {
+			return false;
+		}
+		$status = ( $post->post_status == 'completed' ) ? "jQuery( '#post-status-display' ).text( 'Completed' ); jQuery( 
+		'select[name=\"post_status\"]' ).val('completed');" : '';
+		echo "<script>
+		jQuery(document).ready( function() {
+		jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"completed\">Completed</option>' );
+		" . esc_html( $status ) . "
+		});
+		</script>";
+		$status = ( $post->post_status == 'expired' ) ? "jQuery( '#post-status-display' ).text( 'Expired' ); jQuery( 
+			'select[name=\"post_status\"]' ).val('expired');" : '';
+			echo "<script>
+			jQuery(document).ready( function() {
+			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"expired\">Expired</option>' );
+			" . esc_html( $status ) . "
+			});
+			</script>";
+		$status = ( $post->post_status == 'confirmation' ) ? "jQuery( '#post-status-display' ).text( 'Confirmation Required' ); jQuery( 
+			'select[name=\"post_status\"]' ).val('confirmation');" : '';
+			echo "<script>
+			jQuery(document).ready( function() {
+			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"confirmation\">Confirmation Required</option>' );
+			" . esc_html( $status ) . "
+			});
+			</script>";
+		$status = ( $post->post_status == 'pending' ) ? "jQuery( '#post-status-display' ).text( 'Pending Payment' ); jQuery( 
+			'select[name=\"post_status\"]' ).val('pending');" : '';
+			echo "<script>
+			jQuery(document).ready( function() {
+			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"pending\">Pending Payment</option>' );
+			" . esc_html( $status ) . "
+			});
+			</script>";
+		$status = ( $post->post_status == 'on-hold' ) ? "jQuery( '#post-status-display' ).text( 'On Hold' ); jQuery( 
+			'select[name=\"post_status\"]' ).val('on-hold');" : '';
+			echo "<script>
+			jQuery(document).ready( function() {
+			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"on-hold\">On Hold</option>' );
+			" . esc_html( $status ) . "
+			});
+			</script>";
+		$status = ( $post->post_status == 'confirmed' ) ? "jQuery( '#post-status-display' ).text( 'Confirmed' ); jQuery( 
+			'select[name=\"post_status\"]' ).val('confirmed');" : '';
+			echo "<script>
+			jQuery(document).ready( function() {
+			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"confirmed\">Confirmed</option>' );
+			" . esc_html( $status ) . "
+			});
+			</script>";
+	}
+
 	/**
 	 * Show Booking Statuses on the order page
 	 *
@@ -1667,9 +1916,9 @@ class Mwb_Wc_Bk_Admin {
 		// if ( isset( $_GET['post'] ) ) {
 		// 	$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
 		// 	if ( 'mwb_cpt_booking' === $p->post_type ) {
-				$order_status['wc-confirmation'] = esc_html__( 'Confirmation Required', '' );
-				$order_status['wc-confirmed']    = esc_html__( 'Comfirmed', '' );
-				$order_status['wc-expired']      = esc_html__( 'Expired', '' );
+				$order_status['confirmation'] = esc_html__( 'Confirmation Required', 'mwb-wc-bk' );
+				$order_status['confirmed']    = esc_html__( 'Comfirmed', 'mwb-wc-bk' );
+				$order_status['expired']      = esc_html__( 'Expired', 'mwb-wc-bk' );
 		// 	}
 		// }
 

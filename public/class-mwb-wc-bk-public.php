@@ -736,14 +736,18 @@ class Mwb_Wc_Bk_Public {
 	public function mwb_wc_bk_create_booking( $args ) {
 
 		// echo '<pre>'; print_r( $args ); echo '</pre>';die("ok");
-		$title      = 'Booking for order #' . $args['order_id'];
-		$booking_id = wp_insert_post(
+		$product      = get_post( $args['product_id'] );
+		$product_name = $product->post_name;
+		$title        = 'Booking for ' . $product_name;
+		$booking_id   = wp_insert_post(
 			array(
-				'post_type'  => 'mwb_cpt_booking',
-				'post_title' => $title,
+				'post_type'   => 'mwb_cpt_booking',
+				'post_title'  => $title,
+				'post_status' => 'publish',
 			)
 		);
-		
+
+		$args['order_meta']['order_id'] = $args['order_id'];
 		update_post_meta( $booking_id, '_customer_user', $args['user_id'] );
 		update_post_meta( $booking_id, 'mwb_meta_data', $args['order_meta'] );
 		return $booking_id;

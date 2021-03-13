@@ -1007,7 +1007,7 @@ class Mwb_Wc_Bk_Admin {
 				$new_status = 'pending';
 				break;
 		}
-		update_post_meta( $post->ID, 'mwb_booking_status', $new_status );
+		// update_post_meta( $post->ID, 'mwb_booking_status', $new_status );
 		$current_status = get_post_meta( $post->ID, 'mwb_booking_status', true );
 		$current_status = ! empty( $current_status ) ? $current_status : 'pending';
 		?>
@@ -1037,12 +1037,15 @@ class Mwb_Wc_Bk_Admin {
 		global $post;
 		$meta   = get_post_meta( $post->ID, 'mwb_meta_data', true );
 		$status = get_post_meta( $post->ID, 'mwb_booking_status', true );
-		echo '<pre>'; print_r( $post ); echo '</pre>';
-		echo '<pre>'; print_r( $meta ); echo '</pre>';
+		// echo '<pre>'; print_r( $post ); echo '</pre>';
+		// echo '<pre>'; print_r( $meta ); echo '</pre>';
 
 		$order_id       = isset( $meta['order_id'] ) ? $meta['order_id'] : '';
+		$customer_id    = wc_get_order( $order_id )->get_data()['customer_id'];
+		$user           = get_user_by( 'ID', $customer_id );
+		// echo '<pre>'; print_r( $user->user_login ); echo '</pre>';
 		$product_id     = isset( $meta['product_id'] ) ? $meta['product_id'] : '';
-		$product_name   = get_post( $product_id )->post_name; 
+		$product_name   = get_post( $product_id )->post_name;
 		$status         = isset( $status ) ? $status : 'pending';
 		$created_date   = isset( $post->post_date ) ? gmdate( 'Y-m-d', strtotime( $post->post_date ) ) : '';
 		$created_time_h = isset( $post->post_date ) ? gmdate( 'H', strtotime( $post->post_date ) ) : '';
@@ -1058,19 +1061,40 @@ class Mwb_Wc_Bk_Admin {
 				<div class="mwb_booking_data_column">
 					<h3><?php esc_html_e( 'General data', '' ); ?></h3>
 					<p class="form-field form-field-wide" >
-						<label for=""><?php esc_html_e( 'Booking Created', '' ); ?></label>
+						<label for=""><?php esc_html_e( 'Booking Created', 'mwb-wc-bk' ); ?></label>
 						<input type="text" id="" value="<?php echo esc_html( $created_date ); ?>" >
-						<span><?php esc_html_e( '@', '' ); ?></span>
+						<span><?php esc_html_e( '@', 'mwb-wc-bk' ); ?></span>
 						<input type="number" id="" value="<?php echo esc_html( $created_time_h ); ?>">
-						<span><?php esc_html_e( ':', '' ); ?></span>
+						<span><?php esc_html_e( ':', 'mwb-wc-bk' ); ?></span>
 						<input type="number" id="" value="<?php echo esc_html( $created_time_m ); ?>">
 					</p>
 					<p>
-						<label for=""><?php esc_html_e( 'Booking Product', '' ); ?><a href="<?php echo get_edit_post_link( $product_id ); ?>"><?php esc_html_e( 'View Product->', '' ); ?></a></label>
+						<label for=""><?php esc_html_e( 'Booking Product', 'mwb-wc-bk' ); ?><a href="<?php echo esc_url( get_edit_post_link( $product_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Product ->', '' ); ?></a></label>
 						<select name="mwb_booking_product_select" id="mwb_booking_product_select" >
 							<option value="<?php echo esc_html( $product_id ); ?>" ><?php echo esc_html( $product_name ); ?></option>
 						</select>
 					</p>
+					<p>
+						<label for="mwb_booking_order_select"><?php esc_html_e( 'Booking Order', 'mwb-wc-bk' ); ?><a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Order ->', '' ); ?></a></label>
+						<select name="mwb_booking_order_select" id="mwb_booking_order_select" >
+							<option value="<?php echo esc_html( $order_id ); ?>" ><?php echo esc_html( sprintf( '#%d - Order', $order_id ) ); ?></option>
+						</select>
+					</p>
+					<p>
+						<label for=""><?php esc_html_e( 'Customer', 'mwb-wc-bk' ); ?><a href="<?php echo esc_url( get_edit_user_link( $customer_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Customer ->', '' ); ?></a></label>
+						<select name="mwb_booking_user_select" id="mwb_booking_user_select" >
+							<option value="<?php echo esc_html( $order_id ); ?>" ><?php echo esc_html( sprintf( '%1s (#%d - %2s)', $user->user_login, $order_id, $user->user_email ) ); ?></option>
+						</select>
+					</p>
+				</div>
+
+				<div>
+					<h3><?php esc_html_e( 'Booking Data', '' ); ?></h3>
+					<div class="">
+						<p>
+							<label for=""><?php  ?></label>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1087,7 +1111,7 @@ class Mwb_Wc_Bk_Admin {
 			return;
 		}
 		$status = ! empty( $_POST['mwb_booking_status_select'] ) ? $_POST['mwb_booking_status_select'] : 'pending';
-		update_post_meta( $post->ID, 'mwb_booking_status', $status );
+		update_post_meta( $post_id, 'mwb_booking_status', $status );
 	}
 
 	public function khbsdk() {
@@ -1107,6 +1131,38 @@ class Mwb_Wc_Bk_Admin {
 		$this->booking_register_taxonomy_cost();
 
 		flush_rewrite_rules();
+	}
+
+	public function mwb_booking_schedule_status() {
+	
+		$args = array(
+			'numberposts' => -1,
+			'post_type'   => 'mwb_cpt_booking',
+			'post_status' => array( 'publish' ),
+			'meta_query'  => array(
+				array(
+					'relation' => 'AND',
+					array(
+						'key'     => 'mwb_booking_status',
+						'compare' => 'EXISTS',
+					),
+					array(
+						'key'     => 'mwb_booking_status',
+						'value'   => 'expired',
+						'compare' => '!=',
+					),
+				),
+			),
+		);
+		// echo '<pre>'; print_r( $args ); echo '</pre>';
+		$bookings = get_posts( $args );
+
+		foreach ( $bookings as $booking => $value ) {
+			$booking_id = $value->ID;
+		}
+
+		// echo '<pre>'; print_r( get_posts( $args ) ); echo '</pre>';die('defvkj');
+		
 	}
 
 	/**

@@ -19,6 +19,8 @@ jQuery(document).ready( function($) {
 	create_booking_order_select2($);
 	create_booking_product_details($);
 	booking_product_select2($);
+	booking_order_select2($);
+	booking_user_select2($);
 	ct_custom_fields($);
 
 	if ( screen_id == 'mwb_cpt_booking_page_calendar' ) {
@@ -267,6 +269,41 @@ function create_booking_order_select2($) {
   });
 }
 
+function booking_order_select2($) {
+	if( ! jQuery('#mwb_booking_order_select').length > 0 ) {
+		return;
+	}
+	jQuery('#mwb_booking_order_select').select2({
+		ajax:{
+			  url: mwb_booking_obj.ajaxurl,
+			  dataType: 'json',
+			  delay: 200,
+			  data: function (params) {
+					return {
+					  q: params.term,
+					  action: 'create_booking_order_search'
+					};
+			  },
+			  processResults: function( data ) {
+			  var options = [];
+			  if ( data ) 
+			  {
+				  $.each( data, function( index, text )
+				  {
+					  text[1]+='(#'+text[0]+')';
+					  options.push( { id: text[0], text: text[1] } );
+				  });
+			  }
+			  return {
+				  results:options
+			  };
+		  },
+		  cache: true
+	  },
+	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+  });
+}
+
 function booking_product_select2($) {
 	if( ! jQuery('#mwb_booking_product_select').length > 0 ) {
 		return;
@@ -280,6 +317,41 @@ function booking_product_select2($) {
 					return {
 					  q: params.term,
 					  action: 'create_booking_product_search'
+					};
+			  },
+			  processResults: function( data ) {
+			  var options = [];
+			  if ( data ) 
+			  {
+				  $.each( data, function( index, text )
+				  {
+					  text[1]+='( #'+text[0]+')';
+					  options.push( { id: text[0], text: text[1] } );
+				  });
+			  }
+			  return {
+				  results:options
+			  };
+		  },
+		  cache: true
+	  },
+	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+  });
+}
+
+function booking_user_select2($) {
+	if( ! jQuery('#mwb_booking_user_select').length > 0 ) {
+		return;
+	}
+	jQuery('#mwb_booking_user_select').select2({
+		ajax:{
+			  url: mwb_booking_obj.ajaxurl,
+			  dataType: 'json',
+			  delay: 200,
+			  data: function (params) {
+					return {
+					  q: params.term,
+					  action: 'create_booking_user_search'
 					};
 			  },
 			  processResults: function( data ) {

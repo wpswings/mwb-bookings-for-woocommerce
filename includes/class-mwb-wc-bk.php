@@ -268,6 +268,8 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'manage_mwb_cpt_booking_posts_custom_column', $plugin_admin, 'mwb_booking_manage_custom_columns', 10, 2 );
 
 		$this->loader->add_action( 'wp_ajax_get_booking_details', $plugin_admin, 'get_booking_details' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_booking_schedule_status' );
 	}
 
 	/**

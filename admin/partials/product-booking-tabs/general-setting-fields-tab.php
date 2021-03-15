@@ -31,17 +31,17 @@
 		<p class="form-field">
 			<label for="mwb_start_booking_date"><?php esc_html_e( 'Start date in Booking Form', 'mwb-wc-bk' ); ?></label>
 			<select name="mwb_start_booking_from" id="mwb_start_booking_date">
-				<option value="none" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'none' ); ?>><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
+				<!-- <option value="none" <?php // selected( $this->setting_fields['mwb_start_booking_from'], 'none' ); ?>><?php // esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 				<option value="today" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'today' ); ?>><?php esc_html_e( 'Today', 'mwb-wc-bk' ); ?></option>
 				<option value="tomorrow" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'tomorrow' ); ?>><?php esc_html_e( 'Tomorrow', 'mwb-wc-bk' ); ?></option>
-				<!-- <option value="initially_available" <?php // selected( $this->setting_fields['mwb_start_booking_from'], 'initially_available' ); ?>><?php // esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option> -->
+				<option value="initially_available" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'initially_available' ); ?>><?php esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option>
 				<option value="custom_date" <?php selected( $this->setting_fields['mwb_start_booking_from'], 'custom_date' ); ?>><?php esc_html_e( 'Custom Date', 'mwb-wc-bk' ); ?></option>
 			</select>
-			<select name="mwb_start_booking_time" id="mwb_start_booking_time" style="display:none">
-				<option value="none" <?php selected( $this->setting_fields['mwb_start_booking_time'], 'none' ); ?> ><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
-				<option value="initially_available" <?php selected( $this->setting_fields['mwb_start_booking_time'], 'initially_available' ); ?>><?php esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option>
+			<!-- <select name="mwb_start_booking_time" id="mwb_start_booking_time" style="display:none">
+				<option value="none" <?php // selected( $this->setting_fields['mwb_start_booking_time'], 'none' ); ?> ><?php // esc_html_e( 'None', 'mwb-wc-bk' ); ?></option>
+				<option value="initially_available" <?php // selected( $this->setting_fields['mwb_start_booking_time'], 'initially_available' ); ?>><?php // esc_html_e( 'Initially Available', 'mwb-wc-bk' ); ?></option>
 			</select>
-			<label for="mwb_start_booking_time" style="display:none"><?php esc_html_e( 'Time:', 'mwb-wc-bk' ); ?></label>
+			<label for="mwb_start_booking_time" style="display:none"><?php // esc_html_e( 'Time:', 'mwb-wc-bk' ); ?></label> -->
 		</p>	
 		<p class="form-field" id="mwb_start_booking_custom_date_field">	
 			<label for="mwb_start_booking_custom_date"><?php esc_html_e( 'Custom date to start booking', 'mwb-wc-bk' ); ?></label>

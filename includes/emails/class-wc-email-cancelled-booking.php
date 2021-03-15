@@ -40,7 +40,7 @@ class WC_Booking_Cancelled extends WC_Email {
 		// Action to which we hook onto to send the email.
 
 		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
-		add_action( 'woocommerce_order_status_cancelled', array( $this, 'trigger' ), 10, 2 );
+		add_action( 'mwb_booking_send_email_expired', array( $this, 'trigger' ), 10, 2 );
 
 		parent::__construct();
 	}

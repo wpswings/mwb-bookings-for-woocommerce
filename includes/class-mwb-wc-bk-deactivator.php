@@ -31,6 +31,7 @@ class Mwb_Wc_Bk_Deactivator {
 	 */
 	public static function deactivate() {
 
+		as_unschedule_action( 'mwb_booking_status_schedule' );
 	}
 
 }

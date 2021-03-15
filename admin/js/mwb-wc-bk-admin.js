@@ -402,26 +402,26 @@ function product_general_settings_js($) {
 	var duration = $( '#mwb_booking_general_data #mwb_booking_unit_duration' ).val();
 	switch( duration ) {
 		case 'hour':
-			$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
-			$('#mwb_booking_general_data #mwb_start_booking_time').show();
+			// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
+			// $('#mwb_booking_general_data #mwb_start_booking_time').show();
 			$( '#mwb_full_day_select' ).hide();
 			$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 			break;
 		case 'month':
-			$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
-			$('#mwb_booking_general_data #mwb_start_booking_time').hide();
+			// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
+			// $('#mwb_booking_general_data #mwb_start_booking_time').hide();
 			$( '#mwb_full_day_select' ).hide();
 			$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 			break;
 		case 'day':
 			$( '#mwb_full_day_select' ).show();
-			$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
-			$('#mwb_booking_general_data #mwb_start_booking_time').hide()
+			// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
+			// $('#mwb_booking_general_data #mwb_start_booking_time').hide()
 			$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 			break;
 		case 'minute':
-			$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
-			$('#mwb_booking_general_data #mwb_start_booking_time').show();
+			// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
+			// $('#mwb_booking_general_data #mwb_start_booking_time').show();
 			$( '#mwb_full_day_select' ).hide();
 			$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', 60 ).attr( 'min', 0 ).attr( 'step', 15 );				
 			break;
@@ -563,26 +563,26 @@ function product_general_settings_js($) {
 		
 		switch( duration ) {
 			case 'hour':
-				$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
-				$('#mwb_booking_general_data #mwb_start_booking_time').show();
+				// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
+				// $('#mwb_booking_general_data #mwb_start_booking_time').show();
 				$( '#mwb_full_day_select' ).hide();
 				$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 				break;
 			case 'month':
-				$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
-				$('#mwb_booking_general_data #mwb_start_booking_time').hide();
+			// 	$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
+			// 	$('#mwb_booking_general_data #mwb_start_booking_time').hide();
 				$( '#mwb_full_day_select' ).hide();
 				$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 				break;
 			case 'day':
 				$( '#mwb_full_day_select' ).show();
-				$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
-				$('#mwb_booking_general_data #mwb_start_booking_time').hide()
+				// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
+				// $('#mwb_booking_general_data #mwb_start_booking_time').hide()
 				$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 				break;
 			case 'minute':
-				$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
-				$('#mwb_booking_general_data #mwb_start_booking_time').show();
+				// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
+				// $('#mwb_booking_general_data #mwb_start_booking_time').show();
 				$( '#mwb_full_day_select' ).hide();
 				$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', 60 ).attr( 'min', 0 ).attr( 'step', 15 );				
 				break;

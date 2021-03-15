@@ -25,7 +25,7 @@ if ( isset( $_POST['mwb_booking_settings_save'] ) ) {
 	$mwb_booking_setting_options = array();
 
 	$mwb_booking_setting_options['mwb_booking_setting_go_enable']             = ! empty( $_POST['mwb_booking_setting_go_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_enable'] ) ) : 'no';
-	$mwb_booking_setting_options['mwb_booking_setting_go_complete_status']    = ! empty( $_POST['mwb_booking_setting_go_complete_status'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_complete_status'] ) ) : '';
+	$mwb_booking_setting_options['mwb_booking_setting_go_confirm_status']    = ! empty( $_POST['mwb_booking_setting_go_confirm_status'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_confirm_status'] ) ) : '';
 	$mwb_booking_setting_options['mwb_booking_setting_go_reject']             = ! empty( $_POST['mwb_booking_setting_go_reject'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_reject'] ) ) : '';
 	$mwb_booking_setting_options['mwb_booking_setting_bo_inc_service_enable'] = ! empty( $_POST['mwb_booking_setting_bo_inc_service_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_inc_service_enable'] ) ) : 'no';
 	$mwb_booking_setting_options['mwb_booking_setting_bo_service_cost']       = ! empty( $_POST['mwb_booking_setting_bo_service_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_cost'] ) ) : 'no';
@@ -69,12 +69,12 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booki
 				<tr valign="top">
 
 					<th scope="row" class="">
-						<label for="mwb_booking_setting_go_complete_input"><?php esc_html_e( 'Change Status to Complete after days', 'mwb-wc-bk' ); ?></label>
+						<label for="mwb_booking_setting_go_complete_input"><?php esc_html_e( 'Change Status to Confirmed after days', 'mwb-wc-bk' ); ?></label>
 					</th>
 
 					<td class="forminp forminp-text">
-						<input type="number" id="mwb_booking_setting_go_complete_input" name="mwb_booking_setting_go_complete_status" value="<?php echo esc_html( $mwb_booking_settings['mwb_booking_setting_go_complete_status'] ); ?>" class="" step="1" min="1">
-						<p><?php esc_html_e( 'When this limit is reached, paid Bookings will be set to Completed automatically when the End Date exceeds the specified number of days.', 'mwb-wc-bk' ); ?></p>
+						<input type="number" id="mwb_booking_setting_go_confirm_input" name="mwb_booking_setting_go_confirm_status" value="<?php echo esc_html( $mwb_booking_settings['mwb_booking_setting_go_confirm_status'] ); ?>" class="" step="1" min="1">
+						<p><?php esc_html_e( 'When this limit is reached, paid(complete) Bookings will be set to Confirmed automatically when the End Date exceeds the specified number of days.', 'mwb-wc-bk' ); ?></p>
 					</td>
 				</tr>
 				<tr valign="top">
@@ -85,7 +85,7 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booki
 
 					<td class="forminp forminp-text">
 						<input type="number" id="mwb_booking_setting_go_reject_input" name="mwb_booking_setting_go_reject" value="<?php echo esc_html( $mwb_booking_settings['mwb_booking_setting_go_reject'] ); ?>" class="" step="1" min="1">
-						<p><?php esc_html_e( 'When this limit is reached, unpaid Bookings will be Rejected automatically when the End Date exceeds the specified number of days.', 'mwb-wc-bk' ); ?></p>
+						<p><?php esc_html_e( 'When this limit is reached, unpaid Bookings will be Cancelled automatically when the End Date exceeds the specified number of days.', 'mwb-wc-bk' ); ?></p>
 					</td>
 				</tr>
 			</tbody>

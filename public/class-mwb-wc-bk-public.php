@@ -700,6 +700,7 @@ class Mwb_Wc_Bk_Public {
 						$this->save_booking_order_data( $order_id, $booking_id );
 						$order_item->save_meta_data();
 						$order->add_order_note( sprintf( __( 'A new booking <a href="%s">#%s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );
+						$this->booking_status_acc_order_status( $order_id, $booking_id );
 					}
 				}
 			}
@@ -708,6 +709,48 @@ class Mwb_Wc_Bk_Public {
 		// if ( 'booking' === $order_type ) {
 		// 	update_post_meta( $order_id, 'booking_order', 'yes' );
 		// }
+	}
+
+	/**
+	 * Changing Booking Status according to order status, when a order is created
+	 *
+	 * @param [int] $order_id  ID of the order created.
+	 * @param [int] $booking_id ID of the booking created.
+	 * @return void
+	 */
+	public function booking_status_acc_order_status( $order_id, $booking_id ) {
+
+		$order        = wc_get_order( $order_id );
+		$order_status = $order->get_status();
+		echo '<pre>'; print_r( $order_status ); echo '</pre>';
+
+		switch ( $order_status ) {
+			case 'pending':
+				$new_status = 'pending';
+				break;
+			case 'processing':
+				$new_status = 'pending';
+				break;
+			case 'on-hold':
+				$new_status = 'on-hold';
+				break;
+			case 'completed':
+				$new_status = 'completed';
+				break;
+			case 'cancelled':
+				$new_status = 'expired';
+				break;
+			case 'failed':
+				$new_status = 'expired';
+				break;
+			case 'refunded':
+				$new_status = 'refunded';
+				break;
+			default:
+				$new_status = 'pending';
+				break;
+		}
+		update_post_meta( $booking_id, 'mwb_booking_status', $new_status );
 	}
 
 	/**
@@ -724,6 +767,8 @@ class Mwb_Wc_Bk_Public {
 		foreach ( $meta_data as $key => $value ) {
 			update_post_meta( $booking_id, $key, $value[0] );
 		}
+
+
 	}
 
 	/**

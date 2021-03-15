@@ -55,8 +55,8 @@ class WC_Booking_Completed extends WC_Email {
 		// add_action( 'woocommerce_order_status_pending_to_cancelled_notification', array( $this, 'trigger' ) );
 		// add_action( 'woocommerce_order_status_on-hold_to_cancelled_notification', array( $this, 'trigger' ) );
 
-		add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
-		add_action( 'woocommerce_order_status_expired', array( $this, 'trigger' ), 10, 2 );
+		add_action( 'mwb_booking_send_email_completed', array( $this, 'trigger' ), 10, 2 );
+
 
 		// add_action( 'woocommerce_order_status__notification', array( $this, 'trigger' ), 10, 2 );
 		// add_action( 'woocommerce_order_status_booking-unpaid_to_booking-paid_notification', array( $this, 'trigger' ), 10, 2 );

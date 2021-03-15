@@ -33,7 +33,7 @@ class Mwb_Wc_Bk_Activator {
 
 		if ( ! as_next_scheduled_action( 'mwb_booking_status_schedule' ) ) {
 
-			as_schedule_recurring_action( time(), 300, 'mwb_booking_status_schedule' );
+			as_schedule_recurring_action( time(), 3600, 'mwb_booking_status_schedule' );
 		}
 	}
 

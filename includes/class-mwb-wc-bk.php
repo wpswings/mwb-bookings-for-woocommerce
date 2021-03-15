@@ -269,7 +269,7 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_get_booking_details', $plugin_admin, 'get_booking_details' );
 
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_booking_schedule_status' );
+		$this->loader->add_action( 'mwb_booking_status_schedule', $plugin_admin, 'mwb_booking_schedule_status' );
 	}
 
 	/**

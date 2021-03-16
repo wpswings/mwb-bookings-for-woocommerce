@@ -57,7 +57,6 @@ class WC_Booking_Completed extends WC_Email {
 
 		add_action( 'mwb_booking_send_email_completed', array( $this, 'trigger' ), 10, 2 );
 
-
 		// add_action( 'woocommerce_order_status__notification', array( $this, 'trigger' ), 10, 2 );
 		// add_action( 'woocommerce_order_status_booking-unpaid_to_booking-paid_notification', array( $this, 'trigger' ), 10, 2 );
 

@@ -55,9 +55,11 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 			}
 		}
 		update_option( 'mwb_global_avialability_rules', $rule_arr );
+
 	} else {
 		echo esc_html__( 'Add a new Availability rule', 'mwb-wc-bk' );
 	}
+	update_option( 'mwb_global_availability_rules_count', $rule_count );
 }
 
 $availability_rules = get_option( 'mwb_global_avialability_rules', array() );

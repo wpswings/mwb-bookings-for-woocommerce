@@ -138,7 +138,7 @@ class MWB_Woocommerce_Booking_Availability {
 
 										if ( $k === $date ) {
 											foreach ( $slot as $key => $value ) {
-												$slots[ $date ][ $key ] = $rule_bookable;
+												$slots[ $date ][ $key ]['book'] = $rule_bookable;
 											}
 										} else {
 											continue;
@@ -154,7 +154,7 @@ class MWB_Woocommerce_Booking_Availability {
 												// echo $status;
 												if ( 'no-change' !== $status ) {
 													foreach ( $slot as $key => $value ) {
-														$slots[ $date ][ $key ] = $status;
+														$slots[ $date ][ $key ]['book'] = $status;
 													}
 												}
 											} else {
@@ -171,7 +171,7 @@ class MWB_Woocommerce_Booking_Availability {
 
 										if ( $k === $date ) {
 											foreach ( $slot as $key => $value ) {
-												$slots[ $date ][ $key ] = $rule_bookable;
+												$slots[ $date ][ $key ]['book'] = $rule_bookable;
 											}
 										} else {
 											continue;
@@ -187,7 +187,7 @@ class MWB_Woocommerce_Booking_Availability {
 												// echo $status;
 												if ( 'no-change' !== $status ) {
 													foreach ( $slot as $key => $value ) {
-														$slots[ $date ][ $key ] = $status;
+														$slots[ $date ][ $key ]['book'] = $status;
 													}
 												}
 											} else {
@@ -204,7 +204,7 @@ class MWB_Woocommerce_Booking_Availability {
 
 										if ( $k === $date ) {
 											foreach ( $slot as $key => $value ) {
-												$slots[ $date ][ $key ] = $rule_bookable;
+												$slots[ $date ][ $key ]['book'] = $rule_bookable;
 											}
 										} else {
 											continue;
@@ -220,7 +220,7 @@ class MWB_Woocommerce_Booking_Availability {
 												// echo $status;
 												if ( 'no-change' !== $status ) {
 													foreach ( $slot as $key => $value ) {
-														$slots[ $date ][ $key ] = $status;
+														$slots[ $date ][ $key ]['book'] = $status;
 													}
 												}
 											} else {
@@ -239,7 +239,7 @@ class MWB_Woocommerce_Booking_Availability {
 								if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
 									$status = $rule_bookable;
 									foreach ( $slot as $k => $v ) {
-										$slots[ $date ][ $k ] = $status;
+										$slots[ $date ][ $k ]['book'] = $status;
 									}
 								} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
 									if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
@@ -247,7 +247,7 @@ class MWB_Woocommerce_Booking_Availability {
 										$status = $rule_weekdays_book[ $day ];
 										if ( 'no-change' !== $status ) {
 											foreach ( $slot as $key => $value ) {
-												$slots[ $date ][ $key ] = $status;
+												$slots[ $date ][ $key ]['book'] = $status;
 											}
 										}
 									}
@@ -334,7 +334,7 @@ class MWB_Woocommerce_Booking_Availability {
 				$day = lcfirst( gmdate( 'l', strtotime( $date ) ) );
 				if ( in_array( $day, $not_allowed_days, true ) ) {
 					foreach ( $slot as $key => $value ) {
-						$slots[ $date ][ $key ] = 'non-bookable';
+						$slots[ $date ][ $key ]['book'] = 'non-bookable';
 					}
 				}
 			}
@@ -344,6 +344,134 @@ class MWB_Woocommerce_Booking_Availability {
 		return $slots;
 	}
 
+	public function manage_avaialability_acc_to_created_bookings( $product_id, $slots ) {
+
+		$args = array(
+			'numberposts' => -1,
+			'post_type'   => 'mwb_cpt_booking',
+			'post_status' => 'publish',
+			'meta_query'  => array(
+				array(
+					'relation' => 'AND',
+					array(
+						'key'     => 'mwb_booking_status',
+						'compare' => 'EXISTS',
+					),
+					array(
+						'key'     => 'mwb_booking_status',
+						'value'   => 'expired',
+						'compare' => '!=',
+					),
+				),
+			),
+		);
+
+		$bookings     = get_posts( $args );
+		$max_bookings = get_post_meta( $product_id, 'mwb_max_bookings_per_unit', true );
+		// $unit_dura    = get_post_meta( $product_id, 'mwb_booking_unit_duration', true );
+
+		foreach ( $bookings as $booking => $obj ) {
+
+			$booking_id   = $obj->ID;
+			$booking_meta = get_post_meta( $booking_id, 'mwb_meta_data', true );
+			$p_id         = $booking_meta['product_id'];
+			$start_date   = gmdate( 'Y-m-d', strtotime( $booking_meta['start_date'] ) );
+			$start_time   = gmdate( 'H:i:s', $booking_meta['start_timestamp'] );
+			$end_date     = isset( $booking_meta['end_date'] ) ? gmdate( 'Y-m-d', strtotime( $booking_meta['end_date'] ) ) : gmdate( 'Y-m-d', $booking_meta['end_timestamp'] );
+			$end_time     = gmdate( 'H:i:s', $booking_meta['end_timestamp'] );
+			$duration     = $booking_meta['duration'];
+			$unit_dur     = $booking_meta['unit_dur'];
+
+			$unit_dur_input = $booking_meta['unit_dur_input'];
+
+			if ( $p_id === $product_id ) {
+				// echo '<pre>'; print_r( $end_date ); echo '</pre>';die('vb');
+				if ( array_key_exists( $start_date, $slots ) ) {
+					foreach ( $slots as $date => $slot ) {
+						// echo '<pre>'; print_r( $start_date ); echo '</pre>';
+						// echo '<pre>'; print_r( $end_date ); echo '</pre>';
+						$date_arr = $this->availability_date_range( $start_date, $end_date, '+1 day', 'Y-m-d' );
+						// echo '<pre>'; print_r( $date_arr ); echo '</pre>';die('bb');
+						if ( array_key_exists( $date, $date_arr ) ) {
+							// die('hsdbvgfjhsvdhj');
+							if ( 'day' === $unit_dur ) {
+								foreach ( $slot as $k => $v ) {
+									$slots[ $date ][ $k ]['booking_count'] += 1;
+									// if ( $max_bookings <= $v['booking_count'] ) {
+									// 	$slots[ $date ][ $k ]['book'] = 'non-bookable';
+									// }
+								}
+							} elseif ( 'hour' === $unit_dur || 'minute' === $unit_dur ) {
+								foreach ( $slot as $k => $v ) {
+									$arr = $this->extract_time_slot( $start_time, $end_time, $date, $unit_dur, $unit_dur_input );
+									// die('cv');
+									if ( in_array( $k, $arr ) ) {
+										$slots[ $date ][ $k ]['booking_count'] += 1;
+									}
+									// if ( $max_bookings <= $v['booking_count'] ) {
+									// 	$slots[ $date ][ $k ]['book'] = 'non-bookable';
+									// }
+									// echo '<pre>'; print_r( $arr ); echo '</pre>';
+								}
+							}
+						}
+						//  elseif ( $date === $end_date ) {
+						// 	if ( 'day' === $unit_dur ) {
+						// 		foreach ( $slot as $k => $v ) {
+						// 			$slots[ $date ][ $k ]['booking_count'] += 1;
+						// 			// if ( $max_bookings <= $v['booking_count'] ) {
+						// 			// 	$slots[ $date ][ $k ]['book'] = 'non-bookable';
+						// 			// }
+						// 		}
+						// 	}
+						// }
+					}
+				}
+			}
+
+			foreach ( $slots as $date => $slot ) {
+				foreach ( $slot as $k => $v ) {
+					if ( $max_bookings <= $v['booking_count'] ) {
+						$slots[ $date ][ $k ]['book'] = 'non-bookable';
+					}
+				}
+			}
+		}
+
+		return $slots;
+		// die("ghjkl");
+		// echo '<pre>'; print_r( $bookings ); echo '</pre>';
+	}
+
+	/**
+	 * Prepare another array of the slots to compare the slots array.
+	 *
+	 * @param [type] $start_time Start Time of the booking.
+	 * @param [type] $end_time   End time of the booking.
+	 * @param [type] $date       Date of the booking.
+	 * @param [type] $unit_dur   Unit Duration of the Booking unit.
+	 * @param [type] $unit_dur_input Unit duration input of the booking unit.
+	 * @return array
+	 */
+	public function extract_time_slot( $start_time, $end_time, $date, $unit_dur, $unit_dur_input ) {
+
+		$arr = array();
+
+		// echo '<pre>'; print_r( $unit_dur ); echo '</pre>';
+		// echo '<pre>'; print_r( $unit_dur_input ); echo '</pre>';
+		$start = gmdate( 'H:i:s', strtotime( $start_time, strtotime( $date ) ) );
+		$end   = gmdate( 'H:i:s', strtotime( '+' . $unit_dur_input . ' ' . $unit_dur, strtotime( $start, strtotime( $date ) ) ) );
+		// echo '<pre>'; print_r( $start ); echo '</pre>';
+		// echo '<pre>'; print_r( $end ); echo '</pre>';
+		while ( strtotime( $end, strtotime( $date ) ) <= strtotime( $end_time, strtotime( $date ) ) ) {
+
+			$arr[] = $start . '-' . $end;
+			// echo '<pre>'; print_r( $arr ); echo '</pre>';die('cv');
+			$start = gmdate( 'H:i:s', strtotime( $end, strtotime( $date ) ) );
+			$end   = gmdate( 'H:i:s', strtotime( '+' . $unit_dur_input . ' ' . $unit_dur, strtotime( $start, strtotime( $date ) ) ) );
+		}
+		return $arr;
+	}
 
 }
 

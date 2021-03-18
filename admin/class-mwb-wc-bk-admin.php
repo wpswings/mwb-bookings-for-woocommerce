@@ -2114,12 +2114,13 @@ class Mwb_Wc_Bk_Admin {
 	public function mwb_booking_manage_custom_columns( $column, $post_id ) {
 
 		$booking_meta   = get_post_meta( $post_id, 'mwb_meta_data', true );
+		// echo '<pre>'; print_r( $booking_meta ); echo '</pre>';
 		$booking_status = get_post_meta( $post_id, 'mwb_booking_status', true );
 		switch ( $column ) {
 			case 'from':
 				if ( isset( $booking_meta['start_date'] ) ) {
 					$start_date = $booking_meta['start_date'];
-					$from       = gmdate( 'Y/m/d H:i:s', strtotime( $start_date ) );
+					$from       = gmdate( 'd-m-Y, h:i a', $booking_meta['start_timestamp'] );
 					echo esc_html( $from );
 				} else {
 					echo '-';
@@ -2128,7 +2129,7 @@ class Mwb_Wc_Bk_Admin {
 			case 'to':
 				if ( isset( $booking_meta['end_timestamp'] ) ) {
 					$end_timestamp = $booking_meta['end_timestamp'];
-					$to            = gmdate( 'Y-m-d h:i:s a', $end_timestamp );
+					$to            = gmdate( 'd-m-Y, h:i a', $end_timestamp );
 					echo esc_html( $to );
 				} else {
 					echo '-';

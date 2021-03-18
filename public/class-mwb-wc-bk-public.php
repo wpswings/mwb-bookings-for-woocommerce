@@ -245,7 +245,10 @@ class Mwb_Wc_Bk_Public {
 					if ( 'hour' === $unit_duration || 'minute' === $unit_duration ) {
 						while ( strtotime( $end_time, strtotime( $date ) ) <= strtotime( $daily_end_time, strtotime( $date ) ) ) {
 
-							$s[ $start_time . '-' . $end_time ] = 'bookable';
+							$s[ $start_time . '-' . $end_time ] = array(
+								'book'          => 'bookable',
+								'booking_count' => 0,
+							);
 
 							$start_time = gmdate( 'H:i:s', strtotime( $end_time, strtotime( $date ) ) );
 							$end_time   = gmdate( 'H:i:s', strtotime( '+' . $unit_input . ' ' . $unit_duration, strtotime( $start_time, strtotime( $date ) ) ) );
@@ -256,7 +259,10 @@ class Mwb_Wc_Bk_Public {
 						$start_time = gmdate( 'H:i:s', strtotime( $daily_start_time, strtotime( $date ) ) );
 						$end_time   = gmdate( 'H:i:s', strtotime( $daily_end_time, strtotime( $date ) ) );
 
-						$s[ $start_time . '-' . $end_time ] = 'bookable';
+						$s[ $start_time . '-' . $end_time ] = array(
+							'book'          => 'bookable',
+							'booking_count' => 0,
+						);
 					}
 					$slots[ $date ] = $s;
 				}
@@ -273,12 +279,12 @@ class Mwb_Wc_Bk_Public {
 		$availability_instance = MWB_Woocommerce_Booking_Availability::get_availability_instance();
 		$slot_arr              = $availability_instance->check_product_global_availability( $product_id, $slots );
 		$slot_arr              = $availability_instance->check_product_setting_availability( $product_id, $slot_arr );
+		$slot_arr              = $availability_instance->manage_avaialability_acc_to_created_bookings( $product_id, $slot_arr );
 
 		update_post_meta( $product_id, 'mwb_booking_product_slots', $slot_arr );
-		$this->mwb_product_slots = $slot_arr;
+		// $this->mwb_product_slots = $slot_arr;
 		// echo '<pre>'; print_r( $slot_arr ); echo '</pre>';
 		// die('pl');
-
 	}
 
 	/**
@@ -323,7 +329,8 @@ class Mwb_Wc_Bk_Public {
 		$start_date = gmdate( 'Y-m-d', strtotime( $start_date ) );
 
 		$unit_duration = get_post_meta( $product_id, 'mwb_booking_unit_duration', true );
-		$slots         = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
+
+		$slots = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
 
 		if ( ! empty( $product_id ) && ! empty( $start_date ) ) {
 			if ( 'hour' === $unit_duration || 'minute' === $unit_duration ) {
@@ -335,7 +342,7 @@ class Mwb_Wc_Bk_Public {
 							<select type="text" id="mwb-wc-bk-time-slot-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-time" name="time_slot" required>
 								<?php
 								foreach ( $slots[ $start_date ] as $k => $v ) {
-									if ( 'bookable' === $v ) {
+									if ( 'bookable' === $v['book'] ) {
 										$s =  explode('-' , $k);
 										?>
 										<option value="<?php echo strtotime( $s[0], strtotime( $start_date ) ); ?>">
@@ -479,31 +486,43 @@ class Mwb_Wc_Bk_Public {
 		$booking_unit_input = ! empty( $product_meta['mwb_booking_unit_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_input'][0] ) ) : 0;
 		$booking_people     = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : array();
 		$booking_service    = ! empty( $product_meta['mwb_booking_services_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_services_select'][0] ) : array();
+		$booking_start_time = ! empty( $product_meta['mwb_booking_start_time'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_start_time'][0] ) ) : '00:01';
+		$booking_end_time   = ! empty( $product_meta['mwb_booking_end_time'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_end_time'][0] ) ) : '23:59';
+
 		// $booking_add_cost   = ! empty( $product_meta['mwb_booking_added_cost_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_added_cost_select'][0] ) : array();
 
 		if ( ! isset( $posted_data['end_date'] ) ) {
 			if ( isset( $posted_data['duration'] ) && ! empty( $booking_unit_dur ) && ! empty( $booking_unit_input ) && isset( $posted_data['start_date'] ) ) {
 
-				$time_slot  = $posted_data['time_slot'];
+				$time_slot        = isset( $posted_data['time_slot'] ) ? $posted_data['time_slot'] : strtotime( $booking_start_time, strtotime( $posted_data['start_date'] ) );
+				// $booking_start_ts = strtotime( $time_slot, strtotime( $posted_data['start_date'] ) );
+				$booking_start_ts = $time_slot;
+				// $booking_end_ts   = strtotime( $booking_end_time, strtotime( $posted_data['start_date'] ) );
 
 				$booking_data['duration']        = $posted_data['duration'];
-				$start_timestamp                 = strtotime( $posted_data['start_date'] );
-				$booking_data['start_date']      = $posted_data['start_date'];
-				$booking_data['start_timestamp'] = $start_timestamp;
+				// $start_timestamp                 = strtotime( $posted_data['start_date'] )
+				$start_timestamp                 = $booking_start_ts;
+				// $booking_data['start_date']      = $posted_data['start_date'];
+				$booking_data['start_date']      = gmdate( 'd-m-Y', $booking_start_ts );
+				// $booking_data['start_timestamp'] = $start_timestamp;
+				$booking_data['start_timestamp'] = $booking_start_ts;
 				$total_dur                       = $posted_data['duration'] * $booking_unit_input;
 				// $booking_data['duration']        = $total_dur;
 				$booking_data['dura_param']      = $booking_unit_dur;
 
 				if ( 'day' === $booking_unit_dur || 'month' === $booking_unit_dur ) {
-					$end_timestamp                 = strtotime( gmdate( 'm/d/Y', strtotime( $posted_data['start_date'] ) ) . ' +' . $total_dur . ' ' . $booking_unit_dur );
-					$booking_data['end_date']      = gmdate( 'm/d/Y', $end_timestamp );
+					$end_date                      = gmdate( 'd-m-Y', strtotime( gmdate( 'd-m-Y', strtotime( $booking_data['start_date'] ) ) . ' +' . ( $total_dur - 1 ) . ' ' . $booking_unit_dur ) );
+					$end_timestamp                 = strtotime( $booking_end_time, strtotime( $end_date ) );
+					$booking_data['end_date']      = gmdate( 'd-m-Y', $end_timestamp );
 					$booking_data['end_timestamp'] = $end_timestamp;
 				} elseif ( 'hour' === $booking_unit_dur ) {
-					$end_timestamp                 = $start_timestamp + ( $booking_unit_input * 60 * 60 );
+					// $end_timestamp                 = $start_timestamp + ( $booking_unit_input * 60 * 60 );
+					$end_timestamp                 = $start_timestamp + ( $total_dur * 60 * 60 );
 					$booking_data['end_timestamp'] = $end_timestamp;
 					$booking_data['time_slot']     = $time_slot;
 				} elseif ( 'minute' === $booking_unit_dur ) {
-					$end_timestamp                 = $start_timestamp + ( $booking_unit_input * 60 );
+					// $end_timestamp                 = $start_timestamp + ( $booking_unit_input * 60 );
+					$end_timestamp                 = $start_timestamp + ( $total_dur * 60 );
 					$booking_data['end_timestamp'] = $end_timestamp;
 					$booking_data['time_slot']     = $time_slot;
 				}
@@ -511,17 +530,24 @@ class Mwb_Wc_Bk_Public {
 		} else {
 			if ( ! empty( $booking_unit_dur ) && ! empty( $booking_unit_input ) && isset( $posted_data['start_date'] ) ) {
 
-				$booking_data['start_date']      = $posted_data['start_date'];
-				$start_timestamp                 = strtotime( $posted_data['start_date'] );
+				$booking_start_ts = strtotime( $booking_start_time, strtotime( $posted_data['start_date'] ) );
+				$booking_end_ts   = strtotime( $booking_end_time, strtotime( $posted_data['end_date'] ) );
+
+				// $booking_data['start_date']      = $posted_data['start_date'];
+				// $start_timestamp                 = strtotime( $posted_data['start_date'] );
+				$booking_data['start_date']      = gmdate( 'd-m-Y', $booking_start_ts );
+				$start_timestamp                 = $booking_start_ts;
 				$booking_data['start_timestamp'] = $start_timestamp;
-				$booking_data['end_date']        = $posted_data['end_date'];
-				$booking_data['end_timestamp']   = strtotime( $posted_data['end_date'] );
+				// $booking_data['end_date']        = $posted_data['end_date'];
+				// $booking_data['end_timestamp']   = strtotime( $posted_data['end_date'] );
+				$booking_data['end_date']        = gmdate( 'd-m-Y', $booking_end_ts );
+				$booking_data['end_timestamp']   = $booking_end_ts;
 				$booking_data['dura_param']      = $booking_unit_dur;
 
-				$duration_timestamp = strtotime( $posted_data['end_date'] ) - strtotime( $posted_data['start_date'] );
+				$duration_timestamp_diff = strtotime( $booking_data['end_date'] ) - strtotime( $booking_data['start_date'] );
 
 				if ( 'day' === $booking_unit_dur ) {
-					$booking_data['duration'] = $duration_timestamp / ( 24 * 60 * 60 * $booking_unit_input );
+					$booking_data['duration'] = $duration_timestamp_diff / ( 24 * 60 * 60 * $booking_unit_input );
 				}
 			}
 		}
@@ -531,6 +557,7 @@ class Mwb_Wc_Bk_Public {
 				foreach ( $booking_people as $id ) {
 					$people      = get_term( $id );
 					$people_name = $people->name;
+
 					$booking_data['people_count'][ $people_name ] = ! empty( $posted_data[ 'people-' . $id ] ) ? $posted_data[ 'people-' . $id ] : 0;
 				}
 			}

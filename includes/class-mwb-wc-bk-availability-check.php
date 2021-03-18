@@ -79,22 +79,6 @@ class MWB_Woocommerce_Booking_Availability {
 	}
 
 	/**
-	 * Check product availability
-	 *
-	 * @param [date] $start_date Start date of the booking
-	 * @param [date] $end_date   End Date for the booking
-	 * @return void
-	 */
-	public function check_product_availability( $start_date , $end_date) {
-
-		$dates = $this->date_range( $start_date, $end_date, '+1 day', 'y-m-d' );
-		foreach( $dates as $key => $value ) {
-			
-		}
-		
-	}
-
-	/**
 	 * Calculate dates between start and end date.
 	 *
 	 * @param [date] $first Start Date.
@@ -118,149 +102,153 @@ class MWB_Woocommerce_Booking_Availability {
 		return $dates;
 	}
 
-	public function check_advance_booking_availability( $product_id ) {
+	/**
+	 * Set Global Availability Rules on the Slots
+	 *
+	 * @param [int] $product_id ID of the product.
+	 * @return array
+	 */
+	public function check_product_global_availability( $product_id, $slots ) {
 
-		$prod_settings      = get_post_meta( $this->booking_product_id );
 		$availability_rules = get_option( 'mwb_global_avialability_rules', array() );
 		$availability_count = get_option( 'mwb_global_availability_rules_count', 0 );
 
 		$count = 0;
-		$slots = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
-		// print_r($availability_count);
+		// $slots = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
 
-		while ( $count < $availability_count ) {	
-			// print_r($slots);
-			// die('123');
-			foreach ( $slots as $date => $slot ) {
-				$rule_switch        = ! empty( $availability_rules['rule_switch'][ $count ] ) ? $availability_rules['rule_switch'][ $count ] : 'off';
-				$rule_type          = ! empty( $availability_rules['rule_type'][ $count ] ) ? $availability_rules['rule_type'][ $count ] : '';
-				$from               = ! empty( $availability_rules['rule_range_from'][ $count ] ) ? $availability_rules['rule_range_from'][ $count ] : '';
-				$to                 = ! empty( $availability_rules['rule_range_to'][ $count ] ) ? $availability_rules['rule_range_to'][ $count ] : '';
-				$rule_bookable      = ! empty( $availability_rules['rule_bookable'][ $count ] ) ? $availability_rules['rule_bookable'][ $count ] : '';
-				$rule_weekdays      = ! empty( $availability_rules['rule_weekdays'][ $count ] ) ? $availability_rules['rule_weekdays'][ $count ] : '';
-				$rule_weekdays_book = ! empty( $availability_rules['rule_weekdays_book'][ $count ] ) ? $availability_rules['rule_weekdays_book'][ $count ] : array();
+		while ( $count < $availability_count ) {
+			if ( ! empty( $slots ) ) {
+				foreach ( $slots as $date => $slot ) {
+					$rule_switch        = ! empty( $availability_rules['rule_switch'][ $count ] ) ? $availability_rules['rule_switch'][ $count ] : 'off';
+					$rule_type          = ! empty( $availability_rules['rule_type'][ $count ] ) ? $availability_rules['rule_type'][ $count ] : '';
+					$from               = ! empty( $availability_rules['rule_range_from'][ $count ] ) ? $availability_rules['rule_range_from'][ $count ] : '';
+					$to                 = ! empty( $availability_rules['rule_range_to'][ $count ] ) ? $availability_rules['rule_range_to'][ $count ] : '';
+					$rule_bookable      = ! empty( $availability_rules['rule_bookable'][ $count ] ) ? $availability_rules['rule_bookable'][ $count ] : '';
+					$rule_weekdays      = ! empty( $availability_rules['rule_weekdays'][ $count ] ) ? $availability_rules['rule_weekdays'][ $count ] : '';
+					$rule_weekdays_book = ! empty( $availability_rules['rule_weekdays_book'][ $count ] ) ? $availability_rules['rule_weekdays_book'][ $count ] : array();
 
-				if ( ! empty( $rule_switch ) && 'on' === $rule_switch ) {
-					if ( ! empty( $rule_type ) && 'specific' === $rule_type ) {
-						$from = gmdate( 'Y-m-d', strtotime( $from ) );
-						$to   = gmdate( 'Y-m-d', strtotime( $to ) );
-						if ( array_key_exists( $from, $slots ) && array_key_exists( $to, $slots ) ) {
-							$arr = $this->availability_date_range( $from, $to, '+1 day', 'Y-m-d' );
-							if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
-								foreach ( $arr as $k => $v ) {
-									// $arr[ $k ] = $rule_bookable;
-									if ( $k == $date ) {
-										foreach ( $slot as $key => $value ) {
-											$slots[ $date ][ $key ] = $rule_bookable;
-										}
-									} else {
-										continue;
-									}
-								}
-							} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
-								if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
+					if ( ! empty( $rule_switch ) && 'on' === $rule_switch ) {
+						if ( ! empty( $rule_type ) && 'specific' === $rule_type ) {
+							$from = gmdate( 'Y-m-d', strtotime( $from ) );
+							$to   = gmdate( 'Y-m-d', strtotime( $to ) );
+							if ( array_key_exists( $from, $slots ) && array_key_exists( $to, $slots ) ) {
+								$arr = $this->availability_date_range( $from, $to, '+1 day', 'Y-m-d' );
+								if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
 									foreach ( $arr as $k => $v ) {
-										// $arr[ $k ] = $rule_bookable;
+
 										if ( $k === $date ) {
-											$day    = lcfirst( gmdate( 'l', strtotime( $date ) ) );
-											$status = $rule_weekdays_book[ $day ];
-											echo $status;
-											if ( 'no-change' !== $status ) {
-												foreach ( $slot as $key => $value ) {
-													$slots[ $date ][ $key ] = $status;
-												}
+											foreach ( $slot as $key => $value ) {
+												$slots[ $date ][ $key ] = $rule_bookable;
 											}
 										} else {
 											continue;
 										}
 									}
-								}
-							}
-						} elseif ( array_key_exists( $from, $slots ) && ! array_key_exists( $to, $slots ) ) {
-							$to  = array_key_last( $slots );
-							$arr = $this->availability_date_range( $from, $to, '+1 day', 'Y-m-d' );
-							if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
-								foreach ( $arr as $k => $v ) {
-									// $arr[ $k ] = $rule_bookable;
-									if ( $k == $date ) {
-										foreach ( $slot as $key => $value ) {
-											$slots[ $date ][ $key ] = $rule_bookable;
+								} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
+									if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
+										foreach ( $arr as $k => $v ) {
+
+											if ( $k === $date ) {
+												$day    = lcfirst( gmdate( 'l', strtotime( $date ) ) );
+												$status = $rule_weekdays_book[ $day ];
+												// echo $status;
+												if ( 'no-change' !== $status ) {
+													foreach ( $slot as $key => $value ) {
+														$slots[ $date ][ $key ] = $status;
+													}
+												}
+											} else {
+												continue;
+											}
 										}
-									} else {
-										continue;
 									}
 								}
-							} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
-								if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
+							} elseif ( array_key_exists( $from, $slots ) && ! array_key_exists( $to, $slots ) ) {
+								$to  = array_key_last( $slots );
+								$arr = $this->availability_date_range( $from, $to, '+1 day', 'Y-m-d' );
+								if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
 									foreach ( $arr as $k => $v ) {
-										// $arr[ $k ] = $rule_bookable;
+
 										if ( $k === $date ) {
-											$day    = lcfirst( gmdate( 'l', strtotime( $date ) ) );
-											$status = $rule_weekdays_book[ $day ];
-											echo $status;
-											if ( 'no-change' !== $status ) {
-												foreach ( $slot as $key => $value ) {
-													$slots[ $date ][ $key ] = $status;
-												}
+											foreach ( $slot as $key => $value ) {
+												$slots[ $date ][ $key ] = $rule_bookable;
 											}
 										} else {
 											continue;
 										}
 									}
-								}
-							}
-						} elseif ( ! array_key_exists( $from, $slots ) && array_key_exists( $to, $slots ) ) {
-							$from = array_key_first( $slots );
-							$arr  = $this->availability_date_range( $from, $to, '+1 day', 'Y-m-d' );
-							if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
-								foreach ( $arr as $k => $v ) {
-									// $arr[ $k ] = $rule_bookable;
-									if ( $k == $date ) {
-										foreach ( $slot as $key => $value ) {
-											$slots[ $date ][ $key ] = $rule_bookable;
+								} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
+									if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
+										foreach ( $arr as $k => $v ) {
+
+											if ( $k === $date ) {
+												$day    = lcfirst( gmdate( 'l', strtotime( $date ) ) );
+												$status = $rule_weekdays_book[ $day ];
+												// echo $status;
+												if ( 'no-change' !== $status ) {
+													foreach ( $slot as $key => $value ) {
+														$slots[ $date ][ $key ] = $status;
+													}
+												}
+											} else {
+												continue;
+											}
 										}
-									} else {
-										continue;
 									}
 								}
-							} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
-								if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
+							} elseif ( ! array_key_exists( $from, $slots ) && array_key_exists( $to, $slots ) ) {
+								$from = array_key_first( $slots );
+								$arr  = $this->availability_date_range( $from, $to, '+1 day', 'Y-m-d' );
+								if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
 									foreach ( $arr as $k => $v ) {
-										// $arr[ $k ] = $rule_bookable;
+
 										if ( $k === $date ) {
-											$day    = lcfirst( gmdate( 'l', strtotime( $date ) ) );
-											$status = $rule_weekdays_book[ $day ];
-											echo $status;
-											if ( 'no-change' !== $status ) {
-												foreach ( $slot as $key => $value ) {
-													$slots[ $date ][ $key ] = $status;
-												}
+											foreach ( $slot as $key => $value ) {
+												$slots[ $date ][ $key ] = $rule_bookable;
 											}
 										} else {
 											continue;
 										}
 									}
+								} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
+									if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
+										foreach ( $arr as $k => $v ) {
+
+											if ( $k === $date ) {
+												$day    = lcfirst( gmdate( 'l', strtotime( $date ) ) );
+												$status = $rule_weekdays_book[ $day ];
+												// echo $status;
+												if ( 'no-change' !== $status ) {
+													foreach ( $slot as $key => $value ) {
+														$slots[ $date ][ $key ] = $status;
+													}
+												}
+											} else {
+												continue;
+											}
+										}
+									}
 								}
 							}
-						}
-					} elseif ( ! empty( $rule_type ) && 'generic' === $rule_type ) {
-						$date_month = lcfirst( gmdate( 'M', strtotime( $date ) ) );
-						$date_month = $this->availability_numeric_monthdays( $date_month );
-						$from       = $this->availability_numeric_monthdays( $from );
-						$to         = $this->availability_numeric_monthdays( $to );
-						if ( $date_month >= $from && $date_month <= $to ) {
-							if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
-								$status = $rule_bookable;
-								foreach ( $slot as $k => $v ) {
-									$slots[ $date ][ $k ] = $status;
-								}
-							} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
-								if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
-									$day    = lcfirst( gmdate( 'l', strtotime( $date ) ) );
-									$status = $rule_weekdays_book[ $day ];
-									if ( 'no-change' !== $status ) {
-										foreach ( $slot as $key => $value ) {
-											$slots[ $date ][ $key ] = $status;
+						} elseif ( ! empty( $rule_type ) && 'generic' === $rule_type ) {
+							$date_month = lcfirst( gmdate( 'M', strtotime( $date ) ) );
+							$date_month = $this->availability_numeric_monthdays( $date_month );
+							$from       = $this->availability_numeric_monthdays( $from );
+							$to         = $this->availability_numeric_monthdays( $to );
+							if ( $date_month >= $from && $date_month <= $to ) {
+								if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
+									$status = $rule_bookable;
+									foreach ( $slot as $k => $v ) {
+										$slots[ $date ][ $k ] = $status;
+									}
+								} elseif ( ! empty( $rule_weekdays ) && 'on' === $rule_weekdays ) {
+									if ( ! empty( $rule_weekdays_book ) && is_array( $rule_weekdays_book ) ) {
+										$day    = lcfirst( gmdate( 'l', strtotime( $date ) ) );
+										$status = $rule_weekdays_book[ $day ];
+										if ( 'no-change' !== $status ) {
+											foreach ( $slot as $key => $value ) {
+												$slots[ $date ][ $key ] = $status;
+											}
 										}
 									}
 								}
@@ -268,15 +256,21 @@ class MWB_Woocommerce_Booking_Availability {
 						}
 					}
 				}
+				update_post_meta( $product_id, 'mwb_booking_product_slots', $slots );
+				$count++;
 			}
-			update_post_meta( $product_id, 'mwb_booking_product_slots', $slots );
-			$count++;
 		}
 
 		return $slots;
 	}
 
-	public function availability_numeric_monthdays ( $month ) {
+	/**
+	 * Set neumeric value to the months.
+	 *
+	 * @param [string] $month three letter textual representation of the month.
+	 * @return $numeric_month
+	 */
+	public function availability_numeric_monthdays( $month ) {
 
 		$numeric_month = 0;
 
@@ -319,6 +313,35 @@ class MWB_Woocommerce_Booking_Availability {
 				break;
 		}
 		return $numeric_month;
+	}
+
+	/**
+	 * Check the product availability according to the product settings
+	 *
+	 * @param [int] $product_id ID of the product.
+	 * @return array
+	 */
+	public function check_product_setting_availability( $product_id, $slots ) {
+
+		// $slots         = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
+		$prod_settings = get_post_meta( $product_id );
+
+		$not_allowed_days = ! empty( $prod_settings['mwb_booking_not_allowed_days'][0] ) ? maybe_unserialize( $prod_settings['mwb_booking_not_allowed_days'][0] ) : array();
+
+		// echo '<pre>'; print_r( $not_allowed_days ); echo '</pre>';die('xcvbnm');
+		if ( ! empty( $slots ) ) {
+			foreach ( $slots as $date => $slot ) {
+				$day = lcfirst( gmdate( 'l', strtotime( $date ) ) );
+				if ( in_array( $day, $not_allowed_days, true ) ) {
+					foreach ( $slot as $key => $value ) {
+						$slots[ $date ][ $key ] = 'non-bookable';
+					}
+				}
+			}
+			// update_post_meta( $product_id, 'mwb_booking_product_slots', $slots );
+		}
+		// echo '<pre>'; print_r( $slots ); echo '</pre>';
+		return $slots;
 	}
 
 

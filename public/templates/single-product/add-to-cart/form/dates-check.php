@@ -81,36 +81,36 @@ $end_time   = ! empty( $product_meta['mwb_booking_end_time'][0] ) ? $product_met
 			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy" required>
 		</div>
 			<?php
-			if ( ! empty( $start_time ) && ! empty( $end_time ) ) {
-				?>
-			<div>
-				<label for=""><?php esc_html_e( 'Time', '' ); ?></label>
+			// if ( ! empty( $start_time ) && ! empty( $end_time ) ) {
+			// 	?>
+			<!-- <div>
+				<label for=""><?php // esc_html_e( 'Time', '' ); ?></label>
 				<select name="start_time" id="mwb-wc-bk-time-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-time">
 					<?php
-					$start_ts = strtotime( $start_time );
-					$end_ts   = strtotime( $end_time );
-					$diff_ts  = $end_ts - $satrt_ts;
+					// $start_ts = strtotime( $start_time );
+					// $end_ts   = strtotime( $end_time );
+					// $diff_ts  = $end_ts - $satrt_ts;
 					// $dura_unit = strtotime( '+' . $unit_input . ' ' . $unit_duration );
-					while ( $start_ts < $end_ts ) {
-						$start_time = gmdate( 'h:i:s a', $start_ts );
+					// while ( $start_ts < $end_ts ) {
+					// 	$start_time = gmdate( 'h:i:s a', $start_ts );
 						?>
-						<option value="<?php echo $start_ts; ?>"><?php echo $start_time; ?></option>
+						<option value="<?php // echo $start_ts; ?>"><?php // echo $start_time; ?></option>
 						<?php
-						if ( 'hour' === $unit_duration ) {
-							$start_ts += ( $unit_input * 3600 );
-						} else if ( 'minute' === $unit_duration ) {
-							$start_ts += ( $unit_input * 60 );
-						}
-					}
+					// 	if ( 'hour' === $unit_duration ) {
+					// 		$start_ts += ( $unit_input * 3600 );
+					// 	} else if ( 'minute' === $unit_duration ) {
+					// 		$start_ts += ( $unit_input * 60 );
+					// 	}
+					// }
 					// echo $start_ts . ' ';
 					// echo $end_ts . '   ';
 					// echo $dura_unit;
 					// for (  )
 					?>
 				</select>
-			</div>
+			</div> -->
 				<?php
-			}
+			// }
 		}
 	}
 	?>

@@ -286,6 +286,8 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+		$this->loader->add_action( 'woocommerce_before_single_product_summary', $plugin_public, 'mwb_booking_slot_management' );
+
 		$this->loader->add_action( 'woocommerce_mwb_booking_add_to_cart', $plugin_public, 'mwb_include_booking_add_to_cart' );
 
 		$this->loader->add_action( 'mwb_booking_add_to_cart_form_content', $plugin_public, 'mwb_booking_add_to_cart_form_fields' );
@@ -321,6 +323,9 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_filter( 'woocommerce_before_calculate_totals', $plugin_public, 'mwb_change_booking_product_quantity', 20, 3 );
 
+		$this->loader->add_action( 'wp_ajax_mwb_time_slots_in_booking_form', $plugin_public, 'mwb_time_slots_in_booking_form' );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_time_slots_in_booking_form', $plugin_public, 'mwb_time_slots_in_booking_form' );
 	}
 
 	/**

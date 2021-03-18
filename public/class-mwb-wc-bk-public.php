@@ -47,6 +47,13 @@ class Mwb_Wc_Bk_Public {
 	public $mwb_booking;
 
 	/**
+	 * Slot for a particular booking product
+	 *
+	 * @var array
+	 */
+	public $mwb_product_slots = array();
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -123,7 +130,10 @@ class Mwb_Wc_Bk_Public {
 			$args['global_settings']  = get_option( 'mwb_booking_settings_options' );
 			$args['current_date']     = gmdate( 'Y-m-d' );
 			$args['not_allowed_days'] = maybe_unserialize( $args['product_settings']['mwb_booking_not_allowed_days'][0] );
-			// echo '<pre>'; print_r( $args['product_settings'] ); echo '</pre>'; die("ok");
+			$args['slots']            = $this->mwb_product_slots;
+			// // echo '<pre>'; print_r( $args['product_settings'] ); echo '</pre>'; die("ok");
+			// global $product;
+			// echo '<pre>'; print_r( wc_get_product( $product ) ); echo '</pre>';die('first');
 		}
 
 		wp_localize_script(
@@ -143,10 +153,212 @@ class Mwb_Wc_Bk_Public {
 	 */
 	public function mwb_include_booking_add_to_cart() {
 		global $product;
+
+		// $product_id = $product->get_id();
 		if ( $product && $product->is_type( 'mwb_booking' ) ) {
 
-			wc_get_template( 'single-product/add-to-cart/mwb-booking.php', array(), '', MWB_WC_BK_TEMPLATE_PATH );
+			wc_get_template( 'single-product/add-to-cart/mwb-booking.php', array( 'slots' => $this->mwb_product_slots ), '', MWB_WC_BK_TEMPLATE_PATH );
+
+			// $this->mwb_booking_slot_management( $product_id, $product );
 		}
+	}
+
+	/**
+	 * Slot management for the booking product
+	 *
+	 * @param [int] $product_id ID of the product.
+	 * @param [obj] $product Product Object.
+	 * @return void
+	 */
+	public function mwb_booking_slot_management() {
+
+		global $product;
+		$product_id = $product->get_id();
+		$product_meta = get_post_meta( $product_id );
+
+		// $slots = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
+
+		// if ( empty( $slots ) ) {
+
+		$slots = array();
+		// }
+
+		// $product_creation_ts = strtotime( get_the_date( 'Y-m-d', $product_id ) );
+		// $product_modified_ts = strtotime( get_the_modified_date( 'Y-m-d', $product_id ) );
+
+		// if ( $product_modified_ts ) {
+		// 	$product_creation_ts = $product_modified_ts;
+		// }
+
+		$current_date = gmdate( 'Y-m-d', time() );
+		$current_ts   = strtotime( $current_date );
+
+		// if ( $current_ts > $product_modified_ts ) {
+		// $product_creation_ts = $current_ts;
+		// }
+
+		// if ( empty( $slots ) ) {
+		$start_date = gmdate( 'Y-m-d', $current_ts );
+
+		$start_booking     = isset( $product_meta['mwb_start_booking_from'][0] ) ? $product_meta['mwb_start_booking_from'][0] : '';
+		$daily_start_time  = isset( $product_meta['mwb_booking_start_time'][0] ) ? $product_meta['mwb_booking_start_time'][0] : '00:01';
+		$daily_end_time    = isset( $product_meta['mwb_booking_end_time'][0] ) ? $product_meta['mwb_booking_end_time'][0] : '23:59';
+		$min_advance_input = isset( $product_meta['mwb_advance_booking_min_input'][0] ) ? $product_meta['mwb_advance_booking_min_input'][0] : 1;
+		$max_advance_input = isset( $product_meta['mwb_advance_booking_max_input'][0] ) ? $product_meta['mwb_advance_booking_max_input'][0] : 1;
+		$min_advance_dura  = isset( $product_meta['mwb_advance_booking_min_duration'][0] ) ? $product_meta['mwb_advance_booking_min_duration'][0] : 'day';
+		$max_advance_dura  = isset( $product_meta['mwb_advance_booking_max_duration'][0] ) ? $product_meta['mwb_advance_booking_max_duration'][0] : 'day';
+		$unit_input        = ! empty( $product_meta['mwb_booking_unit_input'][0] ) ? $product_meta['mwb_booking_unit_input'][0] : '';
+		$unit_duration     = ! empty( $product_meta['mwb_booking_unit_duration'][0] ) ? $product_meta['mwb_booking_unit_duration'][0] : '';
+
+		if ( 'today' === $start_booking ) {
+			$start_date = gmdate( 'Y-m-d', $current_ts );
+			// echo 'today';
+		} elseif ( 'tomorrow' === $start_booking ) {
+			$start_date = gmdate( 'Y-m-d', strtotime( '+1 day', $current_ts ) );
+			// echo 'tomorrow';
+		} elseif ( 'custom_date' === $start_booking ) {
+			$custom_date = isset( $product_meta['mwb_start_booking_custom_date'][0] ) ? $product_meta['mwb_start_booking_custom_date'][0] : '';
+			$start_date  = gmdate( 'Y-m-d', strtotime( $custom_date ) );
+			if ( strtotime( $custom_date ) < $current_ts ) {
+				$start_date = gmdate( 'Y-m-d', strtotime( $current_ts ) );
+			}
+			// echo 'custom';
+		} elseif ( 'initially_available' === $start_booking ) {
+			// $start_str  = '-' . $min_avail_input . ' ' . $min_avail_dura . '';
+			$start_date = gmdate( 'Y-m-d', strtotime( '+' . $min_advance_input . ' ' . $min_advance_dura . '', $current_ts ) );
+			// echo 'initial';
+		}
+
+		$end_date = gmdate( 'Y-m-d', strtotime( '+' . $max_advance_input . ' ' . $max_advance_dura . '', strtotime( $start_date ) ) );
+
+		$slots = $this->date_range( $start_date, $end_date, '+1 day', 'Y-m-d' );
+
+		// echo '<pre>'; print_r( $slots ); echo '</pre>';die('lkl');
+
+		if ( ! empty( $unit_duration ) && ! empty( $unit_input ) ) {
+			if ( ! empty( $slots ) && is_array( $slots ) ) {
+				foreach ( $slots as $date => $slot ) {
+					$start_time = gmdate( 'H:i:s', strtotime( $daily_start_time, strtotime( $date ) ) );
+					$end_time   = gmdate( 'H:i:s', strtotime( '+' . $unit_input . ' ' . $unit_duration, strtotime( $start_time, strtotime( $date ) ) ) );
+					$s          = array();
+
+					if ( 'hour' === $unit_duration || 'minute' === $unit_duration ) {
+						while ( strtotime( $end_time, strtotime( $date ) ) <= strtotime( $daily_end_time, strtotime( $date ) ) ) {
+
+							$s[ $start_time . '-' . $end_time ] = 'bookable';
+
+							$start_time = gmdate( 'H:i:s', strtotime( $end_time, strtotime( $date ) ) );
+							$end_time   = gmdate( 'H:i:s', strtotime( '+' . $unit_input . ' ' . $unit_duration, strtotime( $start_time, strtotime( $date ) ) ) );
+
+						}
+					} elseif ( 'day' === $unit_duration ) {
+
+						$start_time = gmdate( 'H:i:s', strtotime( $daily_start_time, strtotime( $date ) ) );
+						$end_time   = gmdate( 'H:i:s', strtotime( $daily_end_time, strtotime( $date ) ) );
+
+						$s[ $start_time . '-' . $end_time ] = 'bookable';
+					}
+					$slots[ $date ] = $s;
+				}
+				// echo '<pre>'; print_r( $slots ); echo '</pre>';die('klkl');
+			}
+		}
+			// update_post_meta( $product_id, 'mwb_booking_product_slots', $slots );
+		// }
+
+		// $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
+		// $availabiltiy_count = get_option( 'mwb_global_availability_rules_count', 0 );
+		// echo '<pre>'; print_r( $availabiltiy_count ); echo '</pre>';
+
+		$availability_instance = MWB_Woocommerce_Booking_Availability::get_availability_instance();
+		$slot_arr              = $availability_instance->check_product_global_availability( $product_id, $slots );
+		$slot_arr              = $availability_instance->check_product_setting_availability( $product_id, $slot_arr );
+
+		update_post_meta( $product_id, 'mwb_booking_product_slots', $slot_arr );
+		$this->mwb_product_slots = $slot_arr;
+		// echo '<pre>'; print_r( $slot_arr ); echo '</pre>';
+		// die('pl');
+
+	}
+
+	/**
+	 * Calculate dates between start and end date.
+	 *
+	 * @param [date] $first Start Date.
+	 * @param [date] $last Last Date.
+	 * @param string $step Step to increment the date.
+	 * @param string $output_format DAte format.
+	 * @return array
+	 */
+	public function date_range( $first, $last, $step = '+1 day', $output_format = 'd/m/Y' ) {
+
+		$dates   = array();
+		$current = strtotime( $first );
+		$last    = strtotime( $last );
+
+		while ( $current <= $last ) {
+			$dates[ gmdate( $output_format, $current ) ] = array();
+
+			$current = strtotime( $step, $current );
+		}
+
+		return $dates;
+	}
+
+	/**
+	 * Show time field on the booking form if the duration is in hours or minutes.
+	 * Ajax hander
+	 *
+	 * @return void
+	 */
+	public function mwb_time_slots_in_booking_form() {
+
+		if ( ! check_ajax_referer( 'mwb_wc_bk_public', 'nonce' ) ) {
+			die;
+		}
+
+		$product_id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
+		$start_date = isset( $_POST['date'] ) ? $_POST['date'] : '';
+
+		$start_date = gmdate( 'Y-m-d', strtotime( $start_date ) );
+
+		$unit_duration = get_post_meta( $product_id, 'mwb_booking_unit_duration', true );
+		$slots         = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
+
+		if ( ! empty( $product_id ) && ! empty( $start_date ) ) {
+			if ( 'hour' === $unit_duration || 'minute' === $unit_duration ) {
+				if ( array_key_exists( $start_date, $slots ) ) {
+					?>
+					<div id="mwb-wc-bk-time-section" class="mwb-wc-bk-form-section" >
+						<div id="mwb-wc-bk-time-slot-field">
+							<label for="mwb-wc-bk-time-slot-input"><?php esc_html_e( 'Time', 'mwb-wc-bk' ); ?></label>
+							<select type="text" id="mwb-wc-bk-time-slot-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-time" name="time_slot" required>
+								<?php
+								foreach ( $slots[ $start_date ] as $k => $v ) {
+									if ( 'bookable' === $v ) {
+										$s =  explode('-' , $k);
+										?>
+										<option value="<?php echo strtotime( $s[0], strtotime( $start_date ) ); ?>">
+										<?php
+										echo date('h:i:s a', strtotime( $s[0], strtotime( $start_date ) ) );
+										?>
+										</option>
+										<?php
+									} else {
+										?>
+										<option value="" disabled ><?php echo $k; ?></option>
+										<?php
+									}
+								}
+								?>
+							</select>
+						</div>
+					</div>
+					<?php
+				}
+			}
+		}
+		wp_die();
 	}
 
 	/**
@@ -272,6 +484,8 @@ class Mwb_Wc_Bk_Public {
 		if ( ! isset( $posted_data['end_date'] ) ) {
 			if ( isset( $posted_data['duration'] ) && ! empty( $booking_unit_dur ) && ! empty( $booking_unit_input ) && isset( $posted_data['start_date'] ) ) {
 
+				$time_slot  = $posted_data['time_slot'];
+
 				$booking_data['duration']        = $posted_data['duration'];
 				$start_timestamp                 = strtotime( $posted_data['start_date'] );
 				$booking_data['start_date']      = $posted_data['start_date'];
@@ -287,9 +501,11 @@ class Mwb_Wc_Bk_Public {
 				} elseif ( 'hour' === $booking_unit_dur ) {
 					$end_timestamp                 = $start_timestamp + ( $booking_unit_input * 60 * 60 );
 					$booking_data['end_timestamp'] = $end_timestamp;
+					$booking_data['time_slot']     = $time_slot;
 				} elseif ( 'minute' === $booking_unit_dur ) {
 					$end_timestamp                 = $start_timestamp + ( $booking_unit_input * 60 );
 					$booking_data['end_timestamp'] = $end_timestamp;
+					$booking_data['time_slot']     = $time_slot;
 				}
 			}
 		} else {
@@ -389,11 +605,11 @@ class Mwb_Wc_Bk_Public {
 	 * @param array  $booking_data Cart item data for 'mwb_booking'.
 	 * @return number
 	 */
-	public function get_booking_product_price( $product, $booking_data ) {
-		$price    = $product->get_price();
-		$duration = $booking_data['duration'];
-		return $price * $duration;
-	}
+	// public function get_booking_product_price( $product, $booking_data ) {
+	// 	$price    = $product->get_price();
+	// 	$duration = $booking_data['duration'];
+	// 	return $price * $duration;
+	// }
 
 	/**
 	 * Change Price for Product (while add to cart) according to the form fields using session data.
@@ -502,6 +718,12 @@ class Mwb_Wc_Bk_Public {
 					'key'     => 'On',
 					'value'   => $booking_data['start_date'],
 					'display' => '',
+				);
+				$booking_item_data['mwb_wc_bk_time_slot'] = array(
+					'key'     => 'Start Time',
+					'value'   => $booking_data['time_slot'],
+					// 'value'   => $booking_data['time_slot'],
+					'display' => gmdate( 'h:i a', $booking_data['time_slot'] ),
 				);
 			}
 			if ( ! empty( $booking_data['people_count'] ) && is_array( $booking_data['people_count'] ) ) {

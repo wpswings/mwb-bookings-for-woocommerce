@@ -36,7 +36,8 @@
 // var booking_added_cost = 0;
 // var booking_service_cost = 0;
 // var indiv_added_cost_arr = [];
-
+var slots = mwb_wc_bk_public.slots;
+console.log( slots );
 var start_date;
 var end_date;
 jQuery(document).ready( function($) {
@@ -44,6 +45,7 @@ jQuery(document).ready( function($) {
 	start_date = $( '#mwb-wc-bk-start-date-input' ).val();
 	end_date   = $( '#mwb-wc-bk-end-date-input' ).val();
 
+	show_time_slots($);
 	if ( mwb_wc_bk_public.hasOwnProperty( 'product_settings' ) ) {
 		datepicker_check($);
 	}
@@ -292,6 +294,35 @@ function mwb_wc_bk_add_to_cart_form_update($){
 	});
 }
 
+function show_time_slots($) {
+	$( '#mwb-wc-bk-create-booking-form' ).on( 'change', '#mwb-wc-bk-start-date-input', function() {
+
+		var product_data = $('#mwb-wc-bk-create-booking-form').attr( 'product-data' );
+		var product_data = JSON.parse( product_data );
+		var product_id = product_data.product_id;
+		// alert(product_id);
+
+		var date = $(this).val();
+		// alert( $(this).val() );
+
+		$.ajax({
+			url      : mwb_wc_bk_public.ajaxurl,
+			type     : 'POST',
+			data     : {
+				'action': 'mwb_time_slots_in_booking_form',
+				'nonce' : mwb_wc_bk_public.nonce,
+				'date'  : date,
+				'id'    : product_id,
+			},
+			success : function( response ) {
+				$( '#mwb-wc-bk-start-date-field' ).append( response );
+				console.log( response );
+			}
+		});
+
+	} );
+}
+
 function people_conditions($) {
 
 	$( '#mwb-wc-bk-people-section' ).on( 'click', "label[for='mwb-wc-bk-people-input-div']", function(){
@@ -523,6 +554,8 @@ function booking_price_cal($) {
 
 		price_cal_func($);
 	} );
+
+
 
 }
 

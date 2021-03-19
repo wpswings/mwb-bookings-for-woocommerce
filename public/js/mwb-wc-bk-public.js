@@ -37,7 +37,9 @@
 // var booking_service_cost = 0;
 // var indiv_added_cost_arr = [];
 var slots = mwb_wc_bk_public.slots;
+var unavailable_dates = mwb_wc_bk_public.unavailable_dates;
 console.log( slots );
+console.log( unavailable_dates );
 var start_date;
 var end_date;
 jQuery(document).ready( function($) {
@@ -143,37 +145,55 @@ function datepicker_check($) {
 		// 	return [days.includes(date.getDay())];
 		// }
 
-		beforeShowDay: function(date) {
-			var days = [0,1,2,3,4,5,6];
-			for( var l = 0; l < not_allowed_days.length; l++ ) {
-				switch( not_allowed_days[l] ) {
-					case 'sunday':
-						days.splice( $.inArray(0, days), 1 );
-						break;
-					case 'monday':
-						days.splice( $.inArray(1, days), 1 );
-						break;
-					case 'tuesday':
-						days.splice( $.inArray(2, days), 1 );
-						break;
-					case 'wednesday':
-						days.splice( $.inArray(3, days), 1 );
-						break;
-					case 'thursday':
-						days.splice( $.inArray(4, days), 1 );
-						break;
-					case 'friday':
-						days.splice( $.inArray(5, days), 1 );
-						break;
-					case 'saturday':
-						days.splice( $.inArray(6, days), 1 );
-						break;
-				}
-				// var day = date.getDay();
-				// return [(day != day_no)];
+		beforeShowDay: function(d) {
+			var year = d.getFullYear();
+           		month = ("0" + (d.getMonth() + 1)).slice(-2);
+            	day = ("0" + (d.getDate())).slice(-2);
+			var formatted = year + '-' + month + '-' + day;
+
+			if ( $.inArray( formatted, unavailable_dates ) != -1 ) {
+				return [false, "","Un-available"];
+			} else {
+				return [true,"","Available"];
 			}
-			return [days.includes(date.getDay())];
-		},
+			// console.log(formatted);
+		}
+
+		// beforeShowDay: function(date) {
+		// 	var days = [0,1,2,3,4,5,6];
+		// 	for( var l = 0; l < not_allowed_days.length; l++ ) {
+		// 		switch( not_allowed_days[l] ) {
+		// 			case 'sunday':
+		// 				days.splice( $.inArray(0, days), 1 );
+		// 				break;
+		// 			case 'monday':
+		// 				days.splice( $.inArray(1, days), 1 );
+		// 				break;
+		// 			case 'tuesday':
+		// 				days.splice( $.inArray(2, days), 1 );
+		// 				break;
+		// 			case 'wednesday':
+		// 				days.splice( $.inArray(3, days), 1 );
+		// 				break;
+		// 			case 'thursday':
+		// 				days.splice( $.inArray(4, days), 1 );
+		// 				break;
+		// 			case 'friday':
+		// 				days.splice( $.inArray(5, days), 1 );
+		// 				break;
+		// 			case 'saturday':
+		// 				days.splice( $.inArray(6, days), 1 );
+		// 				break;
+		// 		}
+		// 		// var day = date.getDay();
+		// 		// return [(day != day_no)];
+		// 	}
+		// 	return [days.includes(date.getDay())];
+		// },
+
+
+
+
 	});
 
 	$( '#mwb-wc-bk-end-date-input' ).datepicker({
@@ -488,11 +508,11 @@ function booking_price_cal($) {
 
 	
 	$( document ).on( 'submit', '.cart', function(e) {
-		alert("submit working");
+		// alert("submit working");
 
 		var people_total = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden' ).val();
 		if ( people_total <= 0 ) {
-			alert("people");
+			// alert("people");
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).show();
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( "*Select at least 1 people" );
 				e.preventDefault();
@@ -655,7 +675,7 @@ function price_cal_func($) {
 
 function show_total($, total_cost, base_cost, service_cost, added_cost_arr) {
 	if ( 'yes' == mwb_wc_bk_public.global_settings.mwb_booking_setting_bo_service_total ) {
-		alert("working");
+		// alert("working");
 		// if(  booking_total_cost > 0 ) {
 			var data = {
 				'action'         : 'show_booking_total',

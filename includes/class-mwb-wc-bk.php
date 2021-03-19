@@ -311,7 +311,11 @@ class Mwb_Wc_Bk {
 		// $this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'change_on_sale_badge' );
 		$this->loader->add_action( 'wp_ajax_booking_price_cal', $plugin_public, 'booking_price_cal' );
 
+		$this->loader->add_action( 'wp_ajax_nopriv_booking_price_cal', $plugin_public, 'booking_price_cal' );
+
 		$this->loader->add_action( 'wp_ajax_show_booking_total', $plugin_public, 'show_booking_total' );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_show_booking_total', $plugin_public, 'show_booking_total' );
 
 		// $this->loader->add_filter( 'woocommerce_get_cart_contents', $plugin_public, 'mwb_wc_bk_single_cart_booking' );
 
@@ -326,6 +330,14 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'wp_ajax_mwb_time_slots_in_booking_form', $plugin_public, 'mwb_time_slots_in_booking_form' );
 
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_time_slots_in_booking_form', $plugin_public, 'mwb_time_slots_in_booking_form' );
+
+		$this->loader->add_filter( 'woocommerce_account_menu_items', $plugin_public, 'mwb_booking_list_user_bookings', 40 );
+
+		$this->loader->add_action( 'init', $plugin_public, 'mwb_booking_add_endpoint' );
+
+		$this->loader->add_action( 'woocommerce_account_all_bookings_endpoint', $plugin_public, 'mwb_booking_endpoint_content' );
+
+		$this->loader->add_filter( 'pre_option_woocommerce_enable_guest_checkout', $plugin_public, 'conditional_guest_checkout_based_on_product' );
 	}
 
 	/**

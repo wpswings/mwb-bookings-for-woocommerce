@@ -130,7 +130,9 @@ class Mwb_Wc_Bk_Public {
 			$args['global_settings']  = get_option( 'mwb_booking_settings_options' );
 			$args['current_date']     = gmdate( 'Y-m-d' );
 			$args['not_allowed_days'] = maybe_unserialize( $args['product_settings']['mwb_booking_not_allowed_days'][0] );
-			$args['slots']            = $this->mwb_product_slots;
+
+			$args['slots']             = get_post_meta( get_the_id(), 'mwb_booking_product_slots', true );
+			$args['unavailable_dates'] = get_post_meta( get_the_id(), 'mwb_booking_unavailable_dates', true );
 			// // echo '<pre>'; print_r( $args['product_settings'] ); echo '</pre>'; die("ok");
 			// global $product;
 			// echo '<pre>'; print_r( wc_get_product( $product ) ); echo '</pre>';die('first');
@@ -141,7 +143,6 @@ class Mwb_Wc_Bk_Public {
 			'mwb_wc_bk_public',
 			$args
 		);
-
 		// add_thickbox();
 
 	}
@@ -173,7 +174,7 @@ class Mwb_Wc_Bk_Public {
 	public function mwb_booking_slot_management() {
 
 		global $product;
-		$product_id = $product->get_id();
+		$product_id   = $product->get_id();
 		$product_meta = get_post_meta( $product_id );
 
 		// $slots = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
@@ -281,6 +282,23 @@ class Mwb_Wc_Bk_Public {
 		$slot_arr              = $availability_instance->check_product_setting_availability( $product_id, $slot_arr );
 		$slot_arr              = $availability_instance->manage_avaialability_acc_to_created_bookings( $product_id, $slot_arr );
 
+		$unavail_dates = array();
+		if ( ! empty( $slot_arr ) && is_array( $slot_arr ) ) {
+			foreach ( $slot_arr as $date => $slot ) {
+				$count = count( $slot );
+				foreach ( $slot as $k => $v ) {
+					if ( 'non-bookable' === $v['book'] ) {
+						$count--;
+					}
+				}
+				if ( 0 === $count ) {
+					$unavail_dates[] = $date;
+				}
+			}
+		}
+		// echo '<pre>'; print_r( $unavail_dates ); echo '</pre>';
+
+		update_post_meta( $product_id, 'mwb_booking_unavailable_dates', $unavail_dates );
 		update_post_meta( $product_id, 'mwb_booking_product_slots', $slot_arr );
 		// $this->mwb_product_slots = $slot_arr;
 		// echo '<pre>'; print_r( $slot_arr ); echo '</pre>';
@@ -685,7 +703,13 @@ class Mwb_Wc_Bk_Public {
 	 */
 	public function mwb_wc_bk_skip_cart_redirect_checkout( $url ) {
 
-		return wc_get_checkout_url();
+		if ( is_user_logged_in() ) {
+			return wc_get_checkout_url();
+		} else {
+			$url = wc_get_page_permalink( 'myaccount' );
+			return $url;
+		}
+
 	}
 
 	/**
@@ -883,6 +907,10 @@ class Mwb_Wc_Bk_Public {
 		if ( empty( $values['mwb_wc_bk_data'] ) ) {
 			return;
 		}
+		// if ( ! is_user_logged_in() ) {
+		// 	$url = wc_get_page_permalink( 'myaccount' );
+		// 	wp_safe_redirect( $url );
+		// }
 
 		$booking_data = array();
 		if ( isset( $values['mwb_wc_bk_data'] ) && is_array( $values['mwb_wc_bk_data'] ) ) {
@@ -897,6 +925,28 @@ class Mwb_Wc_Bk_Public {
 				$item->add_meta_data( 'mwb_wc_bk_id', $booking_data['mwb_wc_bk_id'], true );
 			}
 		}
+	}
+
+	/**
+	 * Avoid guest user to Book a mwb_booking product.
+	 *
+	 * @param [string] $value 'Yes' or 'No' for sign-up.
+	 * @return string
+	 */
+	public function conditional_guest_checkout_based_on_product( $value ) {
+
+		if ( WC()->cart ) {
+			$cart = WC()->cart->get_cart();
+			foreach ( $cart as $item ) {
+				$prod_id  = $item['product_id'];
+				$_product = wc_get_product( $prod_id );
+				if ( $_product && $_product->is_type( 'mwb_booking' ) ) {
+					$value = 'no';
+					break;
+				}
+			}
+		}
+		return $value;
 	}
 
 	/**
@@ -1016,8 +1066,6 @@ class Mwb_Wc_Bk_Public {
 		foreach ( $meta_data as $key => $value ) {
 			update_post_meta( $booking_id, $key, $value[0] );
 		}
-
-
 	}
 
 	/**
@@ -1091,7 +1139,7 @@ class Mwb_Wc_Bk_Public {
 					$people_term_meta = get_term_meta( $v );
 					$people_name      = $people_term->name;
 					$people[ $v ]     = ! empty( $_POST['people_count'][ $v ] ) ? sanitize_text_field( wp_unslash( $_POST['people_count'][ $v ] ) ) : '';
-	
+
 					$people_data[ $v ] = array(
 						'name'         => $people_term->name,
 						'term_id'      => $v,
@@ -1103,7 +1151,7 @@ class Mwb_Wc_Bk_Public {
 				}
 			}
 		}
-		
+
 		// echo '<pre>'; print_r( $people_data ); echo '</pre>';
 		$unit_cost          = ! empty( $product_meta['mwb_booking_unit_cost_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_input'][0] ) ) : '';
 		$unit_cost_multiply = ! empty( $product_meta['mwb_booking_unit_cost_multiply'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_multiply'][0] ) ) : '';
@@ -1442,6 +1490,39 @@ class Mwb_Wc_Bk_Public {
 		</div>
 		<?php
 		wp_die();
+	}
+
+	/**
+	 * Add a tab to the menu linkjs array to show All Booking on my account page.
+	 *
+	 * @param [array] $menu_links Array of the tabs.
+	 * @return array
+	 */
+	public function mwb_booking_list_user_bookings( $menu_links ) {
+
+		$menu_links['all_bookings'] = __( 'All Bookings', '' );
+
+		return $menu_links;
+	}
+
+	/**
+	 * Register the endpoint for the new tab.
+	 *
+	 * @return void
+	 */
+	public function mwb_booking_add_endpoint() {
+
+		add_rewrite_endpoint( 'all_bookings', EP_PAGES );
+	}
+
+	/**
+	 * Content for the abaove end point created.
+	 *
+	 * @return void
+	 */
+	public function mwb_booking_endpoint_content() {
+
+		require_once MWB_WC_BK_BASEPATH . 'public/partials/mwb-booking-list-user-bookings.php';
 	}
 
 }

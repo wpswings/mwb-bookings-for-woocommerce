@@ -939,7 +939,7 @@ function global_availability_rules($) {
 			availability_count++;
 		}
 		
-		alert( "count: " + availability_count );
+		// alert( "count: " + availability_count );
 
 		// 	var pattern = /[0-9]$/;
 		$.ajax({
@@ -1007,7 +1007,7 @@ function global_availability_rules($) {
 						}
 					});
 					$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_type' ).on( 'change', function(){
-						alert("hi");
+						// alert("hi");
 						var rule_type = $(this).val();
 						switch( rule_type ) {
 							case 'generic':
@@ -1032,7 +1032,7 @@ function global_availability_rules($) {
 	$( '#mwb_global_availability_form').on( 'change', ".mwb_global_availability_rule_weekdays" , function(){
 		var weekdays_rule_check = $(this).is(':checked');
 		var check_obj = $( this );
-		alert(weekdays_rule_check);
+		// alert(weekdays_rule_check);
 		if( weekdays_rule_check ) {
 			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.bookable').hide();
 			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').show();
@@ -1051,9 +1051,9 @@ function global_availability_rules($) {
 
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_delete_avialability_rule', function(e){
 		
-		alert('pressed');
+		// alert('pressed');
 		var del_count = parseInt($(this).attr('rule_count'));
-		alert(del_count);
+		// alert(del_count);
 
 		$.ajax({
 			url  : mwb_booking_obj.ajaxurl,
@@ -1072,7 +1072,7 @@ function global_availability_rules($) {
 
 function global_cost_conditions(obj, $) {
 	var condition = obj.val();
-	alert(condition);
+	// alert(condition);
 	switch (condition) {
 		case 'day':
 			obj.closest('.mwb_global_cost_rule_fields').find('.days').show();
@@ -1196,7 +1196,7 @@ function global_cost_rules($) {
 			cost_count++;
 		}
 		
-		alert( "count: " + cost_count );
+		// alert( "count: " + cost_count );
 
 		// 	var pattern = /[0-9]$/;
 		$.ajax({
@@ -1221,9 +1221,9 @@ function global_cost_rules($) {
 	});
 	$('#mwb_global_cost_form').on('click', '#mwb_delete_cost_rule', function(e){
 		
-		alert('pressed');
+		// alert('pressed');
 		var del_count = parseInt($(this).attr('rule_count'));
-		alert(del_count);
+		// alert(del_count);
 
 		$.ajax({
 			url  : mwb_booking_obj.ajaxurl,
@@ -1302,7 +1302,7 @@ function create_booking_product_details($) {
 				'product_id' : product_id,
 			},
 			success: function( data ) {
-				console.log( data );
+				// console.log( data );
 				$( '#mwb_create_booking_form' ).find( '.product_ajax' ).html( data );
 			}
 		});

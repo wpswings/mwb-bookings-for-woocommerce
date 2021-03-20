@@ -48,9 +48,7 @@ jQuery(document).ready( function($) {
 	end_date   = $( '#mwb-wc-bk-end-date-input' ).val();
 
 	show_time_slots($);
-	if ( mwb_wc_bk_public.hasOwnProperty( 'product_settings' ) ) {
-		datepicker_check($);
-	}
+	
 	// mwb_wc_bk_add_to_cart_form_update($);
 	people_conditions($);
 	// booking_service_conditions($);
@@ -58,9 +56,21 @@ jQuery(document).ready( function($) {
 	// show_total($)
 
 	console.log( mwb_wc_bk_public );
+
+	if( $('#booking-slots-data').length > 0  ){
+		var unavail_dates = $('#booking-slots-data').attr('unavail_dates');
+		unavail_dates = JSON.parse(unavail_dates);
+		console.log(unavail_dates);
+
+		if ( mwb_wc_bk_public.hasOwnProperty( 'product_settings' ) ) {
+			datepicker_check($, unavail_dates);
+		}
+	}
+
+
 });
 
-function datepicker_check($) {
+function datepicker_check($, unavailable_dates) {
 	max_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_input[0];
 	max_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_duration[0];
 	min_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_input[0];

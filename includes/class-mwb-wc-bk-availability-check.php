@@ -459,20 +459,44 @@ class MWB_Woocommerce_Booking_Availability {
 
 		// echo '<pre>'; print_r( $unit_dur ); echo '</pre>';
 		// echo '<pre>'; print_r( $unit_dur_input ); echo '</pre>';
-		$start = gmdate( 'H:i:s', strtotime( $start_time, strtotime( $date ) ) );
-		$end   = gmdate( 'H:i:s', strtotime( '+' . $unit_dur_input . ' ' . $unit_dur, strtotime( $start, strtotime( $date ) ) ) );
+		$start = strtotime( $start_time, strtotime( $date ) );
+		$end   = strtotime( '+' . $unit_dur_input . ' ' . $unit_dur, $start );
 		// echo '<pre>'; print_r( $start ); echo '</pre>';
 		// echo '<pre>'; print_r( $end ); echo '</pre>';
-		while ( strtotime( $end, strtotime( $date ) ) <= strtotime( $end_time, strtotime( $date ) ) ) {
+		while ( $end <= strtotime( $end_time, strtotime( $date ) ) ) {
 
-			$arr[] = $start . '-' . $end;
+			$arr[] = gmdate( 'H:i:s', $start ) . '-' . gmdate( 'H:i:s', $end );
 			// echo '<pre>'; print_r( $arr ); echo '</pre>';die('cv');
-			$start = gmdate( 'H:i:s', strtotime( $end, strtotime( $date ) ) );
-			$end   = gmdate( 'H:i:s', strtotime( '+' . $unit_dur_input . ' ' . $unit_dur, strtotime( $start, strtotime( $date ) ) ) );
+			$start = $end;
+			$end   = strtotime( '+' . $unit_dur_input . ' ' . $unit_dur, $start );
 		}
 		return $arr;
 	}
 
+	/**
+	 * Fetches the unavailable dates from the slots array
+	 *
+	 * @param [array] $slots array of the slots.
+	 * @return array
+	 */
+	public function fetch_unavailable_dates( $slot_arr ) {
+
+		$unavail_dates = array();
+		if ( ! empty( $slot_arr ) && is_array( $slot_arr ) ) {
+			foreach ( $slot_arr as $date => $slot ) {
+				$count = count( $slot );
+				foreach ( $slot as $k => $v ) {
+					if ( 'non-bookable' === $v['book'] ) {
+						$count--;
+					}
+				}
+				if ( 0 === $count ) {
+					$unavail_dates[] = $date;
+				}
+			}
+		}
+		return $unavail_dates;
+	}
 }
 
 

@@ -351,7 +351,7 @@ class Mwb_Wc_Bk_Public {
 			if ( 'hour' === $unit_duration || 'minute' === $unit_duration ) {
 				if ( array_key_exists( $start_date, $slots ) ) {
 					?>
-					<div id="mwb-wc-bk-time-section" class="mwb-wc-bk-form-section" >
+					<!-- <div id="mwb-wc-bk-time-section" class="mwb-wc-bk-form-section" > -->
 						<div id="mwb-wc-bk-time-slot-field">
 							<label for="mwb-wc-bk-time-slot-input"><?php esc_html_e( 'Time', 'mwb-wc-bk' ); ?></label>
 							<select type="text" id="mwb-wc-bk-time-slot-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-time" name="time_slot" required>
@@ -375,7 +375,7 @@ class Mwb_Wc_Bk_Public {
 								?>
 							</select>
 						</div>
-					</div>
+					<!-- </div> -->
 					<?php
 				}
 			}
@@ -414,48 +414,48 @@ class Mwb_Wc_Bk_Public {
 	 *
 	 * @return void
 	 */
-	public function mwb_wc_bk_update_add_to_cart() {
+	// public function mwb_wc_bk_update_add_to_cart() {
 
-		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+	// 	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
-		if ( ! wp_verify_nonce( $nonce, 'mwb_wc_bk_public' ) ) {
-			die( 'Nonce value cannot be verified' );
-		}
-		$product_id = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
-		$duration   = isset( $_POST['duration'] ) ? sanitize_text_field( wp_unslash( $_POST['duration'] ) ) : '';
+	// 	if ( ! wp_verify_nonce( $nonce, 'mwb_wc_bk_public' ) ) {
+	// 		die( 'Nonce value cannot be verified' );
+	// 	}
+	// 	$product_id = isset( $_POST['product_id'] ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+	// 	$duration   = isset( $_POST['duration'] ) ? sanitize_text_field( wp_unslash( $_POST['duration'] ) ) : '';
 
-		$product_meta  = get_post_meta( $product_id );
-		$duration_cost = 0;
+	// 	$product_meta  = get_post_meta( $product_id );
+	// 	$duration_cost = 0;
 
-		$price       = ! empty( $product_meta['mwb_booking_unit_cost_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_input'][0] ) ) : '';
-		$added_costs = ! empty( $product_meta['mwb_booking_added_cost_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_added_cost_select'][0] ) : '';
+	// 	$price       = ! empty( $product_meta['mwb_booking_unit_cost_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_input'][0] ) ) : '';
+	// 	$added_costs = ! empty( $product_meta['mwb_booking_added_cost_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_added_cost_select'][0] ) : '';
 
-		$duration_cost += ( $price * $duration );
-		// echo '<pre>'; print_r( $duration_cost ); echo '</pre>';die( 'ok' );
+	// 	$duration_cost += ( $price * $duration );
+	// 	// echo '<pre>'; print_r( $duration_cost ); echo '</pre>';die( 'ok' );
 
-		if ( is_array( $added_costs ) && ! empty( $added_costs ) ) {
-			foreach ( $added_costs as $cost_id ) {
-				// $cost_term      = get_term( $cost_id );
-				$cost_term_meta = get_term_meta( $cost_id );
-				// echo '<pre>'; print_r( $cost_term_meta ); echo '</pre>';die("ok");
-				if ( ! empty( $cost_term_meta['mwb_booking_ct_costs_multiply_units'][0] ) && 'yes' === $cost_term_meta['mwb_booking_ct_costs_multiply_units'][0] ) {
-					// die("ok");
-					$cost_price     = ! empty( $cost_term_meta['mwb_booking_ct_costs_custom_price'][0] ) ? $cost_term_meta['mwb_booking_ct_costs_custom_price'][0] : 0;
-					$duration_cost += ( $cost_price * $duration );
-				}
-			}
-		}
+	// 	if ( is_array( $added_costs ) && ! empty( $added_costs ) ) {
+	// 		foreach ( $added_costs as $cost_id ) {
+	// 			// $cost_term      = get_term( $cost_id );
+	// 			$cost_term_meta = get_term_meta( $cost_id );
+	// 			// echo '<pre>'; print_r( $cost_term_meta ); echo '</pre>';die("ok");
+	// 			if ( ! empty( $cost_term_meta['mwb_booking_ct_costs_multiply_units'][0] ) && 'yes' === $cost_term_meta['mwb_booking_ct_costs_multiply_units'][0] ) {
+	// 				// die("ok");
+	// 				$cost_price     = ! empty( $cost_term_meta['mwb_booking_ct_costs_custom_price'][0] ) ? $cost_term_meta['mwb_booking_ct_costs_custom_price'][0] : 0;
+	// 				$duration_cost += ( $cost_price * $duration );
+	// 			}
+	// 		}
+	// 	}
 
-		$product    = wc_get_product( $product_id );
-		$price_html = wc_price( $duration_cost );
-		echo wp_json_encode(
-			array(
-				'price_html' => $price_html,
-				'success'    => true,
-			)
-		);
-		wp_die();
-	}
+	// 	$product    = wc_get_product( $product_id );
+	// 	$price_html = wc_price( $duration_cost );
+	// 	echo wp_json_encode(
+	// 		array(
+	// 			'price_html' => $price_html,
+	// 			'success'    => true,
+	// 		)
+	// 	);
+	// 	wp_die();
+	// }
 
 	/**
 	 * Add the additional product data to the cart items
@@ -992,6 +992,7 @@ class Mwb_Wc_Bk_Public {
 				if ( ! $booking_id && ! empty( $booking_data ) ) {
 					$booking_id = $this->mwb_wc_bk_create_booking( $args );
 					if ( $booking_id ) {
+						update_post_meta( $order_id, 'mwb_booking_id', $booking_id );
 						$order_item->add_meta_data( 'mwb_wc_bk_id', $booking_id, true );
 						$this->save_booking_order_data( $order_id, $booking_id );
 						$order_item->save_meta_data();
@@ -1046,6 +1047,7 @@ class Mwb_Wc_Bk_Public {
 				$new_status = 'pending';
 				break;
 		}
+		do_action( 'mwb_booking_status_' . $new_status, $booking_id, $order_id );
 		update_post_meta( $booking_id, 'mwb_booking_status', $new_status );
 	}
 
@@ -1089,6 +1091,7 @@ class Mwb_Wc_Bk_Public {
 		$args['order_meta']['order_id'] = $args['order_id'];
 		update_post_meta( $booking_id, '_customer_user', $args['user_id'] );
 		update_post_meta( $booking_id, 'mwb_meta_data', $args['order_meta'] );
+		do_action( 'mwb_new_booking', $booking_id);
 		return $booking_id;
 	}
 
@@ -1199,7 +1202,7 @@ class Mwb_Wc_Bk_Public {
 				}
 			}
 		}
-		
+
 		// echo "people cost -" . $booking_people_cost . "<br>";
 
 		if ( empty( $unit_cost_multiply ) || 'no' === $unit_cost_multiply ) {

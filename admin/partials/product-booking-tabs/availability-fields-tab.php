@@ -47,13 +47,14 @@
 		</p>
 		<p class="form-field">
 			<label for="mwb_booking_start_time"><?php esc_html_e( 'Daily start time', 'mwb-wc-bk' ); ?></label>
-			<input type="time" name="mwb_booking_start_time" id="mwb_booking_start_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_start_time'] ); ?>"/>
+			<input type="time" name="mwb_booking_start_time" id="mwb_booking_start_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_start_time'] ); ?>" required/>
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time when the booking starts', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
 			<label for="mwb_booking_end_time"><?php esc_html_e( 'Daily end time', 'mwb-wc-bk' ); ?></label>
-			<input type="time" name="mwb_booking_end_time" id="mwb_booking_end_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_end_time'] ); ?>"/>
+			<input type="time" name="mwb_booking_end_time" id="mwb_booking_end_time" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_end_time'] ); ?>" required/>
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time when the booking ends', 'mwb-wc-bk' ) ); ?>
+			<span id="mwb_booking_time_notice"></span>
 		</p>
 		<p class="form-field">
 			<label for="mwb_booking_buffer_input"><?php esc_html_e( 'Booking Buffer', 'mwb-wc-bk' ); ?></label>

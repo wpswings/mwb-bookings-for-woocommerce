@@ -8,6 +8,7 @@ jQuery(document).ready( function($) {
 	selected_services_select2($);
 	selected_people_type_select2($);
 	product_general_settings_js($);
+	product_availability_settings($);
 	product_cost_settings_js($);
 	product_people_settings_js($);
 	product_services_settings_js($)
@@ -597,6 +598,64 @@ function product_general_settings_js($) {
 			$( '#mwb_booking_general_data #mwb_start_booking_custom_date_field' ).hide();
 		}
 	});
+}
+
+function product_availability_settings($) {
+
+	var start_time = $('#mwb_booking_start_time').val();
+	var end_time   = $('#mwb_booking_end_time').val();
+
+	if ( start_time >= end_time ) {
+		// alert( 'wrong' );
+		jQuery( '#mwb_booking_time_notice' ).text( ' *End time should be less than start time' );
+		jQuery( '#mwb_booking_time_notice' ).css( 'color', 'red' );
+		jQuery( this ).val('');
+
+	} else {
+		jQuery( '#mwb_booking_time_notice' ).text( '' );
+	}
+
+	$( '#mwb_booking_availability_data' ).on( 'change', '#mwb_booking_end_time', function($){
+
+		var start_t = jQuery('#mwb_booking_start_time').val();
+
+		var end = jQuery(this).val();
+		if ( start_t >= end ) {
+			// alert( 'wrong' );
+			jQuery( '#mwb_booking_time_notice' ).text( ' *End time should be less than start time' );
+			jQuery( '#mwb_booking_time_notice' ).css( 'color', 'red' );
+			jQuery( this ).val('');
+
+		} else {
+			jQuery( '#mwb_booking_time_notice' ).text( '' );
+		}
+		// if ( start_time < end ) {
+		// 	alert( 'correct' );
+		// } else { 
+		// 	alert( 'wrong' );
+		// }
+	} );
+	$( '#mwb_booking_availability_data' ).on( 'change', '#mwb_booking_start_time', function($){
+
+		var end_t = jQuery('#mwb_booking_end_time').val();
+
+		var start = jQuery(this).val();
+		if ( start >= end_t ) {
+			// alert( 'wrong' );
+			jQuery( '#mwb_booking_time_notice' ).text( ' *End time should be less than start time' );
+			jQuery( '#mwb_booking_time_notice' ).css( 'color', 'red' );
+			jQuery( this ).val('');
+
+		} else {
+			jQuery( '#mwb_booking_time_notice' ).text( '' );
+		}
+		// if ( start < end_time ) {
+		// 	alert( 'correct' );
+		// } else { 
+		// 	alert( 'wrong' );
+		// }
+	} );
+	// console.log( start_time + '  ' + end_time );
 }
 
 function product_cost_settings_js($) {
@@ -1335,6 +1394,34 @@ function render_calendar($ , booking_events) {
      	selectMirror: true,
      	nowIndicator: true,
 		events : booking_events,
+
+		eventClick: function( info ) {
+			// alert( 'Event: ' + info.event.id);
+			$.ajax({
+				url  : mwb_booking_obj.ajaxurl,
+				type : 'POST',
+				data : {
+					'action'     : 'mwb_calendar_event_details_popup',
+					'nonce'      : mwb_booking_obj.nonce,
+					'booking_id' : info.event.id,
+				},
+				success: function( data ) {
+					console.log( data );
+					$('#calendar_event_popup').dialog({
+						title:info.event.title,
+						autoOpen: false,
+						modal: true,
+						width: 400,
+						height: 500
+					});
+					$('#calendar_event_popup').html(data);
+					$('#calendar_event_popup').dialog( 'open' );
+					// return false;
+
+				}
+			});
+			// info.el.style.borderColor = 'red';
+		},
 		// events: [
 		// 	{
 		// 	  title: 'All Day Event',

@@ -114,4 +114,5 @@ $end_time   = ! empty( $product_meta['mwb_booking_end_time'][0] ) ? $product_met
 		}
 	}
 	?>
+	<div id="mwb-wc-bk-time-section" class="mwb-wc-bk-form-section"></div>
 </div>

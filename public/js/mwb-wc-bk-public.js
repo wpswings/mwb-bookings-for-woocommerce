@@ -38,8 +38,8 @@
 // var indiv_added_cost_arr = [];
 var slots = mwb_wc_bk_public.slots;
 var unavailable_dates = mwb_wc_bk_public.unavailable_dates;
-console.log( slots );
-console.log( unavailable_dates );
+// console.log( slots );
+// console.log( unavailable_dates );
 var start_date;
 var end_date;
 jQuery(document).ready( function($) {
@@ -66,8 +66,6 @@ jQuery(document).ready( function($) {
 			datepicker_check($, unavail_dates);
 		}
 	}
-
-
 });
 
 function datepicker_check($, unavailable_dates) {
@@ -75,10 +73,48 @@ function datepicker_check($, unavailable_dates) {
 	max_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_duration[0];
 	min_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_input[0];
 	min_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_duration[0];
-	current_date     = mwb_wc_bk_public.current_date;
-	// alert( min_adv_duration );
+
+	start_booking        = mwb_wc_bk_public.product_settings.mwb_start_booking_from[0];
+	custom_start_booking = mwb_wc_bk_public.product_settings.mwb_start_booking_custom_date[0];
+	custom_date_arr = custom_start_booking.split('-');
+	// current_date     = mwb_wc_bk_public.current_date;
+	console.log( custom_date_arr );
+	// if ( custom_start_booking ) {
+	// 	console.log( custom_start_booking );
+	// }
+
 	max_dur   = max_adv_duration.match(/\b(\w)/g);
 	min_dur   = min_adv_duration.match( /\b(\w)/g );
+
+	if ( start_booking == 'today' ) {
+		// start_slot = (new Date()).toISOString().split('T')[0];
+		start_slot = new Date();
+		end_slot   = "+" + max_adv_input + max_dur;
+		// console.log( start_slot );
+	} else if ( start_booking == 'tomorrow' ) {
+		start_slot = '+1d';
+		end_slot   = "+" + (parseInt(max_adv_input) + 1) + max_dur;
+	} else if ( start_booking == 'initially_available' ) {
+		start_slot = "+" + min_adv_input + min_dur;
+		// if ( min_dur == 'day' ) {
+			
+		// }
+		end_slot   = "+" + (max_adv_input + min_adv_input) + max_dur;
+	} else if ( start_booking == 'custom_date' ) {
+		start_slot = new Date( custom_date_arr[0], custom_date_arr[1] - 1, custom_date_arr[2] );
+		// end_slot   = "+" + (max_adv_input + min_adv_input) + max_dur;
+		if ( max_adv_duration == 'day' ) {
+			end_slot = new Date(start_slot.getTime() + max_adv_input*24*60*60*1000);
+		} else if( max_adv_duration == 'month' ) {
+			end_slot = start_slot;
+			end_slot.setMonth(end_slot.getMonth() + max_adv_input);
+		}
+	}
+
+	console.log( start_slot );
+	console.log( end_slot );
+	// alert( min_adv_duration );
+	
 	// arr = current_date.split("-");
 	// min_date_yr = arr[0];
 	// if( 'day' == min_adv_duration ) {
@@ -106,8 +142,8 @@ function datepicker_check($, unavailable_dates) {
 	// }
 	// alert( min_date_day + "-" + min_date_mnth);
 	// console.log( new Date( min_date_yr, min_date_mnth, min_date_day ) );
-	console.log( "+" + max_adv_input + max_dur );
-	console.log( "+" + min_adv_input + min_dur );
+	// console.log( "+" + max_adv_input + max_dur );
+	// console.log( "+" + min_adv_input + min_dur );
 	var not_allowed_days = mwb_wc_bk_public.not_allowed_days;
 	
 	// console.log( mwb_wc_bk_public.not_allowed_days );
@@ -145,20 +181,22 @@ function datepicker_check($, unavailable_dates) {
 		dateFormat : "mm/dd/yy",
 		// firstDay: 0,
 		maxDate: "+" + max_adv_input + max_dur,
+		// maxDate: end_slot,
 		// minDate: new Date( min_date_yr, min_date_mnth - min_date_mnth, min_date_day ),
 		minDate: "+" + min_adv_input + min_dur,
+		// minDate: start_slot,
 		// autoSize: true
 		// numberOfMonths: [ 2, 3 ]
 
-		// beforeShowDay: function(date){ 
+		// beforeShowDay: function(date){
 		// 	var days = [1,2,3,4,5]; 
 		// 	return [days.includes(date.getDay())];
 		// }
 
 		beforeShowDay: function(d) {
 			var year = d.getFullYear();
-           		month = ("0" + (d.getMonth() + 1)).slice(-2);
-            	day = ("0" + (d.getDate())).slice(-2);
+           	var	month = ( "0" + ( d.getMonth() + 1 ) ).slice( -2 );
+            var	day = ( "0" + ( d.getDate() ) ).slice( -2 );
 			var formatted = year + '-' + month + '-' + day;
 
 			if ( $.inArray( formatted, unavailable_dates ) != -1 ) {
@@ -212,35 +250,49 @@ function datepicker_check($, unavailable_dates) {
 		maxDate: "+" + max_adv_input + max_dur,
 		minDate: "+" + min_adv_input + min_dur,
 
-		beforeShowDay: function(date) {
-			var days = [0,1,2,3,4,5,6];
-			for( var l = 0; l < not_allowed_days.length; l++ ) {
-				switch( not_allowed_days[l] ) {
-					case 'sunday':
-						days.splice( $.inArray(0, days), 1 );
-						break;
-					case 'monday':
-						days.splice( $.inArray(1, days), 1 );
-						break;
-					case 'tuesday':
-						days.splice( $.inArray(2, days), 1 );
-						break;
-					case 'wednesday':
-						days.splice( $.inArray(3, days), 1 );
-						break;
-					case 'thursday':
-						days.splice( $.inArray(4, days), 1 );
-						break;
-					case 'friday':
-						days.splice( $.inArray(5, days), 1 );
-						break;
-					case 'saturday':
-						days.splice( $.inArray(6, days), 1 );
-						break;
-				}
+		// beforeShowDay: function(date) {
+		// 	var days = [0,1,2,3,4,5,6];
+		// 	for( var l = 0; l < not_allowed_days.length; l++ ) {
+		// 		switch( not_allowed_days[l] ) {
+		// 			case 'sunday':
+		// 				days.splice( $.inArray(0, days), 1 );
+		// 				break;
+		// 			case 'monday':
+		// 				days.splice( $.inArray(1, days), 1 );
+		// 				break;
+		// 			case 'tuesday':
+		// 				days.splice( $.inArray(2, days), 1 );
+		// 				break;
+		// 			case 'wednesday':
+		// 				days.splice( $.inArray(3, days), 1 );
+		// 				break;
+		// 			case 'thursday':
+		// 				days.splice( $.inArray(4, days), 1 );
+		// 				break;
+		// 			case 'friday':
+		// 				days.splice( $.inArray(5, days), 1 );
+		// 				break;
+		// 			case 'saturday':
+		// 				days.splice( $.inArray(6, days), 1 );
+		// 				break;
+		// 		}
+		// 	}
+		// 	return [days.includes(date.getDay())];
+		// },
+
+		beforeShowDay: function(d) {
+			var year = d.getFullYear();
+           	var	month = ("0" + (d.getMonth() + 1)).slice(-2);
+            var	day = ("0" + (d.getDate())).slice(-2);
+			var formatted = year + '-' + month + '-' + day;
+
+			if ( $.inArray( formatted, unavailable_dates ) != -1 ) {
+				return [false, "","Un-available"];
+			} else {
+				return [true,"","Available"];
 			}
-			return [days.includes(date.getDay())];
-		},
+			// console.log(formatted);
+		}
 	});
 }
 
@@ -345,7 +397,7 @@ function show_time_slots($) {
 				'id'    : product_id,
 			},
 			success : function( response ) {
-				$( '#mwb-wc-bk-start-date-field' ).append( response );
+				$( '#mwb-wc-bk-time-section' ).html( response );
 				console.log( response );
 			}
 		});

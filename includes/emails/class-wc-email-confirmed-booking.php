@@ -40,7 +40,7 @@ class WC_Booking_Confirmed extends WC_Email {
 		// Action to which we hook onto to send the email.
 
 		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
-		add_action( 'woocommerce_order_status_confirmed', array( $this, 'trigger' ), 10, 2 );
+		add_action( 'mwb_new_booking', array( $this, 'trigger' ), 10 );
 
 		parent::__construct();
 	}
@@ -51,7 +51,7 @@ class WC_Booking_Confirmed extends WC_Email {
 	 * @param int            $order_id The order ID.
 	 * @param WC_Order|false $order Order object.
 	 */
-	public function trigger( $order_id, $order = false ) {
+	public function trigger( $booking_id ) {
 		$this->setup_locale();
 
 		if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {

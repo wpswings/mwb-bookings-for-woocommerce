@@ -96,21 +96,19 @@ function datepicker_check($, unavailable_dates) {
 		end_slot   = "+" + (parseInt(max_adv_input) + 1) + max_dur;
 	} else if ( start_booking == 'initially_available' ) {
 		start_slot = "+" + min_adv_input + min_dur;
-		// if ( min_dur == 'day' ) {
-			
-		// }
-		end_slot   = "+" + (max_adv_input + min_adv_input) + max_dur;
+		end_slot   = "+" + max_adv_input + max_dur + ' +' + min_adv_input + min_dur;
 	} else if ( start_booking == 'custom_date' ) {
 		start_slot = new Date( custom_date_arr[0], custom_date_arr[1] - 1, custom_date_arr[2] );
 		// end_slot   = "+" + (max_adv_input + min_adv_input) + max_dur;
 		if ( max_adv_duration == 'day' ) {
 			end_slot = new Date(start_slot.getTime() + max_adv_input*24*60*60*1000);
 		} else if( max_adv_duration == 'month' ) {
-			end_slot = start_slot;
-			end_slot.setMonth(end_slot.getMonth() + max_adv_input);
+			// console.log('yahuza');
+			end_slot = new Date( custom_date_arr[0], custom_date_arr[1] - 1, custom_date_arr[2] );
+			end_slot.setMonth( ( end_slot.getMonth() ) + parseInt(max_adv_input) );
 		}
 	}
-
+	
 	console.log( start_slot );
 	console.log( end_slot );
 	// alert( min_adv_duration );
@@ -180,16 +178,16 @@ function datepicker_check($, unavailable_dates) {
 	$( '#mwb-wc-bk-start-date-input' ).datepicker({
 		dateFormat : "mm/dd/yy",
 		// firstDay: 0,
-		maxDate: "+" + max_adv_input + max_dur,
+		maxDate: end_slot,
 		// maxDate: end_slot,
 		// minDate: new Date( min_date_yr, min_date_mnth - min_date_mnth, min_date_day ),
-		minDate: "+" + min_adv_input + min_dur,
+		minDate: start_slot,
 		// minDate: start_slot,
 		// autoSize: true
 		// numberOfMonths: [ 2, 3 ]
 
 		// beforeShowDay: function(date){
-		// 	var days = [1,2,3,4,5]; 
+		// 	var days = [1,2,3,4,5];
 		// 	return [days.includes(date.getDay())];
 		// }
 

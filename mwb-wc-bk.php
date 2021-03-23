@@ -1,14 +1,13 @@
 <?php
 /**
- *
  * @link              https://makewebbetter.com/
  * @since             1.0.0
  * @package           Mwb_Wc_Bk
  *
  * @wordpress-plugin
- * Plugin Name:       Booking For WooCommerce
+ * Plugin Name:       Bookings For WooCommerce
  * Plugin URI:        https://makewebbetter.com/
- * Description:       Booking For WooCommerce.
+ * Description:       Bookings For WooCommerce.
  * Version:           1.0.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/

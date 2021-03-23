@@ -10,7 +10,7 @@ if ( ! class_exists( 'WC_Email' ) ) {
 /**
  * Class WC_Customer_Cancel_Order
  */
-class WC_Booking_On_Hold extends WC_Email {
+class WC_Booking_Pending extends WC_Email {
 
 	/**
 	 * Create an instance of the class.
@@ -20,17 +20,18 @@ class WC_Booking_On_Hold extends WC_Email {
 	 */
 	public function __construct() {
 
-		$this->id             = 'customer_on_hold_booking';
+		
+		$this->id             = 'customer_pending_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'On Hold Booking', 'woocommerce' );
-		$this->description    = __( 'Booking on hold emails are sent to customers when their booking is on hold.', 'woocommerce' );
-		$this->heading        = __( 'Booking On Hold', 'custom-wc-email' );
+		$this->title          = __( 'Pending Booking', 'woocommerce' );
+		$this->description    = __( 'Booking pending emails are sent to customers when their booking is pending ie payment is not complete.', 'woocommerce' );
+		$this->heading        = __( 'Booking Pending', 'custom-wc-email' );
 
 		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-		$this->subject = sprintf( _x( '[%s] Booking On Hold', 'You booking is on hold due to pending payment', 'mwb-wc-bk' ), '{blogname}' );
+		$this->subject = sprintf( _x( '[%s] Booking Pending', 'You booking is pending due to pending payment', 'mwb-wc-bk' ), '{blogname}' );
 
-		$this->template_html  = 'emails/wc-customer-on-hold-booking.php';
-		$this->template_plain = 'emails/plain/wc-customer-on-hold-booking.php';
+		$this->template_html  = 'emails/wc-customer-pending-booking.php';
+		$this->template_plain = 'emails/plain/wc-customer-pending-booking.php';
 		$this->template_base  = MWB_WC_BK_BASEPATH . 'admin/templates/';
 
 		$this->placeholders = array(
@@ -52,8 +53,8 @@ class WC_Booking_On_Hold extends WC_Email {
 	 * @param WC_Order|false $order Order object.
 	 */
 	public function trigger( $booking_id, $order_id ) {
+	
 		$this->setup_locale();
-		
 
 		// if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 		// 	$order = wc_get_order( $order_id );
@@ -84,6 +85,8 @@ class WC_Booking_On_Hold extends WC_Email {
 		if ( $this->is_enabled() && $this->get_recipient() ) {
 			$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
 		}
+
+		//die('Imonfront');
 
 		$this->restore_locale();
 	}

@@ -39,8 +39,12 @@ class WC_Booking_Cancelled extends WC_Email {
 		);
 		// Action to which we hook onto to send the email.
 
-		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
-		add_action( 'mwb_booking_send_email_expired', array( $this, 'trigger' ), 10, 2 );
+		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );	
+		add_action( 'mwb_new_booking', array( $this, 'trigger' ), 10, 2 );
+
+		add_action( 'mwb_booking_status_cancelled', array( $this, 'trigger' ), 10, 2 );
+		add_action( 'mwb_booking_status_pending_to_cancelled', array( $this, 'trigger', 10, 2 ) );
+		add_action( 'mwb_booking_status_confirmation_to_cancelled', array( $this, 'trigger', 10, 2 ) );
 
 		parent::__construct();
 	}
@@ -51,17 +55,18 @@ class WC_Booking_Cancelled extends WC_Email {
 	 * @param int            $order_id The order ID.
 	 * @param WC_Order|false $order Order object.
 	 */
-	public function trigger( $order_id, $order = false ) {
+	public function trigger( $booking_id, $order_id ) {
 		$this->setup_locale();
 
 		// if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 		// 	$order = wc_get_order( $order_id );
 		// }mwb_cpt_booking
-
+		$order = wc_get_order( $order_id );
+			// die('working');
 		if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 			$order = wc_get_order( $order_id );
 		}
-		$pos = get_post( ! empty( $order_id ) ? $order_id : 0 );
+		$pos = get_post( ! empty( $booking_id ) ? $booking_id : 0 );
 		if ( 'mwb_cpt_booking' !== $pos->post_type ) {
 			return;
 		}
@@ -73,7 +78,7 @@ class WC_Booking_Cancelled extends WC_Email {
 			$this->object                         = $order;
 			$this->recipient                      = $this->object->get_billing_email();
 
-			$this->subject                        = __( 'Cancelled booking', 'wooocommerce' );
+			$this->subject                        = __( 'Cancelled booking', 'mwb-wc-bk' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();

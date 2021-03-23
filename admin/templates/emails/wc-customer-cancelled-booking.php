@@ -6,16 +6,15 @@
  * @package mwb-woocommerce-booking/admin/templates/emails
  * @version 1.0.0
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-
-
-do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
+do_action( 'woocommerce_booking_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: $1: customer's billing first name and last name */ ?>
-<p><?php printf( esc_html__( 'Booking belonging to %1$s has been cancelled. Their booking\'s details are as follows:', 'mwb-wc-bk' ), esc_html( $order->get_formatted_billing_full_name() ) ); ?></p>
+<p><?php printf( esc_html__( 'Booking belonging to %1$s has been cancelled. The booking\'s details are as follows:', 'mwb-wc-bk' ), esc_html( $order->get_formatted_billing_full_name() ) ); ?></p>
 
 <table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
 	<thead>
@@ -28,7 +27,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 	<tbody>
 		<tr>
 			<td class="td" width="1%" style="text-align:left; vertical-align:middle;">
-				<a href="<?php echo esc_url( get_edit_post_link( $order->get_id() ) ); ?>">#<?php echo esc_html( $order->get_order_number() ); ?></a>
+				<a href="#">#<?php echo esc_html( $order->get_order_number() ); ?></a>
 			</td>
 			<td class="td" style="text-align:left; vertical-align:middle;">
 				<?php $meta = $order->get_meta( 'mwb_meta_data' ); ?>

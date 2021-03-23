@@ -10,7 +10,7 @@ if ( ! class_exists( 'WC_Email' ) ) {
 /**
  * Class WC_Customer_Cancel_Order
  */
-class WC_Booking_Expired extends WC_Email {
+class WC_Booking_Refunded extends WC_Email {
 
 	/**
 	 * Create an instance of the class.
@@ -20,29 +20,23 @@ class WC_Booking_Expired extends WC_Email {
 	 */
 	public function __construct() {
 
-		$this->id             = 'customer_expired_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'Expired Booking', 'woocommerce' );
-		$this->description    = __( 'Booking expired emails are sent to customers when their booking is expired.', 'woocommerce' );
-		$this->heading        = __( 'Booking Expired', 'mwb-wc-bk' );
+		$this->id             = 'customer_refunded_booking';
+		$this->title          = __( 'Refunded Booking', 'woocommerce' );
+		$this->description    = __( 'Booking refunded emails are sent to customers when their booking is refunded.', 'woocommerce' );
 
-		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-		$this->subject = sprintf( _x( '[%s] Booking is Expired', 'Your booking has been expired due to pending payment', 'mwb-wc-bk' ), '{blogname}' );
-
-		$this->template_html  = 'emails/wc-customer-expired-booking.php';
-		$this->template_plain = 'emails/plain/wc-customer-expired-booking.php';
-		$this->template_base  = MWB_WC_BK_BASEPATH . 'admin/templates/';
-
-		$this->placeholders = array(
+		$this->template_html  = 'emails/wc-customer-refunded-booking.php';
+		$this->template_plain = 'emails/plain/wc-customer-refunded-booking.php';
+		$this->placeholders   = array(
 			'{order_date}'   => '',
 			'{order_number}' => '',
 		);
-		// Action to which we hook onto to send the email.
 
-		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
-		add_action( 'woocommerce_order_status_expired', array( $this, 'trigger' ), 10, 2 );
-		add_action( 'mwb_booking_status_pending_to_expired', array( $this, 'trigger', 10, 2 ) );
+		// Triggers for this email.
+		add_action( 'woocommerce_order_fully_refunded_notification', array( $this, 'trigger_full' ), 10, 2 );
+		add_action( 'woocommerce_order_partially_refunded_notification', array( $this, 'trigger_partial' ), 10, 2 );
 
+		// Call parent constructor.
 		parent::__construct();
 	}
 
@@ -76,7 +70,7 @@ class WC_Booking_Expired extends WC_Email {
 			$this->object    = $order;
 			$this->recipient = $this->object->get_billing_email();
 
-			$this->subject = __( 'Booking Expired', 'wooocommerce' );
+			$this->subject = __( 'Booking Confirmed', 'wooocommerce' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();
@@ -89,7 +83,7 @@ class WC_Booking_Expired extends WC_Email {
 		$this->restore_locale();
 	}
 
-/**
+	/**
 	 * Get content html.
 	 *
 	 * @return string

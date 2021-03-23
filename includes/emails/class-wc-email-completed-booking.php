@@ -55,8 +55,10 @@ class WC_Booking_Completed extends WC_Email {
 		// add_action( 'woocommerce_order_status_pending_to_cancelled_notification', array( $this, 'trigger' ) );
 		// add_action( 'woocommerce_order_status_on-hold_to_cancelled_notification', array( $this, 'trigger' ) );
 
-		add_action( 'mwb_booking_send_email_completed', array( $this, 'trigger' ), 10, 2 );
+		add_action( 'mwb_booking_status_completed', array( $this, 'trigger' ), 10, 2 );
+		add_action( 'mwb_booking_status_pending_to_completed', array( $this, 'trigger', 10, 2 ) );
 
+		// add_action( 'mwb_booking_status_confirmation_to_cancelled', array( $this, 'trigger', 10, 2 ) );
 		// add_action( 'woocommerce_order_status__notification', array( $this, 'trigger' ), 10, 2 );
 		// add_action( 'woocommerce_order_status_booking-unpaid_to_booking-paid_notification', array( $this, 'trigger' ), 10, 2 );
 
@@ -69,17 +71,19 @@ class WC_Booking_Completed extends WC_Email {
 	 * @param int            $order_id The order ID.
 	 * @param WC_Order|false $order Order object.
 	 */
-	public function trigger( $order_id, $order = false ) {
+	public function trigger( $booking_id, $order_id ) {
 		$this->setup_locale();
 
+		$order = wc_get_order( $order_id );
 		// if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 		// 	$order = wc_get_order( $order_id );
 		// }mwb_cpt_booking
+		// die('kljsdvn');
 
 		if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 			$order = wc_get_order( $order_id );
 		}
-		$pos = get_post( ! empty( $order_id ) ? $order_id : 0 );
+		$pos = get_post( ! empty( $booking_id ) ? $booking_id : 0 );
 		if ( 'mwb_cpt_booking' !== $pos->post_type ) {
 			return;
 		}

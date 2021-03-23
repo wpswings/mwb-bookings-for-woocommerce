@@ -293,7 +293,7 @@ class Mwb_Wc_Bk_Public {
 
 		// return compact( 'slot_arr', 'unavail_dates' );
 
-		echo '<div id="booking-slots-data" unavail_dates="'. htmlspecialchars( json_encode( $unavail_dates ) )  .'" ></div>'; 
+		echo '<div id="booking-slots-data" unavail_dates="' . esc_html( htmlspecialchars( wp_json_encode( $unavail_dates ) ) ) . '" ></div>';
 
 		//update_post_meta( $product_id, 'mwb_booking_unavailable_dates', $unavail_dates );
 		//update_post_meta( $product_id, 'mwb_booking_product_slots', $slot_arr );
@@ -955,6 +955,9 @@ class Mwb_Wc_Bk_Public {
 	 * @return void
 	 */
 	public function mwb_wc_bk_check_order_booking( $order_id, $posted_data = array() ) {
+
+		// echo '<pre>'; print_r( $posted_data ); echo '</pre>';
+		// die("order_processed");
 		$order = wc_get_order( $order_id );
 		if ( ! $order ) {
 			return;
@@ -963,6 +966,7 @@ class Mwb_Wc_Bk_Public {
 		if ( ! $order_items ) {
 			return;
 		}
+
 		// echo '<pre>'; print_r( $order_items ); echo '</pre>';die("ook");
 		// $order_type = '';
 
@@ -973,12 +977,15 @@ class Mwb_Wc_Bk_Public {
 					continue;
 				}
 
+				// echo '<pre>'; print_r( $product ); echo '</pre>';die('kk');
+
 				// echo '<pre>'; print_r( $order_item_id ); echo '</pre>';
 				// echo '<pre>'; print_r( $order_item->get_meta( 'mwb_wc_bk_data' ) ); echo '</pre>';
 				// $order_type = 'booking';
 
 				$order_meta               = $order_item->get_meta( 'mwb_wc_bk_data' );
 				$order_meta['product_id'] = $product->get_id();
+
 				$args = array(
 					'order_id'   => $order_id,
 					'product_id' => $product->get_id(),
@@ -988,15 +995,18 @@ class Mwb_Wc_Bk_Public {
 				);
 
 				$booking_data = $order_item->get_meta( 'mwb_wc_bk_data' );
-				$booking_id   = $order_item->get_meta( 'mwb_wc_bk_id' );
-				if ( ! $booking_id && ! empty( $booking_data ) ) {
+				// $booking_id   = $order_item->get_meta( 'mwb_wc_bk_id' );
+				// if ( ! $booking_id && ! empty( $booking_data ) ) {
+
+				if ( ! empty( $booking_data ) ) {
 					$booking_id = $this->mwb_wc_bk_create_booking( $args );
 					if ( $booking_id ) {
 						update_post_meta( $order_id, 'mwb_booking_id', $booking_id );
-						$order_item->add_meta_data( 'mwb_wc_bk_id', $booking_id, true );
-						$this->save_booking_order_data( $order_id, $booking_id );
+						$order_item->add_meta_data( 'mwb_booking_id', $booking_id, true );
 						$order_item->save_meta_data();
-						$order->add_order_note( sprintf( __( 'A new booking <a href="%s">#%s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );
+						$order->add_order_note( sprintf( __( 'A new booking <a href="%1$1s">#%2$2s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );
+
+						$this->save_booking_order_data( $order_id, $booking_id );
 						$this->booking_status_acc_order_status( $order_id, $booking_id );
 					}
 				}
@@ -1019,7 +1029,7 @@ class Mwb_Wc_Bk_Public {
 
 		$order        = wc_get_order( $order_id );
 		$order_status = $order->get_status();
-		echo '<pre>'; print_r( $order_status ); echo '</pre>';
+		//echo '<pre>'; print_r( $order_status ); echo '</pre>';
 
 		switch ( $order_status ) {
 			case 'pending':
@@ -1029,16 +1039,16 @@ class Mwb_Wc_Bk_Public {
 				$new_status = 'pending';
 				break;
 			case 'on-hold':
-				$new_status = 'on-hold';
+				$new_status = 'pending';
 				break;
 			case 'completed':
 				$new_status = 'completed';
 				break;
 			case 'cancelled':
-				$new_status = 'expired';
+				$new_status = 'cancelled';
 				break;
 			case 'failed':
-				$new_status = 'expired';
+				$new_status = 'cancelled';
 				break;
 			case 'refunded':
 				$new_status = 'refunded';
@@ -1047,11 +1057,16 @@ class Mwb_Wc_Bk_Public {
 				$new_status = 'pending';
 				break;
 		}
-		do_action( 'mwb_booking_status_' . $new_status, $booking_id, $order_id );
 		update_post_meta( $booking_id, 'mwb_booking_status', $new_status );
+		
+		do_action( 'mwb_booking_status_' . $new_status, $booking_id, $order_id );
+		
+		update_post_meta( $booking_id, 'trigger_admin_email', 'yes' );
+		
+		//do_action( 'mwb_booking_created', $booking_id, $order_id );
 	}
 
-	/**
+	/** 
 	 * Update Order meta to the booking post meta.
 	 *
 	 * @param [int]  $order_id Order ID.
@@ -1078,6 +1093,7 @@ class Mwb_Wc_Bk_Public {
 
 		// echo '<pre>'; print_r( $args ); echo '</pre>';die("ok");
 		$product      = get_post( $args['product_id'] );
+		$order_id     = $args['order_id'];
 		$product_name = $product->post_name;
 		$title        = 'Booking for ' . $product_name;
 		$booking_id   = wp_insert_post(
@@ -1091,7 +1107,9 @@ class Mwb_Wc_Bk_Public {
 		$args['order_meta']['order_id'] = $args['order_id'];
 		update_post_meta( $booking_id, '_customer_user', $args['user_id'] );
 		update_post_meta( $booking_id, 'mwb_meta_data', $args['order_meta'] );
-		do_action( 'mwb_new_booking', $booking_id);
+
+		do_action( 'mwb_booking_created', $booking_id, $order_id );
+
 		return $booking_id;
 	}
 
@@ -1524,5 +1542,6 @@ class Mwb_Wc_Bk_Public {
 
 		require_once MWB_WC_BK_BASEPATH . 'public/partials/mwb-booking-list-user-bookings.php';
 	}
+	
 
 }

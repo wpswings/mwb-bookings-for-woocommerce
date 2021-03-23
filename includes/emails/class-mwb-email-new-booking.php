@@ -10,7 +10,7 @@ if ( ! class_exists( 'WC_Email' ) ) {
 /**
  * Class WC_Customer_Cancel_Order
  */
-class WC_Booking_Expired extends WC_Email {
+class WC_Booking_New extends WC_Email {
 
 	/**
 	 * Create an instance of the class.
@@ -19,18 +19,18 @@ class WC_Booking_Expired extends WC_Email {
 	 * @return void
 	 */
 	public function __construct() {
-
-		$this->id             = 'customer_expired_booking';
+        
+		$this->id             = 'customer_new_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'Expired Booking', 'woocommerce' );
-		$this->description    = __( 'Booking expired emails are sent to customers when their booking is expired.', 'woocommerce' );
-		$this->heading        = __( 'Booking Expired', 'mwb-wc-bk' );
+		$this->title          = __( 'New Booking', 'woocommerce' );
+		$this->description    = __( 'Booking cancelled emails are sent to customers when their bookings are cancelled.', 'woocommerce' );
+		$this->heading        = __( 'Booking Cancelled', 'custom-wc-email' );
 
 		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-		$this->subject = sprintf( _x( '[%s] Booking is Expired', 'Your booking has been expired due to pending payment', 'mwb-wc-bk' ), '{blogname}' );
+		$this->subject = sprintf( _x( '[%s] Booking Cancelled', 'Sorry! your booking has been cancelled', 'mwb-wc-bk' ), '{blogname}' );
 
-		$this->template_html  = 'emails/wc-customer-expired-booking.php';
-		$this->template_plain = 'emails/plain/wc-customer-expired-booking.php';
+		$this->template_html  = 'emails/wc-customer-cancelled-booking.php';
+		$this->template_plain = 'emails/plain/wc-customer-cancelled-booking.php';
 		$this->template_base  = MWB_WC_BK_BASEPATH . 'admin/templates/';
 
 		$this->placeholders = array(
@@ -39,9 +39,12 @@ class WC_Booking_Expired extends WC_Email {
 		);
 		// Action to which we hook onto to send the email.
 
-		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
-		add_action( 'woocommerce_order_status_expired', array( $this, 'trigger' ), 10, 2 );
-		add_action( 'mwb_booking_status_pending_to_expired', array( $this, 'trigger', 10, 2 ) );
+		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );	
+		add_action( 'mwb_booking_created' , array( $this, 'trigger' ), 10, 2 );
+
+		//add_action( 'mwb_booking_status_pending', array( $this, 'trigger' ), 10, 2 );
+		// add_action( 'mwb_booking_status_pending_to_cancelled', array( $this, 'trigger', 10, 2 ) );
+		// add_action( 'mwb_booking_status_confirmation_to_cancelled', array( $this, 'trigger', 10, 2 ) );
 
 		parent::__construct();
 	}
@@ -55,17 +58,19 @@ class WC_Booking_Expired extends WC_Email {
 	public function trigger( $booking_id, $order_id ) {
 		$this->setup_locale();
 
-		$order = wc_get_order( $order_id );
 		// if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 		// 	$order = wc_get_order( $order_id );
 		// }mwb_cpt_booking
-		// die('kljsdvn');
-
+		$order = wc_get_order( $order_id );
+        //echo '1';
+			// die('working');
 		if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 			$order = wc_get_order( $order_id );
+            //echo '2';
 		}
 		$pos = get_post( ! empty( $booking_id ) ? $booking_id : 0 );
 		if ( 'mwb_cpt_booking' !== $pos->post_type ) {
+            //echo '3';
 			return;
 		}
 		// echo '<pre>'; print_r( $pos ); echo '</pre>';
@@ -73,23 +78,25 @@ class WC_Booking_Expired extends WC_Email {
 		// echo '<pre>'; var_dump( $order ); echo '</pre>';die("ok");
 
 		if ( is_a( $order, 'WC_Order' ) ) {
-			$this->object    = $order;
-			$this->recipient = $this->object->get_billing_email();
+			$this->object                         = $order;
+			$this->recipient                      = $this->object->get_billing_email();
 
-			$this->subject = __( 'Booking Expired', 'wooocommerce' );
+			$this->subject                        = __( 'Cancelled booking', 'mwb-wc-bk' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();
+            //echo '4';
 		}
 
 		if ( $this->is_enabled() && $this->get_recipient() ) {
 			$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
-		}
-
+            //echo '5';
+        }
+ 
 		$this->restore_locale();
 	}
 
-/**
+	/**
 	 * Get content html.
 	 *
 	 * @return string

@@ -261,7 +261,7 @@ class Mwb_Wc_Bk {
 		// $this->loader->add_action( 'wc_order_statuses', $plugin_admin, 'mwb_booking_show_status' );
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_admin, 'mwb_booking_change_order', 10, 4 );
-		
+
 		// $this->loader->add_action( 'woocommerce_order_edit_status', $plugin_admin, 'mwb_booking_set_new_status', 10, 2 );
 
 		$this->loader->add_filter( 'manage_edit-mwb_cpt_booking_columns', $plugin_admin, 'mwb_booking_show_custom_columns' );
@@ -342,6 +342,7 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'woocommerce_account_all_bookings_endpoint', $plugin_public, 'mwb_booking_endpoint_content' );
 
 		$this->loader->add_filter( 'pre_option_woocommerce_enable_guest_checkout', $plugin_public, 'conditional_guest_checkout_based_on_product' );
+	
 	}
 
 	/**

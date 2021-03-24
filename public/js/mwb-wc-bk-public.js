@@ -37,12 +37,35 @@
 // var booking_service_cost = 0;
 // var indiv_added_cost_arr = [];
 var slots = mwb_wc_bk_public.slots;
+var is_product = false;
+if ( mwb_wc_bk_public.hasOwnProperty( 'mwb_booking_product_page' ) ) {
+	var is_product = mwb_wc_bk_public.mwb_booking_product_page;
+}
+console.log( is_product );
 var unavailable_dates = mwb_wc_bk_public.unavailable_dates;
 // console.log( slots );
 // console.log( unavailable_dates );
 var start_date;
 var end_date;
 jQuery(document).ready( function($) {
+
+	$(window).on('load', function(event) {
+		// alert('reload');
+		if ( is_product ) {
+			// alert('working');
+			$( '.mwb-wc-bk-form-input' ).trigger('change');
+		}
+
+	});
+	// $(function() {
+	// 	$(window).on("navigate", function (event, data) {
+	// 		var direction = data.state.direction;
+	// 		if (direction == 'back') {
+	// 			// console.log('back button was pressed')
+	// 			window.reload(true);
+	// 		}
+	// 	});
+	// });
 
 	start_date = $( '#mwb-wc-bk-start-date-input' ).val();
 	end_date   = $( '#mwb-wc-bk-end-date-input' ).val();
@@ -433,6 +456,20 @@ function booking_price_cal($) {
 	var max_people = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div input[type=hidden]' ).attr('data-max');
 	var min_people = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div input[type=hidden]' ).attr('data-min');
 
+	var tot = 0;
+	// $( '#mwb-wc-bk-create-booking-form .people-input' ).each( function(e){
+	// 	tot = parseInt( tot ) + parseInt( $(this).val() );
+	// 	console.log( tot );
+	// 	// var people_total = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden' ).val();
+	// 	if ( tot > 0 ) {
+	// 		// alert("people");
+	// 		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).hide();
+	// 		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( '' );
+
+	// 		// e.preventDefault();
+	// 	}
+	// } );
+
 	$( document ).on('change', '.people-input', function(e) {
 
 		const people_input = $( '.people-input' );
@@ -603,6 +640,7 @@ function booking_price_cal($) {
 		
 	});
 	
+	// price_cal_func($);
 
 	$( '#mwb-wc-bk-service-section' ).on( 'click', '.service-input', function(){
 
@@ -700,7 +738,7 @@ function price_cal_func($) {
 		id  = $(this).attr( 'data-id' );
 		inc_service_count[id] = val;
 	});
-	Object.assign( ajax_data, { 'inc_service_count': inc_service_count });
+	Object.assign( ajax_data, { 'inc_service_count': inc_service_count } );
 
 	$( '.mwb-wc-bk-add-service-quant' ).each(function(){
 		// alert($(this).val());
@@ -734,7 +772,7 @@ function price_cal_func($) {
 }
 
 function show_total($, total_cost, base_cost, service_cost, added_cost_arr) {
-	if ( 'yes' == mwb_wc_bk_public.global_settings.mwb_booking_setting_bo_service_total ) {
+	// if ( 'yes' == mwb_wc_bk_public.global_settings.mwb_booking_setting_bo_service_total ) {
 		// alert("working");
 		// if(  booking_total_cost > 0 ) {
 			var data = {
@@ -756,7 +794,7 @@ function show_total($, total_cost, base_cost, service_cost, added_cost_arr) {
 				}
 			});
 		// }
-	}
+	// }
 }
 function booking_service_conditions($){
 

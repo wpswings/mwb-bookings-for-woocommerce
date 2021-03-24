@@ -20,11 +20,16 @@ $total_check = ! empty( $setting_options['mwb_booking_setting_bo_service_total']
 ?>
 
 <div id="mwb-wc-bk-total-section" class="mwb-wc-bk-form-section">
-	<?php if ( 'yes' === $total_check ) { ?>
-		<div id="mwb-wc-bk-total-fields" >
+	<?php
+	if ( 'yes' === $total_check ) {
+		$style = 'display: block;';
+	} else {
+		$style = 'display: none;';
+	}
+	?>
+	<div id="mwb-wc-bk-total-fields" style="<?php echo esc_html( $style ); ?>" >
 
-		</div>	
-	<?php } ?>
+	</div>
 </div>
 
 

@@ -24,6 +24,8 @@ jQuery(document).ready( function($) {
 	booking_user_select2($);
 	ct_custom_fields($);
 
+	refund_booking($)
+
 	if ( screen_id == 'mwb_cpt_booking_page_calendar' ) {
 		get_events($);
 		render_calendar( $, booking_events );
@@ -31,6 +33,32 @@ jQuery(document).ready( function($) {
 	
 	
 });
+
+function refund_booking($) {
+	$( '.mwb_booking_refund' ).on( 'click', function(){
+		// alert('working');
+
+		var booking_id = $( this ).closest('.mwb_booking_refund').attr( 'booking_id' );
+		// alert( booking_id );
+
+		$.ajax({
+			url: mwb_booking_obj.ajaxurl,
+			type: 'POST',
+			data: {
+				'action'    : 'mwb_wc_bk_refund_booking',
+				'nonce'     : mwb_booking_obj.nonce,
+				'booking_id': booking_id,
+			},
+			success: function( data ) {
+				data = JSON.parse(data);
+				alert(data.msg);
+				if(data.success){
+					location.reload();
+				}
+			},	
+		});
+	} );
+}
 
 function get_events($) {
 

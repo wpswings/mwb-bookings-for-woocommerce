@@ -12,6 +12,8 @@ if ( ! class_exists( 'WC_Email' ) ) {
  */
 class WC_Booking_Cancelled extends WC_Email {
 
+
+	public $booking_meta;
 	/**
 	 * Create an instance of the class.
 	 *
@@ -58,11 +60,11 @@ class WC_Booking_Cancelled extends WC_Email {
 	public function trigger( $booking_id, $order_id ) {
 		$this->setup_locale();
 
-		// if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
-		// 	$order = wc_get_order( $order_id );
-		// }mwb_cpt_booking
-		$order = wc_get_order( $order_id );
-			// die('working');
+		$order        = wc_get_order( $order_id );
+		$b_meta = get_post_meta( $booking_id, 'mwb_meta_data', true );
+
+		$this->booking_meta = $b_meta;
+
 		if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 			$order = wc_get_order( $order_id );
 		}
@@ -75,10 +77,10 @@ class WC_Booking_Cancelled extends WC_Email {
 		// echo '<pre>'; var_dump( $order ); echo '</pre>';die("ok");
 
 		if ( is_a( $order, 'WC_Order' ) ) {
-			$this->object                         = $order;
-			$this->recipient                      = $this->object->get_billing_email();
+			$this->object    = $order;
+			$this->recipient = $this->object->get_billing_email();
 
-			$this->subject                        = __( 'Cancelled booking', 'mwb-wc-bk' );
+			$this->subject = __( 'Cancelled booking', 'mwb-wc-bk' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();
@@ -106,6 +108,7 @@ class WC_Booking_Cancelled extends WC_Email {
 				'sent_to_admin'      => false,
 				'plain_text'         => false,
 				'email'              => $this,
+				'booking_meta'       => $this->booking_meta,
 			),
 			'',
 			$this->template_base
@@ -132,4 +135,29 @@ class WC_Booking_Cancelled extends WC_Email {
 			$this->template_base
 		);
 	}
+	/**
+	 * Allows developers to add additional customer details to templates.
+	 *
+	 * In versions prior to 3.2 this was used for notes, phone and email but this data has moved.
+	 *
+	 * @param WC_Order $order         Order instance.
+	 * @param bool     $sent_to_admin If should sent to admin.
+	 * @param bool     $plain_text    If is plain text email.
+	 */
+	public function customer_details( $order, $sent_to_admin = false, $plain_text = false ) {
+		if ( ! is_a( $order, 'WC_Order' ) ) {
+			return;
+		}
+
+		$fields = array_filter( apply_filters( 'woocommerce_email_customer_details_fields', array(), $sent_to_admin, $order ), array( $this, 'customer_detail_field_is_valid' ) );
+		echo '<pre>'; print_r( $fields ); echo '</pre>'; die('jojo');
+		if ( ! empty( $fields ) ) {
+			if ( $plain_text ) {
+				wc_get_template( 'emails/plain/email-customer-details.php', array( 'fields' => $fields ) );
+			} else {
+				wc_get_template( 'emails/email-customer-details.php', array( 'fields' => $fields ) );
+			}
+		}
+	}
+
 }

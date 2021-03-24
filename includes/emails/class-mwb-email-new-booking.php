@@ -19,18 +19,18 @@ class WC_Booking_New extends WC_Email {
 	 * @return void
 	 */
 	public function __construct() {
-        
+
 		$this->id             = 'customer_new_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'New Booking', 'woocommerce' );
-		$this->description    = __( 'Booking cancelled emails are sent to customers when their bookings are cancelled.', 'woocommerce' );
-		$this->heading        = __( 'Booking Cancelled', 'custom-wc-email' );
+		$this->title          = __( 'New Booking Created', 'mwb-wc-bk' );
+		$this->description    = __( 'Booking created emails are sent to customers when their bookings are created.', 'mwb-wc-bk' );
+		$this->heading        = __( 'New Booking Created', 'custom-wc-email' );
 
 		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-		$this->subject = sprintf( _x( '[%s] Booking Cancelled', 'Sorry! your booking has been cancelled', 'mwb-wc-bk' ), '{blogname}' );
+		$this->subject = sprintf( _x( '[%s] Booking Created', 'A new booking has been created', 'mwb-wc-bk' ), '{blogname}' );
 
-		$this->template_html  = 'emails/wc-customer-cancelled-booking.php';
-		$this->template_plain = 'emails/plain/wc-customer-cancelled-booking.php';
+		$this->template_html  = 'emails/wc-customer-new-booking.php';
+		$this->template_plain = 'emails/plain/wc-customer-new-booking.php';
 		$this->template_base  = MWB_WC_BK_BASEPATH . 'admin/templates/';
 
 		$this->placeholders = array(
@@ -58,19 +58,18 @@ class WC_Booking_New extends WC_Email {
 	public function trigger( $booking_id, $order_id ) {
 		$this->setup_locale();
 
-		// if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
-		// 	$order = wc_get_order( $order_id );
-		// }mwb_cpt_booking
-		$order = wc_get_order( $order_id );
-        //echo '1';
+		$order        = wc_get_order( $order_id );
+		$booking_meta = get_post_meta( $booking_id, 'mwb_meta_data', true );
+		$product_id   = $booking_meta['product_id'];
+		$author       = get_post( $product_id )->post_author;
+
 			// die('working');
 		if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 			$order = wc_get_order( $order_id );
-            //echo '2';
+
 		}
 		$pos = get_post( ! empty( $booking_id ) ? $booking_id : 0 );
 		if ( 'mwb_cpt_booking' !== $pos->post_type ) {
-            //echo '3';
 			return;
 		}
 		// echo '<pre>'; print_r( $pos ); echo '</pre>';
@@ -78,21 +77,21 @@ class WC_Booking_New extends WC_Email {
 		// echo '<pre>'; var_dump( $order ); echo '</pre>';die("ok");
 
 		if ( is_a( $order, 'WC_Order' ) ) {
-			$this->object                         = $order;
-			$this->recipient                      = $this->object->get_billing_email();
+			$this->object    = $order;
 
-			$this->subject                        = __( 'Cancelled booking', 'mwb-wc-bk' );
+			$this->recipient = $this->object->get_billing_email();
+
+			$this->subject = __( 'Cancelled booking', 'mwb-wc-bk' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();
-            //echo '4';
+
 		}
 
 		if ( $this->is_enabled() && $this->get_recipient() ) {
 			$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
-            //echo '5';
-        }
- 
+		}
+
 		$this->restore_locale();
 	}
 

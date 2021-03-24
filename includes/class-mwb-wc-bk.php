@@ -274,6 +274,9 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'wp_ajax_mwb_calendar_event_details_popup', $plugin_admin, 'mwb_calendar_event_details_popup' );
 
+		$this->loader->add_action( 'wp_ajax_mwb_wc_bk_refund_booking', $plugin_admin, 'mwb_wc_bk_refund_booking' );
+
+
 	}
 
 	/**

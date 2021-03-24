@@ -905,78 +905,137 @@ class Mwb_Wc_Bk_Admin {
 		$booking_data = get_post_meta( $post->ID, 'mwb_meta_data', true );
 		echo '<pre>'; print_r( $booking_data ); echo '</pre>';
 		$from = isset( $booking_data['start_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['start_timestamp'] ) : '-';
-			$to   = isset( $booking_data['end_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['end_timestamp'] ) : '-';
-			// $dur  = 
-			$people_total = ! empty( $booking_data['people_total'] ) ? $booking_data['people_total'] : 0;
-			$peoples      = ( ! empty( $booking_data['people_count'] ) && is_array( $booking_data['people_count'] ) ) ? $booking_data['people_count'] : array();
-			$inc_service  = ( ! empty( $booking_data['inc_service'] ) && is_array( $booking_data['inc_service'] ) ) ? $booking_data['inc_service'] : array();
-			$add_service  = ( ! empty( $booking_data['add_service'] ) && is_array( $booking_data['add_service'] ) ) ? $booking_data['add_service'] : array();
-			$total_cost   = ! empty( $booking_data['total_cost'] ) ? $booking_data['total_cost'] : 0;
-			// ob_start();
-			?>
-			<table>
+		$to   = isset( $booking_data['end_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['end_timestamp'] ) : '-';
+		// $dur  = 
+		$people_total = ! empty( $booking_data['people_total'] ) ? $booking_data['people_total'] : 0;
+		$peoples      = ( ! empty( $booking_data['people_count'] ) && is_array( $booking_data['people_count'] ) ) ? $booking_data['people_count'] : array();
+		$inc_service  = ( ! empty( $booking_data['inc_service'] ) && is_array( $booking_data['inc_service'] ) ) ? $booking_data['inc_service'] : array();
+		$add_service  = ( ! empty( $booking_data['add_service'] ) && is_array( $booking_data['add_service'] ) ) ? $booking_data['add_service'] : array();
+		$total_cost   = ! empty( $booking_data['total_cost'] ) ? $booking_data['total_cost'] : 0;
+		// ob_start();
+		?>
+		<table>
+			<tr>
+				<th><?php esc_html_e( 'From:', '' ); ?></th>
+				<td><?php echo esc_html( $from ); ?></td>
+			</tr>
+			<tr>
+				<th><?php esc_html_e( 'To:', '' ); ?></th>
+				<td><?php echo esc_html( $to ); ?></td>
+			</tr>
+			<tr>
+				<th><?php esc_html_e( 'Total People', '' ); ?></th>
+				<td><?php echo esc_html( $people_total ); ?></td>
+			</tr>
+			<?php if ( ! empty( $peoples ) && is_array( $peoples ) ) { ?>
 				<tr>
-					<th><?php esc_html_e( 'From:', '' ); ?></th>
-					<td><?php echo esc_html( $from ); ?></td>
-				</tr>
-				<tr>
-					<th><?php esc_html_e( 'To:', '' ); ?></th>
-					<td><?php echo esc_html( $to ); ?></td>
-				</tr>
-				<tr>
-					<th><?php esc_html_e( 'Total People', '' ); ?></th>
-					<td><?php echo esc_html( $people_total ); ?></td>
-				</tr>
-				<?php if ( ! empty( $peoples ) && is_array( $peoples ) ) { ?>
-					<tr>
-						<th><?php esc_html_e( 'Peoples:', '' ); ?></th>
-						<?php
-						$people_str = '';
-						foreach ( $peoples as $name => $count ) {
-							$people_str .= $name . '-' . $count . ', ';
-						}
-						$people_str = substr( $people_str, 0, -2 );
-						?>
-						<td><?php echo esc_html( $people_str ); ?></td>
-					</tr>
-				<?php } ?>
-				<tr>
-					<th><?php esc_html_e( 'Included Services:', '' ); ?></th>
+					<th><?php esc_html_e( 'Peoples:', '' ); ?></th>
 					<?php
-					$inc_services_str = '';
-					if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
-						foreach ( $inc_service as $name => $count ) {
-							$inc_services_str .= $name . '-' . $count . ', ';
-						}
-					} else {
-						$inc_services_str .= 'None  ';
+					$people_str = '';
+					foreach ( $peoples as $name => $count ) {
+						$people_str .= $name . '-' . $count . ', ';
 					}
-					$inc_services_str = substr( $inc_services_str, 0, -2 );
+					$people_str = substr( $people_str, 0, -2 );
 					?>
-					<td><?php echo esc_html( $inc_services_str ); ?></td>
+					<td><?php echo esc_html( $people_str ); ?></td>
 				</tr>
-				<tr>
-					<th><?php esc_html_e( 'Additional Services:', '' ); ?></th>
-					<?php
-					$add_services_str = '';
-					if ( ! empty( $add_service ) && is_array( $add_service ) ) {
-						foreach ( $add_service as $name => $count ) {
-							$add_services_str .= $name . '-' . $count . ', ';
-						}
-					} else {
-						$add_services_str .= 'None  ';
+			<?php } ?>
+			<tr>
+				<th><?php esc_html_e( 'Included Services:', '' ); ?></th>
+				<?php
+				$inc_services_str = '';
+				if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
+					foreach ( $inc_service as $name => $count ) {
+						$inc_services_str .= $name . '-' . $count . ', ';
 					}
-					$add_services_str = substr( $add_services_str, 0, -2 );
-					?>
-					<td><?php echo esc_html( $add_services_str ); ?></td>
-				</tr>
-				<tr>
-					<th><?php esc_html_e( 'Total:', '' ); ?></th>
-					<td><?php echo wc_price( esc_html( $total_cost ) ); ?></td>
-				</tr>
-			</table>
-			<?php
-			// $content = ob_get_clean();
+				} else {
+					$inc_services_str .= 'None  ';
+				}
+				$inc_services_str = substr( $inc_services_str, 0, -2 );
+				?>
+				<td><?php echo esc_html( $inc_services_str ); ?></td>
+			</tr>
+			<tr>
+				<th><?php esc_html_e( 'Additional Services:', '' ); ?></th>
+				<?php
+				$add_services_str = '';
+				if ( ! empty( $add_service ) && is_array( $add_service ) ) {
+					foreach ( $add_service as $name => $count ) {
+						$add_services_str .= $name . '-' . $count . ', ';
+					}
+				} else {
+					$add_services_str .= 'None  ';
+				}
+				$add_services_str = substr( $add_services_str, 0, -2 );
+				?>
+				<td><?php echo esc_html( $add_services_str ); ?></td>
+			</tr>
+			<tr>
+				<th><?php esc_html_e( 'Total:', '' ); ?></th>
+				<td><?php echo wc_price( esc_html( $total_cost ) ); ?></td>
+			</tr>
+		</table>
+
+		<div class="mwb_booking_refund" booking_id="<?php echo esc_html( $post->ID ); ?>" >
+			<input type="button" class="button refund-items mwb_booking_refund_btn" value="<?php esc_html_e( 'Refund Booking', 'mwb_wc_bk' ); ?>">
+		</div>
+		<?php
+		// $content = ob_get_clean();
+	}
+
+	/**
+	 * Manage Booking Refund.
+	 * Ajax Handler
+	 *
+	 * @return void
+	 */
+	public function mwb_wc_bk_refund_booking() {
+
+		$response = array(
+			'success' => false,
+			'msg'     => __( 'There is some issue with refund, Please check the order', '' ),
+		);
+
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+
+		$booking_id = isset( $_POST['booking_id'] ) ? sanitize_text_field( wp_unslash( $_POST['booking_id'] ) ) : '';
+
+		if ( ! empty( $booking_id ) ) {
+			$booking_meta = get_post_meta( $booking_id, 'mwb_meta_data', true );
+
+			$order_id      = $booking_meta['order_id'];
+			$refund_amount = $booking_meta['total_cost'];
+			$order         = wc_get_order( $order_id );
+
+			if ( 'refunded' !== $order->get_status() ) {
+
+				$reason         = esc_html__( 'Booking Refund.', 'mwb_wc_bk' );
+				$payment_method = $order->get_payment_method();
+
+				if ( 'cod' === $payment_method ) {
+					$refund = wc_create_refund(
+						array(
+							'amount'   => $refund_amount,
+							'reason'   => $reason,
+							'order_id' => $order_id,
+						)
+					);
+				} else {
+					$gateways           = WC()->payment_gateways->get_available_payment_gateways();
+					$payment_method_obj = $gateways[ $payment_method ];
+					$refund             = $payment_method_obj->process_refund( $order_id, $refund_amount, $reason );
+				}
+
+				if ( $refund && ! is_wp_error( $refund ) ) {
+
+					$response['success'] = true;
+					$response['msg']     = 'Sucess';
+				}
+			}
+		}
+		echo wp_json_encode( $response );
+		// echo $booking_id;
+		wp_die();
 	}
 
 	public function mwb_booking_status_callback() {
@@ -1030,11 +1089,12 @@ class Mwb_Wc_Bk_Admin {
 					<?php } ?>
 				</select>
 			</div>
-			<div>
-				<label for="mwb_booking_action_select"><?php esc_html_e( 'Booking Actions:', '' ); ?></label>
+			<div class="mwb_bookimg_refund" >
+				<!-- <label for="mwb_booking_action_select"><?php // esc_html_e( 'Booking Actions:', '' ); ?></label>
 				<select name="mwb_booking_action_select" id="mwb_booking_action_select">
-					<option value="send_email"><?php esc_html_e( 'Send Email based on actions' ); ?></option>
-				</select>
+					<option value="send_email"><?php // esc_html_e( 'Send Email based on actions' ); ?></option>
+				</select> -->
+
 			</div>
 			<div class="mwb_booking_cpt_submit">
 				<input type="submit" name="save" id="publish" class="button button-primary button-large" value="<?php esc_html_e( 'Update', '' ); ?>" >
@@ -1119,18 +1179,20 @@ class Mwb_Wc_Bk_Admin {
 	 * @return void
 	 */
 	public function mwb_booking_save_post( $post_id ) {
-		// global $post;
-		$post = get_post( $post_id );
-		$post_meta = get_post_meta( $post_id, 'mwb_meta_data', true );
 
-		// echo '<pre>'; print_r( $post_meta ); echo '</pre>';die('jdfbvnk');
-		$order_id = $post_meta['order_id'];
-		if ( 'mwb_cpt_booking' !== $post->post_type ) {
-			return;
-		}
 		if ( ! isset( $_POST['save'] ) ) {
 			return;
 		}
+
+		$post = get_post( $post_id );
+
+		if ( 'mwb_cpt_booking' !== $post->post_type ) {
+			return;
+		}
+		// echo '<pre>'; print_r( $post_meta ); echo '</pre>';die('jdfbvnk');
+		$post_meta = get_post_meta( $post_id, 'mwb_meta_data', true );
+		$order_id  = isset( $post_meta['order_id'] ) ? $post_meta['order_id'] : '';
+
 		$from = get_post_meta( $post_id, 'mwb_booking_status', true );
 		$to   = ! empty( $_POST['mwb_booking_status_select'] ) ? $_POST['mwb_booking_status_select'] : 'pending';
 
@@ -2035,13 +2097,15 @@ class Mwb_Wc_Bk_Admin {
 	 * @return array
 	 */
 	public function register_email( $emails ) {
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-completed-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-cancelled-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-confirmation-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-confirmed-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-expired-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-wc-email-pending-booking.php';
+
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-completed-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-cancelled-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-confirmation-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-confirmed-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-expired-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-pending-booking.php';
 		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-new-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-refunded-booking.php';
 
 		$emails['WC_Customer_Completed_Booking']    = new WC_Booking_Completed();
 		$emails['WC_Customer_Cancelled_Booking']    = new WC_Booking_Cancelled();
@@ -2049,9 +2113,10 @@ class Mwb_Wc_Bk_Admin {
 		$emails['WC_Customer_Confirmed_Booking']    = new WC_Booking_Confirmed();
 		$emails['WC_Customer_Expired_Booking']      = new WC_Booking_Pending();
 		$emails['WC_Customer_On_Hold_Booking']      = new WC_Booking_Expired();
-		$emails['WC_Customer_New_Booking'] 		    = new WC_Booking_New();
+		$emails['WC_Customer_New_Booking']          = new WC_Booking_New();
+		$emails['WC_Customer_Refunded_Booking']     = new WC_Booking_Refunded();
 		return $emails;
-		
+
 	}
 
 	// /**
@@ -2260,9 +2325,9 @@ class Mwb_Wc_Bk_Admin {
 				break;
 		}
 		update_post_meta( $booking_id, 'mwb_booking_status', $new_status );
-		
+
 		do_action( 'mwb_booking_status_' . $new_status, $booking_id, $order_id );
-		
+
 		if ( 'yes' === get_post_meta( $booking_id, 'trigger_admin_email', true ) ) {
 			do_action( 'mwb_booking_created', $booking_id, $order_id );
 			update_post_meta( $booking_id, 'trigger_admin_email', 'no' );

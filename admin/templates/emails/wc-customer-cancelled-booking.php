@@ -2,7 +2,7 @@
 /**
  * Cancelled Booking email
  *
- * @author  Prospress
+ * @author  makewebbetter
  * @package mwb-woocommerce-booking/admin/templates/emails
  * @version 1.0.0
  */
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-do_action( 'woocommerce_booking_email_header', $email_heading, $email ); ?>
+do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: $1: customer's billing first name and last name */ ?>
 <p><?php printf( esc_html__( 'Booking belonging to %1$s has been cancelled. The booking\'s details are as follows:', 'mwb-wc-bk' ), esc_html( $order->get_formatted_billing_full_name() ) ); ?></p>
@@ -22,6 +22,7 @@ do_action( 'woocommerce_booking_email_header', $email_heading, $email ); ?>
 			<th class="td" scope="col" style="text-align:left;"><?php esc_html_e( 'Booking', 'mwb-wc-bk' ); ?></th>
 			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'Price', 'table headings in notification email', 'mwb-wc-bk' ); ?></th>
 			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'Start Date', 'table heading', 'mwb-wc-bk' ); ?></th>
+			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'End Date', 'table heading', 'mwb-wc-bk' ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -31,12 +32,17 @@ do_action( 'woocommerce_booking_email_header', $email_heading, $email ); ?>
 			</td>
 			<td class="td" style="text-align:left; vertical-align:middle;">
 				<?php $meta = $order->get_meta( 'mwb_meta_data' ); ?>
-				<?php echo wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $meta['total_cost'] ); ?>
+				<?php echo wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $booking_meta['total_cost'] ); ?>
 			</td>
 			<td class="td" style="text-align:left; vertical-align:middle;">
 				<?php
-				$meta = $order->get_meta( 'mwb_meta_data' );
-				echo esc_html( $meta['start_date'] );
+				// $meta = $order->get_meta( 'mwb_meta_data' );
+				echo esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) );
+				?>
+			</td>
+			<td class="td" style="text-align:left; vertical-align:middle;">
+				<?php
+				echo esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['end_timestamp'] ) );
 				?>
 			</td>
 		</tr>
@@ -45,9 +51,11 @@ do_action( 'woocommerce_booking_email_header', $email_heading, $email ); ?>
 <br/>
 <?php
 
-do_action( 'woocommerce_booking_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+// do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
-do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
+//do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
+
+
 
 /**
  * Show user-defined additional content - this is set in each email's settings.

@@ -32,7 +32,7 @@ $show_service_desc   = ! empty( $setting_options['mwb_booking_setting_bo_service
 
 $service_enabled  = ! empty( $product_meta['mwb_services_enable_checkbox'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_services_enable_checkbox'][0] ) ) : 'no';
 $enabled_services = ! empty( $product_meta['mwb_booking_services_select'][0] ) ? maybe_unserialize( sanitize_text_field( wp_unslash( $product_meta['mwb_booking_services_select'][0] ) ) ) : array();
-$mandatory_check  = ! empty( $product_meta['mwb_services_mandatory_check'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_services_mandatory_check'][0] ) ) : 'customer_selected';
+// $mandatory_check  = ! empty( $product_meta['mwb_services_mandatory_check'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_services_mandatory_check'][0] ) ) : 'customer_selected';
 
 $service_meta = array();
 
@@ -40,7 +40,7 @@ foreach ( $enabled_services as $service_id ) {
 	$service      = get_term_meta( $service_id );
 	$service_term = get_term( $service_id );
 	// echo '<pre>'; print_r( $service_term ); echo '</pre>';
-	if ( 'no' === $service['mwb_booking_ct_services_optional'][0] || 'mandatory' === $mandatory_check || empty( $service['mwb_booking_ct_services_optional'][0] ) ) {
+	if ( 'no' === $service['mwb_booking_ct_services_optional'][0] || empty( $service['mwb_booking_ct_services_optional'][0] ) ) {
 		$service['term_obj']                 = $service_term;
 		$service_meta['included_services'][] = $service;
 	} else {
@@ -58,8 +58,12 @@ foreach ( $enabled_services as $service_id ) {
 	<div id="mwb-wc-bk-service-field">
 		<?php
 		if ( 'yes' === $inc_service_enabled ) {
-			?>
-		<div id="mwb-wc-bk-inc-service-field">
+			$style = 'display: block;';
+		} else {
+			$style = 'display: none;';
+		}
+		?>
+		<div id="mwb-wc-bk-inc-service-field" style="<?php echo esc_html( $style ); ?>" >
 			<?php if ( isset( $service_meta['included_services'] ) && is_array( $service_meta['included_services'] ) ) { ?>
 				<label for=""><b><?php esc_html_e( 'Included Services', '' ); ?></b></label>
 				<input type="hidden" id="mwb-wc-bk-service-input-hidden" class="mwb-wc-bk-form-input-hidden" data-hidden="<?php echo esc_html( htmlspecialchars( wp_json_encode( $service_meta ) ) ); ?>"> 
@@ -99,11 +103,8 @@ foreach ( $enabled_services as $service_id ) {
 				}
 				?>
 			</ul>
-		<?php } ?>
+			<?php } ?>
 		</div>
-			<?php
-		}
-		?>
 		<div id="mwb-wc-bk-add-service-field">
 			<?php if ( isset( $service_meta['additional_services'] ) && is_array( $service_meta['additional_services'] ) ) { ?>
 				<label for=""><b><?php esc_html_e( 'Additional Services', '' ); ?></b></label>

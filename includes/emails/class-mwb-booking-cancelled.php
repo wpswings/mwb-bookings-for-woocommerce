@@ -1,4 +1,12 @@
 <?php
+/**
+ * Class MWB_Booking_Cancelled file.
+ *
+ * @author  makewebbetter
+ * @package mwb-woocommerce-booking/included/emails
+ * @version 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -10,10 +18,22 @@ if ( ! class_exists( 'WC_Email' ) ) {
 /**
  * Class WC_Customer_Cancel_Order
  */
-class WC_Booking_Cancelled extends WC_Email {
+class MWB_Booking_Cancelled extends WC_Email {
 
+	/**
+	 * MWB Booking meta
+	 *
+	 * @var [type]
+	 */
+	public $booking_id;
 
+	/**
+	 * MWB Booking meta
+	 *
+	 * @var [type]
+	 */
 	public $booking_meta;
+
 	/**
 	 * Create an instance of the class.
 	 *
@@ -24,15 +44,15 @@ class WC_Booking_Cancelled extends WC_Email {
 
 		$this->id             = 'customer_cancelled_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'Cancelled Booking', 'woocommerce' );
-		$this->description    = __( 'Booking cancelled emails are sent to customers when their bookings are cancelled.', 'woocommerce' );
+		$this->title          = __( 'Cancelled Booking', 'mwb-wc-bk' );
+		$this->description    = __( 'Booking cancelled emails are sent to customers when their bookings are cancelled.', 'mwb-wc-bk' );
 		$this->heading        = __( 'Booking Cancelled', 'custom-wc-email' );
 
 		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
 		$this->subject = sprintf( _x( '[%s] Booking Cancelled', 'Sorry! your booking has been cancelled', 'mwb-wc-bk' ), '{blogname}' );
 
-		$this->template_html  = 'emails/wc-customer-cancelled-booking.php';
-		$this->template_plain = 'emails/plain/wc-customer-cancelled-booking.php';
+		$this->template_html  = 'emails/mwb-customer-cancelled-booking.php';
+		$this->template_plain = 'emails/plain/mwb-customer-cancelled-booking.php';
 		$this->template_base  = MWB_WC_BK_BASEPATH . 'admin/templates/';
 
 		$this->placeholders = array(
@@ -40,9 +60,6 @@ class WC_Booking_Cancelled extends WC_Email {
 			'{order_number}' => '',
 		);
 		// Action to which we hook onto to send the email.
-
-		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );	
-		add_action( 'mwb_new_booking', array( $this, 'trigger' ), 10, 2 );
 
 		add_action( 'mwb_booking_status_cancelled', array( $this, 'trigger' ), 10, 2 );
 		add_action( 'mwb_booking_status_pending_to_cancelled', array( $this, 'trigger', 10, 2 ) );
@@ -54,16 +71,17 @@ class WC_Booking_Cancelled extends WC_Email {
 	/**
 	 * Trigger the sending of this email.
 	 *
-	 * @param int            $order_id The order ID.
-	 * @param WC_Order|false $order Order object.
+	 * @param int $booking_id The Booking ID.
+	 * @param int $order_id The order ID.
 	 */
 	public function trigger( $booking_id, $order_id ) {
 		$this->setup_locale();
 
-		$order        = wc_get_order( $order_id );
+		$order  = wc_get_order( $order_id );
 		$b_meta = get_post_meta( $booking_id, 'mwb_meta_data', true );
 
 		$this->booking_meta = $b_meta;
+		$this->booking_id   = $booking_id;
 
 		if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 			$order = wc_get_order( $order_id );
@@ -109,6 +127,7 @@ class WC_Booking_Cancelled extends WC_Email {
 				'plain_text'         => false,
 				'email'              => $this,
 				'booking_meta'       => $this->booking_meta,
+				'booking_id'         => $this->booking_id,
 			),
 			'',
 			$this->template_base
@@ -130,34 +149,36 @@ class WC_Booking_Cancelled extends WC_Email {
 				'sent_to_admin'      => false,
 				'plain_text'         => true,
 				'email'              => $this,
+				'booking_meta'       => $this->booking_meta,
+				'booking_id'         => $this->booking_id,
 			),
 			'',
 			$this->template_base
 		);
 	}
-	/**
-	 * Allows developers to add additional customer details to templates.
-	 *
-	 * In versions prior to 3.2 this was used for notes, phone and email but this data has moved.
-	 *
-	 * @param WC_Order $order         Order instance.
-	 * @param bool     $sent_to_admin If should sent to admin.
-	 * @param bool     $plain_text    If is plain text email.
-	 */
-	public function customer_details( $order, $sent_to_admin = false, $plain_text = false ) {
-		if ( ! is_a( $order, 'WC_Order' ) ) {
-			return;
-		}
+	// /**
+	//  * Allows developers to add additional customer details to templates.
+	//  *
+	//  * In versions prior to 3.2 this was used for notes, phone and email but this data has moved.
+	//  *
+	//  * @param WC_Order $order         Order instance.
+	//  * @param bool     $sent_to_admin If should sent to admin.
+	//  * @param bool     $plain_text    If is plain text email.
+	//  */
+	// public function customer_details( $order, $sent_to_admin = false, $plain_text = false ) {
+	// 	if ( ! is_a( $order, 'WC_Order' ) ) {
+	// 		return;
+	// 	}
 
-		$fields = array_filter( apply_filters( 'woocommerce_email_customer_details_fields', array(), $sent_to_admin, $order ), array( $this, 'customer_detail_field_is_valid' ) );
-		echo '<pre>'; print_r( $fields ); echo '</pre>'; die('jojo');
-		if ( ! empty( $fields ) ) {
-			if ( $plain_text ) {
-				wc_get_template( 'emails/plain/email-customer-details.php', array( 'fields' => $fields ) );
-			} else {
-				wc_get_template( 'emails/email-customer-details.php', array( 'fields' => $fields ) );
-			}
-		}
-	}
+	// 	$fields = array_filter( apply_filters( 'woocommerce_email_customer_details_fields', array(), $sent_to_admin, $order ), array( $this, 'customer_detail_field_is_valid' ) );
+	// 	echo '<pre>'; print_r( $fields ); echo '</pre>'; die('jojo');
+	// 	if ( ! empty( $fields ) ) {
+	// 		if ( $plain_text ) {
+	// 			wc_get_template( 'emails/plain/email-customer-details.php', array( 'fields' => $fields ) );
+	// 		} else {
+	// 			wc_get_template( 'emails/email-customer-details.php', array( 'fields' => $fields ) );
+	// 		}
+	// 	}
+	// }
 
 }

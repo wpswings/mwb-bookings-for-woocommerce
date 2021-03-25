@@ -7,9 +7,9 @@
 
 ?>
 <div id="mwb_booking_people_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-	<div id="mwb_people_heading">
-		<h1><em><?php esc_html_e( 'Peoples', 'mwb-wc-bk' ); ?></em></h1>
-	</div>
+	<!-- <div id="mwb_people_heading">
+		<h1><em><?php // esc_html_e( 'Peoples', 'mwb-wc-bk' ); ?></em></h1>
+	</div> -->
 	<div id="mwb_people_enable" class="options_group">
 		<?php
 			woocommerce_wp_checkbox(

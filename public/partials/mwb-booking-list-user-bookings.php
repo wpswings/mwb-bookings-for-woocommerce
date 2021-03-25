@@ -104,14 +104,14 @@ if ( isset( $_GET['booking_id'] ) ) {
 				</tfoot>
 			</table>
 		</section>
-	<section class="woocommerce-customer-details">
-		<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'mwb-wc-bk' ); ?></h2>
-		<address>
-			<?php echo esc_html( $order_data['billing']['first_name'] ); ?><br><?php echo esc_html( $order_data['billing']['last_name'] ); ?><br><?php echo esc_html( $order_data['billing']['address_1'] ); ?><br><?php echo esc_html( $order_data['billing']['address_2'] ); ?><br><?php echo esc_html( $order_data['billing']['city'] ); ?><?php echo esc_html( $order_data['billing']['state'] ); ?><br><?php echo esc_html( $order_data['billing']['postcode'] ); ?><br><?php echo esc_html( $order_data['billing']['country'] ); ?>
-				<p class="woocommerce-customer-details--phone"><?php echo esc_html( $order_data['billing']['phone'] ); ?></p>	
-				<p class="woocommerce-customer-details--email"><?php echo esc_html( $order_data['billing']['email'] ); ?></p>
-		</address>
-	</section>
+		<section class="woocommerce-customer-details">
+			<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'mwb-wc-bk' ); ?></h2>
+			<address>
+				<?php echo esc_html( $order_data['billing']['first_name'] ); ?><br><?php echo esc_html( $order_data['billing']['last_name'] ); ?><br><?php echo esc_html( $order_data['billing']['address_1'] ); ?><br><?php echo esc_html( $order_data['billing']['address_2'] ); ?><br><?php echo esc_html( $order_data['billing']['city'] ); ?><?php echo esc_html( $order_data['billing']['state'] ); ?><br><?php echo esc_html( $order_data['billing']['postcode'] ); ?><br><?php echo esc_html( $order_data['billing']['country'] ); ?>
+					<p class="woocommerce-customer-details--phone"><?php echo esc_html( $order_data['billing']['phone'] ); ?></p>	
+					<p class="woocommerce-customer-details--email"><?php echo esc_html( $order_data['billing']['email'] ); ?></p>
+			</address>
+		</section>
 	<?php
 } else {
 
@@ -162,10 +162,10 @@ if ( isset( $_GET['booking_id'] ) ) {
 					<a href="?booking_id=<?php echo esc_html( $booking_id ); ?>"><?php echo esc_html( $booking_title ); ?></a>
 				</td>
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-from" data-title="From">
-					<time datetime="2021-03-19T07:27:23+00:00"><?php echo esc_html( $from ); ?></time>
+					<time datetime="<?php gmdate( 'y-m-d h:i:s a', $from ); ?>"><?php echo esc_html( $from ); ?></time>
 				</td>
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-to" data-title="To">
-					<time datetime="2021-03-19T07:27:23+00:00"><?php echo esc_html( $to ); ?></time>
+					<time datetime="<?php gmdate( 'y-m-d h:i:s a', $to ); ?>"><?php echo esc_html( $to ); ?></time>
 				</td>
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-status" data-title="Status">
 					<?php echo esc_html( $booking_status ); ?>

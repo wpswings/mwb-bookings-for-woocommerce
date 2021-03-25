@@ -10,8 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-
-echo $email_heading . "\n\n";
+echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
+echo esc_html( wp_strip_all_tags( $email_heading ) );
+echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 // translators: $1: customer's billing first name and last name
 printf( __( 'Booking belonging to %1$s has been cancelled. Their booking\'s details are as follows:', 'mwb-wc-bk' ), $order->get_formatted_billing_full_name() );
@@ -22,24 +23,31 @@ echo "\n\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\
  * @hooked WC_Subscriptions_Email::order_details() Shows the order details table.
  * @since 2.1.0
  */
-do_action( 'woocommerce_booking_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+// do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 echo "\n----------\n\n";
 
-$meta = $order->get_meta( 'mwb_meta_data' );
-
-if ( ! empty( $meta['start_date'] ) ) {
-	// translators: placeholder is last time subscription was paid
-	echo sprintf( __( 'Satrt Booking Date: %s', 'mwb-wc-bk' ), esc_html( $meta['start_date'] ) ) . "\n";
+if ( ! empty( $booking_meta['start_timestamp'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'Satrt Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) ) ) . "\n";
 }
 
-do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
+if ( ! empty( $booking_meta['end_timestamp'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'End Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['end_timestamp'] ) ) ) . "\n";
+}
+if ( ! empty( $booking_meta['total_cost'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'Total : %s', 'mwb-wc-bk' ), wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $booking_meta['total_cost'] ) ) . "\n";
+}
 
-echo "\n" . sprintf( _x( 'View Booking: %s', 'in plain emails for subscription information', 'mwb-wc-bk' ), get_edit_post_link( $order->get_id() ) ) . "\n";
+// do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
+
+// echo "\n" . sprintf( _x( 'View Booking: %s', 'in plain emails for subscription information', 'mwb-wc-bk' ), '' ) . "\n";
 
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
-do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
+// do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 

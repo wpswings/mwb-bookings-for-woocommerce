@@ -10,9 +10,9 @@ echo esc_html( wp_strip_all_tags( $email_heading ) );
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 /* translators: %s: Customer first name */
-echo sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ) . "\n\n";
+echo sprintf( esc_html__( 'Hi %s,', 'mwb-wc-bk' ), esc_html( $order->get_billing_first_name() ) ) . "\n\n";
 /* translators: %s: Site title */
-echo esc_html__( 'We have finished processing your booking.', 'woocommerce' ) . "\n\n";
+echo esc_html__( 'We have finished processing your booking. Congratulations! your booking payment is completed.', 'mwb-wc-bk' ) . "\n\n";
 
 /*
  * @hooked WC_Emails::order_details() Shows the order details table.
@@ -20,14 +20,28 @@ echo esc_html__( 'We have finished processing your booking.', 'woocommerce' ) . 
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+// do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 echo "\n----------------------------------------\n\n";
+
+if ( ! empty( $booking_meta['start_timestamp'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'Satrt Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) ) ) . "\n";
+}
+
+if ( ! empty( $booking_meta['end_timestamp'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'End Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['end_timestamp'] ) ) ) . "\n";
+}
+if ( ! empty( $booking_meta['total_cost'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'Total : %s', 'mwb-wc-bk' ), wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $booking_meta['total_cost'] ) ) . "\n";
+}
 
 /*
  * @hooked WC_Emails::order_meta() Shows order meta data.
  */
-do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
+// do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 /*
  * @hooked WC_Emails::customer_details() Shows customer details

@@ -28,7 +28,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 	<tbody>
 		<tr>
 			<td class="td" width="1%" style="text-align:left; vertical-align:middle;">
-				<a href="#">#<?php echo esc_html( $order->get_order_number() ); ?></a>
+				<a href="<?php echo esc_url( get_option( 'siteurl' ) . '/my-account/all_bookings/?booking_id=' . $booking_id ); ?>">#<?php echo esc_html( $booking_id ); ?></a>
 			</td>
 			<td class="td" style="text-align:left; vertical-align:middle;">
 				<?php $meta = $order->get_meta( 'mwb_meta_data' ); ?>
@@ -48,6 +48,15 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 		</tr>
 	</tbody>
 </table>
+<?php $order_data = $order->get_data(); ?>
+<section class="woocommerce-customer-details">
+	<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'mwb-wc-bk' ); ?></h2>
+	<address>
+		<?php echo esc_html( $order_data['billing']['first_name'] ); ?><br><?php echo esc_html( $order_data['billing']['last_name'] ); ?><br><?php echo esc_html( $order_data['billing']['address_1'] ); ?><br><?php echo esc_html( $order_data['billing']['address_2'] ); ?><br><?php echo esc_html( $order_data['billing']['city'] ); ?><?php echo esc_html( $order_data['billing']['state'] ); ?><br><?php echo esc_html( $order_data['billing']['postcode'] ); ?><br><?php echo esc_html( $order_data['billing']['country'] ); ?>
+			<p class="woocommerce-customer-details--phone"><?php echo esc_html( $order_data['billing']['phone'] ); ?></p>	
+			<p class="woocommerce-customer-details--email"><?php echo esc_html( $order_data['billing']['email'] ); ?></p>
+	</address>
+</section>
 <br/>
 <?php
 

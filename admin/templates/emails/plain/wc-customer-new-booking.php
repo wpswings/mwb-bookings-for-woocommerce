@@ -1,6 +1,6 @@
 <?php
 /**
- * Expired Booking email ( Plain Text )
+ * New Booking email ( Plain Text )
  *
  * @author  MWB
  * @package mwb-woocommerce-booking/admin/templates/emails/plain
@@ -22,14 +22,29 @@ echo sprintf( esc_html__( 'You’ve received the following order from %s:', 'mwb
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+// do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 echo "\n----------------------------------------\n\n";
+
+
+if ( ! empty( $booking_meta['start_timestamp'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'Satrt Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) ) ) . "\n";
+}
+
+if ( ! empty( $booking_meta['end_timestamp'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'End Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['end_timestamp'] ) ) ) . "\n";
+}
+if ( ! empty( $booking_meta['total_cost'] ) ) {
+	// translators: placeholder is last time subscription was paid.
+	echo sprintf( __( 'Total : %s', 'mwb-wc-bk' ), wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $booking_meta['total_cost'] ) ) . "\n";
+}
 
 /*
  * @hooked WC_Emails::order_meta() Shows order meta data.
  */
-do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
+// do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 /*
  * @hooked WC_Emails::customer_details() Shows customer details

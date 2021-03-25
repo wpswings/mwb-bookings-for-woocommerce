@@ -1,4 +1,12 @@
 <?php
+/**
+ * Class MWB_Booking_Pending file.
+ *
+ * @author  makewebbetter
+ * @package mwb-woocommerce-booking/included/emails
+ * @version 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -10,7 +18,21 @@ if ( ! class_exists( 'WC_Email' ) ) {
 /**
  * Class WC_Customer_Cancel_Order
  */
-class WC_Booking_Pending extends WC_Email {
+class MWB_Booking_Pending extends WC_Email {
+
+	/**
+	 * MWB Booking meta
+	 *
+	 * @var [type]
+	 */
+	public $booking_id;
+
+	/**
+	 * MWB Booking meta
+	 *
+	 * @var [type]
+	 */
+	public $booking_meta;
 
 	/**
 	 * Create an instance of the class.
@@ -20,18 +42,17 @@ class WC_Booking_Pending extends WC_Email {
 	 */
 	public function __construct() {
 
-		
 		$this->id             = 'customer_pending_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'Pending Booking', 'woocommerce' );
-		$this->description    = __( 'Booking pending emails are sent to customers when their booking is pending ie payment is not complete.', 'woocommerce' );
-		$this->heading        = __( 'Booking Pending', 'custom-wc-email' );
+		$this->title          = __( 'Pending Booking', 'mwb-wc-bk' );
+		$this->description    = __( 'Booking pending emails are sent to customers when their booking is pending ie payment is not complete.', 'mwb-wc-bk' );
+		$this->heading        = __( 'Booking Pending', 'mwb-wc-bk' );
 
 		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
 		$this->subject = sprintf( _x( '[%s] Booking Pending', 'You booking is pending due to pending payment', 'mwb-wc-bk' ), '{blogname}' );
 
-		$this->template_html  = 'emails/wc-customer-pending-booking.php';
-		$this->template_plain = 'emails/plain/wc-customer-pending-booking.php';
+		$this->template_html  = 'emails/mwb-customer-pending-booking.php';
+		$this->template_plain = 'emails/plain/mwb-customer-pending-booking.php';
 		$this->template_base  = MWB_WC_BK_BASEPATH . 'admin/templates/';
 
 		$this->placeholders = array(
@@ -40,7 +61,6 @@ class WC_Booking_Pending extends WC_Email {
 		);
 		// Action to which we hook onto to send the email.
 
-		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
 		add_action( 'mwb_booking_status_pending', array( $this, 'trigger' ), 10, 2 );
 
 		parent::__construct();
@@ -49,17 +69,15 @@ class WC_Booking_Pending extends WC_Email {
 	/**
 	 * Trigger the sending of this email.
 	 *
-	 * @param int            $order_id The order ID.
-	 * @param WC_Order|false $order Order object.
+	 * @param int $booking_id The Booking ID.
+	 * @param int $order_id The order ID.
 	 */
 	public function trigger( $booking_id, $order_id ) {
-	
+
 		$this->setup_locale();
 
-		// if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
-		// 	$order = wc_get_order( $order_id );
-		// }mwb_cpt_booking
-		$order = wc_get_order( $order_id );
+		$order  = wc_get_order( $order_id );
+		$b_meta = get_post_meta( $booking_id, 'mwb_meta_data', true );
 
 		if ( $order_id && ! is_a( $order, 'WC_Order' ) ) {
 			$order = wc_get_order( $order_id );
@@ -68,15 +86,18 @@ class WC_Booking_Pending extends WC_Email {
 		if ( 'mwb_cpt_booking' !== $pos->post_type ) {
 			return;
 		}
-		// echo '<pre>'; print_r( $pos ); echo '</pre>';
 
-		// echo '<pre>'; var_dump( $order ); echo '</pre>';die("ok");
+		$this->booking_meta = $b_meta;
+		$this->booking_id   = $booking_id;
+
+		// echo '<pre>'; print_r( $this->booking_meta ); echo '</pre>';
+		// die( 'pending' );
 
 		if ( is_a( $order, 'WC_Order' ) ) {
 			$this->object    = $order;
 			$this->recipient = $this->object->get_billing_email();
 
-			$this->subject = __( 'Booking Pending', 'wooocommerce' );
+			$this->subject = __( 'Booking Pending', 'mwb-wc-bk' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();
@@ -85,8 +106,6 @@ class WC_Booking_Pending extends WC_Email {
 		if ( $this->is_enabled() && $this->get_recipient() ) {
 			$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
 		}
-
-		//die('Imonfront');
 
 		$this->restore_locale();
 	}
@@ -105,6 +124,8 @@ class WC_Booking_Pending extends WC_Email {
 				'sent_to_admin'      => false,
 				'plain_text'         => false,
 				'email'              => $this,
+				'booking_meta'       => $this->booking_meta,
+				'booking_id'         => $this->booking_id,
 			),
 			'',
 			$this->template_base
@@ -126,6 +147,8 @@ class WC_Booking_Pending extends WC_Email {
 				'sent_to_admin'      => false,
 				'plain_text'         => true,
 				'email'              => $this,
+				'booking_meta'       => $this->booking_meta,
+				'booking_id'         => $this->booking_id,
 			),
 			'',
 			$this->template_base

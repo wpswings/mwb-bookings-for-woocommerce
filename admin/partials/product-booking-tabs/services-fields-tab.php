@@ -7,9 +7,9 @@
 
 ?>
 <div id="mwb_booking_services_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-	<div id="mwb_servives_heading">
-		<h1><em><?php esc_html_e( 'Services', 'mwb-wc-bk' ); ?></em></h1>
-	</div>
+	<!-- <div id="mwb_servives_heading">
+		<h1><em><?php // esc_html_e( 'Services', 'mwb-wc-bk' ); ?></em></h1>
+	</div> -->
 	<div id="mwb_booking_servives_fields" class="options_group">
 	<?php
 		woocommerce_wp_checkbox(

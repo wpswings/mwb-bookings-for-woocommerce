@@ -1122,7 +1122,7 @@ class Mwb_Wc_Bk_Public {
 		update_post_meta( $booking_id, '_customer_user', $args['user_id'] );
 		update_post_meta( $booking_id, 'mwb_meta_data', $args['order_meta'] );
 
-		do_action( 'mwb_booking_created', $booking_id, $order_id );
+		// do_action( 'mwb_booking_created', $booking_id, $order_id );
 
 		return $booking_id;
 	}
@@ -1557,6 +1557,5 @@ class Mwb_Wc_Bk_Public {
 
 		require_once MWB_WC_BK_BASEPATH . 'public/partials/mwb-booking-list-user-bookings.php';
 	}
-	
 
 }

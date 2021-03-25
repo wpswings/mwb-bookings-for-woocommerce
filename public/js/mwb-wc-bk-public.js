@@ -47,6 +47,7 @@ var unavailable_dates = mwb_wc_bk_public.unavailable_dates;
 // console.log( unavailable_dates );
 var start_date;
 var end_date;
+var day_difference;
 jQuery(document).ready( function($) {
 
 	$(window).on('load', function(event) {
@@ -175,9 +176,28 @@ function datepicker_check($, unavailable_dates) {
 		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
 			end_date = $(this).val();
 		});
+
+		$( '#mwb-wc-bk-duration-section' ).on( 'change', '#mwb-wc-bk-duration-input', function(){
+			duration = $( this ).val();
+			if ( start_date && duration ) {
+					
+				day_difference = duration;
+				var arr = cal_booking_days( start_date, day_difference );
+				console.log( arr );
+
+				
+			}
+		} );
+
 		if ( start_date && end_date ) {
 
-			var arr = cal_booking_days( start_date, end_date );
+			date1 = new Date( start_date );
+			date2 = new Date( end_date );
+			
+			time_difference = date2.getTime() - date1.getTime();
+			day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+
+			var arr = cal_booking_days( start_date, day_difference );
 			console.log( arr );
 		}
 	});
@@ -190,7 +210,12 @@ function datepicker_check($, unavailable_dates) {
 		});
 		if ( start_date && end_date ) {
 
-			var arr = cal_booking_days( start_date, end_date );
+			date1 = new Date( start_date );
+			date2 = new Date( end_date );
+			
+			time_difference = date2.getTime() - date1.getTime();
+			day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+			var arr = cal_booking_days( start_date, day_difference );
 			console.log( arr );
 		}
 	});	
@@ -260,9 +285,6 @@ function datepicker_check($, unavailable_dates) {
 		// 	return [days.includes(date.getDay())];
 		// },
 
-
-
-
 	});
 
 	$( '#mwb-wc-bk-end-date-input' ).datepicker({
@@ -317,23 +339,31 @@ function datepicker_check($, unavailable_dates) {
 	});
 }
 
+function da( arr, unavail_dates ) {
 
-function cal_booking_days( start_date, end_date ) {
+	for( i=0; i<arr.length; i++ ) {
+		if ( jQuery.inArray( arr[i], unavail_dates ) == -1 ) {
+			break;
+		}
+	}
+}
+
+
+function cal_booking_days( start_date, day_difference ) {
 
 	// var tomorrow = new Date();
 	var date_arr = [];
-
+	// date1 = start_date;
 	date1 = new Date( start_date );
-	date2 = new Date( end_date );
-	
-	time_difference = date2.getTime() - date1.getTime();
-	day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
-	
+	// console.log( day_difference );
 	date_arr.push(date1.getDate() + '-' + ( date1.getMonth() + 1 ) + '-' + date1.getFullYear());
 	for( var day = 1; day < day_difference; day++ ) {
 
-		date1.setDate( date1.getDate() + day );
+		date1.setDate( date1.getDate() + 1 );
+		// console.log( date1 );
+
 		val = date1.getDate() + '-' + ( date1.getMonth() + 1 ) + '-' + date1.getFullYear();
+		// console.log( val );
 
 		date_arr.push( val );
 	}

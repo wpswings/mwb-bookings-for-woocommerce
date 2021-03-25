@@ -7,9 +7,9 @@
 
 ?>
 <div id="mwb_booking_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-	<div id="mwb_general_settings_heading">
-		<h1><em><?php esc_html_e( 'General Settings', 'mwb-wc-bk' ); ?></em></h1>
-	</div>
+	<!-- <div id="mwb_general_settings_heading">
+		<h1><em><?php // esc_html_e( 'General Settings', 'mwb-wc-bk' ); ?></em></h1>
+	</div> -->
 	<div id="mwb_booking_unit" class="options_group">
 		<p class="form-field">
 			<label for="mwb_booking_unit_select"><?php esc_html_e( 'Booking Unit', 'mwb-wc-bk' ); ?></label>

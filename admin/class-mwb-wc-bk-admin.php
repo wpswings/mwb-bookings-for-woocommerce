@@ -156,8 +156,25 @@ class Mwb_Wc_Bk_Admin {
 	 * @return array
 	 */
 	public function booking_virtual_product_options( $options ) {
-		$options['virtual']['wrapper_class'] .= 'show_if_mwb_booking';
+		$options['virtual']['wrapper_class']      .= 'hide_if_mwb_booking';
+		$options['downloadable']['wrapper_class'] .= 'hide_if_mwb_booking';
+
 		return $options;
+	}
+
+	/**
+	 * Add class name to the product type classes
+	 *
+	 * @param [string] $classname    Class Name.
+	 * @param [string] $product_type Type of the product.
+	 *
+	 * @return string
+	 */
+	public function mwb_load_booking_product_class( $classname, $product_type ) {
+		if ( 'mwb_booking' === $product_type ) {
+			$classname = 'WC_Product_MWB_Booking';
+		}
+		return $classname;
 	}
 	/**
 	 * Add various Setting Tabs under Product settings for bookable product type
@@ -166,6 +183,13 @@ class Mwb_Wc_Bk_Admin {
 	 * @return array
 	 */
 	public function booking_add_product_data_tabs( $tabs ) {
+
+		// unset( $tabs['shipping'] );
+		$tabs['shipping']['class'][]       = 'hide_if_mwb_booking';
+		$tabs['attribute']['class'][]      = 'hide_if_mwb_booking';
+		$tabs['linked_product']['class'][] = 'hide_if_mwb_booking';
+		$tabs['advanced']['class'][]       = 'hide_if_mwb_booking';
+		$tabs['advanced']['class'][]       = 'hide_if_mwb_booking';
 
 		$tabs = array_merge(
 			$tabs,
@@ -202,6 +226,7 @@ class Mwb_Wc_Bk_Admin {
 				),
 			)
 		);
+
 		return $tabs;
 	}
 
@@ -1029,7 +1054,7 @@ class Mwb_Wc_Bk_Admin {
 				if ( $refund && ! is_wp_error( $refund ) ) {
 
 					$response['success'] = true;
-					$response['msg']     = 'Sucess';
+					$response['msg']     = 'Success';
 				}
 			}
 		}
@@ -2092,49 +2117,35 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	/**
-	 * @param array $emails
+	 * Register Emails for the booking.
+	 *
+	 * @param array $emails Array for all the woocommerce emails.
 	 *
 	 * @return array
 	 */
 	public function register_email( $emails ) {
 
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-completed-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-cancelled-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-confirmation-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-confirmed-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-expired-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-pending-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-new-booking.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-email-refunded-booking.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-completed.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-cancelled.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-confirmation.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-confirmed.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-expired.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-pending.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-new.php';
+		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-refunded.php';
 
-		$emails['WC_Customer_Completed_Booking']    = new WC_Booking_Completed();
-		$emails['WC_Customer_Cancelled_Booking']    = new WC_Booking_Cancelled();
-		$emails['WC_Customer_Confirmation_Booking'] = new WC_Booking_Confirmation_Required();
-		$emails['WC_Customer_Confirmed_Booking']    = new WC_Booking_Confirmed();
-		$emails['WC_Customer_Expired_Booking']      = new WC_Booking_Pending();
-		$emails['WC_Customer_On_Hold_Booking']      = new WC_Booking_Expired();
-		$emails['WC_Customer_New_Booking']          = new WC_Booking_New();
-		$emails['WC_Customer_Refunded_Booking']     = new WC_Booking_Refunded();
+		$emails['WC_Customer_Completed_Booking']    = new MWB_Booking_Completed();
+		$emails['WC_Customer_Cancelled_Booking']    = new MWB_Booking_Cancelled();
+		$emails['WC_Customer_Confirmation_Booking'] = new MWB_Booking_Confirmation_Required();
+		$emails['WC_Customer_Confirmed_Booking']    = new MWB_Booking_Confirmed();
+		$emails['WC_Customer_Expired_Booking']      = new MWB_Booking_Pending();
+		$emails['WC_Customer_On_Hold_Booking']      = new MWb_Booking_Expired();
+		$emails['WC_Customer_New_Booking']          = new MWB_Booking_New();
+		$emails['WC_Customer_Refunded_Booking']     = new MWB_Booking_Refunded();
+
 		return $emails;
 
 	}
-
-	// /**
-	//  * Function to set gmail as SMTP
-	//  *
-	//  * @param [type] $phpmailer is the object of PHPmailer class.
-	//  */
-	// public function phpmailer_gmail_setup( $phpmailer ) {
-	// 	$phpmailer->isSMTP();
-	// 	$phpmailer->Host       = 'smtp.gmail.com';
-	// 	$phpmailer->SMTPAuth   = true; // Ask it to use authenticate using the Username and Password properties.
-	// 	$phpmailer->Port       = 25;
-	// 	$phpmailer->Username   = 'brijmohan11.1996@gmail.com';
-	// 	$phpmailer->Password   = '';
-	// 	$phpmailer->SMTPSecure = 'tls'; // Choose 'ssl' for SMTPS on port 465, or 'tls' for SMTP+STARTTLS on port 25 or 587.
-
-	// }
-	// // add_action( 'phpmailer_init', 'phpmailer_gmail_setup' );
 
 	/**
 	 * Defining Booking Statuses
@@ -2156,124 +2167,6 @@ class Mwb_Wc_Bk_Admin {
 		return $booking_status;
 	}
 
-	/**
-	 * Add 'Booking Complete' post status.
-	 */
-	public function mwb_booking_custom_post_status() {
-
-		// echo '<pre>'; print_r( $_GET['post'] ); echo '</pre>';die("post");
-		// if ( isset( $_GET['post'] ) ) {
-		// 	$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
-		// 	if ( 'mwb_cpt_booking' === $p->post_type ) {
-				$statuses = $this->mwb_booking_status();
-
-				$status = array(
-					/* translators: %s: Context */
-					'confirmation' => _nx_noop( 'Confirmation required (%s)', 'Confirmation required (%s)', 'Booking status', 'mwb-wc-bk' ),
-					/* translators: %s: Context */
-					'confirmed'    => _nx_noop( 'Confirmed (%s)', 'Confirmed (%s)', 'Booking status', 'mwb-wc-bk' ),
-					/* translators: %s: Context */
-					'expired'      => _nx_noop( 'Expired (%s)', 'Expired (%s)', 'Booking status', 'mwb-wc-bk' ),
-					/* translators: %s: Context */
-					'completed'    => _nx_noop( 'Completed (%s)', 'Completed (%s)', 'Booking status', 'mwb-wc-bk' ),
-					/* translators: %s: Context */
-					'pending'      => _nx_noop( 'Pending Payment (%s)', 'Pending Payment (%s)', 'Booking status', 'mwb-wc-bk' ),
-					/* translators: %s: Context */
-					'on-hold'      => _nx_noop( 'On Hold (%s)', 'On Hold (%s)', 'Booking status', 'mwb-wc-bk' ),
-				);
-				foreach ( $statuses as $status => $label ) {
-					register_post_status(
-						$status,
-						array(
-							'label'                     => $label,
-							'public'                    => true,
-							'exclude_from_search'       => false,
-							'show_in_admin_all_list'    => true,
-							'show_in_admin_status_list' => true,
-							// 'label_count'               => _n_noop( 'Awaiting shipment (%s)', 'Awaiting shipment (%s)' )
-						)
-					);
-				}
-		// 	}
-		// }
-	}
-
-	public function add_to_post_status_dropdown() {
-		global $post;
-		if ( $post->post_type != 'mwb_cpt_booking' ) {
-			return false;
-		}
-		$status = ( $post->post_status == 'completed' ) ? "jQuery( '#post-status-display' ).text( 'Completed' ); jQuery( 
-		'select[name=\"post_status\"]' ).val('completed');" : '';
-		echo "<script>
-		jQuery(document).ready( function() {
-		jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"completed\">Completed</option>' );
-		" . esc_html( $status ) . "
-		});
-		</script>";
-		$status = ( $post->post_status == 'expired' ) ? "jQuery( '#post-status-display' ).text( 'Expired' ); jQuery( 
-			'select[name=\"post_status\"]' ).val('expired');" : '';
-			echo "<script>
-			jQuery(document).ready( function() {
-			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"expired\">Expired</option>' );
-			" . esc_html( $status ) . "
-			});
-			</script>";
-		$status = ( $post->post_status == 'confirmation' ) ? "jQuery( '#post-status-display' ).text( 'Confirmation Required' ); jQuery( 
-			'select[name=\"post_status\"]' ).val('confirmation');" : '';
-			echo "<script>
-			jQuery(document).ready( function() {
-			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"confirmation\">Confirmation Required</option>' );
-			" . esc_html( $status ) . "
-			});
-			</script>";
-		$status = ( $post->post_status == 'pending' ) ? "jQuery( '#post-status-display' ).text( 'Pending Payment' ); jQuery( 
-			'select[name=\"post_status\"]' ).val('pending');" : '';
-			echo "<script>
-			jQuery(document).ready( function() {
-			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"pending\">Pending Payment</option>' );
-			" . esc_html( $status ) . "
-			});
-			</script>";
-		$status = ( $post->post_status == 'on-hold' ) ? "jQuery( '#post-status-display' ).text( 'On Hold' ); jQuery( 
-			'select[name=\"post_status\"]' ).val('on-hold');" : '';
-			echo "<script>
-			jQuery(document).ready( function() {
-			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"on-hold\">On Hold</option>' );
-			" . esc_html( $status ) . "
-			});
-			</script>";
-		$status = ( $post->post_status == 'confirmed' ) ? "jQuery( '#post-status-display' ).text( 'Confirmed' ); jQuery( 
-			'select[name=\"post_status\"]' ).val('confirmed');" : '';
-			echo "<script>
-			jQuery(document).ready( function() {
-			jQuery( 'select[name=\"post_status\"]' ).append( '<option value=\"confirmed\">Confirmed</option>' );
-			" . esc_html( $status ) . "
-			});
-			</script>";
-	}
-
-	/**
-	 * Show Booking Statuses on the order page
-	 *
-	 * @param [type] $order_status Array of all the statuses.
-	 * @return array
-	 */
-	public function mwb_booking_show_status( $order_status ) {
-
-		// echo '<pre>'; print_r( $order_status ); echo '</pre>'; die("status");
-		// if ( isset( $_GET['post'] ) ) {
-		// 	$p = get_post( sanitize_text_field( wp_unslash( $_GET['post'] ) ) );
-		// 	if ( 'mwb_cpt_booking' === $p->post_type ) {
-				$order_status['confirmation'] = esc_html__( 'Confirmation Required', 'mwb-wc-bk' );
-				$order_status['confirmed']    = esc_html__( 'Comfirmed', 'mwb-wc-bk' );
-				$order_status['expired']      = esc_html__( 'Expired', 'mwb-wc-bk' );
-		// 	}
-		// }
-
-		// echo '<pre>'; print_r( wc_get_order_types( 'view-orders' ) ); echo '</pre>';
-		return $order_status;
-	}
 
 	/**
 	 * Change Booking Statuses according to the changed order statuses.
@@ -2286,11 +2179,6 @@ class Mwb_Wc_Bk_Admin {
 	 * @return void
 	 */
 	public function mwb_booking_change_order( $order_id, $from, $to, $obj ) {
-
-		// echo '<pre>'; print_r( $id ); echo '</pre>';
-		// echo '<pre>'; print_r( $from ); echo '</pre>';
-		// echo '<pre>'; print_r( $to ); echo '</pre>';
-		// echo '<pre>'; print_r( $obj ); echo '</pre>';die("kjkj");
 
 		$booking_id = get_post_meta( $order_id, 'mwb_booking_id', true );
 
@@ -2333,15 +2221,7 @@ class Mwb_Wc_Bk_Admin {
 			update_post_meta( $booking_id, 'trigger_admin_email', 'no' );
 		}
 
-		// print_r($booking_id);
-		// die('123');
-
 	}
-
-	// public function mwb_booking_set_new_status( $id, $new_status ) {
-	// 	echo '<pre>'; print_r( $id ); echo '</pre>';
-	// 	echo '<pre>'; print_r( $new_status ); echo '</pre>';die("new");
-	// }
 
 
 	/**

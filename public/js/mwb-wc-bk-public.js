@@ -36,12 +36,12 @@
 // var booking_added_cost = 0;
 // var booking_service_cost = 0;
 // var indiv_added_cost_arr = [];
-var slots = mwb_wc_bk_public.slots;
+// var slots = mwb_wc_bk_public.slots;
 var is_product = false;
 if ( mwb_wc_bk_public.hasOwnProperty( 'mwb_booking_product_page' ) ) {
 	var is_product = mwb_wc_bk_public.mwb_booking_product_page;
 }
-console.log( is_product );
+// console.log( is_product );
 var unavailable_dates = mwb_wc_bk_public.unavailable_dates;
 // console.log( slots );
 // console.log( unavailable_dates );
@@ -84,15 +84,18 @@ jQuery(document).ready( function($) {
 	if( $('#booking-slots-data').length > 0  ){
 		var unavail_dates = $('#booking-slots-data').attr('unavail_dates');
 		unavail_dates = JSON.parse(unavail_dates);
+		var slots = $('#booking-slots-data').attr('slots');
+		slots = JSON.parse(slots);
+		console.log( slots );
 		console.log(unavail_dates);
 
 		if ( mwb_wc_bk_public.hasOwnProperty( 'product_settings' ) ) {
-			datepicker_check($, unavail_dates);
+			datepicker_check($, unavail_dates, slots);
 		}
 	}
 });
 
-function datepicker_check($, unavailable_dates) {
+function datepicker_check($, unavailable_dates, slots) {
 	max_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_input[0];
 	max_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_duration[0];
 	min_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_input[0];
@@ -100,9 +103,9 @@ function datepicker_check($, unavailable_dates) {
 
 	start_booking        = mwb_wc_bk_public.product_settings.mwb_start_booking_from[0];
 	custom_start_booking = mwb_wc_bk_public.product_settings.mwb_start_booking_custom_date[0];
-	custom_date_arr = custom_start_booking.split('-');
+
 	// current_date     = mwb_wc_bk_public.current_date;
-	console.log( custom_date_arr );
+	// console.log( custom_date_arr );
 	// if ( custom_start_booking ) {
 	// 	console.log( custom_start_booking );
 	// }
@@ -122,10 +125,15 @@ function datepicker_check($, unavailable_dates) {
 		start_slot = "+" + min_adv_input + min_dur;
 		end_slot   = "+" + max_adv_input + max_dur + ' +' + min_adv_input + min_dur;
 	} else if ( start_booking == 'custom_date' ) {
+		custom_date_arr = custom_start_booking.split('-');
 		start_slot = new Date( custom_date_arr[0], custom_date_arr[1] - 1, custom_date_arr[2] );
+		if ( start_slot < new Date() ) {
+			// alert('less');
+			start_slot = new Date();
+		}
 		// end_slot   = "+" + (max_adv_input + min_adv_input) + max_dur;
 		if ( max_adv_duration == 'day' ) {
-			end_slot = new Date(start_slot.getTime() + max_adv_input*24*60*60*1000);
+			end_slot = new Date( start_slot.getTime() + max_adv_input * 24 * 60 * 60 * 1000 );
 		} else if( max_adv_duration == 'month' ) {
 			// console.log('yahuza');
 			end_slot = new Date( custom_date_arr[0], custom_date_arr[1] - 1, custom_date_arr[2] );
@@ -169,56 +177,106 @@ function datepicker_check($, unavailable_dates) {
 	var not_allowed_days = mwb_wc_bk_public.not_allowed_days;
 	
 	// console.log( mwb_wc_bk_public.not_allowed_days );
+	// alert( slots );
 
-	$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
+	if ( mwb_wc_bk_public.product_settings.mwb_booking_unit_duration[0] == 'day' ) {
 
-		start_date = $(this).val();
-		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
-			end_date = $(this).val();
-		});
+		// $( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
 
-		$( '#mwb-wc-bk-duration-section' ).on( 'change', '#mwb-wc-bk-duration-input', function(){
-			duration = $( this ).val();
-			if ( start_date && duration ) {
-					
-				day_difference = duration;
-				var arr = cal_booking_days( start_date, day_difference );
-				console.log( arr );
-
+			start_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
+			$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
+				end_date = $(this).val();
+			});
+			if ( start_date && end_date ) {
+	
+				date1 = new Date( start_date );
+				date2 = new Date( end_date );
 				
+				time_difference = date2.getTime() - date1.getTime();
+				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+	
+				var arr = cal_in_between_days( start_date, day_difference );
+				var result = unvailable_date_range_check( arr, unavailable_dates );
+				if ( result == false ) {
+					$('#mwb-wc-bk-date-section .date-error').show();
+					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
+				} else {
+					// alert( "less" );
+					$('#mwb-wc-bk-date-section .date-error').hide();
+				}
+				// console.log( result );
 			}
-		} );
-
-		if ( start_date && end_date ) {
-
-			date1 = new Date( start_date );
-			date2 = new Date( end_date );
-			
-			time_difference = date2.getTime() - date1.getTime();
-			day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
-
-			var arr = cal_booking_days( start_date, day_difference );
-			console.log( arr );
-		}
-	});
-	$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
-
-		end_date = $(this).val();
-		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
-
-			start_date = $(this).val();
+	
+			$( '#mwb-wc-bk-duration-section' ).on( 'change', '#mwb-wc-bk-duration-input', function(){
+				duration = $( this ).val();
+				if ( start_date && duration ) {
+						
+					day_difference = duration;
+					var arr = cal_in_between_days( start_date, day_difference );
+					var result = unvailable_date_range_check( arr, unavailable_dates );
+					// console.log( arr );
+					// console.log( result );
+					if ( result == false ) {
+						$('#mwb-wc-bk-date-section .date-error').show();
+						$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
+					} else {
+						// alert( "less" );
+						$('#mwb-wc-bk-date-section .date-error').hide();
+					}
+	
+				}
+			} );
+		// });
+		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
+	
+			end_date = $(this).val();
+			$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
+	
+				start_date = $(this).val();
+			});
+			if ( start_date && end_date ) {
+	
+				date1 = new Date( start_date );
+				date2 = new Date( end_date );
+				
+				time_difference = date2.getTime() - date1.getTime();
+				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+				var arr = cal_in_between_days( start_date, day_difference );
+				var result = unvailable_date_range_check( arr, unavailable_dates );
+				// console.log( result );
+				if ( result == false ) {
+					$('#mwb-wc-bk-date-section .date-error').show();
+					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
+				} else {
+					// alert( "less" );
+					$('#mwb-wc-bk-date-section .date-error').hide();
+				}
+			}
 		});
-		if ( start_date && end_date ) {
+	} else {
+		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(e){
+			start_date = $( this ).val();
+			var dura = $( '#mwb-wc-bk-duration-input' ).val();
+			// console.log( slots );
+			start_date = new Date( start_date );
+			var val = start_date.getFullYear() + '-' + ( "0" + ( start_date.getMonth() + 1 ) ).slice( -2 ) + '-' + ( "0" + ( start_date.getDate() ) ).slice( -2 );
+			var result = val in slots;
+			// console.log(result);
+			// console.log( start_date );
+			console.log( val );
+			// alert( start_date );
+			if ( result ) {
+				// alert('working');
+				var slot = slots[val];
+				jQuery.each(slot, function(index , value){
+					console.log(index);
 
-			date1 = new Date( start_date );
-			date2 = new Date( end_date );
-			
-			time_difference = date2.getTime() - date1.getTime();
-			day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
-			var arr = cal_booking_days( start_date, day_difference );
-			console.log( arr );
-		}
-	});	
+				})
+
+			}
+		});
+	}
+	
 	
 	// console.log( start_date + "  " + end_date );
 	
@@ -244,10 +302,12 @@ function datepicker_check($, unavailable_dates) {
            	var	month = ( "0" + ( d.getMonth() + 1 ) ).slice( -2 );
             var	day = ( "0" + ( d.getDate() ) ).slice( -2 );
 			var formatted = year + '-' + month + '-' + day;
-
+			// console.log( unavailable_dates );
 			if ( $.inArray( formatted, unavailable_dates ) != -1 ) {
+				// console.log('unavailable-' + formatted );
 				return [false, "","Un-available"];
 			} else {
+				// console.log('available-' + formatted );
 				return [true,"","Available"];
 			}
 			// console.log(formatted);
@@ -290,8 +350,10 @@ function datepicker_check($, unavailable_dates) {
 	$( '#mwb-wc-bk-end-date-input' ).datepicker({
 		dateFormat : "mm/dd/yy",
 
-		maxDate: "+" + max_adv_input + max_dur,
-		minDate: "+" + min_adv_input + min_dur,
+		// maxDate: "+" + max_adv_input + max_dur,
+		// minDate: "+" + min_adv_input + min_dur,
+		maxDate: end_slot,
+		minDate: start_slot,
 
 		// beforeShowDay: function(date) {
 		// 	var days = [0,1,2,3,4,5,6];
@@ -339,30 +401,34 @@ function datepicker_check($, unavailable_dates) {
 	});
 }
 
-function da( arr, unavail_dates ) {
+function unvailable_date_range_check( arr, unavail_dates ) {
 
-	for( i=0; i<arr.length; i++ ) {
-		if ( jQuery.inArray( arr[i], unavail_dates ) == -1 ) {
-			break;
+	for( i = 0; i < arr.length; i++ ) {
+		var val = jQuery.inArray( arr[i], unavail_dates );
+		if ( val == -1 ) {
+			continue;
+		} else {
+			return false;
 		}
 	}
+	return true;
 }
 
 
-function cal_booking_days( start_date, day_difference ) {
+function cal_in_between_days( start_date, day_difference ) {
 
 	// var tomorrow = new Date();
 	var date_arr = [];
 	// date1 = start_date;
 	date1 = new Date( start_date );
 	// console.log( day_difference );
-	date_arr.push(date1.getDate() + '-' + ( date1.getMonth() + 1 ) + '-' + date1.getFullYear());
+	date_arr.push(date1.getFullYear() + '-' + ( "0" + ( date1.getMonth() + 1 ) ).slice( -2 ) + '-' + ( "0" + ( date1.getDate() ) ).slice( -2 ));
 	for( var day = 1; day < day_difference; day++ ) {
 
 		date1.setDate( date1.getDate() + 1 );
 		// console.log( date1 );
 
-		val = date1.getDate() + '-' + ( date1.getMonth() + 1 ) + '-' + date1.getFullYear();
+		val = date1.getFullYear() + '-' + ( "0" + ( date1.getMonth() + 1 ) ).slice( -2 ) + '-' + ( "0" + ( date1.getDate() ) ).slice( -2 );
 		// console.log( val );
 
 		date_arr.push( val );

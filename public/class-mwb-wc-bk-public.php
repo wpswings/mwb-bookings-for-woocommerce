@@ -212,6 +212,7 @@ class Mwb_Wc_Bk_Public {
 
 		// if ( empty( $slots ) ) {
 		$start_date = gmdate( 'Y-m-d', $current_ts );
+		// echo '<pre>'; print_r( $start_date ); echo '</pre>';
 
 		$start_booking     = isset( $product_meta['mwb_start_booking_from'][0] ) ? $product_meta['mwb_start_booking_from'][0] : '';
 		$daily_start_time  = isset( $product_meta['mwb_booking_start_time'][0] ) ? $product_meta['mwb_booking_start_time'][0] : '00:01';
@@ -231,7 +232,10 @@ class Mwb_Wc_Bk_Public {
 			// echo 'tomorrow';
 		} elseif ( 'custom_date' === $start_booking ) {
 			$custom_date = isset( $product_meta['mwb_start_booking_custom_date'][0] ) ? $product_meta['mwb_start_booking_custom_date'][0] : '';
-			$start_date  = gmdate( 'Y-m-d', strtotime( $custom_date ) );
+			if ( strtotime( $custom_date ) < strtotime( gmdate( 'Y-m-d', time() ) ) ) {
+				$custom_date = gmdate( 'Y-m-d', time() );
+			}
+			$start_date = gmdate( 'Y-m-d', strtotime( $custom_date ) );
 			if ( strtotime( $custom_date ) < $current_ts ) {
 				$start_date = gmdate( 'Y-m-d', strtotime( $current_ts ) );
 			}
@@ -242,8 +246,9 @@ class Mwb_Wc_Bk_Public {
 			// echo 'initial';
 		}
 
+		// echo '<pre>'; print_r( $start_date ); echo '</pre>';
 		$end_date = gmdate( 'Y-m-d', strtotime( '+' . $max_advance_input . ' ' . $max_advance_dura . '', strtotime( $start_date ) ) );
-
+		// $step     = '+' . $unit_input;
 		$slots = $this->date_range( $start_date, $end_date, '+1 day', 'Y-m-d' );
 
 		// echo '<pre>'; print_r( $slots ); echo '</pre>';die('lkl');
@@ -295,13 +300,14 @@ class Mwb_Wc_Bk_Public {
 		$slot_arr = $availability_instance->check_product_global_availability( $product_id, $slots );
 		$slot_arr = $availability_instance->check_product_setting_availability( $product_id, $slot_arr );
 		$slot_arr = $availability_instance->manage_avaialability_acc_to_created_bookings( $product_id, $slot_arr );
+		// echo '<pre>'; print_r( $slot_arr ); echo '</pre>';
 
 		$unavail_dates = $availability_instance->fetch_unavailable_dates( $slot_arr );
 		// echo '<pre>'; print_r( $unavail_dates ); echo '</pre>';
 
 		// return compact( 'slot_arr', 'unavail_dates' );
 
-		echo '<div id="booking-slots-data" unavail_dates="' . esc_html( htmlspecialchars( wp_json_encode( $unavail_dates ) ) ) . '" ></div>';
+		echo '<div id="booking-slots-data" slots="' . esc_html( htmlspecialchars( wp_json_encode( $slot_arr ) ) ) . '" unavail_dates="' . esc_html( htmlspecialchars( wp_json_encode( $unavail_dates ) ) ) . '" ></div>';
 
 		//update_post_meta( $product_id, 'mwb_booking_unavailable_dates', $unavail_dates );
 		//update_post_meta( $product_id, 'mwb_booking_product_slots', $slot_arr );

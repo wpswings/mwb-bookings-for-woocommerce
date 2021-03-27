@@ -1474,7 +1474,7 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function booking_admin_menu() {
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Create Booking', 'mwb-wc-bk' ), 'Create Booking', 'manage_options', 'create-booking', array( $this, 'menu_page_create_booking' ) );
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Overview', 'mwb-wc-bk' ), 'Overview', 'manage_options', 'overview', array( $this, 'menu_page_overview' ) );
 
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Global booking Settings', 'mwb-wc-bk' ), 'Settings', 'manage_options', 'global-settings', array( $this, 'menu_page_booking_settings' ) );
 
@@ -1497,9 +1497,9 @@ class Mwb_Wc_Bk_Admin {
 	 *
 	 * @return void
 	 */
-	public function menu_page_create_booking() {
+	public function menu_page_overview() {
 
-		require_once plugin_dir_path( __FILE__ ) . 'partials/mwb_create_booking.php';
+		require_once plugin_dir_path( __FILE__ ) . 'partials/mwb_booking_overview.php';
 	}
 
 	/**

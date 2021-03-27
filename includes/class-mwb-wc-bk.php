@@ -347,7 +347,9 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'woocommerce_account_all_bookings_endpoint', $plugin_public, 'mwb_booking_endpoint_content' );
 
 		$this->loader->add_filter( 'pre_option_woocommerce_enable_guest_checkout', $plugin_public, 'conditional_guest_checkout_based_on_product' );
-	
+
+		$this->loader->add_action( 'wp_ajax_mwb_check_time_slot_availability', $plugin_public, 'mwb_check_time_slot_availability' );
+
 	}
 
 	/**

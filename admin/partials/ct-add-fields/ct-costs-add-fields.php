@@ -25,10 +25,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</p>
 	<p>
 		<input type="checkbox" id="mwb_booking_ct_costs_multiply_units" name="mwb_booking_ct_costs_multiply_units" value="yes">
-		<p class="description"><?php esc_html_e( 'Multiply cost by duration', 'mwb-wc-bk' ); ?></p>
+		<span class="description"><?php esc_html_e( 'Multiply cost by duration', 'mwb-wc-bk' ); ?></span>
 	</p>
 	<p>
 		<input type="checkbox" id="mwb_booking_ct_costs_multiply_people" name="mwb_booking_ct_costs_multiply_people" value="yes">
-		<p class="description"><?php esc_html_e( 'Multiply cost by the number of people', 'mwb-wc-bk' ); ?></p>
+		<span class="description"><?php esc_html_e( 'Multiply cost by the number of people', 'mwb-wc-bk' ); ?></span>
 	</p>
 </div>

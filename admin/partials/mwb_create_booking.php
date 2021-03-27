@@ -103,7 +103,7 @@ if ( isset( $_POST['mwb_create_booking_submit_button'] ) ) {
 						</td>
 						<?php //} else { ?>
 							<?php
-								$product_meta = get_post_meta( $product_id );
+								$product_meta    = get_post_meta( $product_id );
 								$global_settings = get_option( 'mwb_booking_settings_options' );
 								echo "<pre>";
 								print_r( $product_meta );

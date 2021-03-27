@@ -300,7 +300,7 @@ class Mwb_Wc_Bk_Public {
 		$slot_arr = $availability_instance->check_product_global_availability( $product_id, $slots );
 		$slot_arr = $availability_instance->check_product_setting_availability( $product_id, $slot_arr );
 		$slot_arr = $availability_instance->manage_avaialability_acc_to_created_bookings( $product_id, $slot_arr );
-		// echo '<pre>'; print_r( $slot_arr ); echo '</pre>';
+		echo '<pre>'; print_r( $slot_arr ); echo '</pre>';
 
 		$unavail_dates = $availability_instance->fetch_unavailable_dates( $slot_arr );
 		// echo '<pre>'; print_r( $unavail_dates ); echo '</pre>';
@@ -310,7 +310,7 @@ class Mwb_Wc_Bk_Public {
 		echo '<div id="booking-slots-data" slots="' . esc_html( htmlspecialchars( wp_json_encode( $slot_arr ) ) ) . '" unavail_dates="' . esc_html( htmlspecialchars( wp_json_encode( $unavail_dates ) ) ) . '" ></div>';
 
 		//update_post_meta( $product_id, 'mwb_booking_unavailable_dates', $unavail_dates );
-		//update_post_meta( $product_id, 'mwb_booking_product_slots', $slot_arr );
+		update_post_meta( $product_id, 'mwb_booking_product_slots', $slot_arr );
 		// $this->mwb_product_slots = $slot_arr;
 		// echo '<pre>'; print_r( $slot_arr ); echo '</pre>';
 		// die('pl');
@@ -348,9 +348,7 @@ class Mwb_Wc_Bk_Public {
 	 */
 	public function mwb_time_slots_in_booking_form() {
 
-		if ( ! check_ajax_referer( 'mwb_wc_bk_public', 'nonce' ) ) {
-			die;
-		}
+		check_ajax_referer( 'mwb_wc_bk_public', 'nonce' );
 
 		$product_id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
 		$start_date = isset( $_POST['date'] ) ? $_POST['date'] : '';
@@ -359,7 +357,9 @@ class Mwb_Wc_Bk_Public {
 
 		$unit_duration = get_post_meta( $product_id, 'mwb_booking_unit_duration', true );
 
-		$slots = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
+		$slots = isset( $_POST['slots'] ) ? $_POST['slots'] : array();
+		// $slots = get_post_meta( $product_id, 'mwb_booking_product_slots', true );
+		// echo '<pre>'; print_r( $slots ); echo '</pre>';die('slots');
 
 		if ( ! empty( $product_id ) && ! empty( $start_date ) ) {
 			if ( 'hour' === $unit_duration || 'minute' === $unit_duration ) {
@@ -370,20 +370,23 @@ class Mwb_Wc_Bk_Public {
 							<label for="mwb-wc-bk-time-slot-input"><?php esc_html_e( 'Time', 'mwb-wc-bk' ); ?></label>
 							<select type="text" id="mwb-wc-bk-time-slot-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-time" name="time_slot" required>
 								<?php
-								foreach ( $slots[ $start_date ] as $k => $v ) {
-									if ( 'bookable' === $v['book'] ) {
-										$s = explode( '-', $k );
-										?>
-										<option value="<?php echo strtotime( $s[0], strtotime( $start_date ) ); ?>">
-										<?php
-										echo gmdate( 'h:i:s a', strtotime( $s[0], strtotime( $start_date ) ) );
-										?>
-										</option>
-										<?php
-									} else {
-										?>
-										<option value="" disabled ><?php echo $k; ?></option>
-										<?php
+								if ( ! empty( $slots ) ) {
+									foreach ( $slots[ $start_date ] as $k => $v ) {
+										if ( 'bookable' === $v['book'] ) {
+											$s = explode( '-', $k );
+											?>
+											<option value="<?php echo strtotime( $s[0], strtotime( $start_date ) ); ?>">
+											<?php
+											echo gmdate( 'h:i:s a', strtotime( $s[0], strtotime( $start_date ) ) );
+											?>
+											</option>
+											<?php
+										} else {
+											$s = explode( '-', $k );
+											?>
+											<option value="<?php strtotime( $s[0], strtotime( $start_date ) ); ?>" disabled ><?php echo gmdate( 'h:i:s a', strtotime( $s[0], strtotime( $start_date ) ) ); ?></option>
+											<?php
+										}
 									}
 								}
 								?>
@@ -395,6 +398,45 @@ class Mwb_Wc_Bk_Public {
 			}
 		}
 		wp_die();
+	}
+
+	public function mwb_check_time_slot_availability() {
+
+		check_ajax_referer( 'mwb_wc_bk_public', 'nonce' );
+
+		$slots      = isset( $_POST['slots'] ) ? $_POST['slots'] : array();
+		$time_slot  = isset( $_POST['time_slot'] ) ? $_POST['time_slot'] : '';
+		$start_date = isset( $_POST['start_date'] ) ? $_POST['start_date'] : array();
+		$duration   = isset( $_POST['duration'] ) ? $_POST['duration'] : '';
+
+		echo '<pre>'; print_r( $slots ); echo '</pre>';
+		echo '<pre>'; print_r( $time_slot ); echo '</pre>';
+		echo '<pre>'; print_r( $start_date ); echo '</pre>';
+		echo '<pre>'; print_r( $duration ); echo '</pre>';
+
+		$time = gmdate( 'H:i:s', $time_slot );
+		// echo '<pre>'; print_r( $time ); echo '</pre>';
+		$arr    = $slots[ $start_date ];
+		$result = array( 'status' => true );
+		$count  = 0;
+		foreach ( $arr as $k => $v ) {
+
+			$time2 = explode( '-', $k );
+			$time3 = $time2[0];
+			if ( strtotime( $time, strtotime( $start_date ) ) <= strtotime( $time3, strtotime( $start_date ) ) ) {
+				$count++;
+				// echo 'working';
+				if ( $count <= $duration ) {
+					if ( 'non-bookable' === $k['book'] ) {
+						$result['status'] = false;
+					}
+				} else {
+					break;
+				}
+			}
+		}
+		echo wp_json_encode( $result );
+		// wp_die();
 	}
 
 	/**
@@ -622,7 +664,6 @@ class Mwb_Wc_Bk_Public {
 			$booking_data['total_cost'] = $posted_data['total_cost'];
 		}
 
-		
 		// $booking_data['posted_data']    = $posted_data;
 		$booking_data['unit_dur']       = $booking_unit_dur;
 		$booking_data['unit_dur_input'] = $booking_unit_input;

@@ -253,28 +253,6 @@ function datepicker_check($, unavailable_dates, slots) {
 				}
 			}
 		});
-	} else {
-		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(e){
-			start_date = $( this ).val();
-			var dura = $( '#mwb-wc-bk-duration-input' ).val();
-			// console.log( slots );
-			start_date = new Date( start_date );
-			var val = start_date.getFullYear() + '-' + ( "0" + ( start_date.getMonth() + 1 ) ).slice( -2 ) + '-' + ( "0" + ( start_date.getDate() ) ).slice( -2 );
-			var result = val in slots;
-			// console.log(result);
-			// console.log( start_date );
-			console.log( val );
-			// alert( start_date );
-			if ( result ) {
-				// alert('working');
-				var slot = slots[val];
-				jQuery.each(slot, function(index , value){
-					console.log(index);
-
-				})
-
-			}
-		});
 	}
 	
 	
@@ -499,6 +477,8 @@ function show_time_slots($) {
 		var product_data = $('#mwb-wc-bk-create-booking-form').attr( 'product-data' );
 		var product_data = JSON.parse( product_data );
 		var product_id = product_data.product_id;
+		var slots = $('#booking-slots-data').attr('slots');
+		slots = JSON.parse( slots );
 		// alert(product_id);
 
 		var date = $(this).val();
@@ -512,7 +492,8 @@ function show_time_slots($) {
 				'nonce' : mwb_wc_bk_public.nonce,
 				'date'  : date,
 				'id'    : product_id,
-			},
+				'slots' : slots,
+ 			},
 			success : function( response ) {
 				$( '#mwb-wc-bk-time-section' ).html( response );
 				console.log( response );
@@ -732,6 +713,49 @@ function booking_price_cal($) {
 				// alert( "less" );
 				$('#mwb-wc-bk-date-section .date-error').hide();
 			}
+		}
+
+		if ( mwb_wc_bk_public.product_settings.mwb_booking_unit_duration[0] != 'day' ) {
+
+				start_date = $( '#mwb-wc-bk-start-date-input' ).val();
+				var dura = $( '#mwb-wc-bk-duration-input' ).val();
+				var time_slot = $( '#mwb-wc-bk-time-slot-input' ).val();
+				// alert( time_slot );
+				// console.log( slots );
+				start_date = new Date( start_date );
+				var slots = $('#booking-slots-data').attr('slots');
+				slots = JSON.parse(slots);
+				var start_date = start_date.getFullYear() + '-' + ( "0" + ( start_date.getMonth() + 1 ) ).slice( -2 ) + '-' + ( "0" + ( start_date.getDate() ) ).slice( -2 );
+				// var result = val in slots;
+				// // console.log(result);
+				// // console.log( start_date );
+				// console.log( val );
+				// // alert( start_date );
+				// if ( result ) {
+				// 	// alert('working');
+				// 	var slot = slots[val];
+				// 	jQuery.each(slot, function(index , value){
+				// 		console.log(index);
+	
+				// 	});
+	
+				// }
+
+				$.ajax({
+					url      : mwb_wc_bk_public.ajaxurl,
+					type     : 'POST',
+					data     : {
+						'action'    : 'mwb_check_time_slot_availability',
+						'nonce'     : mwb_wc_bk_public.nonce,
+						'start_date': start_date,
+						'duration'  : dura,
+						'time_slot' : time_slot,
+						'slots'     : slots,
+					},
+					success : function( response ) {
+
+					} 
+				});
 		}
 		
 	});

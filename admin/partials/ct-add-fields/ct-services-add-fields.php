@@ -26,27 +26,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p class="form-field">
 		<label for=""></label>
 		<input type="checkbox" id="mwb_booking_ct_services_multiply_units" class="checkbox" name="mwb_booking_ct_services_multiply_units" value="yes">
-		<p class="description"><?php esc_html_e( 'Multiply cost by duration', 'mwb-wc-bk' ); ?></p>
+		<span class="description"><?php esc_html_e( 'Multiply cost by duration', 'mwb-wc-bk' ); ?></span>
 	</p>
 	<p class="form-field">
 		<label for=""></label>
 		<input type="checkbox" id="mwb_booking_ct_services_multiply_people" class="checkbox" name="mwb_booking_ct_services_multiply_people" value="yes">
-		<p class="description"><?php esc_html_e( 'Multiply cost by number of peoples per booking', 'mwb-wc-bk' ); ?></p>
+		<span class="description"><?php esc_html_e( 'Multiply cost by number of peoples per booking', 'mwb-wc-bk' ); ?></span>
 	</p>
 	<p class="form-field">
 		<label for=""></label>
 		<input type="checkbox" id="mwb_booking_ct_services_has_quantity" class="checkbox" name="mwb_booking_ct_services_has_quantity" value="yes">
-		<p class="description"><?php esc_html_e( 'If has quantity', 'mwb-wc-bk' ); ?></p>
+		<span class="description"><?php esc_html_e( 'If has quantity', 'mwb-wc-bk' ); ?></span>
 	</p>
 	<p class="form-field">
 		<label for=""></label>
 		<input type="checkbox" id="mwb_booking_ct_services_hidden" class="checkbox" name="mwb_booking_ct_services_hidden" value="yes">
-		<p class="description"><?php esc_html_e( 'If Hidden', 'mwb-wc-bk' ); ?></p>
+		<span class="description"><?php esc_html_e( 'If Hidden', 'mwb-wc-bk' ); ?></span>
 	</p>
 	<p class="form-field">
 		<label for=""></label>
 		<input type="checkbox" id="mwb_booking_ct_services_optional" class="checkbox" name="mwb_booking_ct_services_optional" value="yes" >
-		<p class="description"><?php esc_html_e( 'If Optional', 'mwb-wc-bk' ); ?></p>
+		<span class="description"><?php esc_html_e( 'If Optional', 'mwb-wc-bk' ); ?></span>
 	</p>
 </div>
 <div class="form-field term-has-quantity-checked-wrap">

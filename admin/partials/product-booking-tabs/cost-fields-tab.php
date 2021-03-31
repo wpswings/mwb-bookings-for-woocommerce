@@ -17,7 +17,7 @@
 		<div id="mwb_booking_normal_cost_fields">
 			<p class="form-field unit-cost">
 				<label for="mwb_booking_unit_cost_input"><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label>
-				<input type="number" name="mwb_booking_unit_cost_input" id="mwb_booking_unit_cost_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_unit_cost_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;" required>
+				<input type="number" name="mwb_booking_unit_cost_input" id="mwb_booking_unit_cost_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_unit_cost_input'] ); ?>" step="1" style="margin-right: 7px; width: 4em;" >
 				<input type="checkbox" name="mwb_booking_unit_cost_multiply" id="mwb_booking_unit_cost_multiply" value="yes" <?php checked( 'yes', $this->setting_fields['mwb_booking_unit_cost_multiply'] ); ?>/>
 				<label for="mwb_booking_unit_cost_multiply"><?php esc_html_e( 'Count per people', 'mwb-wc-bk' ); ?></label>
 				<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Unit cost is main cost for your booking', 'mwb-wc-bk' ) ); ?>
@@ -60,6 +60,9 @@
 						),
 						'desc_tip'    => true,
 						'description' => __( 'Type of discount for the booking', 'mwb-wc-bk' ),
+						// 'custom_attributes' => array(
+						// 	'disabled' => true,
+						// ),
 					)
 				);
 				?>

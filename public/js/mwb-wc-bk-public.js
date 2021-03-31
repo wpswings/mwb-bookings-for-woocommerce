@@ -58,15 +58,6 @@ jQuery(document).ready( function($) {
 		}
 
 	});
-	// $(function() {
-	// 	$(window).on("navigate", function (event, data) {
-	// 		var direction = data.state.direction;
-	// 		if (direction == 'back') {
-	// 			// console.log('back button was pressed')
-	// 			window.reload(true);
-	// 		}
-	// 	});
-	// });
 
 	start_date = $( '#mwb-wc-bk-start-date-input' ).val();
 	end_date   = $( '#mwb-wc-bk-end-date-input' ).val();
@@ -79,15 +70,15 @@ jQuery(document).ready( function($) {
 	booking_price_cal($);
 	// show_total($)
 
-	console.log( mwb_wc_bk_public );
+	// console.log( mwb_wc_bk_public );
 
 	if( $('#booking-slots-data').length > 0  ){
 		var unavail_dates = $('#booking-slots-data').attr('unavail_dates');
 		unavail_dates = JSON.parse(unavail_dates);
 		var slots = $('#booking-slots-data').attr('slots');
 		slots = JSON.parse(slots);
-		console.log( slots );
-		console.log(unavail_dates);
+		// console.log( slots );
+		// console.log(unavail_dates);
 
 		if ( mwb_wc_bk_public.hasOwnProperty( 'product_settings' ) ) {
 			datepicker_check($, unavail_dates, slots);
@@ -689,7 +680,7 @@ function booking_price_cal($) {
 			// alert("people");
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).show();
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( "*Select at least 1 people" );
-				e.preventDefault();
+			e.preventDefault();
 		} else {
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).hide();
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( '' );
@@ -739,11 +730,17 @@ function booking_price_cal($) {
 	
 				// 	});
 	
+				// e.preventDefault();
 				// }
+				// var result = await time_slot_availability( start_date, dura, time_slot, slots, e );
+				// console.log(result);
+			
+			
 
 				$.ajax({
 					url      : mwb_wc_bk_public.ajaxurl,
 					type     : 'POST',
+					async    : false,
 					data     : {
 						'action'    : 'mwb_check_time_slot_availability',
 						'nonce'     : mwb_wc_bk_public.nonce,
@@ -753,8 +750,24 @@ function booking_price_cal($) {
 						'slots'     : slots,
 					},
 					success : function( response ) {
+						alert(response);
+						response = JSON.parse( response );
 
-					} 
+						// $( '.cart' ).on( 'submit', function( e ){
+						// 	e.preventDefault();
+						// } );
+
+						if ( response.status == true ) {
+							jQuery('#mwb-wc-bk-date-section .date-error').hide();
+							// alert('jdhcv');
+							// jQuery( '.cart' ).submit();
+						} else {
+							jQuery('#mwb-wc-bk-date-section .date-error').show();
+							jQuery('#mwb-wc-bk-date-section .date-error').text( '*In between slots are unavailable' );
+							e.preventDefault();
+						}
+
+					}
 				});
 		}
 		
@@ -796,6 +809,25 @@ function booking_price_cal($) {
 
 
 }
+
+const time_slot_availability = async( start_date, dura, time_slot, slots, e ) => {
+	const response = await jQuery.ajax({
+		url      : mwb_wc_bk_public.ajaxurl,
+		type     : 'POST',
+		data     : {
+			'action'    : 'mwb_check_time_slot_availability',
+			'nonce'     : mwb_wc_bk_public.nonce,
+			'start_date': start_date,
+			'duration'  : dura,
+			'time_slot' : time_slot,
+			'slots'     : slots,
+		}
+	});
+	// console.log( response );
+	
+	return response;
+}
+
 
 function price_cal_func($) {
 

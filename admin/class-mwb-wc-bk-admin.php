@@ -104,15 +104,18 @@ class Mwb_Wc_Bk_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb-wc-bk-admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( 'js-calendar', plugin_dir_url( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.js', array(), '5.5.0', false );
+
 		$current_screen = get_current_screen();
-		// $current_screen_id = $curent_screen->id;
+		// $product        = wc_get_product( get_the_ID() );
+
 		wp_localize_script(
 			$this->plugin_name,
 			'mwb_booking_obj',
 			array(
-				'ajaxurl'   => admin_url( 'admin-ajax.php' ),
-				'nonce'     => wp_create_nonce( 'ajax-nonce' ),
-				'screen_id' => $current_screen->id,
+				'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+				'nonce'        => wp_create_nonce( 'ajax-nonce' ),
+				'screen_id'    => $current_screen->id,
+				// 'product_type' => $product->get_type(),
 			)
 		);
 
@@ -344,7 +347,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_buffer_duration'            => array( 'default' => '' ),
 			'mwb_advance_booking_max_input'          => array( 'default' => '' ),
 			'mwb_advance_booking_max_duration'       => array( 'default' => '' ),
-			'mwb_advance_booking_min_input'          => array( 'default' => '' ),
+			'mwb_advance_booking_min_input'          => array( 'default' => 0 ),
 			'mwb_advance_booking_min_duration'       => array( 'default' => '' ),
 			'mwb_booking_not_allowed_days'           => array( 'default' => array() ),
 
@@ -1051,6 +1054,8 @@ class Mwb_Wc_Bk_Admin {
 					$refund             = $payment_method_obj->process_refund( $order_id, $refund_amount, $reason );
 				}
 
+				// echo '<pre>'; print_r( $refund ); echo '</pre>';die('xcx');
+
 				if ( $refund && ! is_wp_error( $refund ) ) {
 
 					$response['success'] = true;
@@ -1140,6 +1145,7 @@ class Mwb_Wc_Bk_Admin {
 		$user           = get_user_by( 'ID', $customer_id );
 		// echo '<pre>'; print_r( $user->user_login ); echo '</pre>';
 		$product_id     = isset( $meta['product_id'] ) ? $meta['product_id'] : '';
+		$product        = wc_get_product( $product_id );
 		$product_name   = get_post( $product_id )->post_name;
 		$status         = isset( $status ) ? $status : 'pending';
 		$created_date   = isset( $post->post_date ) ? gmdate( 'Y-m-d', strtotime( $post->post_date ) ) : '';
@@ -1164,33 +1170,37 @@ class Mwb_Wc_Bk_Admin {
 						<input type="number" id="" value="<?php echo esc_html( $created_time_m ); ?>">
 					</p>
 					<p>
-						<label for=""><?php esc_html_e( 'Booking Product', 'mwb-wc-bk' ); ?><a href="<?php echo esc_url( get_edit_post_link( $product_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Product ->', '' ); ?></a></label>
-						<select name="mwb_booking_product_select" id="mwb_booking_product_select" >
-							<option value="<?php echo esc_html( $product_id ); ?>" ><?php echo esc_html( $product_name ); ?></option>
-						</select>
+						<label for=""><?php esc_html_e( 'Booking Product', 'mwb-wc-bk' ); ?></label>
+						<a href="<?php echo esc_url( get_edit_post_link( $product_id ) ); ?>" target="__blank"><?php echo esc_html( $product_name ); ?></a>
+						<?php echo $product->get_image(); ?>
+						<!-- <select name="mwb_booking_product_select" id="mwb_booking_product_select" >
+							<option value="<?php // echo esc_html( $product_id ); ?>" ><?php // echo esc_html( $product_name ); ?></option>
+						</select> -->
 					</p>
 					<p>
-						<label for="mwb_booking_order_select"><?php esc_html_e( 'Booking Order', 'mwb-wc-bk' ); ?><a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Order ->', '' ); ?></a></label>
-						<select name="mwb_booking_order_select" id="mwb_booking_order_select" >
-							<option value="<?php echo esc_html( $order_id ); ?>" ><?php echo esc_html( sprintf( '#%d - Order', $order_id ) ); ?></option>
-						</select>
+						<label for="mwb_booking_order_select"><?php esc_html_e( 'Booking Order', 'mwb-wc-bk' ); ?></label>
+						<a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Order', 'mwb-wc-bk' ); ?></a>
+						<!-- <select name="mwb_booking_order_select" id="mwb_booking_order_select" >
+							<option value="<?php // echo esc_html( $order_id ); ?>" ><?php // echo esc_html( sprintf( '#%d - Order', $order_id ) ); ?></option>
+						</select> -->
 					</p>
 					<p>
-						<label for=""><?php esc_html_e( 'Customer', 'mwb-wc-bk' ); ?><a href="<?php echo esc_url( get_edit_user_link( $customer_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Customer ->', '' ); ?></a></label>
-						<select name="mwb_booking_user_select" id="mwb_booking_user_select" >
-							<option value="<?php echo esc_html( $order_id ); ?>" ><?php echo esc_html( sprintf( '%1s (#%d - %2s)', $user->user_login, $order_id, $user->user_email ) ); ?></option>
-						</select>
+						<label for=""><?php esc_html_e( 'Customer', 'mwb-wc-bk' ); ?></label>
+						<a href="<?php echo esc_url( get_edit_user_link( $customer_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Customer', 'mwb-wc-bk' ); ?></a>
+						<!-- <select name="mwb_booking_user_select" id="mwb_booking_user_select" >
+							<option value="<?php // echo esc_html( $order_id ); ?>" ><?php // echo esc_html( sprintf( '%1s (#%d - %2s)', $user->user_login, $order_id, $user->user_email ) ); ?></option>
+						</select> -->
 					</p>
 				</div>
 
-				<div>
-					<h3><?php esc_html_e( 'Booking Data', '' ); ?></h3>
+				<!-- <div>
+					<h3><?php // esc_html_e( 'Booking Data', '' ); ?></h3>
 					<div class="">
 						<p>
 							<label for=""><?php  ?></label>
 						</p>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<?php
@@ -2181,10 +2191,6 @@ class Mwb_Wc_Bk_Admin {
 	public function mwb_booking_change_order( $order_id, $from, $to, $obj ) {
 
 		$booking_id = get_post_meta( $order_id, 'mwb_booking_id', true );
-
-		// $order        = wc_get_order( $id );
-		// $order_status = $order->get_status();
-		// echo '<pre>'; print_r( $order_status ); echo '</pre>';
 
 		switch ( $to ) {
 			case 'pending':

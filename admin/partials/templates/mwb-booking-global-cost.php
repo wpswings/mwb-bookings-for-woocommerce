@@ -50,9 +50,9 @@ if ( isset( $_POST['mwb_booking_global_cost_rules_save'] ) ) {
 }
 $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 
-echo '<pre>';
-print_r( $cost_rules );
-echo '</pre>';
+// echo '<pre>';
+// print_r( $cost_rules );
+// echo '</pre>';
 ?>
 
 <!-- For Global options Setting -->

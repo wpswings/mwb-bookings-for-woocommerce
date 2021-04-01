@@ -36,7 +36,10 @@ jQuery(document).ready( function($) {
 		get_events($);
 		render_calendar( $, booking_events );
 	}
+	jQuery(document).on('click', '.booking-overview__help-icon', function() {
+		jQuery('.booking-overview__help').toggleClass('booking-help__out');
 	
+	});
 	
 });
 
@@ -101,9 +104,9 @@ function get_events($) {
 			'events'  : 'events',
 		},
 		success: function( data ) {
-			// console.log( data );
+
 			booking_events = data;
-			// console.log( booking_events );
+			console.log( booking_events );
 		},
 		async: false
 	});

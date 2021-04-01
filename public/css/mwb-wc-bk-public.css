@@ -2,3 +2,33 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ ul {
+    list-style: none!important;
+    margin: 0!important;
+}
+.product-type-mwb_booking h1 {
+    text-transform: capitalize;
+}
+.mwb-wc-bk-form-section {
+    margin-bottom: 10px;
+}
+label {
+    flex: 0 0 100%;
+}div#mwb-wc-bk-duration-div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}.mwb-wc-bk-form-section {
+    margin-bottom: 10px;
+}
+li{    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+#mwb-wc-bk-total-fields li label{
+ flex: 0 0 50%;
+ max-width: 50%;
+}
+#mwb-wc-bk-total-fields ul li:last-child{
+border-top: 1px solid #e2e2e2;
+}

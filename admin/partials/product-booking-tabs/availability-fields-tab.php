@@ -25,7 +25,7 @@
 					'label'             => __( 'Max Booking per unit', 'mwb-wc-bk' ),
 					'description'       => __( 'Maximum number of bookings allowed per unit.', 'mwb-wc-bk' ),
 					'value'             => $this->setting_fields['mwb_max_bookings_per_unit'],
-					'desc_tip'          => false,
+					'desc_tip'          => true,
 					'type'              => 'number',
 					'style'             => 'width: 30%; margin-right: 7px;',
 					'custom_attributes' => array(
@@ -56,7 +56,7 @@
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time when the booking ends', 'mwb-wc-bk' ) ); ?>
 			<span id="mwb_booking_time_notice"></span>
 		</p>
-		<p class="form-field">
+		<p class="form-field mwb-bookings__pro">
 			<label for="mwb_booking_buffer_input"><?php esc_html_e( 'Booking Buffer', 'mwb-wc-bk' ); ?></label>
 			<input type="number" name="mwb_booking_buffer_input" id="mwb_booking_buffer_input" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_buffer_input'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;" disabled>
 			<select name="mwb_booking_buffer_duration" id="mwb_booking_buffer_duration" class="" style="width: auto; margin-right: 7px;" disabled>
@@ -106,7 +106,7 @@
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Select weekday(s) on which booking is not allowed', 'mwb-wc-bk' ) ); ?>
 		</p>
 	</div>
-	<div id="mwb_local_availability_rules" class="options_group">
+	<div id="mwb_local_availability_rules" class="options_group mwb-bookings__pro">
 		<div id="mwb_local_availability_rules_heading">
 			<h3><?php esc_html_e( 'Local Availability Rules', 'mwb-wc-bk' ); ?></h3>
 		</div>	

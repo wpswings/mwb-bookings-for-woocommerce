@@ -1,4 +1,1036 @@
 /**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
- */
+* All of the CSS for your admin-specific functionality should be
+* included in this file.
+*/
+
+
+/*===================================
+=            FONT-FAMILY            =
+===================================*/
+
+@font-face {
+    font-family: 'NunitoSans-Black';
+    src: url('../fonts/nunito/NunitoSans-Black.eot');
+    src: url('../fonts/nunito/NunitoSans-Black.eot?#iefix') format('embedded-opentype'), url('../fonts/nunito/NunitoSans-Black.woff2') format('woff2'), url('../fonts/nunito/NunitoSans-Black.woff') format('woff'), url('../fonts/nunito/NunitoSans-Black.ttf') format('truetype'), url('../fonts/nunito/NunitoSans-Black.svg#NunitoSans-Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-Italic';
+    src: url('../fonts/nunito/NunitoSans-Italic.eot');
+    src: url('../fonts/nunito/NunitoSans-Italic.eot?#iefix') format('embedded-opentype'), url('../fonts/nunito/NunitoSans-Italic.woff2') format('woff2'), url('../fonts/nunito/NunitoSans-Italic.woff') format('woff'), url('../fonts/nunito/NunitoSans-Italic.ttf') format('truetype'), url('../fonts/nunito/NunitoSans-Italic.svg#NunitoSans-Italic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-ExtraBold';
+    src: url('../fonts/nunito/NunitoSans-ExtraBold.eot');
+    src: url('../fonts/nunito/NunitoSans-ExtraBold.eot?#iefix') format('embedded-opentype'), url('../fonts/nunito/NunitoSans-ExtraBold.woff2') format('woff2'), url('../fonts/nunito/NunitoSans-ExtraBold.woff') format('woff'), url('../fonts/nunito/NunitoSans-ExtraBold.ttf') format('truetype'), url('../fonts/nunito/NunitoSans-ExtraBold.svg#NunitoSans-ExtraBold') format('svg');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-Bold';
+    src: url('../fonts/nunito/NunitoSans-Bold.eot');
+    src: url('../fonts/nunito/NunitoSans-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/nunito/NunitoSans-Bold.woff2') format('woff2'), url('../fonts/nunito/NunitoSans-Bold.woff') format('woff'), url('../fonts/nunito/NunitoSans-Bold.ttf') format('truetype'), url('../fonts/nunito/NunitoSans-Bold.svg#NunitoSans-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-SemiBold';
+    src: url('../fonts/nunito/NunitoSans-SemiBold.eot');
+    src: url('../fonts/nunito/NunitoSans-SemiBold.eot?#iefix') format('embedded-opentype'), url('../fonts/nunito/NunitoSans-SemiBold.woff2') format('woff2'), url('../fonts/nunito/NunitoSans-SemiBold.woff') format('woff'), url('../fonts/nunito/NunitoSans-SemiBold.ttf') format('truetype'), url('../fonts/nunito/NunitoSans-SemiBold.svg#NunitoSans-SemiBold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-Light';
+    src: url('../fonts/nunito/NunitoSans-Light.eot');
+    src: url('../fonts/nunito/NunitoSans-Light.eot?#iefix') format('embedded-opentype'), url('../fonts/nunito/NunitoSans-Light.woff2') format('woff2'), url('../fonts/nunito/NunitoSans-Light.woff') format('woff'), url('../fonts/nunito/NunitoSans-Light.ttf') format('truetype'), url('../fonts/nunito/NunitoSans-Light.svg#NunitoSans-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-Regular';
+    src: url('../fonts/nunito/NunitoSans-Regular.eot');
+    src: url('../fonts/nunito/NunitoSans-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/nunito/NunitoSans-Regular.woff2') format('woff2'), url('../fonts/nunito/NunitoSans-Regular.woff') format('woff'), url('../fonts/nunito/NunitoSans-Regular.ttf') format('truetype'), url('../fonts/nunito/NunitoSans-Regular.svg#NunitoSans-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/*=====  End of FONT-FAMILY  ======*/
+
+
+/*====================================
+mwb settings wrapper css starts
+======================================*/
+
+
+/* ================================
+    ******** Globals start  *******
+=================================== */
+body,
+html {
+    font-family: 'NunitoSans-Regular', sans-serif;
+    margin: 0;
+}
+a{
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+    border: none;
+}
+a:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.button-primary.mwb-btn {
+    border-radius: 30px;
+    background: #2196f3;
+    border-color: #2196f3;
+    padding: 6px 20px;
+    font-size: 15px;
+    transition: 0.2s linear all;
+    outline: none;
+}
+
+.button-primary.mwb-btn:hover {
+    background:#ffffff!important;
+    color: #2196f3!important;
+    font-weight: 400!important;
+    border-color: #2196f3!important;
+}
+
+input[type=radio]:checked::before {
+ background-color: #2196f3;
+}
+
+input:focus {
+    border-color: #2196f3!important;
+    box-shadow:unset!important;
+    outline:none!important;
+}
+input[type=checkbox]+p {
+    display: inline;
+}
+h1 {
+    color: #1a3365;
+    font-size: 26px;
+    font-weight: 600!important;
+    letter-spacing: 0.7px;
+}
+ h2 {
+    color: #1a3365;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+}
+input[type=radio]+label {
+    margin-right: 25px;
+}
+label {
+    color: #000000;
+}
+
+/* ==============================================
+    ******** Globals ends  *******
+================================================= */
+
+
+
+
+/* ==============================================
+    ******** Admin Display CSS starts  *******
+================================================== */
+
+.mwb-booking__nav-wrap {
+    background: #ffffff;
+    box-shadow:0 7px 8px rgb(0 0 0 / 8%);
+    padding: 20px 10px 14px 15px;
+}
+.mwb_booking_setting_title {
+    align-items: baseline;
+    display: flex;
+    padding: 0 5px;
+}
+.mwb_booking_setting_title_version {
+    color: #848484;
+    margin-left: 10px;
+}
+
+.mwb-booking__nav {
+    border-bottom: none;
+}
+
+.mwb-booking__nav .nav-tab {
+    background: #ffffff;
+    border: none;
+    font-weight: 600;
+    position: relative;
+}
+.mwb-booking__nav .nav-tab.mwb-bookings__pro {
+    width: 100%;
+    max-width: 140px;
+}
+.mwb-booking__nav .nav-tab.mwb-bookings__pro:before {
+    padding: 2px 2px;
+    right: 2px;
+ 
+}
+
+.nav-tab.nav-tab-active {
+    color: #1a3365;
+}
+
+.nav-tab.nav-tab-active:after {
+    background: #1a3365;
+    border-radius: 12px;
+    bottom: -14px;
+    content: '';
+    height: 3px;
+    left: 2px;
+    position: absolute;
+    right: 2px;
+    z-index:2;
+}
+
+/*===============================================
+    ******** Admin Display CSS ends *******
+================================================= */
+
+
+/*===============================================
+    ******** Settings CSS starts *******
+================================================= */
+
+.mwb-booking-settings__table {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 7px 8px rgb(0 0 0 / 8%);
+    margin: 20px 20px 30px 0;
+    padding: 10px 20px 40px;
+}
+.mwb-booking-settings__table tbody,.mwb-availability-rules__table tbody {
+    display: block;
+}
+.mwb_booking_heading {
+    padding: 0 5px;
+}
+
+.mwb-booking__heading h2 {
+    border-bottom: 1px solid #e2e2e2;
+    color: #1a3365;
+    font-size: 20px;
+    letter-spacing: 1.3px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.mwb-form-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mwb-form-group__label {
+    flex: 0 0 100%;
+    max-width: 250px;
+    width: unset!important;;
+}
+
+.mwb-form-group__input {
+    flex: 0 0 100%;
+    max-width: 500px;
+}
+
+.mwb-form-group__input input {
+    border-color: #00000070;
+    margin-bottom: 5px;
+    padding: 8px 16px;
+    transition: border-color 0.2s ease;
+}
+.mwb-form-group__input input[type=radio],.mwb-form-group__input input[type=checkbox] {
+    margin-bottom: 0;
+}
+.mwb-form-group__input input:hover {
+    border-color: #000000;
+}
+
+.mwb-form-group__input input:focus {
+    border-color: #2196f3;
+    box-shadow: none;
+}
+
+.mwb-booking__submit {
+   padding-left: 10px;
+}
+
+
+
+/*===============================================
+    ******** Settings CSS ends *******
+================================================= */
+
+
+/*===============================================
+    ******** Availability CSS starts *******
+================================================= */
+
+.mwb-availability-rules__table {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow:0 7px 8px rgb(0 0 0 / 8%);
+    margin: 20px 20px 30px 0;
+    padding: 10px 20px 40px;
+    position: relative;
+}
+
+.mwb-global-availability-rule__heading h2 {
+    color: #1a3365;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+.mwb_booking_global_availability_rules .mwb-add-rule__icon {
+    background:#2196f3;
+    border-color: #2196f3!important;
+    border-radius: 50%;
+    box-shadow: unset;
+    color: #ffffff;
+    height: 40px;
+    position: fixed;
+    right: 40px;
+    top: 160px;
+    transition: 0.3s ease all;
+    width: 40px;
+    
+}
+.mwb-add-rule__icon svg {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.mwb_booking_global_availability_rules .mwb-add-rule__icon:hover {
+    background: #ffffff;
+    border-color: #2196f3!important;
+    box-shadow: unset;
+    color: #2196f3;
+    transform: scale(1.2);
+}
+.mwb_booking_global_availability_rules .mwb-add-rule__icon:focus {
+    background: #ffffff;
+    border-color: #2196f3!important;
+    box-shadow: unset;
+    color: #2196f3;
+    outline: none;
+    transform: translateZ(0.8);
+}
+.mwb-form-group__days  {
+  justify-content: center;
+}
+.mwb-form-group__days .mwb-form-group__input-rules {
+    color: #000000;
+    flex: 0 0 100%;
+    font-weight: 500;
+    max-width: 100%;
+}
+.mwb-form-group__days .mwb-form-group__input {
+    border-radius: 4px;
+    border: 1px solid#e2e2e2;
+    flex: 0 0 20%;
+    margin-right: 12px;
+    max-width: 20%;
+    padding: 24px 0px;
+    text-align: center;
+}
+
+.mwb-availability-rules__table .mwb-form-group__input select {
+    padding: 8px 20px;
+    margin-bottom: 5px;
+}
+
+.mwb-form-group__days .mwb-form-group__input {
+    background: linear-gradient( -35deg ,#c7c7c7 7%, #FFFFFF 12%);
+    border-radius: 4px;
+    border-top: 20px solid #8e908f;
+    flex: 0 0 20%;
+    height: 67px;
+    margin-bottom: 20px;
+    margin-right: 12px;
+    max-width: 100px;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+    width: 100%;     
+}
+
+.mwb-form-group__days .mwb-form-group__input p {
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.mwb-form-group__days .mwb-form-group__input:after, .mwb-form-group__days .mwb-form-group__input:before {
+    background: #ffffff;  top: -23px;
+    border-radius: 60px 60px 0 60px;
+    content: '';
+    height: 15px;
+    position: absolute;
+    width: 5px;
+}
+.mwb-form-group__days .mwb-form-group__input:after {
+    right: 17px;
+}
+.mwb-form-group__days .mwb-form-group__input:before {
+    left: 13px;
+}
+.mwb-availability-rules__table .mwb-delete-icon {
+    background: #ffffff;
+    border-color: #ffffff;
+    bottom: -20px;
+    box-shadow: 0 7px 8px rgb(0 0 0 / 8%);
+    color: #000;
+    position: absolute;
+    right: 0;
+    transition: 0.2s ease all;
+}
+.mwb-availability-rules__table .mwb-delete-icon:hover {
+    background: inherit;
+    border-color: #ffffff;
+    box-shadow: unset;
+    color: #000000;
+    transform: scale(1.2);
+
+}
+/*===============================================
+    ******** Availability CSS ends *******
+================================================= */
+
+
+
+/*===============================================
+          **** Services CSS starts ****
+================================================== */
+.taxonomy-mwb_ct_services .nosubsub,
+.taxonomy-mwb_ct_people_type .nosubsub, 
+.taxonomy-mwb_ct_costs .nosubsub,
+.post-type-mwb_cpt_booking #mwb-wc-bk-calendar{
+background: #ffffff;
+border-radius: 10px;
+box-shadow: 0 7px 8px rgb(0 0 0 / 8%);
+margin: 20px 20px 30px 0;
+padding: 10px 20px 40px;
+}
+
+
+/*===============================================
+          **** Services CSS ends ****
+================================================== */
+
+
+
+
+/*===============================================
+          **** Bookings Status CSS starts ****
+================================================== */
+.mwb_cpt_booking_listing_status {
+    border-radius: 4px;
+    display: inline-block;
+    padding: 8px 16px;
+}
+
+.mwb_booking_confirmed {
+    background-color: #a2e69d;
+    color: #0e8a24;
+}
+
+.mwb_booking_confirmation {
+    background-color: #e6cc9d;
+    color: #8a5e0e;
+}
+
+
+.mwb_booking_expired {
+    background-color: #e69d9d;
+    color: #bd2222;
+}
+.mwb_booking_completed {
+    background-color: #9ddfe6;
+    color: #0e6d8a;
+}
+
+.mwb_booking_pending {
+    background-color: #d2d2d2;
+    color: #737373;
+}
+
+.mwb_booking_cancelled{
+    background-color: #f7d5a8;
+    color: #e98513;
+}
+
+.mwb_booking_refunded{
+    background-color: #d2d2d2;
+    color: #737373;
+}
+
+
+/*===============================================
+          **** Bookings Status CSS ends ****
+================================================== */
+
+
+.ui-draggable .ui-dialog-titlebar,
+#TB_ajaxWindowTitle  {
+    box-shadow: 0 7px 8px rgb(0 0 0 / 8%);
+    color: #1a3365;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+}
+
+#TB_ajaxWindowTitle {
+    font-size: 18px;
+}
+
+#TB_title {
+    border: none!important;
+}
+
+.mwb_booking_calender_details table, 
+.mwb_cpt_booking_listing_view table, 
+#mwb-wc-bk-booking-details table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.mwb_booking_calender_details tr:nth-child(even),
+.mwb_cpt_booking_listing_view tr:nth-child(even),
+#mwb-wc-bk-booking-details tr:nth-child(even) {
+    background: #e5eff9;
+}
+
+.mwb_booking_calender_details th,
+.mwb_booking_calender_details td ,
+.mwb_cpt_booking_listing_view th,
+.mwb_cpt_booking_listing_view td,
+#mwb-wc-bk-booking-details td,
+#mwb-wc-bk-booking-details th {
+    padding: 10px 20px;
+    text-align: left;
+}
+
+.mwb_booking_calender_details th {
+    text-align: left;
+}
+
+/* additional cost css */
+
+.mwb-add-field__desc {
+    display: inline;
+}
+/* additional cost css ends*/
+
+
+/* Edit bookings page css */
+
+.mwb_booking_cpt_actions .mwb_booking_cpt_submit {
+    margin-top: 10px;
+    text-align: center;
+}
+#mwb-wc-bk-booking-data .form-field.form-field-wide {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+#mwb-wc-bk-booking-data .form-field.form-field-wide label{ 
+flex: 0 0 100%;
+max-width: 100%;
+margin-bottom: 10px;
+}
+#mwb-wc-bk-booking-data .form-field.form-field-wide input[type=text] {
+    flex: 0 0 100%;
+    max-width: 120px;
+    text-align: center;
+}
+
+#mwb-wc-bk-booking-data .form-field.form-field-wide input[type=number] {
+    flex: 0 0 100%;
+    max-width: 50px;
+    padding: 0;
+    text-align: center;
+}
+#mwb-wc-bk-booking-data .form-field.form-field-wide input:hover {
+border-color: #000000;
+}
+
+/* Edit bookings page css ends*/
+
+
+/* Overview page css */
+
+.booking-overview__wrapper h2,
+.booking-overview__wrapper h3 {
+    font-weight: 600;
+}
+
+.booking-overview__wrapper p {
+    color: #565857;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+.booking-overview__wrapper {
+    width: calc(100% - 20px);
+}
+
+.booking-overview__banner {
+    background-color: #ffffff;
+    margin: 10px 0 25px;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.booking-overview__banner>img {
+    width: 100%;
+}
+
+.booking-overview__content-description {
+    background-color: #ffffff;
+    margin-bottom: 30px;
+    padding: 25px 50px;
+    text-align: left;
+}
+
+.booking-overview__content h2 {
+    color: #163062;
+    font-size: 30px;
+    letter-spacing: 0.5px;
+    line-height: 150%;
+    margin: 10px 0px;
+    text-align: left;
+}
+
+.booking-overview__wrapper h3 {
+    color: #163062;
+    font-size: 18px;
+    letter-spacing: 0.3px;
+    margin-bottom: 15px;
+    margin-top: 25px;
+}
+
+.booking-overview__keywords-text h3 {
+    margin: 15px 0;
+}
+
+.booking-overview__keywords-image {
+    overflow: hidden;
+}
+
+.booking-overview__keywords-image img {
+    object-fit: cover;
+    width: 100%;
+}
+
+.booking-overview__features {
+    list-style: none;
+}
+
+.booking-overview__features li::before {
+    color: #1a3365;
+    content: "⚬";
+    font-size: 20px;
+    font-weight: 400;
+    vertical-align: middle;
+}
+
+.booking-overview__features li {
+    color: #565857;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+}
+
+.booking-overview__keywords {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.booking-overview__keywords-heading {
+    font-size: 64px;
+    line-height: 28px;
+}
+
+.booking-overview__keywords-item {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 0 30%;
+    margin-bottom: 20px;
+    max-width: 30%;
+    padding: 0 15px;
+}
+
+.booking-overview__keywords-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px #efefef;
+    color: #ffffff;
+    flex-grow: 1;
+    padding: 30px;
+}
+
+.booking-support__connect a {
+    align-items: center;
+    border-radius: 35px;
+    border: 2px solid;
+    color: #2196F3;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    margin: 0px auto;
+    max-width: 130px;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.booking-overview__support {
+    border-top: 1px solid rgba(0, 0, 0, 0.18);
+    margin-top: 50px;
+    padding-top: 25px;
+}
+
+.booking-overview__help {
+    background-color: #ffffff;
+    border-radius: 0px 0px 0px 5px;
+    box-shadow: 0px 1px 5px #6f6f6f;
+    max-width: 200px;
+    padding: 15px 10px;
+    position: fixed;
+    right: -195px;
+    top: 40%;
+    transition: right 0.5s ease-in-out;
+}
+
+.booking-overview__help-icon {
+    background: #2196f3;
+    border-radius: 6px 0 0 6px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 32px;
+    font-weight: 800;
+    height: 35px;
+    left: -40px;
+    line-height: 27px;
+    position: absolute;
+    top: 41px;
+    transition: all 0.3s ease-in-out;
+    width: 35px;
+}
+
+.booking-overview__help h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 2px 0px 10px;
+    text-align: center;
+}
+
+.booking-overview__help-icon:hover {
+    box-shadow: -2px 2px 5px #909090;
+    left: -42px;
+}
+
+.booking-overview__help-icon::before {
+    content: '←';
+}
+
+.booking-help__out .booking-overview__help-icon::before {
+    content: '→';
+}
+
+.booking-help__out {
+    right: 0;
+}
+
+.booking-overview__help a {
+    align-items: center;
+    border-radius: 35px;
+    border: 2px solid;
+    color: #2196F3;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    margin: 0px auto;
+    max-width: 130px;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.booking-overview__help>a>img {
+    margin: 0px 10px 0 0;
+    width: 25px;
+}
+
+.booking-support__list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.booking-support__list-item {
+    margin-right: 15px;
+}
+
+.booking-support__list-item a {
+    text-decoration: none;
+}
+
+.booking-support__list-item a img {
+    width: 25px;
+}
+
+.booking-help__out .booking-overview__help-icon:hover {
+    left: -40px;
+}
+
+.taxonomy-mwb_ct_services .dashicons-yes:before,.taxonomy-mwb_ct_costs .dashicons-yes:before {
+    color:#008000;
+}
+.taxonomy-mwb_ct_services .dashicons-no-alt:before,.taxonomy-mwb_ct_costs .dashicons-no-alt:before{
+    color: #ff0000;
+}
+.booking-service-icon {
+      color: #1a3365;
+}
+
+/* Overview page css ends */
+
+/*===============================================
+         ******** Media Queries *******
+================================================= */
+
+@media only screen and ( max-width: 768px){
+    .mwb-form-group__days .mwb-form-group__input {
+        flex: 0 0 100%;
+        max-width: 100px;
+    }
+}
+
+
+
+/*===============================================
+         ******** Media Queries ends *******
+================================================= */
+.switch { 
+    position : relative ;
+    display : inline-block;
+    width : 40px;
+    height : 20px;
+    background-color: #eee;
+    border-radius: 20px;
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: white;
+    top: 1px; 
+    left: 1px;
+    transition: all 0.3s;
+}
+
+.mwb-form-group__input input:checked + .switch::after {
+    left : 20px; 
+}
+
+.mwb-form-group__input input:checked + .switch {
+    background-color: #7983ff;
+}
+
+
+
+.mwb-bookings__pro {
+    position: relative;
+    pointer-events: none;
+    cursor: not-allowed;
+ 
+}
+
+.mwb-bookings__pro >*{
+    opacity: 0.4;
+}
+
+.mwb-bookings__pro:before{
+    position: absolute;
+    content: 'PRO';
+    color: #ffffff;
+    padding: 8px 0px;
+    right: 4px;
+    text-align: center;
+    font-size: 11px;
+    transform: rotate(30deg);
+    z-index: 1;
+}
+
+.mwb-bookings__pro::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    background: #1d3461;
+    width: 52px;
+    height: 39px;
+    top: 0;
+    clip-path: polygon(0 0,100% 0,100% 100%);
+}
+#mwb_booking_cost_data.woocommerce_options_panel label,#mwb_booking_cost_data.woocommerce_options_panel legend {
+    margin: 0;
+}
+#mwb_booking_cost_data.woocommerce_options_panel fieldset.form-field,#mwb_booking_cost_data.woocommerce_options_panel p.form-field {
+    padding: 5px 20px 5px 10px!important;
+}
+.mwb-form-group__input input[type=checkbox],.mwb-form-group__input-rules input[type=checkbox]{
+    position: relative;
+    width: 30px;
+    border-radius: 30px;
+
+}
+.mwb-form-group__input input[type=checkbox]:before,
+.mwb-form-group__input-rules input[type=checkbox]:before
+{
+   display: none;
+}
+.mwb-form-group__input input[type=checkbox]:checked:after,
+.mwb-form-group__input-rules input[type=checkbox]:checked:after{
+    content: '';
+    position:absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background:#ffffff;
+    box-shadow: 0 7px 8px rgb(0 0 0 / 8%);
+    transform: translateX(14px);
+    top: 1px;
+}
+.mwb-form-group__input input[type=checkbox]:after,
+.mwb-form-group__input-rules input[type=checkbox]:after
+{
+    box-shadow: 0 7px 8px rgb(0 0 0 / 8%);
+    background:#ffffff;
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    transition: 0.2s linear all;
+   
+    
+}
+.mwb-form-group__input input[type=checkbox]:checked,
+.mwb-form-group__input-rules input[type=checkbox]:checked{
+      background: #1d3461;
+    
+}
+.mwb-form-group__input input[type=checkbox],
+.mwb-form-group__input-rules input[type=checkbox]{
+    background:#b3b2b2;
+    border:none;
+}
+.mwb_booking_added_cost_select_field .form-field .select2 {
+    max-width: 250px;
+    width: 100%;
+}
+
+
+/*===============================================
+          **** Calendar CSS starts ****
+================================================== */
+
+
+
+.mwb_booking_confirmed {
+    background-color: #a2e69d!important;
+    /* color: #0e8a24; */
+}
+.mwb_booking_confirmed .fc-event-main {
+    /* background-color: #a2e69d; */
+    color: #0e8a24!important;
+}
+
+.mwb_booking_confirmation {
+    background-color: #e6cc9d!important;
+    /* color: #8a5e0e; */
+}
+
+.mwb_booking_confirmation .fc-event-main {
+    /* background-color: #e6cc9d; */
+    color: #8a5e0e!important;
+}
+
+
+.mwb_booking_expired {
+    background-color: #e69d9d!important;
+    /* color: #bd2222; */
+}
+.mwb_booking_expired .fc-event-main {
+    /* background-color: #e69d9d; */
+    color: #bd2222!important;
+}
+
+.mwb_booking_completed {
+    background-color: #9ddfe6!important;
+    /* color: #0e6d8a; */
+}
+
+.mwb_booking_completed .fc-event-main {
+    /* background-color: #9ddfe6; */
+    color: #0e6d8a!important;
+}
+
+.mwb_booking_pending {
+    background-color: #d2d2d2!important;
+    /* color: #737373; */
+}
+.mwb_booking_pending .fc-event-main {
+    /* background-color: #d2d2d2; */
+    color: #737373!important;
+}
+
+.mwb_booking_cancelled {
+    background-color: #f7d5a8!important;
+    /* color: #565656; */
+}
+.mwb_booking_cancelled .fc-event-main {
+    /* background-color: #e98513; */
+    color: #e98513!important;
+}
+
+.mwb_booking_refunded {
+    background-color: #d2d2d2!important;
+    /* color: #737373; */
+}
+
+.mwb_booking_refunded .fc-event-main{
+    /* background-color: #d2d2d2; */
+    color: #737373!important;
+}
+
+/*===============================================
+          **** Calendar CSS ends ****
+================================================== */

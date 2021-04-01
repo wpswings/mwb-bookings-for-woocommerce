@@ -24,8 +24,8 @@ do_action( 'mwb_booking_tab_active' );
 
 ?>
 
-<div class="wrap woocommerce" id="mwb_booking_setting_wrapper">
-	<div class="mwb_booking_setting_title">
+<div class="wrap woocommerce mwb-booking__nav-wrap" id="mwb_booking_setting_wrapper">
+	<div class="mwb_booking_setting_title mwb_booking__heading">
 		<h1><?php echo esc_html( apply_filters( 'mwb_booking_heading', esc_html__( 'Booking For Woocommerce', 'mwb-wc-bk' ) ) ); ?></h1>
 
 		<span class="mwb_booking_setting_title_version">
@@ -35,13 +35,13 @@ do_action( 'mwb_booking_tab_active' );
 		?>
 		</span>
 	</div>
-	<nav class="nav-tab-wrapper woo-nav-tab-wrapper">
+	<nav class="nav-tab-wrapper woo-nav-tab-wrapper mwb-booking__nav">
 
 		<a class="nav-tab <?php echo esc_html( 'settings' === $mwb_booking_active_tabs ? 'nav-tab-active' : '' ); ?>" href="?post_type=mwb_cpt_booking&page=global-settings&tab=settings"><?php esc_html_e( 'Settings', 'mwb-wc-bk' ); ?></a>
 
 		<a class="nav-tab <?php echo esc_html( 'global-availability-rules' === $mwb_booking_active_tabs ? 'nav-tab-active' : '' ); ?>" href="?post_type=mwb_cpt_booking&page=global-settings&tab=global-availability-rules"><?php esc_html_e( 'Global Availability Rules', 'mwb-wc-bk' ); ?></a>
 
-		<a class="nav-tab <?php echo esc_html( 'global-cost-rules' === $mwb_booking_active_tabs ? 'nav-tab-active' : '' ); ?>" href="?post_type=mwb_cpt_booking&page=global-settings&tab=global-cost-rules"><?php esc_html_e( 'Global Cost Rules', 'mwb-wc-bk' ); ?></a>
+		<a class="nav-tab <?php echo esc_html( 'global-cost-rules' === $mwb_booking_active_tabs ? 'nav-tab-active' : '' ); ?> mwb-bookings__pro" href="?post_type=mwb_cpt_booking&page=global-settings&tab=global-cost-rules"><?php esc_html_e( 'Global Cost Rules', 'mwb-wc-bk' ); ?></a>
 	</nav>
 </div>
 	<?php

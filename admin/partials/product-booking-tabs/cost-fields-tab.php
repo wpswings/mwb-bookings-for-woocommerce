@@ -39,7 +39,7 @@
 			</p>
 		</div>
 	</div>
-	<div id="mwb_booking_discount_cost" class="options_group">
+	<div id="mwb_booking_discount_cost" class="options_group mwb-bookings__pro">
 		<div id="mwb_booking_discount_cost_heading">
 			<h3><?php esc_html_e( 'Discount', 'mwb-wc-bk' ); ?></h3>
 		</div>
@@ -143,7 +143,7 @@
 			<button class="btn btn-primary"><a href="edit-tags.php?taxonomy=mwb_ct_costs&post_type=mwb_cpt_booking" target="blank"><?php esc_html_e( 'New Added Cost', 'mwb-wc-bk' ); ?></a></button>
 		</div>
 	</div>
-	<div id="mwb_booking_local_cost_rules" class="options_group">
+	<div id="mwb_booking_local_cost_rules" class="options_group mwb-bookings__pro">
 		<div id="mwb_booking_local_cost_rules_heading">
 			<h3><?php esc_html_e( 'Local Cost Rules', 'mwb-wc-bk' ); ?></h3>
 		</div>

@@ -60,7 +60,7 @@
 			);
 			?>
 	</div>
-	<div id="mwb_full_day_select" class="options_group" style="display:none">
+	<div id="mwb_full_day_select" class="options_group mwb-bookings__pro" style="display:none">
 		<?php
 			woocommerce_wp_checkbox(
 				array(

@@ -194,7 +194,7 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'init', $plugin_admin, 'booking_custom_post_type' );
 
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_booking_remove_support' );
-		// $this->loader->add_action( 'woocommerce_init', $plugin_admin, 'booking_custom_post_order_type' );
+
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_meta_box_cpt', 90 );
 
 		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_booking_save_post' );
@@ -224,6 +224,9 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_action( 'manage_edit-mwb_ct_services_columns', $plugin_admin, 'add_columns_ct_services' );
 		$this->loader->add_filter( 'manage_mwb_ct_services_custom_column', $plugin_admin, 'manage_columns_ct_services', 10, 3 );
+
+		$this->loader->add_action( 'manage_edit-mwb_ct_people_type_columns', $plugin_admin, 'add_columns_ct_people_type' );
+		$this->loader->add_filter( 'manage_mwb_ct_people_type_custom_column', $plugin_admin, 'manage_columns_ct_people_type', 10, 3 );
 
 		$this->loader->add_action( 'manage_edit-mwb_ct_costs_columns', $plugin_admin, 'add_columns_ct_costs' );
 		$this->loader->add_filter( 'manage_mwb_ct_costs_custom_column', $plugin_admin, 'manage_columns_ct_costs', 10, 3 );

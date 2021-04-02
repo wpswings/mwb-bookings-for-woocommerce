@@ -5,15 +5,8 @@
  * @package Mwb_Wc_Bk
  */
 
-//  print_r( $this->global_func->booking_search_weekdays() );
-// //  die;
-
-//$global_func = Mwb_Booking_Global_Functions::get_global_instance();
 ?>
 <div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-	<!-- <div id="mwb_availability_heading">
-		<h1><em><?php // esc_html_e( 'Availability', 'mwb-wc-bk' ); ?></em></h1>
-	</div> -->
 	<div id="mwb_availability_preferences" class="options_group">
 		<div id="mwb_preferences_heading">
 			<h3><?php esc_html_e( 'Availability Preferences', 'mwb-wc-bk' ); ?></h3>

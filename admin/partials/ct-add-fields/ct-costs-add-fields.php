@@ -18,16 +18,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="form-field term-extra-cost-wrap">
-	<p>
+	<p class="form-field">
 		<label for="mwb_booking_ct_costs_custom_price"><?php esc_html_e( 'Cost Price', 'mwb-wc-bk' ); ?></label>
 		<input type="number" id="mwb_booking_ct_costs_custom_price" name="mwb_booking_ct_costs_custom_price" step="1" min="1" required/>
-		<p class="description"><?php esc_html_e( 'Cost price of the added cost', 'mwb-wc-bk' ); ?></p>
+		<span class="description"><?php esc_html_e( 'Cost price of the added cost', 'mwb-wc-bk' ); ?></span>
 	</p>
-	<p>
+	<p class="form-field">
 		<input type="checkbox" id="mwb_booking_ct_costs_multiply_units" name="mwb_booking_ct_costs_multiply_units" value="yes">
 		<span class="description"><?php esc_html_e( 'Multiply cost by duration', 'mwb-wc-bk' ); ?></span>
 	</p>
-	<p>
+	<p class="form-field">
 		<input type="checkbox" id="mwb_booking_ct_costs_multiply_people" name="mwb_booking_ct_costs_multiply_people" value="yes">
 		<span class="description"><?php esc_html_e( 'Multiply cost by the number of people', 'mwb-wc-bk' ); ?></span>
 	</p>

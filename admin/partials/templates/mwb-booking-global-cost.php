@@ -50,9 +50,6 @@ if ( isset( $_POST['mwb_booking_global_cost_rules_save'] ) ) {
 }
 $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 
-// echo '<pre>';
-// print_r( $cost_rules );
-// echo '</pre>';
 ?>
 
 <!-- For Global options Setting -->
@@ -135,14 +132,12 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 								<p>
 									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
-										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 									<?php foreach ( $this->global_func->booking_search_weekdays() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
-										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 									<?php foreach ( $this->global_func->booking_search_weekdays() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
@@ -153,14 +148,12 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 								<p>
 									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
-										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 									<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
-										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 									<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
@@ -171,14 +164,12 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 								<p>
 									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
-										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 									<?php foreach ( $this->global_func->booking_search_weeks() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
 									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
-										<!-- <option value="" selected ><?php //esc_html_e( 'None', 'mwb-wc-bk' ); ?></option> -->
 									<?php foreach ( $this->global_func->booking_search_weeks() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
@@ -242,9 +233,7 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 						</tr>
 					</tbody>
 				</table>
-				<!-- <div id="mwb_delete_cost_rule_button"> -->
 					<button type="button" id="mwb_delete_cost_rule" class="button" rule_count="<?php echo esc_html( $count + 1 ); ?>" ><?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?></button>
-				<!-- </div> -->
 			</div>
 				<?php
 			}

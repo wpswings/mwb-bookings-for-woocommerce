@@ -6,10 +6,10 @@
 //     calendar.render();
 //   });
 
-jQuery( document ).ready( function($) {
-  var calendar_obj = $( '#wpbody-content #calendar' ) 
-  var calendar_ins = new FullCalendar.Calendar(calendar_obj, {
-    initialView: 'resourceTimelineWeek'
-  });
-  calendar_ins.render();
-});
+// jQuery( document ).ready( function($) {
+//   var calendar_obj = $( '#wpbody-content #calendar' ) 
+//   var calendar_ins = new FullCalendar.Calendar(calendar_obj, {
+//     initialView: 'resourceTimelineWeek'
+//   });
+//   calendar_ins.render();
+// });

@@ -17,7 +17,7 @@
  *
  * @package    Mwb_Wc_Bk
  * @subpackage Mwb_Wc_Bk/admin
- * @author     MakeWebBetter <webmaster@makewebbetter.com>
+ * @author     MakeWebBetter
  */
 class Mwb_Wc_Bk_Admin {
 
@@ -85,7 +85,12 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
+		$current_screen_obj = get_current_screen();
+		$post_type          = $current_screen_obj->post_type;
+
+		if ( 'mwb_cpt_booking' === $post_type || 'product' === $post_type ) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mwb-wc-bk-admin.css', array(), $this->version, 'all' );
+		}
 		wp_enqueue_style( 'select2_css', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'js-calendar-css', plugin_dir_url( __FILE__ ) . 'fullcalendar-5.5.0/lib/main.css', array(), '5.5.0', 'all' );
 
@@ -795,6 +800,7 @@ class Mwb_Wc_Bk_Admin {
 	public function mwb_booking_details_callback() {
 		global $post;
 		$booking_data = get_post_meta( $post->ID, 'mwb_meta_data', true );
+		$order_id     = $booking_data['order_id'];
 
 		$from = isset( $booking_data['start_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['start_timestamp'] ) : '-';
 		$to   = isset( $booking_data['end_timestamp'] ) ? gmdate( 'Y-m-d h:i:s a', $booking_data['end_timestamp'] ) : '-';
@@ -819,48 +825,59 @@ class Mwb_Wc_Bk_Admin {
 				<th><?php esc_html_e( 'Total People', '' ); ?></th>
 				<td><?php echo esc_html( $people_total ); ?></td>
 			</tr>
-			<?php if ( ! empty( $peoples ) && is_array( $peoples ) ) { ?>
-				<tr>
-					<th><?php esc_html_e( 'Peoples:', '' ); ?></th>
-					<?php
-					$people_str = '';
-					foreach ( $peoples as $name => $count ) {
-						$people_str .= $name . '-' . $count . ', ';
-					}
-					$people_str = substr( $people_str, 0, -2 );
-					?>
-					<td><?php echo esc_html( $people_str ); ?></td>
-				</tr>
-			<?php } ?>
 			<tr>
-				<th><?php esc_html_e( 'Included Services:', '' ); ?></th>
-				<?php
-				$inc_services_str = '';
-				if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
-					foreach ( $inc_service as $name => $count ) {
-						$inc_services_str .= $name . '-' . $count . ', ';
+				<th><?php esc_html_e( 'Peoples:', 'mwb-wc-bk' ); ?></th>
+				<td>
+					<?php
+					if ( ! empty( $peoples ) && is_array( $peoples ) ) {
+						foreach ( $peoples as $name => $count ) {
+							?>
+							<span><?php echo esc_html( $name . ' - ' . $count ); ?></span><br>
+							<?php
+						}
+					} else {
+						?>
+						<span><?php echo esc_html( $people_total ); ?></span>
+						<?php
 					}
-				} else {
-					$inc_services_str .= 'None  ';
-				}
-				$inc_services_str = substr( $inc_services_str, 0, -2 );
-				?>
-				<td><?php echo esc_html( $inc_services_str ); ?></td>
+					?>
+				</td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Additional Services:', '' ); ?></th>
-				<?php
-				$add_services_str = '';
-				if ( ! empty( $add_service ) && is_array( $add_service ) ) {
-					foreach ( $add_service as $name => $count ) {
-						$add_services_str .= $name . '-' . $count . ', ';
+				<th><?php esc_html_e( 'Included Services:', 'mwb-wc-bk' ); ?></th>
+				<td>
+					<?php
+					if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
+						foreach ( $inc_service as $name => $count ) {
+							?>
+							<span><?php echo esc_html( $name . ' - ' . $count ); ?></span>
+							<?php
+						}
+					} else {
+						?>
+						<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+						<?php
 					}
-				} else {
-					$add_services_str .= 'None  ';
-				}
-				$add_services_str = substr( $add_services_str, 0, -2 );
-				?>
-				<td><?php echo esc_html( $add_services_str ); ?></td>
+					?>
+				</td>
+			</tr>
+			<tr>
+				<th><?php esc_html_e( 'Additional Services:', 'mwb-wc-bk' ); ?></th>
+				<td>
+					<?php
+					if ( ! empty( $add_service ) && is_array( $add_service ) ) {
+						foreach ( $add_service as $name => $count ) {
+							?>
+							<span><?php echo esc_html( $name . ' - ' . $count ); ?></span>
+							<?php
+						}
+					} else {
+						?>
+						<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+						<?php
+					}
+					?>
+				</td>
 			</tr>
 			<tr>
 				<th><?php esc_html_e( 'Total:', '' ); ?></th>
@@ -869,7 +886,7 @@ class Mwb_Wc_Bk_Admin {
 		</table>
 
 		<div class="mwb_booking_refund" booking_id="<?php echo esc_html( $post->ID ); ?>" >
-			<input type="button" class="button refund-items mwb_booking_refund_btn" value="<?php esc_html_e( 'Refund Booking', 'mwb_wc_bk' ); ?>">
+			<a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>#woocommerce-order-items" class="button refund-items mwb_booking_refund_btn"><?php esc_html_e( 'Refund Order', 'mwb_wc_bk' ); ?></a>
 		</div>
 		<?php
 
@@ -1017,27 +1034,33 @@ class Mwb_Wc_Bk_Admin {
 			<div class=mwb_booking_data_column_container>
 				<div class="mwb_booking_data_column">
 					<h3><?php esc_html_e( 'General data', '' ); ?></h3>
-					<p class="form-field form-field-wide" >
-						<label for=""><?php esc_html_e( 'Booking Created', 'mwb-wc-bk' ); ?></label>
-						<input type="text" id="" value="<?php echo esc_html( $created_date ); ?>" >
-						<span><?php esc_html_e( '@', 'mwb-wc-bk' ); ?></span>
-						<input type="number" id="" value="<?php echo esc_html( $created_time_h ); ?>">
-						<span><?php esc_html_e( ':', 'mwb-wc-bk' ); ?></span>
-						<input type="number" id="" value="<?php echo esc_html( $created_time_m ); ?>">
-					</p>
-					<p>
-						<label for=""><?php esc_html_e( 'Booking Product', 'mwb-wc-bk' ); ?></label>
-						<a href="<?php echo esc_url( get_edit_post_link( $product_id ) ); ?>" target="__blank"><?php echo esc_html( $product_name ); ?></a>
-						<?php echo $product->get_image(); // @codingStandardsIgnoreLine ?>
-					</p>
-					<p>
-						<label for="mwb_booking_order_select"><?php esc_html_e( 'Booking Order', 'mwb-wc-bk' ); ?></label>
-						<a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Order', 'mwb-wc-bk' ); ?></a>
-					</p>
-					<p>
-						<label for=""><?php esc_html_e( 'Customer', 'mwb-wc-bk' ); ?></label>
-						<a href="<?php echo esc_url( get_edit_user_link( $customer_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Customer', 'mwb-wc-bk' ); ?></a>
-					</p>
+					<div class="mwb_booking_details_wrap">
+						<div class="mwb_booking_order_data">
+							<p class="form-field form-field-wide" >
+								<label for=""><?php esc_html_e( 'Booking Created', 'mwb-wc-bk' ); ?></label>
+								<input type="text" id="" value="<?php echo esc_html( $created_date ); ?>" disabled>
+								<span><?php esc_html_e( '@', 'mwb-wc-bk' ); ?></span>
+								<input type="number" id="" value="<?php echo esc_html( $created_time_h ); ?>" disabled>
+								<span><?php esc_html_e( ':', 'mwb-wc-bk' ); ?></span>
+								<input type="number" id="" value="<?php echo esc_html( $created_time_m ); ?>" disabled>
+							</p>
+							<p>
+								<label for=""><?php esc_html_e( 'Booking Product', 'mwb-wc-bk' ); ?></label>
+								<a href="<?php echo esc_url( get_edit_post_link( $product_id ) ); ?>" target="__blank"><?php echo esc_html( $product_name ); ?></a>
+							</p>
+							<p>
+								<label for="mwb_booking_order_select"><?php esc_html_e( 'Booking Order', 'mwb-wc-bk' ); ?></label>
+								<a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Order', 'mwb-wc-bk' ); ?></a>
+							</p>
+							<p>
+								<label for=""><?php esc_html_e( 'Customer', 'mwb-wc-bk' ); ?></label>
+								<a href="<?php echo esc_url( get_edit_user_link( $customer_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Customer', 'mwb-wc-bk' ); ?></a>
+							</p>
+						</div>
+						<div class="mwb_booking_order_data_prod_img">
+							<?php echo $product->get_image(); // @codingStandardsIgnoreLine ?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1516,51 +1539,57 @@ class Mwb_Wc_Bk_Admin {
 				</tr>
 				<tr>
 					<th><?php esc_html_e( 'Peoples:', 'mwb-wc-bk' ); ?></th>
-					<?php
-					if ( ! empty( $peoples ) && is_array( $peoples ) ) {
-						foreach ( $peoples as $name => $count ) {
+					<td>
+						<?php
+						if ( ! empty( $peoples ) && is_array( $peoples ) ) {
+							foreach ( $peoples as $name => $count ) {
+								?>
+								<span><?php echo esc_html( $name . '-' . $count ); ?></span>
+								<?php
+							}
+						} else {
 							?>
-							<td><?php echo esc_html( $name . '-' . $count . '  ' ); ?></td>
+							<span><?php echo esc_html( $people_total ); ?></span>
 							<?php
 						}
-					} else {
 						?>
-						<td><?php echo esc_html( $people_total ); ?></td>
-						<?php
-					}
-					?>
+					</td>
 				</tr>
 				<tr>
 					<th><?php esc_html_e( 'Included Services:', 'mwb-wc-bk' ); ?></th>
-					<?php
-					if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
-						foreach ( $inc_service as $name => $count ) {
+					<td>
+						<?php
+						if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
+							foreach ( $inc_service as $name => $count ) {
+								?>
+								<span><?php echo esc_html( $name . '-' . $count ); ?></span>
+								<?php
+							}
+						} else {
 							?>
-							<td><?php echo esc_html( $name . '-' . $count . '  ' ); ?></td>
+							<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
 							<?php
 						}
-					} else {
 						?>
-						<td><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></td>
-						<?php
-					}
-					?>
+					</td>
 				</tr>
 				<tr>
 					<th><?php esc_html_e( 'Additional Services:', 'mwb-wc-bk' ); ?></th>
-					<?php
-					if ( ! empty( $add_service ) && is_array( $add_service ) ) {
-						foreach ( $add_service as $name => $count ) {
+					<td>
+						<?php
+						if ( ! empty( $add_service ) && is_array( $add_service ) ) {
+							foreach ( $add_service as $name => $count ) {
+								?>
+								<span><?php echo esc_html( $name . '-' . $count ); ?></span>
+								<?php
+							}
+						} else {
 							?>
-							<td><?php echo esc_html( $name . '-' . $count . '  ' ); ?></td>
+							<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
 							<?php
 						}
-					} else {
 						?>
-						<td><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></td>
-						<?php
-					}
-					?>
+					</td>
 				</tr>
 				<tr>
 					<th><?php esc_html_e( 'Total:', 'mwb-wc-bk' ); ?></th>
@@ -1770,8 +1799,8 @@ class Mwb_Wc_Bk_Admin {
 		$columns = array(
 			'cb'        => '<input type="checkbox" />',
 			'name'      => __( 'Name', 'mwb-wc-bk' ),
-			'unit_cost' => __( 'Unit Cost', 'mwb-wc-bk' ),
-			'base_cost' => __( 'Base Cost', 'mwb-wc-bk' ),
+			'unit_cost' => '<span class="booking-people-icon">' . esc_html__( 'Unit Cost', 'mwb-wc-bk' ) . '</sapn>',
+			'base_cost' => '<span class="booking-people-icon">' . esc_html__( 'Base Cost', 'mwb-wc-bk' ) . '</sapn>',
 		);
 		return $columns;
 	}
@@ -2201,51 +2230,57 @@ class Mwb_Wc_Bk_Admin {
 					</tr>
 					<tr>
 						<th><?php esc_html_e( 'Peoples:', 'mwb-wc-bk' ); ?></th>
-						<?php
-						if ( ! empty( $peoples ) && is_array( $peoples ) ) {
-							foreach ( $peoples as $name => $count ) {
+						<td>
+							<?php
+							if ( ! empty( $peoples ) && is_array( $peoples ) ) {
+								foreach ( $peoples as $name => $count ) {
+									?>
+									<span><?php echo esc_html( $name . ' - ' . $count ); ?></span>
+									<?php
+								}
+							} else {
 								?>
-								<td><?php echo esc_html( $name . ' - ' . $count . '  ' ); ?></td>
+								<span><?php echo esc_html( $people_total ); ?></span>
 								<?php
 							}
-						} else {
 							?>
-							<td><?php echo esc_html( $people_total ); ?></td>
-							<?php
-						}
-						?>
+						</td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e( 'Included Services:', 'mwb-wc-bk' ); ?></th>
-						<?php
-						if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
-							foreach ( $inc_service as $name => $count ) {
+						<td>
+							<?php
+							if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
+								foreach ( $inc_service as $name => $count ) {
+									?>
+									<span><?php echo esc_html( $name . ' - ' . $count ); ?></span>
+									<?php
+								}
+							} else {
 								?>
-								<td><?php echo esc_html( $name . ' - ' . $count . '  ' ); ?></td>
+								<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
 								<?php
 							}
-						} else {
 							?>
-							<td><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></td>
-							<?php
-						}
-						?>
+						</td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e( 'Additional Services:', 'mwb-wc-bk' ); ?></th>
-						<?php
-						if ( ! empty( $add_service ) && is_array( $add_service ) ) {
-							foreach ( $add_service as $name => $count ) {
+						<td>
+							<?php
+							if ( ! empty( $add_service ) && is_array( $add_service ) ) {
+								foreach ( $add_service as $name => $count ) {
+									?>
+									<span><?php echo esc_html( $name . ' - ' . $count ); ?></span>
+									<?php
+								}
+							} else {
 								?>
-								<td><?php echo esc_html( $name . ' - ' . $count . '  ' ); ?></td>
+								<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
 								<?php
 							}
-						} else {
 							?>
-							<td><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></td>
-							<?php
-						}
-						?>
+						</td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e( 'Total:', 'mwb-wc-bk' ); ?></th>

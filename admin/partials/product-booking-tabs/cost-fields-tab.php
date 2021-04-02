@@ -7,9 +7,6 @@
 
 ?>
 <div id="mwb_booking_cost_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-	<!-- <div id="mwb_cost_heading">
-		<h1><em><?php // esc_html_e( 'Costs', 'mwb-wc-bk' ); ?></em></h1>
-	</div> -->
 	<div id="mwb_booking_normal_cost" class="options_group">
 		<div id="mwb_booking_normal_cost_heading">
 			<h3><?php esc_html_e( 'Normal Cost', 'mwb-wc-bk' ); ?></h3>
@@ -60,9 +57,6 @@
 						),
 						'desc_tip'    => true,
 						'description' => __( 'Type of discount for the booking', 'mwb-wc-bk' ),
-						// 'custom_attributes' => array(
-						// 	'disabled' => true,
-						// ),
 					)
 				);
 				?>

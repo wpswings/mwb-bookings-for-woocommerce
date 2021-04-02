@@ -7,9 +7,6 @@
 
 ?>
 <div id="mwb_booking_services_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-	<!-- <div id="mwb_servives_heading">
-		<h1><em><?php // esc_html_e( 'Services', 'mwb-wc-bk' ); ?></em></h1>
-	</div> -->
 	<div id="mwb_booking_servives_fields" class="options_group">
 	<?php
 		woocommerce_wp_checkbox(
@@ -38,21 +35,6 @@
 			</select>
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Add services you want to include in booking', 'mwb-wc-bk' ) ); ?>
 		</p>
-		<?php
-		// woocommerce_wp_select(
-		// 	array(
-		// 		'id'          => 'mwb_services_mandatory_check',
-		// 		'label'       => __( 'Services are', 'mwb-wc-bk' ),
-		// 		'value'       => $this->setting_fields['mwb_services_mandatory_check'],
-		// 		'options'     => array(
-		// 			'mandatory'         => __( 'Mandatory', 'mwb-wc-bk' ),
-		// 			'customer_selected' => __( 'Selected by Customer', 'mwb-wc-bk' ),
-		// 		),
-		// 		'description' => __( 'If services are mandatory in booking, enable this option.', 'mwb-wc-bk' ),
-		// 		'desc_tip'    => true,
-		// 	)
-		// );
-		?>
 		<div id="mwb_booking_service_add" style="margin-bottom: 7px;">
 			<button class=""><a href="edit-tags.php?taxonomy=mwb_ct_services&post_type=mwb_cpt_booking" target="blank"><?php esc_html_e( 'Add New Service', 'mwb-wc-bk' ); ?></a></button>
 		</div>

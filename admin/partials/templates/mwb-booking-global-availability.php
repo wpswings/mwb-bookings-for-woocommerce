@@ -21,17 +21,13 @@ $rule_arr = array();
 $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
 $rule_count         = ! empty( $availability_rules['rule_name'] ) ? count( $availability_rules['rule_name'] ) : 0;
 
+echo '<pre>'; print_r( $availability_rules ); echo '</pre>';
 
 if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 
+
 	// Nonce verification.
 	check_admin_referer( 'mwb_booking_global_options_availability_nonce', 'mwb_booking_availability_nonce' );
-
-	// if ( isset( $_POST['mwb_global_availability_rule_weekdays_book'] ) ) {
-	// 	echo "<pre>";
-	// 	print_r( $_POST['mwb_global_availability_rule_weekdays_book'] );
-	// 	echo "</pre>";
-	// }
 
 	$rule_count = isset( $_POST['mwb_availability_rule_count'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_availability_rule_count'] ) ) : $rule_count;
 
@@ -63,10 +59,6 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 }
 
 $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
-// echo '<pre>';
-// echo $rule_count;
-// print_r( $availability_rules );
-// echo '</pre>';
 ?>
 
 <!-- For Global options Setting -->
@@ -88,10 +80,6 @@ $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
 			$mwb_availability_rule_weekdays_book = ! empty( $availability_rules['rule_weekdays_book'] ) ? $availability_rules['rule_weekdays_book'] : array();
 
 			for ( $count = 0; $count < $rule_count; $count++ ) {
-				// if ( empty( $mwb_availability_rule_switch[ $count ] ) ) {
-				// 	continue;
-				// }
-				// $mwb_availability_rule_switch[ $count ] = isset( $mwb_availability_rule_switch[ $count ] ) ? $mwb_availability_rule_switch[ $count ] : 'off';
 				?>
 			<div id="mwb_global_availability_rule_<?php echo esc_html( $count + 1 ); ?>" data-id="<?php echo esc_html( $count + 1 ); ?>" class="mwb-availability-rules__table">
 				<table class="form-table mwb_global_availability_rule_fields" >
@@ -117,9 +105,9 @@ $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
 							</th>
 							<td class="forminp forminp-text mwb-form-group__input">
 								<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $count ); ?>]" value="specific" <?php checked( 'specific', $mwb_availability_rule_type[ $count ] ); ?> >
-								<label><?php esc_html_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label><br>
+								<label><?php esc_html_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label>
 								<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $count ); ?>]" value="generic" <?php checked( 'generic', $mwb_availability_rule_type[ $count ] ); ?>>
-								<label><?php esc_html_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label><br>
+								<label><?php esc_html_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label>
 							</td>
 						</tr>
 						<tr valign="top" class="range mwb-form-group">
@@ -154,9 +142,9 @@ $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
 							<td class="forminp forminp-text mwb-form-group__input">
 								<p>
 								<input type="radio" class="mwb_global_availability_rule_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $count ); ?>]" value="bookable" <?php checked( 'bookable', $mwb_availability_rule_bookable[ $count ] ); ?> >
-								<label><?php esc_html_e( 'Bookable', 'mwb-wc-bk' ); ?></label><br>
+								<label><?php esc_html_e( 'Bookable', 'mwb-wc-bk' ); ?></label>
 								<input type="radio" class="mwb_global_availability_rule_non_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $count ); ?>]" value="non-bookable" <?php checked( 'non-bookable', $mwb_availability_rule_bookable[ $count ] ); ?>>
-								<label><?php esc_html_e( 'Non-Bookable', 'mwb-wc-bk' ); ?></label><br>
+								<label><?php esc_html_e( 'Non-Bookable', 'mwb-wc-bk' ); ?></label>
 								</p>
 							</td>
 						</tr>
@@ -178,14 +166,12 @@ $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
 						</tr>
 					</tbody>
 				</table>
-				<!-- <div id="mwb_delete_availability_rule_button"> -->
-					<button type="button" id="mwb_delete_avialability_rule" class="button mwb-delete-icon" rule_count="<?php echo esc_html( $count + 1 ); ?>" title="<?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?>" >
-						<svg width="16" height="16" fill="currentColor" class="mwb-trash-icon" viewBox="0 0 16 16">
-							<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-							<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-						</svg>
-					</button>
-				<!-- </div> -->
+				<button type="button" id="mwb_delete_avialability_rule" class="button mwb-delete-icon" rule_count="<?php echo esc_html( $count + 1 ); ?>" title="<?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?>" >
+					<svg width="16" height="16" fill="currentColor" class="mwb-trash-icon" viewBox="0 0 16 16">
+						<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+						<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+					</svg>
+				</button>
 			</div>
 				<?php
 			}

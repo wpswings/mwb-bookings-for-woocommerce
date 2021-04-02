@@ -49,9 +49,9 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 				</th>
 				<td class="forminp forminp-text mwb-form-group__input">
 					<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="specific" checked >
-					<label><?php esc_attr_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label><br>
+					<label><?php esc_attr_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label>
 					<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="generic">
-					<label><?php esc_attr_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label><br>
+					<label><?php esc_attr_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label>
 				</td>
 			</tr>
 			<tr valign="top" class="range mwb-form-group">
@@ -60,20 +60,20 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 				</th>
 				<td class="forminp forminp-text specific mwb-form-group__input">
 					<p>
-						<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" >
+						<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" required>
 						<label><?php esc_attr_e( 'To', 'mwb-wc-bk' ); ?></label>
-						<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" >
+						<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" required>
 					</p>
 				</td>
 				<td class="forminp forminp-text generic mwb-form-group__input">
 					<p>
-						<select class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]">
+						<select class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" required>
 						<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 							<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
 						<?php } ?>
 						</select>
 						<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
-						<select class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
+						<select class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" required>
 						<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 							<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
 						<?php } ?>
@@ -86,9 +86,9 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 				<td class="forminp forminp-text mwb-form-group__input">
 					<p>
 					<input type="radio" class="mwb_global_availability_rule_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $rule_count - 1 ); ?>]" value="bookable" checked >
-					<label><?php esc_attr_e( 'Bookable', 'mwb-wc-bk' ); ?></label><br>
+					<label><?php esc_attr_e( 'Bookable', 'mwb-wc-bk' ); ?></label>
 					<input type="radio" class="mwb_global_availability_rule_non_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $rule_count - 1 ); ?>]" value="non-bookable" >
-					<label><?php esc_attr_e( 'Non-Bookable', 'mwb-wc-bk' ); ?></label><br>
+					<label><?php esc_attr_e( 'Non-Bookable', 'mwb-wc-bk' ); ?></label>
 					</p>
 				</td>
 			</tr>

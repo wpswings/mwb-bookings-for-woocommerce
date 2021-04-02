@@ -2,9 +2,6 @@ var availability_count = 0;
 var cost_count = 0;
 var booking_events;
 var screen_id = mwb_booking_obj.screen_id;
-// var product_type = mwb_booking_obj.product_type;
-// alert( product_type );
-var product_type = '';
 jQuery(document).ready( function($) {
 	availability_not_allowed_days_select2($);
 	selected_added_cost_select2($);
@@ -47,7 +44,7 @@ function check_product_type($) {
 	jQuery( '#post #woocommerce-product-data' ).on('change', '#product-type', function(e){
 		var product_type = jQuery(this).val();
 		if ( product_type == 'mwb_booking' ) {
-			// alert('working1');
+
 			product_general_settings_js($);
 			product_availability_settings($);
 			product_cost_settings_js($);
@@ -57,7 +54,7 @@ function check_product_type($) {
 	});
 	var product_type = jQuery( '#post #woocommerce-product-data #product-type' ).val();
 	if ( product_type == 'mwb_booking' ) {
-		// alert('working2');
+	
 		product_general_settings_js($);
 		product_availability_settings($);
 		product_cost_settings_js($);
@@ -67,11 +64,9 @@ function check_product_type($) {
 }
 
 function refund_booking($) {
-	$( '.mwb_booking_refund' ).on( 'click', function(){
-		// alert('working');
-
+	$( '.mwb_booking_refund_btn' ).on( 'click', function(){
+		
 		var booking_id = $( this ).closest('.mwb_booking_refund').attr( 'booking_id' );
-		// alert( booking_id );
 
 		$.ajax({
 			url: mwb_booking_obj.ajaxurl,
@@ -434,11 +429,9 @@ function booking_user_select2($) {
 
 function product_general_settings_js($) {
 
-	// alert('1gg');
 	$( '#mwb_booking_unit_input' ).attr( 'required', true );
 
 	var allow_cancellation_check = $( '#mwb_booking_general_data #mwb_allow_booking_cancellation' ).is(':checked');
-	// alert( allow_cancellation_check );
 	if ( allow_cancellation_check ) {
 		$ ( '#mwb_booking_general_data #mwb_booking_cancellation_days' ).show();
 		$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', false ).attr( 'required', true );
@@ -449,7 +442,6 @@ function product_general_settings_js($) {
 
 	$( '#mwb_booking_general_data' ).on( 'change', '#mwb_allow_booking_cancellation', function(){
 		var allow_cancellation_check = $(this).is(':checked');
-		// alert( allow_cancellation_check );
 		if( allow_cancellation_check ) {
 			$ ( '#mwb_booking_general_data #mwb_booking_cancellation_days' ).show();
 			$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', false ).attr( 'required', true );
@@ -458,35 +450,25 @@ function product_general_settings_js($) {
 			$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', true );
 		}
 	});
-	// alert('12');
 	var duration = $( '#mwb_booking_general_data #mwb_booking_unit_duration' ).val();
 	switch( duration ) {
 		case 'hour':
-			// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
-			// $('#mwb_booking_general_data #mwb_start_booking_time').show();
 			$( '#mwb_full_day_select' ).hide();
 			$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 			break;
 		case 'month':
-			// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
-			// $('#mwb_booking_general_data #mwb_start_booking_time').hide();
 			$( '#mwb_full_day_select' ).hide();
 			$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 			break;
 		case 'day':
 			$( '#mwb_full_day_select' ).show();
-			// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
-			// $('#mwb_booking_general_data #mwb_start_booking_time').hide()
 			$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 			break;
 		case 'minute':
-			// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
-			// $('#mwb_booking_general_data #mwb_start_booking_time').show();
 			$( '#mwb_full_day_select' ).hide();
 			$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', 60 ).attr( 'min', 0 ).attr( 'step', 15 );				
 			break;
 	}
-// alert('13');
 	var duration_input = $( '#mwb_booking_general_data #mwb_booking_unit_input' ).val();
 
 	$( '#mwb_booking_general_data #mwb_booking_unit input' ).bind( 'keyup mouseup', function(){
@@ -519,7 +501,6 @@ function product_general_settings_js($) {
 		$( '#mwb_booking_general_data #mwb_start_booking_custom_date' ).prop('disabled', true);
 		$( '#mwb_booking_general_data #mwb_start_booking_custom_date_field' ).hide();
 	}
-// alert('14');
 	var unit_select = $( '#mwb_booking_general_data #mwb_booking_unit_select' ).val();
 	if ( duration == 'day' && unit_select == 'customer' && duration_input == 1 ) {
 		$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', false );
@@ -565,8 +546,6 @@ function product_general_settings_js($) {
 			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).show();
 			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', false );
 
-			// alert(duration + " " + unit_select);
-
 		} else {
 			
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', true );
@@ -576,7 +555,6 @@ function product_general_settings_js($) {
 			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', true );
 			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).hide();
 			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', true );
-			// alert(duration + " " + unit_select);
 
 		}
 
@@ -608,8 +586,6 @@ function product_general_settings_js($) {
 			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', false );
 			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).show();
 			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', false );
-			// alert(duration + " " + unit_select);
-			// alert("working");
 		} else {
 			$( '#mwb_booking_general_data #mwb_enable_range_picker' ).prop( 'disabled', true );
 			$('#mwb_booking_general_data #mwb_calendar_range').hide();
@@ -618,31 +594,22 @@ function product_general_settings_js($) {
 			$( '#mwb_booking_discount_type_field input[value="weekly_discount"]' ).prop( 'disabled', true );
 			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).closest( 'li' ).hide();
 			$( '#mwb_booking_discount_type_field input[value="monthly_discount"]' ).prop( 'disabled', true );
-			// alert(duration + " " + unit_select);
 		}
 		
 		switch( duration ) {
 			case 'hour':
-				// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
-				// $('#mwb_booking_general_data #mwb_start_booking_time').show();
 				$( '#mwb_full_day_select' ).hide();
 				$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 				break;
 			case 'month':
-			// 	$( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
-			// 	$('#mwb_booking_general_data #mwb_start_booking_time').hide();
 				$( '#mwb_full_day_select' ).hide();
 				$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 				break;
 			case 'day':
 				$( '#mwb_full_day_select' ).show();
-				// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).hide();
-				// $('#mwb_booking_general_data #mwb_start_booking_time').hide()
 				$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', '' ).attr( 'min', 1 ).attr( 'step', 1 );	
 				break;
 			case 'minute':
-				// $( '#mwb_start_booking_from p label[for=mwb_start_booking_time]' ).show();
-				// $('#mwb_booking_general_data #mwb_start_booking_time').show();
 				$( '#mwb_full_day_select' ).hide();
 				$('#mwb_booking_general_data #mwb_booking_unit_input').attr( 'max', 60 ).attr( 'min', 0 ).attr( 'step', 15 );				
 				break;
@@ -657,12 +624,10 @@ function product_general_settings_js($) {
 			$( '#mwb_booking_general_data #mwb_start_booking_custom_date_field' ).hide();
 		}
 	});
-	// alert('1end');
 }
 
 function product_availability_settings($) {
 
-	// alert('2');
 	$('#mwb_booking_start_time').attr( 'required', true );
 	$('#mwb_advance_booking_max_input').attr( 'required', true );
 
@@ -670,7 +635,6 @@ function product_availability_settings($) {
 	var end_time   = $('#mwb_booking_end_time').val();
 
 	if ( start_time >= end_time ) {
-		// alert( 'wrong' );
 		jQuery( '#mwb_booking_time_notice' ).text( ' *End time should be less than start time' );
 		jQuery( '#mwb_booking_time_notice' ).css( 'color', 'red' );
 		jQuery( this ).val('');
@@ -685,7 +649,6 @@ function product_availability_settings($) {
 
 		var end = jQuery(this).val();
 		if ( start_t >= end ) {
-			// alert( 'wrong' );
 			jQuery( '#mwb_booking_time_notice' ).text( ' *End time should be less than start time' );
 			jQuery( '#mwb_booking_time_notice' ).css( 'color', 'red' );
 			jQuery( this ).val('');
@@ -693,11 +656,6 @@ function product_availability_settings($) {
 		} else {
 			jQuery( '#mwb_booking_time_notice' ).text( '' );
 		}
-		// if ( start_time < end ) {
-		// 	alert( 'correct' );
-		// } else { 
-		// 	alert( 'wrong' );
-		// }
 	} );
 	$( '#mwb_booking_availability_data' ).on( 'change', '#mwb_booking_start_time', function($){
 
@@ -705,7 +663,6 @@ function product_availability_settings($) {
 
 		var start = jQuery(this).val();
 		if ( start >= end_t ) {
-			// alert( 'wrong' );
 			jQuery( '#mwb_booking_time_notice' ).text( ' *End time should be less than start time' );
 			jQuery( '#mwb_booking_time_notice' ).css( 'color', 'red' );
 			jQuery( this ).val('');
@@ -713,23 +670,16 @@ function product_availability_settings($) {
 		} else {
 			jQuery( '#mwb_booking_time_notice' ).text( '' );
 		}
-		// if ( start < end_time ) {
-		// 	alert( 'correct' );
-		// } else { 
-		// 	alert( 'wrong' );
-		// }
+	
 	} );
-	// console.log( start_time + '  ' + end_time );
 }
 
 function product_cost_settings_js($) {
 
-	// alert('3');
 	$( '#mwb_booking_unit_cost_input' ).attr( 'required', true );
 
 	var unit_cost_check = $( '#mwb_booking_cost_data .unit-cost #mwb_booking_unit_cost_multiply' )
 	if( unit_cost_check.is( ':checked' ) ) {
-		// alert('checked');
 		$( '#mwb_booking_cost_data .extra-cost' ).hide();
 		$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_input' ).prop( 'disabled', true );
 		$( '#mwb_booking_cost_data .extra-cost #mwb_booking_extra_cost_people_input' ).prop( 'disabled', true );
@@ -764,7 +714,6 @@ function product_cost_settings_js($) {
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_discount_field' ).hide();
 					break;
 				case 'weekly_discount':
-					// alert('week');
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_monthly_discount_input' ).prop( 'disabled', true );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_weekly_discount_input' ).prop( 'disabled', false );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_days_discount_input' ).prop( 'disabled', true );
@@ -774,7 +723,6 @@ function product_cost_settings_js($) {
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_discount_field' ).hide();
 					break;
 				case 'monthly_discount':
-					// alert('month');
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_monthly_discount_input' ).prop( 'disabled', false );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_weekly_discount_input' ).prop( 'disabled', true );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_days_discount_input' ).prop( 'disabled', true );
@@ -784,7 +732,6 @@ function product_cost_settings_js($) {
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_discount_field' ).hide();
 					break;
 				case 'custom_discount':
-					// alert('custom');
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_monthly_discount_input' ).prop( 'disabled', true );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_weekly_discount_input' ).prop( 'disabled', true );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_days_discount_input' ).prop( 'disabled', false );
@@ -813,7 +760,6 @@ function product_cost_settings_js($) {
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_discount_field' ).hide();
 					break;
 				case 'weekly_discount':
-					// alert('week');
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_monthly_discount_input' ).prop( 'disabled', true );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_weekly_discount_input' ).prop( 'disabled', false );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_days_discount_input' ).prop( 'disabled', true );
@@ -823,7 +769,6 @@ function product_cost_settings_js($) {
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_discount_field' ).hide();
 					break;
 				case 'monthly_discount':
-					// alert('month');
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_monthly_discount_input' ).prop( 'disabled', false );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_weekly_discount_input' ).prop( 'disabled', true );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_days_discount_input' ).prop( 'disabled', true );
@@ -833,7 +778,6 @@ function product_cost_settings_js($) {
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_discount_field' ).hide();
 					break;
 				case 'custom_discount':
-					// alert('custom');
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_monthly_discount_input' ).prop( 'disabled', true );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_weekly_discount_input' ).prop( 'disabled', true );
 					$(this).closest('#mwb_booking_cost_data').find( '#mwb_booking_custom_days_discount_input' ).prop( 'disabled', false );
@@ -852,7 +796,6 @@ function product_cost_settings_js($) {
 
 function product_people_settings_js($) {
 
-	// alert( '4' );
 	var enable_people = $( '#mwb_booking_people_data #mwb_people_enable_checkbox')
 	if( enable_people.is(':checked') ) {
 		$( '#mwb_booking_people_data #mwb_min_people_per_booking').prop( 'disabled', false );
@@ -918,8 +861,6 @@ function product_people_settings_js($) {
 
 function product_services_settings_js($) {
 
-
-	// alert( '5' );
 	var enable_services = $( '#mwb_booking_services_data #mwb_services_enable_checkbox' );
 	if( enable_services.is(':checked') ) {
 		$( '#mwb_booking_services_data #mwb_booking_services_select_search').prop( 'disabled', false );
@@ -958,7 +899,6 @@ function dashicons_ajax_change($) {
 		}
 		var id = $( this ).parents('tr').attr('id');
 		var term_id = id.substr( id.indexOf('-')+1, id.length );
-		//alert ( term_id );
 		var name = $( this ).parent().attr('class');
 		name = name.substr( 0, name.indexOf(' ') );
 		$.ajax({
@@ -981,11 +921,9 @@ function global_availability_rules($) {
 
 	$( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays' ).each(function() {
 		if ( $(this).is( ':checked' ) ) {
-			//alert( 'checked' );
 			$(this).closest( '.mwb_global_availability_rule_fields' ).find('.bookable').hide();
 			$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').show();
 		} else {
-			//alert( 'un-checked' );
 			$(this).closest( '.mwb_global_availability_rule_fields' ).find('.bookable').show();
 			$(this).closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').hide();
 		}
@@ -1067,10 +1005,7 @@ function global_availability_rules($) {
 		} else {
 			availability_count++;
 		}
-		
-		// alert( "count: " + availability_count );
 
-		// 	var pattern = /[0-9]$/;
 		$.ajax({
 			url: mwb_booking_obj.ajaxurl,
 			type: 'POST',
@@ -1136,7 +1071,6 @@ function global_availability_rules($) {
 						}
 					});
 					$(this).closest( '.mwb_global_availability_rule_fields' ).find( '.mwb_global_availability_rule_type' ).on( 'change', function(){
-						// alert("hi");
 						var rule_type = $(this).val();
 						switch( rule_type ) {
 							case 'generic':
@@ -1161,14 +1095,13 @@ function global_availability_rules($) {
 	$( '#mwb_global_availability_form').on( 'change', ".mwb_global_availability_rule_weekdays" , function(){
 		var weekdays_rule_check = $(this).is(':checked');
 		var check_obj = $( this );
-		// alert(weekdays_rule_check);
 		if( weekdays_rule_check ) {
-			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.bookable').hide();
-			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').show();
+			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.bookable').slideUp(200);
+			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').slideDown(200);
 			
 		} else {
-			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.bookable').show();
-			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').hide();
+			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.bookable').slideDown(200);
+			check_obj.closest( '.mwb_global_availability_rule_fields' ).find('.mwb_global_availability_rule_weekdays_book').slideUp(200);
 		}	
 	});
 
@@ -1180,9 +1113,7 @@ function global_availability_rules($) {
 
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_delete_avialability_rule', function(e){
 		
-		// alert('pressed');
 		var del_count = parseInt($(this).attr('rule_count'));
-		// alert(del_count);
 
 		$.ajax({
 			url  : mwb_booking_obj.ajaxurl,
@@ -1194,6 +1125,8 @@ function global_availability_rules($) {
 			},
 			success: function( data ){
 				$( '#mwb_global_availability_rule_' + del_count ).remove();
+				// var rule_count = $( '#mwb_delete_avialability_rule' ).attr( 'rule_count' );
+				// $( '#mwb_delete_avialability_rule' ).attr( 'rule_count', (rule_count - 1) );
 			}
 		});
 	});
@@ -1201,7 +1134,6 @@ function global_availability_rules($) {
 
 function global_cost_conditions(obj, $) {
 	var condition = obj.val();
-	// alert(condition);
 	switch (condition) {
 		case 'day':
 			obj.closest('.mwb_global_cost_rule_fields').find('.days').show();
@@ -1325,9 +1257,6 @@ function global_cost_rules($) {
 			cost_count++;
 		}
 		
-		// alert( "count: " + cost_count );
-
-		// 	var pattern = /[0-9]$/;
 		$.ajax({
 			url: mwb_booking_obj.ajaxurl,
 			type: 'POST',
@@ -1350,9 +1279,7 @@ function global_cost_rules($) {
 	});
 	$('#mwb_global_cost_form').on('click', '#mwb_delete_cost_rule', function(e){
 		
-		// alert('pressed');
 		var del_count = parseInt($(this).attr('rule_count'));
-		// alert(del_count);
 
 		$.ajax({
 			url  : mwb_booking_obj.ajaxurl,
@@ -1374,9 +1301,7 @@ function ct_custom_fields($){
 
 	var has_quantity    = $( '#mwb_booking_ct_services_has_quantity' );
 	var multiply_people = $( '#mwb_booking_ct_services_multiply_people' );
-	// alert( has_quantity.val() );
 	if( has_quantity.is(":checked") ) {
-		// alert('checked');
 		$( '#mwb_booking_ct_services_min_quantity' ).prop( 'disabled', false );
 		$( '#mwb_booking_ct_services_max_quantity' ).prop( 'disabled', false );
 	} else {
@@ -1394,7 +1319,6 @@ function ct_custom_fields($){
 	}
 	$( document ).on( 'change', '#mwb_booking_ct_services_has_quantity', function(){
 		if( $(this).is(":checked") ) {
-			// alert('checked');
 			$( '#mwb_booking_ct_services_min_quantity' ).prop( 'disabled', false );
 			$( '#mwb_booking_ct_services_max_quantity' ).prop( 'disabled', false );
 		} else {
@@ -1416,11 +1340,8 @@ function ct_custom_fields($){
 }
 
 function create_booking_product_details($) {
-	// var form = $('#mwb_create_booking_form');
-	// var selected_option = form.find( '#mwb_create_booking_product_select' );
 
 	$('#mwb_create_booking_form').on( 'change', '#mwb_create_booking_product_select', function() {
-		//alert( $(this).val() );
 		var product_id = $(this).val();
 		$.ajax({
 			url  : mwb_booking_obj.ajaxurl,
@@ -1431,21 +1352,16 @@ function create_booking_product_details($) {
 				'product_id' : product_id,
 			},
 			success: function( data ) {
-				// console.log( data );
 				$( '#mwb_create_booking_form' ).find( '.product_ajax' ).html( data );
 			}
 		});
 	});
 }
-// console.log( booking_events );
 function render_calendar($ , booking_events) {
-	// console.table(booking_events);
-	// var booking_data = $('#mwb-wc-bk-calendar').attr('booking-data');
 
 	var booking_events = JSON.parse(booking_events);
 
 	var calendarEl = document.getElementById('mwb-wc-bk-calendar');
-	// var calendarEL = $( '#mwb-wc-bk-calendar' )[0];
 	var calendar = new FullCalendar.Calendar(calendarEl, {
 
 		initialView: 'dayGridMonth',
@@ -1466,7 +1382,6 @@ function render_calendar($ , booking_events) {
 		events : booking_events,
 
 		eventClick: function( info ) {
-			// alert( 'Event: ' + info.event.id);
 			$.ajax({
 				url  : mwb_booking_obj.ajaxurl,
 				type : 'POST',
@@ -1486,11 +1401,9 @@ function render_calendar($ , booking_events) {
 					});
 					$('#calendar_event_popup').html(data);
 					$('#calendar_event_popup').dialog( 'open' );
-					// return false;
 
 				}
 			});
-			// info.el.style.borderColor = 'red';
 		},
 		// events: [
 		// 	{

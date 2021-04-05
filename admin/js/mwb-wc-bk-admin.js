@@ -22,8 +22,6 @@ jQuery(document).ready( function($) {
 	booking_user_select2($);
 	ct_custom_fields($);
 
-	refund_booking($);
-
 	if ( screen_id == 'mwb_cpt_booking_page_calendar' ) {
 		get_events($);
 		render_calendar( $, booking_events );

@@ -149,18 +149,6 @@ class Mwb_Wc_Bk_Admin {
 		$type['mwb_booking'] = __( 'MWB Booking', 'mwb-wc-bk' );
 		return $type;
 	}
-	/**
-	 * Add virtual option for bookable product.
-	 *
-	 * @param array $options Contains the default virtual and downloadable options.
-	 * @return array
-	 */
-	public function booking_virtual_product_options( $options ) {
-		$options['virtual']['wrapper_class']      .= 'hide_if_mwb_booking';
-		$options['downloadable']['wrapper_class'] .= 'hide_if_mwb_booking';
-
-		return $options;
-	}
 
 	/**
 	 * Add class name to the product type classes
@@ -270,7 +258,7 @@ class Mwb_Wc_Bk_Admin {
 	public function save_product_booking_fields( $post_id ) {
 
 		foreach ( $this->get_product_settings() as $key => $value ) {
-			if ( isset( $_POST[ $key ] ) ) {  // @codingStandardsIgnoreLine
+			if ( ! empty( $_POST[ $key ] ) ) {  // @codingStandardsIgnoreLine
 				if ( is_array( $_POST[ $key ] ) ) { // @codingStandardsIgnoreLine
 					$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default']; // @codingStandardsIgnoreLine
 
@@ -278,6 +266,8 @@ class Mwb_Wc_Bk_Admin {
 					$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default']; // @codingStandardsIgnoreLine
 
 				}
+			} else {
+				continue;
 			}
 			update_post_meta( $post_id, $key, $posted_data );
 		}
@@ -835,7 +825,7 @@ class Mwb_Wc_Bk_Admin {
 					if ( ! empty( $peoples ) && is_array( $peoples ) ) {
 						foreach ( $peoples as $name => $count ) {
 							?>
-							<span><?php echo esc_html( $name . ' - ' . $count ); ?></span><br>
+							<span><?php echo esc_html( ucfirst( $name ) . ' - ' . $count ); ?></span><br>
 							<?php
 						}
 					} else {
@@ -853,7 +843,7 @@ class Mwb_Wc_Bk_Admin {
 					if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
 						foreach ( $inc_service as $name => $count ) {
 							?>
-							<span><?php echo esc_html( $name . ' - ' . $count ); ?></span>
+							<span><?php echo esc_html( ucfirst( $name ) . ' - ' . $count ); ?></span><br>
 							<?php
 						}
 					} else {
@@ -871,7 +861,7 @@ class Mwb_Wc_Bk_Admin {
 					if ( ! empty( $add_service ) && is_array( $add_service ) ) {
 						foreach ( $add_service as $name => $count ) {
 							?>
-							<span><?php echo esc_html( $name . ' - ' . $count ); ?></span>
+							<span><?php echo esc_html( ucfirst( $name ) . ' - ' . $count ); ?></span><br>
 							<?php
 						}
 					} else {
@@ -893,60 +883,6 @@ class Mwb_Wc_Bk_Admin {
 		</div>
 		<?php
 
-	}
-
-	/**
-	 * Manage Booking Refund.
-	 * Ajax Handler
-	 *
-	 * @return void
-	 */
-	public function mwb_wc_bk_refund_booking() {
-
-		$response = array(
-			'success' => false,
-			'msg'     => __( 'There is some issue with refund, Please check the order', '' ),
-		);
-
-		check_ajax_referer( 'ajax-nonce', 'nonce' );
-
-		$booking_id = isset( $_POST['booking_id'] ) ? sanitize_text_field( wp_unslash( $_POST['booking_id'] ) ) : '';
-
-		if ( ! empty( $booking_id ) ) {
-			$booking_meta = get_post_meta( $booking_id, 'mwb_meta_data', true );
-
-			$order_id      = $booking_meta['order_id'];
-			$refund_amount = $booking_meta['total_cost'];
-			$order         = wc_get_order( $order_id );
-
-			if ( 'refunded' !== $order->get_status() ) {
-
-				$reason         = esc_html__( 'Booking Refund.', 'mwb_wc_bk' );
-				$payment_method = $order->get_payment_method();
-
-				if ( 'cod' === $payment_method ) {
-					$refund = wc_create_refund(
-						array(
-							'amount'   => $refund_amount,
-							'reason'   => $reason,
-							'order_id' => $order_id,
-						)
-					);
-				} else {
-					$gateways           = WC()->payment_gateways->get_available_payment_gateways();
-					$payment_method_obj = $gateways[ $payment_method ];
-					$refund             = $payment_method_obj->process_refund( $order_id, $refund_amount, $reason );
-				}
-
-				if ( $refund && ! is_wp_error( $refund ) ) {
-
-					$response['success'] = true;
-					$response['msg']     = 'Success';
-				}
-			}
-		}
-		echo wp_json_encode( $response );
-		wp_die();
 	}
 
 	/**
@@ -1036,7 +972,7 @@ class Mwb_Wc_Bk_Admin {
 			<h1 class="woocommerce-order-data__heading"><?php echo esc_html( $post->post_title . '  ' ); ?><span><a href="javascript:void(0)" class="mwb_cpt_booking_listing_status mwb_booking_<?php echo esc_html( $status ); ?>"><?php echo esc_html( $status ); ?></a></span></h1>
 			<div class=mwb_booking_data_column_container>
 				<div class="mwb_booking_data_column">
-					<h3><?php esc_html_e( 'General data', '' ); ?></h3>
+					<!-- <h3><?php // esc_html_e( 'General data', '' ); ?></h3> -->
 					<div class="mwb_booking_details_wrap">
 						<div class="mwb_booking_order_data">
 							<p class="form-field form-field-wide" >
@@ -1132,7 +1068,7 @@ class Mwb_Wc_Bk_Admin {
 			'numberposts' => -1,
 			'post_type'   => 'mwb_cpt_booking',
 			'post_status' => 'publish',
-			'meta_query'  => array( // @codingStandardsIgnoreLine
+			'meta_query'  => array(                                                    // @codingStandardsIgnoreLine
 				array(
 					'relation' => 'AND',
 					array(
@@ -1357,48 +1293,11 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	/**
-	 * Calendar
+	 * Calendar for listing bookings.
 	 *
 	 * @return void
 	 */
 	public function menu_page_calendar() {
-
-		// $args = array(
-		// 	'numberposts' => -1,
-		// 	'post_type'   => 'mwb_cpt_booking',
-		// 	'post_status' => 'wc-completed',
-		// );
-
-		// $bookings = get_posts( $args );
-		// $events   = array();
-		// if ( ! empty( $bookings ) && is_array( $bookings ) ) {
-
-		// 	foreach ( $bookings as $booking => $booking_obj ) {
-		// 		$b_id      = $booking_obj->ID;
-		// 		$book      = get_post( $b_id );
-		// 		$meta_data = get_post_meta( $b_id, 'mwb_meta_data', true );
-
-		// 		$product = '';
-
-		// 		if ( isset( $meta_data['product_id'] ) ) {
-		// 			$id      = $meta_data['product_id'];
-		// 			$product = wc_get_product( $meta_data['product_id'] );
-		// 		} else {
-		// 			continue;
-		// 		}
-
-		// 		$date = gmdate( 'Y-m-d', strtotime( $meta_data['start_date'] ) );
-
-		// 		$events[] = array(
-		// 			'id'    => $b_id,
-		// 			'title' => $product->get_name(),
-		// 			'start' => $date,
-		// 		);
-		// 	}
-		// }
-
-		// echo '<pre>'; print_r( $events ); echo '</pre>';
-		// $meta_data = get_post_meta( $post->ID, 'mwb_meta_data' );
 
 		echo '<div id="mwb-wc-bk-calendar" ></div><div id="calendar_event_popup"></div>';
 	}
@@ -1417,11 +1316,13 @@ class Mwb_Wc_Bk_Admin {
 		}
 
 		if ( isset( $_POST['events'] ) ) {
+
 			$args = array(
 				'numberposts' => -1,
 				'post_type'   => 'mwb_cpt_booking',
 				'post_status' => 'publish',
 			);
+
 			$bookings = get_posts( $args );
 			$events   = array();
 			if ( ! empty( $bookings ) && is_array( $bookings ) ) {
@@ -1453,30 +1354,6 @@ class Mwb_Wc_Bk_Admin {
 					$arr['end']       = $end_date;
 					$arr['className'] = 'mwb_booking_' . $booking_status;
 
-					// if ( gmdate( 'Y-m-d', $meta_data['start_timestamp'] ) == gmdate( 'Y-m-d', $meta_data['end_timestamp'] ) ) {
-					// 	$arr['group_id'] = 999;
-					// }
-
-					// if ( ! empty( $meta_data['end_date'] ) ) {
-					// 	$end_date   = gmdate( 'Y-m-d h:i:s a', $meta_data['end_timestamp'] );
-					// 	$arr['end'] = $end_date;
-					// } else {
-					// 	if ( ! empty( $meta_data['start_timestamp'] ) && ! empty( $meta_data['end_timestamp'] ) ) {
-					// 		$duration = $meta_data['end_timestamp'] - $meta_data['start_timestamp'];
-					// 		$duration = date( 'H:i:s', $duration );
-					// 		// date()
-					// 	}
-					// }
-					// echo '<pre>'; print_r( $duration ); echo '</pre>';
-					// if (  )
-
-					// $events[] = array(
-					// 	'id'    => $b_id,
-					// 	'title' => sprintf( '#%d  %s', $b_id, $product->get_name() ),
-					// 	'start' => $start_date,
-					// 	// 'end'   => isset( $meta_data['end_date'] ) ? $meta_data['end_date'] : $meta_data['start_date'],
-					// 	'end'   => $end_date,
-					// );
 					$events[] = $arr;
 				}
 			}
@@ -1626,7 +1503,7 @@ class Mwb_Wc_Bk_Admin {
 	public function save_custom_fields_ct_booking_services( $term_id, $tt_id ) {
 
 		// phpcs:disable
-		update_term_meta( $term_id, 'mwb_ct_booking_service_cost', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_ct_booking_service_cost'] ) ? $_POST['mwb_ct_booking_service_cost'] : '' ) ) ) );
+		update_term_meta( $term_id, 'mwb_ct_booking_service_cost', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_ct_booking_service_cost'] ) ? $_POST['mwb_ct_booking_service_cost'] : 0 ) ) ) );
 		update_term_meta( $term_id, 'mwb_booking_ct_services_multiply_units', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_multiply_units'] ) ? $_POST['mwb_booking_ct_services_multiply_units'] : 'no' ) ) ) );
 		update_term_meta( $term_id, 'mwb_booking_ct_services_multiply_people', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_multiply_people'] ) ? $_POST['mwb_booking_ct_services_multiply_people'] : 'no' ) ) ) );
 		update_term_meta( $term_id, 'mwb_booking_ct_services_has_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_has_quantity'] ) ? $_POST['mwb_booking_ct_services_has_quantity'] : 'no' ) ) ) );

@@ -14,9 +14,7 @@ global $product;
 if ( ! $product->is_purchasable() ) {
 	return;
 }
-// echo '<pre>';
-// print_r( $product );
-// echo '</pre>';
+
 ?>
 
 

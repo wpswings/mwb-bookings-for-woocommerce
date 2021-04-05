@@ -1,4 +1,4 @@
-<?php   
+<?php
 /**
  * Check Service settings for the booking.
  *
@@ -14,32 +14,28 @@
 defined( 'ABSPATH' ) || exit;
 
 $global_func = Mwb_Booking_Global_Functions::get_global_instance();
-// $instance = MWB_Woocommerce_Booking::get_booking_instance();
+
 global $product;
 $product_data = array(
 	'product_id' => $product->get_id(),
 );
 
-// echo '<pre>'; print_r( $instance ); echo '</pre>';
 $product_meta    = get_post_meta( $product->get_id() );
 $setting_options = get_option( 'mwb_booking_settings_options' );
 
-// echo '<pre>'; print_r( $setting_options ); echo '</pre>';
-// $booking_enabled     = ! empty( $setting_options['mwb_booking_setting_go_enable'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_go_enable'] ) ) : 'yes';
 $inc_service_enabled = ! empty( $setting_options['mwb_booking_setting_bo_inc_service_enable'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_inc_service_enable'] ) ) : 'no';
 $show_service_cost   = ! empty( $setting_options['mwb_booking_setting_bo_service_cost'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_service_cost'] ) ) : 'no';
 $show_service_desc   = ! empty( $setting_options['mwb_booking_setting_bo_service_desc'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_service_desc'] ) ) : 'no';
 
 $service_enabled  = ! empty( $product_meta['mwb_services_enable_checkbox'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_services_enable_checkbox'][0] ) ) : 'no';
 $enabled_services = ! empty( $product_meta['mwb_booking_services_select'][0] ) ? maybe_unserialize( sanitize_text_field( wp_unslash( $product_meta['mwb_booking_services_select'][0] ) ) ) : array();
-// $mandatory_check  = ! empty( $product_meta['mwb_services_mandatory_check'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_services_mandatory_check'][0] ) ) : 'customer_selected';
 
 $service_meta = array();
 
 foreach ( $enabled_services as $service_id ) {
 	$service      = get_term_meta( $service_id );
 	$service_term = get_term( $service_id );
-	// echo '<pre>'; print_r( $service_term ); echo '</pre>';
+
 	if ( 'no' === $service['mwb_booking_ct_services_optional'][0] || empty( $service['mwb_booking_ct_services_optional'][0] ) ) {
 		$service['term_obj']                 = $service_term;
 		$service_meta['included_services'][] = $service;
@@ -48,7 +44,7 @@ foreach ( $enabled_services as $service_id ) {
 		$service_meta['additional_services'][] = $service;
 	}
 }
-// echo '<pre>'; print_r( $service_meta ); echo '</pre>';
+
 
 ?>
 <div id="mwb-wc-bk-service-section" class="mwb-wc-bk-form-section">
@@ -64,22 +60,21 @@ foreach ( $enabled_services as $service_id ) {
 		}
 		?>
 		<div id="mwb-wc-bk-inc-service-field" style="<?php echo esc_html( $style ); ?>" >
-			<?php if ( isset( $service_meta['included_services'] ) && is_array( $service_meta['included_services'] ) ) { ?>
-				<label for=""><b><?php esc_html_e( 'Included Services', '' ); ?></b></label>
+			<?php if ( ! empty( $service_meta['included_services'] ) && is_array( $service_meta['included_services'] ) ) { ?>
+				<label for=""><b><?php esc_html_e( 'Included Services', 'mwb-wc-bk' ); ?></b></label>
 				<input type="hidden" id="mwb-wc-bk-service-input-hidden" class="mwb-wc-bk-form-input-hidden" data-hidden="<?php echo esc_html( htmlspecialchars( wp_json_encode( $service_meta ) ) ); ?>"> 
 				<ul id="mwb-wc-bk-inc-service-list">
 				<?php
 				foreach ( $service_meta['included_services'] as $service_data ) {
-					// echo '<pre>'; print_r( $service_data['term_obj']->term_id ); echo '</pre>';
-					if ( 'no' === $service_data['mwb_booking_ct_services_hidden'][0] ) {
+					$service_price = ! empty( $service_data['mwb_ct_booking_service_cost'][0] ) ? (int) $service_data['mwb_ct_booking_service_cost'][0] : 0;
+					if ( 'no' === $service_data['mwb_booking_ct_services_hidden'][0] || empty( $service_data['mwb_booking_ct_services_hidden'][0] ) ) {
 						?>
 					<li>
 						<label for="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>"><?php echo esc_html( $service_data['term_obj']->name ); ?></label>
 							<?php
 							if ( 'yes' === $show_service_cost ) {
-								// $global_func->mwb_booking_help_tip( esc_html( sprintf( '$ %d', $service_data['mwb_ct_booking_service_cost'][0] ) ) );
 								?>
-						<span class="booking-service-price"><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_data['mwb_ct_booking_service_cost'][0] ) ); ?></span>
+						<span class="booking-service-price"><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_price ) ); ?></span>
 								<?php
 							}
 							if ( 'yes' === $service_data['mwb_booking_ct_services_has_quantity'][0] ) {
@@ -106,25 +101,21 @@ foreach ( $enabled_services as $service_id ) {
 			<?php } ?>
 		</div>
 		<div id="mwb-wc-bk-add-service-field">
-			<?php if ( isset( $service_meta['additional_services'] ) && is_array( $service_meta['additional_services'] ) ) { ?>
-				<label for=""><b><?php esc_html_e( 'Additional Services', '' ); ?></b></label>
+			<?php if ( ! empty( $service_meta['additional_services'] ) && is_array( $service_meta['additional_services'] ) ) { ?>
+				<label for=""><b><?php esc_html_e( 'Additional Services', 'mwb-wc-bk' ); ?></b></label>
 				<ul id="mwb-wc-bk-add-service-list">
 				<?php
 				foreach ( $service_meta['additional_services'] as $service_data ) {
-					$service_price = ! empty( $service_data['mwb_ct_booking_service_cost'][0] ) ? $service_data['mwb_ct_booking_service_cost'][0] : ( $product_meta['mwb_booking_unit_cost_input'][0] + $product_meta['mwb_booking_base_cost_input'][0] );
-					if ( 'yes' === $service_data['mwb_booking_ct_services_multiply_units'][0] ) {
-						$service_price = (int) $product_meta['mwb_booking_unit_duration'][0] * (int) $service_data['mwb_ct_booking_service_cost'][0];
-					}
-					if ( 'no' === $service_data['mwb_booking_ct_services_hidden'][0] ) {
+					$service_price = ! empty( $service_data['mwb_ct_booking_service_cost'][0] ) ? (int) $service_data['mwb_ct_booking_service_cost'][0] : 0;
+					if ( 'no' === $service_data['mwb_booking_ct_services_hidden'][0] || empty( $service_data['mwb_booking_ct_services_hidden'][0] ) ) {
 						?>
 					<li>
 						<input type="checkbox" name="add-service-check-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" id="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" class="mwb-wc-bk-form-input-services add_service_check">
 						<label for="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>"><?php echo esc_html( $service_data['term_obj']->name ); ?></label>
 							<?php
 							if ( 'yes' === $show_service_cost ) {
-								// $global_func->mwb_booking_help_tip( esc_html( sprintf( '$ %d', $service_price ) ) );
 								?>
-						<span class="booking-service-price"><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_data['mwb_ct_booking_service_cost'][0] ) ); ?></span>
+						<span class="booking-service-price"><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_price ) ); ?></span>
 								<?php
 							}
 							if ( 'yes' === $service_data['mwb_booking_ct_services_has_quantity'][0] ) {

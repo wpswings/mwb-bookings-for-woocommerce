@@ -13,15 +13,15 @@
 
 defined( 'ABSPATH' ) || exit;
 
-// echo '<pre>'; print_r( $kl ); echo '</pre>';die;
 global $product;
 $product_meta = get_post_meta( $product->get_id() );
+
 $product_data = array(
 	'product_id' => $product->get_id(),
 );
 
 $unit_select   = ! empty( $product_meta['mwb_booking_unit_select'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_select'][0] ) ) : '';
-$range_picker  = ! empty( $product_meta['mwb_enable_range_picker'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_range_picker'][0] ) ) : '';
+$range_picker  = ! empty( $product_meta['mwb_enable_range_picker'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_range_picker'][0] ) ) : 'no';
 $unit_duration = ! empty( $product_meta['mwb_booking_unit_duration'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_duration'][0] ) ) : '';
 $unit_input    = ! empty( $product_meta['mwb_booking_unit_input'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_input'][0] ) ) : '';
 $min_duration  = ! empty( $product_meta['mwb_booking_min_duration'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_min_duration'][0] ) ) : '';
@@ -42,6 +42,7 @@ $max_duration  = ! empty( $product_meta['mwb_booking_max_duration'][0] ) ? sanit
 		</div>
 		<?php
 	} elseif ( 'customer' === $unit_select ) {
+
 		if ( empty( $range_picker ) || 'no' === $range_picker ) {
 			if ( ! empty( $unit_duration ) && ! empty( $unit_input ) ) {
 				?>

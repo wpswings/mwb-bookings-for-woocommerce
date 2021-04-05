@@ -78,7 +78,7 @@
 			);
 			?>
 	</div>
-	<div id="mwb_booking_cancellation" class="options_group">
+	<div id="mwb_booking_cancellation" class="options_group mwb-bookings__pro">
 		<?php
 			woocommerce_wp_checkbox(
 				array(
@@ -91,7 +91,7 @@
 			);
 			?>
 	</div>
-	<div id="mwb_booking_cancellation_days" class="options_group" style="display:none">
+	<div id="mwb_booking_cancellation_days" class="options_group mwb-bookings__pro" style="display:none">
 		<?php
 			woocommerce_wp_text_input(
 				array(

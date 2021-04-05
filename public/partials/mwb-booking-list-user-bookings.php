@@ -3,11 +3,11 @@
  * Listing of user's all booking on My Account Page under "All Bookings".
  */
 
-if ( isset( $_GET['booking_id'] ) ) {
+if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
 
-	$booking_id = sanitize_text_field( wp_unslash( $_GET['booking_id'] ) );
+	$booking_id = sanitize_text_field( wp_unslash( $_GET['booking_id'] ) ); // @codingStandardsIgnoreLine.
 	$booking    = get_post( $booking_id );
-	// echo '<pre>'; print_r( $booking ); echo '</pre>';
+
 	$post_created   = $booking->post_date_gmt;
 	$booking_meta   = get_post_meta( $booking_id, 'mwb_meta_data', true );
 	$booking_status = get_post_meta( $booking_id, 'mwb_booking_status', true );
@@ -30,7 +30,7 @@ if ( isset( $_GET['booking_id'] ) ) {
 	$order_data = $_order->get_data();
 
 	$_product = get_post( $product_id );
-	// echo '<pre>'; print_r( $booking_meta ); echo '</pre>';
+
 
 	$people_str = '';
 	if ( ! empty( $people ) ) {
@@ -99,7 +99,7 @@ if ( isset( $_GET['booking_id'] ) ) {
 					</tr>
 					<tr>
 						<th scope="row"><?php esc_html_e( 'Total:', 'mwb-wc-bk' ); ?></th>
-						<td><?php echo wc_price( $total ); ?></td>
+						<td><?php echo wc_price( $total ); // @codingStandardsIgnoreLine.?></td>
 					</tr>
 				</tfoot>
 			</table>
@@ -139,8 +139,8 @@ if ( isset( $_GET['booking_id'] ) ) {
 		<tbody>
 		<?php
 		if ( ! empty( $bookings ) ) {
-				// echo '<pre>'; print_r( $bookings ); echo '</pre>';die;
-			foreach ( $bookings as $booking => $obj  ) {
+
+			foreach ( $bookings as $booking => $obj ) {
 				$booking_id     = $obj->ID;
 				$booking_title  = $obj->post_title;
 				$booking_meta   = get_post_meta( $booking_id, 'mwb_meta_data', true );
@@ -155,7 +155,6 @@ if ( isset( $_GET['booking_id'] ) ) {
 				$order_id = isset( $booking_meta['order_id'] ) ? $booking_meta['order_id'] : '-';
 
 
-				// echo '<pre>'; print_r( $booking_meta ); echo '</pre>';
 				?>
 			<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-titile" data-title="Booking">

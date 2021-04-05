@@ -19,9 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $multiply_unit   = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_multiply_units', true );
 $multiply_people = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_multiply_people', true );
 $cost_price      = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_custom_price', true );
-// echo '<pre>';
-// print_r( get_current_screen() );
-// echo '</pre>';
+
 ?>
 <tr class="form-field term-extra-cost-wrap">
 	<th><label for="mwb_booking_ct_costs_custom_price"><?php esc_html_e( 'Cost price', 'mwb-wc-bk' ); ?></label></th>

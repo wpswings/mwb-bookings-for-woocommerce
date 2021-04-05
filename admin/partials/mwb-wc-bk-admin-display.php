@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $default_tab             = 'settings';
 $default_tab             = apply_filters( 'mwb_booking_open_default_tab', $default_tab );
-$mwb_booking_active_tabs = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : $default_tab;
+$mwb_booking_active_tabs = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : $default_tab;  // @codingStandardsIgnoreLine.
 
 // To change the default active tab for the global settings.
 do_action( 'mwb_booking_tab_active' );

@@ -185,12 +185,11 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 }
 .mwb-booking__nav .nav-tab.mwb-bookings__pro {
     width: 100%;
-    max-width: 150px;
+    max-width: 150px!important;
 }
 .mwb-booking__nav .nav-tab.mwb-bookings__pro:before {
     padding: 2px 2px;
     right: 2px;
- 
 }
 
 .nav-tab.nav-tab-active {
@@ -314,7 +313,6 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     background:#2196f3;
     border-color: #2196f3!important;
     border-radius: 50%;
-    box-shadow: unset;
     color: #ffffff;
     height: 40px;
     position: fixed;
@@ -322,8 +320,18 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     top: 160px;
     transition: 0.3s ease all;
     width: 40px;
-    
+    animation: pulse-animation 2s infinite;
 }
+    @keyframes pulse-animation {
+    0% {
+      box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+      
+    }
+    100% {
+      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+    
+    }
+  }
 .mwb-add-rule__icon svg {
     left: 50%;
     position: absolute;
@@ -376,19 +384,21 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
         -ms-user-select: none; 
             user-select: none;
  }
+ .mwb_global_availability_rule_heading_switch {
+     vertical-align: bottom!important;
+ }
 .mwb-form-group__days .mwb-form-group__input {
-    background: linear-gradient( -35deg ,#c7c7c7 7%, #FFFFFF 12%);
-    border-radius: 4px;
-    border-top: 20px solid #8e908f;
-    flex: 0 0 20%;
-    height: 67px;
+    border:none;
+    flex: 0 0 100%;
     margin-bottom: 20px;
-    margin-right: 12px;
-    max-width: 100px;
+    max-width: 80px;
     padding: 20px;
     position: relative;
     text-align: center;
     width: 100%;     
+}
+.mwb-form-group__input .mwb_global_availability_rule_weekdays_book_button {
+    border-radius: 35px;
 }
 
 .mwb-form-group__days .mwb-form-group__input p {
@@ -396,20 +406,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     text-transform: uppercase;
 }
 
-.mwb-form-group__days .mwb-form-group__input:after, .mwb-form-group__days .mwb-form-group__input:before {
-    background: #ffffff;  top: -23px;
-    border-radius: 60px 60px 0 60px;
-    content: '';
-    height: 15px;
-    position: absolute;
-    width: 5px;
-}
-.mwb-form-group__days .mwb-form-group__input:after {
-    right: 17px;
-}
-.mwb-form-group__days .mwb-form-group__input:before {
-    left: 13px;
-}
+
 .mwb-availability-rules__table .mwb-delete-icon {
     background: #ffffff;
     border-color: #ffffff;
@@ -427,6 +424,32 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     color: #000000;
     transform: scale(1.2);
 
+}
+.mwb_add_new_rule_text {
+    text-align: center;
+}
+.mwb_add_new_rule_text p{
+    font-size: 20px;
+    font-weight: 600;
+}
+.mwb_add_new_rule_text span {
+    height: 25px;
+    width: 25px;
+    background: #2196f3;
+    display: inline-block;
+    position: relative;
+    border-radius: 50%;
+    vertical-align: middle;       
+}
+.mwb_add_new_rule_text span:after {
+    color: '+';
+    content: '+';
+    position: absolute;  
+    left: 50%;
+    top: 50%;
+    transform: translate(-52%,-54%);
+    font-weight: 400;
+    color: #fff;
 }
 /*===============================================
     ******** Availability CSS ends *******
@@ -1091,7 +1114,22 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 #mwb_booking_ct_services_custom_fields .description ,.post-type-mwb_cpt_booking .term-extra-cost-wrap .description{
     color: #1d2327;
 }
-
+#mwb_availability_preferences input[type=number],#mwb_booking_people_data input[type=number] {
+    max-width: 50px;
+}
+div#mwb_booking_cost_data a,#mwb_booking_services_data a,#mwb_booking_availability_data a,#mwb_booking_people_data a {
+    color: #ffffff;
+    text-decoration: none;
+}
+div#mwb_booking_cost_data button,#mwb_booking_services_data button,#mwb_booking_availability_data button,#mwb_booking_people_data button {
+    border-radius: 30px;
+    background: #2196f3;
+    color: #fff;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    padding: 10px 15px;
+}
 /*===============================================
           **** Calendar CSS starts ****
 ================================================== */

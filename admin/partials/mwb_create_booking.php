@@ -21,17 +21,6 @@ if ( isset( $_POST['mwb_create_booking_submit_button'] ) ) {
 	$product_id         = isset( $_POST['mwb_create_booking_product_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_product_select'] ) ) : '';
 	$assign_order       = isset( $_POST['mwb_create_booking_assign_order'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_assign_order'] ) ) : '';
 	$order_id_to_assign = isset( $_POST['mwb_create_booking_order_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_create_booking_order_select'] ) ) : '';
-	// $new_post = array(
-	// 	'post_type'      => 'mwb_cpt_booking',
-	// 	'post_title'     => '',
-	// 	'post_date_gmt'  => gmdate( 'Y-m-d H:i:s' ),
-	// 	'post_content'   => '',
-	// 	'post_status'    => 'publish',
-	// 	'comment_status' => 'closed',
-	// 	'ping_status'    => 'closed',
-	// );
-
-	// $postid = wp_insert_post( $new_post );
 
 	$create_booking = array(
 		'user_id'      => $user_id,
@@ -39,12 +28,6 @@ if ( isset( $_POST['mwb_create_booking_submit_button'] ) ) {
 		'assign_order' => $assign_order,
 		'order_id'     => $order_id_to_assign,
 	);
-
-	//update_post_meta( '' )
-	echo "<pre>";
-	print_r( $create_booking );
-	echo "</pre>";
-
 
 }
 
@@ -97,27 +80,13 @@ if ( isset( $_POST['mwb_create_booking_submit_button'] ) ) {
 						<th scope="row" class="">
 							<label><h3><?php esc_html_e( 'Details', 'mwb-wc-bk' ); ?></h3></label>
 						</th>
-						<?php //if ( ! isset( $product_id ) ) { ?>
 						<td class="forminp forminp-text">
 							<p><?php esc_html_e( 'Select the Product above to see the details', '' ); ?></p>
 						</td>
-						<?php //} else { ?>
 							<?php
 								$product_meta    = get_post_meta( $product_id );
 								$global_settings = get_option( 'mwb_booking_settings_options' );
-								echo "<pre>";
-								print_r( $product_meta );
-								echo "</pre>";
-								?>
-						<!-- <td class="forminp forminp-text">
-							<p>
-								<label for=""><?php //esc_html_e( 'Start Date', '' ); ?></label>
-								<input type="date" name="mwb_create_booking_" data-placeholder="Start Date">
-								<label for=""><?php //esc_html_e( 'End Date', '' ); ?></label>
-								<input type="date" data-placeholder="End Date">
-							</p>
-						</td> -->
-						<?php //} ?>
+							?>
 					</tr>
 				</tbody>
 			</table>

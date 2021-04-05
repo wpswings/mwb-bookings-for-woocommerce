@@ -26,7 +26,7 @@ if ( isset( $_GET['booking_id'] ) ) {
 	$inc_service  = ( ! empty( $booking_meta['inc_service'] ) && is_array( $booking_meta['inc_service'] ) ) ? $booking_meta['inc_service'] : array();
 	$add_service  = ( ! empty( $booking_meta['add_service'] ) && is_array( $booking_meta['add_service'] ) ) ? $booking_meta['add_service'] : array();
 
-	$_order = wc_get_order( $order_id );
+	$_order     = wc_get_order( $order_id );
 	$order_data = $_order->get_data();
 
 	$_product = get_post( $product_id );
@@ -82,12 +82,12 @@ if ( isset( $_GET['booking_id'] ) ) {
 						</td>
 						<td class="woocommerce-table__product-total product-total">
 							<ul class="wc-item-meta">
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'From: ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $from ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'To: ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $to ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'People Total: ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $people_total ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'People Types: ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $people_str ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'Included Services: ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $inc_services_str ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'Additional Services: ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $add_services_str ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'From:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $from ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'To:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $to ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'People Total:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $people_total ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'People Types:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $people_str ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'Included Services:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $inc_services_str ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'Additional Services:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $add_services_str ); ?></p></li>
 							</ul>
 						</td>
 					</tr>
@@ -162,10 +162,10 @@ if ( isset( $_GET['booking_id'] ) ) {
 					<a href="?booking_id=<?php echo esc_html( $booking_id ); ?>"><?php echo esc_html( $booking_title ); ?></a>
 				</td>
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-from" data-title="From">
-					<time datetime="<?php gmdate( 'y-m-d h:i:s a', $from ); ?>"><?php echo esc_html( $from ); ?></time>
+					<time datetime="<?php gmdate( 'y-m-d h:i:s a', strtotime( $from ) ); ?>"><?php echo esc_html( $from ); ?></time>
 				</td>
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-to" data-title="To">
-					<time datetime="<?php gmdate( 'y-m-d h:i:s a', $to ); ?>"><?php echo esc_html( $to ); ?></time>
+					<time datetime="<?php gmdate( 'y-m-d h:i:s a', strtotime( $to ) ); ?>"><?php echo esc_html( $to ); ?></time>
 				</td>
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-status" data-title="Status">
 					<?php echo esc_html( $booking_status ); ?>

@@ -634,7 +634,7 @@ function product_availability_settings($) {
 	var start_time = $('#mwb_booking_start_time').val();
 	var end_time   = $('#mwb_booking_end_time').val();
 
-	if ( start_time >= end_time ) {
+	if ( start_time > end_time ) {
 		jQuery( '#mwb_booking_time_notice' ).text( ' *End time should be less than start time' );
 		jQuery( '#mwb_booking_time_notice' ).css( 'color', 'red' );
 		jQuery( this ).val('');
@@ -996,14 +996,25 @@ function global_availability_rules($) {
 			}
 		});
 	});
-	
+
+	var c = jQuery( '#mwb_add_avialability_rule' ).attr( 'rule_count' );
+	if ( parseInt(c) > 0 ){
+		jQuery( '#mwb_global_availability_form .mwb_add_new_rule_text' ).slideUp( 200 );
+	} else {
+		jQuery( '#mwb_global_availability_form .mwb_add_new_rule_text' ).slideDown( 200 );
+	}
 	
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_add_avialability_rule', function(e){
+
+		jQuery( '#mwb_global_availability_form .mwb_add_new_rule_text' ).slideUp( 200 );
+
 		if ( availability_count < parseInt(jQuery(this).attr('rule_count')) ) {
 			availability_count = parseInt(jQuery(this).attr('rule_count'));
 			availability_count++;
+			// alert('if working');
 		} else {
 			availability_count++;
+			// alert( 'else working' );
 		}
 
 		$.ajax({
@@ -1016,6 +1027,7 @@ function global_availability_rules($) {
 			},
 			success: function( data ) {
 				
+				console.log( data );
 				$( '.mwb_booking_global_availability_rules #mwb_global_availability_rules' ).append(data);
 
 				$( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays' ).each(function() {
@@ -1106,14 +1118,34 @@ function global_availability_rules($) {
 	});
 
 
-	jQuery('#mwb_global_availability_form .mwb_global_availability_rule_heading').on('click', 'label', function(e){
-		var count = $(this).attr('data-id');
-		$( '#mwb_global_availability_rule_' + count ).find('table').toggle();
-	});
+	// jQuery('#mwb_global_availability_form .mwb_global_availability_rule_heading').on('click', 'label', function(e){
+	// 	var count = $(this).attr('data-id');
+	// 	$( '#mwb_global_availability_rule_' + count ).find('table').slidetoggle();
+	// });
+
+	jQuery('.mwb_booking_global_availability_rules .mwb_global_availability_rule_heading').each( function() {
+		$(this).on('click', 'label', function(e){
+			// alert('working');
+			$(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
+			// var count = $(this).attr('data-id');
+			// $( '#mwb_global_availability_rule_' + count ).find('.mwb_global_availability_toggle').slideToggle(200);
+		});
+	} );
 
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_delete_avialability_rule', function(e){
 		
+		var c = jQuery( '#mwb_add_avialability_rule' ).attr( 'rule_count' );
+		if ( parseInt(c) > 0 ){
+			jQuery( '#mwb_global_availability_form .mwb_add_new_rule_text' ).slideUp( 200 );
+		} else {
+			jQuery( '#mwb_global_availability_form .mwb_add_new_rule_text' ).slideDown( 200 );
+		}
 		var del_count = parseInt($(this).attr('rule_count'));
+
+		if($(this).hasClass('ajax-added')) {
+			$( '#mwb_global_availability_rule_' + del_count ).remove();
+			return;
+		}
 
 		$.ajax({
 			url  : mwb_booking_obj.ajaxurl,

@@ -15,6 +15,7 @@
 					'label'       => __( 'Enable/Disable People option', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_people_enable_checkbox'],
 					'description' => __( 'Enable if extra peoples are to be included per booking.', 'mwb-wc-bk' ),
+					'desc_tip'    => true,
 				)
 			);
 			woocommerce_wp_text_input(
@@ -47,20 +48,28 @@
 					),
 				)
 			);
-			// woocommerce_wp_checkbox(
-			// 	array(
-			// 		'id'          => 'mwb_people_as_seperate_booking',
-			// 		'label'       => __( 'Allow Peoples as seperate booking', 'mwb-wc-bk' ),
-			// 		'value'       => $this->setting_fields['mwb_people_as_seperate_booking'],
-			// 		'description' => __( 'Check if peoples are to be counted as seperate bookings.', 'mwb-wc-bk' ),
-			// 	)
-			// );
+			?>
+			<div class="mwb_people_seperate_booking_field mwb-bookings__pro">
+			<?php
+			woocommerce_wp_checkbox(
+				array(
+					'id'          => 'mwb_people_as_seperate_booking',
+					'label'       => __( 'Allow Peoples as seperate booking', 'mwb-wc-bk' ),
+					'value'       => $this->setting_fields['mwb_people_as_seperate_booking'],
+					'description' => __( 'Check if peoples are to be counted as seperate bookings.', 'mwb-wc-bk' ),
+					'desc_tip'    => true,
+				)
+			);
+			?>
+			</div>
+			<?php
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => 'mwb_enable_people_types',
 					'label'       => __( 'Enable people types', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_enable_people_types'],
 					'description' => __( 'If people types are to be created.', 'mwb-wc-bk' ),
+					'desc_tip'    => true,
 				)
 			);
 			?>

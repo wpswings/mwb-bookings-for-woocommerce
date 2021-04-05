@@ -77,9 +77,9 @@ foreach ( $enabled_services as $service_id ) {
 						<label for="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>"><?php echo esc_html( $service_data['term_obj']->name ); ?></label>
 							<?php
 							if ( 'yes' === $show_service_cost ) {
-								$global_func->mwb_booking_help_tip( esc_html( sprintf( '$ %d', $service_data['mwb_ct_booking_service_cost'][0] ) ) );
+								// $global_func->mwb_booking_help_tip( esc_html( sprintf( '$ %d', $service_data['mwb_ct_booking_service_cost'][0] ) ) );
 								?>
-						<span class="booking-service-price"><?php echo esc_html( sprintf( '$ %d', $service_data['mwb_ct_booking_service_cost'][0] ) ); ?></span>
+						<span class="booking-service-price"><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_data['mwb_ct_booking_service_cost'][0] ) ); ?></span>
 								<?php
 							}
 							if ( 'yes' === $service_data['mwb_booking_ct_services_has_quantity'][0] ) {
@@ -93,7 +93,7 @@ foreach ( $enabled_services as $service_id ) {
 							}
 							if ( 'yes' === $show_service_desc ) {
 								?>
-						<span class="booking-service-desc"><?php echo esc_html( $service_data['term_obj']->description ); ?></span>
+						<span class="booking-service-desc"><?php echo ! empty( $service_data['term_obj']->description ) ? esc_html( $service_data['term_obj']->description ) : esc_html__( 'No description provided' ); ?></span>
 								<?php
 							}
 							?>
@@ -122,9 +122,9 @@ foreach ( $enabled_services as $service_id ) {
 						<label for="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>"><?php echo esc_html( $service_data['term_obj']->name ); ?></label>
 							<?php
 							if ( 'yes' === $show_service_cost ) {
-								$global_func->mwb_booking_help_tip( esc_html( sprintf( '$ %d', $service_price ) ) );
+								// $global_func->mwb_booking_help_tip( esc_html( sprintf( '$ %d', $service_price ) ) );
 								?>
-						<span class="booking-service-price"><?php echo esc_html( sprintf( '$ %d', $service_price ) ); ?></span>
+						<span class="booking-service-price"><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_data['mwb_ct_booking_service_cost'][0] ) ); ?></span>
 								<?php
 							}
 							if ( 'yes' === $service_data['mwb_booking_ct_services_has_quantity'][0] ) {
@@ -138,7 +138,7 @@ foreach ( $enabled_services as $service_id ) {
 							}
 							if ( 'yes' === $show_service_desc ) {
 								?>
-						<span class="booking-service-desc"><?php echo esc_html( $service_data['term_obj']->description ); ?></span>
+						<span class="booking-service-desc"><?php echo ! empty( $service_data['term_obj']->description ) ? esc_html( $service_data['term_obj']->description ) : esc_html__( 'No description provided' ); ?></span>
 								<?php
 							}
 							?>

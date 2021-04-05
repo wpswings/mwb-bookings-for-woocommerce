@@ -2,33 +2,148 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
- ul {
-    list-style: none!important;
-    margin: 0!important;
-}
-.product-type-mwb_booking h1 {
+
+ .product-type-mwb_booking h1 {
     text-transform: capitalize;
 }
+
 .mwb-wc-bk-form-section {
     margin-bottom: 10px;
 }
-label {
-    flex: 0 0 100%;
-}div#mwb-wc-bk-duration-div {
+
+#mwb-wc-bk-date-section {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-}.mwb-wc-bk-form-section {
+    margin-bottom: 20px;
+}
+
+#mwb-wc-bk-start-date-field,
+#mwb-wc-bk-end-date-field {
+    flex: 0 0 100%;
+    max-width: 50%;
+    padding-right: 10px;
+   
+}
+#mwb-wc-bk-people-field,#mwb-wc-bk-service-field {
+    margin-bottom: 20px;
+}
+#mwb-wc-bk-inc-service-field {
     margin-bottom: 10px;
 }
-li{    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
+
+
+#mwb-wc-bk-start-date-input,
+#mwb-wc-bk-end-date-input {
+    max-width: 180px;
+    width: 100%;
+ 
 }
-#mwb-wc-bk-total-fields li label{
- flex: 0 0 50%;
- max-width: 50%;
+
+.booking-service-desc {
+    position: absolute;
+    left: -50%;
+    background: #333333;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 196px;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+    clip-path: polygon(0 0, 91% 0, 91% 28%, 97% 50%, 91% 75%, 91% 100%, 0% 100%);
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#mwb-wc-bk-service-field ul :hover .booking-service-desc  {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: 0.5s ease all;
+    opacity: 1;
+} 
+
+#mwb-wc-bk-people-field ul,#mwb-wc-bk-inc-service-field ul,#mwb-wc-bk-add-service-field ul {
+    list-style: none;
+    margin: 0;
+}
+#mwb-wc-bk-inc-service-field ul,#mwb-wc-bk-add-service-field ul {
+    position: relative;
+}
+.mwb-wc-bk-people-type-list label,.mwb-wc-bk-people-type-list input {
+
+    flex: 0 0 100%;
+}
+.mwb-wc-bk-people-type-list label {
+    max-width: 210px;
+}
+.mwb-wc-bk-people-type-list input {
+    max-width: 180px;
+}
+
+div#mwb-wc-bk-duration-div {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mwb-wc-bk-form-section {
+    margin-bottom: 10px;
+ 
+}
+
+.mwb-wc-bk-people-type-list li{   
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+} 
+#mwb-wc-bk-inc-service-list li,#mwb-wc-bk-add-service-list li {
+    align-items: center;
+    display:flex;
+    flex-wrap: wrap;
+   
+}
+#mwb-wc-bk-inc-service-list li .booking-service-price ,#mwb-wc-bk-add-service-list li .booking-service-price {
+    max-width: 60px;
+    width: 100%;
+    flex: 0 0 100%;
+}
+#mwb-wc-bk-inc-service-list li label,#mwb-wc-bk-add-service-list li label {
+    flex: 0 0 100%;
+    max-width: 150px;
+    width: 100%;
+}
+#mwb-wc-bk-add-service-list li label {
+    max-width: 133px;
+}
+#mwb-wc-bk-inc-service-list li input,#mwb-wc-bk-add-service-list li input[type=number] {
+    flex: 0 0 100%;
+    max-width: 180px;
+    width: 100%;
+}
+#mwb-wc-bk-total-fields ul {
+    margin: 0;
 }
 #mwb-wc-bk-total-fields ul li:last-child{
-border-top: 1px solid #e2e2e2;
+    border-top: 1px solid #e2e2e2;
+}
+#mwb-wc-bk-total-fields li {
+    display: flex;
+}
+#mwb-wc-bk-total-fields li label {
+    max-width: 100px;
+    width: 100%;
+}
+
+@media only screen and (max-width:768px) {
+
+    #mwb-wc-bk-start-date-field, #mwb-wc-bk-end-date-field {
+        max-width: 30%;
+    }
+    .mwb-wc-bk-people-type-list label, .mwb-wc-bk-people-type-list input {
+        max-width: 30%;
+    
+    }
 }

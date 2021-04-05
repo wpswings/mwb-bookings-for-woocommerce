@@ -270,12 +270,14 @@ class Mwb_Wc_Bk_Admin {
 	public function save_product_booking_fields( $post_id ) {
 
 		foreach ( $this->get_product_settings() as $key => $value ) {
-			if ( is_array( $_POST[ $key ] ) ) { // @codingStandardsIgnoreLine
-				$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default']; // @codingStandardsIgnoreLine
+			if ( isset( $_POST[ $key ] ) ) {  // @codingStandardsIgnoreLine
+				if ( is_array( $_POST[ $key ] ) ) { // @codingStandardsIgnoreLine
+					$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default']; // @codingStandardsIgnoreLine
 
-			} else {
-				$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default']; // @codingStandardsIgnoreLine
+				} else {
+					$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default']; // @codingStandardsIgnoreLine
 
+				}
 			}
 			update_post_meta( $post_id, $key, $posted_data );
 		}
@@ -329,6 +331,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_people_enable_checkbox'             => array( 'default' => 'no' ),
 			'mwb_min_people_per_booking'             => array( 'default' => '' ),
 			'mwb_max_people_per_booking'             => array( 'default' => '' ),
+			'mwb_people_as_seperate_booking'         => array( 'default' => 'no' ),
 			'mwb_enable_people_types'                => array( 'default' => 'no' ),
 			'mwb_booking_people_select'              => array( 'default' => array() ),
 			'mwb_max_bookings_per_unit'              => array( 'default' => '' ),
@@ -1951,6 +1954,10 @@ class Mwb_Wc_Bk_Admin {
 
 		}
 		update_option( 'mwb_global_avialability_rules', $availability_rules );
+		$rule_count = get_option( 'mwb_global_availability_rules_count' );
+		if ( $rule_count > 0 ) {
+			update_option( 'mwb_global_availability_rules_count', $rule_count - 1 );
+		}
 	}
 
 	/**

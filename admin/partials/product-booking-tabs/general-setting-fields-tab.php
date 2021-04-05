@@ -47,6 +47,7 @@
 					'label'       => __( 'Enable Calendar Range Picker', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_enable_range_picker'],
 					'description' => __( 'To select the start and end date on the calendar.', 'mwb-wc-bk' ),
+					'desc_tip'    => true,
 				)
 			);
 			?>
@@ -59,6 +60,7 @@
 					'label'       => __( 'Full Day Booking', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_full_day_booking'],
 					'description' => __( 'Booking for full day.', 'mwb-wc-bk' ),
+					'desc_tip'    => true,
 				)
 			);
 			?>
@@ -71,6 +73,7 @@
 					'label'       => __( 'Confirmation Required', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_admin_confirmation'],
 					'description' => __( 'Enable booking confirmation by the admin.', 'mwb-wc-bk' ),
+					'desc_tip'    => true,
 				)
 			);
 			?>

@@ -75,31 +75,34 @@
 /*=====  End of FONT-FAMILY  ======*/
 
 
-/*====================================
-mwb settings wrapper css starts
-======================================*/
-
 
 /* ================================
     ******** Globals start  *******
 =================================== */
-body,
-html {
-    font-family: 'NunitoSans-Regular', sans-serif;
-    margin: 0;
+
+body.post-type-mwb_cpt_booking .mwb-booking__nav-wrap h1,#mwb-wc-bk-booking-data h1 {
+    font-family: 'NunitoSans-Bold'; 
+    color: #2196f3;
+    font-size: 26px;
+    letter-spacing: 0.7px;
 }
-a{
+/* body.post-type-mwb_cpt_booking {
+   font-family: 'NunitoSans-Regular';
+
+} */
+
+.post-type-mwb_cpt_booking a{
     outline: none;
     box-shadow: none;
     text-decoration: none;
     border: none;
 }
-a:focus {
+.post-type-mwb_cpt_booking a:focus {
     outline: none;
     box-shadow: none;
 }
 
-.button-primary.mwb-btn,.mwb_booking_refund .mwb_booking_refund_btn {
+.button-primary.mwb-btn {
     border-radius: 30px;
     background: #2196f3;
     border-color: #2196f3;
@@ -110,41 +113,37 @@ a:focus {
     color: #ffffff;
 }
 
-.button-primary.mwb-btn:hover,.mwb_booking_refund_btn:hover {
+.button-primary.mwb-btn:hover {
     background:#ffffff!important;
     color: #2196f3!important;
     font-weight: 400!important;
     border-color: #2196f3!important;
 }
 
-input[type=radio]:checked::before {
+.post-type-mwb_cpt_booking input[type=radio]:checked::before {
  background-color: #2196f3;;
 }
 
-input:focus {
+.post-type-mwb_cpt_booking input:focus {
     border-color: #2196f3!important;
     box-shadow:unset!important;
     outline:none!important;
 }
-input[type=checkbox]+p {
+.post-type-mwb_cpt_booking input[type=checkbox]+p {
     display: inline;
 }
-h1 {
+
+body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb-wc-bk-booking-details h2,#mwb-wc-bk-booking-status h2 ,#mwb-wc-bk-booking-data h2{
     color: #2196f3;
-    font-size: 26px;
-    font-weight: 600!important;
-    letter-spacing: 0.7px;
-}
- h2 {
-    color: #2196f3;
+    font-family: 'NunitoSans-Bold';
     font-size: 20px;
-    text-transform: uppercase;
     letter-spacing: 1.3px;
+    text-transform: uppercase;
 }
-input[type=radio]+label {
+.post-type-mwb_cpt_booking input[type=radio]+label {
     margin-right: 25px;
 }
-label {
+.post-type-mwb_cpt_booking label {
     color: #000000;
 }
 
@@ -186,7 +185,7 @@ label {
 }
 .mwb-booking__nav .nav-tab.mwb-bookings__pro {
     width: 100%;
-    max-width: 140px;
+    max-width: 150px;
 }
 .mwb-booking__nav .nav-tab.mwb-bookings__pro:before {
     padding: 2px 2px;
@@ -267,11 +266,11 @@ label {
 .mwb-form-group__input input[type=radio],.mwb-form-group__input input[type=checkbox] {
     margin-bottom: 0;
 }
-.mwb-form-group__input input:hover {
+.mwb-form-group__input input:hover,.mwb_add_people_type_select input:hover {
     border-color: #000000;
 }
 
-.mwb-form-group__input input:focus {
+.mwb-form-group__input input:focus,.mwb_add_people_type_select input:focus {
     border-color: #2196f3;
     box-shadow: none;
 }
@@ -279,7 +278,13 @@ label {
 .mwb-booking__submit {
    padding-left: 10px;
 }
-
+#mwb_booking_added_costs_btn,
+#mwb_booking_local_cost_rules_btn,
+#mwb_local_availability_rules_add,
+#mwb_people_type_add,
+#mwb_booking_service_add {
+    padding: 0 10px;
+}
 
 
 /*===============================================
@@ -326,10 +331,10 @@ label {
     transform: translate(-50%,-50%);
 }
 .mwb_booking_global_availability_rules .mwb-add-rule__icon:hover {
-    background: #ffffff;
+    background: #ffffff!important;
     border-color: #2196f3!important;
     box-shadow: unset;
-    color: #2196f3;
+    color: #2196f3!important;
     transform: scale(1.2);
 }
 .mwb_booking_global_availability_rules .mwb-add-rule__icon:focus {
@@ -559,28 +564,21 @@ label {
     margin-top: 10px;
     text-align: center;
 }
-#mwb-wc-bk-booking-data .form-field.form-field-wide {
-    align-items: baseline;
-    display: flex;
-    flex-wrap: wrap;
-}
-#mwb-wc-bk-booking-data .form-field.form-field-wide label{ 
-    flex: 0 0 100%;
-    margin-bottom: 10px;
-    max-width: 100%;
-}
+
+
+
+
 #mwb-wc-bk-booking-data .form-field.form-field-wide input[type=text] {
-    flex: 0 0 100%;
-    max-width: 120px;
-    text-align: center;
+
+    max-width: 90px;
+ 
+}
+#mwb-wc-bk-booking-data .form-field.form-field-wide input[type=number] {
+ 
+    max-width: 40px;
+  
 }
 
-#mwb-wc-bk-booking-data .form-field.form-field-wide input[type=number] {
-    flex: 0 0 100%;
-    max-width: 50px;
-    padding: 0;
-    text-align: center;
-}
 
 #mwb-wc-bk-booking-data .form-field.form-field-wide input:hover {
     border-color: #000000;
@@ -820,7 +818,7 @@ label {
 .taxonomy-mwb_ct_services .dashicons-no-alt:before,.taxonomy-mwb_ct_costs .dashicons-no-alt:before{
     color: #ff0000;
 }
-.booking-service-icon {
+.booking-service-icon,.booking-cost-icon,.booking-people-icon {
       color: #2196f3;
 }
 
@@ -1061,22 +1059,24 @@ label {
     padding: 40px 20px;
     flex-wrap: wrap;
 }
-
+.mwb_booking_order_data {
+    flex: 0 0 100%;
+    max-width: 50%;
+    padding-right: 15px;
+    padding-top: 30px;
+}
 .mwb_booking_order_data label {
     font-size: 16px;
     font-weight: 600;
 }
 
-.mwb_booking_order_data {
-    flex: 0 0 100%;
-    max-width: 35%;
-    padding-right: 15px;
-    padding-top: 12px;
-
-}
-
 .mwb_booking_order_data p {
     margin-bottom: 25px;
+}
+.mwb_booking_order_data p label {
+    display: inline-block;
+    max-width: 140px;
+    width: 100%;
 }
 
 .mwb_booking_order_data_prod_img {
@@ -1088,9 +1088,6 @@ label {
     width: 100%;
 }
 
-.mwb_booking_refund .mwb_booking_refund_btn {
-    padding: 2px 10px;
-}
 #mwb_booking_ct_services_custom_fields .description ,.post-type-mwb_cpt_booking .term-extra-cost-wrap .description{
     color: #1d2327;
 }
@@ -1167,6 +1164,7 @@ label {
     color: #737373!important;
 }
 
+
 /*===============================================
           **** Calendar CSS ends ****
 ================================================== */
@@ -1177,27 +1175,19 @@ label {
          ******** Media Queries *******
 ================================================= */
 
+
+
+
 @media only screen and ( max-width: 768px){
     .mwb-form-group__days .mwb-form-group__input {
         flex: 0 0 100%;
         max-width: 100px;
     }
-    .mwb_booking_order_data {
-        
-        max-width: 100%;
-        padding-right: 15px;
-        padding-top: 12px;
-    
-    }
+  
     .mwb_booking_order_data p {
         margin-bottom: 25px;
     }
-    .mwb_booking_order_data_prod_img {
-        max-width: 100%;
-    }
-    .mwb_booking_details_wrap {
-        flex-direction: column-reverse;
-    }
+    
 }
 
 @media screen and (max-width: 782px) {
@@ -1207,7 +1197,23 @@ label {
 
 }
 
-
+@media only screen and (max-width:1260px){
+    .mwb_booking_order_data_prod_img {
+        max-width: 100%;
+    }
+    .mwb_booking_details_wrap {
+        flex-direction: column-reverse;
+    }
+    .mwb_booking_order_data {
+        max-width: 100%;
+        padding-right: 15px;
+        padding-top: 12px;
+    
+    }
+    .mwb_booking_details_wrap {
+        padding: 30px 15px;
+    }
+}
 /*===============================================
          ******** Media Queries ends *******
 ================================================= */

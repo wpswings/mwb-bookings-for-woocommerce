@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 global $product;
 $setting_options = get_option( 'mwb_booking_settings_options' );
 
-$total_check = ! empty( $setting_options['mwb_booking_setting_bo_service_total'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_service_total'] ) ) : '';
+$total_check = ! empty( $setting_options['mwb_booking_setting_bo_service_total'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_service_total'] ) ) : 'no';
 ?>
 
 <div id="mwb-wc-bk-total-section" class="mwb-wc-bk-form-section">

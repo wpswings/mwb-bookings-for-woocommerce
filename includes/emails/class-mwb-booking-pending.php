@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 if ( ! class_exists( 'WC_Email' ) ) {
@@ -89,9 +89,6 @@ class MWB_Booking_Pending extends WC_Email {
 
 		$this->booking_meta = $b_meta;
 		$this->booking_id   = $booking_id;
-
-		// echo '<pre>'; print_r( $this->booking_meta ); echo '</pre>';
-		// die( 'pending' );
 
 		if ( is_a( $order, 'WC_Order' ) ) {
 			$this->object    = $order;

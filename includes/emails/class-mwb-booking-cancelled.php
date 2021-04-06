@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 if ( ! class_exists( 'WC_Email' ) ) {
@@ -90,10 +90,6 @@ class MWB_Booking_Cancelled extends WC_Email {
 		if ( 'mwb_cpt_booking' !== $pos->post_type ) {
 			return;
 		}
-		// echo '<pre>'; print_r( $pos ); echo '</pre>';
-
-		// echo '<pre>'; var_dump( $order ); echo '</pre>';die("ok");
-
 		if ( is_a( $order, 'WC_Order' ) ) {
 			$this->object    = $order;
 			$this->recipient = $this->object->get_billing_email();
@@ -156,29 +152,5 @@ class MWB_Booking_Cancelled extends WC_Email {
 			$this->template_base
 		);
 	}
-	// /**
-	//  * Allows developers to add additional customer details to templates.
-	//  *
-	//  * In versions prior to 3.2 this was used for notes, phone and email but this data has moved.
-	//  *
-	//  * @param WC_Order $order         Order instance.
-	//  * @param bool     $sent_to_admin If should sent to admin.
-	//  * @param bool     $plain_text    If is plain text email.
-	//  */
-	// public function customer_details( $order, $sent_to_admin = false, $plain_text = false ) {
-	// 	if ( ! is_a( $order, 'WC_Order' ) ) {
-	// 		return;
-	// 	}
-
-	// 	$fields = array_filter( apply_filters( 'woocommerce_email_customer_details_fields', array(), $sent_to_admin, $order ), array( $this, 'customer_detail_field_is_valid' ) );
-	// 	echo '<pre>'; print_r( $fields ); echo '</pre>'; die('jojo');
-	// 	if ( ! empty( $fields ) ) {
-	// 		if ( $plain_text ) {
-	// 			wc_get_template( 'emails/plain/email-customer-details.php', array( 'fields' => $fields ) );
-	// 		} else {
-	// 			wc_get_template( 'emails/email-customer-details.php', array( 'fields' => $fields ) );
-	// 		}
-	// 	}
-	// }
 
 }

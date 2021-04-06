@@ -308,6 +308,12 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     color: #2196f3;
     font-size: 18px;
     text-transform: uppercase;
+    display: flex;
+
+    width: 100%;
+    max-width: 250px;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 .mwb_booking_global_availability_rules .mwb-add-rule__icon {
     background:#2196f3;
@@ -376,7 +382,12 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     padding: 8px 20px;
     margin-bottom: 5px;
 }
-.mwb_global_availability_rule_heading.mwb-global-availability-rule__heading .booking-availability__title {
+.mwb_global_availability_rule_heading.mwb-global-availability-rule__heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+.mwb_global_availability_rule_heading.mwb-global-availability-rule__heading .booking-availability__title,.mwb_global_availability_toggle_icon {
 -webkit-touch-callout: none;
     -webkit-user-select: none;
      -khtml-user-select: none; 
@@ -406,6 +417,17 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     text-transform: uppercase;
 }
 
+.mwb_global_availability_toggle_icon {
+    display: inline-block;
+    font-size: 45px;
+    transform-box: fill-box;
+    transform-origin: top;
+    transition: 0.2s ease all;
+}
+
+.mwb_global_availability_toggle_icon-arrow {
+    transform:rotate(180deg);
+}
 
 .mwb-availability-rules__table .mwb-delete-icon {
     background: #ffffff;
@@ -1232,6 +1254,13 @@ div#mwb_booking_cost_data button,#mwb_booking_services_data button,#mwb_booking_
     input[type=checkbox]{
         height:1rem;
     }
+    input[type=radio] {
+        transform:scale(0.8);
+    }
+    .mwb-form-group__label {
+        margin-bottom: 10px;
+    }
+   
 
 }
 

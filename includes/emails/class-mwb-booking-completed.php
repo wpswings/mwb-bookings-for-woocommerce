@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 if ( ! class_exists( 'WC_Email' ) ) {
@@ -41,19 +41,6 @@ class MWB_Booking_Completed extends WC_Email {
 	 * @return void
 	 */
 	public function __construct() {
-		// Email slug we can use to filter other data.
-		// $this->id          = 'wc_customer_completed_booking';
-		// $this->title       = __( 'Booking Completed', 'custom-wc-email' );
-		// $this->description = __( 'An email sent to the customer when an order is cancelled.', 'custom-wc-email' );
-		// // For admin area to let the user know we are sending this email to customers.
-		// $this->customer_email = true;
-		// $this->heading     = __( 'Booking Completed', 'custom-wc-email' );
-		// // translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-
-		// // Template paths.
-		// $this->template_html  = 'emails/wc-customer-complete-booking.php';
-		// $this->template_plain = 'emails/plain/wc-customer-complete-booking.php';
-		// $this->template_base  = MWB_WC_BK_BASEPATH . 'public/templates/';
 
 		$this->id             = 'customer_completed_booking';
 		$this->customer_email = true;

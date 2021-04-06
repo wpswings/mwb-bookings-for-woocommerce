@@ -38,7 +38,6 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 			</td>
 			<td class="td" style="text-align:left; vertical-align:middle;">
 				<?php
-				// $meta = $order->get_meta( 'mwb_meta_data' );
 				echo esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) );
 				?>
 			</td>
@@ -60,22 +59,8 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 	</address>
 </section>
 <?php
-/*
- * @hooked WC_Subscriptions_Email::order_download_details() Shows the order details table.
- * @hooked WC_Subscriptions_Email::order_details() Shows the order details table.
- */
-// do_action( 'woocommerce_booking_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
-/*
- * @hooked WC_Emails::order_meta() Shows order meta data.
- */
-// do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
-
-/*
- * @hooked WC_Emails::customer_details() Shows customer details
- * @hooked WC_Emails::email_address() Shows email address
- */
-// do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
+do_action( 'mwb_booking_add_other_details', $order, $sent_to_admin, $plain_text, $email, $booking_meta );
 
 /**
  * Show user-defined additional content - this is set in each email's settings.

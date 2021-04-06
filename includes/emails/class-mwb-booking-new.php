@@ -95,9 +95,8 @@ class MWB_Booking_New extends WC_Email {
 		$this->booking_id   = $booking_id;
 
 		if ( is_a( $order, 'WC_Order' ) ) {
-			$this->object    = $order;
+			$this->object = $order;
 
-			// $this->recipient = $this->object->get_billing_email();
 			$this->recipient = $author_mail;
 
 			$this->subject = __( 'New booking created', 'mwb-wc-bk' );

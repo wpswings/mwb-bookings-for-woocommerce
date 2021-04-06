@@ -258,12 +258,12 @@ class Mwb_Wc_Bk_Admin {
 	public function save_product_booking_fields( $post_id ) {
 
 		foreach ( $this->get_product_settings() as $key => $value ) {
-			if ( ! empty( $_POST[ $key ] ) ) {  // @codingStandardsIgnoreLine
-				if ( is_array( $_POST[ $key ] ) ) { // @codingStandardsIgnoreLine
+			if ( ! empty( $_POST[ $key ] ) ) {                                                                           // @codingStandardsIgnoreLine
+				if ( is_array( $_POST[ $key ] ) ) {                                                                      // @codingStandardsIgnoreLine
 					$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default']; // @codingStandardsIgnoreLine
 
 				} else {
-					$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default']; // @codingStandardsIgnoreLine
+					$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default'];                       // @codingStandardsIgnoreLine
 
 				}
 			} else {
@@ -284,7 +284,6 @@ class Mwb_Wc_Bk_Admin {
 				update_post_meta( $product->get_id(), '_price', $price );
 			}
 		}
-
 	}
 
 	/**
@@ -297,14 +296,14 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_booking_unit_select'                => array( 'default' => 'customer' ),
 			'mwb_booking_unit_input'                 => array( 'default' => '1' ),
 			'mwb_booking_unit_duration'              => array( 'default' => 'day' ),
-			'mwb_start_booking_from'                 => array( 'default' => 'none' ),
-			'mwb_start_booking_custom_date'          => array( 'default' => '' ),
+			'mwb_start_booking_from'                 => array( 'default' => 'today' ),
+			'mwb_start_booking_custom_date'          => array( 'default' => gmdate( 'Y-m-d', time() ) ),
 			'mwb_enable_range_picker'                => array( 'default' => 'no' ),
 			'mwb_full_day_booking'                   => array( 'default' => 'no' ),
 			'mwb_admin_confirmation'                 => array( 'default' => 'no' ),
 			'mwb_allow_booking_cancellation'         => array( 'default' => 'no' ),
-			'mwb_max_days_for_cancellation'          => array( 'default' => '' ),
-			'mwb_booking_unit_cost_input'            => array( 'default' => '' ),
+			'mwb_max_days_for_cancellation'          => array( 'default' => 1 ),
+			'mwb_booking_unit_cost_input'            => array( 'default' => 50 ),
 			'mwb_booking_unit_cost_multiply'         => array( 'default' => 'no' ),
 			'mwb_booking_base_cost_input'            => array( 'default' => '' ),
 			'mwb_booking_base_cost_multiply'         => array( 'default' => 'no' ),
@@ -319,22 +318,22 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_services_enable_checkbox'           => array( 'default' => 'no' ),
 			'mwb_booking_services_select'            => array( 'default' => array() ),
 			'mwb_people_enable_checkbox'             => array( 'default' => 'no' ),
-			'mwb_min_people_per_booking'             => array( 'default' => '' ),
+			'mwb_min_people_per_booking'             => array( 'default' => 1 ),
 			'mwb_max_people_per_booking'             => array( 'default' => '' ),
 			'mwb_people_as_seperate_booking'         => array( 'default' => 'no' ),
 			'mwb_enable_people_types'                => array( 'default' => 'no' ),
 			'mwb_booking_people_select'              => array( 'default' => array() ),
-			'mwb_max_bookings_per_unit'              => array( 'default' => '' ),
-			'mwb_booking_min_duration'               => array( 'default' => '' ),
+			'mwb_max_bookings_per_unit'              => array( 'default' => 1 ),
+			'mwb_booking_min_duration'               => array( 'default' => 1 ),
 			'mwb_booking_max_duration'               => array( 'default' => '' ),
-			'mwb_booking_start_time'                 => array( 'default' => '' ),
-			'mwb_booking_end_time'                   => array( 'default' => '' ),
+			'mwb_booking_start_time'                 => array( 'default' => '01:00' ),
+			'mwb_booking_end_time'                   => array( 'default' => '23:00' ),
 			'mwb_booking_buffer_input'               => array( 'default' => '' ),
 			'mwb_booking_buffer_duration'            => array( 'default' => '' ),
-			'mwb_advance_booking_max_input'          => array( 'default' => '' ),
-			'mwb_advance_booking_max_duration'       => array( 'default' => '' ),
-			'mwb_advance_booking_min_input'          => array( 'default' => 0 ),
-			'mwb_advance_booking_min_duration'       => array( 'default' => '' ),
+			'mwb_advance_booking_max_input'          => array( 'default' => 1 ),
+			'mwb_advance_booking_max_duration'       => array( 'default' => 'month' ),
+			'mwb_advance_booking_min_input'          => array( 'default' => 1 ),
+			'mwb_advance_booking_min_duration'       => array( 'default' => 'day' ),
 			'mwb_booking_not_allowed_days'           => array( 'default' => array() ),
 
 		);
@@ -1153,7 +1152,7 @@ class Mwb_Wc_Bk_Admin {
 			'menu_name'         => __( 'Services', 'mwb-wc-bk' ),
 		);
 		$args   = array(
-			'hierarchical'      => true,
+			'hierarchical'      => false,
 			'labels'            => $labels,
 			'description'       => 'Services or resources which are to be included in booking',
 			'show_ui'           => true,
@@ -1186,7 +1185,7 @@ class Mwb_Wc_Bk_Admin {
 			'menu_name'         => __( 'People Types', 'mwb-wc-bk' ),
 		);
 		$args   = array(
-			'hierarchical'      => true,
+			'hierarchical'      => false,
 			'labels'            => $labels,
 			'description'       => 'Types of Peoples which are to be included per booking',
 			'show_ui'           => true,
@@ -1219,7 +1218,7 @@ class Mwb_Wc_Bk_Admin {
 			'menu_name'         => __( 'Costs', 'mwb-wc-bk' ),
 		);
 		$args   = array(
-			'hierarchical'      => true,
+			'hierarchical'      => false,
 			'labels'            => $labels,
 			'description'       => 'Additional Costs which are to be included in booking',
 			'show_ui'           => true,
@@ -1904,7 +1903,7 @@ class Mwb_Wc_Bk_Admin {
 		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-expired.php';
 		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-pending.php';
 		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-new.php';
-		require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-refunded.php';
+		// require_once MWB_WC_BK_BASEPATH . 'includes/emails/class-mwb-booking-refunded.php';
 
 		$emails['WC_Customer_Completed_Booking']    = new MWB_Booking_Completed();
 		$emails['WC_Customer_Cancelled_Booking']    = new MWB_Booking_Cancelled();
@@ -1913,7 +1912,7 @@ class Mwb_Wc_Bk_Admin {
 		$emails['WC_Customer_Expired_Booking']      = new MWB_Booking_Pending();
 		$emails['WC_Customer_On_Hold_Booking']      = new MWb_Booking_Expired();
 		$emails['WC_Customer_New_Booking']          = new MWB_Booking_New();
-		$emails['WC_Customer_Refunded_Booking']     = new MWB_Booking_Refunded();
+		// $emails['WC_Customer_Refunded_Booking']     = new MWB_Booking_Refunded();
 
 		return $emails;
 

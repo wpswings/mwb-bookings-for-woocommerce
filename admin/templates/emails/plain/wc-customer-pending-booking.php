@@ -3,7 +3,7 @@
  * Pending Booking email.
  *
  * @author  MWB
- * @package mwb-woocommerce-booking/admin/templates/emails
+ * @package mwb-woocommerce-booking/admin/templates/emails/plain
  * @version 1.0.0
  */
 
@@ -17,40 +17,24 @@ echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 echo sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ) . "\n\n";
 echo esc_html__( 'Your Booking payment is pending, please complete the payment. Here’s a reminder of what you booked:', 'mwb-wc-bk' ) . "\n\n";
 
-/*
- * @hooked WC_Emails::order_details() Shows the order details table.
- * @hooked WC_Structured_Data::generate_order_data() Generates structured data.
- * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
- * @since 2.5.0
- */
-// do_action( 'woocommerce_booking_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 echo "\n----------------------------------------\n\n";
 
 if ( ! empty( $booking_meta['start_timestamp'] ) ) {
 	// translators: placeholder is last time subscription was paid.
-	echo sprintf( __( 'Satrt Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) ) ) . "\n";
+	echo sprintf( __( 'Satrt Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) ) ) . "\n";  // @codingStandardsIgnoreLine
 }
 
 if ( ! empty( $booking_meta['end_timestamp'] ) ) {
 	// translators: placeholder is last time subscription was paid.
-	echo sprintf( __( 'End Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['end_timestamp'] ) ) ) . "\n";
+	echo sprintf( __( 'End Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['end_timestamp'] ) ) ) . "\n";  // @codingStandardsIgnoreLine
 }
 if ( ! empty( $booking_meta['total_cost'] ) ) {
 	// translators: placeholder is last time subscription was paid.
-	echo sprintf( __( 'Total : %s', 'mwb-wc-bk' ), wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $booking_meta['total_cost'] ) ) . "\n";
+	echo sprintf( __( 'Total : %s', 'mwb-wc-bk' ), wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $booking_meta['total_cost'] ) ) . "\n";  // @codingStandardsIgnoreLine
 }
 
-/*
- * @hooked WC_Emails::order_meta() Shows order meta data.
- */
-// do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
-
-/*
- * @hooked WC_Emails::customer_details() Shows customer details
- * @hooked WC_Emails::email_address() Shows email address
- */
-do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
+do_action( 'mwb_booking_add_other_plain_details', $order, $sent_to_admin, $plain_text, $email, $booking_meta );
 
 echo "\n\n----------------------------------------\n\n";
 

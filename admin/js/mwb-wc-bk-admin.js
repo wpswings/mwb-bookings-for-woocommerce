@@ -1,3 +1,6 @@
+/**
+ * Admin Js File.
+ */
 var availability_count = 0;
 var cost_count = 0;
 var booking_events;
@@ -30,6 +33,20 @@ jQuery(document).ready( function($) {
 		jQuery('.booking-overview__help').toggleClass('booking-help__out');
 	
 	});
+
+	// jQuery('.mwb-add-rule__icon').on('click',function () {
+	// 	jQuery(this).css({
+	// 	'background-color':'#2196f3',
+	// 	'color':'#ffffff',
+	// 	'outline':'none'
+	// 	});	
+	// });
+		
+	// jQuery('.mwb_global_availability_toggle_icon').on('click',function(){
+	// 	jQuery(this).toggleClass('mwb_global_availability_toggle_icon-arrow');
+	// 	jQuery(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
+	// });
+	
 	
 });
 
@@ -112,7 +129,8 @@ function selected_added_cost_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve' 
   });
 }
 
@@ -147,7 +165,8 @@ function selected_services_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve'
   });
 }
 
@@ -182,7 +201,8 @@ function selected_people_type_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve'
   });
 }
 
@@ -217,7 +237,8 @@ function create_booking_user_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve'
   });
 }
 
@@ -252,7 +273,8 @@ function create_booking_product_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve'
   });
 }
 function create_booking_order_select2($) {
@@ -286,7 +308,8 @@ function create_booking_order_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve'
   });
 }
 
@@ -321,7 +344,8 @@ function booking_order_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve'
   });
 }
 
@@ -356,7 +380,8 @@ function booking_product_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve'
   });
 }
 
@@ -391,19 +416,20 @@ function booking_user_select2($) {
 		  },
 		  cache: true
 	  },
-	  minimumInputLength: 3 // The minimum of symbols to input before perform a search.
+	  minimumInputLength: 3, // The minimum of symbols to input before perform a search.
+	  width: 'resolve'
   });
 }
 
 
 function product_general_settings_js($) {
 
-	$( '#mwb_booking_unit_input' ).attr( 'required', true );
+	// $( '#mwb_booking_unit_input' ).attr( 'required', true );
 
 	var allow_cancellation_check = $( '#mwb_booking_general_data #mwb_allow_booking_cancellation' ).is(':checked');
 	if ( allow_cancellation_check ) {
 		$ ( '#mwb_booking_general_data #mwb_booking_cancellation_days' ).show();
-		$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', false ).attr( 'required', true );
+		$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', false );
 	} else {
 		$ ( '#mwb_booking_general_data #mwb_booking_cancellation_days' ).hide();
 		$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', true );
@@ -413,7 +439,7 @@ function product_general_settings_js($) {
 		var allow_cancellation_check = $(this).is(':checked');
 		if( allow_cancellation_check ) {
 			$ ( '#mwb_booking_general_data #mwb_booking_cancellation_days' ).show();
-			$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', false ).attr( 'required', true );
+			$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', false );
 		} else {
 			$ ( '#mwb_booking_general_data #mwb_booking_cancellation_days' ).hide();
 			$ ( '#mwb_booking_general_data #mwb_max_days_for_cancellation' ).prop( 'disabled', true );
@@ -464,7 +490,7 @@ function product_general_settings_js($) {
 
 	var start_booking_from = $( '#mwb_booking_general_data #mwb_start_booking_date' ).val();
 	if( start_booking_from == 'custom_date' ) {
-		$( '#mwb_booking_general_data #mwb_start_booking_custom_date' ).prop('disabled', false).attr( 'required', true );
+		$( '#mwb_booking_general_data #mwb_start_booking_custom_date' ).prop('disabled', false);
 		$( '#mwb_booking_general_data #mwb_start_booking_custom_date_field' ).show();
 	} else {
 		$( '#mwb_booking_general_data #mwb_start_booking_custom_date' ).prop('disabled', true);
@@ -586,7 +612,7 @@ function product_general_settings_js($) {
 	});
 	$( '#mwb_booking_general_data' ).on( 'change', '#mwb_start_booking_date', function(){
 		if( $(this).val() == 'custom_date' ) {
-			$( '#mwb_booking_general_data #mwb_start_booking_custom_date' ).prop('disabled', false).attr( 'required', true );
+			$( '#mwb_booking_general_data #mwb_start_booking_custom_date' ).prop('disabled', false);
 			$( '#mwb_booking_general_data #mwb_start_booking_custom_date_field' ).show();
 		} else {
 			$( '#mwb_booking_general_data #mwb_start_booking_custom_date' ).prop('disabled', true);
@@ -597,8 +623,8 @@ function product_general_settings_js($) {
 
 function product_availability_settings($) {
 
-	$('#mwb_booking_start_time').attr( 'required', true );
-	$('#mwb_advance_booking_max_input').attr( 'required', true );
+	// $('#mwb_booking_start_time').attr( 'required', true );
+	// $('#mwb_advance_booking_max_input').attr( 'required', true );
 
 	var start_time = $('#mwb_booking_start_time').val();
 	var end_time   = $('#mwb_booking_end_time').val();
@@ -645,7 +671,7 @@ function product_availability_settings($) {
 
 function product_cost_settings_js($) {
 
-	$( '#mwb_booking_unit_cost_input' ).attr( 'required', true );
+	// $( '#mwb_booking_unit_cost_input' ).attr( 'required', true );
 
 	var unit_cost_check = $( '#mwb_booking_cost_data .unit-cost #mwb_booking_unit_cost_multiply' )
 	if( unit_cost_check.is( ':checked' ) ) {
@@ -980,10 +1006,8 @@ function global_availability_rules($) {
 		if ( availability_count < parseInt(jQuery(this).attr('rule_count')) ) {
 			availability_count = parseInt(jQuery(this).attr('rule_count'));
 			availability_count++;
-			// alert('if working');
 		} else {
 			availability_count++;
-			// alert( 'else working' );
 		}
 
 		$.ajax({
@@ -999,11 +1023,15 @@ function global_availability_rules($) {
 				console.log( data );
 				$( '.mwb_booking_global_availability_rules #mwb_global_availability_rules' ).append(data);
 
-				jQuery('.mwb_booking_global_availability_rules .mwb_global_availability_rule_heading').each( function() {
-					$(this).on('click', 'label', function(e){
-						$(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
-					});
-				} );
+				// jQuery('.mwb_booking_global_availability_rules .mwb_global_availability_rule_heading').each( function() {
+				// 	$(this).on('click', 'label', function(e){
+				// 		$(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
+				// 	});
+				// } );
+				jQuery('.mwb_global_availability_toggle_icon').on('click',function(){
+					jQuery(this).toggleClass('mwb_global_availability_toggle_icon-arrow');
+					jQuery(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
+				});
 
 				$( '#mwb_global_availability_form .mwb_global_availability_rule_weekdays' ).each(function() {
 
@@ -1093,13 +1121,18 @@ function global_availability_rules($) {
 	});
 
 
-	jQuery('.mwb_booking_global_availability_rules .mwb_global_availability_rule_heading').each( function() {
-		$(this).on('click', 'label', function(e){
+	// jQuery('.mwb_booking_global_availability_rules .mwb_global_availability_rule_heading').each( function() {
+	// 	$(this).on('click', 'label', function(e){
 		
-			$(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
+	// 		$(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
 
-		});
-	} );
+	// 	});
+	// } );
+
+	jQuery('.mwb_global_availability_toggle_icon').on('click',function(){
+		jQuery(this).toggleClass('mwb_global_availability_toggle_icon-arrow');
+		jQuery(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
+	});
 
 	jQuery('#mwb_global_availability_form').on('click', '#mwb_delete_avialability_rule', function(e){
 		
@@ -1126,10 +1159,16 @@ function global_availability_rules($) {
 			},
 			success: function( data ){
 				$( '#mwb_global_availability_rule_' + del_count ).remove();
-				// var rule_count = $( '#mwb_delete_avialability_rule' ).attr( 'rule_count' );
-				// $( '#mwb_delete_avialability_rule' ).attr( 'rule_count', (rule_count - 1) );
 			}
 		});
+	});
+
+	jQuery('.mwb-add-rule__icon').on('click',function () {
+		jQuery(this).css({
+		'background-color':'#2196f3',
+		'color':'#ffffff',
+		'outline':'none'
+		});	
 	});
 }
 
@@ -1366,8 +1405,6 @@ function render_calendar($ , booking_events) {
 	var calendar = new FullCalendar.Calendar(calendarEl, {
 
 		initialView: 'dayGridMonth',
-	//  initialView: 'timeGridWeek',
-	//  timeZone: 'UTC',
 
 		headerToolbar: {
 			left  : 'prev,next today',
@@ -1375,7 +1412,7 @@ function render_calendar($ , booking_events) {
 			right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		},
 		
-		navLinks: true, // can click day/week names to navigate views
+		navLinks: true,
     	editable: true,
      	selectable: true,
      	selectMirror: true,
@@ -1406,82 +1443,12 @@ function render_calendar($ , booking_events) {
 				}
 			});
 		},
-		// events: [
-		// 	{
-		// 	  title: 'All Day Event',
-		// 	  start: '2021-02-01',
-		// 	},
-		// 	{
-		// 	  title: 'Long Event',
-		// 	  start: '2021-02-07',
-		// 	  end: '2021-02-10'
-		// 	},
-		// 	{
-		// 	  groupId: 999,
-		// 	  title: 'Repeating Event',
-		// 	  start: '2021-02-09T16:00:00'
-		// 	},
-		// 	{
-		// 	  groupId: 999,
-		// 	  title: 'Repeating Event',
-		// 	  start: '2021-02-16T16:00:00'
-		// 	},
-		// 	{
-		// 	  title: 'Conference',
-		// 	  start: '2021-02-11',
-		// 	  end: '2021-02-13'
-		// 	},
-		// 	{
-		// 	  title: 'Meeting',
-		// 	  start: '2021-02-12T10:30:00',
-		// 	  end: '2021-02-12T12:30:00'
-		// 	},
-		// 	{
-		// 	  title: 'Lunch',
-		// 	  start: '2021-02-12T12:00:00'
-		// 	},
-		// 	{
-		// 	  title: 'Meeting',
-		// 	  start: '2021-02-12T14:30:00'
-		// 	},
-		// 	{
-		// 	  title: 'Happy Hour',
-		// 	  start: '2021-02-12T17:30:00'
-		// 	},
-		// 	{
-		// 	  title: 'Dinner',
-		// 	  start: '2021-02-12T20:00:00'
-		// 	},
-		// 	{
-		// 	  title: 'Birthday Party',
-		// 	  start: '2021-02-13T07:00:00'
-		// 	},
-		// 	{
-		// 	  title: 'Click for Google',
-		// 	  url: 'http://google.com/',
-		// 	  start: '2021-02-28'
-		// 	}
-		//   ],
-
-		
-		// events: mwb_booking_obj.ajaxurl,
-		
-		
-		// dateClick  : function() {
-		// 	alert('a day has been clicked!');
-		// }
-		  
-		// views: {
-		// 	dayGridMonth: { // name of view
-		// 	//   titleFormat: { month: '2-digit', day: '2-digit', year: 'numeric' }
-		// 	  // other view-specific options here
-		// 	}
-		// }
+	
 
 	});
 	
-	calendar.on('dateClick', function(info) {
-		console.log('clicked on ' + info.dateStr);
-	  });
+	// calendar.on('dateClick', function(info) {
+	// 	console.log('clicked on ' + info.dateStr);
+	//   });
 	calendar.render();
 }

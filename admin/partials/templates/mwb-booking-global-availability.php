@@ -88,9 +88,9 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 					<input type="hidden" name="mwb_availability_rule_count" value="<?php echo esc_html( $count + 1 ); ?>" >
 					<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[<?php echo esc_html( $count ); ?>]" <?php checked( 'on', $mwb_availability_rule_switch[ $count ] ); ?>>
 					</h2>
-					<div class="mwb_global_availability_toggle">
+					<div class="mwb_global_availability_toggler">
 						<span class="mwb_global_availability_toggle_icon">
-
+							&#8963;
 						</span>
 					</div>
 				</div>

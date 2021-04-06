@@ -32,9 +32,9 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 		<input type="hidden" name="mwb_availability_rule_count" value="<?php echo esc_html( $rule_count ); ?>" >
 		<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[<?php echo esc_html( $rule_count - 1 ); ?>]" checked  >
 		</h2>
-		<div class="mwb_global_availability_toggle">
+		<div class="mwb_global_availability_toggler">
 			<span class="mwb_global_availability_toggle_icon">
-
+				&#8963;
 			</span>
 		</div>
 	</div>

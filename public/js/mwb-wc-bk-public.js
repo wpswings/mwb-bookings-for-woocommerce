@@ -1,36 +1,6 @@
-(function( $ ) {
-	'use strict';
-
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
-
-})( jQuery );
-
+/**
+ * Public Js File.
+ */
 var is_product = false;
 if ( mwb_wc_bk_public.hasOwnProperty( 'mwb_booking_product_page' ) ) {
 	var is_product = mwb_wc_bk_public.mwb_booking_product_page;
@@ -56,13 +26,8 @@ jQuery(document).ready( function($) {
 
 	show_time_slots($);
 	
-	// mwb_wc_bk_add_to_cart_form_update($);
 	people_conditions($);
-	// booking_service_conditions($);
 	booking_price_cal($);
-	// show_total($)
-
-	// console.log( mwb_wc_bk_public );
 
 	if( $('#booking-slots-data').length > 0  ){
 		var unavail_dates = $('#booking-slots-data').attr('unavail_dates');
@@ -82,7 +47,7 @@ jQuery(document).ready( function($) {
 		jQuery(this).parent('li').children('.booking-service-desc').removeClass('booking-service-desc_extend');
 	});
 });
-
+console.log(mwb_wc_bk_public.product_settings);
 function datepicker_check($, unavailable_dates, slots) {
 	max_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_input[0];
 	max_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_duration[0];
@@ -90,7 +55,6 @@ function datepicker_check($, unavailable_dates, slots) {
 	min_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_duration[0];
 
 	start_booking        = mwb_wc_bk_public.product_settings.mwb_start_booking_from[0];
-	custom_start_booking = mwb_wc_bk_public.product_settings.mwb_start_booking_custom_date[0];
 
 	max_dur   = max_adv_duration.match(/\b(\w)/g);
 	min_dur   = min_adv_duration.match( /\b(\w)/g );
@@ -102,9 +66,17 @@ function datepicker_check($, unavailable_dates, slots) {
 		start_slot = '+1d';
 		end_slot   = "+" + (parseInt(max_adv_input) + 1) + max_dur;
 	} else if ( start_booking == 'initially_available' ) {
-		start_slot = "+" + min_adv_input + min_dur;
-		end_slot   = "+" + max_adv_input + max_dur + ' +' + min_adv_input + min_dur;
+		if ( min_adv_input != 0 ) {
+			start_slot = "+" + min_adv_input + min_dur;
+			end_slot   = "+" + max_adv_input + max_dur + ' +' + min_adv_input + min_dur;
+		} else {
+			start_slot = new Date();
+			end_slot   = "+" + max_adv_input + max_dur;
+		}	
 	} else if ( start_booking == 'custom_date' ) {
+
+		custom_start_booking = mwb_wc_bk_public.product_settings.mwb_start_booking_custom_date[0];
+
 		custom_date_arr = custom_start_booking.split('-');
 		start_slot = new Date( custom_date_arr[0], custom_date_arr[1] - 1, custom_date_arr[2] );
 		if ( start_slot < new Date() ) {
@@ -119,59 +91,18 @@ function datepicker_check($, unavailable_dates, slots) {
 	}
 	
 	if ( mwb_wc_bk_public.product_settings.mwb_booking_unit_duration[0] == 'day' ) {
-
-			start_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
-			$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
-				end_date = $(this).val();
-			});
-			if ( start_date && end_date ) {
 	
-				date1 = new Date( start_date );
-				date2 = new Date( end_date );
-				
-				time_difference = date2.getTime() - date1.getTime();
-				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
-	
-				var arr = cal_in_between_days( start_date, day_difference );
-				var result = unvailable_date_range_check( arr, unavailable_dates );
-				if ( result == false ) {
-					$('#mwb-wc-bk-date-section .date-error').show();
-					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
-				} else {
-					$('#mwb-wc-bk-date-section .date-error').hide();
-				}
-			}
-	
-			$( '#mwb-wc-bk-duration-section' ).on( 'change', '#mwb-wc-bk-duration-input', function(){
-				duration = $( this ).val();
-				if ( start_date && duration ) {
-						
-					day_difference = duration;
-					var arr = cal_in_between_days( start_date, day_difference );
-					var result = unvailable_date_range_check( arr, unavailable_dates );
-					if ( result == false ) {
-						$('#mwb-wc-bk-date-section .date-error').show();
-						$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
-					} else {
-						$('#mwb-wc-bk-date-section .date-error').hide();
-					}
-	
-				}
-			} );
 		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
-	
 			end_date = $(this).val();
-			$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
-	
-				start_date = $(this).val();
-			});
+			start_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
 			if ( start_date && end_date ) {
-	
+
 				date1 = new Date( start_date );
 				date2 = new Date( end_date );
 				
 				time_difference = date2.getTime() - date1.getTime();
 				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+	
 				var arr = cal_in_between_days( start_date, day_difference );
 				var result = unvailable_date_range_check( arr, unavailable_dates );
 				if ( result == false ) {
@@ -182,9 +113,65 @@ function datepicker_check($, unavailable_dates, slots) {
 				}
 			}
 		});
+			
+		$( '#mwb-wc-bk-duration-section' ).on( 'change', '#mwb-wc-bk-duration-input', function(){
+			duration = $( this ).val();
+			start_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
+			if ( start_date && duration ) {
+					// alert('bnbnb');
+				day_difference = duration;
+				var arr = cal_in_between_days( start_date, day_difference );
+				alert( arr );
+				var result = unvailable_date_range_check( arr, unavailable_dates );
+				if ( result == false ) {
+					$('#mwb-wc-bk-date-section .date-error').show();
+					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
+				} else {
+					$('#mwb-wc-bk-date-section .date-error').hide();
+				}
+
+			}
+		} );
+			
+		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-start-date-input', function(){
+
+			start_date = $(this).val();
+			end_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-end-date-input').val();
+			duration = $( '#mwb-wc-bk-duration-section #mwb-wc-bk-duration-input' ).val();
+
+			if ( start_date && end_date ) {
+
+				date1 = new Date( start_date );
+				date2 = new Date( end_date );
+				
+				time_difference = date2.getTime() - date1.getTime();
+				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
+				var arr = cal_in_between_days( start_date, day_difference );
+				var result = unvailable_date_range_check( arr, unavailable_dates );
+				if ( result == false ) {
+					$('#mwb-wc-bk-date-section .date-error').show();
+					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
+				} else {
+					$('#mwb-wc-bk-date-section .date-error').hide();
+				}
+			}
+
+			if ( start_date && duration ) {
+				day_difference = duration;
+				var arr = cal_in_between_days( start_date, day_difference );
+				// alert( arr );
+				var result = unvailable_date_range_check( arr, unavailable_dates );
+				if ( result == false ) {
+					$('#mwb-wc-bk-date-section .date-error').show();
+					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
+				} else {
+					$('#mwb-wc-bk-date-section .date-error').hide();
+				}
+			}
+		});
+
 	}
 	
-
 	$( '#mwb-wc-bk-start-date-input' ).datepicker({
 		dateFormat : "mm/dd/yy",
 	
@@ -327,15 +314,18 @@ function booking_price_cal($) {
 		for ( var i = 0, len = people_input.length; i < len; i++ ) {
 			total_input += parseInt( people_input[i].value );
 		}
-		
-		if( total_input > max_people ) {
+		if ( max_people ) {
+			if( total_input > max_people ) {
 
-			var val = parseInt( currentObj.val() );
-			val -= 1;
-			total_input--;
-			currentObj.val( val );
+				var val = parseInt( currentObj.val() );
+				val -= 1;
+				total_input--;
+				currentObj.val( val );
+			}
 		}
+		
 		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-span').text( total_input + '-Peoples');
+
 		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden').val( total_input );
 		
 		var product_data   = $('#mwb-wc-bk-create-booking-form').attr('product-data');
@@ -418,6 +408,7 @@ function booking_price_cal($) {
 	$( document ).on( 'submit', '.cart', function(e) {
 
 		var people_total = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden' ).val();
+		// alert( people_total );
 		if ( people_total <= 0 ) {
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).show();
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( "*Select at least 1 people" );

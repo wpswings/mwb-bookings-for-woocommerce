@@ -19,13 +19,13 @@ $product_data = array(
 	'product_id' => $product->get_id(),
 );
 
-$unit_select   = ! empty( $product_meta['mwb_booking_unit_select'][0] ) ? $product_meta['mwb_booking_unit_select'][0] : '';
+$unit_select   = ! empty( $product_meta['mwb_booking_unit_select'][0] ) ? $product_meta['mwb_booking_unit_select'][0] : 'customer';
 $unit_input    = ! empty( $product_meta['mwb_booking_unit_input'][0] ) ? $product_meta['mwb_booking_unit_input'][0] : '';
-$unit_duration = ! empty( $product_meta['mwb_booking_unit_duration'][0] ) ? $product_meta['mwb_booking_unit_duration'][0] : '';
+$unit_duration = ! empty( $product_meta['mwb_booking_unit_duration'][0] ) ? $product_meta['mwb_booking_unit_duration'][0] : 'day';
 $range_picker  = ! empty( $product_meta['mwb_enable_range_picker'][0] ) ? $product_meta['mwb_enable_range_picker'][0] : 'no';
 
-$start_time = ! empty( $product_meta['mwb_booking_start_time'][0] ) ? $product_meta['mwb_booking_start_time'][0] : '00:00';
-$end_time   = ! empty( $product_meta['mwb_booking_end_time'][0] ) ? $product_meta['mwb_booking_end_time'][0] : '23:59';
+$start_time = ! empty( $product_meta['mwb_booking_start_time'][0] ) ? $product_meta['mwb_booking_start_time'][0] : '01:00';
+$end_time   = ! empty( $product_meta['mwb_booking_end_time'][0] ) ? $product_meta['mwb_booking_end_time'][0] : '23:00';
 
 ?>
 <div id="mwb-wc-bk-date-section" class="mwb-wc-bk-form-section">

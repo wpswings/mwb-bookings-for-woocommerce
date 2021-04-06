@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 if ( ! class_exists( 'WC_Email' ) ) {
@@ -61,8 +61,6 @@ class MWB_Booking_Confirmed extends WC_Email {
 		);
 		// Action to which we hook onto to send the email.
 
-		// add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
-		// add_action( 'mwb_new_booking', array( $this, 'trigger' ), 10 );
 		add_action( 'mwb_booking_status_confirmed', array( $this, 'trigger' ), 10, 2 );
 		add_action( 'mwb_booking_status_pending_to_confirmed', array( $this, 'trigger', 10, 2 ) );
 		add_action( 'mwb_booking_status_confirmation_to_confirmed', array( $this, 'trigger', 10, 2 ) );

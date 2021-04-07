@@ -1068,7 +1068,8 @@ class Mwb_Wc_Bk_Public {
 				} else {
 					$booking_people_cost += $base_cost;
 				}
-				$booking_people_cost += $booking_people_cost * $duration;
+				$booking_people_cost = $booking_people_cost * $duration;
+
 			}
 		} else {
 

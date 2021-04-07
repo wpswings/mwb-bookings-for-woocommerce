@@ -18,7 +18,6 @@ jQuery(document).ready( function($) {
 		if ( is_product ) {
 			$( '.mwb-wc-bk-form-input' ).trigger('change');
 		}
-
 	});
 
 	start_date = $( '#mwb-wc-bk-start-date-input' ).val();

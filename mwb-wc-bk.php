@@ -7,9 +7,9 @@
  * @package              Mwb_Wc_Bk
  *
  * @wordpress-plugin
- * Plugin Name:          Bookings For WooCommerce
+ * Plugin Name:          MWB Bookings For WooCommerce
  * Plugin URI:           https://makewebbetter.com/
- * Description:          Bookings For WooCommerce.
+ * Description:          Bookings For hotels or hourly bookings as appointments.
  * Version:              1.0.0
  * Author:               MakeWebBetter
  * Author URI:           https://makewebbetter.com/

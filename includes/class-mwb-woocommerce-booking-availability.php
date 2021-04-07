@@ -353,7 +353,7 @@ class MWB_Woocommerce_Booking_Availability {
 			'numberposts' => -1,
 			'post_type'   => 'mwb_cpt_booking',
 			'post_status' => 'publish',
-			'meta_query'  => array(
+			'meta_query'  => array(    // @codingStandardsIgnoreLine
 				array(
 					'relation' => 'AND',
 					array(
@@ -403,7 +403,7 @@ class MWB_Woocommerce_Booking_Availability {
 							} elseif ( 'hour' === $unit_dur || 'minute' === $unit_dur ) {
 								foreach ( $slot as $k => $v ) {
 									$arr = $this->extract_time_slot( $start_time, $end_time, $date, $unit_dur, $unit_dur_input );
-									if ( in_array( $k, $arr ) ) {
+									if ( in_array( $k, $arr ) ) {    // @codingStandardsIgnoreLine
 										$slots[ $date ][ $k ]['booking_count'] += 1;
 									}
 								}

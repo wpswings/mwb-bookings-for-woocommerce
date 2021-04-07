@@ -33,20 +33,6 @@ jQuery(document).ready( function($) {
 		jQuery('.booking-overview__help').toggleClass('booking-help__out');
 	
 	});
-
-	// jQuery('.mwb-add-rule__icon').on('click',function () {
-	// 	jQuery(this).css({
-	// 	'background-color':'#2196f3',
-	// 	'color':'#ffffff',
-	// 	'outline':'none'
-	// 	});	
-	// });
-		
-	// jQuery('.mwb_global_availability_toggle_icon').on('click',function(){
-	// 	jQuery(this).toggleClass('mwb_global_availability_toggle_icon-arrow');
-	// 	jQuery(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
-	// });
-	
 	
 });
 
@@ -424,8 +410,6 @@ function booking_user_select2($) {
 
 function product_general_settings_js($) {
 
-	// $( '#mwb_booking_unit_input' ).attr( 'required', true );
-
 	var allow_cancellation_check = $( '#mwb_booking_general_data #mwb_allow_booking_cancellation' ).is(':checked');
 	if ( allow_cancellation_check ) {
 		$ ( '#mwb_booking_general_data #mwb_booking_cancellation_days' ).show();
@@ -623,9 +607,6 @@ function product_general_settings_js($) {
 
 function product_availability_settings($) {
 
-	// $('#mwb_booking_start_time').attr( 'required', true );
-	// $('#mwb_advance_booking_max_input').attr( 'required', true );
-
 	var start_time = $('#mwb_booking_start_time').val();
 	var end_time   = $('#mwb_booking_end_time').val();
 
@@ -670,8 +651,6 @@ function product_availability_settings($) {
 }
 
 function product_cost_settings_js($) {
-
-	// $( '#mwb_booking_unit_cost_input' ).attr( 'required', true );
 
 	var unit_cost_check = $( '#mwb_booking_cost_data .unit-cost #mwb_booking_unit_cost_multiply' )
 	if( unit_cost_check.is( ':checked' ) ) {
@@ -1120,14 +1099,6 @@ function global_availability_rules($) {
 		}	
 	});
 
-
-	// jQuery('.mwb_booking_global_availability_rules .mwb_global_availability_rule_heading').each( function() {
-	// 	$(this).on('click', 'label', function(e){
-		
-	// 		$(this).closest('.mwb-availability-rules__table').find( '.mwb_global_availability_toggle' ).slideToggle(200);
-
-	// 	});
-	// } );
 
 	jQuery('.mwb_global_availability_toggle_icon').on('click',function(){
 		jQuery(this).toggleClass('mwb_global_availability_toggle_icon-arrow');

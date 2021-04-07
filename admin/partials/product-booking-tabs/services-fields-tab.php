@@ -20,7 +20,7 @@
 		?>
 		<p class="form-field">
 			<label for="mwb_booking_services_select_search"><?php esc_html_e( 'Add Services', 'mwb-wc-bk' ); ?></label>
-			<select id="mwb_booking_services_select_search" multiple ='multiple' name="mwb_booking_services_select[]" data-placeholder="<?php esc_html_e( 'Add the services you want to include in booking', 'mwb-wc-bk' ); ?>">
+			<select id="mwb_booking_services_select_search" multiple ='multiple' name="mwb_booking_services_select[]" data-placeholder="<?php esc_html_e( 'Select services', 'mwb-wc-bk' ); ?>" style="width: 40%">
 					<?php
 					if ( ! empty( $this->setting_fields['mwb_booking_services_select'] ) ) {
 						$selected_services = is_array( $this->setting_fields['mwb_booking_services_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_services_select'] ) : null;

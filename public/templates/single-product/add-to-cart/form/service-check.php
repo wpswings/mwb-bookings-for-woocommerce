@@ -21,7 +21,7 @@ $product_data = array(
 );
 
 $product_meta    = get_post_meta( $product->get_id() );
-$setting_options = get_option( 'mwb_booking_settings_options' );
+$setting_options = get_option( 'mwb_booking_settings_options', $global_func->booking_settings_tab_default_global_options() );
 
 $inc_service_enabled = ! empty( $setting_options['mwb_booking_setting_bo_inc_service_enable'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_inc_service_enable'] ) ) : 'no';
 $show_service_cost   = ! empty( $setting_options['mwb_booking_setting_bo_service_cost'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_service_cost'] ) ) : 'no';

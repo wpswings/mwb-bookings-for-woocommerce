@@ -32,8 +32,8 @@ if ( isset( $_POST['mwb_booking_global_cost_rules_save'] ) ) {
 		$cost_rule_arr['rule_switch']     = isset( $_POST['mwb_global_cost_rule_heading_switch'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_heading_switch'] ) ) : array();
 		$cost_rule_arr['rule_name']       = isset( $_POST['mwb_global_cost_rule_name'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_name'] ) ) : array();
 		$cost_rule_arr['rule_condition']  = isset( $_POST['mwb_global_cost_rule_condition'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_condition'] ) ) : array();
-		$cost_rule_arr['rule_range_from'] = isset( $_POST['mwb_global_cost_rule_range_from'] ) ? $_POST['mwb_global_cost_rule_range_from'] : array();
-		$cost_rule_arr['rule_range_to']   = isset( $_POST['mwb_global_cost_rule_range_to'] ) ? $_POST['mwb_global_cost_rule_range_to'] : array();
+		$cost_rule_arr['rule_range_from'] = isset( $_POST['mwb_global_cost_rule_range_from'] ) ? $_POST['mwb_global_cost_rule_range_from'] : array();    // @codingStandardsIgnoreLine
+		$cost_rule_arr['rule_range_to']   = isset( $_POST['mwb_global_cost_rule_range_to'] ) ? $_POST['mwb_global_cost_rule_range_to'] : array();         // @codingStandardsIgnoreLine
 		$cost_rule_arr['rule_base_cal']   = isset( $_POST['mwb_global_cost_rule_base_cal'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_base_cal'] ) ) : array();
 		$cost_rule_arr['rule_base_cost']  = isset( $_POST['mwb_global_cost_rule_base_cost'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_base_cost'] ) ) : array();
 		$cost_rule_arr['rule_unit_cal']   = isset( $_POST['mwb_global_cost_rule_unit_cal'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_global_cost_rule_unit_cal'] ) ) : array();

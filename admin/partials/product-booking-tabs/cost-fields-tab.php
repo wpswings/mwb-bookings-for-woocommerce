@@ -117,7 +117,7 @@
 		<div id="mwb_booking_added_cost_select_field">
 			<p class="form-field">
 				<label for="mwb_booking_added_cost_select_search"><?php esc_html_e( 'Add Extra Costs', 'mwb-wc-bk' ); ?></label>
-				<select id="mwb_booking_added_cost_select_search" multiple ='multiple' name="mwb_booking_added_cost_select[]" data-placeholder="<?php esc_html_e( 'Add the Extra Costs you want to include in booking', 'mwb-wc-bk' ); ?>">
+				<select id="mwb_booking_added_cost_select_search" multiple ='multiple' name="mwb_booking_added_cost_select[]" data-placeholder="<?php esc_html_e( 'Select Extra Costs', 'mwb-wc-bk' ); ?>" style="width: 40%;">
 					<?php
 					if ( ! empty( $this->setting_fields['mwb_booking_added_cost_select'] ) ) {
 						$selected_costs = is_array( $this->setting_fields['mwb_booking_added_cost_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_added_cost_select'] ) : null;

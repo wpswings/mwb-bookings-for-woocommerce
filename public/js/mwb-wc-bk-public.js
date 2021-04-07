@@ -117,10 +117,8 @@ function datepicker_check($, unavailable_dates, slots) {
 			duration = $( this ).val();
 			start_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
 			if ( start_date && duration ) {
-					// alert('bnbnb');
 				day_difference = duration;
 				var arr = cal_in_between_days( start_date, day_difference );
-				alert( arr );
 				var result = unvailable_date_range_check( arr, unavailable_dates );
 				if ( result == false ) {
 					$('#mwb-wc-bk-date-section .date-error').show();
@@ -158,7 +156,6 @@ function datepicker_check($, unavailable_dates, slots) {
 			if ( start_date && duration ) {
 				day_difference = duration;
 				var arr = cal_in_between_days( start_date, day_difference );
-				// alert( arr );
 				var result = unvailable_date_range_check( arr, unavailable_dates );
 				if ( result == false ) {
 					$('#mwb-wc-bk-date-section .date-error').show();
@@ -254,10 +251,8 @@ function show_time_slots($) {
 		var product_id = product_data.product_id;
 		var slots = $('#booking-slots-data').attr('slots');
 		slots = JSON.parse( slots );
-		// alert(product_id);
 
 		var date = $(this).val();
-		// alert( $(this).val() );
 
 		$.ajax({
 			url      : mwb_wc_bk_public.ajaxurl,
@@ -271,7 +266,6 @@ function show_time_slots($) {
  			},
 			success : function( response ) {
 				$( '#mwb-wc-bk-time-section' ).html( response );
-				// console.log( response );
 			}
 		});
 
@@ -291,7 +285,6 @@ function people_conditions($) {
 }
 
 function booking_price_cal($) {
-	// var people_count = 0;
 	var max_people = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div input[type=hidden]' ).attr('data-max');
 	var min_people = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div input[type=hidden]' ).attr('data-min');
 
@@ -407,7 +400,6 @@ function booking_price_cal($) {
 	$( document ).on( 'submit', '.cart', function(e) {
 
 		var people_total = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden' ).val();
-		// alert( people_total );
 		if ( people_total <= 0 ) {
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).show();
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( "*Select at least 1 people" );
@@ -455,7 +447,6 @@ function booking_price_cal($) {
 						'slots'     : slots,
 					},
 					success : function( response ) {
-						alert(response);
 						response = JSON.parse( response );
 
 						if ( response.status == true ) {
@@ -559,7 +550,6 @@ function price_cal_func($) {
 		}
 	});
 	Object.assign( ajax_data, {'add_service_count': add_service_count} );
-	// console.log( ajax_data );
 
 	$.ajax({
 		url      : mwb_wc_bk_public.ajaxurl,
@@ -567,7 +557,6 @@ function price_cal_func($) {
 		data     : ajax_data,
 		success : function( response ) {
 			response = JSON.parse(response);
-			// console.log( response );
 			var price_html = response.price_html ; 
 			$('.price').html(price_html);
 			total_cost     = response.booking_total_cost;

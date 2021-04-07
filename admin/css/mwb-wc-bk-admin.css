@@ -1070,7 +1070,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     top: -71px;
     transition: 0.5s ease all;
     opacity: 1;
-} 
+}
 
 #mwb_booking_added_cost_select_field select#mwb_booking_added_cost_select_search ~ .select2 {
     width: 250px !important;

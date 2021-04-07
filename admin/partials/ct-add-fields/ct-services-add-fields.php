@@ -69,10 +69,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'hide_empty' => false,
 			)
 		);
-		foreach ( $booking_people_taxonomy_terms as $term ) {
-			$term_name = $term->slug;
+		foreach ( $booking_people_taxonomy_terms as $t ) {
+			$term_name = $t->slug;
 			?>
-		<label for="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"><?php echo esc_html( 'Service Cost for ' . $term->name ); ?></label>
+		<label for="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"><?php echo esc_html( 'Service Cost for ' . $t->name ); ?></label>
 		<input type="number" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"  class="postform mwb_ct_service_multiply_people" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" />
 		<p class="description"><?php esc_html_e( 'Enter the service cost for respective people type.', 'mwb-wc-bk' ); ?></p>
 	<?php } ?>

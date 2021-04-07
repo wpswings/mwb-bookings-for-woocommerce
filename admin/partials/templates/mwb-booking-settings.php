@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	exit;
 }
+$global_func = Mwb_Booking_Global_Functions::get_global_instance();
 
 if ( isset( $_POST['mwb_booking_settings_save'] ) ) {
 
@@ -24,18 +25,18 @@ if ( isset( $_POST['mwb_booking_settings_save'] ) ) {
 
 	$mwb_booking_setting_options = array();
 
-	$mwb_booking_setting_options['mwb_booking_setting_go_enable']             = ! empty( $_POST['mwb_booking_setting_go_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_enable'] ) ) : 'no';
+	$mwb_booking_setting_options['mwb_booking_setting_go_enable']             = ! empty( $_POST['mwb_booking_setting_go_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_enable'] ) ) : 'yes';
 	$mwb_booking_setting_options['mwb_booking_setting_go_confirm_status']     = ! empty( $_POST['mwb_booking_setting_go_confirm_status'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_confirm_status'] ) ) : '';
 	$mwb_booking_setting_options['mwb_booking_setting_go_reject']             = ! empty( $_POST['mwb_booking_setting_go_reject'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_reject'] ) ) : '';
-	$mwb_booking_setting_options['mwb_booking_setting_bo_inc_service_enable'] = ! empty( $_POST['mwb_booking_setting_bo_inc_service_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_inc_service_enable'] ) ) : 'no';
-	$mwb_booking_setting_options['mwb_booking_setting_bo_service_cost']       = ! empty( $_POST['mwb_booking_setting_bo_service_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_cost'] ) ) : 'no';
-	$mwb_booking_setting_options['mwb_booking_setting_bo_service_desc']       = ! empty( $_POST['mwb_booking_setting_bo_service_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_desc'] ) ) : 'no';
-	$mwb_booking_setting_options['mwb_booking_setting_bo_service_total']      = ! empty( $_POST['mwb_booking_setting_bo_service_total'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_total'] ) ) : 'no';
+	$mwb_booking_setting_options['mwb_booking_setting_bo_inc_service_enable'] = ! empty( $_POST['mwb_booking_setting_bo_inc_service_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_inc_service_enable'] ) ) : 'yes';
+	$mwb_booking_setting_options['mwb_booking_setting_bo_service_cost']       = ! empty( $_POST['mwb_booking_setting_bo_service_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_cost'] ) ) : 'yes';
+	$mwb_booking_setting_options['mwb_booking_setting_bo_service_desc']       = ! empty( $_POST['mwb_booking_setting_bo_service_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_desc'] ) ) : 'yes';
+	$mwb_booking_setting_options['mwb_booking_setting_bo_service_total']      = ! empty( $_POST['mwb_booking_setting_bo_service_total'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_bo_service_total'] ) ) : 'yes';
 
 	update_option( 'mwb_booking_settings_options', $mwb_booking_setting_options );
 }
 
-$mwb_booking_settings = get_option( 'mwb_booking_settings_options', $this->booking_settings_tab_default_global_options() );
+$mwb_booking_settings = get_option( 'mwb_booking_settings_options', $global_func->booking_settings_tab_default_global_options() );
 
 ?>
 <!-- For Global options Setting -->

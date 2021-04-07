@@ -40,7 +40,7 @@ class Mwb_Wc_Bk_Public {
 	private $version;
 
 	/**
-	 * Instance for the MWB_Woocommerce_Booking class
+	 * Instance for the MWB_Woocommerce_Booking Public class
 	 *
 	 * @var obj
 	 */
@@ -119,7 +119,10 @@ class Mwb_Wc_Bk_Public {
 			'nonce'   => wp_create_nonce( 'mwb_wc_bk_public' ),
 		);
 
-		// echo '<pre>'; print_r( get_post_meta( get_the_id() ) ); echo '</pre>';die('lm');
+		$global_func = Mwb_Booking_Global_Functions::get_global_instance();
+
+		$global_settings = get_option( 'mwb_booking_settings_options', $global_func->booking_settings_tab_default_global_options() );
+
 		if ( is_product() ) {
 			$p_id    = get_the_id();
 			$product = wc_get_product( $p_id );
@@ -127,7 +130,7 @@ class Mwb_Wc_Bk_Public {
 				$args['mwb_booking_product_page'] = 'true';
 
 				$args['product_settings'] = get_post_meta( get_the_id() );
-				$args['global_settings']  = get_option( 'mwb_booking_settings_options' );
+				$args['global_settings']  = $global_settings;
 				$args['current_date']     = gmdate( 'Y-m-d' );
 				$args['not_allowed_days'] = maybe_unserialize( ! empty( $args['product_settings']['mwb_booking_not_allowed_days'][0] ) ? $args['product_settings']['mwb_booking_not_allowed_days'][0] : array() );
 			}
@@ -297,7 +300,7 @@ class Mwb_Wc_Bk_Public {
 
 		$unit_duration = get_post_meta( $product_id, 'mwb_booking_unit_duration', true );
 
-		$slots = isset( $_POST['slots'] ) ? $_POST['slots'] : array();
+		$slots = isset( $_POST['slots'] ) ? $_POST['slots'] : array();    // @codingStandardsIgnoreLine
 
 		if ( ! empty( $product_id ) && ! empty( $start_date ) ) {
 			if ( 'hour' === $unit_duration || 'minute' === $unit_duration ) {
@@ -346,7 +349,7 @@ class Mwb_Wc_Bk_Public {
 
 		check_ajax_referer( 'mwb_wc_bk_public', 'nonce' );
 
-		$slots      = isset( $_POST['slots'] ) ? $_POST['slots'] : array();
+		$slots      = isset( $_POST['slots'] ) ? $_POST['slots'] : array();     // @codingStandardsIgnoreLine
 		$time_slot  = isset( $_POST['time_slot'] ) ? sanitize_text_field( wp_unslash( $_POST['time_slot'] ) ) : '';
 		$start_date = isset( $_POST['start_date'] ) ? sanitize_text_field( wp_unslash( $_POST['start_date'] ) ) : array();
 		$duration   = isset( $_POST['duration'] ) ? sanitize_text_field( wp_unslash( $_POST['duration'] ) ) : '';
@@ -428,7 +431,7 @@ class Mwb_Wc_Bk_Public {
 		$product = wc_get_product( $product_id );
 		if ( $product && $product->is_type( 'mwb_booking' ) ) {
 			if ( ! isset( $cart_item_data['mwb_wc_bk_cart_data'] ) ) {
-				$posted_data                      = $_REQUEST;
+				$posted_data                      = $_REQUEST;    // @codingStandardsIgnoreLine
 				$booking_data                     = $this->mwb_wc_bk_get_product_data( $posted_data, $product_id );
 				$cart_item_data['mwb_wc_bk_data'] = $booking_data;
 			}
@@ -596,7 +599,9 @@ class Mwb_Wc_Bk_Public {
 	/**
 	 * Change button text on product pages
 	 *
-	 * @param [string] $product Product Add to cart button text.
+	 * @param string $text    Text of the add to cart button.
+	 * @param object $product Product Object.
+	 *
 	 * @return string
 	 */
 	public function mwb_wc_bk_add_to_cart_text( $text, $product ) {
@@ -719,10 +724,11 @@ class Mwb_Wc_Bk_Public {
 	/**
 	 * Empty the cart before Add Booking.
 	 *
-	 * @param [type] $passed
-	 * @param [int] $product_id ID of the product.
-	 * @param [type] $quantity 
-	 * @return void
+	 * @param boolean $passed True or False.
+	 * @param int     $product_id ID of the product.
+	 * @param int     $quantity Quantity.
+	 *
+	 * @return boolean
 	 */
 	public function remove_cart_item_before_add_to_cart( $passed, $product_id, $quantity ) {
 
@@ -752,7 +758,7 @@ class Mwb_Wc_Bk_Public {
 			$product_id = $cart_item['data']->get_id();
 			$product    = wc_get_product( $product_id );
 
-			if ( $product && $product->is_type( 'mwb_booking' ) && $cart_item['quantity'] != $new_qty ) {
+			if ( $product && $product->is_type( 'mwb_booking' ) && $cart_item['quantity'] != $new_qty ) {  // @codingStandardsIgnoreLine
 				$cart->set_quantity( $cart_item_key, $new_qty ); // Change quantity.
 			}
 		}
@@ -851,9 +857,10 @@ class Mwb_Wc_Bk_Public {
 					$booking_id = $this->mwb_wc_bk_create_booking( $args );
 					if ( $booking_id ) {
 						update_post_meta( $order_id, 'mwb_booking_id', $booking_id );
-						$order_item->add_meta_data( 'mwb_booking_id', $booking_id, true );
+						// $order_item->add_meta_data( 'mwb_booking_id', $booking_id, true );
+						$this->mwb_wc_bk_booking_details_order( $order_item, $booking_data );
 						$order_item->save_meta_data();
-						$order->add_order_note( sprintf( __( 'A new booking <a href="%1$1s">#%2$2s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );
+						$order->add_order_note( sprintf( __( 'A new booking <a href="%1$1s">#%2$2s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );   // @codingStandardsIgnoreLine
 
 						$this->save_booking_order_data( $order_id, $booking_id );
 						$this->booking_status_acc_order_status( $order_id, $booking_id );
@@ -865,10 +872,24 @@ class Mwb_Wc_Bk_Public {
 	}
 
 	/**
+	 * Display details on Thanq Page.
+	 *
+	 * @param object $order_item Order item Object.
+	 * @param array  $booking_data Booking Details.
+	 * @return void
+	 */
+	public function mwb_wc_bk_booking_details_order( $order_item, $booking_data ) {
+
+		$order_item->add_meta_data( 'From', gmdate( 'Y-m-d h:i:s a', $booking_data['start_timestamp'] ) );
+		$order_item->add_meta_data( 'To', gmdate( 'Y-m-d h:i:s a', $booking_data['end_timestamp'] ) );
+
+	}
+
+	/**
 	 * Changing Booking Status according to order status, when a order is created
 	 *
-	 * @param [int] $order_id  ID of the order created.
-	 * @param [int] $booking_id ID of the booking created.
+	 * @param int $order_id  ID of the order created.
+	 * @param int $booking_id ID of the booking created.
 	 * @return void
 	 */
 	public function booking_status_acc_order_status( $order_id, $booking_id ) {
@@ -903,13 +924,11 @@ class Mwb_Wc_Bk_Public {
 				break;
 		}
 		update_post_meta( $booking_id, 'mwb_booking_status', $new_status );
-		// do_action( 'mwb_booking_status_' . $new_status, $booking_id, $order_id );
 		update_post_meta( $booking_id, 'trigger_admin_email', 'yes' );
 
-		//do_action( 'mwb_booking_created', $booking_id, $order_id );
 	}
 
-	/** 
+	/**
 	 * Update Order meta to the booking post meta.
 	 *
 	 * @param [int]  $order_id Order ID.
@@ -1069,7 +1088,6 @@ class Mwb_Wc_Bk_Public {
 					$booking_people_cost += $base_cost;
 				}
 				$booking_people_cost = $booking_people_cost * $duration;
-
 			}
 		} else {
 
@@ -1269,7 +1287,7 @@ class Mwb_Wc_Bk_Public {
 	 */
 	public function mwb_booking_list_user_bookings( $menu_links ) {
 
-		$menu_links['all_bookings'] = __( 'All Bookings', '' );
+		$menu_links['all_bookings'] = __( 'All Bookings', 'mwb-wc-bk' );
 
 		return $menu_links;
 	}

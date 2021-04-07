@@ -1,10 +1,9 @@
-<?php
+<?php  // @codingStandardsIgnoreLine
 /**
  * Booking product add to cart
  *
- * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates
- * @version 3.4.0
+ * @package Mwb_Wc_Bk
+ * @version 1.0.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -14,9 +13,7 @@ global $product;
 if ( ! $product->is_purchasable() ) {
 	return;
 }
-
 ?>
-
 
 <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 

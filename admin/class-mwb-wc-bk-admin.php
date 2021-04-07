@@ -279,7 +279,7 @@ class Mwb_Wc_Bk_Admin {
 			$product->set_stock_status( 'instock' );
 			$base_price = get_post_meta( $product->get_id(), 'mwb_booking_base_cost_input', true );
 			$unit_price = get_post_meta( $product->get_id(), 'mwb_booking_unit_cost_input', true );
-			$price      = $base_price + $unit_price;
+			$price      = (int) $base_price + (int) $unit_price;
 			if ( $price ) {
 				update_post_meta( $product->get_id(), '_price', $price );
 			}
@@ -627,7 +627,6 @@ class Mwb_Wc_Bk_Admin {
 			<label><h3><?php esc_html_e( 'Details', 'mwb-wc-bk' ); ?></h3></label>
 		</th>
 		<?php
-		// if ( ! empty( $global_settings['mwb_booking_setting_go_enable'] ) && 'yes' === $global_settings['mwb_booking_setting_go_enable'] ) {
 		if ( ! empty( $product_meta['mwb_booking_unit_select'][0] ) && 'fixed' === $product_meta['mwb_booking_unit_select'][0] ) {
 			?>
 			<td>
@@ -675,7 +674,6 @@ class Mwb_Wc_Bk_Admin {
 		}
 		?>
 		<?php
-		// }
 		wp_die();
 	}
 
@@ -715,7 +713,6 @@ class Mwb_Wc_Bk_Admin {
 			'search_items'          => __( 'Search Bookings', 'mwb-wc-bk' ),
 			'not_found'             => __( 'No booking found', 'mwb-wc-bk' ),
 			'not_found_in_trash'    => __( 'No bookings found in trash', 'mwb-wc-bk' ),
-		//	'parent_items_colon'    => __( 'Parent Booking:', 'mwb-wc-bk' ),
 			'archives'              => __( 'Archives', 'mwb-wc-bk' ),
 			'attributes'            => __( 'Attributes', 'mwb-wc-bk' ),
 			'insert_into_item'      => __( 'Insert into Product', 'mwb-wc-bk' ),
@@ -744,7 +741,6 @@ class Mwb_Wc_Bk_Admin {
 			'map_meta_cap'       => true,
 			'query-var'          => true,
 			'menu_icon'          => 'dashicons-calendar-alt',
-			//'add_order_meta_boxes' => true,
 		);
 		register_post_type( 'mwb_cpt_booking', $args );
 	}
@@ -753,9 +749,6 @@ class Mwb_Wc_Bk_Admin {
 	 * Remove meta boxes from the mwb_cpt_booking order type post edit screen
 	 */
 	public function remove_meta_box_cpt() {
-
-		// $screen    = get_current_screen();
-		// $screen_id = $screen ? $screen->id : '';
 
 		remove_meta_box( 'postexcerpt', 'mwb_cpt_booking', 'normal' ); // Excerpt box.
 		remove_meta_box( 'commentstatusdiv', 'mwb_cpt_booking', 'normal' ); // Comment status box.
@@ -806,15 +799,15 @@ class Mwb_Wc_Bk_Admin {
 		?>
 		<table>
 			<tr>
-				<th><?php esc_html_e( 'From:', '' ); ?></th>
+				<th><?php esc_html_e( 'From:', 'mwb-wc-bk' ); ?></th>
 				<td><?php echo esc_html( $from ); ?></td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'To:', '' ); ?></th>
+				<th><?php esc_html_e( 'To:', 'mwb-wc-bk' ); ?></th>
 				<td><?php echo esc_html( $to ); ?></td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Total People', '' ); ?></th>
+				<th><?php esc_html_e( 'Total People', 'mwb-wc-bk' ); ?></th>
 				<td><?php echo esc_html( $people_total ); ?></td>
 			</tr>
 			<tr>
@@ -872,7 +865,7 @@ class Mwb_Wc_Bk_Admin {
 				</td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Total:', '' ); ?></th>
+				<th><?php esc_html_e( 'Total:', 'mwb-wc-bk' ); ?></th>
 				<td><?php echo wc_price( esc_html( $total_cost ) ); // @codingStandardsIgnoreLine ?></td>
 			</tr>
 		</table>
@@ -931,7 +924,7 @@ class Mwb_Wc_Bk_Admin {
 		?>
 		<div class="mwb_booking_cpt_actions">
 			<div class="mwb_booking_cpt_status">
-				<label for="mwb_booking_status_select"><?php esc_html_e( 'Booking Status:', '' ); ?></label>
+				<label for="mwb_booking_status_select"><?php esc_html_e( 'Booking Status:', 'mwb-wc-bk' ); ?></label>
 				<select name="mwb_booking_status_select" id="mwb_booking_status_select">
 					<?php foreach ( $statuses as $status => $val ) { ?>
 					<option value="<?php echo esc_html( $status ); ?>" <?php selected( $status, $current_status, true ); ?>><?php echo esc_html( $val ); ?></option>
@@ -939,7 +932,7 @@ class Mwb_Wc_Bk_Admin {
 				</select>
 			</div>
 			<div class="mwb_booking_cpt_submit">
-				<input type="submit" name="save" id="publish" class="button button-primary button-large" value="<?php esc_html_e( 'Update', '' ); ?>" >
+				<input type="submit" name="save" id="publish" class="button button-primary button-large" value="<?php esc_html_e( 'Update', 'mwb-wc-bk' ); ?>" >
 			</div>
 		</div>
 		<?php
@@ -971,7 +964,6 @@ class Mwb_Wc_Bk_Admin {
 			<h1 class="woocommerce-order-data__heading"><?php echo esc_html( $post->post_title . '  ' ); ?><span><a href="javascript:void(0)" class="mwb_cpt_booking_listing_status mwb_booking_<?php echo esc_html( $status ); ?>"><?php echo esc_html( $status ); ?></a></span></h1>
 			<div class=mwb_booking_data_column_container>
 				<div class="mwb_booking_data_column">
-					<!-- <h3><?php // esc_html_e( 'General data', '' ); ?></h3> -->
 					<div class="mwb_booking_details_wrap">
 						<div class="mwb_booking_order_data">
 							<p class="form-field form-field-wide" >
@@ -1059,7 +1051,9 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function mwb_booking_schedule_status() {
 
-		$settings     = get_option( 'mwb_booking_settings_options' );
+		$global_func = Mwb_Booking_Global_Functions::get_global_instance();
+
+		$settings     = get_option( 'mwb_booking_settings_options', $global_func->booking_settings_tab_default_global_options() );
 		$confirm_days = ! empty( $settings['mwb_booking_setting_go_confirm_status'] ) ? $settings['mwb_booking_setting_go_confirm_status'] : 0;
 		$cancel_days  = ! empty( $settings['mwb_booking_setting_go_reject'] ) ? $settings['mwb_booking_setting_go_reject'] : 0;
 
@@ -1235,17 +1229,18 @@ class Mwb_Wc_Bk_Admin {
 	 *
 	 * @return array
 	 */
-	public function booking_settings_tab_default_global_options() {
+	// public function booking_settings_tab_default_global_options() {
 
-		return array(
-			'mwb_booking_setting_go_enable'             => 'yes',
-			'mwb_booking_setting_go_confirm_status'     => '',
-			'mwb_booking_setting_go_reject'             => '',
-			'mwb_booking_setting_bo_inc_service_enable' => 'yes',
-			'mwb_booking_setting_bo_service_cost'       => 'yes',
-			'mwb_booking_setting_bo_service_desc'       => 'no',
-		);
-	}
+	// 	return array(
+	// 		'mwb_booking_setting_go_enable'             => 'yes',
+	// 		'mwb_booking_setting_go_confirm_status'     => '',
+	// 		'mwb_booking_setting_go_reject'             => '',
+	// 		'mwb_booking_setting_bo_inc_service_enable' => 'yes',
+	// 		'mwb_booking_setting_bo_service_cost'       => 'yes',
+	// 		'mwb_booking_setting_bo_service_desc'       => 'yes',
+	// 		'mwb_booking_setting_bo_service_total'      => 'yes',
+	// 	);
+	// }
 
 	/**
 	 * "Bookings" Admin Menu.
@@ -1602,6 +1597,7 @@ class Mwb_Wc_Bk_Admin {
 	/**
 	 * Editing the custom fields in our custom taxonomy "mwb_ct_cost"
 	 *
+	 * @param  object $term Term Object.
 	 * @return void
 	 */
 	public function edit_custom_fields_ct_booking_cost( $term ) {
@@ -1619,7 +1615,7 @@ class Mwb_Wc_Bk_Admin {
 		$columns = array(
 			'cb'              => '<input type="checkbox" />',
 			'name'            => __( 'Name', 'mwb-wc-bk' ),
-			'cost'            => '<span class="booking-service-icon">' . esc_html__( 'Cost', '' ) . '</sapn>',
+			'cost'            => '<span class="booking-service-icon">' . esc_html__( 'Cost', 'mwb-wc-bk' ) . '</sapn>',
 			'multiply_units'  => '<span class="dashicons dashicons-money-alt booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by units', 'mwb-wc-bk' ) . '</p>',
 			'multiply_people' => '<span class="dashicons dashicons-groups booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by number of peoples', 'mwb-wc-bk' ) . '</p>',
 			'has_quantity'    => '<span class="dashicons dashicons-images-alt2 booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'If has Quantity', 'mwb-wc-bk' ) . '</p>',
@@ -1718,7 +1714,7 @@ class Mwb_Wc_Bk_Admin {
 		$columns = array(
 			'cb'              => '<input type="checkbox" />',
 			'name'            => __( 'Name', 'mwb-wc-bk' ),
-			'cost'            => '<span class="booking-cost-icon">' . esc_html__( 'Cost', '' ) . '</sapn>',
+			'cost'            => '<span class="booking-cost-icon">' . esc_html__( 'Cost', 'mwb-wc-bk' ) . '</sapn>',
 			'multiply_units'  => '<span class="dashicons dashicons-money-alt booking-cost-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by units', 'mwb-wc-bk' ) . '</p>',
 			'multiply_people' => '<span class="dashicons dashicons-groups booking-cost-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by number of people', 'mwb-wc-bk' ) . '</p>',
 		);

@@ -1,6 +1,15 @@
-<?php
-
-// echo 'overview';
+<?php  // @codingStandardsIgnoreLine
+/**
+ * Provide a admin area view for the plugin
+ *
+ * This file is used to markup the admin-facing aspects of the plugin.
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Mwb_Wc_Bk
+ * @subpackage Mwb_Wc_Bk/admin/partials
+ */
 
 ?>
 

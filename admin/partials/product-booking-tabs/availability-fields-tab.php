@@ -89,11 +89,9 @@
 
 		<p class="form-field">
 			<label for="mwb_booking_not_allowed_days"><?php esc_html_e( 'Booking not allowed', 'mwb-wc-bk' ); ?></label>
-			<select name="mwb_booking_not_allowed_days[]" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Weekday(s)', 'mwb-wc-bk' ); ?>" data-day="<?php echo esc_html( wp_json_encode( $this->setting_fields['mwb_booking_not_allowed_days'] ) ); ?>">
+			<select name="mwb_booking_not_allowed_days[]" id="mwb_booking_not_allowed_days" multiple ="multiple" data-placeholder="<?php esc_html_e( 'Select Weekday(s)', 'mwb-wc-bk' ); ?>" data-day="<?php echo esc_html( wp_json_encode( $this->setting_fields['mwb_booking_not_allowed_days'] ) ); ?>" style="width:40%;">
 				<?php foreach ( apply_filters( 'mwb_wc_bk_not_allowed_days', $this->global_func->booking_search_weekdays() ) as $key => $value ) : ?>
-					<?php //if ( ! empty( $this->setting_fields['mwb_booking_not_allowed_days'] ) ) { ?>
 					<option <?php echo in_array( $key, $this->setting_fields['mwb_booking_not_allowed_days'], true ) ? 'selected' : ''; ?> value="<?php echo esc_html( $key ); ?>"><?php echo esc_html( $value ); ?></option>
-					<?php //} ?>
 				<?php endforeach; ?>
 			</select>
 			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Select weekday(s) on which booking is not allowed', 'mwb-wc-bk' ) ); ?>

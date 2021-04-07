@@ -1,6 +1,6 @@
 <?php
 /**
- * The admin-specific functionality of the plugin.
+ * The Gobal functionality for the plugin.
  *
  * @link       https://makewebbetter.com/
  * @since      1.0.0
@@ -148,6 +148,24 @@ class Mwb_Booking_Global_Functions {
 		);
 		apply_filters( 'mwb_booking_months', $arr );
 		return $arr;
+	}
+
+	/**
+	 * Settings tab Default Global Options
+	 *
+	 * @return array
+	 */
+	public function booking_settings_tab_default_global_options() {
+
+		return array(
+			'mwb_booking_setting_go_enable'             => 'yes',
+			'mwb_booking_setting_go_confirm_status'     => '',
+			'mwb_booking_setting_go_reject'             => '',
+			'mwb_booking_setting_bo_inc_service_enable' => 'yes',
+			'mwb_booking_setting_bo_service_cost'       => 'yes',
+			'mwb_booking_setting_bo_service_desc'       => 'yes',
+			'mwb_booking_setting_bo_service_total'      => 'yes',
+		);
 	}
 }
 

@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 $product_meta = get_post_meta( $product->get_id() );
-// echo '<pre>'; print_r( $product_meta ); echo '</pre>';
+
 $booking_people_price = '';
 
 $people_enable_check = ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_people_enable_checkbox'][0] ) ) : 'no';
@@ -26,7 +26,6 @@ $people_select       = ! empty( $product_meta['mwb_booking_people_select'][0] ) 
 $unit_price          = ! empty( $product_meta['mwb_booking_unit_cost_input'] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_unit_cost_input'] ) ) : sanitize_text_field( wp_unslash( $product_meta['_price'] ) );
 $base_price          = ! empty( $product_meta['mwb_booking_base_cost_input'] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_booking_base_cost_input'] ) ) : 0;
 
-// echo '<pre>'; print_r( $min_people ); echo '</pre>';
 $product_data = array(
 	'product_id' => $product->get_id(),
 );
@@ -42,7 +41,6 @@ if ( empty( $people_select ) ) {
 		?>
 		<div id="mwb-wc-bk-people-field">
 			<?php
-	// echo '<pre>'; print_r( $people_type_check ); echo '</pre>';die('mojo');
 
 			if ( 'no' === $people_type_check ) {
 				?>

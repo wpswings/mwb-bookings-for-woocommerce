@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +23,7 @@
  * @subpackage Mwb_Wc_Bk/includes
  * @author     MakeWebBetter <webmaster@makewebbetter.com>
  */
-class Mwb_Wc_Bk_i18n {
+class Mwb_Wc_Bk_i18n {     // @codingStandardsIgnoreLine
 
 
 	/**

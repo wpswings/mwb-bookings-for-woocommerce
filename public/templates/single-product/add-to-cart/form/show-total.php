@@ -14,7 +14,10 @@
 defined( 'ABSPATH' ) || exit;
 
 global $product;
-$setting_options = get_option( 'mwb_booking_settings_options' );
+
+$global_func = Mwb_Booking_Global_Functions::get_global_instance();
+
+$setting_options = get_option( 'mwb_booking_settings_options', $global_func->booking_settings_tab_default_global_options() );
 
 $total_check = ! empty( $setting_options['mwb_booking_setting_bo_service_total'] ) ? sanitize_text_field( wp_unslash( $setting_options['mwb_booking_setting_bo_service_total'] ) ) : 'no';
 ?>

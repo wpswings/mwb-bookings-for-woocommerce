@@ -106,7 +106,7 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 							</select>
 							<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
 							<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
-							<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?> -->
+							<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 								<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
 							<?php } ?>
 							</select>

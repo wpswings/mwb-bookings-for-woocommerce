@@ -1,6 +1,8 @@
 <?php
 /**
  * Listing of user's all booking on My Account Page under "All Bookings".
+ *
+ * @package    Mwb_Wc_Bk
  */
 
 if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
@@ -65,7 +67,7 @@ if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
 
 	?>
 
-	<p><?php esc_html_e( 'Booking #' ); ?><mark class="booking-number"><?php echo esc_html( $booking_id ); ?> </mark><?php esc_html_e( 'was placed on' ); ?> <mark class="booking-date"><?php echo esc_html( gmdate( 'd-m-Y', strtotime( $post_created ) ) ); ?> </mark><?php esc_html_e( 'and is currently', '' ); ?> <mark class="booking-status"><?php echo esc_html( $booking_status ); ?></mark></p>
+	<p><?php esc_html_e( 'Booking #' ); ?><mark class="booking-number"><?php echo esc_html( $booking_id ); ?> </mark><?php esc_html_e( 'was placed on' ); ?> <mark class="booking-date"><?php echo esc_html( gmdate( 'd-m-Y', strtotime( $post_created ) ) ); ?> </mark><?php esc_html_e( 'and is currently', 'mwb-wc-bk' ); ?> <mark class="booking-status"><?php echo esc_html( $booking_status ); ?></mark></p>
 		<section class="woocommerce-order-details">
 			<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Booking details', 'mwb-wc-bk' ); ?></h2>
 			<table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
@@ -128,12 +130,12 @@ if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
 	<table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
 		<thead>
 			<tr>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-number"><span class="nobr"><?php esc_html_e( 'Booking', '' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-from"><span class="nobr"><?php esc_html_e( 'From', '' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-to"><span class="nobr"><?php esc_html_e( 'To', '' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status"><span class="nobr"><?php esc_html_e( 'Status', '' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-total"><span class="nobr"><?php esc_html_e( 'Total', '' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions"><span class="nobr"><?php esc_html_e( 'Actions', '' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-number"><span class="nobr"><?php esc_html_e( 'Booking', 'mwb-wc-bk' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-from"><span class="nobr"><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-to"><span class="nobr"><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status"><span class="nobr"><?php esc_html_e( 'Status', 'mwb-wc-bk' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-total"><span class="nobr"><?php esc_html_e( 'Total', 'mwb-wc-bk' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions"><span class="nobr"><?php esc_html_e( 'Actions', 'mwb-wc-bk' ); ?></span></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -173,7 +175,7 @@ if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
 					<?php echo wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $total ); ?>
 				</td>
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-actions" data-title="Actions">
-					<a href="?booking_id=<?php echo esc_html( $booking_id ); ?>" class="woocommerce-button button view"><?php esc_html_e( 'View Order', '' ); ?></a>
+					<a href="?booking_id=<?php echo esc_html( $booking_id ); ?>" class="woocommerce-button button view"><?php esc_html_e( 'View Order', 'mwb-wc-bk' ); ?></a>
 				</td>
 			</tr>
 				<?php

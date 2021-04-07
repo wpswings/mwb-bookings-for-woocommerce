@@ -131,11 +131,6 @@ class Mwb_Wc_Bk {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-woocommerce-booking-availability.php';
 
-		/**
-		 * The class responsible for defining Booking and Booking product.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-woocommerce-booking.php';
-
 		$this->loader = new Mwb_Wc_Bk_Loader();
 
 	}
@@ -180,7 +175,7 @@ class Mwb_Wc_Bk {
 
 		$this->loader->add_filter( 'woocommerce_product_data_tabs', $plugin_admin, 'booking_add_product_data_tabs' );
 
-		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'product_booking_fields' );	
+		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'product_booking_fields' );
 
 		$this->loader->add_action( 'woocommerce_process_product_meta_mwb_booking', $plugin_admin, 'save_product_booking_fields' );
 
@@ -277,7 +272,9 @@ class Mwb_Wc_Bk {
 
 		$plugin_public = new Mwb_Wc_Bk_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$global_settings = get_option( 'mwb_booking_settings_options' );
+		$global_func = Mwb_Booking_Global_Functions::get_global_instance();
+
+		$global_settings = get_option( 'mwb_booking_settings_options', $global_func->booking_settings_tab_default_global_options() );
 		$enable_booking  = $global_settings['mwb_booking_setting_go_enable'];
 
 		if ( 'yes' === $enable_booking ) {

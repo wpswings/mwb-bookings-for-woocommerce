@@ -34,7 +34,7 @@ $end_time   = ! empty( $product_meta['mwb_booking_end_time'][0] ) ? $product_met
 		?>
 		<div id="mwb-wc-bk-start-date-field">
 			<label for="mwb-wc-bk-start-date-input"><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label>
-			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy" required autocomplete="off">
+			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd/mm/yyyy" required autocomplete="off">
 		</div>
 		<span class="mwb-wc-bk-form-error date-error" style="display:none; color:red;" ></span>
 		<?php
@@ -43,11 +43,11 @@ $end_time   = ! empty( $product_meta['mwb_booking_end_time'][0] ) ? $product_met
 			?>
 		<div id="mwb-wc-bk-start-date-field">
 			<label for="mwb-wc-bk-start-date-input"><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label><br>
-			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy" required autocomplete="off">
+			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd/mm/yyyy" required autocomplete="off">
 		</div>
 		<div id="mwb-wc-bk-end-date-field">
 			<label for="mwb-wc-bk-end-date-input"><?php esc_html_e( 'End Date', 'mwb-wc-bk' ); ?></label><br>
-			<input type="text" id="mwb-wc-bk-end-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="end_date" required autocomplete="off" >
+			<input type="text" id="mwb-wc-bk-end-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="end_date" placeholder="dd/mm/yyyy" required autocomplete="off" >
 		</div>
 		<span class="mwb-wc-bk-form-error date-error" style="display:none; color:red;" ></span>
 			<?php
@@ -55,7 +55,7 @@ $end_time   = ! empty( $product_meta['mwb_booking_end_time'][0] ) ? $product_met
 			?>
 		<div id="mwb-wc-bk-start-date-field">
 			<label for="mwb-wc-bk-start-date-input"><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label><br>
-			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd-mm-yyyy" required autocomplete="off">
+			<input type="text" id="mwb-wc-bk-start-date-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-date" name="start_date" placeholder="dd/mm/yyyy" required autocomplete="off">
 		</div>
 		<span class="mwb-wc-bk-form-error date-error" style="display:none; color:red;" ></span>
 			<?php

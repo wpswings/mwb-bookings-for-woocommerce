@@ -256,21 +256,29 @@ class Mwb_Wc_Bk_Admin {
 	 * @return void
 	 */
 	public function save_product_booking_fields( $post_id ) {
-
+		// echo '<pre>'; print_r( $_POST ); echo '</pre>';die('kl');
 		foreach ( $this->get_product_settings() as $key => $value ) {
-			if ( ! empty( $_POST[ $key ] ) ) {                                                                           // @codingStandardsIgnoreLine
+
+			if ( ! empty( $_POST[ $key ] ) ) {                                                                         // @codingStandardsIgnoreLine
 				if ( is_array( $_POST[ $key ] ) ) {                                                                      // @codingStandardsIgnoreLine
 					$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default']; // @codingStandardsIgnoreLine
 
 				} else {
 					$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default'];                       // @codingStandardsIgnoreLine
-
 				}
 			} else {
-				continue;
+				$posted_data = $value['default'];
+				// continue;
 			}
+
+			// echo '<pre>'; print_r( $key ); echo '</pre>';
+			// echo '<pre>'; print_r( $posted_data ); echo '</pre>';
+
 			update_post_meta( $post_id, $key, $posted_data );
 		}
+		// die;
+		// echo '<pre>'; print_r( $_POST ); echo '</pre>';die('kl');
+
 		$product = wc_get_product( $post_id );
 		if ( $product && $product->is_type( 'mwb_booking' ) ) {
 			$product->set_regular_price( '' );
@@ -729,7 +737,7 @@ class Mwb_Wc_Bk_Admin {
 			'show_ui'            => true,
 			'show_in_menu'       => true,
 			'show_in_nav_menu'   => true,
-			'show_in_admin_bar'  => true,
+			'show_in_admin_bar'  => false,
 			'hierarchical'       => false,
 			'capability_type'    => 'post',
 			'capabilities'       => array(

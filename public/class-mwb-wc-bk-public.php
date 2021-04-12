@@ -990,6 +990,8 @@ class Mwb_Wc_Bk_Public {
 
 		$product_meta = get_post_meta( $product_id );
 
+		// echo '<pre>'; print_r( $product_meta ); echo '</pre>'; die('kllk');
+
 		$people_select       = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : '';
 		$people_enable_check = ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_people_enable_checkbox'][0] ) ) : 'no';
 		$enable_people_type  = ! empty( $product_meta['mwb_enable_people_types'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_enable_people_types'][0] ) ) : 'no';
@@ -1051,13 +1053,18 @@ class Mwb_Wc_Bk_Public {
 								} else {
 									$booking_people_cost += $unit_cost * $people_data[ $id ]['people_count'];
 								}
+								// echo '1';
 							}
+							// echo '2';
 						} else {
-							if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] ) ) {
-								$booking_people_cost += $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'];
-							} else {
-								$booking_people_cost += $unit_cost;
+							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
+								if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] ) ) {
+									$booking_people_cost += $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'];
+								} else {
+									$booking_people_cost += $unit_cost;
+								}
 							}
+							// echo '<pre>'; print_r( $booking_people_cost ); echo '</pre>';
 						}
 						if ( ! empty( $base_cost_multiply ) && 'yes' === $base_cost_multiply ) {
 							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
@@ -1066,13 +1073,19 @@ class Mwb_Wc_Bk_Public {
 								} else {
 									$booking_people_cost += $base_cost * $people_data[ $id ]['people_count'];
 								}
+								// echo '3';
 							}
+							// echo '4';
 						} else {
-							if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] ) ) {
-								$booking_people_cost += $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'];
-							} else {
-								$booking_people_cost += $base_cost;
+							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
+								if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] ) ) {
+									$booking_people_cost += $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'];
+								} else {
+									$booking_people_cost += $base_cost;
+								}
 							}
+							// echo '<pre>'; print_r( $booking_people_cost ); echo '</pre>';
+
 						}
 					}
 				}
@@ -1094,6 +1107,8 @@ class Mwb_Wc_Bk_Public {
 			$booking_people_cost = ( $unit_cost + $base_cost ) * $duration;
 		}
 
+		// echo '<pre>'; print_r( 'PC-' . $booking_people_cost ); echo '</pre>';
+
 		if ( empty( $unit_cost_multiply ) || 'no' === $unit_cost_multiply ) {
 
 			if ( ! empty( $extra_cost ) ) {
@@ -1106,6 +1121,8 @@ class Mwb_Wc_Bk_Public {
 				}
 			}
 		}
+		// echo '<pre>'; print_r( 'PC-' . $booking_people_cost ); echo '</pre>';
+
 
 		if ( is_array( $added_costs ) && ! empty( $added_costs ) ) {
 			foreach ( $added_costs as $cost_id ) {
@@ -1139,6 +1156,8 @@ class Mwb_Wc_Bk_Public {
 				}
 			}
 		}
+
+		// echo '<pre>'; print_r( 'AC-' . $total_added_cost ); echo '</pre>';
 
 		if ( ! empty( $enabled_services ) && is_array( $enabled_services ) ) {
 			foreach ( $enabled_services as $service_id ) {
@@ -1191,11 +1210,13 @@ class Mwb_Wc_Bk_Public {
 			}
 		}
 
+		// echo '<pre>'; print_r( 'SC-' . $total_service_cost ); echo '</pre>';
+
 		$booking_cost = $booking_people_cost + $total_added_cost + $total_service_cost;
 
-		if ( $booking_cost < ( (int) $unit_cost + (int) $base_cost ) ) {
-			$booking_cost = (int) $unit_cost + (int) $base_cost;
-		}
+		// if ( $booking_cost < ( (int) $unit_cost + (int) $base_cost ) ) {
+		// 	$booking_cost = (int) $unit_cost + (int) $base_cost;
+		// }
 
 		$price_html = wc_price( $booking_cost );
 		echo wp_json_encode(

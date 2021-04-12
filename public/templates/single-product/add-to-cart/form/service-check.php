@@ -58,18 +58,29 @@ foreach ( $enabled_services as $service_id ) {
 		} else {
 			$style = 'display: none;';
 		}
+
+		// if ( count( $service_meta['included_services'] ) > 0 ) {
+		// 	$label_style = 'display: block;';
+		// 	// echo '<pre>'; print_r( count( $service_meta['included_services'] ) ); echo '</pre>';die('nn');
+		// } else {
+		// 	$label_style = 'display: none;';
+		// }
 		?>
 		<div id="mwb-wc-bk-inc-service-field" style="<?php echo esc_html( $style ); ?>" >
 			<?php if ( ! empty( $service_meta['included_services'] ) && is_array( $service_meta['included_services'] ) ) { ?>
-				<label for=""><b><?php esc_html_e( 'Included Services', 'mwb-wc-bk' ); ?></b></label>
+				<label for="mwb-wc-bk-service-input-hidden"><b><?php esc_html_e( 'Included Services', 'mwb-wc-bk' ); ?></b></label>
 				<input type="hidden" id="mwb-wc-bk-service-input-hidden" class="mwb-wc-bk-form-input-hidden" data-hidden="<?php echo esc_html( htmlspecialchars( wp_json_encode( $service_meta ) ) ); ?>"> 
 				<ul id="mwb-wc-bk-inc-service-list">
 				<?php
 				foreach ( $service_meta['included_services'] as $service_data ) {
 					$service_price = ! empty( $service_data['mwb_ct_booking_service_cost'][0] ) ? (int) $service_data['mwb_ct_booking_service_cost'][0] : 0;
-					if ( 'no' === $service_data['mwb_booking_ct_services_hidden'][0] || empty( $service_data['mwb_booking_ct_services_hidden'][0] ) ) {
-						?>
-					<li>
+					if ( 'yes' === $service_data['mwb_booking_ct_services_hidden'][0] && ! empty( $service_data['mwb_booking_ct_services_hidden'][0] ) ) {
+						$style = 'display: none;';
+					} else {
+						$style = '';
+					}
+					?>
+					<li style="<?php echo esc_attr( $style ); ?>" >
 						<label for="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>"><?php echo esc_html( $service_data['term_obj']->name ); ?></label>
 							<?php
 							if ( 'yes' === $show_service_cost ) {
@@ -77,9 +88,9 @@ foreach ( $enabled_services as $service_id ) {
 						<span class="booking-service-price"><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_price ) ); ?></span>
 								<?php
 							}
-							if ( 'yes' === $service_data['mwb_booking_ct_services_has_quantity'][0] ) {
+							if ( 'yes' === $service_data['mwb_booking_ct_services_has_quantity'][0] && ! empty( $service_data['mwb_booking_ct_services_has_quantity'][0] ) ) {
 								?>
-						<input type="number" name="inc-service-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" id="mwb-wc-bk-inc-service-quant-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" class="mwb-wc-bk-inc-service-quant service-input" data-id="<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" value="<?php echo ! empty( $service_data['mwb_booking_ct_services_min_quantity'][0] ) ? esc_html( $service_data['mwb_booking_ct_services_min_quantity'][0] ) : '0'; ?>" step="1" min="<?php echo ! empty( $service_data['mwb_booking_ct_services_min_quantity'][0] ) ? esc_html( $service_data['mwb_booking_ct_services_min_quantity'][0] ) : '0'; ?>" max="<?php echo ! empty( $service_data['mwb_booking_ct_services_max_quantity'][0] ) ? esc_html( $service_data['mwb_booking_ct_services_max_quantity'][0] ) : ''; ?>">	
+						<input type="number" name="inc-service-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" id="mwb-wc-bk-inc-service-quant-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" class="mwb-wc-bk-inc-service-quant service-input" data-id="<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" value="<?php echo ( ! empty( $service_data['mwb_booking_ct_services_min_quantity'][0] ) && $service_data['mwb_booking_ct_services_min_quantity'][0] > 1 ) ? esc_html( $service_data['mwb_booking_ct_services_min_quantity'][0] ) : '1'; ?>" step="1" min="<?php echo ! empty( $service_data['mwb_booking_ct_services_min_quantity'][0] ) ? esc_html( $service_data['mwb_booking_ct_services_min_quantity'][0] ) : '1'; ?>" max="<?php echo ! empty( $service_data['mwb_booking_ct_services_max_quantity'][0] ) ? esc_html( $service_data['mwb_booking_ct_services_max_quantity'][0] ) : ''; ?>">	
 								<?php
 							} else {
 								?>
@@ -94,7 +105,7 @@ foreach ( $enabled_services as $service_id ) {
 							?>
 					</li>
 						<?php
-					}
+					// }
 				}
 				?>
 			</ul>
@@ -107,18 +118,20 @@ foreach ( $enabled_services as $service_id ) {
 				<?php
 				foreach ( $service_meta['additional_services'] as $service_data ) {
 					$service_price = ! empty( $service_data['mwb_ct_booking_service_cost'][0] ) ? (int) $service_data['mwb_ct_booking_service_cost'][0] : 0;
-					if ( 'no' === $service_data['mwb_booking_ct_services_hidden'][0] || empty( $service_data['mwb_booking_ct_services_hidden'][0] ) ) {
-						?>
+					// if ( 'yes' === $service_data['mwb_booking_ct_services_hidden'][0] || ! empty( $service_data['mwb_booking_ct_services_hidden'][0] ) ) {
+					// 	$style = 'display: none;';
+					// }
+					?>
 					<li>
-						<input type="checkbox" name="add-service-check-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" id="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" class="mwb-wc-bk-form-input-services add_service_check">
-						<label for="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>"><?php echo esc_html( $service_data['term_obj']->name ); ?></label>
+						<input type="checkbox" name="add-service-check-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" id="mwb-wc-bk-add-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" class="mwb-wc-bk-form-input-services add_service_check">
+						<label for="mwb-wc-bk-add-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>"><?php echo esc_html( $service_data['term_obj']->name ); ?></label>
 							<?php
 							if ( 'yes' === $show_service_cost ) {
 								?>
 						<span class="booking-service-price"><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_price ) ); ?></span>
 								<?php
 							}
-							if ( 'yes' === $service_data['mwb_booking_ct_services_has_quantity'][0] ) {
+							if ( 'yes' === $service_data['mwb_booking_ct_services_has_quantity'][0] && ! empty( $service_data['mwb_booking_ct_services_has_quantity'][0] ) ) {
 								?>
 						<input type="number" name="add-service-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" id="mwb-wc-bk-add-service-quant-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" class="mwb-wc-bk-add-service-quant service-input" data-id="<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" value="0" step="1" min="0" max="<?php echo ! empty( $service_data['mwb_booking_ct_services_max_quantity'][0] ) ? esc_html( $service_data['mwb_booking_ct_services_max_quantity'][0] ) : ''; ?>">	
 								<?php
@@ -135,7 +148,7 @@ foreach ( $enabled_services as $service_id ) {
 							?>
 					</li>
 						<?php
-					}
+					// }
 				}
 				?>
 			</ul>

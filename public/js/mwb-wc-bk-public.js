@@ -16,7 +16,8 @@ jQuery(document).ready( function($) {
 
 	$(window).on('load', function(event) {
 		if ( is_product ) {
-			$( '.mwb-wc-bk-form-input' ).trigger('change');
+			// $( '.mwb-wc-bk-form-input' ).trigger('change');
+			$( '.mwb_booking_checkout_form' )[0].reset();
 		}
 	});
 
@@ -60,6 +61,7 @@ function datepicker_check($, unavailable_dates, slots) {
 
 	if ( start_booking == 'today' ) {
 		start_slot = new Date();
+		// console.log( 'dkfjbvkjdbf' + start_slot );
 		end_slot   = "+" + max_adv_input + max_dur;
 	} else if ( start_booking == 'tomorrow' ) {
 		start_slot = '+1d';

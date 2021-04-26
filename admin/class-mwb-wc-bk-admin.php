@@ -1114,11 +1114,9 @@ class Mwb_Wc_Bk_Admin {
 
 					update_post_meta( $booking_id, 'mwb_booking_status', 'confirmed' );
 				}
-				if ( time() > $end_timestamp ) {
-
+				if ( time() > $end_timestamp && 'pending' === $order_status ) {
 					update_post_meta( $booking_id, 'mwb_booking_status', 'expired' );
 				}
-
 				if ( 'pending' === $order_status ) {
 					if ( time() > ( $order_created + ( $cancel_days * 24 * 3600 ) ) ) {
 						update_post_meta( $booking_id, 'mwb_booking_status', 'expired' );

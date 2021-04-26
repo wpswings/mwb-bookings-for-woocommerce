@@ -43,10 +43,11 @@ if ( empty( $people_select ) ) {
 			<?php
 
 			if ( 'no' === $people_type_check ) {
+				// die('lklkl');
 				?>
 				<div id="mwb-wc-bk-people-input-div">
 					<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
-					<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="people-input-hidden" name="people_total" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" >
+					<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="people-input-hidden" name="people_total" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" value="1" >
 					<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number people-input" name="people_total" value="1" step="1" min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" required>
 					<span class="mwb-wc-bk-form-error people-error" style="display:none; color:red;"></span>
 				</div>

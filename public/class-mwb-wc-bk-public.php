@@ -964,6 +964,14 @@ class Mwb_Wc_Bk_Public {
 			)
 		);
 
+		// // $booking_product = wp_insert_term( 'Mwb Booking', 'product_cat', array(
+		// // 	'description' => 'A booking product', // optional
+		// // 	'parent' => 0, // optional
+		// // 	'slug' => 'mwb_booking_cat' // optional
+		// // ) );
+
+		// echo '<pre>'; print_r( $booking_product ); echo '</pre>';
+
 		$args['order_meta']['order_id'] = $args['order_id'];
 		update_post_meta( $booking_id, '_customer_user', $args['user_id'] );
 		update_post_meta( $booking_id, 'mwb_meta_data', $args['order_meta'] );

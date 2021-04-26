@@ -34,7 +34,7 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 		</h2>
 		<div class="mwb_global_availability_toggler">
 			<span class="mwb_global_availability_toggle_icon">
-				&#8963;
+				<!-- &#8963; -->
 			</span>
 		</div>
 	</div>

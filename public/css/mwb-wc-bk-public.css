@@ -95,15 +95,18 @@ max-width: calc(50% - 10px);
 }
 
 
-div#mwb-wc-bk-duration-div {
+/* #mwb-wc-bk-duration-div {
     align-items: baseline;
     display: flex;
     flex-wrap: wrap;
-}
+} */
 
 .mwb-wc-bk-form-section {
     margin-bottom: 10px;
  
+}
+.mwb_bk_ppl {
+    margin: 0 20px;
 }
 
 .mwb-wc-bk-people-type-list li{   
@@ -161,11 +164,13 @@ div#mwb-wc-bk-duration-div {
     max-width: 100px;
     width: 100%;
 }
-
+#mwb-wc-bk-add-service-list li {
+    margin-bottom: 10px;
+}
 /* #mwb-wc-bk-time-section #mwb-wc-bk-time-slot-field select {
     padding: 12px;
 } */
-div#mwb-wc-bk-time-section {
+#mwb-wc-bk-time-section {
     flex: 0 0 100%;
     max-width: 50%;
 }
@@ -192,4 +197,5 @@ div#mwb-wc-bk-time-section {
         top:-33px;
         left:5px;
         clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 62% 85%, 56% 99%, 49% 85%, 0% 85%);
+    }
 }

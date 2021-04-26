@@ -45,13 +45,12 @@ foreach ( $enabled_services as $service_id ) {
 	}
 }
 
-
 ?>
 <div id="mwb-wc-bk-service-section" class="mwb-wc-bk-form-section">
 	<?php
 	if ( 'yes' === $service_enabled ) {
 		?>
-	<div id="mwb-wc-bk-service-field">
+		<div id="mwb-wc-bk-service-field">
 		<?php
 		if ( 'yes' === $inc_service_enabled ) {
 			$style = 'display: block;';

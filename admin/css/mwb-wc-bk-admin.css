@@ -186,6 +186,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 .mwb-booking__nav .nav-tab.mwb-bookings__pro {
     width: 100%;
     max-width: 150px!important;
+    color: #bdbcbc;
 }
 .mwb-booking__nav .nav-tab.mwb-bookings__pro:before {
     padding: 2px 2px;
@@ -206,6 +207,13 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     position: absolute;
     right: 2px;
     z-index:2;
+}
+.mwb_add_new_rule_text {
+    text-align: center;
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /*===============================================
@@ -323,10 +331,11 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     height: 40px;
     position: fixed;
     right: 40px;
-    top: 160px;
+    bottom: 20px;
     transition: 0.3s ease all;
     width: 40px;
     animation: pulse-animation 2s infinite;
+    z-index: 2;
 }
     @keyframes pulse-animation {
     0% {
@@ -461,7 +470,8 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     display: inline-block;
     position: relative;
     border-radius: 50%;
-    vertical-align: middle;       
+    vertical-align: middle;   
+    margin: 0 10px;    
 }
 .mwb_add_new_rule_text span:after {
     color: '+';
@@ -1003,10 +1013,10 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     
     height: unset!important;
 }
-.mwb_booking_added_cost_select_field .form-field .select2 {
+/* .mwb_booking_added_cost_select_field .form-field .select2 {
     max-width: 250px;
     width: 100%;
-}
+} */
 .post-type-mwb_cpt_booking #post-body-content, .post-type-mwb_cpt_booking .edit-form-section {
     margin-bottom: 0;
 }
@@ -1072,9 +1082,9 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     opacity: 1;
 }
 
-#mwb_booking_added_cost_select_field select#mwb_booking_added_cost_select_search ~ .select2 {
+/* #mwb_booking_added_cost_select_field select#mwb_booking_added_cost_select_search ~ .select2 {
     width: 250px !important;
-}
+} */
 
 .mwb_booking_refund {
     margin-top: 20px;

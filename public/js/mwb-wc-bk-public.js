@@ -14,6 +14,7 @@ var day_difference;
 
 jQuery(document).ready( function($) {
 
+	jQuery('#mwb-wc-bk-create-booking-form').parent('form').addClass('mwb_booking_checkout_form');
 	$(window).on('load', function(event) {
 		if ( is_product ) {
 			// $( '.mwb-wc-bk-form-input' ).trigger('change');
@@ -39,15 +40,21 @@ jQuery(document).ready( function($) {
 			datepicker_check($, unavail_dates, slots);
 		}
 	}
-
 	jQuery('#mwb-wc-bk-create-booking-form').parent('form').addClass('mwb_booking_checkout_form');
 	jQuery('#mwb-wc-bk-service-field ul li label').on('mouseenter',function(){
 		jQuery(this).parent('li').children('.booking-service-desc').addClass('booking-service-desc_extend');
 	}).on('mouseleave',function () { 
 		jQuery(this).parent('li').children('.booking-service-desc').removeClass('booking-service-desc_extend');
 	});
+
+
+	if(!(jQuery('.single_add_to_cart_button').parents().hasClass('mwb_booking_checkout_form'))) {
+		jQuery('.mwb_booking_checkout_form').append(
+			jQuery('.single_add_to_cart_button')
+		);
+	}
 });
-console.log(mwb_wc_bk_public.product_settings);
+// console.log(mwb_wc_bk_public.product_settings);
 function datepicker_check($, unavailable_dates, slots) {
 	max_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_input[0];
 	max_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_duration[0];
@@ -97,13 +104,14 @@ function datepicker_check($, unavailable_dates, slots) {
 			end_date = $(this).val();
 			start_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
 			if ( start_date && end_date ) {
+				
 
 				date1 = new Date( start_date );
 				date2 = new Date( end_date );
 				
 				time_difference = date2.getTime() - date1.getTime();
 				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
-	
+				// alert(day_difference);
 				var arr = cal_in_between_days( start_date, day_difference );
 				var result = unvailable_date_range_check( arr, unavailable_dates );
 				if ( result == false ) {
@@ -294,29 +302,35 @@ function booking_price_cal($) {
 
 	$( document ).on('change keyup keydown keypress', '.people-input', function(e) {
 
-		const people_input = $( '.people-input' );
-		const currentObj = $( this );
-		var total_input = 0;
-	
-		var obj = currentObj.siblings( '.people-input-hidden' );
-		var max_quant = obj.attr( 'data-max' );
-		var min_quant = obj.attr( 'data-min' );
+		if ( mwb_wc_bk_public.hasOwnProperty( 'product_settings' ) && mwb_wc_bk_public.product_settings.mwb_enable_people_types[0] == 'no' ) {
+			total_input = $( this ).val();
+		} else {
+			const people_input = $( '.people-input' );
+			const currentObj = $( this );
+			var total_input = 0;
+		
+			var obj = currentObj.siblings( '.people-input-hidden' );
+			var max_quant = obj.attr( 'data-max' );
+			var min_quant = obj.attr( 'data-min' );
 
-		currentObj.attr( 'min', 0 );
-		currentObj.attr( 'max', max_quant );
+			currentObj.attr( 'min', 0 );
+			currentObj.attr( 'max', max_quant );
 
-		for ( var i = 0, len = people_input.length; i < len; i++ ) {
-			total_input += parseInt( people_input[i].value );
-		}
-		if ( max_people ) {
-			if( total_input > max_people ) {
+			for ( var i = 0, len = people_input.length; i < len; i++ ) {
+				total_input += parseInt( people_input[i].value );
+			}
+			if ( max_people ) {
+				if( total_input > max_people ) {
 
-				var val = parseInt( currentObj.val() );
-				val -= 1;
-				total_input--;
-				currentObj.val( val );
+					var val = parseInt( currentObj.val() );
+					val -= 1;
+					total_input--;
+					currentObj.val( val );
+				}
 			}
 		}
+
+		
 		
 		$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-span').text( total_input + '-Peoples');
 
@@ -326,6 +340,7 @@ function booking_price_cal($) {
 		var duration_input = $('#mwb-wc-bk-duration-input');
 		if ( duration_input.length < 1 ){
 			if( mwb_wc_bk_public.product_settings.hasOwnProperty( 'mwb_enable_range_picker' ) && 'yes' == mwb_wc_bk_public.product_settings.mwb_enable_range_picker[0] ) {
+				
 				start_date = $( '#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
 				end_date   = $( '#mwb-wc-bk-date-section #mwb-wc-bk-end-date-input').val();
 
@@ -402,6 +417,8 @@ function booking_price_cal($) {
 	$( document ).on( 'submit', '.cart', function(e) {
 
 		var people_total = $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden' ).val();
+		// alert( people_total );
+		// console.log( $( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div #mwb-wc-bk-people-input-hidden' ) );
 		if ( people_total <= 0 ) {
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).show();
 			$( '#mwb-wc-bk-people-section #mwb-wc-bk-people-input-div .people-error' ).text( "*Select at least 1 people" );
@@ -488,6 +505,12 @@ function booking_price_cal($) {
 		price_cal_func($);
 	
 	} );
+
+	$( '#mwb-wc-bk-end-date-field' ).on( 'change keyup keydown keypress', 'input', function(){
+
+		price_cal_func($);
+	
+	} );
 }
 
 
@@ -508,6 +531,12 @@ function price_cal_func($) {
 			day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
 
 			var duration = day_difference;
+			if ( ! end_date || ! start_date ) {
+				// alert('kk');
+				duration = 1;
+			}
+
+			// alert( 'time_diff:  ' + time_difference );
 		}
 	} else {
 		var duration = duration_input.val();
@@ -525,6 +554,7 @@ function price_cal_func($) {
 
 	var people_count_obj = {};
 	var people_total = 0;
+	$( '#mwb-wc-bk-people-section .people-input' ).val(1);
 	$( '#mwb-wc-bk-people-section .people-input' ).each(function() {
 		var val = $(this).val();
 		var id  = $(this).attr( 'data-id' );

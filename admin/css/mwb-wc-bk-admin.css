@@ -129,6 +129,7 @@ body.post-type-mwb_cpt_booking .mwb-booking__nav-wrap h1,#mwb-wc-bk-booking-data
     box-shadow:unset!important;
     outline:none!important;
 }
+
 .post-type-mwb_cpt_booking input[type=checkbox]+p {
     display: inline;
 }
@@ -140,9 +141,11 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     letter-spacing: 1.3px;
     text-transform: uppercase;
 }
+
 .post-type-mwb_cpt_booking input[type=radio]+label {
     margin-right: 25px;
 }
+
 .post-type-mwb_cpt_booking label {
     color: #000000;
 }
@@ -163,11 +166,13 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     box-shadow:0 7px 8px rgb(0 0 0 / 8%);
     padding: 20px 10px 14px 15px;
 }
+
 .mwb_booking_setting_title {
     align-items: baseline;
     display: flex;
     padding: 0 5px;
 }
+
 .mwb_booking_setting_title_version {
     color: #848484;
     margin-left: 10px;
@@ -183,11 +188,13 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     font-weight: 600;
     position: relative;
 }
+
 .mwb-booking__nav .nav-tab.mwb-bookings__pro {
     width: 100%;
     max-width: 150px!important;
     color: #bdbcbc;
 }
+
 .mwb-booking__nav .nav-tab.mwb-bookings__pro:before {
     padding: 2px 2px;
     right: 2px;
@@ -208,6 +215,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     right: 2px;
     z-index:2;
 }
+
 .mwb_add_new_rule_text {
     text-align: center;
     min-height: 400px;
@@ -232,6 +240,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     margin: 20px 20px 30px 0;
     padding: 10px 20px 40px;
 }
+
 .mwb-booking-settings__table tbody,.mwb-availability-rules__table tbody {
     display: block;
 }
@@ -270,9 +279,11 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     padding: 8px 16px;
     transition: border-color 0.2s ease;
 }
+
 .mwb-form-group__input input[type=radio],.mwb-form-group__input input[type=checkbox] {
     margin-bottom: 0;
 }
+
 .mwb-form-group__input input:hover,.mwb_add_people_type_select input:hover {
     border-color: #000000;
 }
@@ -285,6 +296,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 .mwb-booking__submit {
    padding-left: 10px;
 }
+
 #mwb_booking_added_costs_btn,
 #mwb_booking_local_cost_rules_btn,
 #mwb_local_availability_rules_add,
@@ -337,7 +349,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     animation: pulse-animation 2s infinite;
     z-index: 2;
 }
-    @keyframes pulse-animation {
+@keyframes pulse-animation {
     0% {
       box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
       
@@ -346,13 +358,14 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
       box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
     
     }
-  }
+}
 .mwb-add-rule__icon svg {
     left: 50%;
     position: absolute;
     top: 50%;
     transform: translate(-50%,-50%);
 }
+
 .mwb_booking_global_availability_rules .mwb-add-rule__icon:hover {
     background: #ffffff!important;
     border-color: #2196f3!important;
@@ -360,6 +373,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     color: #2196f3!important;
     transform: scale(1.2);
 }
+
 .mwb_booking_global_availability_rules .mwb-add-rule__icon:focus {
     background: #ffffff;
     border-color: #2196f3!important;
@@ -368,15 +382,18 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     outline: none;
     transform: translateZ(0.8);
 }
+
 .mwb-form-group__days  {
     justify-content: center;
 }
+
 .mwb-form-group__days .mwb-form-group__input-rules {
     color: #000000;
     flex: 0 0 100%;
     font-weight: 500;
     max-width: 100%;
 }
+
 .mwb-form-group__days .mwb-form-group__input {
     border-radius: 4px;
     border: 1px solid#e2e2e2;
@@ -391,11 +408,13 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     padding: 8px 20px;
     margin-bottom: 5px;
 }
+
 .mwb_global_availability_rule_heading.mwb-global-availability-rule__heading {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
 }
+
 .mwb_global_availability_rule_heading.mwb-global-availability-rule__heading .booking-availability__title,.mwb_global_availability_toggle_icon {
 -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -403,10 +422,12 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
        -moz-user-select: none;
         -ms-user-select: none; 
             user-select: none;
- }
- .mwb_global_availability_rule_heading_switch {
+}
+
+.mwb_global_availability_rule_heading_switch {
      vertical-align: bottom!important;
- }
+}
+
 .mwb-form-group__days .mwb-form-group__input {
     border:none;
     flex: 0 0 100%;
@@ -620,20 +641,14 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     text-align: center;
 }
 
-
-
-
 #mwb-wc-bk-booking-data .form-field.form-field-wide input[type=text] {
-
     max-width: 90px;
  
 }
-#mwb-wc-bk-booking-data .form-field.form-field-wide input[type=number] {
- 
+#mwb-wc-bk-booking-data .form-field.form-field-wide input[type=number] { 
     max-width: 40px;
   
 }
-
 
 #mwb-wc-bk-booking-data .form-field.form-field-wide input:hover {
     border-color: #000000;
@@ -705,6 +720,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 .booking-overview__keywords-image img {
     object-fit: cover;
     width: 100%;
+    max-width: 150px;
 }
 
 .booking-overview__features {
@@ -729,7 +745,14 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 .booking-overview__keywords {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -15px;
+    background:#ffffff;
+    padding: 25px 50px;
+
+}
+h2.booking-overview__keywords-title {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 35px;
 }
 
 .booking-overview__keywords-heading {
@@ -753,6 +776,12 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     color: #ffffff;
     flex-grow: 1;
     padding: 30px;
+    border: 1px solid #dddddd;      
+}
+
+.booking-overview__keywords-card:hover {
+    box-shadow: 0 0 10px #c7c7c7;
+ 
 }
 
 .booking-support__connect a {
@@ -870,9 +899,11 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 .taxonomy-mwb_ct_services .dashicons-yes:before,.taxonomy-mwb_ct_costs .dashicons-yes:before {
     color:#008000;
 }
+
 .taxonomy-mwb_ct_services .dashicons-no-alt:before,.taxonomy-mwb_ct_costs .dashicons-no-alt:before{
     color: #ff0000;
 }
+
 .booking-service-icon,.booking-cost-icon,.booking-people-icon {
       color: #2196f3;
 }
@@ -908,8 +939,6 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     background-color: #7983ff;
 }
 
-
-
 .mwb-bookings__pro {
     position: relative;
     pointer-events: none;
@@ -943,12 +972,15 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     top: 0;
     clip-path: polygon(0 0,100% 0,100% 100%);
 }
+
 #mwb_booking_cost_data.woocommerce_options_panel label,#mwb_booking_cost_data.woocommerce_options_panel legend {
     margin: 0;
 }
+
 #mwb_booking_cost_data.woocommerce_options_panel fieldset.form-field,#mwb_booking_cost_data.woocommerce_options_panel p.form-field {
     padding: 5px 20px 5px 10px!important;
 }
+
 .mwb-form-group__input input[type=checkbox],
 .mwb-form-group__input-rules input[type=checkbox],
 .mwb-global-availability-rule__heading input[type=checkbox] {
@@ -961,7 +993,6 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 .mwb-form-group__input input[type=checkbox]:before,
 .mwb-form-group__input-rules input[type=checkbox]:before,
 .mwb-global-availability-rule__heading input[type=checkbox]:before {
-
    display: none;
 }
 
@@ -1013,29 +1044,32 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     
     height: unset!important;
 }
-/* .mwb_booking_added_cost_select_field .form-field .select2 {
-    max-width: 250px;
-    width: 100%;
-} */
+
 .post-type-mwb_cpt_booking #post-body-content, .post-type-mwb_cpt_booking .edit-form-section {
     margin-bottom: 0;
 }
+
 .mwb_booking_cpt_actions .mwb_booking_cpt_status {
     display: flex;
     flex-wrap: wrap;
     margin: 15px 0;
 }
+
 .mwb_booking_cpt_actions .mwb_booking_cpt_status label {
     flex: 0 0 100%;
     max-width: 30%;
 }
+
 .mwb_booking_cpt_actions .mwb_booking_cpt_status #mwb_booking_status_select {
     flex: 0 0 100%;
     max-width: 67%;
 }
+
 .mwb_booking_cpt_actions .mwb_booking_cpt_submit {
     text-align: right;
 }
+
+
 #mwb_availability_preferences .form-field.mwb-bookings__pro::after {
     height: 37px!important;
     visibility:visible!important;
@@ -1047,6 +1081,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     right: 1px;
     top: 1px;
 }
+
 .post-type-mwb_cpt_booking .mwb_booking_icons_tooltip {
     background: #333333;
     border-radius: 3px;
@@ -1070,9 +1105,11 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     cursor: help;
     position: relative;
 }
+
 .post-type-mwb_cpt_booking .column-cost,.post-type-mwb_cpt_booking .column-unit_cost,.post-type-mwb_cpt_booking .column-base_cost {
     cursor: default;
 }
+
 .post-type-mwb_cpt_booking .manage-column:hover p.mwb_booking_icons_tooltip {
     align-items: center;
     justify-content: center;
@@ -1081,10 +1118,6 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     transition: 0.5s ease all;
     opacity: 1;
 }
-
-/* #mwb_booking_added_cost_select_field select#mwb_booking_added_cost_select_search ~ .select2 {
-    width: 250px !important;
-} */
 
 .mwb_booking_refund {
     margin-top: 20px;
@@ -1290,6 +1323,20 @@ div#mwb_booking_cost_data button,#mwb_booking_services_data button,#mwb_booking_
     .mwb_booking_details_wrap {
         padding: 30px 15px;
     }
+}
+@media only screen and (max-width:1200px) {
+    .booking-overview__keywords-item {
+        max-width: calc(50% - 30px);
+        flex: 0 0 50%;   
+    }
+ 
+}
+@media only screen and (max-width:600px) {
+    .booking-overview__keywords-item {
+        max-width: 100%;
+        flex: 0 0 100%;   
+    }
+ 
 }
 /*===============================================
          ******** Media Queries ends *******

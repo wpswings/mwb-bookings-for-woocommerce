@@ -79,8 +79,8 @@ class MWB_Woocommerce_Booking_Availability {
 	/**
 	 * Calculate dates between start and end date.
 	 *
-	 * @param [date] $first Start Date.
-	 * @param [date] $last Last Date.
+	 * @param string $first Start Date.
+	 * @param string $last Last Date.
 	 * @param string $step Step to increment the date.
 	 * @param string $output_format DAte format.
 	 * @return array
@@ -428,11 +428,11 @@ class MWB_Woocommerce_Booking_Availability {
 	/**
 	 * Prepare another array of the slots to compare the slots array.
 	 *
-	 * @param [type] $start_time Start Time of the booking.
-	 * @param [type] $end_time   End time of the booking.
-	 * @param [type] $date       Date of the booking.
-	 * @param [type] $unit_dur   Unit Duration of the Booking unit.
-	 * @param [type] $unit_dur_input Unit duration input of the booking unit.
+	 * @param string $start_time Start Time of the booking.
+	 * @param string $end_time   End time of the booking.
+	 * @param string $date       Date of the booking.
+	 * @param string $unit_dur   Unit Duration of the Booking unit.
+	 * @param string $unit_dur_input Unit duration input of the booking unit.
 	 * @return array
 	 */
 	public function extract_time_slot( $start_time, $end_time, $date, $unit_dur, $unit_dur_input ) {
@@ -475,6 +475,36 @@ class MWB_Woocommerce_Booking_Availability {
 			}
 		}
 		return $unavail_dates;
+	}
+
+	/**
+	 * Make the passed slots for hour and minutes booking unavailable for present date
+	 *
+	 * @param int   $product_id ID of the product.
+	 * @param array $slots      Array of the slots.
+	 *
+	 * @return array
+	 */
+	public function make_unavailable_todays_passed_slots( $product_id, $slots ) {
+
+		$unit_dur     = get_post_meta( $product_id, 'mwb_booking_unit_duration', true );
+		$current_date = gmdate( 'Y-m-d', time() );
+
+		if ( 'hour' === $unit_dur || 'minute' === $unit_dur ) {
+			foreach ( $slots as $date => $slot ) {
+				if ( $current_date === $date ) {
+					foreach ( $slot as $k => $v ) {
+						$arr       = explode( '-', $k );
+						$timestamp = strtotime( $arr[0], strtotime( $date ) );
+						if ( $timestamp < current_time( 'timestamp' ) ) {    // @codingStandardsIgnoreLine
+							$slots[ $date ][ $k ]['book'] = 'non-bookable';
+						}
+					}
+				}
+			}
+		}
+		return $slots;
+
 	}
 }
 

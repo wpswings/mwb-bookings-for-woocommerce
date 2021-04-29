@@ -58,12 +58,6 @@ foreach ( $enabled_services as $service_id ) {
 			$style = 'display: none;';
 		}
 
-		// if ( count( $service_meta['included_services'] ) > 0 ) {
-		// 	$label_style = 'display: block;';
-		// 	// echo '<pre>'; print_r( count( $service_meta['included_services'] ) ); echo '</pre>';die('nn');
-		// } else {
-		// 	$label_style = 'display: none;';
-		// }
 		?>
 		<div id="mwb-wc-bk-inc-service-field" style="<?php echo esc_html( $style ); ?>" >
 			<?php if ( ! empty( $service_meta['included_services'] ) && is_array( $service_meta['included_services'] ) ) { ?>
@@ -104,7 +98,6 @@ foreach ( $enabled_services as $service_id ) {
 							?>
 					</li>
 						<?php
-					// }
 				}
 				?>
 			</ul>
@@ -117,9 +110,6 @@ foreach ( $enabled_services as $service_id ) {
 				<?php
 				foreach ( $service_meta['additional_services'] as $service_data ) {
 					$service_price = ! empty( $service_data['mwb_ct_booking_service_cost'][0] ) ? (int) $service_data['mwb_ct_booking_service_cost'][0] : 0;
-					// if ( 'yes' === $service_data['mwb_booking_ct_services_hidden'][0] || ! empty( $service_data['mwb_booking_ct_services_hidden'][0] ) ) {
-					// 	$style = 'display: none;';
-					// }
 					?>
 					<li>
 						<input type="checkbox" name="add-service-check-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" id="mwb-wc-bk-add-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>" class="mwb-wc-bk-form-input-services add_service_check">
@@ -147,7 +137,6 @@ foreach ( $enabled_services as $service_id ) {
 							?>
 					</li>
 						<?php
-					// }
 				}
 				?>
 			</ul>

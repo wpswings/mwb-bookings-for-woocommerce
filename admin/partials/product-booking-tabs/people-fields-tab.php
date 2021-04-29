@@ -54,8 +54,8 @@
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => 'mwb_people_as_seperate_booking',
-					'label'       => __( 'Allow Peoples as seperate booking', 'mwb-wc-bk' ),
-					'value'       => $this->setting_fields['mwb_people_as_seperate_booking'],
+					'label'       => __( 'Allow Peoples as separate booking', 'mwb-wc-bk' ),
+					'value'       => $this->setting_fields['mwb_people_as_separate_booking'],
 					'description' => __( 'Check if peoples are to be counted as seperate bookings.', 'mwb-wc-bk' ),
 					'desc_tip'    => true,
 				)

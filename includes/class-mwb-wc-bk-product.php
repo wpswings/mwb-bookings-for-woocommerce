@@ -1,4 +1,4 @@
-<?php
+<?php   // @codingStandardsIgnoreLine
 /**
  * The Register Booking Product of the plugin.
  *

@@ -29,14 +29,14 @@
 			);
 			?>
 		<p class="form-field">
-			<label for="mwb_booking_min_duration"><?php esc_html_e( 'Minimum duaration for booking', 'mwb-wc-bk' ); ?></label>
+			<label for="mwb_booking_min_duration"><?php esc_html_e( 'Minimum duration for booking', 'mwb-wc-bk' ); ?></label>
 			<input type="number" name="mwb_booking_min_duration" id="mwb_booking_min_duration" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_min_duration'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
-			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Minimum Duartion for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Minimum Duration for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
-			<label for="mwb_booking_max_duration"><?php esc_html_e( 'Maximum duaration for booking', 'mwb-wc-bk' ); ?></label>
+			<label for="mwb_booking_max_duration"><?php esc_html_e( 'Maximum duration for booking', 'mwb-wc-bk' ); ?></label>
 			<input type="number" name="mwb_booking_max_duration" id="mwb_booking_max_duration" value="<?php echo esc_attr( $this->setting_fields['mwb_booking_max_duration'] ); ?>" step="1" min="1" style="margin-right: 7px; width: 4em;">
-			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Maximum Duartion for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Maximum Duration for booking when selected by the customer', 'mwb-wc-bk' ) ); ?>
 		</p>
 		<p class="form-field">
 			<label for="mwb_booking_end_time"><?php esc_html_e( 'Daily end time', 'mwb-wc-bk' ); ?></label>
@@ -59,7 +59,7 @@
 				<?php endforeach; ?>
 
 			</select>
-			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time or days between two adjacent booking', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Time or days between two adjacent bookings', 'mwb-wc-bk' ) ); ?>
 		</p>
 	</div>
 	<div id="mwb_advance_booking" class="options_group">

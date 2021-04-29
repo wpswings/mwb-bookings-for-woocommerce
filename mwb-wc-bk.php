@@ -55,7 +55,6 @@ run_mwb_wc_bk();
 function mwb_wc_bk_plugin_deactivate() {
 	deactivate_plugins( plugin_basename( __FILE__ ) );
 	add_action( 'admin_notices', 'mwb_wc_bk_plugin_error_notice' );
-	// activate_plugin( plugin_basename( __FILE__ ) );
 }
 
 /**

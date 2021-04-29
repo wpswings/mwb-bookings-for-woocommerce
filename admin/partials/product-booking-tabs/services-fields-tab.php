@@ -14,7 +14,7 @@
 				'id'          => 'mwb_services_enable_checkbox',
 				'label'       => __( 'Enable/Disable Services', 'mwb-wc-bk' ),
 				'value'       => $this->setting_fields['mwb_services_enable_checkbox'],
-				'description' => __( 'Enable if services are to be included in booking.', 'mwb-wc-bk' ),
+				'description' => __( 'Enable if services are to be included in the booking.', 'mwb-wc-bk' ),
 			)
 		);
 		?>

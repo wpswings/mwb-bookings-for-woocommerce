@@ -19,9 +19,10 @@ input:not(input[type=checkbox],input[type=radio]) {
 }
 
 .mwb_booking_checkout_form {
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
+
 .product-type-mwb_booking h1 {
     text-transform: capitalize;
 }
@@ -43,13 +44,14 @@ flex-direction: column;
     padding-right: 10px;
    
 }
+
 #mwb-wc-bk-people-field,#mwb-wc-bk-service-field {
     margin-bottom: 20px;
 }
+
 #mwb-wc-bk-inc-service-field {
     margin-bottom: 10px;
 }
-
 
 #mwb-wc-bk-start-date-input,
 #mwb-wc-bk-end-date-input {
@@ -89,22 +91,15 @@ flex-direction: column;
 }
 
 .mwb-wc-bk-people-type-list label,.mwb-wc-bk-people-type-list input {
-
     flex: 0 0 100%;
-max-width: calc(50% - 10px);
+    max-width: calc(50% - 10px);
 }
-
-
-/* #mwb-wc-bk-duration-div {
-    align-items: baseline;
-    display: flex;
-    flex-wrap: wrap;
-} */
 
 .mwb-wc-bk-form-section {
     margin-bottom: 10px;
  
 }
+
 .mwb_bk_ppl {
     margin: 0 20px;
 }
@@ -116,10 +111,12 @@ max-width: calc(50% - 10px);
     margin-bottom: 10px;
     flex-wrap: wrap;
 } 
+
 #mwb-wc-bk-add-service-list input[type=checkbox]{
     max-width: 24px;
     width: 100%;
 }
+
 #mwb-wc-bk-inc-service-list li,#mwb-wc-bk-add-service-list li {
     align-items: baseline;
     display:flex;
@@ -127,24 +124,29 @@ max-width: calc(50% - 10px);
     position: relative;
    
 }
+
 #mwb-wc-bk-inc-service-list li .booking-service-price ,#mwb-wc-bk-add-service-list li .booking-service-price {
     max-width: 15%;
     width: 100%;
     flex: 0 0 100%;
 }
+
 #mwb-wc-bk-inc-service-list li label,#mwb-wc-bk-add-service-list li label {
     flex: 0 0 100%;
     max-width: 30%;
     width: 100%;
 }
+
 #mwb-wc-bk-add-service-list li label {
     max-width: 25%;
 }
+
 #mwb-wc-bk-inc-service-list li input,#mwb-wc-bk-add-service-list li input[type=number] {
     flex: 0 0 100%;
     max-width: 45%;
     width: 100%;
 }
+
 #mwb-wc-bk-total-fields ul {
     margin: 0;
     padding: 0;
@@ -153,6 +155,7 @@ max-width: calc(50% - 10px);
 #mwb-wc-bk-total-fields ul li:last-child{
     border-top: 1px solid #e2e2e2;
 }
+
 #mwb-wc-bk-total-fields li {
     display: flex;
     justify-content: space-between;
@@ -161,39 +164,35 @@ max-width: calc(50% - 10px);
   
 }
 #mwb-wc-bk-total-fields li label {
-    max-width: 100px;
+    max-width: 150px;
     width: 100%;
 }
 #mwb-wc-bk-add-service-list li {
     margin-bottom: 10px;
 }
-/* #mwb-wc-bk-time-section #mwb-wc-bk-time-slot-field select {
-    padding: 12px;
-} */
+
 #mwb-wc-bk-time-section {
     flex: 0 0 100%;
     max-width: 50%;
 }
+
 #mwb-wc-bk-time-section #mwb-wc-bk-time-slot-field label  {
     display: block;
-   
-
 }
+
 .mwb-wc-bk-people-type-list input[type=number] {
     max-width: 50%;
     flex: 0 0 100%;
 }
 
 @media only screen and (max-width:768px) {
-
-    #mwb-wc-bk-start-date-field, #mwb-wc-bk-end-date-field {
+        #mwb-wc-bk-start-date-field, #mwb-wc-bk-end-date-field {
         max-width: 30%;
     }
-    .mwb-wc-bk-people-type-list label, .mwb-wc-bk-people-type-list input {
+        .mwb-wc-bk-people-type-list label, .mwb-wc-bk-people-type-list input {
         max-width: 30%;
-    
     }
-    .booking-service-desc {
+        .booking-service-desc {
         top:-33px;
         left:5px;
         clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 62% 85%, 56% 99%, 49% 85%, 0% 85%);

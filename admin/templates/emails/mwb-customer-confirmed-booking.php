@@ -40,7 +40,6 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 			</td>
 			<td class="td" style="text-align:left; vertical-align:middle;">
 				<?php
-				// $meta = $order->get_meta( 'mwb_meta_data' );
 				echo esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) );
 				?>
 			</td>

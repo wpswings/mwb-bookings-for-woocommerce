@@ -59,7 +59,7 @@
 					'id'          => 'mwb_full_day_booking',
 					'label'       => __( 'Full Day Booking', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_full_day_booking'],
-					'description' => __( 'Booking for full day.', 'mwb-wc-bk' ),
+					'description' => __( 'Booking for the full day.', 'mwb-wc-bk' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -85,7 +85,7 @@
 					'id'          => 'mwb_allow_booking_cancellation',
 					'label'       => __( 'Cancellation Allowed', 'mwb-wc-bk' ),
 					'value'       => $this->setting_fields['mwb_allow_booking_cancellation'],
-					'description' => __( 'Allows user to cancel their booking.', 'mwb-wc-bk' ),
+					'description' => __( 'Allows a user to cancel their booking.', 'mwb-wc-bk' ),
 					'desc_tip'    => true,
 				)
 			);

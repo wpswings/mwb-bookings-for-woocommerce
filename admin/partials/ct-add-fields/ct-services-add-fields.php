@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="form-field term-cost-wrap">
 	<label for="mwb_ct_booking_service_cost"><?php esc_html_e( 'Service Cost', 'mwb-wc-bk' ); ?></label>
-	<input type="number" id="mwb_ct_booking_service_cost" class="postform" name="mwb_ct_booking_service_cost" />
+	<input type="number" id="mwb_ct_booking_service_cost" class="postform" name="mwb_ct_booking_service_cost" min="0"/>
 	<p class="description"><?php esc_html_e( 'Enter the cost for the services to be included', 'mwb-wc-bk' ); ?></p>
 </div>
 <div class="form-field" id="mwb_booking_ct_services_custom_fields">
@@ -52,11 +52,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="form-field term-has-quantity-checked-wrap">
 
 	<label for="mwb_booking_ct_services_min_quantity"><?php esc_html_e( 'Minimum Quantity', 'mwb-wc-bk' ); ?></label>
-	<input type="number" id="mwb_booking_ct_services_min_quantity" class="postform" name="mwb_booking_ct_services_min_quantity" />
+	<input type="number" id="mwb_booking_ct_services_min_quantity" class="postform" name="mwb_booking_ct_services_min_quantity" min="0"/>
 	<p class="description"><?php esc_html_e( 'Minimum Quantity if the service has quantity', 'mwb-wc-bk' ); ?></p>
 
 	<label for="mwb_booking_ct_services_max_quantity"><?php esc_html_e( 'Maximum Quantity', 'mwb-wc-bk' ); ?></label>
-	<input type="number" id="mwb_booking_ct_services_max_quantity" class="postform" name="mwb_booking_ct_services_max_quantity" />
+	<input type="number" id="mwb_booking_ct_services_max_quantity" class="postform" name="mwb_booking_ct_services_max_quantity" min="1"/>
 	<p class="description"><?php esc_html_e( 'Maximum Quantity if the service has quantity', 'mwb-wc-bk' ); ?></p>
 
 </div>
@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$term_name = $t->slug;
 			?>
 		<label for="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"><?php echo esc_html( 'Service Cost for ' . $t->name ); ?></label>
-		<input type="number" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"  class="postform mwb_ct_service_multiply_people" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" />
+		<input type="number" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"  class="postform mwb_ct_service_multiply_people" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" min="0" />
 		<p class="description"><?php esc_html_e( 'Enter the service cost for respective people type.', 'mwb-wc-bk' ); ?></p>
 	<?php } ?>
 

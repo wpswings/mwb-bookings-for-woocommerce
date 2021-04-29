@@ -2,7 +2,7 @@
 /**
  * Provide a admin area view for the plugin
  *
- * This file is used to markup the admin-facing aspects of the plugin.
+ * This file is used for the overview page of the plugin.
  *
  * @link       https://makewebbetter.com/
  * @since      1.0.0
@@ -15,101 +15,90 @@
 
 <div class="booking-overview__wrapper">
 	<div class="booking-overview__banner">
-		<img src="" alt="Overview banner image">
+		<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/booking-banner.png' ); ?>" alt="Overview banner image">
 	</div>
 	<div class="booking-overview__content">
 		<div class="booking-overview__content-description">
-			<h2>What is Get A Quote for WordPress?</h2>
-			<p>Get A Quote for WordPress plugin helps you create and add a quotation form on your WordPress website. Users can fill this form to submit a request for a quotation of the required services. With this plugin, you can add multiple statuses for
-				your quotations, multiple services in the form, and acknowledge users through an email for the successful submission of their quote request.</p>
-			<h3>With our Get A Quote for WordPress plugin you can:</h3>
+			<h2><?php esc_html_e( 'What is MWB Bookings for WooCommerce?', 'mwb-wc-bk' ); ?></h2>
+			<p><?php esc_html_e( "The MWB Bookings for WooCommerce Plugin builds a booking system for your services using WooCommerce. Schedule appointments, Booking Items and Rooms, Reserve seats for classes, and so on. This plugin also allows you to organize your booking slots into days and hours. You'll need to set the value of the booking unit as days when booking space, renting items, reserving courses or classes, or selling tour packages..", 'mwb-wc-bk' ); ?></p>
+			<h3><?php esc_html_e( 'As a store owner, you can-', 'mwb-wc-bk' ); ?></h3>
 			<ul class="booking-overview__features">
-				<li>Add a quote form on your website</li>
-				<li>Notify customers for their quote submission through emails</li>
-				<li>Enable/Disable your quotation form fields</li>
-				<li>Enable/Disable service and quote status taxonomy</li>
-				<li>Add different statuses for your quotation</li>
+				<li><?php esc_html_e( 'Create unlimited bookable products with ease.', 'mwb-wc-bk' ); ?></li>
+				<li><?php esc_html_e( 'Easily access and manage all bookings using the calendar listings.', 'mwb-wc-bk' ); ?></li>
+				<li><?php esc_html_e( 'Create booking slots for days, weeks, and hours, as required.', 'mwb-wc-bk' ); ?></li>
+				<li><?php esc_html_e( 'Reject bookings with a pending confirmation status automatically.', 'mwb-wc-bk' ); ?></li>
+				<li><?php esc_html_e( 'Set a minimum and maximum booking time.', '' ); ?></li>
+				<li><?php esc_html_e( 'During the booking process, easily inquire about the types of people.', 'mwb-wc-bk' ); ?></li>
 			</ul>
 		</div>
 		<div class="booking-overview__keywords">
+			<h2 class="booking-overview__keywords-title"><?php esc_html_e( 'The free plugin benefits include', 'mwb-wc-bk' ); ?></h2>
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="" alt="Quotation image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/assign.png' ); ?>" alt="Efficiently Assign image">
 					</div>
 					<div class="booking-overview__keywords-text">
-						<h3 class="booking-overview__keywords-heading">Quotation Form</h3>
-						<p class="booking-overview__keywords-description">The plugin provides a quotation form you can add on your website. Customers will fill this form to submit a quotation request on your website. As soon as you install and activate our Get A Quote plugin, this form will automatically
-							be created.</p>
+						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Efficiently Assign Booking Units', 'mwb-wc-bk' ); ?></h3>
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Admin managers can easily set up WooCommerce bookings-based units for the bookable products available in their WooCommerce booking services store.', 'mwb-wc-bk' ); ?></p>
 					</div>
 				</div>
 			</div>
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="" alt="Services image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/define.png' ); ?>" alt="People type image">
 					</div>
 					<div class="booking-overview__keywords-text">
-						<h3 class="booking-overview__keywords-heading">Service and quote status taxonomies</h3>
-						<p class="booking-overview__keywords-description">The plugin provides you two different types of taxonomies. <b>1) Quote Service Taxonomy</b>, <b>2) Quote Status Taxonomy</b>. Merchants can enable/disable these taxonomies as per their requirements.</p>
+						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Easily Define People Types ', 'mwb-wc-bk' ); ?></h3>
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'During the Woocommerce booking process, inquire about the types of people you’re offering bookings for. Admin managers can easily create their own people-type labels based on age, marital status, affiliation, etc. e.g. adults, children, senior-citizen, foreigners, etc', 'mwb-wc-bk' ) ?></p>
 					</div>
 				</div>
 			</div>
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="" alt="Multiple quotations image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/customization.png' ); ?>" alt="Service Customization image">
 					</div>
 					<div class="booking-overview__keywords-text">
-						<h3 class="booking-overview__keywords-heading">Multiple quotation statuses</h3>
-						<p class="booking-overview__keywords-description">Our Get A Quote plugin helps merchants to create multiple statuses for quotations. Admin can check and change the status for a particular quote.</p>
+						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Service Customization Available ', 'mwb-wc-bk' ); ?></h3>
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Store managers can easily customize their booking services i.e. included and addon services as per their customer prerequisites. For instance- hotel rental booking includes parking services and offer addon meals services.', 'mwb-wc-bk' ); ?></p>
 					</div>
 				</div>
 			</div>
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="" alt="Multiple services image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/global.png' ); ?>" alt="Global Availability image">
 					</div>
 					<div class="booking-overview__keywords-text">
-						<h3 class="booking-overview__keywords-heading">Multiple services</h3>
-						<p class="booking-overview__keywords-description">With this plugin, merchants can create multiple services to offer. Customers will be able to select these services through the quotation form you added to your website. These services will be displayed in the Services field of
-							your quotation form.</p>
+						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Effectively lay down Global Availability rules for Bookings ', 'mwb-wc-bk' ); ?></h3>
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Admin managers can easily set up global booking availability rules for the customer planning to avail your bookable products.', 'mwb-wc-bk' ); ?></p>
 					</div>
 				</div>
 			</div>
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="" alt="Acknowledgement image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/additional.png' ); ?>" alt="Additional costs image">
 					</div>
 					<div class="booking-overview__keywords-text">
-						<h3 class="booking-overview__keywords-heading">Submission Acknowledgement through email</h3>
-						<p class="booking-overview__keywords-description">Our Get A Quote plugin also lets you send an acknowledgment email to the user whenever s/he submits the quote requests. You can create and save your email subject and message which will be sent to the user to notify them about
-							their successful submission of their quote request.</p>
+						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Smoothly underline additional costs depending on demand surge', 'mwb-wc-bk' ); ?></h3>
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Demand surge can directly affect the cost of bookable products. Admin managers can easily set up WooCommerce bookings based on additional surge costs when there is a high demand for certain bookable products in a specific region.', 'mwb-wc-bk' ); ?></p>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="booking-overview__support">
-			<div class="booking-support__content">
-				<h2 class="booking-support__heading">Exclusive Support</h2>
-				<p class="booking-support__description">Receive dedicated <b>24x7</b> Phone, Email & Skype support. Our Support is ready to assist you regarding any query, issue, or feature request and if that doesn't help our Technical team will connect with you personally and have your query
-					resolved.
-				</p>
+			<div class="booking-overview__keywords-item">
+				<div class="booking-overview__keywords-card">
+					<div class="booking-overview__keywords-image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/max-booking.png' ); ?>" alt="Booking Limit image">
+					</div>
+					<div class="booking-overview__keywords-text">
+						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Set-forth max booking limits with ease', 'mwb-wc-bk' ); ?></h3>	
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Store managers can also limit max bookings per unit allowed for bookable products, to avoid being overbooked, manage booking, and track bookings effectively.', 'mwb-wc-bk' ); ?></p>
+					</div>
+				</div>
 			</div>
-			<div class="booking-support__icons">
-				<ul class="booking-support__list">
-					<li class="booking-support__list-item"><a href=""><img src=""></a></li>
-					<li class="booking-support__list-item"><a href=""><img src=""></a></li>
-					<li class="booking-support__list-item"><a href=""><img src=""></a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="booking-overview__help">
-			<div class="booking-overview__help-icon"><span></span></div>
-			<h4>Connect with us in one click</h4>
-			<a href="https://join.skype.com/invite/IKVeNkLHebpC"> <img src=""><span>Connect </span></a>
-		</div>
+		</div>	
 	</div>
 </div>

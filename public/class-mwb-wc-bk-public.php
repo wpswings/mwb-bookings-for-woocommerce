@@ -253,6 +253,8 @@ class Mwb_Wc_Bk_Public {
 
 		$unavail_dates = $availability_instance->fetch_unavailable_dates( $slot_arr );
 
+		$slot_arr = $availability_instance->make_unavailable_todays_passed_slots( $product_id, $slot_arr );
+
 		echo '<div id="booking-slots-data" slots="' . esc_html( htmlspecialchars( wp_json_encode( $slot_arr ) ) ) . '" unavail_dates="' . esc_html( htmlspecialchars( wp_json_encode( $unavail_dates ) ) ) . '" ></div>';
 
 		update_post_meta( $product_id, 'mwb_booking_product_slots', $slot_arr );
@@ -262,8 +264,8 @@ class Mwb_Wc_Bk_Public {
 	/**
 	 * Calculate dates between start and end date.
 	 *
-	 * @param [date] $first Start Date.
-	 * @param [date] $last Last Date.
+	 * @param string $first Start Date.
+	 * @param string $last Last Date.
 	 * @param string $step Step to increment the date.
 	 * @param string $output_format DAte format.
 	 * @return array
@@ -857,7 +859,6 @@ class Mwb_Wc_Bk_Public {
 					$booking_id = $this->mwb_wc_bk_create_booking( $args );
 					if ( $booking_id ) {
 						update_post_meta( $order_id, 'mwb_booking_id', $booking_id );
-						// $order_item->add_meta_data( 'mwb_booking_id', $booking_id, true );
 						$this->mwb_wc_bk_booking_details_order( $order_item, $booking_data );
 						$order_item->save_meta_data();
 						$order->add_order_note( sprintf( __( 'A new booking <a href="%1$1s">#%2$2s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );   // @codingStandardsIgnoreLine
@@ -964,14 +965,6 @@ class Mwb_Wc_Bk_Public {
 			)
 		);
 
-		// // $booking_product = wp_insert_term( 'Mwb Booking', 'product_cat', array(
-		// // 	'description' => 'A booking product', // optional
-		// // 	'parent' => 0, // optional
-		// // 	'slug' => 'mwb_booking_cat' // optional
-		// // ) );
-
-		// echo '<pre>'; print_r( $booking_product ); echo '</pre>';
-
 		$args['order_meta']['order_id'] = $args['order_id'];
 		update_post_meta( $booking_id, '_customer_user', $args['user_id'] );
 		update_post_meta( $booking_id, 'mwb_meta_data', $args['order_meta'] );
@@ -997,8 +990,6 @@ class Mwb_Wc_Bk_Public {
 		$duration     = isset( $_POST['duration'] ) ? sanitize_text_field( wp_unslash( $_POST['duration'] ) ) : 1;
 
 		$product_meta = get_post_meta( $product_id );
-
-		// echo '<pre>'; print_r( $product_meta ); echo '</pre>'; die('kllk');
 
 		$people_select       = ! empty( $product_meta['mwb_booking_people_select'][0] ) ? maybe_unserialize( $product_meta['mwb_booking_people_select'][0] ) : '';
 		$people_enable_check = ! empty( $product_meta['mwb_people_enable_checkbox'][0] ) ? sanitize_text_field( wp_unslash( $product_meta['mwb_people_enable_checkbox'][0] ) ) : 'no';
@@ -1061,9 +1052,7 @@ class Mwb_Wc_Bk_Public {
 								} else {
 									$booking_people_cost += $unit_cost * $people_data[ $id ]['people_count'];
 								}
-								// echo '1';
 							}
-							// echo '2';
 						} else {
 							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
 								if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] ) ) {
@@ -1072,7 +1061,6 @@ class Mwb_Wc_Bk_Public {
 									$booking_people_cost += $unit_cost;
 								}
 							}
-							// echo '<pre>'; print_r( $booking_people_cost ); echo '</pre>';
 						}
 						if ( ! empty( $base_cost_multiply ) && 'yes' === $base_cost_multiply ) {
 							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
@@ -1081,9 +1069,7 @@ class Mwb_Wc_Bk_Public {
 								} else {
 									$booking_people_cost += $base_cost * $people_data[ $id ]['people_count'];
 								}
-								// echo '3';
 							}
-							// echo '4';
 						} else {
 							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
 								if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] ) ) {
@@ -1092,8 +1078,6 @@ class Mwb_Wc_Bk_Public {
 									$booking_people_cost += $base_cost;
 								}
 							}
-							// echo '<pre>'; print_r( $booking_people_cost ); echo '</pre>';
-
 						}
 					}
 				}
@@ -1115,8 +1099,6 @@ class Mwb_Wc_Bk_Public {
 			$booking_people_cost = ( $unit_cost + $base_cost ) * $duration;
 		}
 
-		// echo '<pre>'; print_r( 'PC-' . $booking_people_cost ); echo '</pre>';
-
 		if ( empty( $unit_cost_multiply ) || 'no' === $unit_cost_multiply ) {
 
 			if ( ! empty( $extra_cost ) ) {
@@ -1129,8 +1111,6 @@ class Mwb_Wc_Bk_Public {
 				}
 			}
 		}
-		// echo '<pre>'; print_r( 'PC-' . $booking_people_cost ); echo '</pre>';
-
 
 		if ( is_array( $added_costs ) && ! empty( $added_costs ) ) {
 			foreach ( $added_costs as $cost_id ) {
@@ -1165,8 +1145,6 @@ class Mwb_Wc_Bk_Public {
 			}
 		}
 
-		// echo '<pre>'; print_r( 'AC-' . $total_added_cost ); echo '</pre>';
-
 		if ( ! empty( $enabled_services ) && is_array( $enabled_services ) ) {
 			foreach ( $enabled_services as $service_id ) {
 
@@ -1182,16 +1160,19 @@ class Mwb_Wc_Bk_Public {
 					}
 				} else {
 					if ( ! empty( $_POST['inc_service_count'] ) && is_array( $_POST['inc_service_count'] ) ) {
+
 						$service_count = array_key_exists( $service_id, $_POST['inc_service_count'] ) ? 1 : 0;
-					} else {
-						$service_count = 0;
-					}
-					if ( ! empty( $_POST['add_service_count'] ) && is_array( $_POST['add_service_count'] ) ) {
+
+					} elseif ( ! empty( $_POST['add_service_count'] ) && is_array( $_POST['add_service_count'] ) ) {
+
 						$service_count = array_key_exists( $service_id, $_POST['add_service_count'] ) ? 1 : 0;
+
 					} else {
+
 						$service_count = 0;
 					}
 				}
+
 				if ( 'yes' === $service_enable_check ) {
 					if ( 'yes' === $enable_people_type ) {
 						if ( isset( $service_term_meta['mwb_booking_ct_services_multiply_people'][0] ) && ( 'yes' === $service_term_meta['mwb_booking_ct_services_multiply_people'][0] ) ) {
@@ -1218,13 +1199,7 @@ class Mwb_Wc_Bk_Public {
 			}
 		}
 
-		// echo '<pre>'; print_r( 'SC-' . $total_service_cost ); echo '</pre>';
-
 		$booking_cost = $booking_people_cost + $total_added_cost + $total_service_cost;
-
-		// if ( $booking_cost < ( (int) $unit_cost + (int) $base_cost ) ) {
-		// 	$booking_cost = (int) $unit_cost + (int) $base_cost;
-		// }
 
 		$price_html = wc_price( $booking_cost );
 		echo wp_json_encode(

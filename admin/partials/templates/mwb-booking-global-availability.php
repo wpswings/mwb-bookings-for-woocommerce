@@ -17,7 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 $rule_arr = array();
-// echo '<pre>'; print_r( $_POST ); echo '</pre>';
 if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 
 	// Nonce verification.
@@ -35,7 +34,6 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 	// phpcs:enable
 	$rule_count = 0;
 	$r_c        = count( $rule_arr['rule_name'] );
-	// echo '<pre>'; print_r( 'dgndfgbdfg ' . $r_c ); echo '</pre>';
 	for ( $count = 0; $count < $r_c; $count++ ) {
 
 		$rule_arr['rule_switch'][ $count ]   = isset( $rule_arr['rule_switch'][ $count ] ) ? $rule_arr['rule_switch'][ $count ] : 'off';
@@ -48,17 +46,7 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 		}
 		$rule_count++;
 	}
-	// echo '<pre>'; print_r( $rule_arr ); echo '</pre>';
-	// $rule_arr['rule_switch']        = array_values( $rule_arr['rule_switch'] );
-	// $rule_arr['rule_name']          = array_values( $rule_arr['rule_name'] );
-	// $rule_arr['rule_type']          = array_values( $rule_arr['rule_type'] );
-	// $rule_arr['rule_range_from']    = array_values( $rule_arr['rule_range_from'] );
-	// $rule_arr['rule_range_to']      = array_values( $rule_arr['rule_range_to'] );
-	// $rule_arr['rule_bookable']      = array_values( $rule_arr['rule_bookable'] );
-	// $rule_arr['rule_weekdays']      = array_values( $rule_arr['rule_weekdays'] );
-	// $rule_arr['rule_weekdays_book'] = array_values( $rule_arr['rule_weekdays_book'] );
 
-	// echo '<pre>'; print_r( $rule_arr ); echo '</pre>';
 		update_option( 'mwb_global_avialability_rules', $rule_arr );
 
 	update_option( 'mwb_global_availability_rules_count', $rule_count );
@@ -67,8 +55,6 @@ if ( isset( $_POST['mwb_booking_global_availability_rules_save'] ) ) {
 $availability_rules = get_option( 'mwb_global_avialability_rules', array() );
 $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 
-// echo '<pre>'; print_r( $availability_rules ); echo '</pre>';
-// echo '<pre>'; print_r( $rule_count ); echo '</pre>';
 ?>
 
 <!-- For Global options Setting -->
@@ -199,7 +185,7 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 		?>
 		</div>
 		<div id="mwb_global_availability_button">
-			<button type="button" id="mwb_add_avialability_rule" class="button mwb-add-rule__icon" rule_count="<?php echo esc_html( $rule_count ); ?>" title="<?php esc_html_e( 'Add New Avialability Rule', 'mwb-wc-bk' ); ?>" >
+			<button type="button" id="mwb_add_avialability_rule" class="button mwb-add-rule__icon" rule_count="<?php echo esc_html( $rule_count ); ?>" title="<?php esc_html_e( 'Add New Availability Rule', 'mwb-wc-bk' ); ?>" >
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 					<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
 				</svg>

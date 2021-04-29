@@ -25,8 +25,6 @@ if ( isset( $_POST['mwb_booking_settings_save'] ) ) {
 
 	$mwb_booking_setting_options = array();
 
-	// echo '<pre>'; print_r( $_POST ); echo '</pre>';die('working');
-
 	$mwb_booking_setting_options['mwb_booking_setting_go_enable']             = ! empty( $_POST['mwb_booking_setting_go_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_enable'] ) ) : 'no';
 	$mwb_booking_setting_options['mwb_booking_setting_go_confirm_status']     = ! empty( $_POST['mwb_booking_setting_go_confirm_status'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_confirm_status'] ) ) : '';
 	$mwb_booking_setting_options['mwb_booking_setting_go_reject']             = ! empty( $_POST['mwb_booking_setting_go_reject'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_setting_go_reject'] ) ) : '';
@@ -78,7 +76,8 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $global_func
 
 						<td class="forminp forminp-text mwb-form-group__input">
 							<input type="number" id="mwb_booking_setting_go_confirm_input" name="mwb_booking_setting_go_confirm_status" value="<?php echo esc_html( $mwb_booking_settings['mwb_booking_setting_go_confirm_status'] ); ?>" class="" step="1" min="1">
-							<p><?php esc_html_e( 'When this limit is reached, paid(complete) Bookings will be set to Confirmed automatically when the End Date exceeds the specified number of days.', 'mwb-wc-bk' ); ?></p>
+							<span><?php esc_attr_e( 'Days', 'mwb-wc-bk' ); ?></span>
+							<p><?php esc_html_e( 'When this limit is reached, paid(complete) Bookings will be set to Confirmed automatically when the booking creation date exceeds the specified number of days.', 'mwb-wc-bk' ); ?></p>
 						</td>
 					</tr>
 					<tr valign="top" class="mwb-form-group">

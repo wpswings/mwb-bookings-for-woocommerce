@@ -43,7 +43,6 @@ if ( empty( $people_select ) ) {
 			<?php
 
 			if ( 'no' === $people_type_check ) {
-				// die('lklkl');
 				?>
 				<div id="mwb-wc-bk-people-input-div">
 					<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
@@ -86,15 +85,19 @@ if ( empty( $people_select ) ) {
 				</div>
 					<?php
 			}
+			?>
+		</div>
+			<?php
 	} else {
 		?>
 		<div id="mwb-wc-bk-people-field">
 			<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
-			<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="people-input-hidden" name="people_total" value="1" >
-			<span><?php esc_html_e( '1 people', 'mwb-wc-bk' ); ?></span>
+			<div id="mwb-wc-bk-people-input-div">
+				<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="people-input-hidden" name="people_total" value="1" >
+				<span><?php esc_html_e( '1 people', 'mwb-wc-bk' ); ?></span>
+			</div>
 		</div>
 		<?php
 	}
 	?>
-		</div>
-	</div>
+</div>

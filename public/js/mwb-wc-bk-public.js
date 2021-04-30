@@ -46,6 +46,7 @@ jQuery(document).ready( function($) {
 	}).on('mouseleave',function () { 
 		jQuery(this).parent('li').children('.booking-service-desc').removeClass('booking-service-desc_extend');
 	});
+	design_js();
 
 });
 console.log(mwb_wc_bk_public.product_settings);
@@ -579,7 +580,7 @@ function price_cal_func($) {
 		}
 	});
 	Object.assign( ajax_data, {'add_service_count': add_service_count} );
-
+	console.log( ajax_data );
 	$.ajax({
 		url      : mwb_wc_bk_public.ajaxurl,
 		type     : 'POST',
@@ -616,5 +617,35 @@ function show_total($, total_cost, base_cost, service_cost, added_cost_arr) {
 			$( '#mwb-wc-bk-total-fields' ).html( response );
 		}
 	});
+}
+
+function design_js() {
+	
+	if(!(jQuery('#mwb-wc-bk-inc-service-list').children('li').children().hasClass('booking-service-price'))) {
+     jQuery('#mwb-wc-bk-inc-service-list').children('li').children('label').css({
+		'max-width':'50%'
+	 });
+	}
+
+	if(!(jQuery('#mwb-wc-bk-add-service-list').children('li').children().hasClass('booking-service-price'))){
+        jQuery('#mwb-wc-bk-add-service-list').children('li').children('label').css({
+			'max-width':'180px',
+		});
+	}
+    if(jQuery('#mwb-wc-bk-people-input-div').children('.mwb-wc-bk-people-type-popup')) {
+
+		jQuery('.mwb-wc-bk-people-type-popup').parent().parent().css({
+			'display':'block'
+		});
+	}
+
+	if(jQuery('#mwb-wc-bk-people-input-div').children('#mwb-wc-bk-people-input')){
+		jQuery('#mwb-wc-bk-people-input').parent().parent().css({
+			'display':'block'
+		});
+		jQuery('#mwb-wc-bk-people-input-div').toggleClass('mwb-bk-input-div');
+
+	}
+
 }
 

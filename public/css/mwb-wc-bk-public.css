@@ -30,7 +30,19 @@ input:not(input[type=checkbox],input[type=radio]) {
 .mwb-wc-bk-form-section {
     margin-bottom: 10px;
 }
-
+/* #mwb-wc-bk-people-input-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+#mwb-wc-bk-people-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: calc(100% - 30px);
+} */
 #mwb-wc-bk-date-section {
     display: flex;
     flex-wrap: wrap;
@@ -51,6 +63,26 @@ input:not(input[type=checkbox],input[type=radio]) {
 
 #mwb-wc-bk-inc-service-field {
     margin-bottom: 10px;
+}
+/* #mwb-wc-bk-people-field {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: calc(100% - 40px);
+} */
+#mwb-wc-bk-people-input-div.mwb-bk-input-div {
+    display: flex;
+  flex-direction: column;
+}
+.mwb-bk-input-div #mwb-wc-bk-people-input {
+    max-width: 180px;
+    width: 100%;
+}
+#mwb-wc-bk-people-field {
+    display: flex;
+    justify-content: space-between;
+    max-width: calc(100% - 30px);
 }
 
 #mwb-wc-bk-start-date-input,
@@ -136,7 +168,9 @@ input:not(input[type=checkbox],input[type=radio]) {
     max-width: 30%;
     width: 100%;
 }
-
+#mwb-wc-bk-inc-service-list li label {
+    max-width: 32%;
+}
 #mwb-wc-bk-add-service-list li label {
     max-width: 25%;
 }

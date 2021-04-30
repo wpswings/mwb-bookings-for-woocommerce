@@ -1159,17 +1159,18 @@ class Mwb_Wc_Bk_Public {
 						$service_count = ! empty( $_POST['inc_service_count'][ $service_id ] ) ? sanitize_text_field( wp_unslash( $_POST['inc_service_count'][ $service_id ] ) ) : 1;
 					}
 				} else {
-					if ( ! empty( $_POST['inc_service_count'] ) && is_array( $_POST['inc_service_count'] ) ) {
-
-						$service_count = array_key_exists( $service_id, $_POST['inc_service_count'] ) ? 1 : 0;
-
-					} elseif ( ! empty( $_POST['add_service_count'] ) && is_array( $_POST['add_service_count'] ) ) {
-
-						$service_count = array_key_exists( $service_id, $_POST['add_service_count'] ) ? 1 : 0;
-
+					if ( 'yes' === $if_optional ) {
+						if ( ! empty( $_POST['add_service_count'] ) && is_array( $_POST['add_service_count'] ) ) {
+							$service_count = array_key_exists( $service_id, $_POST['add_service_count'] ) ? 1 : 0;
+						} else {
+							$service_count = 0;
+						}
 					} else {
-
-						$service_count = 0;
+						if ( ! empty( $_POST['inc_service_count'] ) && is_array( $_POST['inc_service_count'] ) ) {
+							$service_count = array_key_exists( $service_id, $_POST['inc_service_count'] ) ? 1 : 0;
+						} else {
+							$service_count = 0;
+						}
 					}
 				}
 

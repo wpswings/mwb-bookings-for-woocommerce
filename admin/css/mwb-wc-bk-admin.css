@@ -1266,6 +1266,14 @@ div#mwb_booking_cost_data button,#mwb_booking_services_data button,#mwb_booking_
     /* background-color: #d2d2d2; */
     color: #737373!important;
 }
+.mwb_booking_calendar_status_details {
+    text-align: center;
+}
+
+.mwb_booking_calendar_status_details a {
+    display: inline-block;
+}
+
 
 
 /*===============================================

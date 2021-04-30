@@ -776,7 +776,7 @@ function product_people_settings_js($) {
 	if( enable_people.is(':checked') ) {
 		$( '#mwb_booking_people_data #mwb_min_people_per_booking').prop( 'disabled', false );
 		$( '#mwb_booking_people_data #mwb_max_people_per_booking').prop( 'disabled', false );
-		$( '#mwb_booking_people_data #mwb_people_as_seperate_booking').prop( 'disabled', false );
+		$( '#mwb_booking_people_data #mwb_people_as_separate_booking').prop( 'disabled', false );
 		$( '#mwb_booking_people_data #mwb_enable_people_types').prop( 'disabled', false );
 		$( '#mwb_booking_people_data #mwb_people_type_add button').prop( 'disabled', false );
 		$( '#mwb_booking_people_data #mwb_people_type_add button a').attr( 'href', 'edit-tags.php?taxonomy=mwb_ct_people_type&post_type=mwb_cpt_booking' );
@@ -784,7 +784,7 @@ function product_people_settings_js($) {
 	} else {
 		$( '#mwb_booking_people_data #mwb_min_people_per_booking').prop( 'disabled', true );
 		$( '#mwb_booking_people_data #mwb_max_people_per_booking').prop( 'disabled', true );
-		$( '#mwb_booking_people_data #mwb_people_as_seperate_booking').prop( 'disabled', true );
+		$( '#mwb_booking_people_data #mwb_people_as_separate_booking').prop( 'disabled', true );
 		$( '#mwb_booking_people_data #mwb_enable_people_types').prop( 'disabled', true );
 		$( '#mwb_booking_people_data #mwb_people_type_add button').prop( 'disabled', true );
 		$( '#mwb_booking_people_data #mwb_people_type_add button a').removeAttr( 'href' );
@@ -795,7 +795,7 @@ function product_people_settings_js($) {
 		if( $(this).is(':checked') ) {
 			$( '#mwb_booking_people_data #mwb_min_people_per_booking').prop( 'disabled', false );
 			$( '#mwb_booking_people_data #mwb_max_people_per_booking').prop( 'disabled', false );
-			$( '#mwb_booking_people_data #mwb_people_as_seperate_booking').prop( 'disabled', false );
+			$( '#mwb_booking_people_data #mwb_people_as_separate_booking').prop( 'disabled', false );
 			$( '#mwb_booking_people_data #mwb_enable_people_types').prop( 'disabled', false );
 			$( '#mwb_booking_people_data #mwb_people_type_add button').prop( 'disabled', false );
 			$( '#mwb_booking_people_data #mwb_people_type_add button a').attr( 'href', 'edit-tags.php?taxonomy=mwb_ct_people_type&post_type=mwb_cpt_booking' );
@@ -803,7 +803,7 @@ function product_people_settings_js($) {
 		} else {
 			$( '#mwb_booking_people_data #mwb_min_people_per_booking').prop( 'disabled', true );
 			$( '#mwb_booking_people_data #mwb_max_people_per_booking').prop( 'disabled', true );
-			$( '#mwb_booking_people_data #mwb_people_as_seperate_booking').prop( 'disabled', true );
+			$( '#mwb_booking_people_data #mwb_people_as_separate_booking').prop( 'disabled', true );
 			$( '#mwb_booking_people_data #mwb_enable_people_types').prop( 'disabled', true );
 			$( '#mwb_booking_people_data #mwb_people_type_add button').prop( 'disabled', true );
 			$( '#mwb_booking_people_data #mwb_people_type_add button a').removeAttr( 'href' );

@@ -356,7 +356,7 @@ class Mwb_Wc_Bk_Admin {
 			'mwb_people_enable_checkbox'             => array( 'default' => 'no' ),
 			'mwb_min_people_per_booking'             => array( 'default' => 1 ),
 			'mwb_max_people_per_booking'             => array( 'default' => '' ),
-			'mwb_people_as_seperate_booking'         => array( 'default' => 'no' ),
+			'mwb_people_as_separate_booking'         => array( 'default' => 'no' ),
 			'mwb_enable_people_types'                => array( 'default' => 'no' ),
 			'mwb_booking_people_select'              => array( 'default' => array() ),
 			'mwb_max_bookings_per_unit'              => array( 'default' => 1 ),
@@ -1115,17 +1115,17 @@ class Mwb_Wc_Bk_Admin {
 
 					update_post_meta( $booking_id, 'mwb_booking_status', 'confirmed' );
 				}
-				if ( time() > $end_timestamp && ( 'pending' === $order_status || 'cancelled' === $order_status ) ) {
+				if ( current_time( 'tiemstamp' ) > $end_timestamp && ( 'pending' === $order_status || 'cancelled' === $order_status ) ) {
 					update_post_meta( $booking_id, 'mwb_booking_status', 'expired' );
 				}
 				if ( 'pending' === $order_status ) {
-					if ( time() > ( $order_created + ( $cancel_days * 24 * 3600 ) ) ) {
+					if ( current_time( 'tiemstamp' ) > ( $order_created + ( $cancel_days * 24 * 3600 ) ) ) {
 						update_post_meta( $booking_id, 'mwb_booking_status', 'cancelled' );
 					}
 				}
 				if ( 'confirmation' === $booking_status ) {
 
-					if ( time() > ( $order_created + ( $confirm_days * 24 * 3600 ) ) ) {
+					if ( current_time( 'tiemstamp' ) > ( $order_created + ( $confirm_days * 24 * 3600 ) ) ) {
 						update_post_meta( $booking_id, 'mwb_booking_status', 'confirmed' );
 					}
 				}

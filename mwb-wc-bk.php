@@ -142,3 +142,40 @@ function mwb_wc_bk_constant( $name, $value ) {
 		define( $name, $value );
 	}
 }
+
+/**
+ * Adding settings link to the post action links.
+ *
+ * @param array $links array of the post action links.
+ * @return array
+ */
+function mwb_booking_settings_link( $links ) {
+
+	$plugin_links = array(
+		'<a href="' . admin_url( 'edit.php?post_type=mwb_cpt_booking&page=global-settings&tab=settings' ) . '">' . esc_html__( 'Settings', 'mwb-wc-bk' ) . '</a>',
+	);
+
+	return array_merge( $plugin_links, $links );
+}
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'mwb_booking_settings_link' );
+
+/**
+ * Plugin row meta links
+ *
+ * @param array  $links_array      Array of the plugin row links.
+ * @param string $plugin_file_name Name of the Plugin.
+ * @return array
+ */
+function mwb_booking_plugin_row_links( $links_array, $plugin_file_name ) {
+
+	if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
+		// you can still use array_unshift() to add links at the beginning.
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Demo.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Demo</a>';
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Documentation.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Documetation</a>';
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Support.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Support</a>';
+	}
+
+	return $links_array;
+}
+
+add_filter( 'plugin_row_meta', 'mwb_booking_plugin_row_links', 10, 2 );

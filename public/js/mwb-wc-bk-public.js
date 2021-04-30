@@ -143,7 +143,6 @@ function datepicker_check($, unavailable_dates, slots) {
 			start_date = $(this).val();
 			end_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-end-date-input').val();
 			duration = $( '#mwb-wc-bk-duration-section #mwb-wc-bk-duration-input' ).val();
-			alert( duration );
 			if ( start_date && end_date ) {
 
 				date1 = new Date( start_date );

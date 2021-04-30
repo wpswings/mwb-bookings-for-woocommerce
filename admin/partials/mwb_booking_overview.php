@@ -20,13 +20,13 @@
 	<div class="booking-overview__content">
 		<div class="booking-overview__content-description">
 			<h2><?php esc_html_e( 'What is MWB Bookings for WooCommerce?', 'mwb-wc-bk' ); ?></h2>
-			<p><?php esc_html_e( "The MWB Bookings for WooCommerce Plugin builds a booking system for your services using WooCommerce. Schedule appointments, Booking Items and Rooms, Reserve seats for classes, and so on. This plugin also allows you to organize your booking slots into days and hours. You'll need to set the value of the booking unit as days when booking space, renting items, reserving courses or classes, or selling tour packages..", 'mwb-wc-bk' ); ?></p>
+			<p><?php esc_html_e( "The MWB Bookings for WooCommerce Plugin builds a booking system for your services using WooCommerce. Schedule appointments, Booking Items and Rooms, Reserve seats for classes, and so on. This plugin also allows you to organize your booking slots into days, hours and minutes. You'll need to set the value of the booking unit as per requirement when booking space, renting items, reserving courses or classes, or selling tour packages..", 'mwb-wc-bk' ); ?></p>
 			<h3><?php esc_html_e( 'As a store owner, you can-', 'mwb-wc-bk' ); ?></h3>
 			<ul class="booking-overview__features">
 				<li><?php esc_html_e( 'Create unlimited bookable products with ease.', 'mwb-wc-bk' ); ?></li>
-				<li><?php esc_html_e( 'Easily access and manage all bookings using the calendar listings.', 'mwb-wc-bk' ); ?></li>
-				<li><?php esc_html_e( 'Create booking slots for days, weeks, and hours, as required.', 'mwb-wc-bk' ); ?></li>
-				<li><?php esc_html_e( 'Reject bookings with a pending confirmation status automatically.', 'mwb-wc-bk' ); ?></li>
+				<li><?php esc_html_e( 'Easily access all bookings using the calendar listings.', 'mwb-wc-bk' ); ?></li>
+				<li><?php esc_html_e( 'Create booking slots for days, hours and minutes as required.', 'mwb-wc-bk' ); ?></li>
+				<li><?php esc_html_e( 'Reject bookings with a pending payment status automatically.', 'mwb-wc-bk' ); ?></li>
 				<li><?php esc_html_e( 'Set a minimum and maximum booking time.', '' ); ?></li>
 				<li><?php esc_html_e( 'During the booking process, easily inquire about the types of people.', 'mwb-wc-bk' ); ?></li>
 			</ul>
@@ -36,18 +36,18 @@
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/assign.png' ); ?>" alt="Efficiently Assign image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/define.png' ); ?>" alt="Efficiently Assign image">
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Efficiently Assign Booking Units', 'mwb-wc-bk' ); ?></h3>
-						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Admin managers can easily set up WooCommerce bookings-based units for the bookable products available in their WooCommerce booking services store.', 'mwb-wc-bk' ); ?></p>
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Admin managers can easily set up booking units based on days, hours, minutes and fixed or customer selected durations for the bookable products available in their WooCommerce booking services store.', 'mwb-wc-bk' ); ?></p>
 					</div>
 				</div>
 			</div>
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/define.png' ); ?>" alt="People type image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/assign.png' ); ?>" alt="People type image">
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Easily Define People Types ', 'mwb-wc-bk' ); ?></h3>
@@ -73,7 +73,7 @@
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Effectively lay down Global Availability rules for Bookings ', 'mwb-wc-bk' ); ?></h3>
-						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Admin managers can easily set up global booking availability rules for the customer planning to avail your bookable products.', 'mwb-wc-bk' ); ?></p>
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Admin managers can easily set up global booking availability rules for all the booking products globally as per specific or generic dates for the customer planning to avail your bookable products.', 'mwb-wc-bk' ); ?></p>
 					</div>
 				</div>
 			</div>
@@ -95,7 +95,7 @@
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Set-forth max booking limits with ease', 'mwb-wc-bk' ); ?></h3>	
-						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Store managers can also limit max bookings per unit allowed for bookable products, to avoid being overbooked, manage booking, and track bookings effectively.', 'mwb-wc-bk' ); ?></p>
+						<p class="booking-overview__keywords-description"><?php esc_html_e( 'Store managers can also limit max bookings per unit allowed for a particular bookable product, to avoid being overbooked, manage booking, and track bookings effectively.', 'mwb-wc-bk' ); ?></p>
 					</div>
 				</div>
 			</div>

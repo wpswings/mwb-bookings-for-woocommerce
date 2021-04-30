@@ -14,10 +14,10 @@ var day_difference;
 
 jQuery(document).ready( function($) {
 
-	jQuery('#mwb-wc-bk-create-booking-form').parent('form').addClass('mwb_booking_checkout_form');
+	design_js();
+
 	$(window).on('load', function(event) {
 		if ( is_product ) {
-			// $( '.mwb-wc-bk-form-input' ).trigger('change');
 			$( '.mwb_booking_checkout_form' )[0].reset();
 		}
 	});
@@ -25,8 +25,7 @@ jQuery(document).ready( function($) {
 	start_date = $( '#mwb-wc-bk-start-date-input' ).val();
 	end_date   = $( '#mwb-wc-bk-end-date-input' ).val();
 
-	show_time_slots($);
-	
+	show_time_slots($);	
 	people_conditions($);
 	booking_price_cal($);
 
@@ -40,17 +39,11 @@ jQuery(document).ready( function($) {
 			datepicker_check($, unavail_dates, slots);
 		}
 	}
-	jQuery('#mwb-wc-bk-create-booking-form').parent('form').addClass('mwb_booking_checkout_form');
-	jQuery('#mwb-wc-bk-service-field ul li label').on('mouseenter',function(){
-		jQuery(this).parent('li').children('.booking-service-desc').addClass('booking-service-desc_extend');
-	}).on('mouseleave',function () { 
-		jQuery(this).parent('li').children('.booking-service-desc').removeClass('booking-service-desc_extend');
-	});
-	design_js();
-
+	
 });
-console.log(mwb_wc_bk_public.product_settings);
+
 function datepicker_check($, unavailable_dates, slots) {
+	
 	max_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_input[0];
 	max_adv_duration = mwb_wc_bk_public.product_settings.mwb_advance_booking_max_duration[0];
 	min_adv_input    = mwb_wc_bk_public.product_settings.mwb_advance_booking_min_input[0];
@@ -58,7 +51,6 @@ function datepicker_check($, unavailable_dates, slots) {
 
 	start_booking        = mwb_wc_bk_public.product_settings.mwb_start_booking_from[0];
 
-	console.log( max_adv_input );
 	max_dur   = max_adv_duration.match(/\b(\w)/g);
 	min_dur   = min_adv_duration.match( /\b(\w)/g );
 
@@ -93,7 +85,7 @@ function datepicker_check($, unavailable_dates, slots) {
 			end_slot.setMonth( ( end_slot.getMonth() ) + parseInt(max_adv_input) );
 		}
 	}
-	console.log( 'start: ' + start_slot + "   " + 'end:  ' + end_slot );
+
 	if ( mwb_wc_bk_public.product_settings.mwb_booking_unit_duration[0] == 'day' ) {
 	
 		$( '#mwb-wc-bk-date-section' ).on( 'change', '#mwb-wc-bk-end-date-input', function(){
@@ -219,8 +211,18 @@ function datepicker_check($, unavailable_dates, slots) {
 			} else {
 				return [true,"","Available"];
 			}
-		}
+		},
+		changeYear: true,
+   		changeMonth: true,
+   		autoclose: true
 	});
+
+	$('.prev i').removeClass();
+	$('.prev i').addClass("fa fa-chevron-left");
+  
+	$('.next i').removeClass();
+	$('.next i').addClass("fa fa-chevron-right");
+  
 }
 
 function unvailable_date_range_check( arr, unavail_dates ) {
@@ -395,15 +397,15 @@ function booking_price_cal($) {
 			}
 		});
 		Object.assign( ajax_data, {'add_service_count': add_service_count} );
-		console.log( ajax_data );
 
 		$.ajax({
 			url      : mwb_wc_bk_public.ajaxurl,
 			type     : 'POST',
 			data     : ajax_data,
 			success : function( response ) {
+
 				response = JSON.parse(response);
-				console.log( response );
+
 				var price_html = response.price_html ; 
 				$('.price').html(price_html);
 				total_cost     = response.booking_total_cost;
@@ -580,7 +582,7 @@ function price_cal_func($) {
 		}
 	});
 	Object.assign( ajax_data, {'add_service_count': add_service_count} );
-	console.log( ajax_data );
+
 	$.ajax({
 		url      : mwb_wc_bk_public.ajaxurl,
 		type     : 'POST',
@@ -608,7 +610,7 @@ function show_total($, total_cost, base_cost, service_cost, added_cost_arr) {
 		'base_cost'      : base_cost,
 		'added_cost_arr' : added_cost_arr,
 	}
-	console.log( data );
+
 	$.ajax({
 		url     : mwb_wc_bk_public.ajaxurl,
 		type    : 'POST',
@@ -620,7 +622,16 @@ function show_total($, total_cost, base_cost, service_cost, added_cost_arr) {
 }
 
 function design_js() {
-	
+
+	jQuery('#mwb-wc-bk-create-booking-form').parent('form').addClass('mwb_booking_checkout_form');
+
+	jQuery('#mwb-wc-bk-create-booking-form').parent('form').addClass('mwb_booking_checkout_form');
+	jQuery('#mwb-wc-bk-service-field ul li label').on('mouseenter',function(){
+		jQuery(this).parent('li').children('.booking-service-desc').addClass('booking-service-desc_extend');
+	}).on('mouseleave',function () { 
+		jQuery(this).parent('li').children('.booking-service-desc').removeClass('booking-service-desc_extend');
+	});
+
 	if(!(jQuery('#mwb-wc-bk-inc-service-list').children('li').children().hasClass('booking-service-price'))) {
      jQuery('#mwb-wc-bk-inc-service-list').children('li').children('label').css({
 		'max-width':'50%'

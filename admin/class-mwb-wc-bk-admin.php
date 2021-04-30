@@ -1239,11 +1239,12 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function booking_admin_menu() {
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Overview', 'mwb-wc-bk' ), 'Overview', 'manage_options', 'overview', array( $this, 'menu_page_overview' ) );
-
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Global booking Settings', 'mwb-wc-bk' ), 'Settings', 'manage_options', 'global-settings', array( $this, 'menu_page_booking_settings' ) );
 
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Calendar', 'mwb-wc-bk' ), 'Calendar', 'manage_options', 'calendar', array( $this, 'menu_page_calendar' ) );
+
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Overview', 'mwb-wc-bk' ), 'Overview', 'manage_options', 'overview', array( $this, 'menu_page_overview' ) );
+
 	}
 
 	/**

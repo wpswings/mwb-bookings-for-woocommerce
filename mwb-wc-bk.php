@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name:          MWB Bookings For WooCommerce
  * Plugin URI:           https://makewebbetter.com/
- * Description:          Bookings For hotels or hourly bookings as appointments.
+ * Description:          MWB Bookings for WooCommerce helps you stay focused while offering a better online booking service for your business growth. Just stop speculating and opt for the best one out.
  * Version:              1.0.0
  * Author:               MakeWebBetter
  * Author URI:           https://makewebbetter.com/
@@ -171,8 +171,8 @@ function mwb_booking_plugin_row_links( $links_array, $plugin_file_name ) {
 	if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
 		// you can still use array_unshift() to add links at the beginning.
 		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Demo.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Demo</a>';
-		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Documentation.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Documetation</a>';
-		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Support.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Support</a>';
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Documentation.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc' ) . '">Documetation</a>';
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Support.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support ' ) . '">Support</a>';
 	}
 
 	return $links_array;

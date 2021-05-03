@@ -55,7 +55,6 @@ function datepicker_check($, unavailable_dates, slots) {
 	min_dur   = min_adv_duration.match( /\b(\w)/g );
 
 	if ( start_booking == 'today' ) {
-		// alert( 'today' );
 		start_slot = new Date();
 		end_slot   = "+" + max_adv_input + max_dur;
 		console.log( start_slot );
@@ -236,7 +235,6 @@ function datepicker_check($, unavailable_dates, slots) {
 
 function unvailable_date_range_check( arr, unavail_dates, slots ) {
 
-	console.log( slots );
 	for( i = 0; i < arr.length; i++ ) {
 		var val = jQuery.inArray( arr[i], unavail_dates );
 		if ( val == -1 ) {

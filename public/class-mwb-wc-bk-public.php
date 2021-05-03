@@ -364,19 +364,26 @@ class Mwb_Wc_Bk_Public {
 		$arr_len = count( $arr );
 		if ( $duration > $arr_len ) {
 			$result['status'] = false;
-		}
-		foreach ( $arr as $k => $v ) {
-
-			$time2 = explode( '-', $k );
-			$time3 = $time2[0];
-			if ( strtotime( $time, strtotime( $start_date ) ) <= strtotime( $time3, strtotime( $start_date ) ) ) {
-				$count++;
-				if ( $count <= $duration ) {
-					if ( 'non-bookable' === $v['book'] ) {
-						$result['status'] = false;
+		} else {
+			$length = 0;
+			foreach ( $arr as $k => $v ) {
+				$length ++;
+				$time2 = explode( '-', $k );
+				$time3 = $time2[0];
+				if ( strtotime( $time, strtotime( $start_date ) ) <= strtotime( $time3, strtotime( $start_date ) ) ) {
+					$count++;
+					if ( $count <= $duration ) {
+						if ( 'non-bookable' === $v['book'] ) {
+							$result['status'] = false;
+						}
+					} else {
+						break;
 					}
 				} else {
-					break;
+					if ( ( $length + $duration) > $arr_len ) {
+						$result['status'] = false;
+						break;
+					}
 				}
 			}
 		}
@@ -1048,34 +1055,34 @@ class Mwb_Wc_Bk_Public {
 						if ( ! empty( $unit_cost_multiply ) && 'yes' === $unit_cost_multiply ) {
 							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
 								if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] ) ) {
-									$booking_people_cost += $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] * $people_data[ $id ]['people_count'];
+									$booking_people_cost += ( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] * $people_data[ $id ]['people_count'] * $duration );
 								} else {
-									$booking_people_cost += $unit_cost * $people_data[ $id ]['people_count'];
+									$booking_people_cost += ( $unit_cost * $people_data[ $id ]['people_count'] * $duration );
 								}
 							}
 						} else {
 							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
 								if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] ) ) {
-									$booking_people_cost += $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'];
+									$booking_people_cost += ( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_unit_cost'] * $duration );
 								} else {
-									$booking_people_cost += $unit_cost;
+									$booking_people_cost += ( $unit_cost * $duration );
 								}
 							}
 						}
 						if ( ! empty( $base_cost_multiply ) && 'yes' === $base_cost_multiply ) {
 							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
 								if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] ) ) {
-									$booking_people_cost += $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] * $people_data[ $id ]['people_count'];
+									$booking_people_cost += ( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] * $people_data[ $id ]['people_count'] * $duration );
 								} else {
-									$booking_people_cost += $base_cost * $people_data[ $id ]['people_count'];
+									$booking_people_cost += ( $base_cost * $people_data[ $id ]['people_count'] * $duration );
 								}
 							}
 						} else {
 							if ( ! empty( $people_data[ $id ]['people_count'] ) ) {
 								if ( ! empty( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] ) ) {
-									$booking_people_cost += $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'];
+									$booking_people_cost += ( $people_data[ $id ]['people_meta']['mwb_ct_booking_people_base_cost'] * $duration );
 								} else {
-									$booking_people_cost += $base_cost;
+									$booking_people_cost += ( $base_cost * $duration );
 								}
 							}
 						}
@@ -1104,9 +1111,9 @@ class Mwb_Wc_Bk_Public {
 			if ( ! empty( $extra_cost ) ) {
 				if ( ! empty( $people_total ) ) {
 					if ( ! empty( $extra_cost_people ) ) {
-						$booking_people_cost += $extra_cost * floor( $people_total / $extra_cost_people );
+						$booking_people_cost += ( $extra_cost * floor( $people_total / $extra_cost_people ) * $duration );
 					} else {
-						$booking_people_cost += $extra_cost;
+						$booking_people_cost += ( $extra_cost * $duration );
 					}
 				}
 			}

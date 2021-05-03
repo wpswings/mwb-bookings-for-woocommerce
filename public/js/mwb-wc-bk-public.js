@@ -55,12 +55,17 @@ function datepicker_check($, unavailable_dates, slots) {
 	min_dur   = min_adv_duration.match( /\b(\w)/g );
 
 	if ( start_booking == 'today' ) {
+		// alert( 'today' );
 		start_slot = new Date();
-
 		end_slot   = "+" + max_adv_input + max_dur;
+		console.log( start_slot );
+		console.log( end_slot );
 	} else if ( start_booking == 'tomorrow' ) {
+		alert( 'tomorrow' );
+
 		start_slot = '+1d';
-		end_slot   = "+" + parseInt(max_adv_input) + max_dur;
+		end_slot   = "+" + parseInt(max_adv_input) + max_dur + '+1d';
+
 	} else if ( start_booking == 'initially_available' ) {
 		if ( min_adv_input != 0 ) {
 			start_slot = "+" + min_adv_input + min_dur;
@@ -100,7 +105,7 @@ function datepicker_check($, unavailable_dates, slots) {
 				time_difference = date2.getTime() - date1.getTime();
 				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
 				var arr = cal_in_between_days( start_date, day_difference );
-				var result = unvailable_date_range_check( arr, unavailable_dates );
+				var result = unvailable_date_range_check( arr, unavailable_dates, slots );
 				if ( result == false ) {
 					$('#mwb-wc-bk-date-section .date-error').show();
 					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
@@ -113,12 +118,14 @@ function datepicker_check($, unavailable_dates, slots) {
 		});
 			
 		$( '#mwb-wc-bk-duration-section' ).on( 'change', '#mwb-wc-bk-duration-input', function(){
-			duration = $( this ).val();
+			input_duration = $( this ).val();
+			unit_input = mwb_wc_bk_public.product_settings.mwb_booking_unit_input[0];
+			duration = parseInt( input_duration ) * parseInt( unit_input );
 			start_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-start-date-input').val();
 			if ( start_date && duration ) {
 				day_difference = duration;
 				var arr = cal_in_between_days( start_date, day_difference );
-				var result = unvailable_date_range_check( arr, unavailable_dates );
+				var result = unvailable_date_range_check( arr, unavailable_dates, slots );
 				if ( result == false ) {
 					$('#mwb-wc-bk-date-section .date-error').show();
 					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
@@ -135,7 +142,9 @@ function datepicker_check($, unavailable_dates, slots) {
 
 			start_date = $(this).val();
 			end_date = $('#mwb-wc-bk-date-section #mwb-wc-bk-end-date-input').val();
-			duration = $( '#mwb-wc-bk-duration-section #mwb-wc-bk-duration-input' ).val();
+			input_duration = $( '#mwb-wc-bk-duration-section #mwb-wc-bk-duration-input' ).val();
+			unit_input = mwb_wc_bk_public.product_settings.mwb_booking_unit_input[0];
+			duration = parseInt( input_duration ) * parseInt( unit_input );
 			if ( start_date && end_date ) {
 
 				date1 = new Date( start_date );
@@ -144,7 +153,7 @@ function datepicker_check($, unavailable_dates, slots) {
 				time_difference = date2.getTime() - date1.getTime();
 				day_difference  = ( time_difference / ( 1000 * 3600 * 24 ) ) + 1;
 				var arr = cal_in_between_days( start_date, day_difference );
-				var result = unvailable_date_range_check( arr, unavailable_dates );
+				var result = unvailable_date_range_check( arr, unavailable_dates, slots );
 				if ( result == false ) {
 					$('#mwb-wc-bk-date-section .date-error').show();
 					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
@@ -158,7 +167,7 @@ function datepicker_check($, unavailable_dates, slots) {
 			if ( start_date && duration ) {
 				day_difference = duration;
 				var arr = cal_in_between_days( start_date, day_difference );
-				var result = unvailable_date_range_check( arr, unavailable_dates );
+				var result = unvailable_date_range_check( arr, unavailable_dates, slots );
 				if ( result == false ) {
 					$('#mwb-wc-bk-date-section .date-error').show();
 					$('#mwb-wc-bk-date-section .date-error').text( '*In between dates are unavailable' );
@@ -225,12 +234,17 @@ function datepicker_check($, unavailable_dates, slots) {
   
 }
 
-function unvailable_date_range_check( arr, unavail_dates ) {
+function unvailable_date_range_check( arr, unavail_dates, slots ) {
 
+	console.log( slots );
 	for( i = 0; i < arr.length; i++ ) {
 		var val = jQuery.inArray( arr[i], unavail_dates );
 		if ( val == -1 ) {
-			continue;
+			if( slots.hasOwnProperty( arr[i] ) ) {
+				continue;
+			} else {
+				return false;
+			}	
 		} else {
 			return false;
 		}
@@ -469,8 +483,10 @@ function booking_price_cal($) {
 						'slots'     : slots,
 					},
 					success : function( response ) {
+						// e.preventDefault();
+						
 						response = JSON.parse( response );
-
+						console.log(response);
 						if ( response.status == true ) {
 							jQuery('#mwb-wc-bk-date-section .date-error').hide();
 							

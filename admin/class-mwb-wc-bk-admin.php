@@ -54,13 +54,6 @@ class Mwb_Wc_Bk_Admin {
 	public $setting_fields = array();
 
 	/**
-	 * MWB Booking Global Availability rules array
-	 *
-	 * @var array
-	 */
-	public $global_availability_rule_arr = array();
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -226,6 +219,7 @@ class Mwb_Wc_Bk_Admin {
 			wp_insert_term( 'mwb_booking', 'product_type' );
 		}
 	}
+
 	/**
 	 * General Settings fields.
 	 *

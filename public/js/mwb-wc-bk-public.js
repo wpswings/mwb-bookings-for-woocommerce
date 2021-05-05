@@ -60,7 +60,6 @@ function datepicker_check($, unavailable_dates, slots) {
 		console.log( start_slot );
 		console.log( end_slot );
 	} else if ( start_booking == 'tomorrow' ) {
-		alert( 'tomorrow' );
 
 		start_slot = '+1d';
 		end_slot   = "+" + parseInt(max_adv_input) + max_dur + '+1d';

@@ -57,8 +57,8 @@ function datepicker_check($, unavailable_dates, slots) {
 	if ( start_booking == 'today' ) {
 		start_slot = new Date();
 		end_slot   = "+" + max_adv_input + max_dur;
-		console.log( start_slot );
-		console.log( end_slot );
+		// console.log( start_slot );
+		// console.log( end_slot );
 	} else if ( start_booking == 'tomorrow' ) {
 
 		start_slot = '+1d';
@@ -483,7 +483,7 @@ function booking_price_cal($) {
 						// e.preventDefault();
 						
 						response = JSON.parse( response );
-						console.log(response);
+						// console.log(response);
 						if ( response.status == true ) {
 							jQuery('#mwb-wc-bk-date-section .date-error').hide();
 							

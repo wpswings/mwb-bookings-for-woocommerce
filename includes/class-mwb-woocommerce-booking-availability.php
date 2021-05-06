@@ -162,7 +162,7 @@ class MWB_Woocommerce_Booking_Availability {
 									}
 								}
 							} elseif ( array_key_exists( $from, $slots ) && ! array_key_exists( $to, $slots ) ) {
-								$to  = array_key_last( $slots );
+								$to  = $this->last_array_key( $slots );
 								$arr = $this->availability_date_range( $from, $to, '+1 day', 'Y-m-d' );
 								if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
 									foreach ( $arr as $k => $v ) {
@@ -194,7 +194,7 @@ class MWB_Woocommerce_Booking_Availability {
 									}
 								}
 							} elseif ( ! array_key_exists( $from, $slots ) && array_key_exists( $to, $slots ) ) {
-								$from = array_key_first( $slots );
+								$from = $this->first_array_key( $slots );
 								$arr  = $this->availability_date_range( $from, $to, '+1 day', 'Y-m-d' );
 								if ( ! empty( $rule_weekdays ) && 'off' === $rule_weekdays && ! empty( $rule_bookable ) ) {
 									foreach ( $arr as $k => $v ) {
@@ -258,6 +258,29 @@ class MWB_Woocommerce_Booking_Availability {
 		}
 
 		return $slots;
+	}
+
+	/**
+	 * First array key
+	 *
+	 * @param array $array Array to find first key of.
+	 * @return string
+	 */
+	public function first_array_key( array $array ) {
+		foreach ( $array as $key => $value ) {
+			return $key;
+		}
+	}
+
+	/**
+	 * Last array key
+	 *
+	 * @param array $array Array to find last key of.
+	 * @return string
+	 */
+	public function last_array_key( array $array ) {
+		end( $array );
+		return key( $array );
 	}
 
 	/**

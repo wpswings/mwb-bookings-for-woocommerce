@@ -2,7 +2,8 @@
 /**
  * Booking product add to cart
  *
- * @package Mwb_Wc_Bk
+ * @package MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/templates/single-product/add-to-cart
  * @version 1.0.0
  */
 

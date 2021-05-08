@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/admin
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/admin
  */
 
 /**
@@ -15,8 +15,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/admin
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/admin
  * @author     MakeWebBetter
  */
 class Mwb_Wc_Bk_Admin {
@@ -124,6 +124,40 @@ class Mwb_Wc_Bk_Admin {
 	}
 
 	/**
+	 * Include Booking screen for Onboarding pop-up.
+	 *
+	 * @param array $valid_screens Screens which are valid for Onboarding.
+	 * @return string
+	 */
+	public function add_mwb_backend_screens( $valid_screens = array() ) {
+
+		if ( is_array( $valid_screens ) ) {
+
+			// Push your screen here.
+			array_push( $valid_screens, 'mwb_cpt_booking_page_global-settings' );
+		}
+
+		return $valid_screens;
+	}
+
+	/**
+	 * Include Booking screen for Deactivation pop-up.
+	 *
+	 * @param array $valid_screens Screens which are valid for Onboarding.
+	 * @return string
+	 */
+	public function add_mwb_deactivation_screens( $valid_screens = array() ) {
+
+		if ( is_array( $valid_screens ) ) {
+
+			// Push your screen here.
+			array_push( $valid_screens, 'mwb-bookings-for-woocommerce' );
+		}
+
+		return $valid_screens;
+	}
+
+	/**
 	 * Include class for booking product type
 	 */
 	public function register_booking_product_type() {
@@ -137,7 +171,7 @@ class Mwb_Wc_Bk_Admin {
 	 * @return $type
 	 */
 	public function add_mwb_booking_product_selector( $type ) {
-		$type['mwb_booking'] = __( 'MWB Booking', 'mwb-wc-bk' );
+		$type['mwb_booking'] = __( 'MWB Booking', 'mwb-bookings-for-woocommerce' );
 		return $type;
 	}
 
@@ -400,14 +434,14 @@ class Mwb_Wc_Bk_Admin {
 		);
 
 		$arr = array(
-			'day'    => __( 'Day Range', 'mwb-wc-bk' ),
-			'week'   => __( 'Week Range', 'mwb-wc-bk' ),
-			'month'  => __( 'Months Range', 'mwb-wc-bk' ),
-			'date'   => __( 'Date Range', 'mwb-wc-bk' ),
-			'time'   => __( 'Time Range', 'mwb-wc-bk' ),
-			'unit'   => __( 'Unit Range', 'mwb-wc-bk' ),
+			'day'    => __( 'Day Range', 'mwb-bookings-for-woocommerce' ),
+			'week'   => __( 'Week Range', 'mwb-bookings-for-woocommerce' ),
+			'month'  => __( 'Months Range', 'mwb-bookings-for-woocommerce' ),
+			'date'   => __( 'Date Range', 'mwb-bookings-for-woocommerce' ),
+			'time'   => __( 'Time Range', 'mwb-bookings-for-woocommerce' ),
+			'unit'   => __( 'Unit Range', 'mwb-bookings-for-woocommerce' ),
 			'people' => array(
-				'heading' => __( 'People Range', 'mwb-wc-bk' ),
+				'heading' => __( 'People Range', 'mwb-bookings-for-woocommerce' ),
 			),
 		);
 		foreach ( $terms as $term ) {
@@ -654,14 +688,14 @@ class Mwb_Wc_Bk_Admin {
 
 		?>
 		<th scope="row" class="">
-			<label><h3><?php esc_html_e( 'Details', 'mwb-wc-bk' ); ?></h3></label>
+			<label><h3><?php esc_html_e( 'Details', 'mwb-bookings-for-woocommerce' ); ?></h3></label>
 		</th>
 		<?php
 		if ( ! empty( $product_meta['mwb_booking_unit_select'][0] ) && 'fixed' === $product_meta['mwb_booking_unit_select'][0] ) {
 			?>
 			<td>
 				<div id="mwb_create_booking_start_date">
-					<label for=""><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label>
+					<label for=""><?php esc_html_e( 'Start Date', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<p><?php echo esc_html( printf( '%d-%s', $product_meta['mwb_booking_unit_input'][0], $product_meta['mwb_booking_unit_duration'][0] ) ); ?></p>
 				</div>
 			</td>
@@ -671,9 +705,9 @@ class Mwb_Wc_Bk_Admin {
 				?>
 				<td>
 					<div id="mwb_create_booking_start_date_field">
-						<label for=""><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label>
+						<label for=""><?php esc_html_e( 'Start Date', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="date" id="mwb_create_booking_start_date">
-						<label for=""><?php esc_html_e( 'End Date', 'mwb-wc-bk' ); ?></label>
+						<label for=""><?php esc_html_e( 'End Date', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="date" id="mwb_create_booking_end_date">
 					</div>
 				</td>
@@ -682,11 +716,11 @@ class Mwb_Wc_Bk_Admin {
 				?>
 				<td>
 					<div id="mwb_create_booking_start_date_field">
-						<label for="mwb_create_booking_start_date"><?php esc_html_e( 'Start Date', 'mwb-wc-bk' ); ?></label>
+						<label for="mwb_create_booking_start_date"><?php esc_html_e( 'Start Date', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="date" id="mwb_create_booking_start_date">
 					</div>
 					<div id="mwb_create_booking_start_time_field">
-						<label for=""><?php esc_html__( 'Start Time', 'mwb-wc-bk' ); ?></label>
+						<label for=""><?php esc_html__( 'Start Time', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<select name="mwb_create_booking_start_time" id="mwb_create_booking_start_time"></select>
 					</div>
 				</td>
@@ -695,7 +729,7 @@ class Mwb_Wc_Bk_Admin {
 				?>
 				<td>
 					<div id="mwb_create_booking_start_month_field">
-						<label for=""><?php esc_html_e( 'Start Month', 'mwb-wc-bk' ); ?></label>
+						<label for=""><?php esc_html_e( 'Start Month', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="month" id="mwb_create_booking_start_month">
 					</div>
 				</td>
@@ -716,9 +750,9 @@ class Mwb_Wc_Bk_Admin {
 		return apply_filters(
 			'mwb_wc_bk_duration_options',
 			array(
-				'day'    => __( 'Day(s)', 'mwb-wc-bk' ),
-				'hour'   => __( 'Hour(s)', 'mwb-wc-bk' ),
-				'minute' => __( 'Minute(s)', 'mwb-wc-bk' ),
+				'day'    => __( 'Day(s)', 'mwb-bookings-for-woocommerce' ),
+				'hour'   => __( 'Hour(s)', 'mwb-bookings-for-woocommerce' ),
+				'minute' => __( 'Minute(s)', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 	}
@@ -730,29 +764,29 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function booking_custom_post_type() {
 		$labels = array(
-			'name'                  => _x( 'Bookings', 'Post type general name', 'mwb-wc-bk' ),
-			'singular_name'         => _x( 'Booking', 'Post type singular name', 'mwb-wc-bk' ),
-			'menu_name'             => _x( 'Bookings', 'Admin Menu text', 'mwb-wc-bk' ),
-			'add_new'               => _x( 'Add Booking', 'Booking', 'mwb-wc-bk' ),
-			'add_new_item'          => __( 'Add New Booking', 'mwb-wc-bk' ),
-			'edit_item'             => __( 'Edit Booking', 'mwb-wc-bk' ),
-			'new_item'              => __( 'New Booking', 'mwb-wc-bk' ),
-			'name_admin_bar'        => _x( 'Bookings', 'Add new on toolbar', 'mwb-wc-bk' ),
-			'view_item'             => __( 'View Bookings', 'mwb-wc-bk' ),
-			'all_items'             => __( 'All Bookings', 'mwb-wc-bk' ),
-			'search_items'          => __( 'Search Bookings', 'mwb-wc-bk' ),
-			'not_found'             => __( 'No booking found', 'mwb-wc-bk' ),
-			'not_found_in_trash'    => __( 'No bookings found in the trash', 'mwb-wc-bk' ),
-			'archives'              => __( 'Archives', 'mwb-wc-bk' ),
-			'attributes'            => __( 'Attributes', 'mwb-wc-bk' ),
-			'insert_into_item'      => __( 'Insert into Product', 'mwb-wc-bk' ),
-			'uploaded_to_this_item' => __( 'Upload to this Product', 'mwb-wc-bk' ),
-			'featured_image'        => _x( 'Booking Cover Image', 'Overrides the featured image phrase for this post type', 'mwb-wc-bk' ),
+			'name'                  => _x( 'Bookings', 'Post type general name', 'mwb-bookings-for-woocommerce' ),
+			'singular_name'         => _x( 'Booking', 'Post type singular name', 'mwb-bookings-for-woocommerce' ),
+			'menu_name'             => _x( 'Bookings', 'Admin Menu text', 'mwb-bookings-for-woocommerce' ),
+			'add_new'               => _x( 'Add Booking', 'Booking', 'mwb-bookings-for-woocommerce' ),
+			'add_new_item'          => __( 'Add New Booking', 'mwb-bookings-for-woocommerce' ),
+			'edit_item'             => __( 'Edit Booking', 'mwb-bookings-for-woocommerce' ),
+			'new_item'              => __( 'New Booking', 'mwb-bookings-for-woocommerce' ),
+			'name_admin_bar'        => _x( 'Bookings', 'Add new on toolbar', 'mwb-bookings-for-woocommerce' ),
+			'view_item'             => __( 'View Bookings', 'mwb-bookings-for-woocommerce' ),
+			'all_items'             => __( 'All Bookings', 'mwb-bookings-for-woocommerce' ),
+			'search_items'          => __( 'Search Bookings', 'mwb-bookings-for-woocommerce' ),
+			'not_found'             => __( 'No booking found', 'mwb-bookings-for-woocommerce' ),
+			'not_found_in_trash'    => __( 'No bookings found in the trash', 'mwb-bookings-for-woocommerce' ),
+			'archives'              => __( 'Archives', 'mwb-bookings-for-woocommerce' ),
+			'attributes'            => __( 'Attributes', 'mwb-bookings-for-woocommerce' ),
+			'insert_into_item'      => __( 'Insert into Product', 'mwb-bookings-for-woocommerce' ),
+			'uploaded_to_this_item' => __( 'Upload to this Product', 'mwb-bookings-for-woocommerce' ),
+			'featured_image'        => _x( 'Booking Cover Image', 'Overrides the featured image phrase for this post type', 'mwb-bookings-for-woocommerce' ),
 		);
 		$args   = array(
 			'labels'             => $labels,
 			'public'             => true,
-			'description'        => __( 'Bookings are described here', 'mwb-wc-bk' ),
+			'description'        => __( 'Bookings are described here', 'mwb-bookings-for-woocommerce' ),
 			'has_archive'        => true,
 			'rewrite'            => array( 'slug' => 'booking' ), // my custom slug.
 			'publicly_queryable' => false,
@@ -829,19 +863,19 @@ class Mwb_Wc_Bk_Admin {
 		?>
 		<table>
 			<tr>
-				<th><?php esc_html_e( 'From:', 'mwb-wc-bk' ); ?></th>
+				<th><?php esc_html_e( 'From:', 'mwb-bookings-for-woocommerce' ); ?></th>
 				<td><?php echo esc_html( $from ); ?></td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'To:', 'mwb-wc-bk' ); ?></th>
+				<th><?php esc_html_e( 'To:', 'mwb-bookings-for-woocommerce' ); ?></th>
 				<td><?php echo esc_html( $to ); ?></td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Total People', 'mwb-wc-bk' ); ?></th>
+				<th><?php esc_html_e( 'Total People', 'mwb-bookings-for-woocommerce' ); ?></th>
 				<td><?php echo esc_html( $people_total ); ?></td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'People Types:', 'mwb-wc-bk' ); ?></th>
+				<th><?php esc_html_e( 'People Types:', 'mwb-bookings-for-woocommerce' ); ?></th>
 				<td>
 					<?php
 					if ( ! empty( $peoples ) && is_array( $peoples ) ) {
@@ -852,14 +886,14 @@ class Mwb_Wc_Bk_Admin {
 						}
 					} else {
 						?>
-						<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+						<span><?php esc_html_e( 'None', 'mwb-bookings-for-woocommerce' ); ?></span>
 						<?php
 					}
 					?>
 				</td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Included Services:', 'mwb-wc-bk' ); ?></th>
+				<th><?php esc_html_e( 'Included Services:', 'mwb-bookings-for-woocommerce' ); ?></th>
 				<td>
 					<?php
 					if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
@@ -870,14 +904,14 @@ class Mwb_Wc_Bk_Admin {
 						}
 					} else {
 						?>
-						<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+						<span><?php esc_html_e( 'None', 'mwb-bookings-for-woocommerce' ); ?></span>
 						<?php
 					}
 					?>
 				</td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Additional Services:', 'mwb-wc-bk' ); ?></th>
+				<th><?php esc_html_e( 'Additional Services:', 'mwb-bookings-for-woocommerce' ); ?></th>
 				<td>
 					<?php
 					if ( ! empty( $add_service ) && is_array( $add_service ) ) {
@@ -888,14 +922,14 @@ class Mwb_Wc_Bk_Admin {
 						}
 					} else {
 						?>
-						<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+						<span><?php esc_html_e( 'None', 'mwb-bookings-for-woocommerce' ); ?></span>
 						<?php
 					}
 					?>
 				</td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Total:', 'mwb-wc-bk' ); ?></th>
+				<th><?php esc_html_e( 'Total:', 'mwb-bookings-for-woocommerce' ); ?></th>
 				<td><?php echo wc_price( esc_html( $total_cost ) ); // @codingStandardsIgnoreLine ?></td>
 			</tr>
 		</table>
@@ -925,7 +959,7 @@ class Mwb_Wc_Bk_Admin {
 		?>
 		<div class="mwb_booking_cpt_actions">
 			<div class="mwb_booking_cpt_status">
-				<label for="mwb_booking_status_select"><?php esc_html_e( 'Booking Status:', 'mwb-wc-bk' ); ?></label>
+				<label for="mwb_booking_status_select"><?php esc_html_e( 'Booking Status:', 'mwb-bookings-for-woocommerce' ); ?></label>
 				<select name="mwb_booking_status_select" id="mwb_booking_status_select">
 					<?php foreach ( $statuses as $status => $val ) { ?>
 					<option value="<?php echo esc_html( $status ); ?>" <?php selected( $status, $current_status, true ); ?>><?php echo esc_html( $val ); ?></option>
@@ -933,7 +967,7 @@ class Mwb_Wc_Bk_Admin {
 				</select>
 			</div>
 			<div class="mwb_booking_cpt_submit">
-				<input type="submit" name="save" id="publish" class="button button-primary button-large" value="<?php esc_html_e( 'Update', 'mwb-wc-bk' ); ?>" >
+				<input type="submit" name="save" id="publish" class="button button-primary button-large" value="<?php esc_html_e( 'Update', 'mwb-bookings-for-woocommerce' ); ?>" >
 			</div>
 		</div>
 		<?php
@@ -970,24 +1004,24 @@ class Mwb_Wc_Bk_Admin {
 					<div class="mwb_booking_details_wrap">
 						<div class="mwb_booking_order_data">
 							<p class="form-field form-field-wide" >
-								<label for=""><?php esc_html_e( 'Booking Created', 'mwb-wc-bk' ); ?></label>
+								<label for=""><?php esc_html_e( 'Booking Created', 'mwb-bookings-for-woocommerce' ); ?></label>
 								<input type="text" id="" value="<?php echo esc_html( $created_date ); ?>" disabled>
-								<span><?php esc_html_e( '@', 'mwb-wc-bk' ); ?></span>
+								<span><?php esc_html_e( '@', 'mwb-bookings-for-woocommerce' ); ?></span>
 								<input type="number" id="" value="<?php echo esc_html( $created_time_h ); ?>" disabled>
-								<span><?php esc_html_e( ':', 'mwb-wc-bk' ); ?></span>
+								<span><?php esc_html_e( ':', 'mwb-bookings-for-woocommerce' ); ?></span>
 								<input type="number" id="" value="<?php echo esc_html( $created_time_m ); ?>" disabled>
 							</p>
 							<p>
-								<label for=""><?php esc_html_e( 'Booking Product', 'mwb-wc-bk' ); ?></label>
+								<label for=""><?php esc_html_e( 'Booking Product', 'mwb-bookings-for-woocommerce' ); ?></label>
 								<a href="<?php echo esc_url( get_edit_post_link( $product_id ) ); ?>" target="__blank"><?php echo esc_html( $product_name ); ?></a>
 							</p>
 							<p>
-								<label for="mwb_booking_order_select"><?php esc_html_e( 'Booking Order', 'mwb-wc-bk' ); ?></label>
-								<a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Order', 'mwb-wc-bk' ); ?></a>
+								<label for="mwb_booking_order_select"><?php esc_html_e( 'Booking Order', 'mwb-bookings-for-woocommerce' ); ?></label>
+								<a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Order', 'mwb-bookings-for-woocommerce' ); ?></a>
 							</p>
 							<p>
-								<label for=""><?php esc_html_e( 'Customer', 'mwb-wc-bk' ); ?></label>
-								<a href="<?php echo esc_url( get_edit_user_link( $customer_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Customer', 'mwb-wc-bk' ); ?></a>
+								<label for=""><?php esc_html_e( 'Customer', 'mwb-bookings-for-woocommerce' ); ?></label>
+								<a href="<?php echo esc_url( get_edit_user_link( $customer_id ) ); ?>" target="__blank"><?php esc_html_e( 'View Customer', 'mwb-bookings-for-woocommerce' ); ?></a>
 							</p>
 						</div>
 						<div class="mwb_booking_order_data_prod_img">
@@ -1134,18 +1168,18 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function booking_register_taxonomy_services() {
 		$labels = array(
-			'name'              => _x( 'Services', 'taxonomy general name', 'mwb-wc-bk' ),
-			'singular_name'     => _x( 'Service', 'taxonomy singular name', 'mwb-wc-bk' ),
-			'search_items'      => __( 'Search Services', 'mwb-wc-bk' ),
-			'all_items'         => __( 'All Services', 'mwb-wc-bk' ),
-			'parent_item'       => __( 'Parent Service', 'mwb-wc-bk' ),
-			'parent_item_colon' => __( 'Parent Service:', 'mwb-wc-bk' ),
-			'edit_item'         => __( 'Edit Service', 'mwb-wc-bk' ),
-			'view_item'         => __( 'View Service', 'mwb-wc-bk' ),
-			'update_item'       => __( 'Update Service', 'mwb-wc-bk' ),
-			'add_new_item'      => __( 'Add New Service', 'mwb-wc-bk' ),
-			'new_item_name'     => __( 'New Service Name', 'mwb-wc-bk' ),
-			'menu_name'         => __( 'Services', 'mwb-wc-bk' ),
+			'name'              => _x( 'Services', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
+			'singular_name'     => _x( 'Service', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
+			'search_items'      => __( 'Search Services', 'mwb-bookings-for-woocommerce' ),
+			'all_items'         => __( 'All Services', 'mwb-bookings-for-woocommerce' ),
+			'parent_item'       => __( 'Parent Service', 'mwb-bookings-for-woocommerce' ),
+			'parent_item_colon' => __( 'Parent Service:', 'mwb-bookings-for-woocommerce' ),
+			'edit_item'         => __( 'Edit Service', 'mwb-bookings-for-woocommerce' ),
+			'view_item'         => __( 'View Service', 'mwb-bookings-for-woocommerce' ),
+			'update_item'       => __( 'Update Service', 'mwb-bookings-for-woocommerce' ),
+			'add_new_item'      => __( 'Add New Service', 'mwb-bookings-for-woocommerce' ),
+			'new_item_name'     => __( 'New Service Name', 'mwb-bookings-for-woocommerce' ),
+			'menu_name'         => __( 'Services', 'mwb-bookings-for-woocommerce' ),
 		);
 		$args   = array(
 			'hierarchical'      => false,
@@ -1167,18 +1201,18 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function booking_register_taxonomy_people_type() {
 		$labels = array(
-			'name'              => _x( 'People Types', 'taxonomy general name', 'mwb-wc-bk' ),
-			'singular_name'     => _x( 'People Type', 'taxonomy singular name', 'mwb-wc-bk' ),
-			'search_items'      => __( 'Search People Types', 'mwb-wc-bk' ),
-			'all_items'         => __( 'All People Types', 'mwb-wc-bk' ),
-			'parent_item'       => __( 'Parent Type', 'mwb-wc-bk' ),
-			'parent_item_colon' => __( 'Parent Type:', 'mwb-wc-bk' ),
-			'edit_item'         => __( 'Edit People Type', 'mwb-wc-bk' ),
-			'view_item'         => __( 'View People Type', 'mwb-wc-bk' ),
-			'update_item'       => __( 'Update People Type', 'mwb-wc-bk' ),
-			'add_new_item'      => __( 'Add New People Type', 'mwb-wc-bk' ),
-			'new_item_name'     => __( 'New Type Name', 'mwb-wc-bk' ),
-			'menu_name'         => __( 'People Types', 'mwb-wc-bk' ),
+			'name'              => _x( 'People Types', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
+			'singular_name'     => _x( 'People Type', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
+			'search_items'      => __( 'Search People Types', 'mwb-bookings-for-woocommerce' ),
+			'all_items'         => __( 'All People Types', 'mwb-bookings-for-woocommerce' ),
+			'parent_item'       => __( 'Parent Type', 'mwb-bookings-for-woocommerce' ),
+			'parent_item_colon' => __( 'Parent Type:', 'mwb-bookings-for-woocommerce' ),
+			'edit_item'         => __( 'Edit People Type', 'mwb-bookings-for-woocommerce' ),
+			'view_item'         => __( 'View People Type', 'mwb-bookings-for-woocommerce' ),
+			'update_item'       => __( 'Update People Type', 'mwb-bookings-for-woocommerce' ),
+			'add_new_item'      => __( 'Add New People Type', 'mwb-bookings-for-woocommerce' ),
+			'new_item_name'     => __( 'New Type Name', 'mwb-bookings-for-woocommerce' ),
+			'menu_name'         => __( 'People Types', 'mwb-bookings-for-woocommerce' ),
 		);
 		$args   = array(
 			'hierarchical'      => false,
@@ -1200,18 +1234,18 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function booking_register_taxonomy_cost() {
 		$labels = array(
-			'name'              => _x( 'Additional Costs', 'taxonomy general name', 'mwb-wc-bk' ),
-			'singular_name'     => _x( 'Cost', 'taxonomy singular name', 'mwb-wc-bk' ),
-			'search_items'      => __( 'Search Costs', 'mwb-wc-bk' ),
-			'all_items'         => __( 'All Costs', 'mwb-wc-bk' ),
-			'parent_item'       => __( 'Parent Cost', 'mwb-wc-bk' ),
-			'parent_item_colon' => __( 'Parent Cost:', 'mwb-wc-bk' ),
-			'edit_item'         => __( 'Edit Cost', 'mwb-wc-bk' ),
-			'view_item'         => __( 'View Costs', 'mwb-wc-bk' ),
-			'update_item'       => __( 'Update Cost', 'mwb-wc-bk' ),
-			'add_new_item'      => __( 'Add New Cost', 'mwb-wc-bk' ),
-			'new_item_name'     => __( 'New Cost Name', 'mwb-wc-bk' ),
-			'menu_name'         => __( 'Costs', 'mwb-wc-bk' ),
+			'name'              => _x( 'Additional Costs', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
+			'singular_name'     => _x( 'Cost', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
+			'search_items'      => __( 'Search Costs', 'mwb-bookings-for-woocommerce' ),
+			'all_items'         => __( 'All Costs', 'mwb-bookings-for-woocommerce' ),
+			'parent_item'       => __( 'Parent Cost', 'mwb-bookings-for-woocommerce' ),
+			'parent_item_colon' => __( 'Parent Cost:', 'mwb-bookings-for-woocommerce' ),
+			'edit_item'         => __( 'Edit Cost', 'mwb-bookings-for-woocommerce' ),
+			'view_item'         => __( 'View Costs', 'mwb-bookings-for-woocommerce' ),
+			'update_item'       => __( 'Update Cost', 'mwb-bookings-for-woocommerce' ),
+			'add_new_item'      => __( 'Add New Cost', 'mwb-bookings-for-woocommerce' ),
+			'new_item_name'     => __( 'New Cost Name', 'mwb-bookings-for-woocommerce' ),
+			'menu_name'         => __( 'Costs', 'mwb-bookings-for-woocommerce' ),
 		);
 		$args   = array(
 			'hierarchical'      => false,
@@ -1233,11 +1267,11 @@ class Mwb_Wc_Bk_Admin {
 	 */
 	public function booking_admin_menu() {
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Global booking Settings', 'mwb-wc-bk' ), 'Settings', 'manage_options', 'global-settings', array( $this, 'menu_page_booking_settings' ) );
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Global booking Settings', 'mwb-bookings-for-woocommerce' ), 'Settings', 'manage_options', 'global-settings', array( $this, 'menu_page_booking_settings' ) );
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Calendar', 'mwb-wc-bk' ), 'Calendar', 'manage_options', 'calendar', array( $this, 'menu_page_calendar' ) );
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Calendar', 'mwb-bookings-for-woocommerce' ), 'Calendar', 'manage_options', 'calendar', array( $this, 'menu_page_calendar' ) );
 
-		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Overview', 'mwb-wc-bk' ), 'Overview', 'manage_options', 'overview', array( $this, 'menu_page_overview' ) );
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_booking', __( 'Overview', 'mwb-bookings-for-woocommerce' ), 'Overview', 'manage_options', 'overview', array( $this, 'menu_page_overview' ) );
 
 	}
 
@@ -1384,27 +1418,27 @@ class Mwb_Wc_Bk_Admin {
 			</div>
 			<table>
 				<tr>
-					<th><?php esc_html_e( 'Order', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'Order', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td><a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>"><?php echo esc_html( sprintf( '#%d', $order_id ) ); ?></a></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e( 'Product', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'Product', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td><a href="<?php echo esc_url( get_edit_post_link( $product_id ) ); ?>"><?php echo esc_html( sprintf( '#%d %s', $product_id, $prod->post_title ) ); ?></a></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e( 'User', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'User', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td><a href="<?php echo esc_url( get_edit_user_link( $user_id ) ); ?>"><?php echo esc_html( sprintf( '#%d', $user_id ) ); ?></a></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e( 'From:', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'From:', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td><?php echo esc_html( $from ); ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e( 'To:', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'To:', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td><?php echo esc_html( $to ); ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e( 'Peoples:', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'Peoples:', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td>
 						<?php
 						if ( ! empty( $peoples ) && is_array( $peoples ) ) {
@@ -1422,7 +1456,7 @@ class Mwb_Wc_Bk_Admin {
 					</td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e( 'Included Services:', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'Included Services:', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td>
 						<?php
 						if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
@@ -1433,14 +1467,14 @@ class Mwb_Wc_Bk_Admin {
 							}
 						} else {
 							?>
-							<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+							<span><?php esc_html_e( 'None', 'mwb-bookings-for-woocommerce' ); ?></span>
 							<?php
 						}
 						?>
 					</td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e( 'Additional Services:', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'Additional Services:', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td>
 						<?php
 						if ( ! empty( $add_service ) && is_array( $add_service ) ) {
@@ -1451,14 +1485,14 @@ class Mwb_Wc_Bk_Admin {
 							}
 						} else {
 							?>
-							<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+							<span><?php esc_html_e( 'None', 'mwb-bookings-for-woocommerce' ); ?></span>
 							<?php
 						}
 						?>
 					</td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e( 'Total:', 'mwb-wc-bk' ); ?></th>
+					<th><?php esc_html_e( 'Total:', 'mwb-bookings-for-woocommerce' ); ?></th>
 					<td><?php echo wc_price( esc_html( $total_cost ) ); // @codingStandardsIgnoreLine ?></td>
 				</tr>
 			</table>
@@ -1606,13 +1640,13 @@ class Mwb_Wc_Bk_Admin {
 	public function add_columns_ct_services( $columns ) {
 		$columns = array(
 			'cb'              => '<input type="checkbox" />',
-			'name'            => __( 'Name', 'mwb-wc-bk' ),
-			'cost'            => '<span class="booking-service-icon">' . esc_html__( 'Cost', 'mwb-wc-bk' ) . '</sapn>',
-			'multiply_units'  => '<span class="dashicons dashicons-money-alt booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by duration', 'mwb-wc-bk' ) . '</p>',
-			'multiply_people' => '<span class="dashicons dashicons-groups booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by the number of peoples', 'mwb-wc-bk' ) . '</p>',
-			'has_quantity'    => '<span class="dashicons dashicons-images-alt2 booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'If has Quantity', 'mwb-wc-bk' ) . '</p>',
-			'if_hidden'       => '<span class="dashicons dashicons-hidden booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'If Hidden', 'mwb-wc-bk' ) . '</p>',
-			'if_optional'     => '<span class="dashicons dashicons-editor-help booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'If Optional', 'mwb-wc-bk' ) . '</p>',
+			'name'            => __( 'Name', 'mwb-bookings-for-woocommerce' ),
+			'cost'            => '<span class="booking-service-icon">' . esc_html__( 'Cost', 'mwb-bookings-for-woocommerce' ) . '</sapn>',
+			'multiply_units'  => '<span class="dashicons dashicons-money-alt booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by duration', 'mwb-bookings-for-woocommerce' ) . '</p>',
+			'multiply_people' => '<span class="dashicons dashicons-groups booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by the number of peoples', 'mwb-bookings-for-woocommerce' ) . '</p>',
+			'has_quantity'    => '<span class="dashicons dashicons-images-alt2 booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'If has Quantity', 'mwb-bookings-for-woocommerce' ) . '</p>',
+			'if_hidden'       => '<span class="dashicons dashicons-hidden booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'If Hidden', 'mwb-bookings-for-woocommerce' ) . '</p>',
+			'if_optional'     => '<span class="dashicons dashicons-editor-help booking-service-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'If Optional', 'mwb-bookings-for-woocommerce' ) . '</p>',
 		);
 		return $columns;
 	}
@@ -1665,9 +1699,9 @@ class Mwb_Wc_Bk_Admin {
 	public function add_columns_ct_people_type( $columns ) {
 		$columns = array(
 			'cb'        => '<input type="checkbox" />',
-			'name'      => __( 'Name', 'mwb-wc-bk' ),
-			'unit_cost' => '<span class="booking-people-icon">' . esc_html__( 'Unit Cost', 'mwb-wc-bk' ) . '</sapn>',
-			'base_cost' => '<span class="booking-people-icon">' . esc_html__( 'Base Cost', 'mwb-wc-bk' ) . '</sapn>',
+			'name'      => __( 'Name', 'mwb-bookings-for-woocommerce' ),
+			'unit_cost' => '<span class="booking-people-icon">' . esc_html__( 'Unit Cost', 'mwb-bookings-for-woocommerce' ) . '</sapn>',
+			'base_cost' => '<span class="booking-people-icon">' . esc_html__( 'Base Cost', 'mwb-bookings-for-woocommerce' ) . '</sapn>',
 		);
 		return $columns;
 	}
@@ -1705,10 +1739,10 @@ class Mwb_Wc_Bk_Admin {
 	public function add_columns_ct_costs( $columns ) {
 		$columns = array(
 			'cb'              => '<input type="checkbox" />',
-			'name'            => __( 'Name', 'mwb-wc-bk' ),
-			'cost'            => '<span class="booking-cost-icon">' . esc_html__( 'Cost', 'mwb-wc-bk' ) . '</sapn>',
-			'multiply_units'  => '<span class="dashicons dashicons-money-alt booking-cost-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by units', 'mwb-wc-bk' ) . '</p>',
-			'multiply_people' => '<span class="dashicons dashicons-groups booking-cost-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by the number of people', 'mwb-wc-bk' ) . '</p>',
+			'name'            => __( 'Name', 'mwb-bookings-for-woocommerce' ),
+			'cost'            => '<span class="booking-cost-icon">' . esc_html__( 'Cost', 'mwb-bookings-for-woocommerce' ) . '</sapn>',
+			'multiply_units'  => '<span class="dashicons dashicons-money-alt booking-cost-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by units', 'mwb-bookings-for-woocommerce' ) . '</p>',
+			'multiply_people' => '<span class="dashicons dashicons-groups booking-cost-icon"></span><p class="mwb_booking_icons_tooltip">' . esc_html__( 'Multiply by the number of people', 'mwb-bookings-for-woocommerce' ) . '</p>',
 		);
 		return $columns;
 	}
@@ -1913,13 +1947,13 @@ class Mwb_Wc_Bk_Admin {
 	public function mwb_booking_status() {
 
 		$booking_status = array(
-			'confirmation' => __( 'Confirmation Required', 'mwb-wc-bk' ),
-			'confirmed'    => __( 'Confirmed', 'mwb-wc-bk' ),
-			'expired'      => __( 'Expired', 'mwb-wc-bk' ),
-			'completed'    => __( 'Payment Completed', 'mwb-wc-bk' ),
-			'pending'      => __( 'Pending Payment', 'mwb-wc-bk' ),
-			'cancelled'    => __( 'Cancelled', 'mwb-wc-bk' ),
-			'refunded'     => __( 'Refunded', 'mwb-wc-bk' ),
+			'confirmation' => __( 'Confirmation Required', 'mwb-bookings-for-woocommerce' ),
+			'confirmed'    => __( 'Confirmed', 'mwb-bookings-for-woocommerce' ),
+			'expired'      => __( 'Expired', 'mwb-bookings-for-woocommerce' ),
+			'completed'    => __( 'Payment Completed', 'mwb-bookings-for-woocommerce' ),
+			'pending'      => __( 'Pending Payment', 'mwb-bookings-for-woocommerce' ),
+			'cancelled'    => __( 'Cancelled', 'mwb-bookings-for-woocommerce' ),
+			'refunded'     => __( 'Refunded', 'mwb-bookings-for-woocommerce' ),
 		);
 		return $booking_status;
 	}
@@ -1988,10 +2022,10 @@ class Mwb_Wc_Bk_Admin {
 		// Unset date index.
 		unset( $columns['date'] );
 
-		$columns['from']   = __( 'From', 'mwb-wc-bk' );
-		$columns['to']     = __( 'To', 'mwb-wc-bk' );
-		$columns['status'] = __( 'Status', 'mwb-wc-bk' );
-		$columns['view']   = __( 'View', 'mwb-wc-bk' );
+		$columns['from']   = __( 'From', 'mwb-bookings-for-woocommerce' );
+		$columns['to']     = __( 'To', 'mwb-bookings-for-woocommerce' );
+		$columns['status'] = __( 'Status', 'mwb-bookings-for-woocommerce' );
+		$columns['view']   = __( 'View', 'mwb-bookings-for-woocommerce' );
 
 		return $columns;
 	}
@@ -2078,27 +2112,27 @@ class Mwb_Wc_Bk_Admin {
 			<div class="mwb_cpt_booking_listing_view" >
 				<table>
 					<tr>
-						<th><?php esc_html_e( 'Order', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'Order', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td><a href="<?php echo esc_url( get_edit_post_link( $order_id ) ); ?>"><?php echo esc_html( sprintf( '#%d', $order_id ) ); ?></a></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Product', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'Product', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td><a href="<?php echo esc_url( get_edit_post_link( $product_id ) ); ?>"><?php echo esc_html( sprintf( '#%d %s', $product_id, $prod->post_title ) ); ?></a></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'User', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'User', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td><a href="<?php echo esc_url( get_edit_user_link( $user_id ) ); ?>"><?php echo esc_html( sprintf( '#%d', $user_id ) ); ?></a></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'From:', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'From:', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td><?php echo esc_html( $from ); ?></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'To:', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'To:', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td><?php echo esc_html( $to ); ?></td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Peoples:', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'Peoples:', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td>
 							<?php
 							if ( ! empty( $peoples ) && is_array( $peoples ) ) {
@@ -2116,7 +2150,7 @@ class Mwb_Wc_Bk_Admin {
 						</td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Included Services:', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'Included Services:', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td>
 							<?php
 							if ( ! empty( $inc_service ) && is_array( $inc_service ) ) {
@@ -2127,14 +2161,14 @@ class Mwb_Wc_Bk_Admin {
 								}
 							} else {
 								?>
-								<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+								<span><?php esc_html_e( 'None', 'mwb-bookings-for-woocommerce' ); ?></span>
 								<?php
 							}
 							?>
 						</td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Additional Services:', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'Additional Services:', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td>
 							<?php
 							if ( ! empty( $add_service ) && is_array( $add_service ) ) {
@@ -2145,14 +2179,14 @@ class Mwb_Wc_Bk_Admin {
 								}
 							} else {
 								?>
-								<span><?php esc_html_e( 'None', 'mwb-wc-bk' ); ?></span>
+								<span><?php esc_html_e( 'None', 'mwb-bookings-for-woocommerce' ); ?></span>
 								<?php
 							}
 							?>
 						</td>
 					</tr>
 					<tr>
-						<th><?php esc_html_e( 'Total:', 'mwb-wc-bk' ); ?></th>
+						<th><?php esc_html_e( 'Total:', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td><?php echo wc_price( esc_html( $total_cost ) ); // @codingStandardsIgnoreLine ?></td>
 					</tr>
 				</table>

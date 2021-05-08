@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/admin/partials/templates
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/admin/partials/templates
  */
 
 // Exit if accessed directly.
@@ -62,7 +62,7 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 	<div class="mwb_booking_global_availability_rules">
 		<div id="mwb_global_availability_rules">
 		<div class="mwb_add_new_rule_text">
-			<p><?php esc_html_e( 'Click', 'mwb-wc-bk' ); ?><span></span> <?php esc_html_e( 'To Add New Rule', 'mwb-wc-bk' ); ?></p>
+			<p><?php esc_html_e( 'Click', 'mwb-bookings-for-woocommerce' ); ?><span></span> <?php esc_html_e( 'To Add New Rule', 'mwb-bookings-for-woocommerce' ); ?></p>
 		</div>
 		<?php
 
@@ -83,7 +83,7 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 			<div id="mwb_global_availability_rule_<?php echo esc_html( $count + 1 ); ?>" data-id="<?php echo esc_html( $count + 1 ); ?>" class="mwb-availability-rules__table">
 				<div class="mwb_global_availability_rule_heading mwb-global-availability-rule__heading">
 					<h2>
-					<label class="booking-availability__title" data-id="<?php echo esc_html( $count + 1 ); ?>" ><?php echo ! empty( $mwb_availability_rule_name[ $count ] ) ? esc_html( $mwb_availability_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count + 1 ); ?></label>
+					<label class="booking-availability__title" data-id="<?php echo esc_html( $count + 1 ); ?>" ><?php echo ! empty( $mwb_availability_rule_name[ $count ] ) ? esc_html( $mwb_availability_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-bookings-for-woocommerce' ) . esc_html( $count + 1 ); ?></label>
 					<input type="hidden" name="mwb_availability_rule_count" value="<?php echo esc_html( $count + 1 ); ?>" >
 					<input type="checkbox" class="mwb_global_availability_rule_heading_switch" name="mwb_global_availability_rule_heading_switch[<?php echo esc_html( $count ); ?>]" <?php checked( 'on', $mwb_availability_rule_switch[ $count ] ); ?>>
 					</h2>
@@ -98,7 +98,7 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 					<tbody>	
 						<tr valign="top" class="mwb-form-group">
 							<th scope="row" class="mwb-form-group__label">
-								<label><?php esc_html_e( 'Rule Name', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Rule Name', 'mwb-bookings-for-woocommerce' ); ?></label>
 							</th>
 							<td class="forminp forminp-text mwb-form-group__input">
 								<input type="text" class="mwb_global_availability_rule_name" name="mwb_global_availability_rule_name[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_name[ $count ] ); ?>" required>
@@ -106,23 +106,23 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 						</tr>
 						<tr valign="top" class="mwb-form-group">
 							<th scope="row" class="mwb-form-group__label">
-								<label><?php esc_html_e( 'Rule Type', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Rule Type', 'mwb-bookings-for-woocommerce' ); ?></label>
 							</th>
 							<td class="forminp forminp-text mwb-form-group__input">
 								<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $count ); ?>]" value="specific" <?php checked( 'specific', $mwb_availability_rule_type[ $count ] ); ?> >
-								<label><?php esc_html_e( 'Specific Dates', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Specific Dates', 'mwb-bookings-for-woocommerce' ); ?></label>
 								<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $count ); ?>]" value="generic" <?php checked( 'generic', $mwb_availability_rule_type[ $count ] ); ?>>
-								<label><?php esc_html_e( 'Generic Dates', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Generic Dates', 'mwb-bookings-for-woocommerce' ); ?></label>
 							</td>
 						</tr>
 						<tr valign="top" class="range mwb-form-group">
 							<th scope="row" class="mwb-form-group__label">
-								<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 							</th>
 							<td class="forminp forminp-text specific mwb-form-group__input">
 								<p>
 									<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_from[ $count ] ); ?>" required >
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_availability_rule_range_to[ $count ] ); ?>" required>
 								</p>
 							</td>
@@ -133,7 +133,7 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_availability_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<select class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $count ); ?>]" required>
 									<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_availability_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
@@ -147,9 +147,9 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 							<td class="forminp forminp-text mwb-form-group__input">
 								<p>
 								<input type="radio" class="mwb_global_availability_rule_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $count ); ?>]" value="bookable" <?php checked( 'bookable', $mwb_availability_rule_bookable[ $count ] ); ?> >
-								<label><?php esc_html_e( 'Bookable', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Bookable', 'mwb-bookings-for-woocommerce' ); ?></label>
 								<input type="radio" class="mwb_global_availability_rule_non_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $count ); ?>]" value="non-bookable" <?php checked( 'non-bookable', $mwb_availability_rule_bookable[ $count ] ); ?>>
-								<label><?php esc_html_e( 'Non-Bookable', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Non-Bookable', 'mwb-bookings-for-woocommerce' ); ?></label>
 								</p>
 							</td>
 						</tr>
@@ -158,7 +158,7 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 							<td class="forminp forminp-text mwb-form-group__input-rules" >
 								<p>
 									<input type="checkbox" class="mwb_global_availability_rule_weekdays" name="mwb_global_availability_rule_weekdays[<?php echo esc_html( $count ); ?>]" <?php checked( 'on', $mwb_availability_rule_weekdays[ $count ] ); ?> >
-									<?php esc_html_e( 'Rules for weekdays', 'mwb-wc-bk' ); ?>
+									<?php esc_html_e( 'Rules for weekdays', 'mwb-bookings-for-woocommerce' ); ?>
 								</p>
 							</td>
 						<?php foreach ( $this->global_func->booking_search_weekdays() as $key => $values ) { ?>
@@ -172,7 +172,7 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 					</tbody>
 				</table>
 				</div>
-				<button type="button" id="mwb_delete_avialability_rule" class="button mwb-delete-icon" rule_count="<?php echo esc_html( $count + 1 ); ?>" title="<?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?>" >
+				<button type="button" id="mwb_delete_avialability_rule" class="button mwb-delete-icon" rule_count="<?php echo esc_html( $count + 1 ); ?>" title="<?php esc_html_e( 'Delete Rule', 'mwb-bookings-for-woocommerce' ); ?>" >
 					<svg width="16" height="16" fill="currentColor" class="mwb-trash-icon" viewBox="0 0 16 16">
 						<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
 						<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -185,7 +185,7 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 		?>
 		</div>
 		<div id="mwb_global_availability_button">
-			<button type="button" id="mwb_add_avialability_rule" class="button mwb-add-rule__icon" rule_count="<?php echo esc_html( $rule_count ); ?>" title="<?php esc_html_e( 'Add New Availability Rule', 'mwb-wc-bk' ); ?>" >
+			<button type="button" id="mwb_add_avialability_rule" class="button mwb-add-rule__icon" rule_count="<?php echo esc_html( $rule_count ); ?>" title="<?php esc_html_e( 'Add New Availability Rule', 'mwb-bookings-for-woocommerce' ); ?>" >
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 					<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
 				</svg>
@@ -194,6 +194,6 @@ $rule_count         = get_option( 'mwb_global_availability_rules_count', 0 );
 	</div>
 	<!-- Save Settings -->
 	<p class="submit mwb-booking__submit">
-		<input type="submit" value="<?php esc_html_e( 'Save Changes', 'mwb-wc-bk' ); ?>" class="button-primary woocommerce-save-button mwb-btn" name="mwb_booking_global_availability_rules_save" id="mwb_booking_global_availability_rules_save" >
+		<input type="submit" value="<?php esc_html_e( 'Save Changes', 'mwb-bookings-for-woocommerce' ); ?>" class="button-primary woocommerce-save-button mwb-btn" name="mwb_booking_global_availability_rules_save" id="mwb_booking_global_availability_rules_save" >
 	</p>
 </form>

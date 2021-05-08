@@ -2,9 +2,10 @@
 /**
  * Class MWB_Booking_New file.
  *
- * @author  makewebbetter
- * @package mwb-woocommerce-booking/included/emails
- * @version 1.0.0
+ * @author     MakeWebBetter
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/included/emails
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,12 +45,12 @@ class MWB_Booking_New extends WC_Email {
 
 		$this->id             = 'customer_new_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'New Booking Created', 'mwb-wc-bk' );
-		$this->description    = __( 'Booking created emails are sent to customers when their bookings are created.', 'mwb-wc-bk' );
-		$this->heading        = __( 'New Booking Created', 'custom-wc-email' );
+		$this->title          = __( 'New Booking Created', 'mwb-bookings-for-woocommerce' );
+		$this->description    = __( 'Booking created emails are sent to customers when their bookings are created.', 'mwb-bookings-for-woocommerce' );
+		$this->heading        = __( 'New Booking Created', 'mwb-bookings-for-woocommerce' );
 
 		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-		$this->subject = sprintf( _x( '[%s] Booking Created', 'A new booking has been created', 'mwb-wc-bk' ), '{blogname}' );
+		$this->subject = sprintf( _x( '[%s] Booking Created', 'A new booking has been created', 'mwb-bookings-for-woocommerce' ), '{blogname}' );
 
 		$this->template_html  = 'emails/mwb-customer-new-booking.php';
 		$this->template_plain = 'emails/plain/mwb-customer-new-booking.php';
@@ -99,7 +100,7 @@ class MWB_Booking_New extends WC_Email {
 
 			$this->recipient = $author_mail;
 
-			$this->subject = __( 'New booking created', 'mwb-wc-bk' );
+			$this->subject = __( 'New booking created', 'mwb-bookings-for-woocommerce' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();

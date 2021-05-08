@@ -4,22 +4,22 @@
  *
  * @link                 https://makewebbetter.com/
  * @since                1.0.0
- * @package              Mwb_Wc_Bk
+ * @package              MWB_Bookings_For_WooCommerce
  *
  * @wordpress-plugin
  * Plugin Name:          MWB Bookings For WooCommerce
- * Plugin URI:           https://makewebbetter.com/
+ * Plugin URI:           https://wordpress.org/plugins/mwb-bookings-for-woocommerce
  * Description:          MWB Bookings for WooCommerce helps you stay focused while offering a better online booking service for your business growth. Just stop speculating and opt for the best one out.
  * Version:              1.0.0
  * Author:               MakeWebBetter
  * Author URI:           https://makewebbetter.com/
  * Requires at least:    4.0
- * Tested up to:         5.6.2
+ * Tested up to:         5.7.1
  * WC requires at least: 3.0.0
- * WC tested up to:      5.0.0
+ * WC tested up to:      5.2.2
  * License:              GPL-3.0
  * License URI:          http://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:          mwb-wc-bk
+ * Text Domain:          mwb-bookings-for-woocommerce
  * Domain Path:          /languages
  */
 
@@ -63,7 +63,7 @@ function mwb_wc_bk_plugin_deactivate() {
 function mwb_wc_bk_plugin_error_notice() {
 	?>
 	<div class="error notice is-dismissible">
-		<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to install Plugin.', 'mwb-wc-bk' ); ?></p>
+		<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to install Plugin.', 'mwb-bookings-for-woocommerce' ); ?></p>
 	</div>
 	<style>
 		#message{display:none;}
@@ -130,6 +130,9 @@ function define_mwb_wc_bk() {
 	mwb_wc_bk_constant( 'MWB_WC_BK_BASEURL', plugin_dir_url( __FILE__ ) );
 	mwb_wc_bk_constant( 'MWB_WC_BK_VERSION', '1.0.0' );
 	mwb_wc_bk_constant( 'MWB_WC_BK_TEMPLATE_PATH', plugin_dir_path( __FILE__ ) . 'public/templates/' );
+
+	mwb_wc_bk_constant( 'ONBOARD_PLUGIN_NAME', 'MWB Bookings For WooCommerce' );
+
 }
 /**
  * Defining Constants
@@ -152,7 +155,7 @@ function mwb_wc_bk_constant( $name, $value ) {
 function mwb_booking_settings_link( $links ) {
 
 	$plugin_links = array(
-		'<a href="' . admin_url( 'edit.php?post_type=mwb_cpt_booking&page=global-settings&tab=settings' ) . '">' . esc_html__( 'Settings', 'mwb-wc-bk' ) . '</a>',
+		'<a href="' . admin_url( 'edit.php?post_type=mwb_cpt_booking&page=global-settings&tab=settings' ) . '">' . esc_html__( 'Settings', 'mwb-bookings-for-woocommerce' ) . '</a>',
 	);
 
 	return array_merge( $plugin_links, $links );
@@ -170,12 +173,13 @@ function mwb_booking_plugin_row_links( $links_array, $plugin_file_name ) {
 
 	if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
 		// you can still use array_unshift() to add links at the beginning.
-		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Demo.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Demo</a>';
-		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Documentation.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc' ) . '">Documetation</a>';
-		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Support.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support ' ) . '">Support</a>';
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Demo.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Demo</a>';                                                                                                                                                                                                            // Mandatory Inline CSS.
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Documentation.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc' ) . '">Documetation</a>';                      // Mandatory Inline CSS.
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Support.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support ' ) . '">Support</a>';                                                 // Mandatory Inline CSS.
 	}
 
 	return $links_array;
 }
 
 add_filter( 'plugin_row_meta', 'mwb_booking_plugin_row_links', 10, 2 );
+

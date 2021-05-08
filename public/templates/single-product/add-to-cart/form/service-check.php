@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/templates/single-product/add-to-cart/form
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/templates/single-product/add-to-cart/form
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -59,9 +59,9 @@ foreach ( $enabled_services as $service_id ) {
 		}
 
 		?>
-		<div id="mwb-wc-bk-inc-service-field" style="<?php echo esc_html( $style ); ?>" >
+		<div id="mwb-wc-bk-inc-service-field" style="<?php echo esc_html( $style ); ?>" >         <!--Mandatory Inline CSS -->
 			<?php if ( ! empty( $service_meta['included_services'] ) && is_array( $service_meta['included_services'] ) ) { ?>
-				<label for="mwb-wc-bk-service-input-hidden"><b><?php esc_html_e( 'Included Services', 'mwb-wc-bk' ); ?></b></label>
+				<label for="mwb-wc-bk-service-input-hidden"><b><?php esc_html_e( 'Included Services', 'mwb-bookings-for-woocommerce' ); ?></b></label>
 				<input type="hidden" id="mwb-wc-bk-service-input-hidden" class="mwb-wc-bk-form-input-hidden" data-hidden="<?php echo esc_html( htmlspecialchars( wp_json_encode( $service_meta ) ) ); ?>"> 
 				<ul id="mwb-wc-bk-inc-service-list">
 				<?php
@@ -73,7 +73,7 @@ foreach ( $enabled_services as $service_id ) {
 						$style = '';
 					}
 					?>
-					<li style="<?php echo esc_attr( $style ); ?>" >
+					<li style="<?php echo esc_attr( $style ); ?>" >            <!--Mandatory Inline CSS -->
 						<label for="mwb-wc-bk-inc-service-field-<?php echo esc_html( $service_data['term_obj']->term_id ); ?>"><?php echo esc_html( $service_data['term_obj']->name ); ?></label>
 							<?php
 							if ( 'yes' === $show_service_cost ) {
@@ -105,7 +105,7 @@ foreach ( $enabled_services as $service_id ) {
 		</div>
 		<div id="mwb-wc-bk-add-service-field">
 			<?php if ( ! empty( $service_meta['additional_services'] ) && is_array( $service_meta['additional_services'] ) ) { ?>
-				<label for=""><b><?php esc_html_e( 'Additional Services', 'mwb-wc-bk' ); ?></b></label>
+				<label for=""><b><?php esc_html_e( 'Additional Services', 'mwb-bookings-for-woocommerce' ); ?></b></label>
 				<ul id="mwb-wc-bk-add-service-list">
 				<?php
 				foreach ( $service_meta['additional_services'] as $service_data ) {
@@ -131,7 +131,7 @@ foreach ( $enabled_services as $service_id ) {
 							}
 							if ( 'yes' === $show_service_desc ) {
 								?>
-						<span class="booking-service-desc"><?php echo ! empty( $service_data['term_obj']->description ) ? esc_html( $service_data['term_obj']->description ) : esc_html__( 'No description provided' ); ?></span>
+						<span class="booking-service-desc"><?php echo ! empty( $service_data['term_obj']->description ) ? esc_html( $service_data['term_obj']->description ) : esc_html__( 'No description provided', 'mwb-bookings-for-woocommerce' ); ?></span>
 								<?php
 							}
 							?>

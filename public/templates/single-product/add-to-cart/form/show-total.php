@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/templates/single-product/add-to-cart/form
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/templates/single-product/add-to-cart/form
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -30,7 +30,7 @@ $total_check = ! empty( $setting_options['mwb_booking_setting_bo_service_total']
 		$style = 'display: none;';
 	}
 	?>
-	<div id="mwb-wc-bk-total-fields" style="<?php echo esc_html( $style ); ?>" >
+	<div id="mwb-wc-bk-total-fields" style="<?php echo esc_html( $style ); ?>" >        <!--Mandatory Inline CSS -->
 
 	</div>
 </div>

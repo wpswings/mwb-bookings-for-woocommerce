@@ -480,10 +480,8 @@ function booking_price_cal($) {
 						'slots'     : slots,
 					},
 					success : function( response ) {
-						// e.preventDefault();
 						
 						response = JSON.parse( response );
-						// console.log(response);
 						if ( response.status == true ) {
 							jQuery('#mwb-wc-bk-date-section .date-error').hide();
 							

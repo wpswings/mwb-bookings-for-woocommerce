@@ -2,9 +2,10 @@
 /**
  * Class MWB_Booking_Confirmation_Required file.
  *
- * @author  makewebbetter
- * @package mwb-woocommerce-booking/included/emails
- * @version 1.0.0
+ * @author     MakeWebBetter
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/included/emails
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,12 +45,12 @@ class MWB_Booking_Confirmation_Required extends WC_Email {
 
 		$this->id             = 'customer_confirmation_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'Confirmed Required for Booking', 'mwb-wc-bk' );
-		$this->description    = __( 'Booking confirmation required emails are sent to customers when their booking is under confirmation.', 'mwb-wc-bk' );
-		$this->heading        = __( 'Booking Confirmation Required', 'mwb-wc-bk' );
+		$this->title          = __( 'Confirmed Required for Booking', 'mwb-bookings-for-woocommerce' );
+		$this->description    = __( 'Booking confirmation required emails are sent to customers when their booking is under confirmation.', 'mwb-bookings-for-woocommerce' );
+		$this->heading        = __( 'Booking Confirmation Required', 'mwb-bookings-for-woocommerce' );
 
 		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-		$this->subject = sprintf( _x( '[%s] Booking is completed', 'Congratulations your booking is under confirmation', 'mwb-wc-bk' ), '{blogname}' );
+		$this->subject = sprintf( _x( '[%s] Booking is completed', 'Congratulations your booking is under confirmation', 'mwb-bookings-for-woocommerce' ), '{blogname}' );
 
 		$this->template_html  = 'emails/mwb-customer-confirmation-booking.php';
 		$this->template_plain = 'emails/plain/mwb-customer-confirmation-booking.php';
@@ -92,7 +93,7 @@ class MWB_Booking_Confirmation_Required extends WC_Email {
 			$this->object    = $order;
 			$this->recipient = $this->object->get_billing_email();
 
-			$this->subject = __( 'Booking Confirmation required', 'mwb-wc-bk' );
+			$this->subject = __( 'Booking Confirmation required', 'mwb-bookings-for-woocommerce' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();

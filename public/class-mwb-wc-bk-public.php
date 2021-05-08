@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/public
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/public
  */
 
 /**
@@ -15,9 +15,9 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/public
- * @author     MakeWebBetter <webmaster@makewebbetter.com>
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/public
+ * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Mwb_Wc_Bk_Public {
 
@@ -309,7 +309,7 @@ class Mwb_Wc_Bk_Public {
 				if ( array_key_exists( $start_date, $slots ) ) {
 					?>
 						<div id="mwb-wc-bk-time-slot-field">
-							<label for="mwb-wc-bk-time-slot-input"><?php esc_html_e( 'Time', 'mwb-wc-bk' ); ?></label>
+							<label for="mwb-wc-bk-time-slot-input"><?php esc_html_e( 'Time', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<select type="text" id="mwb-wc-bk-time-slot-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-time" name="time_slot" required>
 								<?php
 								if ( ! empty( $slots ) ) {
@@ -616,9 +616,9 @@ class Mwb_Wc_Bk_Public {
 	public function mwb_wc_bk_add_to_cart_text( $text, $product ) {
 
 		if ( $product && $product->is_type( 'mwb_booking' ) ) {
-			return __( 'Book now', 'mwb-wc-bk' );
+			return __( 'Book now', 'mwb-bookings-for-woocommerce' );
 		}
-		return __( 'Add To Cart', 'mwb-wc-bk' );
+		return __( 'Add To Cart', 'mwb-bookings-for-woocommerce' );
 
 	}
 
@@ -868,7 +868,7 @@ class Mwb_Wc_Bk_Public {
 						update_post_meta( $order_id, 'mwb_booking_id', $booking_id );
 						$this->mwb_wc_bk_booking_details_order( $order_item, $booking_data );
 						$order_item->save_meta_data();
-						$order->add_order_note( sprintf( __( 'A new booking <a href="%1$1s">#%2$2s</a> has been created from this order', 'mwb-wc-bk' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );   // @codingStandardsIgnoreLine
+						$order->add_order_note( sprintf( __( 'A new booking <a href="%1$1s">#%2$2s</a> has been created from this order', 'mwb-bookings-for-woocommerce' ), admin_url( 'post.php?post=' . $booking_id . '&action=edit' ), $booking_id ) );   // @codingStandardsIgnoreLine
 
 						$this->save_booking_order_data( $order_id, $booking_id );
 						$this->booking_status_acc_order_status( $order_id, $booking_id );
@@ -1244,13 +1244,13 @@ class Mwb_Wc_Bk_Public {
 		$added_cost_arr = isset( $_POST['added_cost_arr'] ) ? array_map( 'sanitize_text_field', $_POST['added_cost_arr'] ) : array();
 		?>
 
-		<label for="mwb-wc-bk-total-fields"><b><?php esc_html_e( 'Totals', 'mwb-wc-bk' ); ?></b></label>
-		<ul style="list-style-type:none;">
+		<label for="mwb-wc-bk-total-fields"><b><?php esc_html_e( 'Totals', 'mwb-bookings-for-woocommerce' ); ?></b></label>
+		<ul style="list-style-type:none;">             <!-- Mandatory Inline CSS -->        
 			<?php
 			if ( ! empty( $base_cost ) ) {
 				?>
 				<li>
-					<label for=""><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label>
+					<label for=""><?php esc_html_e( 'Base Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<span>&emsp;&#8377;<?php echo esc_html( $base_cost ); ?></span>
 					<input type="hidden" name="base_cost" value="<?php echo esc_html( $base_cost ); ?>" >
 				</li>
@@ -1259,7 +1259,7 @@ class Mwb_Wc_Bk_Public {
 			if ( ! empty( $service_cost ) ) {
 				?>
 				<li>
-					<label for=""><?php esc_html_e( 'Service Cost', 'mwb-wc-bk' ); ?></label>
+					<label for=""><?php esc_html_e( 'Service Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<span>&emsp;&#8377;<?php echo esc_html( $service_cost ); ?></span>
 					<input type="hidden" name="service_cost" value="<?php echo esc_html( $service_cost ); ?>" >
 				</li>
@@ -1270,7 +1270,7 @@ class Mwb_Wc_Bk_Public {
 					if ( ! empty( $cost ) ) {
 						?>
 				<li>
-					<label for=""><?php echo esc_html( $name ); ?><?php esc_html_e( '-cost', 'mwb-wc-bk' ); ?></label>
+					<label for=""><?php echo esc_html( $name ); ?><?php esc_html_e( '-cost', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<span>&emsp;&#8377;<?php echo esc_html( $cost ); ?></span>
 					<input type="hidden" name="added_cost-<?php echo esc_html( strtolower( $name ) ); ?>" value="<?php echo esc_html( $cost ); ?>" >
 				</li>
@@ -1281,7 +1281,7 @@ class Mwb_Wc_Bk_Public {
 			if ( ! empty( $total_cost ) ) {
 				?>
 				<li>
-					<label for=""><b><?php esc_html_e( 'Total Cost', 'mwb-wc-bk' ); ?></b></label>
+					<label for=""><b><?php esc_html_e( 'Total Cost', 'mwb-bookings-for-woocommerce' ); ?></b></label>
 					<span><b>&emsp;&#8377;<?php echo esc_html( $total_cost ); ?></b></span>
 					<input type="hidden" name="total_cost" value="<?php echo esc_html( $total_cost ); ?>">
 				</li>
@@ -1299,7 +1299,7 @@ class Mwb_Wc_Bk_Public {
 	 */
 	public function mwb_booking_list_user_bookings( $menu_links ) {
 
-		$menu_links['all_bookings'] = __( 'All Bookings', 'mwb-wc-bk' );
+		$menu_links['all_bookings'] = __( 'All Bookings', 'mwb-bookings-for-woocommerce' );
 
 		return $menu_links;
 	}

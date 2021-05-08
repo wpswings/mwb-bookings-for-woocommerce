@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
  */
 
 // Exit if accessed directly.
@@ -20,9 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * This class defines the global functions to be used anywhere in the plugin.
  *
  * @since      1.0.0
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
- * @author     MakeWebBetter <webmaster@makewebbetter.com>
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
+ * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Mwb_Booking_Global_Functions {
 
@@ -84,13 +84,13 @@ class Mwb_Booking_Global_Functions {
 	 */
 	public function booking_search_weekdays() {
 		$arr = array(
-			'sunday'    => __( 'Sunday', 'mwb-wc-bk' ),
-			'monday'    => __( 'Monday', 'mwb-wc-bk' ),
-			'tuesday'   => __( 'Tuesday', 'mwb-wc-bk' ),
-			'wednesday' => __( 'Wednesday', 'mwb-wc-bk' ),
-			'thursday'  => __( 'Thursday', 'mwb-wc-bk' ),
-			'friday'    => __( 'Friday', 'mwb-wc-bk' ),
-			'saturday'  => __( 'Saturday', 'mwb-wc-bk' ),
+			'sunday'    => __( 'Sunday', 'mwb-bookings-for-woocommerce' ),
+			'monday'    => __( 'Monday', 'mwb-bookings-for-woocommerce' ),
+			'tuesday'   => __( 'Tuesday', 'mwb-bookings-for-woocommerce' ),
+			'wednesday' => __( 'Wednesday', 'mwb-bookings-for-woocommerce' ),
+			'thursday'  => __( 'Thursday', 'mwb-bookings-for-woocommerce' ),
+			'friday'    => __( 'Friday', 'mwb-bookings-for-woocommerce' ),
+			'saturday'  => __( 'Saturday', 'mwb-bookings-for-woocommerce' ),
 		);
 		apply_filters( 'mwb_booking_weekdays', $arr );
 		return $arr;
@@ -104,7 +104,7 @@ class Mwb_Booking_Global_Functions {
 	public function booking_search_weeks() {
 
 		for ( $i = 1; $i <= 52; $i++ ) {
-			$arr[ $i ] = __( 'Week-', 'mwb-wc-bk' ) . $i;
+			$arr[ $i ] = __( 'Week-', 'mwb-bookings-for-woocommerce' ) . $i;
 		}
 		apply_filters( 'mwb_booking_weeks', $arr );
 		return $arr;
@@ -133,18 +133,18 @@ class Mwb_Booking_Global_Functions {
 	 */
 	public function booking_months() {
 		$arr = array(
-			'jan' => __( 'January', 'mwb-wc-bk' ),
-			'feb' => __( 'February', 'mwb-wc-bk' ),
-			'mar' => __( 'March', 'mwb-wc-bk' ),
-			'apr' => __( 'April', 'mwb-wc-bk' ),
-			'may' => __( 'May', 'mwb-wc-bk' ),
-			'jun' => __( 'June', 'mwb-wc-bk' ),
-			'jul' => __( 'July', 'mwb-wc-bk' ),
-			'aug' => __( 'August', 'mwb-wc-bk' ),
-			'sep' => __( 'September', 'mwb-wc-bk' ),
-			'oct' => __( 'October', 'mwb-wc-bk' ),
-			'nov' => __( 'November', 'mwb-wc-bk' ),
-			'dec' => __( 'December', 'mwb-wc-bk' ),
+			'jan' => __( 'January', 'mwb-bookings-for-woocommerce' ),
+			'feb' => __( 'February', 'mwb-bookings-for-woocommerce' ),
+			'mar' => __( 'March', 'mwb-bookings-for-woocommerce' ),
+			'apr' => __( 'April', 'mwb-bookings-for-woocommerce' ),
+			'may' => __( 'May', 'mwb-bookings-for-woocommerce' ),
+			'jun' => __( 'June', 'mwb-bookings-for-woocommerce' ),
+			'jul' => __( 'July', 'mwb-bookings-for-woocommerce' ),
+			'aug' => __( 'August', 'mwb-bookings-for-woocommerce' ),
+			'sep' => __( 'September', 'mwb-bookings-for-woocommerce' ),
+			'oct' => __( 'October', 'mwb-bookings-for-woocommerce' ),
+			'nov' => __( 'November', 'mwb-bookings-for-woocommerce' ),
+			'dec' => __( 'December', 'mwb-bookings-for-woocommerce' ),
 		);
 		apply_filters( 'mwb_booking_months', $arr );
 		return $arr;

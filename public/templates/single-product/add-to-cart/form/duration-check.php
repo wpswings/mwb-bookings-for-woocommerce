@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/templates/single-product/add-to-cart/form
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/templates/single-product/add-to-cart/form
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -34,7 +34,7 @@ $max_duration  = ! empty( $product_meta['mwb_booking_max_duration'][0] ) ? sanit
 		?>
 		<div id="mwb_create_booking_date">
 			<div id="mwb_create_booking_duration_field">
-				<label for="mwb-wc-bk-duration-input"><b><?php esc_html_e( 'Duration', 'mwb-wc-bk' ); ?></b></label>
+				<label for="mwb-wc-bk-duration-input"><b><?php esc_html_e( 'Duration', 'mwb-bookings-for-woocommerce' ); ?></b></label>
 				<br>
 				<input type="hidden" id="mwb-wc-bk-duration-input" name="duration" value="1">
 				<p><b><?php echo esc_html( sprintf( '%d-%s', $unit_input, $unit_duration . ( ( $unit_input > 1 ) ? 's' : '' ) ) ); ?></b></p>
@@ -47,7 +47,7 @@ $max_duration  = ! empty( $product_meta['mwb_booking_max_duration'][0] ) ? sanit
 			if ( ! empty( $unit_duration ) && ! empty( $unit_input ) ) {
 				?>
 			<div class="mwb-wc-bk-form-field" id="mwb-wc-bk-duration-div" >
-				<label for="mwb-wc-bk-duration-input"><b><?php esc_html_e( 'Duration', 'mwb-wc-bk' ); ?></b></label>
+				<label for="mwb-wc-bk-duration-input"><b><?php esc_html_e( 'Duration', 'mwb-bookings-for-woocommerce' ); ?></b></label>
 				<br>
 				<?php if ( ! empty( $min_duration ) && ( $min_duration < $max_duration ) ) { ?>
 					<input id="mwb-wc-bk-duration-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number" type="number" name="duration" value="1" step="1" min="<?php echo esc_html( $min_duration ); ?>" max="<?php echo esc_html( $max_duration ); ?>" required>

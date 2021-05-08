@@ -86,10 +86,6 @@ body.post-type-mwb_cpt_booking .mwb-booking__nav-wrap h1,#mwb-wc-bk-booking-data
     font-size: 26px;
     letter-spacing: 0.7px;
 }
-/* body.post-type-mwb_cpt_booking {
-   font-family: 'NunitoSans-Regular';
-
-} */
 
 .post-type-mwb_cpt_booking a{
     outline: none;
@@ -97,6 +93,7 @@ body.post-type-mwb_cpt_booking .mwb-booking__nav-wrap h1,#mwb-wc-bk-booking-data
     text-decoration: none;
     border: none;
 }
+
 .post-type-mwb_cpt_booking a:focus {
     outline: none;
     box-shadow: none;
@@ -244,6 +241,7 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 .mwb-booking-settings__table tbody,.mwb-availability-rules__table tbody {
     display: block;
 }
+
 .mwb_booking_heading {
     padding: 0 5px;
 }
@@ -305,6 +303,34 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
     padding: 0 10px;
 }
 
+#mwb_booking_cost_data #mwb_booking_added_costs_btn {
+    margin-bottom: 10px;
+}
+
+#mwb_booking_cost_data #mwb_booking_local_cost_rules_btn {
+    margin-bottom: 10px;
+}
+
+#mwb_booking_unit_input,
+#mwb_booking_buffer_input,
+#mwb_advance_booking_max_input,
+#mwb_advance_booking_min_input {
+    margin-right: 7px;
+    width: 4em;
+}
+
+#mwb_booking_unit_select,
+#mwb_booking_unit_duration,
+#mwb_booking_buffer_duration,
+#mwb_advance_booking_min_duration,
+#mwb_advance_booking_max_duration,
+.mwb_booking_global_cost_condition {
+    width: auto;
+    margin-right: 7px;
+}
+#mwb_local_availability_rules_add, #mwb_people_type_add, #mwb_booking_service_add {
+    margin-bottom: 7px;
+}
 
 /*===============================================
     ******** Settings CSS ends *******
@@ -658,6 +684,20 @@ body.post-type-mwb_cpt_booking .mwb_booking_global_options_setting_table h2,#mwb
 
 
 /* Overview page css */
+
+.mwb-wc-bk-connect-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+}
+.mwb-wc-bk-connect-links a {
+    display: inline-block;
+    max-width: 150px;
+    font-size: 18px;
+    color: #48494a;
+    margin: 10px;
+}
 
 .booking-overview__wrapper h2,
 .booking-overview__wrapper h3 {
@@ -1202,68 +1242,54 @@ div#mwb_booking_cost_data button,#mwb_booking_services_data button,#mwb_booking_
 
 .mwb_booking_confirmed {
     background-color: #a2e69d!important;
-    /* color: #0e8a24; */
 }
 .mwb_booking_confirmed .fc-event-main {
-    /* background-color: #a2e69d; */
     color: #0e8a24!important;
 }
 
 .mwb_booking_confirmation {
     background-color: #e6cc9d!important;
-    /* color: #8a5e0e; */
 }
 
 .mwb_booking_confirmation .fc-event-main {
-    /* background-color: #e6cc9d; */
     color: #8a5e0e!important;
 }
 
 
 .mwb_booking_expired {
     background-color: #e69d9d!important;
-    /* color: #bd2222; */
 }
 .mwb_booking_expired .fc-event-main {
-    /* background-color: #e69d9d; */
     color: #bd2222!important;
 }
 
 .mwb_booking_completed {
     background-color: #9ddfe6!important;
-    /* color: #0e6d8a; */
 }
 
 .mwb_booking_completed .fc-event-main {
-    /* background-color: #9ddfe6; */
     color: #0e6d8a!important;
 }
 
 .mwb_booking_pending {
     background-color: #d2d2d2!important;
-    /* color: #737373; */
 }
 .mwb_booking_pending .fc-event-main {
-    /* background-color: #d2d2d2; */
     color: #737373!important;
 }
 
 .mwb_booking_cancelled {
     background-color: #f7d5a8!important;
-    /* color: #565656; */
 }
 .mwb_booking_cancelled .fc-event-main {
-    /* background-color: #e98513; */
     color: #e98513!important;
 }
 
 .mwb_booking_refunded {
     background-color: #d2d2d2!important;
-    /* color: #737373; */
 }
 
 .mwb_booking_refunded .fc-event-main{
-    /* background-color: #d2d2d2; */
     color: #737373!important;
 }
 .mwb_booking_calendar_status_details {

@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/templates/single-product/add-to-cart/form
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/templates/single-product/add-to-cart/form
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -45,19 +45,19 @@ if ( empty( $people_select ) ) {
 			if ( 'no' === $people_type_check ) {
 				?>
 				<div id="mwb-wc-bk-people-input-div">
-					<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
+					<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-bookings-for-woocommerce' ); ?></b></label>
 					<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="people-input-hidden" name="people_total" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" value="1" >
 					<input type="number" id="mwb-wc-bk-people-input" class="mwb-wc-bk-form-input mwb-wc-bk-form-input-number people-input" name="people_total" value="1" step="1" min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" required>
-					<span class="mwb-wc-bk-form-error people-error" style="display:none; color:red;"></span>
+					<span class="mwb-wc-bk-form-error people-error" style="display:none; color:red;"></span>          <!--Mandatory Inline CSS -->
 				</div>
 				<?php
 
 			} elseif ( 'yes' === $people_type_check ) {
 
 				?>
-				<label for="mwb-wc-bk-people-input-div"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
+				<label for="mwb-wc-bk-people-input-div"><b><?php esc_html_e( 'People', 'mwb-bookings-for-woocommerce' ); ?></b></label>
 				<div id="mwb-wc-bk-people-input-div">
-					<span id="mwb-wc-bk-people-input-span" ><?php esc_html_e( 'Select Peoples', 'mwb-wc-bk' ); ?></span>	
+					<span id="mwb-wc-bk-people-input-span" ><?php esc_html_e( 'Select Peoples', 'mwb-bookings-for-woocommerce' ); ?></span>	
 					<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="mwb-wc-bk-form-input-hidden" name="people_total" data-min="<?php echo ! empty( $min_people ) ? esc_html( $min_people ) : 1; ?>" data-max="<?php echo ! empty( $max_people ) ? esc_html( $max_people ) : ''; ?>" required >
 					<div class="mwb-wc-bk-people-type-popup">
 						<ul class="mwb-wc-bk-people-type-list">
@@ -80,7 +80,7 @@ if ( empty( $people_select ) ) {
 						}
 						?>
 						</ul>
-						<span class="mwb-wc-bk-form-error people-error" style="display:none; color:red;"></span>
+						<span class="mwb-wc-bk-form-error people-error" style="display:none; color:red;"></span>        <!--Mandatory Inline CSS -->
 					</div>
 				</div>
 					<?php
@@ -91,10 +91,10 @@ if ( empty( $people_select ) ) {
 	} else {
 		?>
 		<div id="mwb-wc-bk-people-field">
-			<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-wc-bk' ); ?></b></label>
+			<label for="mwb-wc-bk-people-input"><b><?php esc_html_e( 'People', 'mwb-bookings-for-woocommerce' ); ?></b></label>
 			<div id="mwb-wc-bk-people-input-div">
 				<input type="hidden" id="mwb-wc-bk-people-input-hidden" class="people-input-hidden" name="people_total" value="1" >
-				<span><?php esc_html_e( '1 people', 'mwb-wc-bk' ); ?></span>
+				<span><?php esc_html_e( '1 people', 'mwb-bookings-for-woocommerce' ); ?></span>
 			</div>
 		</div>
 		<?php

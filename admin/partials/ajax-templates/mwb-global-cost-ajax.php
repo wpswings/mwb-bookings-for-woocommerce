@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/admin/partials/ajax-templates
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/admin/partials/ajax-templates
  */
 
 // Exit if accessed directly.
@@ -36,7 +36,7 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 			</div>
 			<tr valign="top">
 				<th scope="row" class="">
-					<label><?php esc_html_e( 'Rule Name', 'mwb-wc-bk' ); ?></label>
+					<label><?php esc_html_e( 'Rule Name', 'mwb-bookings-for-woocommerce' ); ?></label>
 				</th>
 				<td class="forminp forminp-text">
 					<input type="text" class="mwb_global_cost_rule_name" name="mwb_global_cost_rule_name[<?php echo esc_html( $rule_count - 1 ); ?>]" >
@@ -44,11 +44,11 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 			</tr>
 			<tr valign="top">
 				<th scope="row" class="">
-					<label><?php esc_html_e( 'Conditions', 'mwb-wc-bk' ); ?></label>
+					<label><?php esc_html_e( 'Conditions', 'mwb-bookings-for-woocommerce' ); ?></label>
 				</th>
 				<td class="forminp forminp-text">
-					<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $rule_count - 1 ); ?>]" id="mwb_booking_global_cost_condition" class="mwb_booking_global_cost_condition" style="width: auto; margin-right: 7px;">
-						<option value="" selected><?php esc_html_e( 'none', 'mwb-wc-bk' ); ?></option>
+					<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $rule_count - 1 ); ?>]" id="mwb_booking_global_cost_condition" class="mwb_booking_global_cost_condition" style="width: auto; margin-right: 7px;">                           <!-- Mandatory Inline CSS. -->
+						<option value="" selected><?php esc_html_e( 'none', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<?php
 					foreach ( $this->global_cost_conditions() as $k => $v ) {
 						if ( ! is_array( $v ) ) {
@@ -74,21 +74,21 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 				</td>
 				<td class="forminp forminp-text date">
 					<p>
-						<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+						<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" >
-						<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+						<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" >
 					</p>
 				</td>
 				<td class="forminp forminp-text days">
 						<p>
-							<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]">
 							<?php foreach ( $this->global_func->booking_search_weekdays() as $k => $v ) { ?>
 								<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
 							<?php } ?>
 							</select>
-							<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
 							<?php foreach ( $this->global_func->booking_search_weekdays() as $k => $v ) { ?>
 								<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
@@ -98,13 +98,13 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 					</td>
 					<td class="forminp forminp-text months">
 						<p>
-							<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]">
 							<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 								<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
 							<?php } ?>
 							</select>
-							<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
 							<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 								<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
@@ -114,13 +114,13 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 					</td>
 					<td class="forminp forminp-text weeks">
 						<p>
-							<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]">
 							<?php foreach ( $this->global_func->booking_search_weeks() as $k => $v ) { ?>
 								<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
 							<?php } ?>
 							</select>
-							<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]">
 							<?php foreach ( $this->global_func->booking_search_weeks() as $k => $v ) { ?>
 								<option value="<?php echo esc_html( $k ); ?>" ><?php echo esc_html( $v ); ?></option>
@@ -130,24 +130,24 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 					</td>
 					<td class="forminp forminp-text time">
 						<p>
-							<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<input type="time" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" >
-							<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<input type="time" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" >
 						</p>
 					</td>
 					<td class="forminp forminp-text unit">
 						<p>
-							<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<input type="number" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" step="1" min="1">
-							<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+							<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<input type="number" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" step="1" min="1">
 						</p>
 					</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" class="">
-					<label><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label>
+					<label><?php esc_html_e( 'Base Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
 				</th>
 				<td class="forminp forminp-text">
 					<p>
@@ -166,7 +166,7 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 			</tr>
 			<tr valign="top">
 				<th scope="row" class="">
-					<label><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label>
+					<label><?php esc_html_e( 'Unit Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
 				</th>
 				<td class="forminp forminp-text">
 					<p>
@@ -185,5 +185,5 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 			</tr>
 		</tbody>
 	</table>
-	<button type="button" id="mwb_delete_cost_rule" class="button" rule_count="<?php echo esc_html( $rule_count ); ?>" ><?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?></button>
+	<button type="button" id="mwb_delete_cost_rule" class="button" rule_count="<?php echo esc_html( $rule_count ); ?>" ><?php esc_html_e( 'Delete Rule', 'mwb-bookings-for-woocommerce' ); ?></button>
 </div>

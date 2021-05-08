@@ -2,8 +2,9 @@
 /**
  * Customer confirmed Booking email
  *
- * @author  MWB
- * @package mwb-woocommerce-booking/admin/templates/emails/plain
+ * @author  MakeWebBetter
+ * @package MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/admin/templates/emails/plain
  * @version 1.0.0
  */
 
@@ -16,7 +17,7 @@ echo esc_html( wp_strip_all_tags( $email_heading ) );
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 // translators: $1: customer's billing first name and last name.
-printf( __( 'Congratulations! Booking belonging to %1$s has been confirmed. Their booking\'s details are as follows:', 'mwb-wc-bk' ), $order->get_formatted_billing_full_name() );  // @codingStandardsIgnoreLine
+printf( __( 'Congratulations! Booking belonging to %1$s has been confirmed. Their booking\'s details are as follows:', 'mwb-bookings-for-woocommerce' ), $order->get_formatted_billing_full_name() );  // @codingStandardsIgnoreLine
 
 echo "\n\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
 
@@ -24,16 +25,16 @@ echo "\n----------\n\n";
 
 if ( ! empty( $booking_meta['start_timestamp'] ) ) {
 	// translators: placeholder is last time subscription was paid.
-	echo sprintf( __( 'Satrt Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) ) ) . "\n";  // @codingStandardsIgnoreLine
+	echo sprintf( __( 'Satrt Booking : %s', 'mwb-bookings-for-woocommerce' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['start_timestamp'] ) ) ) . "\n";  // @codingStandardsIgnoreLine
 }
 
 if ( ! empty( $booking_meta['end_timestamp'] ) ) {
 	// translators: placeholder is last time subscription was paid.
-	echo sprintf( __( 'End Booking : %s', 'mwb-wc-bk' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['end_timestamp'] ) ) ) . "\n";  // @codingStandardsIgnoreLine
+	echo sprintf( __( 'End Booking : %s', 'mwb-bookings-for-woocommerce' ), esc_html( gmdate( 'Y-m-d h:i:s a', $booking_meta['end_timestamp'] ) ) ) . "\n";  // @codingStandardsIgnoreLine
 }
 if ( ! empty( $booking_meta['total_cost'] ) ) {
 	// translators: placeholder is last time subscription was paid.
-	echo sprintf( __( 'Total : %s', 'mwb-wc-bk' ), wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $booking_meta['total_cost'] ) ) . "\n";  // @codingStandardsIgnoreLine
+	echo sprintf( __( 'Total : %s', 'mwb-bookings-for-woocommerce' ), wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $booking_meta['total_cost'] ) ) . "\n";  // @codingStandardsIgnoreLine
 }
 
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";

@@ -8,8 +8,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
  */
 
 /**
@@ -19,9 +19,9 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
- * @author     MakeWebBetter <webmaster@makewebbetter.com>
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
+ * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Mwb_Wc_Bk_i18n {     // @codingStandardsIgnoreLine
 
@@ -34,7 +34,7 @@ class Mwb_Wc_Bk_i18n {     // @codingStandardsIgnoreLine
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'mwb-wc-bk',
+			'mwb-bookings-for-woocommerce',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

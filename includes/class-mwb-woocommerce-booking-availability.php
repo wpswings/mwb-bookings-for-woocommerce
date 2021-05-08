@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
  */
 
 // Exit if accessed directly.
@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * This class defines the global functions to be used anywhere in the plugin.
  *
  * @since      1.0.0
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
  * @author     MakeWebBetter <webmaster@makewebbetter.com>
  */
 class MWB_Woocommerce_Booking_Availability {
@@ -29,21 +29,21 @@ class MWB_Woocommerce_Booking_Availability {
 	/**
 	 * Instance of the Availability class.
 	 *
-	 * @var [type]
+	 * @var Object
 	 */
 	public static $availability_instance;
 
 	/**
 	 * Defining a Booking product.
 	 *
-	 * @var [type]
+	 * @var Object
 	 */
 	public $booking_product;
 
 	/**
 	 * ID of the Booking Product.
 	 *
-	 * @var [int]
+	 * @var int
 	 */
 	public $booking_product_id;
 

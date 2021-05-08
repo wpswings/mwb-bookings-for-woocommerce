@@ -2,9 +2,10 @@
 /**
  * Class MWB_Booking_Cancelled file.
  *
- * @author  makewebbetter
- * @package mwb-woocommerce-booking/included/emails
- * @version 1.0.0
+ * @author     MakeWebBetter
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/included/emails
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,12 +45,12 @@ class MWB_Booking_Cancelled extends WC_Email {
 
 		$this->id             = 'customer_cancelled_booking';
 		$this->customer_email = true;
-		$this->title          = __( 'Cancelled Booking', 'mwb-wc-bk' );
-		$this->description    = __( 'Booking cancelled emails are sent to customers when their bookings are cancelled.', 'mwb-wc-bk' );
-		$this->heading        = __( 'Booking Cancelled', 'custom-wc-email' );
+		$this->title          = __( 'Cancelled Booking', 'mwb-bookings-for-woocommerce' );
+		$this->description    = __( 'Booking cancelled emails are sent to customers when their bookings are cancelled.', 'mwb-bookings-for-woocommerce' );
+		$this->heading        = __( 'Booking Cancelled', 'mwb-bookings-for-woocommerce' );
 
 		// translators: placeholder is {blogname}, a variable that will be substituted when email is sent out.
-		$this->subject = sprintf( _x( '[%s] Booking Cancelled', 'Sorry! your booking has been cancelled', 'mwb-wc-bk' ), '{blogname}' );
+		$this->subject = sprintf( _x( '[%s] Booking Cancelled', 'Sorry! your booking has been cancelled', 'mwb-bookings-for-woocommerce' ), '{blogname}' );
 
 		$this->template_html  = 'emails/mwb-customer-cancelled-booking.php';
 		$this->template_plain = 'emails/plain/mwb-customer-cancelled-booking.php';
@@ -94,7 +95,7 @@ class MWB_Booking_Cancelled extends WC_Email {
 			$this->object    = $order;
 			$this->recipient = $this->object->get_billing_email();
 
-			$this->subject = __( 'Cancelled booking', 'mwb-wc-bk' );
+			$this->subject = __( 'Cancelled booking', 'mwb-bookings-for-woocommerce' );
 
 			$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 			$this->placeholders['{order_number}'] = $this->object->get_order_number();

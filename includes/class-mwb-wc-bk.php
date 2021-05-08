@@ -8,8 +8,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
  */
 
 /**
@@ -22,9 +22,9 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
- * @author     MakeWebBetter <webmaster@makewebbetter.com>
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
+ * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Mwb_Wc_Bk {
 
@@ -71,7 +71,7 @@ class Mwb_Wc_Bk {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'mwb-wc-bk';
+		$this->plugin_name = 'mwb-bookings-for-woocommerce';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -130,6 +130,19 @@ class Mwb_Wc_Bk {
 		 * The class responsible for defining Availability functions.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-woocommerce-booking-availability.php';
+
+		/**
+		 * The class responsible for the Onboarding functionality.
+		 */
+		if ( ! class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
+		}
+
+		if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
+
+			$this->onboard = new Makewebbetter_Onboarding_Helper();
+		}
 
 		$this->loader = new Mwb_Wc_Bk_Loader();
 
@@ -258,6 +271,12 @@ class Mwb_Wc_Bk {
 		$this->loader->add_action( 'mwb_booking_status_schedule', $plugin_admin, 'mwb_booking_schedule_status' );
 
 		$this->loader->add_action( 'wp_ajax_mwb_calendar_event_details_popup', $plugin_admin, 'mwb_calendar_event_details_popup' );
+
+		// Include screen for Onboarding pop-up.
+		$this->loader->add_filter( 'mwb_helper_valid_backend_screens', $plugin_admin, 'add_mwb_backend_screens' );
+
+		// Include plugin for Deactivation pop-up.
+		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
 
 	}
 

@@ -2,8 +2,9 @@
 /**
  * Customer confirmed Booking email
  *
- * @author  MWB
- * @package mwb-woocommerce-booking/admin/templates/emails
+ * @author  MakeWebBetter
+ * @package MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/admin/templates/emails
  * @version 1.0.0
  */
 
@@ -23,10 +24,10 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 <table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
 	<thead>
 		<tr>
-			<th class="td" scope="col" style="text-align:left;"><?php esc_html_e( 'Booking', 'mwb-wc-bk' ); ?></th>
-			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'Price', 'table headings in notification email', 'mwb-wc-bk' ); ?></th>
-			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'Start Date', 'table heading', 'mwb-wc-bk' ); ?></th>
-			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'End Date', 'table heading', 'mwb-wc-bk' ); ?></th>
+			<th class="td" scope="col" style="text-align:left;"><?php esc_html_e( 'Booking', 'mwb-bookings-for-woocommerce' ); ?></th>
+			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'Price', 'table headings in notification email', 'mwb-bookings-for-woocommerce' ); ?></th>
+			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'Start Date', 'table heading', 'mwb-bookings-for-woocommerce' ); ?></th>
+			<th class="td" scope="col" style="text-align:left;"><?php echo esc_html_x( 'End Date', 'table heading', 'mwb-bookings-for-woocommerce' ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -53,7 +54,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 </table>
 <?php $order_data = $order->get_data(); ?>
 <section class="woocommerce-customer-details">
-	<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'mwb-wc-bk' ); ?></h2>
+	<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'mwb-bookings-for-woocommerce' ); ?></h2>
 	<address>
 		<?php echo esc_html( $order_data['billing']['first_name'] ); ?><br><?php echo esc_html( $order_data['billing']['last_name'] ); ?><br><?php echo esc_html( $order_data['billing']['address_1'] ); ?><br><?php echo esc_html( $order_data['billing']['address_2'] ); ?><br><?php echo esc_html( $order_data['billing']['city'] ); ?><?php echo esc_html( $order_data['billing']['state'] ); ?><br><?php echo esc_html( $order_data['billing']['postcode'] ); ?><br><?php echo esc_html( $order_data['billing']['country'] ); ?>
 			<p class="woocommerce-customer-details--phone"><?php echo esc_html( $order_data['billing']['phone'] ); ?></p>	

@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/admin/partials/templates
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/admin/partials/templates
  */
 
 // Exit if accessed directly.
@@ -45,7 +45,7 @@ if ( isset( $_POST['mwb_booking_global_cost_rules_save'] ) ) {
 
 		update_option( 'mwb_global_cost_rules', $cost_rule_arr );
 	} else {
-		echo esc_html__( 'Add a new Cost rule', 'mwb-wc-bk' );
+		echo esc_html__( 'Add a new Cost rule', 'mwb-bookings-for-woocommerce' );
 	}
 }
 $cost_rules = get_option( 'mwb_global_cost_rules', array() );
@@ -78,14 +78,14 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 					<tbody>
 						<div class="mwb_global_cost_rule_heading">
 							<h2>
-							<label data-id="<?php echo esc_html( $count + 1 ); ?>"><?php echo ! empty( $mwb_cost_rule_name[ $count ] ) ? esc_html( $mwb_cost_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-wc-bk' ) . esc_html( $count + 1 ); ?></label>
+							<label data-id="<?php echo esc_html( $count + 1 ); ?>"><?php echo ! empty( $mwb_cost_rule_name[ $count ] ) ? esc_html( $mwb_cost_rule_name[ $count ] ) : esc_html__( 'Rule No- ', 'mwb-bookings-for-woocommerce' ) . esc_html( $count + 1 ); ?></label>
 							<input type="hidden" name="mwb_cost_rule_count" value="<?php echo esc_html( $count + 1 ); ?>" >
 							<input type="checkbox" class="mwb_global_cost_rule_heading_switch" name="mwb_global_cost_rule_heading_switch[<?php echo esc_html( $count ); ?>]" <?php checked( 'on', $mwb_cost_rule_switch[ $count ] ); ?>>
 							</h2>
 						</div>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Rule Name', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Rule Name', 'mwb-bookings-for-woocommerce' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<input type="text" class="mwb_global_cost_rule_name" name="mwb_global_cost_rule_name[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_name[ $count ] ); ?>">
@@ -93,10 +93,10 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Conditions', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Conditions', 'mwb-bookings-for-woocommerce' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
-								<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $count ); ?>]" class="mwb_booking_global_cost_condition" style="width: auto; margin-right: 7px;">
+								<select name="mwb_global_cost_rule_condition[<?php echo esc_html( $count ); ?>]" class="mwb_booking_global_cost_condition" >
 								<?php
 								foreach ( $this->global_cost_conditions() as $k => $v ) {
 									if ( ! is_array( $v ) ) {
@@ -122,21 +122,21 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 							</td>
 							<td class="forminp forminp-text date">
 								<p>
-									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<input type="date" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>">
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<input type="date" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" >
 								</p>
 							</td>
 							<td class="forminp forminp-text days">
 								<p>
-									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
 									<?php foreach ( $this->global_func->booking_search_weekdays() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
 									<?php foreach ( $this->global_func->booking_search_weekdays() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
@@ -146,13 +146,13 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 							</td>
 							<td class="forminp forminp-text months">
 								<p>
-									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
 									<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
 									<?php foreach ( $this->global_func->booking_months() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
@@ -162,13 +162,13 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 							</td>
 							<td class="forminp forminp-text weeks">
 								<p>
-									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<select class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]">
 									<?php foreach ( $this->global_func->booking_search_weeks() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_from[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
 									<?php } ?>
 									</select>
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<select class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]">
 									<?php foreach ( $this->global_func->booking_search_weeks() as $k => $v ) { ?>
 										<option value="<?php echo esc_html( $k ); ?>" <?php selected( $k, $mwb_cost_rule_range_to[ $count ] ); ?>><?php echo esc_html( $v ); ?></option>
@@ -178,24 +178,24 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 							</td>
 							<td class="forminp forminp-text time">
 								<p>
-									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<input type="time" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>">
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<input type="time" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" >
 								</p>
 							</td>
 							<td class="forminp forminp-text unit">
 								<p>
-									<label><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<input type="number" class="mwb_global_cost_rule_range_from" name="mwb_global_cost_rule_range_from[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_from[ $count ] ); ?>" step="1" min="1">
-									<label><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></label>
+									<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 									<input type="number" class="mwb_global_cost_rule_range_to" name="mwb_global_cost_rule_range_to[<?php echo esc_html( $count ); ?>]" value="<?php echo esc_html( $mwb_cost_rule_range_to[ $count ] ); ?>" step="1" min="1">
 								</p>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Base Cost', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Base Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<p>
@@ -214,7 +214,7 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 						</tr>
 						<tr valign="top">
 							<th scope="row" class="">
-								<label><?php esc_html_e( 'Unit Cost', 'mwb-wc-bk' ); ?></label>
+								<label><?php esc_html_e( 'Unit Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
 							</th>
 							<td class="forminp forminp-text">
 								<p>
@@ -233,7 +233,7 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 						</tr>
 					</tbody>
 				</table>
-					<button type="button" id="mwb_delete_cost_rule" class="button" rule_count="<?php echo esc_html( $count + 1 ); ?>" ><?php esc_html_e( 'Delete Rule', 'mwb-wc-bk' ); ?></button>
+					<button type="button" id="mwb_delete_cost_rule" class="button" rule_count="<?php echo esc_html( $count + 1 ); ?>" ><?php esc_html_e( 'Delete Rule', 'mwb-bookings-for-woocommerce' ); ?></button>
 			</div>
 				<?php
 			}
@@ -241,12 +241,12 @@ $cost_rules = get_option( 'mwb_global_cost_rules', array() );
 		?>
 		</div>
 		<div id="mwb_global_cost_button">
-			<button type="button" id="mwb_add_cost_rule" class="button" rule_count="<?php echo esc_html( $cost_rule_count ); ?>"><?php esc_html_e( 'Add New Cost Rule', 'mwb-wc-bk' ); ?></button>
+			<button type="button" id="mwb_add_cost_rule" class="button" rule_count="<?php echo esc_html( $cost_rule_count ); ?>"><?php esc_html_e( 'Add New Cost Rule', 'mwb-bookings-for-woocommerce' ); ?></button>
 		</div>
 	</div>
 	<!-- Save Settings -->
 	<p class="submit">
-		<input type="submit" value="<?php esc_html_e( 'Save Changes', 'mwb-wc-bk' ); ?>" class="button-primary woocommerce-save-button" name="mwb_booking_global_cost_rules_save" id="mwb_booking_global_cost_rules_save" >
+		<input type="submit" value="<?php esc_html_e( 'Save Changes', 'mwb-bookings-for-woocommerce' ); ?>" class="button-primary woocommerce-save-button" name="mwb_booking_global_cost_rules_save" id="mwb_booking_global_cost_rules_save" >
 	</p>
 </form>
 

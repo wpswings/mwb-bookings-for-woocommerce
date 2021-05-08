@@ -2,7 +2,8 @@
 /**
  * Listing of user's all booking on My Account Page under "All Bookings".
  *
- * @package    Mwb_Wc_Bk
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/public/partials
  */
 
 if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
@@ -67,14 +68,14 @@ if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
 
 	?>
 
-	<p><?php esc_html_e( 'Booking #' ); ?><mark class="booking-number"><?php echo esc_html( $booking_id ); ?> </mark><?php esc_html_e( 'was placed on' ); ?> <mark class="booking-date"><?php echo esc_html( gmdate( 'd-m-Y', strtotime( $post_created ) ) ); ?> </mark><?php esc_html_e( 'and is currently', 'mwb-wc-bk' ); ?> <mark class="booking-status"><?php echo esc_html( $booking_status ); ?></mark></p>
+	<p><?php esc_html_e( 'Booking #' ); ?><mark class="booking-number"><?php echo esc_html( $booking_id ); ?> </mark><?php esc_html_e( 'was placed on' ); ?> <mark class="booking-date"><?php echo esc_html( gmdate( 'd-m-Y', strtotime( $post_created ) ) ); ?> </mark><?php esc_html_e( 'and is currently', 'mwb-bookings-for-woocommerce' ); ?> <mark class="booking-status"><?php echo esc_html( $booking_status ); ?></mark></p>
 		<section class="woocommerce-order-details">
-			<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Booking details', 'mwb-wc-bk' ); ?></h2>
+			<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Booking details', 'mwb-bookings-for-woocommerce' ); ?></h2>
 			<table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
 				<thead>
 					<tr>
-						<th class="woocommerce-table__product-name product-name"><?php esc_html_e( 'Product', 'mwb-wc-bk' ); ?></th>
-						<th class="woocommerce-table__product-table product-total"><?php esc_html_e( 'Details', 'mwb-wc-bk' ); ?></th>
+						<th class="woocommerce-table__product-name product-name"><?php esc_html_e( 'Product', 'mwb-bookings-for-woocommerce' ); ?></th>
+						<th class="woocommerce-table__product-table product-total"><?php esc_html_e( 'Details', 'mwb-bookings-for-woocommerce' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -84,30 +85,30 @@ if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
 						</td>
 						<td class="woocommerce-table__product-total product-total">
 							<ul class="wc-item-meta">
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'From:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $from ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'To:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $to ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'People Total:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $people_total ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'People Types:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $people_str ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'Included Services:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $inc_services_str ); ?></p></li>
-								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'Additional Services:  ', 'mwb-wc-bk' ); ?></strong><p><?php echo esc_html( $add_services_str ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'From:  ', 'mwb-bookings-for-woocommerce' ); ?></strong><p><?php echo esc_html( $from ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'To:  ', 'mwb-bookings-for-woocommerce' ); ?></strong><p><?php echo esc_html( $to ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'People Total:  ', 'mwb-bookings-for-woocommerce' ); ?></strong><p><?php echo esc_html( $people_total ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'People Types:  ', 'mwb-bookings-for-woocommerce' ); ?></strong><p><?php echo esc_html( $people_str ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'Included Services:  ', 'mwb-bookings-for-woocommerce' ); ?></strong><p><?php echo esc_html( $inc_services_str ); ?></p></li>
+								<li><strong class="wc-item-meta-label"><?php esc_html_e( 'Additional Services:  ', 'mwb-bookings-for-woocommerce' ); ?></strong><p><?php echo esc_html( $add_services_str ); ?></p></li>
 							</ul>
 						</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
-						<th scope="row"><?php esc_html_e( 'Payment method:', 'mwb-wc-bk' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Payment method:', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td><?php echo esc_html( $order_data['payment_method'] ); ?></td>
 					</tr>
 					<tr>
-						<th scope="row"><?php esc_html_e( 'Total:', 'mwb-wc-bk' ); ?></th>
+						<th scope="row"><?php esc_html_e( 'Total:', 'mwb-bookings-for-woocommerce' ); ?></th>
 						<td><?php echo wc_price( $total ); // @codingStandardsIgnoreLine.?></td>
 					</tr>
 				</tfoot>
 			</table>
 		</section>
 		<section class="woocommerce-customer-details">
-			<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'mwb-wc-bk' ); ?></h2>
+			<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'mwb-bookings-for-woocommerce' ); ?></h2>
 			<address>
 				<?php echo esc_html( $order_data['billing']['first_name'] ); ?><br><?php echo esc_html( $order_data['billing']['last_name'] ); ?><br><?php echo esc_html( $order_data['billing']['address_1'] ); ?><br><?php echo esc_html( $order_data['billing']['address_2'] ); ?><br><?php echo esc_html( $order_data['billing']['city'] ); ?><?php echo esc_html( $order_data['billing']['state'] ); ?><br><?php echo esc_html( $order_data['billing']['postcode'] ); ?><br><?php echo esc_html( $order_data['billing']['country'] ); ?>
 					<p class="woocommerce-customer-details--phone"><?php echo esc_html( $order_data['billing']['phone'] ); ?></p>	
@@ -130,12 +131,12 @@ if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
 	<table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
 		<thead>
 			<tr>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-number"><span class="nobr"><?php esc_html_e( 'Booking', 'mwb-wc-bk' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-from"><span class="nobr"><?php esc_html_e( 'From', 'mwb-wc-bk' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-to"><span class="nobr"><?php esc_html_e( 'To', 'mwb-wc-bk' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status"><span class="nobr"><?php esc_html_e( 'Status', 'mwb-wc-bk' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-total"><span class="nobr"><?php esc_html_e( 'Total', 'mwb-wc-bk' ); ?></span></th>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions"><span class="nobr"><?php esc_html_e( 'Actions', 'mwb-wc-bk' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-number"><span class="nobr"><?php esc_html_e( 'Booking', 'mwb-bookings-for-woocommerce' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-from"><span class="nobr"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-to"><span class="nobr"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status"><span class="nobr"><?php esc_html_e( 'Status', 'mwb-bookings-for-woocommerce' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-total"><span class="nobr"><?php esc_html_e( 'Total', 'mwb-bookings-for-woocommerce' ); ?></span></th>
+				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions"><span class="nobr"><?php esc_html_e( 'Actions', 'mwb-bookings-for-woocommerce' ); ?></span></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -175,7 +176,7 @@ if ( isset( $_GET['booking_id'] ) ) { // @codingStandardsIgnoreLine.
 					<?php echo wp_kses_post( get_woocommerce_currency_symbol() . ' ' . $total ); ?>
 				</td>
 				<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-booking-actions" data-title="Actions">
-					<a href="?booking_id=<?php echo esc_html( $booking_id ); ?>" class="woocommerce-button button view"><?php esc_html_e( 'View Order', 'mwb-wc-bk' ); ?></a>
+					<a href="?booking_id=<?php echo esc_html( $booking_id ); ?>" class="woocommerce-button button view"><?php esc_html_e( 'View Order', 'mwb-bookings-for-woocommerce' ); ?></a>
 				</td>
 			</tr>
 				<?php

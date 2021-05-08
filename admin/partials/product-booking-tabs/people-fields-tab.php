@@ -2,7 +2,8 @@
 /**
  * MWB Booking Product People Fields Tab
  *
- * @package Mwb_Wc_Bk
+ * @package MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/admin/partials
  */
 
 ?>
@@ -12,21 +13,21 @@
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => 'mwb_people_enable_checkbox',
-					'label'       => __( 'Enable/Disable People option', 'mwb-wc-bk' ),
+					'label'       => __( 'Enable/Disable People option', 'mwb-bookings-for-woocommerce' ),
 					'value'       => $this->setting_fields['mwb_people_enable_checkbox'],
-					'description' => __( 'Enable if extra peoples are to be included per booking.', 'mwb-wc-bk' ),
+					'description' => __( 'Enable if extra peoples are to be included per booking.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
 			woocommerce_wp_text_input(
 				array(
 					'id'                => 'mwb_min_people_per_booking',
-					'label'             => __( 'Min People per booking', 'mwb-wc-bk' ),
-					'description'       => __( 'Minimum number of peoples allowed per bookings.', 'mwb-wc-bk' ),
+					'label'             => __( 'Min People per booking', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Minimum number of peoples allowed per bookings.', 'mwb-bookings-for-woocommerce' ),
 					'value'             => $this->setting_fields['mwb_min_people_per_booking'],
 					'desc_tip'          => true,
 					'type'              => 'number',
-					'style'             => 'width: 30%; margin-right: 7px;',
+					'style'             => 'width: 30%; margin-right: 7px;',         // Style parameter of the function.
 					'custom_attributes' => array(
 						'step' => '1',
 						'min'  => '1',
@@ -36,12 +37,12 @@
 			woocommerce_wp_text_input(
 				array(
 					'id'                => 'mwb_max_people_per_booking',
-					'label'             => __( 'Max People per booking', 'mwb-wc-bk' ),
-					'description'       => __( 'Maximum number of peoples allowed per bookings.', 'mwb-wc-bk' ),
+					'label'             => __( 'Max People per booking', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Maximum number of peoples allowed per bookings.', 'mwb-bookings-for-woocommerce' ),
 					'value'             => $this->setting_fields['mwb_max_people_per_booking'],
 					'desc_tip'          => true,
 					'type'              => 'number',
-					'style'             => 'width: 30%; margin-right: 7px;',
+					'style'             => 'width: 30%; margin-right: 7px;',         // Style parameter of the function.
 					'custom_attributes' => array(
 						'step' => '1',
 						'min'  => '1',
@@ -54,9 +55,9 @@
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => 'mwb_people_as_separate_booking',
-					'label'       => __( 'Allow Peoples as separate booking', 'mwb-wc-bk' ),
+					'label'       => __( 'Allow Peoples as separate booking', 'mwb-bookings-for-woocommerce' ),
 					'value'       => $this->setting_fields['mwb_people_as_separate_booking'],
-					'description' => __( 'Check if peoples are to be counted as seperate bookings.', 'mwb-wc-bk' ),
+					'description' => __( 'Check if peoples are to be counted as seperate bookings.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -66,9 +67,9 @@
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => 'mwb_enable_people_types',
-					'label'       => __( 'Enable people types', 'mwb-wc-bk' ),
+					'label'       => __( 'Enable people types', 'mwb-bookings-for-woocommerce' ),
 					'value'       => $this->setting_fields['mwb_enable_people_types'],
-					'description' => __( 'If people types are to be created.', 'mwb-wc-bk' ),
+					'description' => __( 'If people types are to be created.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -76,8 +77,8 @@
 	</div>
 	<div id="mwb_add_people_type_select">
 		<p class="form-field">
-			<label for="mwb_booking_people_select_search"><?php esc_html_e( 'Add People Type', 'mwb-wc-bk' ); ?></label>
-			<select id="mwb_booking_people_select_search" multiple ='multiple' name="mwb_booking_people_select[]" data-placeholder="<?php esc_html_e( 'Select people type', 'mwb-wc-bk' ); ?>" style="width: 40%">
+			<label for="mwb_booking_people_select_search"><?php esc_html_e( 'Add People Type', 'mwb-bookings-for-woocommerce' ); ?></label>
+			<select id="mwb_booking_people_select_search" multiple ='multiple' name="mwb_booking_people_select[]" data-placeholder="<?php esc_html_e( 'Select people type', 'mwb-bookings-for-woocommerce' ); ?>" style="width: 40%">         <!-- Mandatory Inline CSS. -->
 				<?php
 				if ( ! empty( $this->setting_fields['mwb_booking_people_select'] ) ) {
 					$selected_people_type = is_array( $this->setting_fields['mwb_booking_people_select'] ) ? array_map( 'absint', $this->setting_fields['mwb_booking_people_select'] ) : null;
@@ -90,16 +91,16 @@
 				}
 				?>
 			</select>
-			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Add people type you want to include in booking', 'mwb-wc-bk' ) ); ?>
+			<?php $this->global_func->mwb_booking_help_tip( esc_html__( 'Add people type you want to include in booking', 'mwb-bookings-for-woocommerce' ) ); ?>
 		</p>
 	</div>
 
 	<div id="mwb_enabled_people_type" class="options_group">
 		<div id="mwb_people_type_heading">
-			<h3><?php esc_html_e( 'People Types', 'mwb-wc-bk' ); ?></h3>
+			<h3><?php esc_html_e( 'People Types', 'mwb-bookings-for-woocommerce' ); ?></h3>
 		</div>
-		<div id="mwb_people_type_add" style="margin-bottom: 7px;">
-			<button class="btn"><a href="edit-tags.php?taxonomy=mwb_ct_people_type&post_type=mwb_cpt_booking" target="blank"><?php esc_html_e( 'Add New Type', 'mwb-wc-bk' ); ?></a></button>
+		<div id="mwb_people_type_add" >
+			<button class="btn"><a href="edit-tags.php?taxonomy=mwb_ct_people_type&post_type=mwb_cpt_booking" target="blank"><?php esc_html_e( 'Add New Type', 'mwb-bookings-for-woocommerce' ); ?></a></button>
 		</div>
 	</div>
 </div>

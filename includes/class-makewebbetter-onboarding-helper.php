@@ -14,7 +14,7 @@
  *
  * @package     MWB_Bookings_For_WooCommerce
  * @subpackage  MWB_Bookings_For_WooCommerce/includes
- * @author      makewebbetter <plugins@makewebbetter.com>
+ * @author      makewebbetter <webmaster@makewebbetter.com>
  */
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	return;

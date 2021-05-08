@@ -21,7 +21,7 @@
  * @since      1.0.0
  * @package    MWB_Bookings_For_WooCommerce
  * @subpackage MWB_Bookings_For_WooCommerce/includes
- * @author     MakeWebBetter <plugins@makewebbetter.com>
+ * @author     MakeWebBetter <webmaster@makewebbetter.com>
  */
 class Mwb_Wc_Bk_i18n {     // @codingStandardsIgnoreLine
 

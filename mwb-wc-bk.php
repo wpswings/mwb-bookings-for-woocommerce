@@ -12,7 +12,7 @@
  * Description:          MWB Bookings for WooCommerce helps you stay focused while offering a better online booking service for your business growth. Just stop speculating and opt for the best one out.
  * Version:              1.0.0
  * Author:               MakeWebBetter
- * Author URI:           https://makewebbetter.com/
+ * Author URI:           https://makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-site
  * Requires at least:    4.0
  * Tested up to:         5.7.1
  * WC requires at least: 3.0.0

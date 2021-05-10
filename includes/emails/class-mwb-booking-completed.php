@@ -24,14 +24,14 @@ class MWB_Booking_Completed extends WC_Email {
 	/**
 	 * MWB Booking meta
 	 *
-	 * @var [type]
+	 * @var int
 	 */
 	public $booking_id;
 
 	/**
 	 * MWB Booking meta
 	 *
-	 * @var [type]
+	 * @var array
 	 */
 	public $booking_meta;
 

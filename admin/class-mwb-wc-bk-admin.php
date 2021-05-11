@@ -289,7 +289,7 @@ class Mwb_Wc_Bk_Admin {
 					$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default']; // @codingStandardsIgnoreLine
 
 				} else {
-					$posted_data = ! empty( $_POST[ $key ] ) ? $_POST[ $key ] : $value['default'];                       // @codingStandardsIgnoreLine
+					$posted_data = ! empty( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : $value['default'];                       // @codingStandardsIgnoreLine
 				}
 			} else {
 				$posted_data = $value['default'];
@@ -1056,7 +1056,7 @@ class Mwb_Wc_Bk_Admin {
 		$order_id  = isset( $post_meta['order_id'] ) ? $post_meta['order_id'] : '';
 
 		$from = get_post_meta( $post_id, 'mwb_booking_status', true );
-		$to   = ! empty( $_POST['mwb_booking_status_select'] ) ? $_POST['mwb_booking_status_select'] : 'pending'; // @codingStandardsIgnoreLine
+		$to   = ! empty( $_POST['mwb_booking_status_select'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_status_select'] ) ) : 'pending'; // @codingStandardsIgnoreLine
 
 		update_post_meta( $post_id, 'mwb_booking_status', $to );
 

@@ -452,7 +452,8 @@ class Mwb_Wc_Bk_Public {
 	/**
 	 * Function to get the Product's added fields Data.
 	 *
-	 * @param array $posted_data parameter.
+	 * @param array $posted_data Posted Data.
+	 * @param int   $product_id ID of the product.
 	 * @return array
 	 */
 	public function mwb_wc_bk_get_product_data( $posted_data, $product_id ) {

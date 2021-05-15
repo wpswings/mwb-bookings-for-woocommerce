@@ -1250,7 +1250,7 @@ class Mwb_Wc_Bk_Admin {
 		$args   = array(
 			'hierarchical'      => false,
 			'labels'            => $labels,
-			'description'       => 'Additional Costs which are to be included in booking',
+			'description'       => __( 'Additional Costs which are to be included in booking', 'mwb-bookings-for-woocommerce' ),
 			'show_ui'           => true,
 			'show_admin_column' => false,
 			'query_var'         => true,

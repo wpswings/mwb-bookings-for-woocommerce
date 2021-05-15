@@ -1,114 +1,152 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://makewebbetter.com/
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+=== MWB Bookings for WooCommerce ===
+Contributors: MakeWebBetter
+Donate link:  https://makewebbetter.com/
+Tags: booking, booking system, booking calendar, reservation, appointment, calendar
+Requires at least: 4.0
+Tested up to: 5.7
+WC requires at least: 3.0.0
+WC tested up to: 5.2.2
+Stable tag: 1.0.0
+Requires PHP: 7.2
+License: GPLv3 or later 
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+
+MWB Booking helps you turn your products into reservations based on your own set of rules, alike service-as-a-product.
+
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+**BOOKINGS PLUGIN ENHANCE CUSTOMER SERVICE BY OFFERING PRODUCTS AS BOOKABLE RESOURCES**
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+MWB Bookings for WooCommerce is a robust plugin that allows store owners to transform their time, products, and product-related services into bookable resources.
+This plugin helps you to empower your bookings for WooCommerce as store-based products with bookable solutions, which would be beneficial to almost businesses of all types.     
 
-A few notes about the sections above:
+**WITH THE MWB BOOKINGS FOR WOOCOMMERCE PLUGIN ON YOUR STORE YOU CAN:**
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+* Customers can make conceivable WooCommerce bookings following the flexibility criteria offered by the merchant
+* All booking redundancies can easily be managed using the planner calendar i.e. Bookings Calendar.
+* Merchants can define their additional and included services that customers can choose from at the time of bookings, conveniently.
+* Offers mobile-friendly booking interface i.e. responsive interface on different devices.
+* Customers can structure their bookings criteria based on their budget, occasion, and requirements.
+* Make WooCommerce booking services more affordable like any other product.
+* No phone call required for bookings i.e. can effortlessly book using comfort your device.
+* Store owners can enforce regulations prior to bookings for WooCommerce, such as global booking availability rules that apply to all bookable products, people types allowed, not allowed days for booking, min-max booking time duration, and more.
+* On WooCommerce stores, merchants can easily add additional costs for customers while performing the booking process.
+* Custom settings, including services, service totals, service details, and additional costs can all be comfortably hidden from consumers on the front end.
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+== WHAT’S INCLUDED IN OUR FREE MWB BOOKINGS FOR WOOCOMMERCE PLUGIN:  ==
+**1)** **Enable Bookings**
+You can easily enable/disable booking WooCommerce products for your customers, using the smart checkbox setting at the backend.
+
+**2)** **Customizable booking for customers**
+Admin managers can easily sell and manage bookings parameters from the backend. Including, setting their booking time slots (booking units), opting for adjustable time durations, and so on, and also enabling their customers to choose from the front end.
+
+**3)** **Ease of listing included and addon services**  
+Admin managers can easily allocate included and add-on services, along with bookable product-based services.  For example, included parking service in hotel booking, extra bed as an addon service in accommodation service, and so on.
+
+**4)** **Avoid unwanted bookings**
+You can easily set up the minimum and maximum duration for your booking. As a result, easily avoid unwanted bookings for your products and define unavailability with all ease.
+
+**5)** **Easily send booking notifications**
+Customers can receive booking notifications via email from the admin manager. The purpose of a notification email is to notify your customers about pending payments or to remind them about modifications to their booking status.
+
+**6)** **Ease of structuring bookings calendar**
+The WooCommerce product calendar view allows merchants to build and analyze how their day or month is progressing. They can also make changes to current bookings or availability according to that. 
+
+**7)** **Booking Payments**
+Admin managers can easily collect booking payments from customers at the time of bookings if they wish.
+
+**8)** **Fully customized duration settings**
+You can easily offer a customizable duration setting i.e. fix or flexible for your bookable products. Duration variations can be full-day bookings, hourly bookings, week-based bookings i.e. for 7 days, day-wise bookings, etc.
+
+**9)** **Bookings for multiple slots/durations**
+Customers would be able to make reservations for several slots in a day/hour/minute or can avail of a single booking for multiple days if the admin creates bookable items likewise.
+**For instance,** as people book rentals for hotels, camping events, resorts, etc.
+
+[**Free demo of MWB Bookings for WooCommerce**](https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org).
+
+Visit [**MWB Bookings for WooCommerce Documentation**](https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) and learn more about the features and working of the plugin. Check out [**Bookings Plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
+== WHAT PREMIUM VERSION OF BOOKINGS FOR WOOCOMMERCE OFFERS [COMING SOON]: ==
+* You can effectively strategize booking-related global cost rules.
+* Full-day bookings can also be accommodated well.
+* Enable your customers to cancel their bookings using the min-max day settings.
+* Offer discounts based on days, weeks, and custom bookings with ease.
+* Can set bookings on buffer regulations with ease.
+* Allow bookings for “people as separate”.
+* Effortlessly plan local cost and local availability rules for a bookable product.
+
+== SUPPORT ==
+If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+= Automatic installation =
 
-e.g.
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of the gift voucher, login to your WordPress dashboard, navigate to the Plugins menu and click Add New.
 
-1. Upload `mwb-wc-bk.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+In the search field type **"MWB Bookings for WooCommerce"** and click Search Plugins. Once you've found our MWB Bookings for WooCommerce plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
 
-== Frequently Asked Questions ==
+= Manual installation =
 
-= A question that someone might have =
+The manual installation method involves downloading our MWB Bookings for WooCommerce and uploading it to your webserver via your favorite FTP application. The WordPress contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
 
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Additional costs
+2. Calendar view 
+3. Add new services 
+4. General Settings 
+5. Global Availability rules 
+6. Add custom new rule 
+7. People types
+8. Placed Bookings Listing Panel Backend
+9. Customer selected unit 
+10. Fixed unit 
+11. Normal cost and extra cost
+12. Availability preferences 
+13. Max/Min per booking
+14. Booking services
+15. Booking Product Frontend View 
+
+== Frequently Asked Questions ==
+
+= Is it feasible for the admin to change the booking's status? =
+Yes, the admin can change the booking status easily for this, you need to navigate in plugin Settings > General option > Change Status to confirm after days.
+
+= Can the admin reject unpaid booking? =
+Yes, the admin can reject unpaid bookings easily. This just requires to Enable the settings from the backend and navigate to Plugin Settings > General Option > Reject Unpaid Booking after the selected specified days.
+
+= From where admin can check all the bookings? =
+The admin can easily review all of the bookings that have been made by heading to the Booking Tab, where we have included all of the booking sections for the admin to check.
+
+= Is it possible for the admin to set the booking and non-booking based on days? =
+Yes, the admin can set the booking and non-booking days as required. We have a setting called Global Availability Rules for this.
+
+= Is there a feature in your plugin that automatically confirms bookings? =
+Yes, we have a setting for this. Please get over to Plugin Settings > General Options > Change Status. After specified days, change the status to confirm, if you’ve already paid the booking charges. (You can set the days to confirm the booking automatically from here.)
+
+= Is there any functionality through which the admin can add the services? =
+To do so, just go to Admin Dashboard > Booking Tab > Services and assign that according to your preferences.
+
+= Is it possible to add the hidden services with a booking order? = 
+Yes, using our plugin, you can add hidden services. Just go to the Admin Dashboard > Booking Tab > Services >Add Services (enable if hidden).
+
+= What is the appropriate way to add the booking product? = 
+To the Admin Dashboard > Products > New Product > Select Data Type > Select MWB Booking and make the settings accordingly.
+
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
+= 1.0.0 - Released on 13 May 2021 =
+* First version
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
 
 == Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+= 1.0.0 - Released on 13 May 2021 =
+* First version

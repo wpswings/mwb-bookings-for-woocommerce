@@ -65,10 +65,10 @@ function mwb_wc_bk_plugin_error_notice() {
 	<div class="error notice is-dismissible">
 		<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to install Plugin.', 'mwb-bookings-for-woocommerce' ); ?></p>
 	</div>
-	<style>
-		#message{display:none;}
-	</style>
 	<?php
+
+	// To hide Plugin activated notice.
+	unset( $_GET['activate'] );       // @codingStandardsIgnoreLine
 }
 /**
  * Check WC activated both on multisite and single site
@@ -173,7 +173,7 @@ function mwb_booking_plugin_row_links( $links_array, $plugin_file_name ) {
 
 	if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
 		// you can still use array_unshift() to add links at the beginning.
-		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Demo.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="#">Demo</a>';                                                                                                                                                                                                            // Mandatory Inline CSS.
+		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Demo.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-demo' ) . '">Demo</a>';                                      // Mandatory Inline CSS.
 		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Documentation.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc' ) . '">Documetation</a>';                      // Mandatory Inline CSS.
 		$links_array[] = '<img src="' . esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/Support.svg' ) . '" style="width: 20px; padding-right: 5px;" ><a href="' . esc_url( 'https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support ' ) . '">Support</a>';                                                 // Mandatory Inline CSS.
 	}

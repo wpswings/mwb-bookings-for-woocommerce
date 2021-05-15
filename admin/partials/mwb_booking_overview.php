@@ -41,7 +41,7 @@
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/define.png' ); ?>" alt="Efficiently Assign image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/define.png' ); ?>" alt="Assign Booking Units">
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Efficiently Assign Booking Units', 'mwb-bookings-for-woocommerce' ); ?></h3>
@@ -52,7 +52,7 @@
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/assign.png' ); ?>" alt="People type image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/assign.png' ); ?>" alt="Define People types">
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Easily Define People Types ', 'mwb-bookings-for-woocommerce' ); ?></h3>
@@ -63,7 +63,7 @@
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/customization.png' ); ?>" alt="Service Customization image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/customization.png' ); ?>" alt="Service Customization">
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Service Customization Available ', 'mwb-bookings-for-woocommerce' ); ?></h3>
@@ -74,7 +74,7 @@
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/global.png' ); ?>" alt="Global Availability image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/global.png' ); ?>" alt="Global Availability Rules">
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Effectively lay down Global Availability rules for Bookings ', 'mwb-bookings-for-woocommerce' ); ?></h3>
@@ -85,7 +85,7 @@
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/additional.png' ); ?>" alt="Additional costs image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/additional.png' ); ?>" alt="Additional costs">
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Smoothly underline additional costs depending on demand surge', 'mwb-bookings-for-woocommerce' ); ?></h3>
@@ -96,7 +96,7 @@
 			<div class="booking-overview__keywords-item">
 				<div class="booking-overview__keywords-card">
 					<div class="booking-overview__keywords-image">
-						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/max-booking.png' ); ?>" alt="Booking Limit image">
+						<img src="<?php echo esc_url( MWB_WC_BK_BASEURL . 'admin/resources/images/max-booking.png' ); ?>" alt="Booking Limit per unit">
 					</div>
 					<div class="booking-overview__keywords-text">
 						<h3 class="booking-overview__keywords-heading"><?php esc_html_e( 'Set-forth max booking limits with ease', 'mwb-bookings-for-woocommerce' ); ?></h3>	

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MWB Bookings For WooCommerce 1.0.0\n"
-"POT-Creation-Date: 2021-05-15 12:22+0530\n"
-"PO-Revision-Date: 2021-05-15 12:23+0530\n"
+"POT-Creation-Date: 2021-05-17 17:38+0530\n"
+"PO-Revision-Date: 2021-05-17 17:38+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
 "Language: en_US\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "View Bookings"
 msgstr ""
 
-#: admin/class-mwb-wc-bk-admin.php:776 public/class-mwb-wc-bk-public.php:1303
+#: admin/class-mwb-wc-bk-admin.php:776 public/class-mwb-wc-bk-public.php:1301
 msgid "All Bookings"
 msgstr ""
 
@@ -497,7 +497,7 @@ msgstr ""
 #: admin/partials/ct-edit-fields/ct-people-type-edit-fields.php:33
 #: admin/partials/product-booking-tabs/cost-fields-tab.php:24
 #: admin/partials/templates/mwb-booking-global-cost.php:198
-#: public/class-mwb-wc-bk-public.php:1254
+#: public/class-mwb-wc-bk-public.php:1252
 msgid "Base Cost"
 msgstr ""
 
@@ -691,7 +691,7 @@ msgstr ""
 
 #: admin/partials/ct-add-fields/ct-services-add-fields.php:21
 #: admin/partials/ct-edit-fields/ct-services-edit-fields.php:30
-#: public/class-mwb-wc-bk-public.php:1263
+#: public/class-mwb-wc-bk-public.php:1261
 msgid "Service Cost"
 msgstr ""
 
@@ -1901,15 +1901,15 @@ msgid ""
 "A new booking <a href=\"%1$1s\">#%2$2s</a> has been created from this order"
 msgstr ""
 
-#: public/class-mwb-wc-bk-public.php:1248
+#: public/class-mwb-wc-bk-public.php:1246
 msgid "Totals"
 msgstr ""
 
-#: public/class-mwb-wc-bk-public.php:1274
+#: public/class-mwb-wc-bk-public.php:1272
 msgid "-cost"
 msgstr ""
 
-#: public/class-mwb-wc-bk-public.php:1285
+#: public/class-mwb-wc-bk-public.php:1283
 msgid "Total Cost"
 msgstr ""
 

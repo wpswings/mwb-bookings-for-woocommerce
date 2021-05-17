@@ -286,7 +286,7 @@ class Mwb_Wc_Bk_Admin {
 
 			if ( ! empty( $_POST[ $key ] ) ) {                                                                         // @codingStandardsIgnoreLine
 				if ( is_array( $_POST[ $key ] ) ) {                                                                      // @codingStandardsIgnoreLine
-					$posted_data = ! empty( $_POST[ $key ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) : $value['default']; // @codingStandardsIgnoreLine
+					$posted_data = ! empty( $_POST[ $key ] ) ? map_deep( wp_unslash( $_POST[ $key ] ), 'sanitize_text_field' ) : $value['default']; // @codingStandardsIgnoreLine
 
 				} else {
 					$posted_data = ! empty( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : $value['default'];                       // @codingStandardsIgnoreLine
@@ -1523,14 +1523,14 @@ class Mwb_Wc_Bk_Admin {
 	public function save_custom_fields_ct_booking_services( $term_id, $tt_id ) {
 
 		// phpcs:disable
-		update_term_meta( $term_id, 'mwb_ct_booking_service_cost', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_ct_booking_service_cost'] ) ? $_POST['mwb_ct_booking_service_cost'] : 0 ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_services_multiply_units', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_multiply_units'] ) ? $_POST['mwb_booking_ct_services_multiply_units'] : 'no' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_services_multiply_people', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_multiply_people'] ) ? $_POST['mwb_booking_ct_services_multiply_people'] : 'no' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_services_has_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_has_quantity'] ) ? $_POST['mwb_booking_ct_services_has_quantity'] : 'no' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_services_hidden', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_hidden'] ) ? $_POST['mwb_booking_ct_services_hidden'] : 'no' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_services_optional', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_optional'] ) ? $_POST['mwb_booking_ct_services_optional'] : 'no' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_services_min_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_min_quantity'] ) ? $_POST['mwb_booking_ct_services_min_quantity'] : '' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_services_max_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_services_max_quantity'] ) ? $_POST['mwb_booking_ct_services_max_quantity'] : '' ) ) ) );
+		update_term_meta( $term_id, 'mwb_ct_booking_service_cost', isset( $_POST['mwb_ct_booking_service_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_ct_booking_service_cost'] ) ) : 0 );
+		update_term_meta( $term_id, 'mwb_booking_ct_services_multiply_units', isset( $_POST['mwb_booking_ct_services_multiply_units'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_services_multiply_units'] ) ) : 'no' );
+		update_term_meta( $term_id, 'mwb_booking_ct_services_multiply_people', isset( $_POST['mwb_booking_ct_services_multiply_people'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_services_multiply_people'] ) ) : 'no' );
+		update_term_meta( $term_id, 'mwb_booking_ct_services_has_quantity', isset( $_POST['mwb_booking_ct_services_has_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_services_has_quantity'] ) ) : 'no' );
+		update_term_meta( $term_id, 'mwb_booking_ct_services_hidden', isset( $_POST['mwb_booking_ct_services_hidden'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_services_hidden'] ) ) : 'no' );
+		update_term_meta( $term_id, 'mwb_booking_ct_services_optional', isset( $_POST['mwb_booking_ct_services_optional'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_services_optional'] ) ): 'no' );
+		update_term_meta( $term_id, 'mwb_booking_ct_services_min_quantity', isset( $_POST['mwb_booking_ct_services_min_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_services_min_quantity'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_booking_ct_services_max_quantity', isset( $_POST['mwb_booking_ct_services_max_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_services_max_quantity'] ) ) : '' );
 		// phpcs:enable
 
 		$booking_people_taxonomy_terms = get_terms(
@@ -1541,7 +1541,7 @@ class Mwb_Wc_Bk_Admin {
 		);
 		foreach ( $booking_people_taxonomy_terms as $term ) {
 			$term_name = $term->slug;
-			update_term_meta( $term_id, 'mwb_ct_booking_service_cost_' . $term_name, esc_attr( sanitize_text_field( wp_unslash( isset( $_POST[ 'mwb_ct_booking_service_cost_' . $term_name ] ) ? $_POST[ 'mwb_ct_booking_service_cost_' . $term_name ] : '' ) ) ) ); // @codingStandardsIgnoreLine
+			update_term_meta( $term_id, 'mwb_ct_booking_service_cost_' . $term_name, isset( $_POST[ 'mwb_ct_booking_service_cost_' . $term_name ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_ct_booking_service_cost_' . $term_name ] ) ): '' ); // @codingStandardsIgnoreLine
 		}
 	}
 
@@ -1576,10 +1576,10 @@ class Mwb_Wc_Bk_Admin {
 	public function save_custom_fields_ct_booking_people( $term_id, $tt_id ) {
 
 		//phpcs:disable
-		update_term_meta( $term_id, 'mwb_ct_booking_people_unit_cost', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_ct_booking_people_unit_cost'] ) ? $_POST['mwb_ct_booking_people_unit_cost'] : '' ) ) ) );
-		update_term_meta( $term_id, 'mwb_ct_booking_people_base_cost', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_ct_booking_people_base_cost'] ) ? $_POST['mwb_ct_booking_people_base_cost'] : '' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_people_min_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_people_min_quantity'] ) ? $_POST['mwb_booking_ct_people_min_quantity'] : '' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_people_max_quantity', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_people_max_quantity'] ) ? $_POST['mwb_booking_ct_people_max_quantity'] : '' ) ) ) );
+		update_term_meta( $term_id, 'mwb_ct_booking_people_unit_cost', isset( $_POST['mwb_ct_booking_people_unit_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_ct_booking_people_unit_cost'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_ct_booking_people_base_cost', isset( $_POST['mwb_ct_booking_people_base_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_ct_booking_people_base_cost'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_booking_ct_people_min_quantity', isset( $_POST['mwb_booking_ct_people_min_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_people_min_quantity'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_booking_ct_people_max_quantity', isset( $_POST['mwb_booking_ct_people_max_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_people_max_quantity'] ) ) : '' );
 		//phpcs:enable
 	}
 
@@ -1614,9 +1614,9 @@ class Mwb_Wc_Bk_Admin {
 	public function save_custom_fields_ct_booking_cost( $term_id, $tt_id ) {
 
 		//phpcs:disable
-		update_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_units', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_costs_multiply_units'] ) ? $_POST['mwb_booking_ct_costs_multiply_units'] : 'no' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_people', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_costs_multiply_people'] ) ? $_POST['mwb_booking_ct_costs_multiply_people'] : 'no' ) ) ) );
-		update_term_meta( $term_id, 'mwb_booking_ct_costs_custom_price', esc_attr( sanitize_text_field( wp_unslash( isset( $_POST['mwb_booking_ct_costs_custom_price'] ) ? $_POST['mwb_booking_ct_costs_custom_price'] : 0 ) ) ) );
+		update_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_units', isset( $_POST['mwb_booking_ct_costs_multiply_units'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_costs_multiply_units'] ) ) : 'no' );
+		update_term_meta( $term_id, 'mwb_booking_ct_costs_multiply_people', isset( $_POST['mwb_booking_ct_costs_multiply_people'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_costs_multiply_people'] ) ) : 'no' );
+		update_term_meta( $term_id, 'mwb_booking_ct_costs_custom_price', isset( $_POST['mwb_booking_ct_costs_custom_price'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_booking_ct_costs_custom_price'] ) ): 0 );
 		//phpcs:enable
 	}
 

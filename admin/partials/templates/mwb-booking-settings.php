@@ -76,7 +76,7 @@ $mwb_booking_settings = get_option( 'mwb_booking_settings_options', $global_func
 
 						<td class="forminp forminp-text mwb-form-group__input">
 							<input type="number" id="mwb_booking_setting_go_confirm_input" name="mwb_booking_setting_go_confirm_status" value="<?php echo esc_html( $mwb_booking_settings['mwb_booking_setting_go_confirm_status'] ); ?>" class="" step="1" min="1">
-							<span><?php esc_attr_e( 'Days', 'mwb-bookings-for-woocommerce' ); ?></span>
+							<span><?php esc_html_e( 'Days', 'mwb-bookings-for-woocommerce' ); ?></span>
 							<p><?php esc_html_e( 'When this limit is reached, paid(complete) Bookings will be set to Confirmed automatically when the booking creation date exceeds the specified number of days.', 'mwb-bookings-for-woocommerce' ); ?></p>
 						</td>
 					</tr>

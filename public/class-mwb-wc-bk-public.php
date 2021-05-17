@@ -302,7 +302,7 @@ class Mwb_Wc_Bk_Public {
 
 		$unit_duration = get_post_meta( $product_id, 'mwb_booking_unit_duration', true );
 
-		$slots = isset( $_POST['slots'] ) ? $_POST['slots'] : array();    // @codingStandardsIgnoreLine
+		$slots = isset( $_POST['slots'] ) ? map_deep( wp_unslash( $_POST['slots'] ), 'sanitize_text_field' ) : array();
 
 		if ( ! empty( $product_id ) && ! empty( $start_date ) ) {
 			if ( 'hour' === $unit_duration || 'minute' === $unit_duration ) {
@@ -351,7 +351,7 @@ class Mwb_Wc_Bk_Public {
 
 		check_ajax_referer( 'mwb_wc_bk_public', 'nonce' );
 
-		$slots      = isset( $_POST['slots'] ) ? $_POST['slots'] : array();     // @codingStandardsIgnoreLine
+		$slots      = isset( $_POST['slots'] ) ? map_deep( wp_unslash( $_POST['slots'] ), 'sanitize_text_field' ) : array();
 		$time_slot  = isset( $_POST['time_slot'] ) ? sanitize_text_field( wp_unslash( $_POST['time_slot'] ) ) : '';
 		$start_date = isset( $_POST['start_date'] ) ? sanitize_text_field( wp_unslash( $_POST['start_date'] ) ) : array();
 		$duration   = isset( $_POST['duration'] ) ? sanitize_text_field( wp_unslash( $_POST['duration'] ) ) : '';
@@ -877,7 +877,6 @@ class Mwb_Wc_Bk_Public {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -1220,7 +1219,6 @@ class Mwb_Wc_Bk_Public {
 				'booking_service_cost' => $total_service_cost,
 				'booking_added_cost'   => $total_added_cost,
 				'indiv_added_cost_arr' => $added_cost_arr,
-				'posted_data'          => $_POST,
 			)
 		);
 		wp_die();
@@ -1242,7 +1240,7 @@ class Mwb_Wc_Bk_Public {
 		$total_cost     = isset( $_POST['total_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['total_cost'] ) ) : 0;
 		$base_cost      = isset( $_POST['base_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['base_cost'] ) ) : 0;
 		$service_cost   = isset( $_POST['service_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['service_cost'] ) ) : 0;
-		$added_cost_arr = isset( $_POST['added_cost_arr'] ) ? array_map( 'sanitize_text_field', $_POST['added_cost_arr'] ) : array();
+		$added_cost_arr = isset( $_POST['added_cost_arr'] ) ? map_deep( wp_unslash( $_POST['added_cost_arr'] ), 'sanitize_text_field' ) : array();
 		?>
 
 		<label for="mwb-wc-bk-total-fields"><b><?php esc_html_e( 'Totals', 'mwb-bookings-for-woocommerce' ); ?></b></label>

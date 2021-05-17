@@ -43,7 +43,7 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 			<tbody>
 				<tr valign="top" class="mwb-form-group">
 					<th scope="row" class="mwb-form-group__label">
-						<label><?php esc_attr_e( 'Rule Name', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'Rule Name', 'mwb-bookings-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text mwb-form-group__input">
 						<input type="text" class="mwb_global_availability_rule_name" name="mwb_global_availability_rule_name[<?php echo esc_html( $rule_count - 1 ); ?>]" required >
@@ -51,23 +51,23 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 				</tr>
 				<tr valign="top" class="mwb-form-group">
 					<th scope="row" class="mwb-form-group__label">
-						<label><?php esc_attr_e( 'Rule Type', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'Rule Type', 'mwb-bookings-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text mwb-form-group__input">
 						<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="specific" checked >
-						<label><?php esc_attr_e( 'Specific Dates', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'Specific Dates', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="radio" class="mwb_global_availability_rule_type" name="mwb_global_availability_rule_type[<?php echo esc_html( $rule_count - 1 ); ?>]" value="generic">
-						<label><?php esc_attr_e( 'Generic Dates', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'Generic Dates', 'mwb-bookings-for-woocommerce' ); ?></label>
 					</td>
 				</tr>
 				<tr valign="top" class="range mwb-form-group">
 					<th scope="row" class="mwb-form-group__label">
-						<label><?php esc_attr_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text specific mwb-form-group__input">
 						<p>
 							<input type="date" class="mwb_global_availability_rule_range_from" name="mwb_global_availability_rule_range_from[<?php echo esc_html( $rule_count - 1 ); ?>]" required>
-							<label><?php esc_attr_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
+							<label><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<input type="date" class="mwb_global_availability_rule_range_to" name="mwb_global_availability_rule_range_to[<?php echo esc_html( $rule_count - 1 ); ?>]" required>
 						</p>
 					</td>
@@ -92,9 +92,9 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 					<td class="forminp forminp-text mwb-form-group__input">
 						<p>
 						<input type="radio" class="mwb_global_availability_rule_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $rule_count - 1 ); ?>]" value="bookable" checked >
-						<label><?php esc_attr_e( 'Bookable', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'Bookable', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="radio" class="mwb_global_availability_rule_non_bookable" name="mwb_global_availability_rule_bookable[<?php echo esc_html( $rule_count - 1 ); ?>]" value="non-bookable" >
-						<label><?php esc_attr_e( 'Non-Bookable', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<label><?php esc_html_e( 'Non-Bookable', 'mwb-bookings-for-woocommerce' ); ?></label>
 						</p>
 					</td>
 				</tr>
@@ -103,7 +103,7 @@ $rule_count = ! empty( $_POST['rule_count'] ) ? sanitize_text_field( wp_unslash(
 					<td class="forminp forminp-text mwb-form-group__input-rules" >
 						<p>
 							<input type="checkbox" class="mwb_global_availability_rule_weekdays" name="mwb_global_availability_rule_weekdays[<?php echo esc_html( $rule_count - 1 ); ?>]"  >
-							<?php esc_attr_e( 'Rules for weekdays', 'mwb-bookings-for-woocommerce' ); ?>
+							<?php esc_html_e( 'Rules for weekdays', 'mwb-bookings-for-woocommerce' ); ?>
 						</p>
 					</td>
 					<?php foreach ( $this->global_func->booking_search_weekdays() as $key => $values ) { ?>

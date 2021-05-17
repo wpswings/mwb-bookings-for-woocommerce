@@ -24,7 +24,7 @@ $cost_price      = get_term_meta( $term->term_id, 'mwb_booking_ct_costs_custom_p
 <tr class="form-field term-extra-cost-wrap">
 	<th><label for="mwb_booking_ct_costs_custom_price"><?php esc_html_e( 'Cost price', 'mwb-bookings-for-woocommerce' ); ?></label></th>
 	<td>
-		<input type="number" id="mwb_booking_ct_costs_custom_price" name="mwb_booking_ct_costs_custom_price" value="<?php echo esc_html( ! empty( $cost_price ) ? $cost_price : 0 ); ?>" step="1" min="1">
+		<input type="number" id="mwb_booking_ct_costs_custom_price" name="mwb_booking_ct_costs_custom_price" value="<?php echo esc_attr( ! empty( $cost_price ) ? $cost_price : 0 ); ?>" step="1" min="1">
 		<p class="description"><?php esc_html_e( 'Cost price of the added cost', 'mwb-bookings-for-woocommerce' ); ?></p>
 	</td>
 </tr>

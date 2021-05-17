@@ -29,7 +29,7 @@ $max_quantity          = get_term_meta( $term->term_id, 'mwb_booking_ct_services
 <tr class="form-field term-service-cost-wrap">
 	<th><label for="mwb_ct_booking_service_cost"><?php esc_html_e( 'Service Cost', 'mwb-bookings-for-woocommerce' ); ?></label></th>
 	<td>
-		<input type="number" id="mwb_ct_booking_service_cost" name="mwb_ct_booking_service_cost" value="<?php echo esc_html( ! empty( $service_cost ) ? $service_cost : '' ); ?>" min="0"/>
+		<input type="number" id="mwb_ct_booking_service_cost" name="mwb_ct_booking_service_cost" value="<?php echo esc_attr( ! empty( $service_cost ) ? $service_cost : '' ); ?>" min="0"/>
 		<p class="description"><?php esc_html_e( 'Enter the cost for the services to be included', 'mwb-bookings-for-woocommerce' ); ?></p>
 	</td>	
 </tr>
@@ -71,14 +71,14 @@ $max_quantity          = get_term_meta( $term->term_id, 'mwb_booking_ct_services
 <tr class="form-field term-has-quantity-check-wrap">
 	<th><label for="mwb_booking_ct_services_min_quantity"><?php esc_html_e( 'Min Quantity', 'mwb-bookings-for-woocommerce' ); ?></label></th>
 	<td>
-		<input type="number" id="mwb_booking_ct_services_min_quantity" name="mwb_booking_ct_services_min_quantity" value="<?php echo esc_html( ! empty( $min_quantity ) ? $min_quantity : '' ); ?>" min="0">
+		<input type="number" id="mwb_booking_ct_services_min_quantity" name="mwb_booking_ct_services_min_quantity" value="<?php echo esc_attr( ! empty( $min_quantity ) ? $min_quantity : '' ); ?>" min="0">
 		<p class="description"><?php esc_html_e( 'Enter the minimum quantity of the service to be included', 'mwb-bookings-for-woocommerce' ); ?></p>
 	</td>
 </tr>
 <tr class="form-field term-has-quantity-check-wrap">
 	<th><label for="mwb_booking_ct_services_max_quantity"><?php esc_html_e( 'Max Quantity', 'mwb-bookings-for-woocommerce' ); ?></label></th>
 	<td>
-		<input type="number" id="mwb_booking_ct_services_max_quantity" name="mwb_booking_ct_services_max_quantity" value="<?php echo esc_html( ! empty( $max_quantity ) ? $max_quantity : '' ); ?>" min="1">
+		<input type="number" id="mwb_booking_ct_services_max_quantity" name="mwb_booking_ct_services_max_quantity" value="<?php echo esc_attr( ! empty( $max_quantity ) ? $max_quantity : '' ); ?>" min="1">
 		<p class="description"><?php esc_html_e( 'Enter the maximum quantity of the service to be included', 'mwb-bookings-for-woocommerce' ); ?></p>
 	</td>
 </tr>
@@ -95,7 +95,7 @@ foreach ( $booking_people_taxonomy_terms as $t ) {
 <tr class="form-field term-has-people-check-wrap">
 	<th><label for="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>"><?php echo esc_html( 'Service Cost for ' . $t->name ); ?></label></th>
 	<td>
-		<input type="number" class="mwb_ct_service_multiply_people" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" value="<?php echo esc_html( get_term_meta( $term->term_id, 'mwb_ct_booking_service_cost_' . $term_name, true ) ); ?>" min="0">
+		<input type="number" class="mwb_ct_service_multiply_people" id="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" name="mwb_ct_booking_service_cost_<?php echo esc_html( $term_name ); ?>" value="<?php echo esc_attr( get_term_meta( $term->term_id, 'mwb_ct_booking_service_cost_' . $term_name, true ) ); ?>" min="0">
 		<p class="description"><?php esc_html_e( 'Enter the service cost for respective people type.', 'mwb-bookings-for-woocommerce' ); ?></p>
 	</td>
 </tr>

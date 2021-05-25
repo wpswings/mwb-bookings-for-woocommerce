@@ -1,13 +1,12 @@
 <?php
-
 /**
  * Fired during plugin deactivation
  *
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
  */
 
 /**
@@ -16,8 +15,8 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/includes
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/includes
  * @author     MakeWebBetter <webmaster@makewebbetter.com>
  */
 class Mwb_Wc_Bk_Deactivator {
@@ -31,6 +30,7 @@ class Mwb_Wc_Bk_Deactivator {
 	 */
 	public static function deactivate() {
 
+		as_unschedule_action( 'mwb_booking_status_schedule' );
 	}
 
 }

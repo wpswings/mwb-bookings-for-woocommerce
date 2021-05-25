@@ -208,31 +208,51 @@ class Mwb_Wc_Bk_Admin {
 			array(
 				'general_settings' => array(
 					'label'    => 'General Settings',
+<<<<<<< HEAD
+					'target'   => 'mwb_booking_product_general_data',
+=======
 					'target'   => 'mwb_booking_general_data',
+>>>>>>> v.1.0.0-dev
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 10,
 				),
 				'cost'             => array(
 					'label'    => 'Costs',
+<<<<<<< HEAD
+					'target'   => 'mwb_booking_product_cost_data',
+=======
 					'target'   => 'mwb_booking_cost_data',
+>>>>>>> v.1.0.0-dev
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 20,
 				),
 				'availability'     => array(
 					'label'    => 'Availability',
+<<<<<<< HEAD
+					'target'   => 'mwb_booking_product_availability_data',
+=======
 					'target'   => 'mwb_booking_availability_data',
+>>>>>>> v.1.0.0-dev
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 30,
 				),
 				'people'           => array(
 					'label'    => 'People',
+<<<<<<< HEAD
+					'target'   => 'mwb_booking_product_people_data',
+=======
 					'target'   => 'mwb_booking_people_data',
+>>>>>>> v.1.0.0-dev
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 40,
 				),
 				'services'         => array(
 					'label'    => 'Services',
+<<<<<<< HEAD
+					'target'   => 'mwb_booking_product_services_data',
+=======
 					'target'   => 'mwb_booking_services_data',
+>>>>>>> v.1.0.0-dev
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 50,
 				),
@@ -241,6 +261,8 @@ class Mwb_Wc_Bk_Admin {
 
 		return $tabs;
 	}
+<<<<<<< HEAD
+=======
 
 	/**
 	 * Installing on activation
@@ -254,11 +276,18 @@ class Mwb_Wc_Bk_Admin {
 		}
 	}
 
+>>>>>>> v.1.0.0-dev
 	/**
 	 * General Settings fields.
 	 *
 	 * @return void
 	 */
+<<<<<<< HEAD
+	public function mwb_general_settings_fields() {
+
+		include MWB_WC_BK_BASEPATH . 'admin/partials/product-data-tabs/general-setting-fields-tab.php';
+		include MWB_WC_BK_BASEPATH . 'admin/partials/product-data-tabs/availability-fields-tab.php';
+=======
 	public function product_booking_fields() {
 
 		global $post;
@@ -2196,6 +2225,7 @@ class Mwb_Wc_Bk_Admin {
 		}
 		echo wp_kses_post( wpautop( wptexturize( $content ) ) . PHP_EOL );
 		wp_die();
+>>>>>>> v.1.0.0-dev
 	}
 
 }

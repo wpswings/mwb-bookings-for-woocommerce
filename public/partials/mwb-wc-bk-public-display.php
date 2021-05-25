@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a public-facing view for the plugin
  *
@@ -8,9 +7,10 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Mwb_Wc_Bk
- * @subpackage Mwb_Wc_Bk/public/partials
+ * @package    MWB_Bookings_For_WooCommerce
+ * @subpackage MWB_Bookings_For_WooCommerce/public/partials
  */
+
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->

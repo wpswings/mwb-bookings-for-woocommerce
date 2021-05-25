@@ -1250,7 +1250,7 @@ class Mwb_Wc_Bk_Public {
 				?>
 				<li>
 					<label for=""><?php esc_html_e( 'Base Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<span>&emsp;&#8377;<?php echo esc_html( $base_cost ); ?></span>
+					<span><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $base_cost ) ); ?></span>
 					<input type="hidden" name="base_cost" value="<?php echo esc_html( $base_cost ); ?>" >
 				</li>
 				<?php
@@ -1259,7 +1259,7 @@ class Mwb_Wc_Bk_Public {
 				?>
 				<li>
 					<label for=""><?php esc_html_e( 'Service Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<span>&emsp;&#8377;<?php echo esc_html( $service_cost ); ?></span>
+					<span><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $service_cost ) ); ?></span>
 					<input type="hidden" name="service_cost" value="<?php echo esc_html( $service_cost ); ?>" >
 				</li>
 				<?php
@@ -1270,7 +1270,7 @@ class Mwb_Wc_Bk_Public {
 						?>
 				<li>
 					<label for=""><?php echo esc_html( $name ); ?><?php esc_html_e( '-cost', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<span>&emsp;&#8377;<?php echo esc_html( $cost ); ?></span>
+					<span><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $cost ) ); ?></span>
 					<input type="hidden" name="added_cost-<?php echo esc_html( strtolower( $name ) ); ?>" value="<?php echo esc_html( $cost ); ?>" >
 				</li>
 						<?php
@@ -1281,7 +1281,7 @@ class Mwb_Wc_Bk_Public {
 				?>
 				<li>
 					<label for=""><b><?php esc_html_e( 'Total Cost', 'mwb-bookings-for-woocommerce' ); ?></b></label>
-					<span><b>&emsp;&#8377;<?php echo esc_html( $total_cost ); ?></b></span>
+					<span><b><?php echo esc_html( sprintf( '%s %d', get_woocommerce_currency_symbol(), $total_cost ) ); ?></b></span>
 					<input type="hidden" name="total_cost" value="<?php echo esc_html( $total_cost ); ?>">
 				</li>
 		<?php } ?>

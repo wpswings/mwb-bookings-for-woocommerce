@@ -10,7 +10,7 @@
  * Plugin Name:          MWB Bookings For WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/mwb-bookings-for-woocommerce
  * Description:          MWB Bookings for WooCommerce helps you stay focused while offering a better online booking service for your business growth. Just stop speculating and opt for the best one out.
- * Version:              1.0.0
+ * Version:              1.0.1
  * Author:               MakeWebBetter
  * Author URI:           https://makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-site
  * Requires at least:    4.0
@@ -128,7 +128,7 @@ function run_mwb_wc_bk() {
 function define_mwb_wc_bk() {
 	mwb_wc_bk_constant( 'MWB_WC_BK_BASEPATH', plugin_dir_path( __FILE__ ) );
 	mwb_wc_bk_constant( 'MWB_WC_BK_BASEURL', plugin_dir_url( __FILE__ ) );
-	mwb_wc_bk_constant( 'MWB_WC_BK_VERSION', '1.0.0' );
+	mwb_wc_bk_constant( 'MWB_WC_BK_VERSION', '1.0.1' );
 	mwb_wc_bk_constant( 'MWB_WC_BK_TEMPLATE_PATH', plugin_dir_path( __FILE__ ) . 'public/templates/' );
 
 	mwb_wc_bk_constant( 'ONBOARD_PLUGIN_NAME', 'MWB Bookings For WooCommerce' );

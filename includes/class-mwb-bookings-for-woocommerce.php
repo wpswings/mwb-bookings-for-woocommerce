@@ -216,9 +216,8 @@ class Mwb_Bookings_For_Woocommerce {
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_filter( 'product_type_selector', $mbfw_plugin_admin, 'mbfw_add_product_type_in_dropdown', 10, 1 );
 			$this->loader->add_filter( 'woocommerce_product_data_tabs', $mbfw_plugin_admin, 'mbfw_add_product_data_tabs' );
-			$this->loader->add_action( 'woocommerce_process_product_meta', $mbfw_plugin_admin, 'mbfw_save_custom_product_meta_boxes_data', 10, 2 );
+			$this->loader->add_action( 'woocommerce_process_product_meta', $mbfw_plugin_admin, 'mbfw_save_custom_product_meta_boxes_data', 100, 2 );
 			$this->loader->add_action( 'woocommerce_product_data_panels', $mbfw_plugin_admin, 'mbfw_product_data_tabs_html' );
-			$this->loader->add_action( 'admin_bar_menu', $mbfw_plugin_admin, 'mbfw_add_admin_menu_custom_tab', 100 );
 			// customising booking_costs taxonomy.
 			$this->loader->add_action( 'mwb_booking_cost_add_form_fields', $mbfw_plugin_admin, 'mbfw_adding_custom_fields_at_booking_cost_taxonomy_page' );
 			$this->loader->add_action( 'mwb_booking_cost_edit_form_fields', $mbfw_plugin_admin, 'mbfw_adding_custom_fields_at_booking_cost_taxonomy_edit_page', 10, 2 );
@@ -234,7 +233,6 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter( 'manage_edit-mwb_booking_service_columns', $mbfw_plugin_admin, 'mbfw_adding_custom_column_booking_services_taxonomy_table' );
 			$this->loader->add_filter( 'manage_mwb_booking_service_custom_column', $mbfw_plugin_admin, 'mbfw_adding_custom_column_data_booking_services_taxonomy_table', 10, 3 );
 		}
-
 	}
 
 	/**
@@ -250,6 +248,9 @@ class Mwb_Bookings_For_Woocommerce {
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_action( 'plugins_loaded', $mbfw_plugin_common, 'mbfw_registering_custom_product_type' );
 			$this->loader->add_action( 'init', $mbfw_plugin_common, 'mbfw_custom_taxonomy_for_products' );
+			$this->loader->add_action( 'admin_bar_menu', $mbfw_plugin_common, 'mbfw_add_admin_menu_custom_tab', 100 );
+			$this->loader->add_action( 'wp_ajax_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
+			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
 		}
 	}
 
@@ -265,7 +266,12 @@ class Mwb_Bookings_For_Woocommerce {
 		$this->loader->add_action('wp_enqueue_scripts', $mbfw_plugin_public, 'mbfw_public_enqueue_scripts');
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_filter( 'woocommerce_product_class', $mbfw_plugin_public, 'mbfw_return_custom_product_class', 10, 2 );
-			$this->loader->add_action( 'woocommerce_single_product_summary', $mbfw_plugin_public, 'mbfw_add_custom_add_to_cart_button' );
+			$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $mbfw_plugin_public, 'mbfw_add_custom_fields_before_add_to_cart_button', 20 );
+			$this->loader->add_action( 'mwb_mbfw_booking_services_details_on_form', $mbfw_plugin_public, 'mwb_mbfw_show_additional_booking_services_details_on_form', 10, 2 );
+			$this->loader->add_action( 'mwb_mbfw_number_of_people_while_booking_on_form', $mbfw_plugin_public, 'mwb_mbfw_show_people_while_booking', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $mbfw_plugin_public, 'mwb_mbfw_add_additional_data_in_cart', 100, 4 );
+			$this->loader->add_filter( 'woocommerce_get_item_data', $mbfw_plugin_public, 'mwb_mbfw_show_additional_data_on_cart_and_checkout_page', 10, 2 );
+			$this->loader->add_action( 'woocommerce_mwb_booking_add_to_cart', $mbfw_plugin_public, 'mwb_mbfw_load_single_page_template' );
 		}
 	}
 

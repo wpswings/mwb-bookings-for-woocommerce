@@ -67,6 +67,15 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_register_script( $this->plugin_name . 'common', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-bookings-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name . 'common', 'mbfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name . 'common' );
+		wp_enqueue_script( 'mwb-mbfw-common-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-common.min.js', array( 'jquery' ), $this->version, true );
+		wp_localize_script(
+			'mwb-mbfw-common-js',
+			'mwb_mbfw_common_obj',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'nonce'    => wp_create_nonce( 'mbfw_common_nonce' ),
+			)
+		);
 	}
 
 	/**
@@ -133,5 +142,35 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 */
 	public function mbfw_registering_custom_product_type() {
 		require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-mwb-booking.php';
+	}
+
+	/**
+	 * Adding Bookings menu on admin bar.
+	 *
+	 * @param object $admin_bar object to add custom menu items.
+	 * @return void
+	 */
+	public function mbfw_add_admin_menu_custom_tab( $admin_bar ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		$admin_bar->add_menu(
+			array(
+				'id'     => 'mwb-mbfw-custom-admin-menu-bookings',
+				'parent' => null,
+				'group'  => null,
+				'title'  => 'Bookings',
+				'href'   => admin_url( 'admin.php?page=custom-page' ),
+				'meta'   => array(
+					'title' => __( 'List All Bookings', 'mwb-bookings-for-woocommerce' ),
+				)
+			)
+		);
+	}
+	public function mbfw_retrieve_booking_total_single_page() {
+		check_ajax_referer( 'mbfw_common_nonce', 'nonce' );
+		$form_data = array_key_exists( 'form_data', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) : '';
+		print_r( $form_data );
+		wp_die();
 	}
 }

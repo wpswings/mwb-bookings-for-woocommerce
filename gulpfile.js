@@ -168,6 +168,25 @@ function scripts()
     .pipe(browsersync.stream())
   );
 }
+// Scripts
+function CommonScripts()
+{
+  return (
+  gulp
+    .src([
+
+    'assets/src/common-end/js/**/*',
+    ])
+    .pipe(plumber())
+    .pipe(concat('mwb-common.js'))
+    .pipe(gulp.dest('common/js'))
+    .pipe(terser())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('common/js'))
+    .pipe(browsersync.stream())
+  );
+}
+
 
 // Scripts Backend
 function scriptsBackend()
@@ -234,6 +253,7 @@ function watchFiles()
 {
   gulp.watch('./assets/src/front-end/scss/**/*', css);
   gulp.watch('assets/src/front-end/js/**/*', scripts);
+  gulp.watch('assets/src/common-end/js/**/*', CommonScripts);
   gulp.watch('assets/src/front-end/image/**/*', images);
   gulp.watch('assets/src/front-end/fonts/**/*', fonts);
   gulp.watch('./*.html', html);
@@ -245,13 +265,14 @@ function watchFiles()
   gulp.watch('assets/src/front-end/fonts/**/*', fontsBackend);
 }
 
-const start = gulp.series(clean, images, fonts, css, scripts, html, imagesBackend, cssBackend, cssBackendCustom, scriptsBackend, scriptsBackendCustom,fontsBackend);
+const start = gulp.series(clean, images, fonts, css, scripts, CommonScripts, html, imagesBackend, cssBackend, cssBackendCustom, scriptsBackend, scriptsBackendCustom,fontsBackend);
 const watch = gulp.parallel(watchFiles, browserSync);
 
 // export tasks
 exports.images = images;
 exports.css = css;
 exports.scripts = scripts;
+exports.CommonScripts = CommonScripts;
 exports.clean = clean;
 exports.imagesBackend = imagesBackend;
 exports.cssBackend = cssBackend;

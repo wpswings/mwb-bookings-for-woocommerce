@@ -272,6 +272,10 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $mbfw_plugin_public, 'mwb_mbfw_add_additional_data_in_cart', 100, 4 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $mbfw_plugin_public, 'mwb_mbfw_show_additional_data_on_cart_and_checkout_page', 10, 2 );
 			$this->loader->add_action( 'woocommerce_mwb_booking_add_to_cart', $mbfw_plugin_public, 'mwb_mbfw_load_single_page_template' );
+			$this->loader->add_action( 'woocommerce_loop_add_to_cart_link', $mbfw_plugin_public, 'mwb_mbfw_show_readmore_button_on_archieve_page', 10, 2 );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_public, 'mwb_mbfw_show_extra_charges_in_total' );
+			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mbfw_plugin_public, 'mwb_mbfw_remove_quantity_field', 10, 2 );
+			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item' , $mbfw_plugin_public, 'mwb_mbfw_add_custom_order_item_meta_data', 10, 4 );
 		}
 	}
 

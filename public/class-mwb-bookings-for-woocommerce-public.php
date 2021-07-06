@@ -148,13 +148,13 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$mbfw_booking_service = get_the_terms( $product_id, 'mwb_booking_service' );
 		if ( $mbfw_booking_service && is_array( $mbfw_booking_service ) ) {
 			?>
+			<div><?php esc_html_e( 'Included services', 'mwb-bookings-for-woocommerce' ); ?></div>
 			<table cellspacing="0">
 				<tbody>
 					<?php
 					foreach ( $mbfw_booking_service as $custom_term ) {
 						if ( 'yes' !== get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_hidden', true ) ) {
 							?>
-							<div><?php esc_html_e( 'Included services', 'mwb-bookings-for-woocommerce' ); ?></div>
 							<tr>
 								<td>
 									<?php if ( 'yes' === get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_optional', true ) ) { ?>
@@ -164,7 +164,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								</td>
 								<td><?php echo wp_kses_post( wc_price( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_cost', true ) ) ); ?></td>
 								<?php if ( get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) { ?>
-									<td><input type="number" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_quantity[<?php echo esc_attr( $custom_term->term_id ); ?>]" min="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" max="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_maximum_quantity', true ) ); ?>" class="mwb-mbfw-additional-service-quantity"/></td>
+									<td><input type="number" value="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_quantity[<?php echo esc_attr( $custom_term->term_id ); ?>]" min="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" max="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_maximum_quantity', true ) ); ?>" class="mwb-mbfw-additional-service-quantity" /></td>
 								<?php } ?>
 							</tr>
 							<?php
@@ -245,7 +245,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				if ( $service_name ) {
 					$other_data[] =  array(
 						'name'    => _n( 'Service', 'Services', count( $service_name ) ),
-						'display' => join( ',', $service_name ),
+						'display' => join( ', ', $service_name ),
 					);
 				}
 			}
@@ -253,4 +253,108 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		return $other_data;
 	}
 
+	/**
+	 * Show read more button on archieve page.
+	 *
+	 * @param string $button string containing html of the add to cart button.
+	 * @param object $product product object of the current looping item.
+	 * @return string
+	 */
+	public function mwb_mbfw_show_readmore_button_on_archieve_page( $button, $product ) {
+		if ( 'mwb_booking' === $product->get_type() ) {
+			$button_text = __( 'View Details', 'mwb-bookings-for-woocommerce' );
+			$button      = '<a class="button" href="' . $product->get_permalink() . '">' . $button_text . '</a>';
+		}
+		return $button;
+	}
+
+	/**
+	 * Showing extra charges on cart listing total.
+	 *
+	 * @return void
+	 */
+	public function mwb_mbfw_show_extra_charges_in_total( $cart_object ) {
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+		$cart_data = $cart_object->get_cart();
+		foreach ( $cart_data as $cart ) {
+			if ( 'mwb_booking' === $cart['data']->get_type() ) {
+				$new_price     = $cart['data']->get_price();
+				$people_number = isset( $cart['mwb_mbfw_people_number'] ) && ( $cart['mwb_mbfw_people_number'] > 0 ) ? (int) $cart['mwb_mbfw_people_number'] : 1;
+				$base_price    = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
+				$unit_price    = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_unit_cost', true );
+				
+				// adding unit cost.
+				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
+					$new_price = (float) $unit_price * $people_number;
+				} else {
+					$new_price = (float) $unit_price;
+				}
+				
+				// adding base cost.
+				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
+					$new_price = $new_price + (float) $base_price * $people_number;
+				} else {
+					$new_price = $new_price + (float) $base_price;
+				}
+				
+				// adding extra services cost.
+				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_add_extra_services', true ) ) {
+					if ( isset( $cart['mwb_mbfw_service_option'] ) ) {
+						$extra_services = $cart['mwb_mbfw_service_option'];
+						if ( is_array( $extra_services ) ) {
+							foreach ( $extra_services as $term_id ) {
+								$cost = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
+								if ( $cost ) {
+									if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
+										$new_price = $new_price + $people_number * (float) $cost;
+									} else {
+										$new_price = $new_price + (float) $cost;
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				// adding extra cost.
+				$terms = get_the_terms( $cart['product_id'], 'mwb_booking_cost' );
+				if ( $terms ) {
+					foreach ( $terms as $term ) {
+						$term_id = $term->term_id;
+						$price   = get_term_meta( $term_id, 'mwb_mbfw_booking_cost', true );
+						if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true ) ) {
+							$new_price = $new_price + $people_number * (float) $price;
+						} else {
+							$new_price = $new_price + (float) $price;
+						}
+					}
+				}
+				
+				// setting the new price.
+				$cart['data']->set_price( $new_price );
+			}
+		}
+	}
+
+	/**
+	 * Remove Quanitity Field.
+	 *
+	 * @param boolean $return return true or false based on if quantity field is required.
+	 * @param object  $product current product object.
+	 * @return boolean
+	 */
+	public function mwb_mbfw_remove_quantity_field( $return, $product ) {
+		if ( 'mwb_booking' === $product->get_type() ) {
+			$return = true;
+		}
+		return $return;
+	}
+
+	public function mwb_mbfw_add_custom_order_item_meta_data( $item, $cart_item_key, $values, $order ) {
+		echo '<pre>';
+		print_r( $item );
+		// die();
+	}
 }

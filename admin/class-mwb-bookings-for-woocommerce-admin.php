@@ -916,7 +916,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 				update_post_meta( $id, $meta_key, $meta_value );
 			}
-			$price = (int) $product_meta_data['mwb_mbfw_booking_base_cost'] + (int) $product_meta_data['mwb_mbfw_booking_unit_cost'];
+			$price = (int) $product_meta_data['mwb_mbfw_booking_unit_cost'];
 			update_post_meta( $id, '_price', $price );
 		}
 	}
@@ -969,31 +969,48 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_adding_custom_fields_at_booking_cost_taxonomy_page() {
-		woocommerce_wp_text_input(
+		$fields = array(
 			array(
 				'id'          => 'mwb_mbfw_booking_cost',
 				'type'        => 'number',
 				'value'       => '',
 				'label'       => __( 'Booking Cost', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add Booking cost here.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_checkbox(
+			),
 			array(
 				'label'       => __( 'Multiply by No. of People', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_booking_cost_multiply_people',
-				'value'       => '',
+				'type'        => 'checkbox',
+				'value'       => 'yes',
 				'description' => __( 'Either to multiply by number of people.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_checkbox(
+			),
 			array(
 				'label'       => __( 'Multiply by Duration', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_booking_cost_multiply_duration',
-				'value'       => '',
+				'type'        => 'checkbox',
+				'value'       => 'yes',
 				'description' => __( 'Either to multiply by Duration of Booking.', 'mwb-bookings-for-woocommerce' ),
-			)
+			),
 		);
+		$this->mbfw_taxonomy_adding_fields_html( $fields );
+	}
+
+	/**
+	 * Html fields for taxonomy edit page.
+	 *
+	 * @param array $fields array containing attributes of html fields.
+	 * @return void
+	 */
+	public function mbfw_taxonomy_adding_fields_html( $fields ) {
+		foreach ( $fields as $field ) {
+			?>
+			<p class="form-field">
+				<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_attr( isset( $field['label'] ) ? $field['label'] : '' ); ?></label>
+				<input type="<?php echo esc_attr( $field['type'] ); ?>" class="<?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : 'short' ); ?>" style="" name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $field['id'] ); ?>" id="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" placeholder="">
+				<span class="description"><?php echo wp_kses_post( isset( $field['description'] ) ? $field['description'] : '' ); ?></span>
+			</p>
+			<?php
+		}
 	}
 
 	/**
@@ -1123,73 +1140,65 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_adding_custom_fields_at_booking_service_taxonomy_page() {
-		woocommerce_wp_text_input(
+		$fields = array(
 			array(
 				'id'          => 'mwb_mbfw_service_cost',
 				'type'        => 'number',
 				'value'       => '',
 				'label'       => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add service cost here.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_checkbox(
+			),
 			array(
 				'label'       => __( 'Multiply by Number of People', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_service_cost_multiply_people',
-				'value'       => '',
+				'type'        => 'checkbox',
+				'value'       => 'yes',
 				'description' => __( 'Either to multiply by number of people.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_checkbox(
+			),
 			array(
 				'label'       => __( 'Multiply by Booking Duration', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_service_cost_multiply_duration',
-				'value'       => '',
+				'value'       => 'yes',
+				'type'        => 'checkbox',
 				'description' => __( 'Either to multiply by Booking Duration.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_checkbox(
+			),
 			array(
 				'label'       => __( 'If Optional', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_service_optional',
-				'value'       => '',
+				'value'       => 'yes',
+				'type'        => 'checkbox',
 				'description' => __( 'Either the Service is Optional.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_checkbox(
+			),
 			array(
 				'label'       => __( 'If Hidden', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_service_hidden',
-				'value'       => '',
+				'value'       => 'yes',
+				'type'        => 'checkbox',
 				'description' => __( 'Either the Service is Hidden.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_checkbox(
+			),
 			array(
 				'label'       => __( 'If has Quantity', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_service_has_quantity',
-				'value'       => '',
+				'value'       => 'yes',
+				'type'        => 'checkbox',
 				'description' => __( 'Either the service has quantity.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_text_input(
+			),
 			array(
 				'id'          => 'mwb_mbfw_service_minimum_quantity',
 				'type'        => 'number',
 				'value'       => '',
 				'label'       => __( 'Minimum Quantity', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add Minimum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ),
-			)
-		);
-		woocommerce_wp_text_input(
+			),
 			array(
 				'id'          => 'mwb_mbfw_service_maximum_quantity',
 				'type'        => 'number',
 				'value'       => '',
 				'label'       => __( 'Maximum Quantity', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add Maximum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ),
-			)
+			),
 		);
+		$this->mbfw_taxonomy_adding_fields_html( $fields );
 	}
 
 	/**

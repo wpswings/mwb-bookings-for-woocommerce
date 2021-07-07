@@ -17,7 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $product;
 $product_id = get_the_id();
-do_action( 'mwb_booking_before_add_to_cart_form' );
-do_action( 'mwb_mbfw_number_of_people_while_booking_on_form', $product_id, $product );
-do_action( 'mwb_mbfw_booking_services_details_on_form', $product_id, $product );
-do_action( 'mwb_booking_after_add_to_cart_form' );
+?>
+<div>
+	<?php
+	do_action( 'mwb_booking_before_add_to_cart_form', $product_id, $product );
+	do_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $product_id, $product );
+	do_action( 'mwb_mbfw_number_of_people_while_booking_on_form', $product_id, $product );
+	do_action( 'mwb_mbfw_booking_services_details_on_form', $product_id, $product );
+	do_action( 'mwb_booking_after_add_to_cart_form', $product, $product );
+	?>
+</div>

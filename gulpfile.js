@@ -99,7 +99,7 @@ function css()
 {
   return gulp
   .src([
-    './assets/src/front-end/scss/main.scss',
+    './assets/src/front-end/css/custom.css',
   ])
   .pipe(plumber())
   .pipe(concat('mwb-public.css'))
@@ -251,7 +251,7 @@ function fontsBackend()
 // watch changes
 function watchFiles()
 {
-  gulp.watch('./assets/src/front-end/scss/**/*', css);
+  gulp.watch('./assets/src/front-end/css/custom.css', css);
   gulp.watch('assets/src/front-end/js/**/*', scripts);
   gulp.watch('assets/src/common-end/js/**/*', CommonScripts);
   gulp.watch('assets/src/front-end/image/**/*', images);

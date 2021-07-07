@@ -690,45 +690,41 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_product_data_tabs_html() {
+		$booking_criteria = get_post_meta( get_the_ID(), 'mwb_mbfw_booking_criteria', true );
+		$booking_unit     = get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit', true );
 		?>
 		<div id="mwb_booking_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
+			<p class="form-field mwb_mbfw_booking_criteria_field">
+				<label for="mwb_mbfw_booking_criteria"><?php esc_html_e( 'Booking unit', 'mwb-booking-for-woocommerce' ); ?></label>
+				<select name="mwb_mbfw_booking_criteria" id="mwb_mbfw_booking_criteria">
+					<option value="customer_selected_unit" <?php selected( 'customer_selected_unit', $booking_criteria ); ?>><?php esc_html_e( 'Customer Selected Unit', 'mwb-bookings-for-woocommerce' ); ?></option>
+					<option value="fixed_unit" <?php selected( 'fixed_unit', $booking_criteria ); ?>><?php esc_html_e( 'Fixed Unit', 'mwb-bookings-for-woocommerce' ); ?></option>
+				</select>
+				<input type="number" step="1" min="1" max="" style="width: 4em;" id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( get_post_meta( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
+				<select name="mwb_mbfw_booking_unit" id="mwb_mbfw_booking_unit">
+					<option value="days" <?php selected( 'days', $booking_unit ); ?>><?php esc_html_e( 'Day(s)', 'mwb-bookings-for-woocommerce' ); ?></option>
+					<option value="hours" <?php selected( 'hours', $booking_unit ); ?>><?php esc_html_e( 'Hour(s)', 'mwb-bookings-for-woocommerce' ); ?></option>
+					<option value="minutes" <?php selected( 'minutes', $booking_unit ); ?>><?php esc_html_e( 'Minute(s)', 'mwb-bookings-for-woocommerce' ); ?></option>
+				</select>
+				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria, max booking number, and unit', 'mwb-booking-for-woocommerce' ); ?>"></span>
+			</p>
 			<?php
-			woocommerce_wp_select(
+			woocommerce_wp_checkbox(
 				array(
-					'id'            => 'mwb_mbfw_booking_criteria',
-					'value'         => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_criteria', true ),
-					'label'         => __( 'Booking Type', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'      => true,
-					'options'       => array(
-						'customer_selected_unit' => __( 'Customer Selected Unit', 'mwb-bookings-for-woocommerce' ),
-						'fixed_unit'             => __( 'Fixed Unit', 'mwb-bookings-for-woocommerce' ),
-					),
-					'description'   => __( 'Choose Booking unit, variable or fixed', 'mwb-bookings-for-woocommerce' )
-				)
-			);
-			woocommerce_wp_text_input(
-				array(
-					'id'          => 'mwb_mbfw_booking_count',
-					// 'class'       => 'fixed_unit' === get_post_meta( get_the_ID(), 'mwb_mbfw_booking_criteria', true ) ? 'hide' : '',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_count', true ),
-					'label'       => __( 'Booking Count', 'mwb-bookings-for-woocommerce' ),
-					'type'        => 'number',
-					'description' => __( 'Enter Booking count', 'mwb-bookings-for-woocommerce' ),
+					'id'          => 'mwb_mbfw_enable_calendar',
+					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_calendar', true ),
+					'label'       => __( 'Enable Calendar', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable calender at frontend for choosing dates while booking', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
-			woocommerce_wp_select(
+			woocommerce_wp_checkbox(
 				array(
-					'id'            => 'mwb_mbfw_booking_unit',
-					'value'         => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit', true ),
-					'label'         => __( 'Booking Unit', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'      => true,
-					'options'       => array(
-						'days'    => __( 'Day(s)', 'mwb-bookings-for-woocommerce' ),
-						'hours'   => __( 'Hour(s)', 'mwb-bookings-for-woocommerce' ),
-						'minutes' => __( 'Minute(s)', 'mwb-bookings-for-woocommerce' ),
-					),
-					'description'   => __( 'Choose Booking unit, days, Hours or minutes', 'mwb-bookings-for-woocommerce' )
+					'id'          => 'mwb_mbfw_enable_time_picker',
+					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_time_picker', true ),
+					'label'       => __( 'Enable Time Picker', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable Time Picker at frontend for choosing Time while booking', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
 				)
 			);
 			woocommerce_wp_text_input(
@@ -737,7 +733,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'type'        => 'number',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_max_bookings', true ),
 					'label'       => __( 'Max Bookings', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Max Bookings per Unit', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Max Bookings per Product/Service.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -899,6 +895,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_booking_criteria'                => array_key_exists( 'mwb_mbfw_booking_criteria', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_criteria'] ) ) : '',
 				'mwb_mbfw_booking_count'                   => array_key_exists( 'mwb_mbfw_booking_count', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_count'] ) ) : '',
 				'mwb_mbfw_booking_unit'                    => array_key_exists( 'mwb_mbfw_booking_unit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_unit'] ) ) : '',
+				'mwb_mbfw_enable_calendar'                 => array_key_exists( 'mwb_mbfw_enable_calendar', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_enable_calendar'] ) ) : '',
+				'mwb_mbfw_enable_time_picker'              => array_key_exists( 'mwb_mbfw_enable_time_picker', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_enable_time_picker'] ) ) : '',
 				'mwb_mbfw_max_bookings'                    => array_key_exists( 'mwb_mbfw_max_bookings', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_max_bookings'] ) ) : '',
 				'mwb_mbfw_admin_confirmation'              => array_key_exists( 'mwb_mbfw_admin_confirmation', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_admin_confirmation'] ) ) : '',
 				'mwb_mbfw_cancellation_allowed'            => array_key_exists( 'mwb_mbfw_cancellation_allowed', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_cancellation_allowed'] ) ) : '',

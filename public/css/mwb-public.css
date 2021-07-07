@@ -1,30 +1,10 @@
-/* Create Color variables here
- * follow this link for Color name
- * https://chir.ag/projects/name-that-color/
- * and use $c prefix.
- * use lowercase for color code and variable name 
- * i.e $c-black: #000000; */
-/* Create Typo variables here
- * use $ff prefix for font family
- * use $fs for font size
- i.e $ff-roboto-b: Roboto-bold;
- * $fs-large: 40px; */
-/* Placeholders */
-/* Mixins */
-/* SCSS Functions */
-/* Enter Your Global CSS here */
-* {
-  box-sizing: border-box;
+.mbfw-additionl-detail-listing-section {
+  float: left;
+  width: 33%;
 }
 
-*:after, *:before {
-  box-sizing: border-box;
+.mbfw-additionl-detail-listing-section__wrapper::after {
+  content: "";
+  clear: both;
+  display: table;
 }
-
-/* Enter Button Global CSS Here */
-/* Header CSS */
-/* Footer CSS */
-/* Navigation CSS */
-/* Sidebar CSS */
-/* About page css */
-/* Home Page CSS */

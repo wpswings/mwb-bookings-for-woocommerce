@@ -176,11 +176,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			<div class="mbfw-additionl-detail-listing-section__wrapper">
 				<div class="mbfw-additionl-detail-listing-section">
 					<label for="mwb-mbfw-single-booking-date-selector-from"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="mwb_mbfw_booking_from_date" id="mwb-mbfw-single-booking-date-selector-from" required>
+					<input type="text" name="mwb_mbfw_booking_from_date" id="mwb-mbfw-single-booking-date-selector-from" autocomplete="off" required>
 				</div>
 				<div class="mbfw-additionl-detail-listing-section">
 					<label for="mwb-mbfw-single-booking-date-selector-to"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="mwb_mbfw_booking_to_date" id="mwb-mbfw-single-booking-date-selector-to" required>
+					<input type="text" name="mwb_mbfw_booking_to_date" id="mwb-mbfw-single-booking-date-selector-to" autocomplete="off" required>
 				</div>
 			</div>
 			<?php
@@ -213,11 +213,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$product = wc_get_product( $product_id );
 		if ( is_object( $product ) && 'mwb_booking' === $product->get_type() ) {
 			// phpcs:disable:WordPress.Security.NonceVerification
-			$cart_item_data['mwb_mbfw_people_number']      = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : '';
-			$cart_item_data['mwb_mbfw_service_option']     = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : '';
-			$cart_item_data['mwb_mbfw_service_quantity']   = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ) ) : '';
-			$cart_item_data['mwb_mbfw_enable_calendar']    = 'no';
-			$cart_item_data['mwb_mbfw_enable_time_picker'] = 'no';
+			$cart_item_data['mwb_mbfw_people_number']           = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : '';
+			$cart_item_data['mwb_mbfw_service_option_checkbox'] = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
+			$cart_item_data['mwb_mbfw_service_quantity']        = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array();
+			$cart_item_data['mwb_mbfw_enable_calendar']         = 'no';
+			$cart_item_data['mwb_mbfw_enable_time_picker']      = 'no';
 			if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
 				$cart_item_data['mwb_mbfw_enable_calendar']   = 'yes';
 				$cart_item_data['mwb_mbfw_booking_from_date'] = array_key_exists( 'mwb_mbfw_booking_from_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_date'] ) ) : '';
@@ -246,21 +246,32 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'display' => wp_kses_post( $cart_item['mwb_mbfw_people_number'] ),
 			);
 		}
-		if ( isset( $cart_item['mwb_mbfw_service_option'] ) ) {
-			$selected_services = $cart_item['mwb_mbfw_service_option'];
-			if ( is_array( $selected_services ) ) {
-				$service_name = array();
-				foreach ( $selected_services as $service ) {
-					$term           = get_term( $service );
-					$service_name[] = isset( $term->name ) ? $term->name : __( 'not found', 'mwb-bookings-for-woocommerce' );
-				}
-				if ( $service_name ) {
-					$other_data[] =  array(
-						'name'    => _n( 'Service', 'Services', count( $service_name ), 'mwb-bookings-for-woocommerce' ),
-						'display' => join( ', ', $service_name ),
-					);
+		$terms            = get_the_terms( $cart_item['product_id'], 'mwb_booking_service' );
+		$service_name     = array();
+		$service_quantity = isset( $cart_item['mwb_mbfw_service_quantity'] ) ? $cart_item['mwb_mbfw_service_quantity'] : array();
+		if ( is_array( $terms ) ) {
+			foreach ( $terms as $term ) {
+				if ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) ) {
+					$service_count  = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
+					$service_name[] = isset( $term->name ) ? $term->name . '( ' . $service_count . ' )' : __( 'not found', 'mwb-bookings-for-woocommerce' );
 				}
 			}
+		}
+		if ( isset( $cart_item['mwb_mbfw_service_option_checkbox'] ) ) {
+			$selected_services = $cart_item['mwb_mbfw_service_option_checkbox'];
+			if ( is_array( $selected_services ) ) {
+				foreach ( $selected_services as $term_id ) {
+					$term           = get_term( $term_id );
+					$service_count  = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
+					$service_name[] = isset( $term->name ) ? $term->name . '( ' . $service_count . ' )' : __( 'not found', 'mwb-bookings-for-woocommerce' );
+				}
+			}
+		}
+		if ( $service_name ) {
+			$other_data[] =  array(
+				'name'    => _n( 'Service', 'Services', count( $service_name ), 'mwb-bookings-for-woocommerce' ),
+				'display' => join( ', ', $service_name ),
+			);
 		}
 		if ( isset( $cart_item['mwb_mbfw_booking_from_date'] ) && isset( $cart_item['mwb_mbfw_booking_to_date'] ) ) {
 			$other_data[] = array(
@@ -301,76 +312,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	}
 
 	/**
-	 * Showing extra charges on cart listing total.
-	 *
-	 * @return void
-	 */
-	public function mwb_mbfw_show_extra_charges_in_total( $cart_object ) {
-		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
-			return;
-		}
-		$cart_data = $cart_object->get_cart();
-		foreach ( $cart_data as $cart ) {
-			if ( 'mwb_booking' === $cart['data']->get_type() ) {
-				$new_price     = $cart['data']->get_price();
-				$people_number = isset( $cart['mwb_mbfw_people_number'] ) && ( $cart['mwb_mbfw_people_number'] > 0 ) ? (int) $cart['mwb_mbfw_people_number'] : 1;
-				$base_price    = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
-				$unit_price    = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_unit_cost', true );
-				
-				// adding unit cost.
-				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
-					$new_price = (float) $unit_price * $people_number;
-				} else {
-					$new_price = (float) $unit_price;
-				}
-				
-				// adding base cost.
-				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
-					$new_price = $new_price + (float) $base_price * $people_number;
-				} else {
-					$new_price = $new_price + (float) $base_price;
-				}
-				
-				// adding extra services cost.
-				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_add_extra_services', true ) ) {
-					if ( isset( $cart['mwb_mbfw_service_option'] ) ) {
-						$extra_services = $cart['mwb_mbfw_service_option'];
-						if ( is_array( $extra_services ) ) {
-							foreach ( $extra_services as $term_id ) {
-								$cost = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
-								if ( $cost ) {
-									if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
-										$new_price = $new_price + $people_number * (float) $cost;
-									} else {
-										$new_price = $new_price + (float) $cost;
-									}
-								}
-							}
-						}
-					}
-				}
-				
-				// adding extra cost.
-				$terms = get_the_terms( $cart['product_id'], 'mwb_booking_cost' );
-				if ( $terms ) {
-					foreach ( $terms as $term ) {
-						$term_id = $term->term_id;
-						$price   = get_term_meta( $term_id, 'mwb_mbfw_booking_cost', true );
-						if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true ) ) {
-							$new_price = $new_price + $people_number * (float) $price;
-						} else {
-							$new_price = $new_price + (float) $price;
-						}
-					}
-				}
-				
-				// setting the new price.
-				$cart['data']->set_price( $new_price );
-			}
-		}
-	}
-
-	/**
 	 * Remove Quanitity Field.
 	 *
 	 * @param boolean $return return true or false based on if quantity field is required.
@@ -385,7 +326,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	}
 	public function mwb_mbfw_set_max_quantity_to_be_booked_by_individual( $args, $product ) {
 		if ( 'mwb_booking' === $product->get_type() ) {
-			$args['max_value'] = 2;
+			$args['max_value'] = get_post_meta( $product->get_id(), 'mwb_mbfw_maximum_booking_per_unit', true );
 		}
 		return $args;
 	}
@@ -405,9 +346,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		if ( 'mwb_booking' === $custom_values['data']->product_type ) {
 			$line_item_meta                                = array();
 			$line_item_meta['mwb_mbfw_people_number']      = isset( $custom_values['mwb_mbfw_people_number'] ) ? $custom_values['mwb_mbfw_people_number'] : 1;
-			$line_item_meta['mwb_mbfw_service_option']     = isset( $custom_values['mwb_mbfw_service_option'] ) ? $custom_values['mwb_mbfw_service_option'] : array();
 			$line_item_meta['mwb_mbfw_enable_time_picker'] = 'no';
 			$line_item_meta['mwb_mbfw_enable_calendar']    = 'no';
+			$line_item_meta['mwb_mbfw_service_and_count']  = isset( $custom_values['mwb_mbfw_service_and_count'] ) ? $custom_values['mwb_mbfw_service_and_count'] : array();
 			if ( 'yes' === $custom_values['mwb_mbfw_enable_calendar'] ) {
 				$line_item_meta['mwb_mbfw_enable_calendar']   = 'yes';
 				$line_item_meta['mwb_mbfw_booking_from_date'] = isset( $custom_values['mwb_mbfw_booking_from_date'] ) ? $custom_values['mwb_mbfw_booking_from_date'] : '';

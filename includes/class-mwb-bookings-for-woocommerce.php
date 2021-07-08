@@ -251,6 +251,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'admin_bar_menu', $mbfw_plugin_common, 'mbfw_add_admin_menu_custom_tab', 100 );
 			$this->loader->add_action( 'wp_ajax_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_common, 'mwb_mbfw_show_extra_charges_in_total' );
 		}
 	}
 
@@ -273,7 +274,6 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_get_item_data', $mbfw_plugin_public, 'mwb_mbfw_show_additional_data_on_cart_and_checkout_page', 10, 2 );
 			$this->loader->add_action( 'woocommerce_mwb_booking_add_to_cart', $mbfw_plugin_public, 'mwb_mbfw_load_single_page_template' );
 			$this->loader->add_action( 'woocommerce_loop_add_to_cart_link', $mbfw_plugin_public, 'mwb_mbfw_show_readmore_button_on_archieve_page', 10, 2 );
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_public, 'mwb_mbfw_show_extra_charges_in_total' );
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mbfw_plugin_public, 'mwb_mbfw_remove_quantity_field', 10, 2 );
 			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item' , $mbfw_plugin_public, 'mwb_mbfw_add_custom_order_item_meta_data', 10, 4 );
 			$this->loader->add_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $mbfw_plugin_public, 'mwb_mbfw_show_date_time_selector_on_single_product_page', 10, 2 );

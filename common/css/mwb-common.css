@@ -1,0 +1,9 @@
+.mbfw-total-listing-single-page__wrapper {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.mbfw-total-listing-single-page {
+  float: left;
+}

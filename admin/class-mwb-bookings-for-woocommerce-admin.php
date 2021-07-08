@@ -851,7 +851,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			<?php
 			woocommerce_wp_text_input(
 				array(
-					'label'       => __( 'Maximum Booking Per Unit', 'mwb-bookings-for-woocommerce' ),
+					'label'       => __( 'Maximum Booking Per User', 'mwb-bookings-for-woocommerce' ),
 					'id'          => 'mwb_mbfw_maximum_booking_per_unit',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_maximum_booking_per_unit', true ),
 					'description' => __( 'Maximum Bookings per Unit', 'mwb-bookings-for-woocommerce' ),

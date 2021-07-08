@@ -112,7 +112,24 @@ function css()
   .pipe(gulp.dest("public/css"))
   .pipe(browsersync.stream());
 }
-
+// CSS Dashboard
+function cssCommonEnd()
+{
+  return gulp
+  .src([
+    'assets/src/common-end/css/custom.css',
+  ])
+  .pipe(plumber())
+  .pipe(concat('mwb-common.css'))
+  .pipe(sass({ outputStyle: "expanded" }))
+  .pipe(gulp.dest("common/css"))
+  .pipe(postcss([autoprefixer(), combineMediaQuery()]))
+  .pipe(gulp.dest("common/css"))
+  .pipe(rename({ suffix: ".min" }))
+  .pipe(postcss([cssnano()]))
+  .pipe(gulp.dest("common/css"))
+  .pipe(browsersync.stream());
+}
 // CSS Dashboard
 function cssBackend()
 {
@@ -259,13 +276,14 @@ function watchFiles()
   gulp.watch('./*.html', html);
   gulp.watch('assets/src/back-end/image/**/*', imagesBackend);
   gulp.watch('assets/src/back-end/scss/main.scss', cssBackend);
+  gulp.watch('assets/src/common-end/css/custom.css', cssCommonEnd);
   gulp.watch('assets/src/back-end/scss/admin-global-custom.scss', cssBackendCustom);
   gulp.watch('assets/src/back-end/js/admin.js', scriptsBackend);
   gulp.watch('assets/src/back-end/js/mwb-bookings-for-woocommerce-admin-custom-global.js', scriptsBackendCustom);
   gulp.watch('assets/src/front-end/fonts/**/*', fontsBackend);
 }
 
-const start = gulp.series(clean, images, fonts, css, scripts, CommonScripts, html, imagesBackend, cssBackend, cssBackendCustom, scriptsBackend, scriptsBackendCustom,fontsBackend);
+const start = gulp.series(clean, images, fonts, css, scripts, CommonScripts, html, imagesBackend, cssBackend, cssCommonEnd, cssBackendCustom, scriptsBackend, scriptsBackendCustom,fontsBackend);
 const watch = gulp.parallel(watchFiles, browserSync);
 
 // export tasks
@@ -276,6 +294,7 @@ exports.CommonScripts = CommonScripts;
 exports.clean = clean;
 exports.imagesBackend = imagesBackend;
 exports.cssBackend = cssBackend;
+exports.cssCommonEnd = cssCommonEnd;
 exports.cssBackendCustom = cssBackendCustom;
 exports.scriptsBackend = scriptsBackend;
 exports.scriptsBackendCustom = scriptsBackendCustom;

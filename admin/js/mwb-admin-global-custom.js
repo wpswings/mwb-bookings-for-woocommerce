@@ -1,3 +1,9 @@
 jQuery(document).ready(function($) {
-    // $('.mwb-mbfw-multiselect-field-admin').select2();
+    $(document).on('change', '#mwb_mbfw_booking_criteria', function(){
+        if ( $(this).val() == 'fixed_unit' ) {
+            $('#mwb_mbfw_booking_count').show();
+        } else {
+            $('#mwb_mbfw_booking_count').hide();
+        }
+    });
 });

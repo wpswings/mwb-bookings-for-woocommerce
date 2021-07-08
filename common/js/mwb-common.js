@@ -29,32 +29,23 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
     $(document).ready(function(){
-        $(document).on('change', '.mwb_mbfw_people_number', function(){
-            var number_of_people = $(this).val();
-            console.log($('.mwb_booking_cart').serializeArray() );
-            // retrieve_booking_total_ajax();
+        $(document).on('change', 'form.cart :input', function(){
+            var form_data = new FormData( $('form.cart')[0] );
+            retrieve_booking_total_ajax( form_data );
         });
-        $(document).on('change', '.mwb-mbfw-additional-service-option', function(){
-            if ( $(this).prop('checked') ) {
-                console.log($(this).data('term-id'));
-                retrieve_booking_total_ajax();
-            } else {
-                console.log('no');
-            }
-        });
-        function retrieve_booking_total_ajax() {
-            $.ajax({
-                url    : mwb_mbfw_common_obj.ajax_url,
-                method : 'post',
-                data   : {
-                    action    : 'mbfw_retrieve_booking_total_single_page',
-                    form_data : $('.mwb_booking_cart').serializeArray(),
-                    nonce     : mwb_mbfw_common_obj.nonce
+        function retrieve_booking_total_ajax( form_data ) {
+            form_data.append('action', 'mbfw_retrieve_booking_total_single_page');
+            form_data.append('nonce', mwb_mbfw_common_obj.nonce);
+            jQuery.ajax({
+                url         : mwb_mbfw_common_obj.ajax_url,
+                method      : 'post',
+                data        : form_data,
+                processData : false,
+                contentType : false,
+                success     : function( msg ) {
+                    $('.mwb-mbfw-total-area').html(msg);
                 },
-                success : function( msg ) {
-                   console.log(msg);
-                },
-                error   : function() {
+                error       : function() {
                     alert('error');
                 }
             });

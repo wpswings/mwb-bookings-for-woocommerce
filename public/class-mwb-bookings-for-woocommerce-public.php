@@ -70,6 +70,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		wp_enqueue_script( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 	}
+
 	/**
 	 * Adding custom fields before add to cart button.
 	 *
@@ -81,6 +82,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/mwb-bookings-for-woocommerce-public-add-to-cart-form.php';
 		}
 	}
+
 	/**
 	 * Loading single product template for our custom product type.
 	 *
@@ -89,6 +91,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	public function mwb_mbfw_load_single_page_template() {
 		do_action( 'woocommerce_simple_add_to_cart' );
 	}
+
 	/**
 	 * Return class name for custom product type.
 	 *
@@ -171,7 +174,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function mwb_mbfw_show_date_time_selector_on_single_product_page( $product_id, $product ) {
-		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calender', true ) ) {
+		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
 			?>
 			<div class="mbfw-additionl-detail-listing-section__wrapper">
 				<div class="mbfw-additionl-detail-listing-section">
@@ -200,6 +203,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			<?php
 		}
 	}
+
 	/**
 	 * Add additional data in the cart.
 	 *
@@ -232,6 +236,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		}
 		return $cart_item_data;
 	}
+
 	/**
 	 * Show addiditional data on cart and checkout page.
 	 *
@@ -312,25 +317,24 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	}
 
 	/**
-	 * Remove Quanitity Field.
+	 * Set maximum and minimum booking quantity per product.
 	 *
-	 * @param boolean $return return true or false based on if quantity field is required.
-	 * @param object  $product current product object.
-	 * @return boolean
+	 * @param array  $args array containing attributes of the html filed for count.
+	 * @param object $product current product object.
+	 * @return array
 	 */
-	public function mwb_mbfw_remove_quantity_field( $return, $product ) {
-		// if ( 'mwb_booking' === $product->get_type() ) {
-		// 	$return = true;
-		// }
-		return $return;
-	}
 	public function mwb_mbfw_set_max_quantity_to_be_booked_by_individual( $args, $product ) {
 		if ( 'mwb_booking' === $product->get_type() ) {
-			$args['max_value'] = get_post_meta( $product->get_id(), 'mwb_mbfw_maximum_booking_per_unit', true );
+			if ( 'fixed_unit' === get_post_meta( $product->get_id(), 'mwb_mbfw_booking_criteria', true ) ) {
+				$booking_count     = get_post_meta( $product->get_id(), 'mwb_mbfw_booking_count', true );
+				$args['min_value'] = $booking_count;
+				$args['max_value'] = $booking_count;
+			} else {
+				$args['max_value'] = get_post_meta( $product->get_id(), 'mwb_mbfw_maximum_booking_per_unit', true );
+			}
 		}
 		return $args;
 	}
-
 
 	/**
 	 * Updating additional meta data with products in line items.

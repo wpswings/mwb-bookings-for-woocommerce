@@ -700,31 +700,34 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					<option value="customer_selected_unit" <?php selected( 'customer_selected_unit', $booking_criteria ); ?>><?php esc_html_e( 'Customer Selected Unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="fixed_unit" <?php selected( 'fixed_unit', $booking_criteria ); ?>><?php esc_html_e( 'Fixed Unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
-				<input type="number" step="1" min="1" max="" style="width: 4em;" id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( get_post_meta( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
+				<input type="number" step="1" min="1" max="" style="width: 4em;" <?php echo esc_attr( ( 'customer_selected_unit' === $booking_criteria ) ? 'disabled:disabled' : '' ); ?> id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( get_post_meta( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
 				<select name="mwb_mbfw_booking_unit" id="mwb_mbfw_booking_unit">
 					<option value="days" <?php selected( 'days', $booking_unit ); ?>><?php esc_html_e( 'Day(s)', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="hours" <?php selected( 'hours', $booking_unit ); ?>><?php esc_html_e( 'Hour(s)', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="minutes" <?php selected( 'minutes', $booking_unit ); ?>><?php esc_html_e( 'Minute(s)', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
-				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria, max booking number, and unit', 'mwb-booking-for-woocommerce' ); ?>"></span>
+				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria, max booking number, and unit. Unit will be used to calculate booking charge based on duration ( if selected in Booking services and booking costs in taxonomy ).', 'mwb-booking-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
+			$custom_attr = array( 'disabled' => 'disabled' );
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => 'mwb_mbfw_enable_calendar',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_calendar', true ),
-					'label'       => __( 'Enable Calendar', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable calender at frontend for choosing dates while booking', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'    => true,
+					'id'                => 'mwb_mbfw_enable_calendar',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_calendar', true ),
+					'label'             => __( 'Enable Calendar', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Enable calender at frontend for choosing dates while booking', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'custom_attributes' => ( 'days' !== $booking_unit ) ? $custom_attr : array(),
 				)
 			);
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => 'mwb_mbfw_enable_time_picker',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_time_picker', true ),
-					'label'       => __( 'Enable Time Picker', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable Time Picker at frontend for choosing Time while booking', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'    => true,
+					'id'                => 'mwb_mbfw_enable_time_picker',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_time_picker', true ),
+					'label'             => __( 'Enable Time Picker', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Enable Time Picker at frontend for choosing Time while booking', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'custom_attributes' => ( 'days' === $booking_unit ) ? $custom_attr : array(),
 				)
 			);
 			woocommerce_wp_text_input(
@@ -735,6 +738,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'label'       => __( 'Max Bookings', 'mwb-bookings-for-woocommerce' ),
 					'description' => __( 'Max Bookings per Product/Service.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
+					'style'       => 'width:10em;',
 				)
 			);
 			woocommerce_wp_checkbox(
@@ -767,6 +771,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'description' => __( 'Enter Unit Cost', 'mwb-bookings-for-woocommerce' ),
 					'type'        => 'number',
 					'desc_tip'    => true,
+					'style'       => 'width:10em;',
 				)
 			);
 			woocommerce_wp_checkbox(
@@ -786,6 +791,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'description' => __( 'Enter Base Cost', 'mwb-bookings-for-woocommerce' ),
 					'type'        => 'number',
 					'desc_tip'    => true,
+					'style'       => 'width:10em;',
 				)
 			);
 			woocommerce_wp_checkbox(
@@ -819,6 +825,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'label'       => __( 'Minimum No. of People', 'mwb-bookings-for-woocommerce' ),
 					'description' => __( 'Minimum Number of People Per Booking', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
+					'style'       => 'width:10em;',
 				)
 			);
 			woocommerce_wp_text_input(
@@ -829,6 +836,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'label'       => __( 'Maximum No. of People', 'mwb-bookings-for-woocommerce' ),
 					'description' => __( 'Maximum Number of People Per Booking', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
+					'style'       => 'width:10em;',
 				)
 			);
 			?>
@@ -857,6 +865,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'description' => __( 'Maximum Bookings per Unit', 'mwb-bookings-for-woocommerce' ),
 					'type'        => 'number',
 					'desc_tip'    => true,
+					'style'       => 'width:10em;',
 				)
 			);
 			?>
@@ -901,6 +910,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_admin_confirmation'              => array_key_exists( 'mwb_mbfw_admin_confirmation', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_admin_confirmation'] ) ) : '',
 				'mwb_mbfw_cancellation_allowed'            => array_key_exists( 'mwb_mbfw_cancellation_allowed', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_cancellation_allowed'] ) ) : '',
 				'mwb_mbfw_booking_unit_cost'               => array_key_exists( 'mwb_mbfw_booking_unit_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_unit_cost'] ) ) : '',
+				'_price'                                   => array_key_exists( 'mwb_mbfw_booking_unit_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_unit_cost'] ) ) : '',
 				'mwb_mbfw_is_booking_unit_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_unit_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_unit_cost_per_people'] ) ) : '',
 				'mwb_mbfw_booking_base_cost'               => array_key_exists( 'mwb_mbfw_booking_base_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_base_cost'] ) ) : '',
 				'mwb_mbfw_is_booking_base_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_base_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_base_cost_per_people'] ) ) : '',
@@ -914,51 +924,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 				update_post_meta( $id, $meta_key, $meta_value );
 			}
-			$price = (int) $product_meta_data['mwb_mbfw_booking_unit_cost'];
-			update_post_meta( $id, '_price', $price );
+			wp_set_object_terms( $id, array( 'booking' ), 'product_cat', true );
+			wp_remove_object_terms( $id, 'uncategorized', 'product_cat' );
 		}
-	}
-
-	/**
-	 * Multiselect Html element.
-	 *
-	 * @param array $field array containing attributes and values of HTML fields for multiselect.
-	 * @return void
-	 */
-	public function mbfw_multiselect_html_field( $field ) {
-		global $thepostid, $post, $woocommerce;
-		$field['class']         = isset( $field['class'] ) ? $field['class'] : 'select short';
-		$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
-		$field['name']          = isset( $field['name'] ) ? $field['name'] : $field['id'];
-		$field['value']         = isset( $field['value'] ) && is_array( $field['value'] ) ? $field['value'] : array();
-		$field['options']       = isset( $field['options'] ) && is_array( $field['options'] ) ? $field['options'] : '';
-		?>
-		<p class="form-field <?php echo esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ); ?>">
-			<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo wp_kses_post( $field['label'] ); ?></label>
-			<select id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" class="<?php echo esc_attr( $field['class'] ); ?>" multiple="multiple">
-				<?php
-				foreach ( $field['options'] as $key => $value ) {
-					?>
-					<option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_attr( in_array( $key, $field['value'], true ) ? 'selected="selected"' : '' ); ?>><?php echo esc_html( $value ); ?></option>
-					<?php
-				}
-				?>
-			</select>
-			<?php
-			if ( ! empty( $field['description'] ) ) {
-				if ( isset( $field['desc_tip'] ) && false !== $field['desc_tip'] ) {
-					?>
-					<span class="woocommerce-help-tip" data-tip="<?php echo esc_attr( $field['description'] ); ?>"></span>
-					<?php
-				} else {
-					?>
-					<span class="description"><?php echo wp_kses_post( $field['description'] ); ?></span>
-					<?php
-				}
-			}
-			?>
-		</p>
-		<?php
 	}
 
 	/**
@@ -974,6 +942,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'value'       => '',
 				'label'       => __( 'Booking Cost', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add Booking cost here.', 'mwb-bookings-for-woocommerce' ),
+				'style'       => 'width:10em;',
 			),
 			array(
 				'label'       => __( 'Multiply by No. of People', 'mwb-bookings-for-woocommerce' ),
@@ -1004,8 +973,23 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			?>
 			<p class="form-field">
 				<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_attr( isset( $field['label'] ) ? $field['label'] : '' ); ?></label>
-				<input type="<?php echo esc_attr( $field['type'] ); ?>" class="<?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : 'short' ); ?>" style="" name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $field['id'] ); ?>" id="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" placeholder="">
-				<span class="description"><?php echo wp_kses_post( isset( $field['description'] ) ? $field['description'] : '' ); ?></span>
+				<input
+				type="<?php echo esc_attr( $field['type'] ); ?>"
+				class="<?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : 'short' ); ?>"
+				style="<?php echo esc_attr( isset( $field['style'] ) ? $field['style'] : '' ); ?>"
+				name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $field['id'] ); ?>"
+				id="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>"
+				placeholder=""
+				<?php
+				if ( isset( $field['custom_attribute'] ) && is_array( $field['custom_attribute'] ) ) {
+					$custom_attributes = $field['custom_attribute'];
+					foreach ( $custom_attributes as $attr_name => $attr_val ) {
+						echo esc_html( $attr_name . '=' . $attr_val );
+					}
+				}
+				?>
+				>
+				<p class="description"><?php echo wp_kses_post( isset( $field['description'] ) ? $field['description'] : '' ); ?></p>
 			</p>
 			<?php
 		}
@@ -1026,7 +1010,22 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 						<label for="<?php echo esc_attr( $tag_arr['id'] ); ?>"><?php echo wp_kses_post( isset( $tag_arr['label'] ) ?  $tag_arr['label'] : '' ); ?></label>
 					</th>
 					<td>
-						<input name="<?php echo esc_attr( isset( $tag_arr['name'] ) ? $tag_arr['name'] : '' ); ?>" id="<?php echo esc_attr( $tag_arr['id'] ); ?>" type="<?php echo esc_attr( $tag_arr['type'] ); ?>" value="<?php echo esc_attr( ( 'checkbox' === $tag_arr['type'] ) ? 'yes' : get_term_meta( $tag_arr['term_id'], $tag_arr['id'], true ) ); ?>" <?php ( 'checkbox' === $tag_arr['type'] ) ? checked( get_term_meta( $tag_arr['term_id'], $tag_arr['id'], true ), 'yes' ) : ''; ?>/>
+						<input
+						name="<?php echo esc_attr( isset( $tag_arr['name'] ) ? $tag_arr['name'] : '' ); ?>"
+						id="<?php echo esc_attr( $tag_arr['id'] ); ?>"
+						type="<?php echo esc_attr( $tag_arr['type'] ); ?>"
+						value="<?php echo esc_attr( ( 'checkbox' === $tag_arr['type'] ) ? 'yes' : get_term_meta( $tag_arr['term_id'], $tag_arr['id'], true ) ); ?>"
+						<?php ( 'checkbox' === $tag_arr['type'] ) ? checked( get_term_meta( $tag_arr['term_id'], $tag_arr['id'], true ), 'yes' ) : ''; ?>
+						<?php
+						if ( isset( $tag_arr['custom_attribute'] ) && is_array( $tag_arr['custom_attribute'] ) ) {
+							$custom_attributes = $tag_arr['custom_attribute'];
+							foreach ( $custom_attributes as $attr_name => $attr_val ) {
+								echo esc_html( $attr_name . '=' . $attr_val );
+							}
+						}
+						?>
+						style="<?php echo esc_attr( isset( $tag_arr['style'] ) ? $tag_arr['style'] : '' ); ?>"
+						/>
 						<p class="description"><?php echo wp_kses_post( isset( $tag_arr['description'] ) ? $tag_arr['description'] : '' ); ?></p>
 					</td>
 				</tr>
@@ -1051,6 +1050,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'type'        => 'text',
 				'term_id'     => $term->term_id,
 				'description' => __( 'Please Add booking cost here.', 'mwb-bookings-for-woocommerce' ),
+				'style'       => 'width:10em;',
 			),
 			array(
 				'id'          => 'mwb_mbfw_is_booking_cost_multiply_people',
@@ -1121,10 +1121,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				$content = get_term_meta( $term_id, 'mwb_mbfw_booking_cost', true );
 				break;
 			case 'people':
-				$content = get_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true );
+				$content = $this->mwb_mbfw_load_icon_for_yesno_custom_taxonomy_listing( get_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true ) );
 				break;
 			case 'duration':
-				$content = get_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_duration', true );
+				$content = $this->mwb_mbfw_load_icon_for_yesno_custom_taxonomy_listing( get_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_duration', true ) );
 				break;
 			default:
 				break;
@@ -1145,6 +1145,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'value'       => '',
 				'label'       => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add service cost here.', 'mwb-bookings-for-woocommerce' ),
+				'style'       => 'width:10em;',
 			),
 			array(
 				'label'       => __( 'Multiply by Number of People', 'mwb-bookings-for-woocommerce' ),
@@ -1182,18 +1183,22 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'description' => __( 'Either the service has quantity.', 'mwb-bookings-for-woocommerce' ),
 			),
 			array(
-				'id'          => 'mwb_mbfw_service_minimum_quantity',
-				'type'        => 'number',
-				'value'       => '',
-				'label'       => __( 'Minimum Quantity', 'mwb-bookings-for-woocommerce' ),
-				'description' => __( 'Please Add Minimum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ),
+				'id'               => 'mwb_mbfw_service_minimum_quantity',
+				'type'             => 'number',
+				'value'            => '',
+				'label'            => __( 'Minimum Quantity', 'mwb-bookings-for-woocommerce' ),
+				'description'      => __( 'Please Add Minimum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ),
+				'custom_attribute' => array( 'disabled' => 'disabled' ),
+				'style'            => 'width:10em;',
 			),
 			array(
-				'id'          => 'mwb_mbfw_service_maximum_quantity',
-				'type'        => 'number',
-				'value'       => '',
-				'label'       => __( 'Maximum Quantity', 'mwb-bookings-for-woocommerce' ),
-				'description' => __( 'Please Add Maximum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ),
+				'id'               => 'mwb_mbfw_service_maximum_quantity',
+				'type'             => 'number',
+				'value'            => '',
+				'label'            => __( 'Maximum Quantity', 'mwb-bookings-for-woocommerce' ),
+				'description'      => __( 'Please Add Maximum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ),
+				'custom_attribute' => array( 'disabled' => 'disabled' ),
+				'style'            => 'width:10em;',
 			),
 		);
 		$this->mbfw_taxonomy_adding_fields_html( $fields );
@@ -1215,6 +1220,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'type'        => 'number',
 				'term_id'     => $term->term_id,
 				'description' => __( 'Please Add service cost here.', 'mwb-bookings-for-woocommerce' ),
+				'style'       => 'width:10em;'
 			),
 			array(
 				'id'          => 'mwb_mbfw_is_service_cost_multiply_people',
@@ -1257,20 +1263,24 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'description' => __( 'Either the Service has Quantity.', 'mwb-bookings-for-woocommerce' ),
 			),
 			array(
-				'id'          => 'mwb_mbfw_service_minimum_quantity',
-				'name'        => 'mwb_mbfw_service_minimum_quantity',
-				'label'       => __( 'Minimum Quantity', 'mwb-bookings-for-woocommerce' ),
-				'type'        => 'number',
-				'term_id'     => $term->term_id,
-				'description' => __( 'Please Add Minimum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ),
+				'id'               => 'mwb_mbfw_service_minimum_quantity',
+				'name'             => 'mwb_mbfw_service_minimum_quantity',
+				'label'            => __( 'Minimum Quantity', 'mwb-bookings-for-woocommerce' ),
+				'type'             => 'number',
+				'term_id'          => $term->term_id,
+				'description'      => __( 'Please Add Minimum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ),
+				'custom_attribute' => ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) ? array( 'disabled' => 'disabled' ) : array(),
+				'style'            => 'width:10em;',
 			),
 			array(
-				'id'          => 'mwb_mbfw_service_maximum_quantity',
-				'name'        => 'mwb_mbfw_service_maximum_quantity',
-				'label'       => __( 'Maximum Quantity', 'mwb-bookings-for-woocommerce' ),
-				'type'        => 'number',
-				'term_id'     => $term->term_id,
-				'description' => __( 'Please Add Maximum Quantity.', 'mwb-bookings-for-woocommerce' ),
+				'id'               => 'mwb_mbfw_service_maximum_quantity',
+				'name'             => 'mwb_mbfw_service_maximum_quantity',
+				'label'            => __( 'Maximum Quantity', 'mwb-bookings-for-woocommerce' ),
+				'type'             => 'number',
+				'term_id'          => $term->term_id,
+				'description'      => __( 'Please Add Maximum Quantity.', 'mwb-bookings-for-woocommerce' ),
+				'custom_attribute' => ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) ? array( 'disabled' => 'disabled' ) : array(),
+				'style'            => 'width:10em;',
 			),
 		);
 		$this->mbfw_taxonomy_custom_fields_html( $term_fields_arr );
@@ -1334,23 +1344,36 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				$content = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
 				break;
 			case 'people':
-				$content = get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true );
+				$content = $this->mwb_mbfw_load_icon_for_yesno_custom_taxonomy_listing( get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) );
 				break;
 			case 'duration':
-				$content = get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true );
+				$content = $this->mwb_mbfw_load_icon_for_yesno_custom_taxonomy_listing( get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) );
 				break;
 			case 'optional':
-				$content = get_term_meta( $term_id, 'mwb_mbfw_is_service_optional', true );
+				$content = $this->mwb_mbfw_load_icon_for_yesno_custom_taxonomy_listing( get_term_meta( $term_id, 'mwb_mbfw_is_service_optional', true ) );
 				break;
 			case 'is_hidden':
-				$content = get_term_meta( $term_id, 'mwb_mbfw_is_service_hidden', true );
+				$content = $this->mwb_mbfw_load_icon_for_yesno_custom_taxonomy_listing( get_term_meta( $term_id, 'mwb_mbfw_is_service_hidden', true ) );
 				break;
 			case 'has_quantity':
-				$content = get_term_meta( $term_id, 'mwb_mbfw_is_service_has_quantity', true );
+				$content = $this->mwb_mbfw_load_icon_for_yesno_custom_taxonomy_listing( get_term_meta( $term_id, 'mwb_mbfw_is_service_has_quantity', true ) );
 				break;
 			default:
 				break;
 		}
 		return $content;
+	}
+
+	/**
+	 * Returm icons in custom taxonomy listing page.
+	 *
+	 * @param string $value string containing yes or no.
+	 * @return string
+	 */
+	public function mwb_mbfw_load_icon_for_yesno_custom_taxonomy_listing( $value ) {
+		if ( 'yes' === $value ) {
+			return '<span class="dashicons dashicons-yes" title="' . esc_attr__( 'yes', 'mwb-bookings-for-woocommerce' ) . '"></span>';
+		}
+		return '<span class="dashicons dashicons-no-alt" title="' . esc_attr__( 'no', 'mwb-bookings-for-woocommerce' ) . '"></span>';
 	}
 }

@@ -274,7 +274,6 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_get_item_data', $mbfw_plugin_public, 'mwb_mbfw_show_additional_data_on_cart_and_checkout_page', 10, 2 );
 			$this->loader->add_action( 'woocommerce_mwb_booking_add_to_cart', $mbfw_plugin_public, 'mwb_mbfw_load_single_page_template' );
 			$this->loader->add_action( 'woocommerce_loop_add_to_cart_link', $mbfw_plugin_public, 'mwb_mbfw_show_readmore_button_on_archieve_page', 10, 2 );
-			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mbfw_plugin_public, 'mwb_mbfw_remove_quantity_field', 10, 2 );
 			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item' , $mbfw_plugin_public, 'mwb_mbfw_add_custom_order_item_meta_data', 10, 4 );
 			$this->loader->add_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $mbfw_plugin_public, 'mwb_mbfw_show_date_time_selector_on_single_product_page', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_quantity_input_args', $mbfw_plugin_public, 'mwb_mbfw_set_max_quantity_to_be_booked_by_individual', 10, 2 );

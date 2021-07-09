@@ -1,3 +1,23 @@
 th#taxonomy-mwb_booking_service, th#taxonomy-mwb_booking_cost{
     width: 10%;
 }
+#woocommerce-product-data ul.wc-tabs li.general_settings_tab.show_if_mwb_booking a:before{
+    font-family: WooCommerce;
+    content: '\e028';
+}
+#woocommerce-product-data ul.wc-tabs li.people_tab.show_if_mwb_booking a:before{
+    font-family: WooCommerce;
+    content: '\e03a';
+}
+#woocommerce-product-data ul.wc-tabs li.availability_tab.show_if_mwb_booking a:before{
+    font-family: WooCommerce;
+    content: '\e02c';
+}
+#woocommerce-product-data ul.wc-tabs li.services_tab.show_if_mwb_booking a:before{
+    font-family: WooCommerce;
+    content: '\e02b';
+}
+#woocommerce-product-data ul.wc-tabs li.cost_tab.show_if_mwb_booking a:before{
+    font-family: Dashicons;
+    content: '\f111';
+}

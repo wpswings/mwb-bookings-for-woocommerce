@@ -31,7 +31,9 @@
     $(document).ready(function(){
         $(document).on('change', 'form.cart :input', function(){
             var form_data = new FormData( $('form.cart')[0] );
-            retrieve_booking_total_ajax( form_data );
+			if ( $('.mwb-mbfw-total-area').length > 0 ) {
+				retrieve_booking_total_ajax( form_data );
+			}
         });
         function retrieve_booking_total_ajax( form_data ) {
             form_data.append('action', 'mbfw_retrieve_booking_total_single_page');

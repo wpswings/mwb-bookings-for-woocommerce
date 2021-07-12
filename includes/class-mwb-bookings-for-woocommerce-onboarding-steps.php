@@ -29,7 +29,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * The single instance of the class.
 	 *
-	 * @since   1.0.0
+	 * @since   2.0.0
 	 * @var $_instance object of onboarding.
 	 */
 	protected static $_instance = null; // phpcs:ignore
@@ -37,7 +37,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Base url of hubspot api for mwb-bookings-for-woocommerce.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var string base url of API.
 	 */
 	private $mwb_mbfw_base_url = 'https://api.hsforms.com/';
@@ -45,7 +45,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Portal id of hubspot api for mwb-bookings-for-woocommerce.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var string Portal id.
 	 */
 	private static $mwb_mbfw_portal_id = '6493626';
@@ -53,7 +53,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Form id of hubspot api for mwb-bookings-for-woocommerce.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var string Form id.
 	 */
 	private static $mwb_mbfw_onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
@@ -61,7 +61,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Form id of hubspot api for mwb-bookings-for-woocommerce.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var string Form id.
 	 */
 	private static $mwb_mbfw_deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
@@ -69,7 +69,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Define some variables for mwb-bookings-for-woocommerce.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var string $mwb_mbfw_plugin_name plugin name.
 	 */
 	private static $mwb_mbfw_plugin_name;
@@ -77,7 +77,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Define some variables for mwb-bookings-for-woocommerce.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var string $mwb_mbfw_plugin_name_label plugin name text.
 	 */
 	private static $mwb_mbfw_plugin_name_label;
@@ -86,14 +86,14 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 * Define some variables for mwb-bookings-for-woocommerce.
 	 *
 	 * @var string $mwb_mbfw_store_name store name.
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	private static $mwb_mbfw_store_name;
 
 	/**
 	 * Define some variables for mwb-bookings-for-woocommerce.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var string $mwb_mbfw_store_url store url.
 	 */
 	private static $mwb_mbfw_store_url;
@@ -104,7 +104,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 * Set the plugin name and the store name and store url that can be used throughout the plugin.
 	 * Load the dependencies, define the locale, and set the hooks for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function __construct() {
 		self::$mwb_mbfw_store_name        = get_bloginfo( 'name' );
@@ -135,7 +135,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * Ensures only one instance of Onboarding functionality is loaded or can be loaded.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @static
 	 * @return Onboarding Steps - Main instance.
 	 */
@@ -199,7 +199,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		}
 		if ( $this->mwb_mbfw_valid_page_screen_check() || $is_valid ) {
 
-			wp_enqueue_script( 'mwb-mbfw-onboarding-select2-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), '1.0.0', false );
+			wp_enqueue_script( 'mwb-mbfw-onboarding-select2-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), '2.0.0', false );
 
 			wp_enqueue_script( 'mwb-mbfw-metarial-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
 			wp_enqueue_script( 'mwb-mbfw-metarial-js2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
@@ -226,7 +226,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Get all valid screens to add scripts and templates for mwb-bookings-for-woocommerce.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_add_onboarding_popup_screen() {
 		if ( $this->mwb_mbfw_valid_page_screen_check() && $this->mwb_mbfw_show_onboarding_popup_check() ) {
@@ -237,7 +237,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Get all valid screens to add scripts and templates for mwb-bookings-for-woocommerce.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_add_deactivation_popup_screen() {
 
@@ -250,7 +250,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Skip the popup for some days of mwb-bookings-for-woocommerce.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_skip_onboarding_popup() {
 
@@ -263,7 +263,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Add your mwb-bookings-for-woocommerce onboarding form fields.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_add_on_boarding_form_fields() {
 
@@ -432,7 +432,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Add your mwb-bookings-for-woocommerce deactivation form fields.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_add_deactivation_form_fields() {
 
@@ -548,7 +548,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Send the data to Hubspot crm.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_send_onboarding_data() {
 
@@ -637,7 +637,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @param array  $submission  The resultant data of the form.
 	 * @param string $action_type Type of action.
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	protected function mwb_mbfw_handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
 
@@ -665,7 +665,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @param      array  $form_data    form data.
 	 * @param      string $action_type    type of action.
-	 * @since       1.0.0
+	 * @since       2.0.0
 	 */
 	protected function mwb_mbfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
 		
@@ -707,7 +707,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Handle Hubspot POST api calls.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 * @param   string $endpoint   Url where the form data posted.
 	 * @param   array  $post_params    form data that need to be send.
 	 * @param   array  $headers    data that must be included in header for request.
@@ -745,7 +745,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Function to get the client IP address.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_get_client_ip() {
 		$ipaddress = '';
@@ -770,7 +770,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Validate the popup to be shown on specific screen.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_valid_page_screen_check() {
 		$mwb_mbfw_screen  = get_current_screen();
@@ -785,7 +785,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	/**
 	 * Show the popup based on condition.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public function mwb_mbfw_show_onboarding_popup_check() {
 

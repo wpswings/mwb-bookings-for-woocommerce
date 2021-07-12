@@ -5,7 +5,7 @@
  * This file is used to markup the html field for general tab.
  *
  * @link       https://makewebbetter.com/
- * @since      1.0.0
+ * @since      2.0.0
  *
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce

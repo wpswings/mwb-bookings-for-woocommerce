@@ -14,7 +14,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
+ * @since      2.0.0
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/includes
  */
@@ -25,7 +25,7 @@ class Mwb_Bookings_For_Woocommerce_Activator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 */
 	public static function mwb_bookings_for_woocommerce_activate() {
 	}

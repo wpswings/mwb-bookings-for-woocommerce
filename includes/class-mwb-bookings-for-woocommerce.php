@@ -21,7 +21,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      2.0.0
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/includes
  */
@@ -31,7 +31,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var   Mwb_Bookings_For_Woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
@@ -39,7 +39,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var   string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
@@ -47,7 +47,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var   string    $version    The current version of the plugin.
 	 */
 	protected $version;
@@ -55,7 +55,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var   string    $mbfw_onboard    To initializsed the object of class onboard.
 	 */
 	protected $mbfw_onboard;
@@ -67,7 +67,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area,
 	 * the public-facing side of the site and common side of the site.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function __construct() {
 
@@ -76,7 +76,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->version = MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.0.0';
+			$this->version = '2.0.0';
 		}
 
 		$this->plugin_name = 'mwb-bookings-for-woocommerce';
@@ -108,7 +108,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_dependencies() {
 
@@ -162,7 +162,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * Uses the Mwb_Bookings_For_Woocommerce_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_locale() {
 
@@ -175,7 +175,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * Define the name of the hook to save admin notices for this plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	private function mwb_saved_notice_hook_name() {
 		$mwb_plugin_name                            = ! empty(explode('/', plugin_basename(__FILE__))) ? explode('/', plugin_basename(__FILE__))[0] : '';
@@ -187,7 +187,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_admin_hooks() {
 		$mbfw_plugin_admin = new Mwb_Bookings_For_Woocommerce_Admin($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
@@ -232,6 +232,11 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'edited_mwb_booking_service', $mbfw_plugin_admin, 'mbfw_saving_custom_fields_at_booking_service_taxonomy_page' );
 			$this->loader->add_filter( 'manage_edit-mwb_booking_service_columns', $mbfw_plugin_admin, 'mbfw_adding_custom_column_booking_services_taxonomy_table' );
 			$this->loader->add_filter( 'manage_mwb_booking_service_custom_column', $mbfw_plugin_admin, 'mbfw_adding_custom_column_data_booking_services_taxonomy_table', 10, 3 );
+			// customisation on order listing page.
+			$this->loader->add_action( 'manage_shop_order_posts_custom_column', $mbfw_plugin_admin, 'mbfw_add_label_for_booking_type', 20, 2 );
+			$this->loader->add_action( 'restrict_manage_posts', $mbfw_plugin_admin, 'mbfw_add_filter_on_order_listing_page' );
+			$this->loader->add_action( 'pre_get_posts', $mbfw_plugin_admin, 'mbfw_vary_query_to_list_only_booking_types' );
+			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data' );
 		}
 	}
 
@@ -239,7 +244,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * Register all of the hooks related to the common functionality
 	 * of the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_common_hooks() {
 		$mbfw_plugin_common = new Mwb_Bookings_For_Woocommerce_Common($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
@@ -259,7 +264,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_public_hooks() {
 		$mbfw_plugin_public = new Mwb_Bookings_For_Woocommerce_Public($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
@@ -277,6 +282,8 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item' , $mbfw_plugin_public, 'mwb_mbfw_add_custom_order_item_meta_data', 10, 4 );
 			$this->loader->add_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $mbfw_plugin_public, 'mwb_mbfw_show_date_time_selector_on_single_product_page', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_quantity_input_args', $mbfw_plugin_public, 'mwb_mbfw_set_max_quantity_to_be_booked_by_individual', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_checkout_create_order', $mbfw_plugin_public, 'mwb_mbfw_add_order_meta_for_booking_order' );
+
 		}
 	}
 
@@ -284,7 +291,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * Register all of the hooks related to the api functionality
 	 * of the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_api_hooks() {
 		$mbfw_plugin_api = new Mwb_Bookings_For_Woocommerce_Rest_Api($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
@@ -295,7 +302,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mbfw_run() {
 		$this->loader->mbfw_run();
@@ -305,7 +312,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since  1.0.0
+	 * @since  2.0.0
 	 * @return string    The name of the plugin.
 	 */
 	public function mbfw_get_plugin_name() {
@@ -315,7 +322,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since  1.0.0
+	 * @since  2.0.0
 	 * @return Mwb_Bookings_For_Woocommerce_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function mbfw_get_loader() {
@@ -326,7 +333,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since  1.0.0
+	 * @since  2.0.0
 	 * @return Mwb_Bookings_For_Woocommerce_Onboard    Orchestrates the hooks of the plugin.
 	 */
 	public function mbfw_get_onboard() {
@@ -336,7 +343,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since  1.0.0
+	 * @since  2.0.0
 	 * @return string    The version number of the plugin.
 	 */
 	public function mbfw_get_version() {
@@ -394,7 +401,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * Locate and load appropriate tempate.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @param string $path   path file for inclusion.
 	 * @param array  $params parameters to pass to the file for access.
 	 */
@@ -413,7 +420,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 *
 	 * @param string $mbfw_message Message to display.
 	 * @param string $type        notice type, accepted values - error/update/update-nag.
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public static function mwb_mbfw_plug_admin_notice( $mbfw_message, $type = 'error' ) {
 
@@ -445,7 +452,7 @@ class Mwb_Bookings_For_Woocommerce {
 	/**
 	 * Show WordPress and server info.
 	 *
-	 * @since  1.0.0
+	 * @since  2.0.0
 	 * @return array $mbfw_system_data returns array of all WordPress and server related information.
 	 */
 	public function mwb_mbfw_plug_system_status() {
@@ -552,7 +559,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * Generate html components.
 	 *
 	 * @param string $mbfw_components html to display.
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mwb_mbfw_plug_generate_html( $mbfw_components = array() ) {
 		if (is_array($mbfw_components) && ! empty($mbfw_components) ) {

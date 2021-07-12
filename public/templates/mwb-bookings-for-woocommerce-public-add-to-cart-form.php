@@ -17,6 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $product;
 $product_id = get_the_id();
+if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
+	exit;
+}
 ?>
 <div>
 	<?php
@@ -27,7 +30,11 @@ $product_id = get_the_id();
 	do_action( 'mwb_booking_after_add_to_cart_form', $product_id, $product );
 	?>
 	<input type="hidden" name="mwb_mbfw_booking_product_id" class="mwb_mbfw_booking_product_id" value="<?php echo esc_html( $product_id ); ?>">
-	<div class="mwb-mbfw-total-area">
-		
-	</div>
+	<?php
+	if ( 'yes' === get_option( 'mwb_mbfw_is_show_totals' ) ) {
+		?>
+		<div class="mwb-mbfw-total-area"></div>
+		<?php
+	}
+	?>
 </div>

@@ -23,7 +23,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
 	private $plugin_name;
@@ -31,7 +31,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.0
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
@@ -39,7 +39,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @param string $plugin_name       The name of the plugin.
 	 * @param string $version    The version of this plugin.
 	 */
@@ -52,7 +52,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * Register the stylesheets for the common side of the site.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mbfw_common_enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name . 'common', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/css/mwb-bookings-for-woocommerce-common.css', array(), $this->version, 'all' );
@@ -62,7 +62,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * Register the JavaScript for the common side of the site.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mbfw_common_enqueue_scripts() {
 		wp_register_script( $this->plugin_name . 'common', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-bookings-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
@@ -156,13 +156,37 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+		$order_count   = count(
+			wc_get_orders(
+				array(
+					'status'   => array( 'wc-processing', 'wc-on-hold' ),
+					'return'   => 'ids',
+					'limit'    => -1,
+					'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress
+					'meta_val' => 'booking',
+				)
+			)
+		);
+		$booking_title = _n( 'Booking', 'Bookings', $order_count, 'mwb-bookings-for-woocommerce' );
 		$admin_bar->add_menu(
 			array(
 				'id'     => 'mwb-mbfw-custom-admin-menu-bookings',
 				'parent' => null,
 				'group'  => null,
-				'title'  => 'Bookings',
-				'href'   => admin_url( 'admin.php?page=custom-page' ),
+				'title'  => sprintf(
+					/* translators:%1$s Booking text. */
+					/* translators:%2$s Booking count. */
+					/* translators:%3$s Booking count. */
+					/* translators:%4$s Booking text for screeen readers. */
+					'<span class="mwb-admin-bar-booking-icon">%1$s</span>
+					<span class="ab-label">%2$s</span>
+					<span class="screen-reader-text">%3$s %4$s</span>',
+					$booking_title,
+					$order_count,
+					$order_count,
+					$booking_title
+				),
+				'href'   => admin_url( 'edit.php?post_status=all&post_type=shop_order&filter_booking=booking&filter_action=Filter' ),
 				'meta'   => array(
 					'title' => __( 'List All Bookings', 'mwb-bookings-for-woocommerce' ),
 				)
@@ -181,11 +205,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		}
 		$cart_data = $cart_object->get_cart();
 		foreach ( $cart_data as $cart ) {
-			if ( 'mwb_booking' === $cart['data']->get_type() ) {
-				$new_price     = $cart['data']->get_price();
-				$people_number = isset( $cart['mwb_mbfw_people_number'] ) && ( $cart['mwb_mbfw_people_number'] > 0 ) ? (int) $cart['mwb_mbfw_people_number'] : 1;
-				$base_price    = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
-				$unit_price    = get_post_meta( $cart['product_id'], '_price', true );
+			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
+				$new_price        = $cart['data']->get_price();
+				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
+				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
+				$base_price       = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
+				$unit_price       = get_post_meta( $cart['product_id'], '_price', true );
 				
 				// adding unit cost.
 				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
@@ -201,8 +226,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					$new_price = $new_price + (float) $base_price;
 				}
 
-				$service_option_checked = isset( $cart['mwb_mbfw_service_option_checkbox'] ) ? $cart['mwb_mbfw_service_option_checkbox'] : array();
-				$service_option_count   = isset( $cart['mwb_mbfw_service_quantity'] ) ? $cart['mwb_mbfw_service_quantity'] : array();
+				$service_option_checked = isset( $custom_cart_data['service_option'] ) ? $custom_cart_data['service_option'] : array();
+				$service_option_count   = isset( $custom_cart_data['service_quantity'] ) ? $custom_cart_data['service_quantity'] : array();
 				$new_price             += $this->mbfw_extra_service_charge( $cart['product_id'], $service_option_checked, $service_option_count, $people_number );
 				$new_price             += $this->mbfw_extra_charges_calculation( $cart['product_id'], $people_number );
 				
@@ -270,7 +295,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						<?php echo wp_kses_post( $title ); ?>
 					</div>
 					<div class="mbfw-total-listing-single-page">
-						<?php echo wp_kses_post( $price ); ?>
+						<?php echo wp_kses_post( wc_price( $price ) ); ?>
 					</div>
 				</div>
 				<?php
@@ -282,7 +307,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					<?php esc_html_e( 'Total', 'mwb-bookings-for-woocommerce' ); ?>
 				</div>
 				<div class="mbfw-total-listing-single-page">
-					<?php echo wp_kses_post( $total ); ?>
+					<?php echo wp_kses_post( wc_price( $total ) ); ?>
 				</div>
 			</div>
 		</div>
@@ -340,7 +365,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				if ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) ) {
 					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
 					$service_price = (float) get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true );
-					if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
+					if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
 						$services_cost += $service_count * $service_price * $people_number;
 					} else {
 						$services_cost += $service_count * $service_price;

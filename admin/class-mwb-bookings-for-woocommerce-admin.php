@@ -23,7 +23,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var   string    $plugin_name    The ID of this plugin.
 	 */
 	private $plugin_name;
@@ -31,7 +31,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @var   string    $version    The current version of this plugin.
 	 */
 	private $version;
@@ -39,7 +39,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @param string $plugin_name The name of this plugin.
 	 * @param string $version     The version of this plugin.
 	 */
@@ -52,7 +52,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @param string $hook The plugin page slug.
 	 */
 	public function mbfw_admin_enqueue_styles( $hook ) {
@@ -79,7 +79,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @param string $hook The plugin page slug.
 	 */
 	public function mbfw_admin_enqueue_scripts( $hook ) {
@@ -114,7 +114,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Adding settings menu for Mwb Bookings For WooCommerce.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mbfw_options_page() {
 		global $submenu;
@@ -134,7 +134,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Removing default submenu of parent menu in backend dashboard
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mwb_mbfw_remove_default_submenu() {
 		global $submenu;
@@ -149,7 +149,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Mwb Bookings For WooCommerce mbfw_admin_submenu_page.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @param array $menus Marketplace menus.
 	 */
 	public function mbfw_admin_submenu_page( $menus = array() ) {
@@ -166,7 +166,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Mwb Bookings For WooCommerce mwb_plugins_listing_page.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mwb_plugins_listing_page() {
 		$active_marketplaces = 
@@ -180,7 +180,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Mwb Bookings For WooCommerce admin menu page.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mbfw_options_menu_html() {
 		include_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-admin-dashboard.php';
@@ -278,7 +278,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Mwb Bookings For WooCommerce admin menu page.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @param array $mbfw_settings_general Settings fields.
 	 */
 	public function mbfw_admin_general_settings_page( $mbfw_settings_general ) {
@@ -427,7 +427,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Mwb Bookings For WooCommerce admin menu page.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @param array $mbfw_settings_template Settings fields.
 	 */
 	public function mbfw_admin_template_settings_page( $mbfw_settings_template ) {
@@ -547,7 +547,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Mwb Bookings For WooCommerce save tab settings.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 */
 	public function mbfw_admin_save_tab_settings() {
 		global $mbfw_mwb_mbfw_obj;
@@ -1375,5 +1375,92 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			return '<span class="dashicons dashicons-yes" title="' . esc_attr__( 'yes', 'mwb-bookings-for-woocommerce' ) . '"></span>';
 		}
 		return '<span class="dashicons dashicons-no-alt" title="' . esc_attr__( 'no', 'mwb-bookings-for-woocommerce' ) . '"></span>';
+	}
+
+	/**
+	 * Add custom badge of booking at order listing page.
+	 *
+	 * @param string $column_name current table columnname.
+	 * @param int    $order_id current order id.
+	 * @return void
+	 */
+	public function mbfw_add_label_for_booking_type( $column_name, $order_id ) {
+		if ( 'order_number' === $column_name ) {
+			$order = wc_get_order( $order_id );
+			if ( 'booking' === $order->get_meta( 'mwb_order_type', true ) ) {
+				?>
+				<span class="mwb-mbfw-booking-product-order-listing">
+					<?php esc_html_e( 'Booking Order', 'mwb-bookings-for-woocommerce' ); ?>
+				</span>
+				<?php
+			}
+		}
+	}
+
+	/**
+	 * Adding filter on the order listing page.
+	 *
+	 * @return void
+	 */
+	public function mbfw_add_filter_on_order_listing_page() {
+		global $pagenow, $post_type;
+		if ( 'shop_order' !== $post_type && 'edit.php' !== $pagenow ) {
+			return;
+		}
+		$current = isset( $_GET['filter_booking'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_booking'] ) ) : ''; // phpcs:ignore WordPress.Security
+		?>
+		<select name="filter_booking">
+			<option value="">
+				<?php esc_html_e( 'choose filter..', 'mwb-bookings-for-woocommerce' ); ?>
+			</option>
+			<option value="booking" <?php selected( $current, 'booking' ); ?>>
+				<?php esc_html_e( 'Filter by Booking' ); ?>
+			</option>
+		</select>
+		<?php
+	}
+
+	/**
+	 * Altering query to show the results form custom filter.
+	 *
+	 * @param object $query query for showing posts.
+	 * @return void
+	 */
+	public function mbfw_vary_query_to_list_only_booking_types( $query ) {
+		global $pagenow;
+		// phpcs:disable WordPress
+		if ( $query->is_admin && 'edit.php' === $pagenow && isset( $_GET['filter_booking'] ) && '' !== sanitize_text_field( wp_unslash( $_GET['filter_booking'] ) ) && isset( $_GET['post_type'] ) && ( 'shop_order' === sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) ) ) {
+			$meta_query = array(
+				array(
+					'meta_key' => 'mwb_order_type',
+					'value'    => sanitize_text_field( wp_unslash( $_GET['filter_booking'] ) ),
+				)
+			);
+			$query->set( 'meta_query', $meta_query );
+			$query->set( 'posts_per_page', 10 );
+			$query->set( 'paged', ( get_query_var('paged') ? get_query_var('paged') : 1 ) );
+		}
+		// phpcs:enable WordPress
+	}
+
+	/**
+	 * Hide custom line item key.
+	 *
+	 * @param array $hidden_keys array containing keys to hide.
+	 * @return array
+	 */
+	public function mbfw_hide_order_item_meta_data( $hidden_keys ) {
+		$custom_line_item_key_name = array(
+			'_mwb_mbfw_people_number',
+			'_mwb_mbfw_enable_calendar',
+			'_mwb_mbfw_enable_time_picker',
+			'_mwb_mbfw_service_and_count',
+			'_mwb_mbfw_booking_from_date',
+			'_mwb_mbfw_booking_to_date',
+			'_mwb_mbfw_booking_from_time',
+			'_mwb_mbfw_booking_to_time',
+			'_mwb_mbfw_booking_extra_costs'
+		);
+		return array_merge( $hidden_keys, $custom_line_item_key_name );
 	}
 }

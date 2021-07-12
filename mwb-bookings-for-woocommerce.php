@@ -15,7 +15,7 @@
  * Plugin Name:       Mwb Bookings For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/mwb-bookings-for-woocommerce/
  * Description:       Provides Booking system for woocommerce
- * Version:           1.0.0
+ * Version:           2.0.0
  * Author:            makewebbetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       mwb-bookings-for-woocommerce
@@ -36,10 +36,10 @@ if (! defined('ABSPATH') ) {
 /**
  * Define plugin constants.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 function define_mwb_bookings_for_woocommerce_constants() {
-	mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '1.0.0');
+	mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '2.0.0');
 	mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path(__FILE__));
 	mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url(__FILE__));
 	mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com');
@@ -51,7 +51,7 @@ function define_mwb_bookings_for_woocommerce_constants() {
  *
  * @param String $key   Key for contant.
  * @param String $value value for contant.
- * @since 1.0.0
+ * @since 2.0.0
  */
 function mwb_bookings_for_woocommerce_constants( $key, $value ) {
 	if (! defined($key) ) {
@@ -116,7 +116,7 @@ require plugin_dir_path(__FILE__) . 'includes/class-mwb-bookings-for-woocommerce
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 function run_mwb_bookings_for_woocommerce() {
 	define_mwb_bookings_for_woocommerce_constants();
@@ -131,7 +131,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'mwb_bookings_for
 /**
  * Settings link.
  *
- * @since 1.0.0
+ * @since 2.0.0
  * @param Array $links Settings link array.
  */
 function mwb_bookings_for_woocommerce_settings_link( $links ) {

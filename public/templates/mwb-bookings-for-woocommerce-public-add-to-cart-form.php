@@ -21,7 +21,7 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 	exit;
 }
 ?>
-<div>
+<div class="mwb-mbfw-cart-page-data">
 	<?php
 	do_action( 'mwb_booking_before_add_to_cart_form', $product_id, $product );
 	do_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $product_id, $product );

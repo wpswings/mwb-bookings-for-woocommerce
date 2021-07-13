@@ -1,9 +1,77 @@
-.mbfw-additionl-detail-listing-section{
-    float:left;
-    width: 33%;
+.mwb-mbfw-cart-page-data {
+    width: 100%;
 }
-.mbfw-additionl-detail-listing-section__wrapper::after{
-    content: "";
-    clear: both;
-    display: table;
+.mwb-mbfw-cart-page-data input:focus {
+    outline: none;
+}
+.mbfw-date-picker-section__wrapper {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+} 
+
+.mbfw-total-listing-single-page__wrapper:nth-last-child(2) {
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 5px;
+    padding: 0 0 5px;
+}
+
+.mbfw-date-picker-section  {
+    margin-right: 10px;
+}
+
+.mbfw-date-picker-section label {
+    display: block;
+}
+
+.mwb_mbfw_included_service_title {
+    margin: 10px 0 ;
+}
+
+.mwb_mbfw_detail-listing-wrap {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.mbfw-additionl-detail-listing-section__wrapper {
+    margin-bottom: 12px;
+}
+
+.mbfw-additionl-detail-listing-section {
+    flex: 0 0 100%;
+    max-width: 33%;
+}
+
+
+.mwb_mbfw_detail-listing-wrap .mbfw-additionl-detail-listing-section .mwb-mbfw-additional-service-quantity {
+    display: block;
+    margin-left: auto;
+}
+
+.mbfw-total-listing-single-page__wrapper {
+    align-items: center;
+    display: flex!important;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.mbfw-calendar-section__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.mbfw-calendar-section {
+    flex: 0 0 100%;
+    max-width: 45%;
+}
+
+.mbfw-calendar-section input {
+    width: 100%;
+}
+
+.summary-container input {
+    padding: 5px;
 }

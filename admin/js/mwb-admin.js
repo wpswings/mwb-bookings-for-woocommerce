@@ -1,6 +1,6 @@
 //code for datatable
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
     jQuery('#mbfw-datatable').DataTable({
         stateSave: true,
         dom: '<"mwb-dt-buttons"fB>tr<"bottom"lip>',
@@ -16,4 +16,19 @@ jQuery(document).ready(function() {
             paginate: { next: '<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.99984 0L0.589844 1.41L5.16984 6L0.589844 10.59L1.99984 12L7.99984 6L1.99984 0Z" fill="#8E908F"/></svg>', previous: '<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.00016 12L7.41016 10.59L2.83016 6L7.41016 1.41L6.00016 -1.23266e-07L0.000156927 6L6.00016 12Z" fill="#8E908F"/></svg>' }
         },
     });
+    var calendarEl = document.getElementById('mwb-mbfw-booking-calendar');
+    if ( calendarEl ) {
+        var calendar = new FullCalendar.Calendar( calendarEl, {
+            initialView: 'dayGridMonth',
+            events: {
+                url: mbfw_admin_param.ajaxurl,
+                method: 'POST',
+                extraParams: {
+                    action: 'mwb_mbfw_get_all_events_date',
+                    nonce: mbfw_admin_param.nonce
+                }
+            }
+        });
+        calendar.render();
+    }
 });

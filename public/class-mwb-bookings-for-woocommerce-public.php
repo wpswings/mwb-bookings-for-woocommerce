@@ -67,7 +67,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @since 2.0.0
 	 */
 	public function mbfw_public_enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.min.js', array( 'jquery' ), $this->version, true );
+		wp_localize_script(
+			$this->plugin_name . 'public',
+			'mwb_mbfw_public_obj',
+			array(
+				'today_date' => current_time( 'd-m-Y' ),
+			)
+		);
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 	}
 
@@ -122,25 +129,27 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$mbfw_booking_service = get_the_terms( $product_id, 'mwb_booking_service' );
 			if ( $mbfw_booking_service && is_array( $mbfw_booking_service ) ) {
 				?>
-				<div><?php esc_html_e( 'Included services', 'mwb-bookings-for-woocommerce' ); ?></div>
+				<div class="mwb_mbfw_included_service_title"><?php esc_html_e( 'Included services', 'mwb-bookings-for-woocommerce' ); ?></div>
 				<div class="mbfw-additionl-detail-listing-section__wrapper">
 					<?php
 					foreach ( $mbfw_booking_service as $custom_term ) {
 						if ( 'yes' !== get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_hidden', true ) ) {
 							?>
-							<div class="mbfw-additionl-detail-listing-section">
-								<?php if ( 'yes' === get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_optional', true ) ) { ?>
-									<input type="checkbox" value="<?Php echo esc_attr( $custom_term->term_id ); ?>" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_option_checkbox[]" id="mwb-mbfw-service-option-checkbox-<?php echo esc_attr( $custom_term->term_id ); ?>" class="mwb-mbfw-additional-service-option" />
-								<?php } ?>
-								<span><?php echo esc_html( $custom_term->name ); ?></span>
-							</div>
-							<div class="mbfw-additionl-detail-listing-section">
-								<?php echo wp_kses_post( wc_price( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_cost', true ) ) ); ?>
-							</div>
-							<div class="mbfw-additionl-detail-listing-section">
-								<?php if ( get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) { ?>
-									<input type="number" value="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_quantity[<?php echo esc_attr( $custom_term->term_id ); ?>]" min="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" max="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_maximum_quantity', true ) ); ?>" class="mwb-mbfw-additional-service-quantity" />
-								<?php } ?>
+							<div class="mwb_mbfw_detail-listing-wrap">
+								<div class="mbfw-additionl-detail-listing-section">
+									<?php if ( 'yes' === get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_optional', true ) ) { ?>
+										<input type="checkbox" value="<?Php echo esc_attr( $custom_term->term_id ); ?>" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_option_checkbox[]" id="mwb-mbfw-service-option-checkbox-<?php echo esc_attr( $custom_term->term_id ); ?>" class="mwb-mbfw-additional-service-option" />
+									<?php } ?>
+									<span><?php echo esc_html( $custom_term->name ); ?></span>
+								</div>
+								<div class="mbfw-additionl-detail-listing-section">
+									<?php echo wp_kses_post( wc_price( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_cost', true ) ) ); ?>
+								</div>
+								<div class="mbfw-additionl-detail-listing-section">
+									<?php if ( get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) { ?>
+										<input type="number" value="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_quantity[<?php echo esc_attr( $custom_term->term_id ); ?>]" min="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" max="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_maximum_quantity', true ) ); ?>" class="mwb-mbfw-additional-service-quantity" />
+									<?php } ?>
+								</div>
 							</div>
 						<?php
 						}
@@ -182,12 +191,12 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	public function mwb_mbfw_show_date_time_selector_on_single_product_page( $product_id, $product ) {
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
 			?>
-			<div class="mbfw-additionl-detail-listing-section__wrapper">
-				<div class="mbfw-additionl-detail-listing-section">
+			<div class="mbfw-calendar-section__wrapper">
+				<div class="mbfw-calendar-section">
 					<label for="mwb-mbfw-single-booking-date-selector-from"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<input type="text" name="mwb_mbfw_booking_from_date" id="mwb-mbfw-single-booking-date-selector-from" autocomplete="off" required>
 				</div>
-				<div class="mbfw-additionl-detail-listing-section">
+				<div class="mbfw-calendar-section">
 					<label for="mwb-mbfw-single-booking-date-selector-to"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<input type="text" name="mwb_mbfw_booking_to_date" id="mwb-mbfw-single-booking-date-selector-to" autocomplete="off" required>
 				</div>
@@ -196,12 +205,12 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		}
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_time_picker', true ) ) {
 			?>
-			<div class="mbfw-additionl-detail-listing-section__wrapper">
-				<div class="mbfw-additionl-detail-listing-section">
+			<div class="mbfw-date-picker-section__wrapper">
+				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-single-booking-time-selector-from"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<input type="time" name="mwb_mbfw_booking_from_time" id="mwb-mbfw-single-booking-time-selector-from" required>
 				</div>
-				<div class="mbfw-additionl-detail-listing-section">
+				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-single-booking-time-selector-to"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<input type="time" name="mwb_mbfw_booking_to_time" id="mwb-mbfw-single-booking-time-selector-to" required>
 				</div>
@@ -230,26 +239,15 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'is_calendar_enable' => 'no',
 				'is_time_enable'     => 'no',
 			);
-			// $cart_item_data['mwb_mbfw_people_number']           = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : '';
-			// $cart_item_data['mwb_mbfw_service_option_checkbox'] = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
-			// $cart_item_data['mwb_mbfw_service_quantity']        = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array();
-			// $cart_item_data['mwb_mbfw_enable_calendar']         = 'no';
-			// $cart_item_data['mwb_mbfw_enable_time_picker']      = 'no';
 			if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
 				$custom_data['is_calendar_enable'] = 'yes';
 				$custom_data['booking_from_date']  = array_key_exists( 'mwb_mbfw_booking_from_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_date'] ) ) : '';
 				$custom_data['booking_to_date']    = array_key_exists( 'mwb_mbfw_booking_to_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_date'] ) ) : '';
-				// $cart_item_data['mwb_mbfw_enable_calendar']   = 'yes';
-				// $cart_item_data['mwb_mbfw_booking_from_date'] = array_key_exists( 'mwb_mbfw_booking_from_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_date'] ) ) : '';
-				// $cart_item_data['mwb_mbfw_booking_to_date']   = array_key_exists( 'mwb_mbfw_booking_to_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_date'] ) ) : '';
 			}
 			if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_time_picker', true ) ) {
 				$custom_data['is_time_enable']    = 'yes';
 				$custom_data['booking_from_time'] = array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) : '';
 				$custom_data['booking_to_time']   = array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) : '';
-				// $cart_item_data['mwb_mbfw_enable_time_picker'] = 'yes';
-				// $cart_item_data['mwb_mbfw_booking_from_time']  = array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) : '';
-				// $cart_item_data['mwb_mbfw_booking_to_time']    = array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) : '';
 			}
 			// phpcs:enable:WordPress.Security.NonceVerification
 			$cart_item_data['mwb_mbfw_booking_values'] = $custom_data;

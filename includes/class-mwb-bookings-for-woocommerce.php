@@ -238,6 +238,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'pre_get_posts', $mbfw_plugin_admin, 'mbfw_vary_query_to_list_only_booking_types' );
 			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data' );
 		}
+		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );
 	}
 
 	/**
@@ -375,6 +376,16 @@ class Mwb_Bookings_For_Woocommerce {
 			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php'
 		);
 
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-calendar-listing'] = array(
+			'title'       => esc_html__( 'Bookings Calendar', 'mwb-bookings-for-woocommerce' ),
+			'name'        => 'mwb-bookings-for-woocommerce-booking-calendar-listing',
+			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-calendar-listing.php'
+		);
+
+		$mbfw_default_tabs = 
+		//desc - add admin setting tabs.
+		apply_filters('mwb_mbfw_plugin_standard_admin_settings_tabs', $mbfw_default_tabs);
+
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-system-status'] = array(
 			'title'       => esc_html__('System Status', 'mwb-bookings-for-woocommerce'),
 			'name'        => 'mwb-bookings-for-woocommerce-system-status',
@@ -392,9 +403,6 @@ class Mwb_Bookings_For_Woocommerce {
 			'name'        => 'mwb-bookings-for-woocommerce-developer',
 			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php'
 		);
-		$mbfw_default_tabs = 
-		//desc - add admin setting tabs.
-		apply_filters('mwb_mbfw_plugin_standard_admin_settings_tabs', $mbfw_default_tabs);
 		return $mbfw_default_tabs;
 	}
 

@@ -179,7 +179,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					/* translators:%3$s Booking count. */
 					/* translators:%4$s Booking text for screeen readers. */
 					'<span class="mwb-admin-bar-booking-icon">%1$s</span>
-					<span class="ab-label">%2$s</span>
+					<span class="mwb-mbfw-booking-count">%2$s</span>
 					<span class="screen-reader-text">%3$s %4$s</span>',
 					$booking_title,
 					$order_count,

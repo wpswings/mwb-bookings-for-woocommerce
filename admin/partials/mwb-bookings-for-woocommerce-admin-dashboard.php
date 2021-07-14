@@ -21,7 +21,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 ?>
 <header>
 	<?php
-		//desc - This hook is used for trial.
+		//desc - setting saved notice.
 		do_action('mwb_mbfw_settings_saved_notice');
 	?>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
@@ -55,7 +55,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 	<section class="mwb-section">
 		<div>
 			<?php
-			//desc - This hook is used for trial.
+			//desc - Before Setting Form.
 			do_action('mwb_mbfw_before_general_settings_form');
 			// if submenu is directly clicked on woocommerce.
 			if ( empty( $mbfw_active_tab ) ) {
@@ -65,7 +65,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			$mbfw_default_tabs     = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			$mbfw_tab_content_path = $mbfw_default_tabs[ $mbfw_active_tab ]['file_path'];
 			$mbfw_mwb_mbfw_obj->mwb_mbfw_plug_load_template($mbfw_tab_content_path);
-			//desc - This hook is used for trial.
+			//desc - After Setting Form.
 			do_action('mwb_mbfw_after_general_settings_form');
 			?>
 		</div>

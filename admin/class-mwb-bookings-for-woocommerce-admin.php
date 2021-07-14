@@ -125,7 +125,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
 			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15);
 			$mbfw_menus = 
-			//desc - filter for trial.
+			//desc - Add Menu Page.
 			apply_filters( 'mwb_add_plugins_menus_array', array() );
 			if ( is_array( $mbfw_menus ) && ! empty( $mbfw_menus ) ) {
 				foreach ( $mbfw_menus as $mbfw_key => $mbfw_value ) {
@@ -174,7 +174,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mwb_plugins_listing_page() {
 		$active_marketplaces = 
-		//desc - filter for trial.
+		//desc - Add Menu Page.
 		apply_filters( 'mwb_add_plugins_menus_array', array() );
 		if ( is_array( $active_marketplaces ) && ! empty( $active_marketplaces ) ) {
 			include MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/welcome.php';
@@ -565,21 +565,21 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( isset( $_POST['mwb_mbfw_general_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
 			$mbfw_genaral_settings = 
-			//desc - general settings fields.
+			//desc - general setting tab fields.
 			apply_filters( 'mbfw_general_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}
 		if ( isset( $_POST['mwb_mbfw_booking_form_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
 			$mbfw_genaral_settings = 
-			//desc - booking setting fields.
+			//desc - booking setting tab fields.
 			apply_filters( 'mbfw_booking_form_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}
 		if ( isset( $_POST['mwb_mbfw_availability_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
 			$mbfw_genaral_settings = 
-			//desc - availability setting fields.
+			//desc - availability setting tab fields.
 			apply_filters( 'mbfw_availability_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}

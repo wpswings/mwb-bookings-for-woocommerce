@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $mbfw_mwb_mbfw_obj;
 $mbfw_genaral_settings = 
-//desc - general settings field array.
+//desc - general settings tab fields.
 apply_filters( 'mbfw_general_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->

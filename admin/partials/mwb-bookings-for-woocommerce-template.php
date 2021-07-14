@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $mbfw_mwb_mbfw_obj;
 $mbfw_template_settings = 
-//desc - filter for trial.
-apply_filters('mbfw_template_settings_array', array());
+//desc - Template setting tab fields.
+apply_filters( 'mbfw_template_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
 <div class="mbfw-section-wrap">

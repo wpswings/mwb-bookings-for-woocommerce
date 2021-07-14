@@ -99,6 +99,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$start_time = get_option( 'mwb_mbfw_daily_start_time' );
 		$end_time   = get_option( 'mwb_mbfw_daily_end_time' );
 		if ( strtotime( $start_time ) < strtotime( current_time( 'H:i' ) ) &&  strtotime( current_time( 'H:i' ) ) < strtotime( $end_time ) ) {
+			//desc - Template for Booking Product Type.
 			do_action( 'woocommerce_simple_add_to_cart' );
 		}
 	}

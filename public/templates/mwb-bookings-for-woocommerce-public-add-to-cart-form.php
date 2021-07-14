@@ -23,10 +23,15 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 ?>
 <div class="mwb-mbfw-cart-page-data">
 	<?php
+	//desc - Before Booking add to cart form.
 	do_action( 'mwb_booking_before_add_to_cart_form', $product_id, $product );
+	//desc - Add Time selector on frontend for booking.
 	do_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $product_id, $product );
+	//desc - Show input field for number of people selection.
 	do_action( 'mwb_mbfw_number_of_people_while_booking_on_form', $product_id, $product );
+	//desc - Show Booking services details on form.
 	do_action( 'mwb_mbfw_booking_services_details_on_form', $product_id, $product );
+	//desc - After Boooking add to cart form.
 	do_action( 'mwb_booking_after_add_to_cart_form', $product_id, $product );
 	?>
 	<input type="hidden" name="mwb_mbfw_booking_product_id" class="mwb_mbfw_booking_product_id" value="<?php echo esc_html( $product_id ); ?>">

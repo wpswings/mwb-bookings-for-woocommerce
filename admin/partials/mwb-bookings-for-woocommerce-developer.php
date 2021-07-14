@@ -16,11 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $mbfw_mwb_mbfw_obj;
 $mbfw_developer_admin_hooks = 
-//desc - filter for trial.
+//desc - Admin Hooks listing.
 apply_filters('mbfw_developer_admin_hooks_array', array());
-$count_admin = filtered_array($mbfw_developer_admin_hooks);
+$count_admin                 = filtered_array($mbfw_developer_admin_hooks);
 $mbfw_developer_public_hooks = 
-//desc - filter for trial.
+//desc - Public Hooks listing.
 apply_filters('mbfw_developer_public_hooks_array', array());
 $count_public = filtered_array($mbfw_developer_public_hooks);
 ?>
@@ -39,16 +39,22 @@ $count_public = filtered_array($mbfw_developer_public_hooks);
 				</thead>
 				<tbody class="mdc-data-table__content">
 				<?php
-				if ( !empty( $count_admin) ){
-					foreach( $count_admin as $k => $v){
-						if( isset( $v['action_hook'] )){
-						?><tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Action Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['action_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr><?php
-						} else{
-							?><tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Filter Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['filter_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr><?php
+				if ( !empty( $count_admin ) ) {
+					foreach ( $count_admin as $k => $v ) {
+						if ( isset( $v['action_hook'] ) ) {
+							?>
+							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Action Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['action_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
+							<?php
+						} else {
+							?>
+							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Filter Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['filter_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
+							<?php
 						}
 					}
-				}else{
-					?><tr class="mdc-data-table__row"><td><?php esc_html_e( 'No Hooks Found', 'mwb-bookings-for-woocommerce' ); ?><td></tr><?php
+				} else {
+					?>
+					<tr class="mdc-data-table__row"><td><?php esc_html_e( 'No Hooks Found', 'mwb-bookings-for-woocommerce' ); ?><td></tr>
+					<?php
 				}
 				?>
 				</tbody>
@@ -68,16 +74,22 @@ $count_public = filtered_array($mbfw_developer_public_hooks);
 				</thead>
 				<tbody class="mdc-data-table__content">
 				<?php
-				if ( !empty( $count_public)){
-					foreach( $count_public as $k => $v){
-						if( isset( $v['action_hook'] )){
-						?><tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Action Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['action_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr><?php
-						} else{
-							?><tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Filter Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['filter_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr><?php
+				if ( ! empty( $count_public ) ) {
+					foreach ( $count_public as $k => $v ) {
+						if ( isset( $v['action_hook'] ) ) {
+							?>
+							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Action Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['action_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
+							<?php
+						} else {
+							?>
+							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Filter Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['filter_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
+							<?php
 						}
 					}
-				}else{
-					?><tr class="mdc-data-table__row"><td><?php esc_html_e( 'No Hooks Found', 'mwb-bookings-for-woocommerce' ); ?><td></tr><?php
+				} else {
+					?>
+					<tr class="mdc-data-table__row"><td><?php esc_html_e( 'No Hooks Found', 'mwb-bookings-for-woocommerce' ); ?><td></tr>
+					<?php
 				}
 				?>
 				</tbody>
@@ -87,23 +99,24 @@ $count_public = filtered_array($mbfw_developer_public_hooks);
 </div>
 
 <?php
-function filtered_array( $argu ){
+function filtered_array( $argu ) {
 	$count_admin = array();
-	foreach( $argu as $key => $value){
-		foreach( $value as $k => $originvalue){
-			if( isset( $originvalue['action_hook'] )){
-				$val = str_replace(" ", '', $originvalue['action_hook']);
-				$val = str_replace("do_action('", '', $val );
-				$val = str_replace("');", '', $val);
+	foreach ( $argu as $key => $value) {
+		foreach ( $value as $k => $originvalue) {
+			if ( isset( $originvalue['action_hook'] ) ) {
+				$val                            = str_replace( ' ', '', $originvalue['action_hook'] );
+				$val                            = str_replace("do_action('", '', $val );
+				$val                            = str_replace("');", '', $val);
+				$val                            = str_replace(');', '', $val);
 				$count_admin[$k]['action_hook'] = $val;
 			}
-			if( isset( $originvalue['filter_hook'] )){
-				$val = str_replace(" ", '', $originvalue['filter_hook']);
-				$val = str_replace("apply_filters('", '', $val );
-				$val = str_replace("',array());", '', $val);
+			if ( isset( $originvalue['filter_hook'] ) ) {
+				$val                            = str_replace(' ', '', $originvalue['filter_hook']);
+				$val                            = str_replace("apply_filters('", '', $val );
+				$val                            = str_replace("',array());", '', $val);
 				$count_admin[$k]['filter_hook'] = $val;
 			}
-			$vale = str_replace("//desc - ", '', $originvalue['desc'] );
+			$vale                    = str_replace( '//desc - ', '', $originvalue['desc'] );
 			$count_admin[$k]['desc'] = $vale;
 		}
 	}

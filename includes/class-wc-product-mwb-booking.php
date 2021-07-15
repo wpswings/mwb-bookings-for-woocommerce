@@ -18,7 +18,6 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	public function __construct( $product ) {
 		$this->product_type = 'mwb_booking';
 		$this->virtual      = 'yes';
-		// $this->supports[]   = 'ajax_add_to_cart';
 		parent::__construct( $product );
 	}
 

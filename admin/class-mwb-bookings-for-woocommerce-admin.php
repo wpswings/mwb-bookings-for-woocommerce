@@ -360,44 +360,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function mbfw_add_availability_settings_page( $mbfw_availability_settings ) {
-		// $sub_available_setting  = array();
-		// $day_available_settings = array(
-		// 	'morning'   => __( 'Morning', 'mwb-booking-system-for-woocommerce' ),
-		// 	'lunch_in'  => __( 'Lunch in', 'mwb-booking-system-for-woocommerce' ),
-		// 	'lunch_out' => __( 'Lunch out', 'mwb-booking-system-for-woocommerce' ),
-		// 	'night'     => __( 'Night', 'mwb-booking-system-for-woocommerce' ),
-		// );
-		// for ( $i = 0; $i < 7; $i++ ) {
-		// 	$day                       = jddayofweek( $i, 1 );
-		// 	$day_available_sub_setting = array();
-		// 	foreach ( $day_available_settings as $day_time => $daytime_label ) {
-		// 		$day_available_sub_setting[] = array(
-		// 			'label'    => $daytime_label,
-		// 			'id'       => 'mbfw_' . $day . '_' . $day_time,
-		// 			'class'    => 'mbfw_' . $day . '_' . $day_time,
-		// 			'name'     => 'mbfw_' . $day . '_' . $day_time,
-		// 			'value'    => get_option( 'mbfw_' . $day . '_' . $day_time ),
-		// 		);
-		// 	}
-		// 	$sub_available_setting[ $day ] = $day_available_sub_setting;
-					
-		// }
-		// $mbfw_availability_settings = array(
-		// 	array(
-		// 		'type'     => 'availability_select',
-		// 		'id'       => 'mbfw_booking_availability_per_day',
-		// 		'class'    => 'mbfw_booking_availability_per_day',
-		// 		'name'     => 'mbfw_booking_availability_per_day',
-		// 		'sub_tabs' => $sub_available_setting,
-		// 	),
-		// 	array(
-		// 		'type'        => 'button',
-		// 		'id'          => 'mwb_mbfw_availability_settings_save',
-		// 		'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
-		// 		'class'       => 'mwb_mbfw_availability_settings_save',
-		// 		'name'        => 'mwb_mbfw_availability_settings_save',
-		// 	)
-		// );
 		$mbfw_availability_settings = array(
 			array(
 				'title'       => __( 'Daily Start Time', 'mwb-bookings-for-woocommerce' ),
@@ -416,137 +378,21 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'value'       => get_option( 'mwb_mbfw_daily_end_time' ),
 				'type'        => 'time',
 				'description' => __( 'Please choose daily end time', 'mwb-bookings-for-woocommerce' ),
-			),
-			array(
-				'type'        => 'button',
-				'id'          => 'mwb_mbfw_availability_settings_save',
-				'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
-				'class'       => 'mwb_mbfw_availability_settings_save',
-				'name'        => 'mwb_mbfw_availability_settings_save',
 			)
+		);
+		$mbfw_availability_settings =
+		//desc - avilability setting fields array
+		apply_filters( 'mwb_mbfw_availability_setting_fields_array', $mbfw_availability_settings );
+		$mbfw_availability_settings[] = array(
+			'type'        => 'button',
+			'id'          => 'mwb_mbfw_availability_settings_save',
+			'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
+			'class'       => 'mwb_mbfw_availability_settings_save',
+			'name'        => 'mwb_mbfw_availability_settings_save',
 		);
 		return $mbfw_availability_settings;
 	}
 
-	/**
-	 * Calendar listing of bookings.
-	 *
-	 * @since 2.0.0
-	 * @param array $mbfw_settings_template Settings fields.
-	 */
-	public function mbfw_admin_calendar_booking_listing_page( $mbfw_settings_template ) {
-		$mbfw_settings_template = array(
-		array(
-		'title' => __('Text Field Demo', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'text',
-		'description'  => __('This is text field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_text_demo',
-		'value' => '',
-		'class' => 'mbfw-text-class',
-		'placeholder' => __('Text Demo', 'mwb-bookings-for-woocommerce'),
-		),
-		array(
-		'title' => __('Number Field Demo', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'number',
-		'description'  => __('This is number field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_number_demo',
-		'value' => '',
-		'class' => 'mbfw-number-class',
-		'placeholder' => '',
-		),
-		array(
-		'title' => __('Password Field Demo', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'password',
-		'description'  => __('This is password field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_password_demo',
-		'value' => '',
-		'class' => 'mbfw-password-class',
-		'placeholder' => '',
-		),
-		array(
-		'title' => __('Textarea Field Demo', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'textarea',
-		'description'  => __('This is textarea field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_textarea_demo',
-		'value' => '',
-		'class' => 'mbfw-textarea-class',
-		'rows' => '5',
-		'cols' => '10',
-		'placeholder' => __('Textarea Demo', 'mwb-bookings-for-woocommerce'),
-		),
-		array(
-		'title' => __('Select Field Demo', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'select',
-		'description'  => __('This is select field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_select_demo',
-		'value' => '',
-		'class' => 'mbfw-select-class',
-		'placeholder' => __('Select Demo', 'mwb-bookings-for-woocommerce'),
-		'options' => array(
-					'' => __('Select option', 'mwb-bookings-for-woocommerce'),
-					'INR' => __('Rs.', 'mwb-bookings-for-woocommerce'),
-					'USD' => __('$', 'mwb-bookings-for-woocommerce'),
-		),
-		),
-		array(
-		'title' => __('Multiselect Field Demo', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'multiselect',
-		'description'  => __('This is multiselect field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_multiselect_demo',
-		'value' => '',
-		'class' => 'mbfw-multiselect-class mwb-defaut-multiselect',
-		'placeholder' => '',
-		'options' => array(
-					'default' => __('Select currency code from options', 'mwb-bookings-for-woocommerce'),
-					'INR' => __('Rs.', 'mwb-bookings-for-woocommerce'),
-					'USD' => __('$', 'mwb-bookings-for-woocommerce'),
-		),
-		),
-		array(
-		'title' => __('Checkbox Field Demo', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'checkbox',
-		'description'  => __('This is checkbox field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_checkbox_demo',
-		'value' => '',
-		'class' => 'mbfw-checkbox-class',
-		'placeholder' => __('Checkbox Demo', 'mwb-bookings-for-woocommerce'),
-		),
-
-		array(
-		'title' => __('Radio Field Demo', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'radio',
-		'description'  => __('This is radio field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_radio_demo',
-		'value' => '',
-		'class' => 'mbfw-radio-class',
-		'placeholder' => __('Radio Demo', 'mwb-bookings-for-woocommerce'),
-		'options' => array(
-					'yes' => __('YES', 'mwb-bookings-for-woocommerce'),
-					'no' => __('NO', 'mwb-bookings-for-woocommerce'),
-		),
-		),
-		array(
-		'title' => __('Enable', 'mwb-bookings-for-woocommerce'),
-		'type'  => 'radio-switch',
-		'description'  => __('This is switch field demo follow same structure for further use.', 'mwb-bookings-for-woocommerce'),
-		'id'    => 'mbfw_radio_switch_demo',
-		'value' => '',
-		'class' => 'mbfw-radio-switch-class',
-		'options' => array(
-					'yes' => __('YES', 'mwb-bookings-for-woocommerce'),
-					'no' => __('NO', 'mwb-bookings-for-woocommerce'),
-		),
-		),
-
-		array(
-		'type'  => 'button',
-		'id'    => 'mbfw_button_demo',
-		'button_text' => __('Button Demo', 'mwb-bookings-for-woocommerce'),
-		'class' => 'mbfw-button-class',
-		),
-		);
-		return $mbfw_settings_template;
-	}
 
 	/**
 	 * Mwb Bookings For WooCommerce save tab settings.
@@ -1390,7 +1236,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			$order = wc_get_order( $order_id );
 			if ( 'booking' === $order->get_meta( 'mwb_order_type', true ) ) {
 				?>
-				<span class="mwb-mbfw-booking-product-order-listing">
+				<span class="mwb-mbfw-booking-product-order-listing" title="<?php esc_html_e( 'This order contains Booking Service/Product.', 'mwb-bookings-for-woocommerce' ); ?>">
 					<?php esc_html_e( 'Booking Order', 'mwb-bookings-for-woocommerce' ); ?>
 				</span>
 				<?php
@@ -1415,14 +1261,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				<?php esc_html_e( 'choose filter..', 'mwb-bookings-for-woocommerce' ); ?>
 			</option>
 			<option value="booking" <?php selected( $current, 'booking' ); ?>>
-				<?php esc_html_e( 'Filter by Booking' ); ?>
+				<?php esc_html_e( 'Filter by Booking', 'mwb-bookings-for-woocommerce' ); ?>
 			</option>
 		</select>
 		<?php
 	}
 
 	/**
-	 * Altering query to show the results form custom filter.
+	 * Altering query to show the results from custom filter.
 	 *
 	 * @param object $query query for showing posts.
 	 * @return void

@@ -267,11 +267,26 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			$base_cost = (float) $base_cost * (int) $people_number;
 		}
 		$charges = array(
-			__( 'Service Cost', 'mwb-bookings-for-woocommerce' )       => $services_cost * $quantity,
-			__( 'Base Cost', 'mwb-bookings-for-woocommerce' )          => $base_cost * $quantity,
-			__( 'General Cost', 'mwb-bookings-for-woocommerce' )       => $product_price * $quantity,
-			__( 'Additional Charges', 'mwb-bookings-for-woocommerce' ) => $extra_charges * $quantity,
+			'service_cost' => array(
+				'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
+				'value' => $services_cost * $quantity,
+			),
+			'base_cost' => array(
+				'title' => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
+				'value' => $base_cost * $quantity,
+			),
+			'general_cost' => array(
+				'title' => __( 'General Cost', 'mwb-bookings-for-woocommerce' ),
+				'value' => $product_price * $quantity,
+			),
+			'additional_charge' => array(
+				'title' => __( 'Additional Charges', 'mwb-bookings-for-woocommerce' ),
+				'value' => $extra_charges * $quantity,
+			),
 		);
+		$charges =
+		//desc - ajax loading total listings.
+		apply_filters( 'mbfw_ajax_load_total_booking_charge_individually', $charges, $product_id );
 		$this->mbfw_booking_total_listing_single_page( $charges );
 		wp_die();
 	}
@@ -287,7 +302,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		<div class="mbfw-total-listing-single-page__wrapper-parent">
 			<?php
 			$total = 0;
-			foreach ( $charges as $title => $price ) {
+			foreach ( $charges as $types ) {
+				$price  = $types['value'];
+				$title  = $types['title'];
 				$total += $price;
 				?>
 				<div class="mbfw-total-listing-single-page__wrapper">

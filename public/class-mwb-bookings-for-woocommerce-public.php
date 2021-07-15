@@ -91,14 +91,30 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Check if we are in the booking hours.
+	 *
+	 * @return void
+	 */
+	public function mwb_mbfw_is_enable_booking() {
+		$start_time = get_option( 'mwb_mbfw_daily_start_time' );
+		$end_time   = get_option( 'mwb_mbfw_daily_end_time' );
+		if ( strtotime( $start_time ) <= strtotime( current_time( 'H:i' ) ) &&  strtotime( current_time( 'H:i' ) ) <= strtotime( $end_time ) && 'yes' === get_option( 'mwb_mbfw_is_booking_enable' ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Loading single product template for our custom product type.
 	 *
 	 * @return void
 	 */
 	public function mwb_mbfw_load_single_page_template() {
-		$start_time = get_option( 'mwb_mbfw_daily_start_time' );
-		$end_time   = get_option( 'mwb_mbfw_daily_end_time' );
-		if ( strtotime( $start_time ) < strtotime( current_time( 'H:i' ) ) &&  strtotime( current_time( 'H:i' ) ) < strtotime( $end_time ) && 'yes' === get_option( 'mwb_mbfw_is_booking_enable' ) ) {
+		
+		$is_booking_available =
+		//desc - enable or disable booking.
+		apply_filters( 'mwb_mbfw_is_booking_available_filter', $this->mwb_mbfw_is_enable_booking() );
+		if ( $is_booking_available ) {
 			//desc - Template for Booking Product Type.
 			do_action( 'woocommerce_simple_add_to_cart' );
 		}
@@ -130,7 +146,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$mbfw_booking_service = get_the_terms( $product_id, 'mwb_booking_service' );
 			if ( $mbfw_booking_service && is_array( $mbfw_booking_service ) ) {
 				?>
-				<div class="mwb_mbfw_included_service_title"><?php esc_html_e( 'Included services', 'mwb-bookings-for-woocommerce' ); ?></div>
+				<div class="mwb_mbfw_included_service_title"><?php esc_html_e( 'Additional services', 'mwb-bookings-for-woocommerce' ); ?></div>
 				<div class="mbfw-additionl-detail-listing-section__wrapper">
 					<?php
 					foreach ( $mbfw_booking_service as $custom_term ) {
@@ -171,16 +187,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_mbfw_show_people_while_booking( $product_id, $product ) {
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_people_option', true ) ) {
-			?>
-			<div class="mbfw-additionl-detail-listing-section__wrapper">
-				<div class="mbfw-additionl-detail-listing-section">
-					<?php esc_html_e( 'People', 'mwb-bookings-for-woocommerce' ); ?>
-				</div>
-				<div class="mbfw-additionl-detail-listing-section">
-					<input type="number" name="mwb_mbfw_people_number" class="mwb_mbfw_people_number" id="mwb_mbfw_people_number" value="<?php echo esc_attr( get_post_meta( $product_id, 'mwb_mbfw_minimum_people_per_booking', true ) ); ?>" min="<?php echo esc_attr( get_post_meta( $product_id, 'mwb_mbfw_minimum_people_per_booking', true ) ); ?>" max="<?php echo esc_attr( get_post_meta( $product_id, 'mwb_mbfw_maximum_people_per_booking', true ) ); ?>" required>
-				</div>
-			</div>
-			<?php
+			require_once apply_filters( 'mbfw_load_people_option_template', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php', 'public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php' );
 		}
 	}
 

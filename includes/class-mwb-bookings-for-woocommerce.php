@@ -922,6 +922,11 @@ class Mwb_Bookings_For_Woocommerce {
 								<?php
 							}
 							break;
+						case 'full_calendar':
+							?>
+							<div id="<?php echo esc_attr( isset( $mbfw_component['id'] ) ? $mbfw_component['id'] : '' ); ?>" class="<?php echo esc_attr( isset( $mbfw_component['class'] ) ? $mbfw_component['class'] : '' ); ?>" ></div>
+							<?php
+							break;
 						default:
 							break;
 					}

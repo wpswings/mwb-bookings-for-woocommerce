@@ -156,8 +156,12 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								<div class="mbfw-additionl-detail-listing-section">
 									<?php if ( 'yes' === get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_optional', true ) ) { ?>
 										<input type="checkbox" value="<?Php echo esc_attr( $custom_term->term_id ); ?>" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_option_checkbox[]" id="mwb-mbfw-service-option-checkbox-<?php echo esc_attr( $custom_term->term_id ); ?>" class="mwb-mbfw-additional-service-option" />
-									<?php } ?>
-									<span><?php echo esc_html( $custom_term->name ); ?></span>
+									<?php
+									}
+									?>
+									<span title="<?php echo esc_html( do_action( 'mbfw_add_tooltip_show_additional_details', $custom_term->term_id, 'mwb_booking_service' ) ); ?>" >
+										<?php echo esc_html( $custom_term->name ); ?>
+									</span>
 								</div>
 								<div class="mbfw-additionl-detail-listing-section">
 									<?php echo wp_kses_post( wc_price( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_cost', true ) ) ); ?>
@@ -257,6 +261,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$custom_data['booking_from_time'] = array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) : '';
 				$custom_data['booking_to_time']   = array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) : '';
 			}
+			$custom_data =
+			//desc - adding extra details in cart.
+			apply_filters( 'mbfw_add_extra_custom_details_in_cart', $custom_data );
 			// phpcs:enable:WordPress.Security.NonceVerification
 			$cart_item_data['mwb_mbfw_booking_values'] = $custom_data;
 		}
@@ -326,6 +333,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					'display' => wp_kses_post( $custom_cart_data['booking_to_time'] ),
 				);
 			}
+			$other_data =
+			//desc - Additional detail to show on cart and checkout page from plugins.
+			apply_filters( 'mbfw_show_additional_details_on_cart_and_checkout_pro', $other_data, $custom_cart_data, $cart_item );
 		}
 		return $other_data;
 	}
@@ -420,6 +430,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 				$line_item_meta['_mwb_mbfw_booking_extra_costs'] = $term_ids;
 			}
+			$line_item_meta =
+			//desc - add custom data in the db for line items.
+			apply_filters( 'mbfw_add_meta_data_in_the_db_for_line_item', $line_item_meta, $custom_booking_values, $item );
 			foreach ( $line_item_meta as $meta_key => $meta_val ) {
 				$item->update_meta_data( $meta_key, $meta_val );
 			}

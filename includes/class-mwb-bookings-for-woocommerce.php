@@ -579,7 +579,7 @@ class Mwb_Bookings_For_Woocommerce {
 						case 'email':
 						case 'text':
 							?>
-							<div class="mwb-form-group mwb-mbfw-<?php echo esc_attr($mbfw_component['type']); ?>">
+							<div class="mwb-form-group mwb-mbfw-<?php echo esc_attr($mbfw_component['type']); ?>" style="<?php echo esc_attr( isset( $mbfw_component['parent-style'] ) ? $mbfw_component['parent-style'] : '' ); ?>">
 								<div class="mwb-form-group__label">
 									<label for="<?php echo esc_attr($mbfw_component['id']); ?>" class="mwb-form-label"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
 								</div>
@@ -645,7 +645,7 @@ class Mwb_Bookings_For_Woocommerce {
 
 						case 'textarea':
 							?>
-							<div class="mwb-form-group">
+							<div class="mwb-form-group" style="<?php echo esc_attr( isset( $mbfw_component['parent-style'] ) ? $mbfw_component['parent-style'] : '' ); ?>">
 								<div class="mwb-form-group__label">
 									<label class="mwb-form-label" for="<?php echo esc_attr($mbfw_component['id']); ?>"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
 								</div>
@@ -872,9 +872,9 @@ class Mwb_Bookings_For_Woocommerce {
 										class="<?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>" 
 										name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
 										id="<?php echo esc_attr($mbfw_component['id']); ?>"
-										type="<?php echo esc_attr($mbfw_component['type']); ?>"
+										type="<?php echo esc_attr( ( 'date' === $mbfw_component['type'] ) ? 'text' : $mbfw_component['type']); ?>"
 										value="<?php echo ( isset($mbfw_component['value']) ? esc_attr($mbfw_component['value']) : '' ); ?>"
-										<?php echo esc_html( ( 'date' === $mbfw_component['type'] ) ? 'max=' . gmdate('Y-m-d', strtotime( gmdate( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . 'min=' . gmdate( 'Y-m-d' ) . '' : '' ); ?>
+										autocomplete="off"
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">
@@ -924,7 +924,7 @@ class Mwb_Bookings_For_Woocommerce {
 							break;
 						case 'full_calendar':
 							?>
-							<div id="<?php echo esc_attr( isset( $mbfw_component['id'] ) ? $mbfw_component['id'] : '' ); ?>" class="<?php echo esc_attr( isset( $mbfw_component['class'] ) ? $mbfw_component['class'] : '' ); ?>" ></div>
+							<input id="<?php echo esc_attr( isset( $mbfw_component['id'] ) ? $mbfw_component['id'] : '' ); ?>" class="<?php echo esc_attr( isset( $mbfw_component['class'] ) ? $mbfw_component['class'] : '' ); ?>" type="text"/>
 							<?php
 							break;
 						default:

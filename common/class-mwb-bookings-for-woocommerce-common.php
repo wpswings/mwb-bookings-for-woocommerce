@@ -231,6 +231,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$new_price             += $this->mbfw_extra_service_charge( $cart['product_id'], $service_option_checked, $service_option_count, $people_number );
 				$new_price             += $this->mbfw_extra_charges_calculation( $cart['product_id'], $people_number );
 				
+				$new_price =
+				apply_filters( 'mbfw_set_price_individually_during_adding_in_cart', $new_price, $custom_cart_data, $cart_object );
 				// setting the new price.
 				$cart['data']->set_price( $new_price );
 			}
@@ -269,25 +271,25 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$charges = array(
 			'service_cost' => array(
 				'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
-				'value' => $services_cost * $quantity,
+				'value' => $services_cost,
 			),
 			'base_cost' => array(
 				'title' => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
-				'value' => $base_cost * $quantity,
+				'value' => $base_cost,
 			),
 			'general_cost' => array(
 				'title' => __( 'General Cost', 'mwb-bookings-for-woocommerce' ),
-				'value' => $product_price * $quantity,
+				'value' => $product_price,
 			),
 			'additional_charge' => array(
 				'title' => __( 'Additional Charges', 'mwb-bookings-for-woocommerce' ),
-				'value' => $extra_charges * $quantity,
+				'value' => $extra_charges,
 			),
 		);
 		$charges =
 		//desc - ajax loading total listings.
 		apply_filters( 'mbfw_ajax_load_total_booking_charge_individually', $charges, $product_id );
-		$this->mbfw_booking_total_listing_single_page( $charges );
+		$this->mbfw_booking_total_listing_single_page( $charges, $quantity );
 		wp_die();
 	}
 
@@ -297,7 +299,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @param array $charges array containing all the charges.
 	 * @return void
 	 */
-	public function mbfw_booking_total_listing_single_page( $charges ) {
+	public function mbfw_booking_total_listing_single_page( $charges, $quantity ) {
 		?>
 		<div class="mbfw-total-listing-single-page__wrapper-parent">
 			<?php
@@ -305,7 +307,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			foreach ( $charges as $types ) {
 				$price  = $types['value'];
 				$title  = $types['title'];
-				$total += $price;
+				$total += (float) $price * (int) $quantity;
 				?>
 				<div class="mbfw-total-listing-single-page__wrapper">
 					<div class="mbfw-total-listing-single-page">
@@ -326,6 +328,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					<?php echo wp_kses_post( wc_price( $total ) ); ?>
 				</div>
 			</div>
+			<?php do_action( 'mbfw_show_booking_policy' ); ?>
 		</div>
 		<?php
 	}

@@ -109,7 +109,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				)
 			);
 			wp_enqueue_script($this->plugin_name . 'admin-js');
-			wp_enqueue_script('mwb-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.min.js', array(), time(), false);
+			wp_enqueue_script('mwb-mbfw-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'mwb-admin-full-calendar-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.js', array( 'jquery' ), '5.8.0', true );
 		}
 		wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-custom.min.js', array( 'jquery' ), $this->version, true );
@@ -304,14 +304,17 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'value'       => get_option( 'mwb_mbfw_is_booking_enable' ),
 				'class'       => 'mwb_mbfw_is_booking_enable',
 				'name'        => 'mwb_mbfw_is_booking_enable',
-			),
-			array(
-				'type'        => 'button',
-				'id'          => 'mwb_mbfw_general_settings_save',
-				'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
-				'class'       => 'mwb_mbfw_general_settings_save',
-				'name'        => 'mwb_mbfw_general_settings_save',
-			),
+			)
+		);
+		$mbfw_settings_general =
+		//desc - General settings tab add html fields.
+		apply_filters( 'mbfw_general_settings_array_filter', $mbfw_settings_general );
+		$mbfw_settings_general[] = array(
+			'type'        => 'button',
+			'id'          => 'mwb_mbfw_general_settings_save',
+			'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
+			'class'       => 'mwb_mbfw_general_settings_save',
+			'name'        => 'mwb_mbfw_general_settings_save',
 		);
 		return $mbfw_settings_general;
 	}
@@ -341,14 +344,17 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'value'       => get_option( 'mwb_mbfw_is_show_totals' ),
 				'class'       => 'mwb_mbfw_is_show_totals',
 				'name'        => 'mwb_mbfw_is_show_totals'
-			),
-			array(
-				'type'        => 'button',
-				'id'          => 'mwb_mbfw_booking_form_settings_save',
-				'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
-				'class'       => 'mwb_mbfw_booking_form_settings_save',
-				'name'        => 'mwb_mbfw_booking_form_settings_save',
-			),
+			)
+		);
+		$mbfw_booking_form_array =
+		//desc - setting fields at booking form setting tab.
+		apply_filters( 'mbfw_booking_form_setting_array_filter', $mbfw_booking_form_array );
+		$mbfw_booking_form_array[] = array(
+			'type'        => 'button',
+			'id'          => 'mwb_mbfw_booking_form_settings_save',
+			'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
+			'class'       => 'mwb_mbfw_booking_form_settings_save',
+			'name'        => 'mwb_mbfw_booking_form_settings_save',
 		);
 		return $mbfw_booking_form_array;
 	}

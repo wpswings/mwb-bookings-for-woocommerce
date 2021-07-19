@@ -83,7 +83,7 @@ class Mwb_Bookings_For_Woocommerce {
 
 		$this->mwb_bookings_for_woocommerce_dependencies();
 		$this->mwb_bookings_for_woocommerce_locale();
-		if (is_admin() ) {
+		if ( is_admin() ) {
 			$this->mwb_bookings_for_woocommerce_admin_hooks();
 		} else {
 			$this->mwb_bookings_for_woocommerce_public_hooks();
@@ -151,7 +151,7 @@ class Mwb_Bookings_For_Woocommerce {
 		 * of the plugin.
 		 */
 		include_once plugin_dir_path(dirname(__FILE__)) . 'common/class-mwb-bookings-for-woocommerce-common.php';
-
+		
 		$this->loader = new Mwb_Bookings_For_Woocommerce_Loader();
 
 	}
@@ -237,6 +237,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'restrict_manage_posts', $mbfw_plugin_admin, 'mbfw_add_filter_on_order_listing_page' );
 			$this->loader->add_action( 'pre_get_posts', $mbfw_plugin_admin, 'mbfw_vary_query_to_list_only_booking_types' );
 			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data' );
+			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $mbfw_plugin_admin, 'mbfw_change_line_item_meta_key_order_edit_page', 10, 3 );
 		}
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );
 	}
@@ -249,8 +250,8 @@ class Mwb_Bookings_For_Woocommerce {
 	 */
 	private function mwb_bookings_for_woocommerce_common_hooks() {
 		$mbfw_plugin_common = new Mwb_Bookings_For_Woocommerce_Common($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
-		$this->loader->add_action('wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_styles');
-		$this->loader->add_action('wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_scripts');
+		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_scripts' );
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_action( 'plugins_loaded', $mbfw_plugin_common, 'mbfw_registering_custom_product_type' );
 			$this->loader->add_action( 'init', $mbfw_plugin_common, 'mbfw_custom_taxonomy_for_products' );

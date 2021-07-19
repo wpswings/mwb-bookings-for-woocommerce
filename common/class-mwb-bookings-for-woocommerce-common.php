@@ -44,7 +44,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @param string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-
+		
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 	}
@@ -68,7 +68,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_register_script( $this->plugin_name . 'common', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-bookings-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name . 'common', 'mbfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name . 'common' );
-		wp_enqueue_script( 'mwb-mbfw-common-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-common.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'mwb-mbfw-common-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-common.min.js', array(), $this->version, true );
 		wp_localize_script(
 			'mwb-mbfw-common-js',
 			'mwb_mbfw_common_obj',
@@ -210,18 +210,20 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
 				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
 				$base_price       = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
+				$base_price       = ! empty( $base_price ) ? $base_price : 0;
 				$unit_price       = get_post_meta( $cart['product_id'], '_price', true );
+				$unit_price       = ! empty( $unit_price ) ? $unit_price : 0;
 				
 				// adding unit cost.
 				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
-					$new_price = (float) $unit_price * $people_number;
+					$new_price = (float) $unit_price * (int) $people_number;
 				} else {
 					$new_price = (float) $unit_price;
 				}
 				
 				// adding base cost.
 				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
-					$new_price = $new_price + (float) $base_price * $people_number;
+					$new_price = $new_price + (float) $base_price * (int) $people_number;
 				} else {
 					$new_price = $new_price + (float) $base_price;
 				}

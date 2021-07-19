@@ -1308,13 +1308,33 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'_mwb_mbfw_enable_calendar',
 			'_mwb_mbfw_enable_time_picker',
 			'_mwb_mbfw_service_and_count',
-			'_mwb_mbfw_booking_from_date',
-			'_mwb_mbfw_booking_to_date',
-			'_mwb_mbfw_booking_from_time',
-			'_mwb_mbfw_booking_to_time',
 			'_mwb_mbfw_booking_extra_costs'
 		);
 		return array_merge( $hidden_keys, $custom_line_item_key_name );
+	}
+
+	/**
+	 * Change the line item meta key.
+	 *
+	 * @param string $display_key key name to display.
+	 * @param object $meta meta key object.
+	 * @param object $item current item object.
+	 * @return string
+	 */
+	public function mbfw_change_line_item_meta_key_order_edit_page( $display_key, $meta, $item  ) {
+		switch ( $display_key ) {
+			case '_mwb_mbfw_booking_from_date':
+				return __( 'Booking from date', 'mwb-bookings-for-woocommerce' );
+			case '_mwb_mbfw_booking_to_date':
+				return __( 'Booking to date', 'mwb-bookings-for-woocommerce' );
+			case '_mwb_mbfw_booking_from_time':
+				return __( 'Booking from time', 'mwb-bookings-for-woocommerce' );
+			case '_mwb_mbfw_booking_to_time':
+				return __( 'Booking to time', 'mwb-bookings-for-woocommerce' );
+			default:
+				break;
+		}
+		return $display_key;
 	}
 
 	/**

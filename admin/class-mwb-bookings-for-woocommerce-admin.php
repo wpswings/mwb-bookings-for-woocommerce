@@ -70,7 +70,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			wp_enqueue_style($this->plugin_name . '-admin-global', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-bookings-for-woocommerce-admin-global.css', array( 'mwb-mbfw-meterial-icons-css' ), time(), 'all');
 
 			wp_enqueue_style($this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-bookings-for-woocommerce-admin.scss', array(), $this->version, 'all');
-			wp_enqueue_style('mwb-admin-min-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.min.css', array(), $this->version, 'all');
+			wp_enqueue_style('mwb-mbfw-admin-min-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.min.css', array(), $this->version, 'all');
 			wp_enqueue_style('mwb-datatable-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all');
 			wp_enqueue_style( 'mwb-admin-full-calendar-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.css', array(), '5.8.0', 'all' );
 		}

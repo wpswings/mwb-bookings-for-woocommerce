@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+jQuery(function($) {
     $(document).on('change', '#mwb_mbfw_booking_criteria', function(){
         if ( $(this).val() == 'fixed_unit' ) {
             $('#mwb_mbfw_booking_count').removeAttr('disabled');
@@ -15,4 +15,7 @@ jQuery(document).ready(function($) {
             $('#mwb_mbfw_service_maximum_quantity').attr('disabled', 'disabled');
         }
     });
+    if ( $('.mbfw_time_picker').length > 0 ) {
+        $('.mbfw_time_picker').timepicker();
+    }
 });

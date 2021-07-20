@@ -873,7 +873,7 @@ class Mwb_Bookings_For_Woocommerce {
 										class="<?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>" 
 										name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
 										id="<?php echo esc_attr($mbfw_component['id']); ?>"
-										type="<?php echo esc_attr( ( 'date' === $mbfw_component['type'] ) ? 'text' : $mbfw_component['type']); ?>"
+										type="<?php echo esc_attr( ( 'date' === $mbfw_component['type'] || 'time' === $mbfw_component['type'] ) ? 'text' : $mbfw_component['type']); ?>"
 										value="<?php echo ( isset($mbfw_component['value']) ? esc_attr($mbfw_component['value']) : '' ); ?>"
 										autocomplete="off"
 										>
@@ -915,7 +915,7 @@ class Mwb_Bookings_For_Woocommerce {
 										<div>
 											<?php foreach ( $mbfw_sub_components as $sub_components ) { ?>
 													<label for="" class="mwb-form-label"><?php echo ( isset( $sub_components['label'] ) ? esc_html( $sub_components['label'] ) : '' ); ?></label>
-													<input type="time" name="<?php echo esc_attr( isset( $sub_components['name'] ) ? $sub_components['name'] : '' ); ?>" id="<?php echo esc_attr( isset( $sub_components['id'] ) ? $sub_components['id'] : '' ); ?>" value="<?php echo esc_attr( isset( $sub_components['value'] ) ? $sub_components['value'] : '' ); ?>">
+													<input type="text" name="<?php echo esc_attr( isset( $sub_components['name'] ) ? $sub_components['name'] : '' ); ?>" id="<?php echo esc_attr( isset( $sub_components['id'] ) ? $sub_components['id'] : '' ); ?>" value="<?php echo esc_attr( isset( $sub_components['value'] ) ? $sub_components['value'] : '' ); ?>" class="<?php echo esc_attr( isset( $sub_components['class'] ) ? $sub_components['class'] : '' ); ?>">
 											<?php } ?>
 										</div>
 									</div>

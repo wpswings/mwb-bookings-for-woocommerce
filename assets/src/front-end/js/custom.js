@@ -7,4 +7,7 @@ jQuery(document).ready(function($){
         dateFormat : 'dd-mm-yy',
 		minDate    : mwb_mbfw_public_obj.today_date,
     });
+    if ( $('.mbfw_time_picker').length > 0 ) {
+        $('.mbfw_time_picker').timepicker();
+    }
 });

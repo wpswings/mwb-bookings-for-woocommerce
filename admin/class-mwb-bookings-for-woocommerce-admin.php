@@ -75,6 +75,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			wp_enqueue_style( 'mwb-admin-full-calendar-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.css', array(), '5.8.0', 'all' );
 		}
 		wp_enqueue_style( 'mwb-mbfw-global-custom-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin-global-custom.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'mwb-mbfw-time-picker-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/css/timepicker.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -113,6 +114,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			wp_enqueue_script( 'mwb-admin-full-calendar-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.js', array( 'jquery' ), '5.8.0', true );
 		}
 		wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-custom.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
 	}
 
 	/**
@@ -371,7 +373,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'title'       => __( 'Daily Start Time', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_daily_start_time',
 				'name'        => 'mwb_mbfw_daily_start_time',
-				'class'       => 'mwb_mbfw_daily_start_time',
+				'class'       => 'mwb_mbfw_daily_start_time mbfw_time_picker',
 				'value'       => get_option( 'mwb_mbfw_daily_start_time' ),
 				'type'        => 'time',
 				'description' => __( 'Please choose daily start time', 'mwb-bookings-for-woocommerce' ),
@@ -380,7 +382,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'title'       => __( 'Daily End Time', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_daily_end_time',
 				'name'        => 'mwb_mbfw_daily_end_time',
-				'class'       => 'mwb_mbfw_daily_end_time',
+				'class'       => 'mwb_mbfw_daily_end_time mbfw_time_picker',
 				'value'       => get_option( 'mwb_mbfw_daily_end_time' ),
 				'type'        => 'time',
 				'description' => __( 'Please choose daily end time', 'mwb-bookings-for-woocommerce' ),
@@ -437,7 +439,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 		if ( $mwb_settings_save_progress ) {
 			$mbfw_button_index = array_search( 'submit', array_column( $mbfw_genaral_settings, 'type' ), true );
-			if ( isset( $mbfw_button_index ) && ! $mbfw_button_index ) {
+			if ( empty( $mbfw_button_index ) ) {
 				$mbfw_button_index = array_search( 'button', array_column( $mbfw_genaral_settings, 'type' ), true );
 			}
 			if ( isset( $mbfw_button_index ) && ( '' !== $mbfw_button_index || ! $mbfw_button_index ) ) {
@@ -721,20 +723,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'style'       => 'width:10em;',
 				)
 			);
+			do_action( 'mwb_mbfw_booking_availability_meta_tab_fields', get_the_ID() );
 			?>
 			<p class="mwb-mbfw-additional-notice">
 				<?php
-				$availability_setting_page_link = add_query_arg(
-					array(
-						'page'     => 'mwb_bookings_for_woocommerce_menu',
-						'mbfw_tab' => 'mwb-bookings-for-woocommerce-booking-availability-settings',
-					),
-					admin_url( 'admin.php' )
-				);
 				printf(
 					/* translators:%s admin setting page link. */
 					esc_html__( 'To Choose daily start time and end time please %s.', 'mwb-bookings-for-woocommerce' ),
-					'<a href="' . esc_url( $availability_setting_page_link ) . '" target="_blank">' . esc_html__( 'visit here', 'mwb-bookings-for-woocommerce' ) . '</a>'
+					'<a href="' . esc_url( admin_url( 'admin.php?page=mwb_bookings_for_woocommerce_menu&mbfw_tab=mwb-bookings-for-woocommerce-booking-availability-settings' ) ) . '" target="_blank">' . esc_html__( 'visit here', 'mwb-bookings-for-woocommerce' ) . '</a>'
 				);
 				?>
 			</p>
@@ -773,6 +769,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_is_add_extra_services'           => array_key_exists( 'mwb_mbfw_is_add_extra_services', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_add_extra_services'] ) ) : '',
 				'mwb_mbfw_maximum_booking_per_unit'        => array_key_exists( 'mwb_mbfw_maximum_booking_per_unit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_maximum_booking_per_unit'] ) ) : '',
 			);
+			$product_meta_data =
+			//desc - save booking product meta data.
+			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data );
 			// phpcs:enable WordPress.Security.NonceVerification
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 				update_post_meta( $id, $meta_key, $meta_value );
@@ -1324,13 +1323,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_change_line_item_meta_key_order_edit_page( $display_key, $meta, $item  ) {
 		switch ( $display_key ) {
 			case '_mwb_mbfw_booking_from_date':
-				return __( 'Booking from date', 'mwb-bookings-for-woocommerce' );
+				return __( 'From date', 'mwb-bookings-for-woocommerce' );
 			case '_mwb_mbfw_booking_to_date':
-				return __( 'Booking to date', 'mwb-bookings-for-woocommerce' );
+				return __( 'To date', 'mwb-bookings-for-woocommerce' );
 			case '_mwb_mbfw_booking_from_time':
-				return __( 'Booking from time', 'mwb-bookings-for-woocommerce' );
+				return __( 'From time', 'mwb-bookings-for-woocommerce' );
 			case '_mwb_mbfw_booking_to_time':
-				return __( 'Booking to time', 'mwb-bookings-for-woocommerce' );
+				return __( 'To time', 'mwb-bookings-for-woocommerce' );
 			default:
 				break;
 		}

@@ -614,6 +614,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			);
+			do_action( 'mwb_mbfw_add_extra_field_product_gen_setting' );
 			?>
 		</div>
 		<div id="mwb_booking_cost_data" class="panel woocommerce_options_panel show_if_mwb_booking">
@@ -772,12 +773,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			$product_meta_data =
 			//desc - save booking product meta data.
 			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data );
-			// phpcs:enable WordPress.Security.NonceVerification
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 				update_post_meta( $id, $meta_key, $meta_value );
 			}
 			wp_set_object_terms( $id, array( 'booking' ), 'product_cat', true );
 			wp_remove_object_terms( $id, 'uncategorized', 'product_cat' );
+			do_action( 'mwb_mbfw_share_product_on_fb', $id );
+			// phpcs:enable WordPress.Security.NonceVerification
 		}
 	}
 

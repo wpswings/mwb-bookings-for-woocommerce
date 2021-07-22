@@ -58,8 +58,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mbfw_public_enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'jquery-ui', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/jquery-ui-css/jquery-ui.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'mwb-mbfw-time-picker-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/css/timepicker.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -76,8 +74,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'today_date' => current_time( 'd-m-Y' ),
 			)
 		);
-		wp_enqueue_script( 'jquery-ui-datepicker' );
-		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
 	}
 
 	/**
@@ -222,11 +218,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			<div class="mbfw-date-picker-section__wrapper">
 				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-single-booking-time-selector-from"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="mwb_mbfw_booking_from_time" id="mwb-mbfw-single-booking-time-selector-from" class="mbfw_time_picker" required>
+					<input type="text" name="mwb_mbfw_booking_from_time" id="mwb-mbfw-single-booking-time-selector-from" class="mbfw_time_picker" autocomplete="off" required>
 				</div>
 				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-single-booking-time-selector-to"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="mwb_mbfw_booking_to_time" id="mwb-mbfw-single-booking-time-selector-to" class="mbfw_time_picker" required>
+					<input type="text" name="mwb_mbfw_booking_to_time" id="mwb-mbfw-single-booking-time-selector-to" class="mbfw_time_picker" autocomplete="off" required>
 				</div>
 			</div>
 			<?php
@@ -428,21 +424,5 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$item->update_meta_data( $meta_key, $meta_val );
 			}
 		}
-	}
-
-	/**
-	 * Adding order meta for booking order.
-	 *
-	 * @return object
-	 */
-	public function mwb_mbfw_add_order_meta_for_booking_order( $order ) {
-		$order_items = $order->get_items();
-		foreach ( $order_items as $item ) {
-			if ( 'mwb_booking' === $item->legacy_values['data']->product_type ) {
-				$order->update_meta_data( 'mwb_order_type', 'booking' );
-				break;
-			}
-		}
-		return $order;
 	}
 }

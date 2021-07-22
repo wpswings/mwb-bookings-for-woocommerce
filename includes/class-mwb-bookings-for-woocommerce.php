@@ -252,6 +252,8 @@ class Mwb_Bookings_For_Woocommerce {
 		$mbfw_plugin_common = new Mwb_Bookings_For_Woocommerce_Common($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
 		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_scripts' );
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_action( 'plugins_loaded', $mbfw_plugin_common, 'mbfw_registering_custom_product_type' );
 			$this->loader->add_action( 'init', $mbfw_plugin_common, 'mbfw_custom_taxonomy_for_products' );
@@ -259,6 +261,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_common, 'mwb_mbfw_show_extra_charges_in_total' );
+			$this->loader->add_action( 'woocommerce_new_order', $mbfw_plugin_common, 'mwb_bfwp_set_order_as_mwb_booking', 10, 2 );
 		}
 	}
 
@@ -284,8 +287,6 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item' , $mbfw_plugin_public, 'mwb_mbfw_add_custom_order_item_meta_data', 10, 4 );
 			$this->loader->add_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $mbfw_plugin_public, 'mwb_mbfw_show_date_time_selector_on_single_product_page', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_quantity_input_args', $mbfw_plugin_public, 'mwb_mbfw_set_max_quantity_to_be_booked_by_individual', 10, 2 );
-			$this->loader->add_filter( 'woocommerce_checkout_create_order', $mbfw_plugin_public, 'mwb_mbfw_add_order_meta_for_booking_order' );
-
 		}
 	}
 
@@ -915,7 +916,7 @@ class Mwb_Bookings_For_Woocommerce {
 										<div>
 											<?php foreach ( $mbfw_sub_components as $sub_components ) { ?>
 													<label for="" class="mwb-form-label"><?php echo ( isset( $sub_components['label'] ) ? esc_html( $sub_components['label'] ) : '' ); ?></label>
-													<input type="text" name="<?php echo esc_attr( isset( $sub_components['name'] ) ? $sub_components['name'] : '' ); ?>" id="<?php echo esc_attr( isset( $sub_components['id'] ) ? $sub_components['id'] : '' ); ?>" value="<?php echo esc_attr( isset( $sub_components['value'] ) ? $sub_components['value'] : '' ); ?>" class="<?php echo esc_attr( isset( $sub_components['class'] ) ? $sub_components['class'] : '' ); ?>">
+													<input type="text" name="<?php echo esc_attr( isset( $sub_components['name'] ) ? $sub_components['name'] : '' ); ?>" id="<?php echo esc_attr( isset( $sub_components['id'] ) ? $sub_components['id'] : '' ); ?>" value="<?php echo esc_attr( isset( $sub_components['value'] ) ? $sub_components['value'] : '' ); ?>" class="<?php echo esc_attr( isset( $sub_components['class'] ) ? $sub_components['class'] : '' ); ?>" autocomplete="off">
 											<?php } ?>
 										</div>
 									</div>
@@ -925,7 +926,7 @@ class Mwb_Bookings_For_Woocommerce {
 							break;
 						case 'full_calendar':
 							?>
-							<input id="<?php echo esc_attr( isset( $mbfw_component['id'] ) ? $mbfw_component['id'] : '' ); ?>" class="<?php echo esc_attr( isset( $mbfw_component['class'] ) ? $mbfw_component['class'] : '' ); ?>" type="text"/>
+							<input id="<?php echo esc_attr( isset( $mbfw_component['id'] ) ? $mbfw_component['id'] : '' ); ?>" class="<?php echo esc_attr( isset( $mbfw_component['class'] ) ? $mbfw_component['class'] : '' ); ?>" type="text" autocomplete="off"/>
 							<?php
 							break;
 						default:

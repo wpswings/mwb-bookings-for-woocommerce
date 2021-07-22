@@ -57,6 +57,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	public function mbfw_common_enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name . 'common', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/css/mwb-bookings-for-woocommerce-common.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'mwb-mbfw-common-custom-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/css/mwb-common.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'mwb-mbfw-time-picker-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/css/timepicker.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'jquery-ui', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/jquery-ui-css/jquery-ui.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -77,6 +79,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'nonce'    => wp_create_nonce( 'mbfw_common_nonce' ),
 			)
 		);
+		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+
 	}
 
 	/**
@@ -159,7 +165,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$order_count   = count(
 			wc_get_orders(
 				array(
-					'status'   => array( 'wc-processing', 'wc-on-hold' ),
+					'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
 					'return'   => 'ids',
 					'limit'    => -1,
 					'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress
@@ -201,6 +207,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 */
 	public function mwb_mbfw_show_extra_charges_in_total( $cart_object ) {
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+		if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) {
 			return;
 		}
 		$cart_data = $cart_object->get_cart();
@@ -252,8 +261,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( ! $product_id ) {
 			wp_die();
 		}
-		$services_checked = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : '';
-		$service_quantity = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : '';
+		$services_checked = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
+		$service_quantity = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array();
 		$people_number    = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : 1;
 		$quantity         = array_key_exists( 'quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['quantity'] ) ) : 1;
 		$date_from        = array_key_exists( 'mwb_mbfw_booking_from_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_date'] ) ) : '';
@@ -395,5 +404,24 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			}
 		}
 		return $services_cost;
+	}
+
+	/**
+	 * Set order as booking type.
+	 *
+	 * @param int    $order_id current order id.
+	 * @param object $order current order object.
+	 * @return void
+	 */
+	public function mwb_bfwp_set_order_as_mwb_booking( $order_id, $order ) {
+		$order_items = $order->get_items();
+		foreach ( $order_items as $item ) {
+			$product = $item->get_product();
+			if ( 'mwb_booking' === $product->get_type() ) {
+				$order->update_meta_data( 'mwb_order_type', 'booking' );
+				$order->save();
+				break;
+			}
+		}
 	}
 }

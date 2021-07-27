@@ -217,9 +217,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
 				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
 				$base_price       = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
-				$base_price       = ! empty( $base_price ) ? $base_price : 0;
+				$base_price       = ! empty( $base_price ) ? (float) $base_price : 0;
 				$unit_price       = get_post_meta( $cart['product_id'], '_price', true );
-				$unit_price       = ! empty( $unit_price ) ? $unit_price : 0;
+				$unit_price       = ! empty( $unit_price ) ? (float) $unit_price : 0;
 				
 				// adding unit cost.
 				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
@@ -272,7 +272,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$services_cost    = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
 		$extra_charges    = $this->mbfw_extra_charges_calculation( $product_id , $people_number);
 		$product_price    = get_post_meta( $product_id, '_price', true );
+		$product_price    = ! empty( $product_price ) ? $product_price : 0;
 		$base_cost        = get_post_meta( $product_id, 'mwb_mbfw_booking_base_cost', true );
+		$base_cost        = ! empty( $base_cost ) ? (float) $base_cost : 0;
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 			$product_price = (float) $product_price * (int) $people_number;
 		}
@@ -357,6 +359,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( is_array( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$cost = get_term_meta( $term->term_id, 'mwb_mbfw_booking_cost', true );
+				$cost = ! empty( $cost ) ? (float) $cost : 0;
 				if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true ) ) {
 					$extra_charges += $cost * $people_number;
 				} else {
@@ -381,7 +384,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( is_array( $services_checked ) ) {
 			foreach ( $services_checked as $term_id ) {
 				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
-				$service_price = (float) get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
+				$service_price = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
+				$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
 				if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
 					$services_cost += $service_count * $service_price * $people_number;
 				} else {
@@ -395,6 +399,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				if ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) ) {
 					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
 					$service_price = (float) get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true );
+					$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
 					if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
 						$services_cost += $service_count * $service_price * $people_number;
 					} else {
@@ -451,13 +456,23 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * Create cancel order link.
 	 *
-	 * @return void
+	 * @param array $statuses array containing order statuses on which to triger cancel button.
+	 * @return array
 	 */
 	public function mwb_mbfw_set_cancel_order_link_order_statuses( $statuses, $order ) {
 		$items = $order->get_items();
 		foreach ( $items as $item ) {
 			if ( 'yes' === get_post_meta( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
-				break;
+				$order_statuses = get_post_meta( $item->get_product_id(), 'mwb_bfwp_order_statuses_to_cancel', true );
+				$order_statuses = is_array( $order_statuses ) ? map_deep(
+						$order_statuses,
+						function ( $status ) {
+							return preg_replace( '/wc-/', '', $status );
+						}
+					) : array();
+				if ( in_array( $order->get_status(), $order_statuses, true ) ) {
+					return array( $order->get_status() );
+				}
 			}
 		}
 		return $statuses;

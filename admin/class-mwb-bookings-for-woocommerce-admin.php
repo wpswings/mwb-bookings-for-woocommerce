@@ -625,6 +625,12 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			);
+			$order_statuses = wc_get_order_statuses();
+			unset( $order_statuses['wc-completed'] );
+			unset( $order_statuses['wc-cancelled'] );
+			unset( $order_statuses['wc-refunded'] );
+			unset( $order_statuses['wc-failed'] );
+			$saved_statuses = get_post_meta( get_the_ID(), 'mwb_bfwp_order_statuses_to_cancel', true );
 			$this->mbfw_multi_select_field_html(
 				array(
 					'label'       => __( 'Order statuses', 'mwb-bookings-for-woocommerce' ),
@@ -632,9 +638,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'          => 'mwb_bfwp_order_statuses_to_cancel',
 					'name'        => 'mwb_bfwp_order_statuses_to_cancel[]',
 					'description' => __( 'Please select the desired order statuses at which the order can be cancelled.', 'mwb-bookings-for-woocommerce' ),
-					'value'       => array(),
+					'value'       => is_array( $saved_statuses ) ? $saved_statuses : array(),
 					'desc_tip'    => true,
-					'options'     => wc_get_order_statuses(),
+					'options'     => $order_statuses,
+					'custom_attr' => ( 'yes' !== get_post_meta( get_the_ID(), 'mwb_mbfw_cancellation_allowed', true ) ) ? array( 'disabled' => 'disabled' ) : array(),
 				)
 			);
 			do_action( 'mwb_mbfw_add_extra_field_product_gen_setting', get_the_ID() );
@@ -784,7 +791,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		?>
 		<p class="form-field <?php echo esc_attr( $field['id'] . '_field ' . $field['wrapper_class'] ); ?>">
 			<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo wp_kses_post( $field['label'] ); ?></label>
-			<select id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" class="<?php echo esc_attr( $field['class'] ); ?>" multiple="multiple">
+			<select id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" class="<?php echo esc_attr( $field['class'] ); ?>" multiple="multiple"
+			<?php
+			if ( isset( $field['custom_attr'] ) && is_array( $field['custom_attr'] ) ) {
+				foreach ( $field['custom_attr'] as $attr_key => $attr_val ) {
+					echo esc_attr( $attr_key . '=' . $attr_val );
+				}
+			}
+			?>
+			>
 				<?php
 				foreach ( $field['options'] as $key => $value ) {
 					?>
@@ -840,6 +855,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_maximum_people_per_booking'      => array_key_exists( 'mwb_mbfw_maximum_people_per_booking', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_maximum_people_per_booking'] ) ) : '',
 				'mwb_mbfw_is_add_extra_services'           => array_key_exists( 'mwb_mbfw_is_add_extra_services', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_add_extra_services'] ) ) : '',
 				'mwb_mbfw_maximum_booking_per_unit'        => array_key_exists( 'mwb_mbfw_maximum_booking_per_unit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_maximum_booking_per_unit'] ) ) : '',
+				'mwb_bfwp_order_statuses_to_cancel'        => array_key_exists( 'mwb_bfwp_order_statuses_to_cancel', $_POST ) ? ( is_array( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ? map_deep( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ) ) : array(),
 			);
 			$product_meta_data =
 			//desc - save booking product meta data.

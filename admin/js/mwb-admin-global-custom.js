@@ -23,4 +23,11 @@ jQuery(function($) {
     if ( $('#mwb_bfwp_order_statuses_to_cancel').length > 0 ) {
         $('#mwb_bfwp_order_statuses_to_cancel').select2();
     }
+    $(document).on('change', '#mwb_mbfw_cancellation_allowed', function(){
+        if ( $(this).prop('checked') ) {
+            $('#mwb_bfwp_order_statuses_to_cancel').removeAttr('disabled');
+        } else {
+            $('#mwb_bfwp_order_statuses_to_cancel').attr('disabled', 'disabled');
+        }
+    });
 });

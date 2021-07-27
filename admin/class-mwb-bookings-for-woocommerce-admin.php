@@ -565,6 +565,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria, max booking number, and unit. Unit will be used to calculate booking charge based on duration ( if selected in Booking services and booking costs in taxonomy ).', 'mwb-booking-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
+			woocommerce_wp_text_input(
+				array(
+					'label'             => __( 'Maximum Booking Per User', 'mwb-bookings-for-woocommerce' ),
+					'id'                => 'mwb_mbfw_maximum_booking_per_unit',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_maximum_booking_per_unit', true ),
+					'description'       => __( 'Maximum Bookings per Unit', 'mwb-bookings-for-woocommerce' ),
+					'type'              => 'number',
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'min' => 0, 'disabled' => 'disabled' ),
+				)
+			);
 			woocommerce_wp_checkbox(
 				array(
 					'id'                => 'mwb_mbfw_enable_calendar',
@@ -585,13 +597,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			);
 			woocommerce_wp_text_input(
 				array(
-					'id'          => 'mwb_mbfw_max_bookings',
-					'type'        => 'number',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_max_bookings', true ),
-					'label'       => __( 'Max Bookings', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Max Bookings per Product/Service.', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'    => true,
-					'style'       => 'width:10em;',
+					'id'                => 'mwb_mbfw_max_bookings',
+					'type'              => 'number',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_max_bookings', true ),
+					'label'             => __( 'Max Bookings', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Max Bookings per Product/Service.', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
 			woocommerce_wp_checkbox(
@@ -612,6 +625,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			);
+			$this->mbfw_multi_select_field_html(
+				array(
+					'label'       => __( 'Order statuses', 'mwb-bookings-for-woocommerce' ),
+					'class'       => 'select short',
+					'id'          => 'mwb_bfwp_order_statuses_to_cancel',
+					'name'        => 'mwb_bfwp_order_statuses_to_cancel[]',
+					'description' => __( 'Please select the desired order statuses at which the order can be cancelled.', 'mwb-bookings-for-woocommerce' ),
+					'value'       => array(),
+					'desc_tip'    => true,
+					'options'     => wc_get_order_statuses(),
+				)
+			);
 			do_action( 'mwb_mbfw_add_extra_field_product_gen_setting', get_the_ID() );
 			?>
 		</div>
@@ -619,22 +644,24 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			<?php
 			woocommerce_wp_text_input(
 				array(
-					'id'          => 'mwb_mbfw_booking_unit_cost',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit_cost', true ),
-					'label'       => __( 'Unit Cost', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enter Unit Cost', 'mwb-bookings-for-woocommerce' ),
-					'type'        => 'number',
-					'desc_tip'    => true,
-					'style'       => 'width:10em;',
+					'id'                => 'mwb_mbfw_booking_unit_cost',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit_cost', true ),
+					'label'             => __( 'Unit Cost', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Enter Unit Cost', 'mwb-bookings-for-woocommerce' ),
+					'type'              => 'number',
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
 			woocommerce_wp_checkbox(
 				array(
-					'id'          => 'mwb_mbfw_is_booking_unit_cost_per_people',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_is_booking_unit_cost_per_people', true ),
-					'label'       => __( 'Unit Cost Per People', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Unit Cost will be Multiplied by Number of People', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'    => true,
+					'id'                => 'mwb_mbfw_is_booking_unit_cost_per_people',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_is_booking_unit_cost_per_people', true ),
+					'label'             => __( 'Unit Cost Per People', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Unit Cost will be Multiplied by Number of People', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
 			woocommerce_wp_text_input(
@@ -682,24 +709,26 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			);
 			woocommerce_wp_text_input(
 				array(
-					'id'          => 'mwb_mbfw_minimum_people_per_booking',
-					'type'        => 'number',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_minimum_people_per_booking', true ),
-					'label'       => __( 'Minimum No. of People', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Minimum Number of People Per Booking', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'    => true,
-					'style'       => 'width:10em;',
+					'id'                => 'mwb_mbfw_minimum_people_per_booking',
+					'type'              => 'number',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_minimum_people_per_booking', true ),
+					'label'             => __( 'Minimum No. of People', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Minimum Number of People Per Booking', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
 			woocommerce_wp_text_input(
 				array(
-					'id'          => 'mwb_mbfw_maximum_people_per_booking',
-					'type'        => 'number',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_maximum_people_per_booking', true ),
-					'label'       => __( 'Maximum No. of People', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Maximum Number of People Per Booking', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'    => true,
-					'style'       => 'width:10em;',
+					'id'                => 'mwb_mbfw_maximum_people_per_booking',
+					'type'              => 'number',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_maximum_people_per_booking', true ),
+					'label'             => __( 'Maximum No. of People', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Maximum Number of People Per Booking', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
 			do_action( 'mwb_mbfw_people_meta_section_add_fields', get_the_ID() );
@@ -729,17 +758,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		</div>
 		<div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<?php
-			woocommerce_wp_text_input(
-				array(
-					'label'       => __( 'Maximum Booking Per User', 'mwb-bookings-for-woocommerce' ),
-					'id'          => 'mwb_mbfw_maximum_booking_per_unit',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_maximum_booking_per_unit', true ),
-					'description' => __( 'Maximum Bookings per Unit', 'mwb-bookings-for-woocommerce' ),
-					'type'        => 'number',
-					'desc_tip'    => true,
-					'style'       => 'width:10em;',
-				)
-			);
 			do_action( 'mwb_mbfw_booking_availability_meta_tab_fields', get_the_ID() );
 			?>
 			<p class="mwb-mbfw-additional-notice">
@@ -752,6 +770,43 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				?>
 			</p>
 		</div>
+		<?php
+	}
+
+	/**
+	 * Multiselect field html.
+	 *
+	 * @return void
+	 */
+	public function mbfw_multi_select_field_html( $field ) {
+		global $thepostid, $post, $woocommerce;
+		$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
+		?>
+		<p class="form-field <?php echo esc_attr( $field['id'] . '_field ' . $field['wrapper_class'] ); ?>">
+			<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo wp_kses_post( $field['label'] ); ?></label>
+			<select id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['name'] ); ?>" class="<?php echo esc_attr( $field['class'] ); ?>" multiple="multiple">
+				<?php
+				foreach ( $field['options'] as $key => $value ) {
+					?>
+					<option value="<?php echo esc_attr( $key ); ?>"<?php echo esc_attr( in_array( $key, $field['value'] ) ? 'selected="selected"' : '' ); //phpcs:ignore WordPress ?>><?php echo esc_html( $value ); ?></option>
+					<?php
+				}
+				?>
+			</select>
+			<?php
+			if ( ! empty( $field['description'] ) ) {
+				if ( isset( $field['desc_tip'] ) && false !== $field['desc_tip'] ) {
+					?>
+					<span class="woocommerce-help-tip" data-tip="<?php echo esc_attr( $field['description'] ); ?>"></span>
+					<?php
+				} else {
+					?>
+					<span class="description"><?php echo wp_kses_post( $field['description'] ); ?></span>
+					<?php
+				}
+			}
+			?>
+		</p>
 		<?php
 	}
 
@@ -1383,11 +1438,12 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				}
 				$all_events[] = array(
 					'title' => $item['name'],
-					'start' => $item->get_meta( '_mwb_mbfw_booking_from_date', true ) . 'T' . $item->get_meta( '_mwb_mbfw_booking_from_time', true ),
-					'end'   => $item->get_meta( '_mwb_mbfw_booking_to_date', true ) . 'T' . $item->get_meta( '_mwb_mbfw_booking_to_time', true ),
+					'start' => gmdate( 'Y-m-d', strtotime( $item->get_meta( '_mwb_mbfw_booking_from_date', true ) ) ) . 'T' . $item->get_meta( '_mwb_mbfw_booking_from_time', true ),
+					'end'   => gmdate( 'Y-m-d', strtotime( $item->get_meta( '_mwb_mbfw_booking_to_date', true ) ) ) . 'T' . $item->get_meta( '_mwb_mbfw_booking_to_time', true ),
 				);
 			}
 		}
+		update_option( 'date_check_mbfw', $all_events );
 		wp_send_json( $all_events );
 		wp_die();
 	}

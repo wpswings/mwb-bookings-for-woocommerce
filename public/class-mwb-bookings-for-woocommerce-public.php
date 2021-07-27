@@ -71,7 +71,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
 			array(
-				'today_date' => current_time( 'd-m-Y' ),
+				'today_date'       => current_time( 'd-m-Y' ),
+				'wrong_order_date' => __( 'To date can not be greater then from date.' ),
 			)
 		);
 	}
@@ -140,7 +141,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function mwb_mbfw_show_additional_booking_services_details_on_form( $product_id, $product ) {
-		if ( 'yes' === get_option( 'mwb_mbfw_is_show_included_service' ) ) {
+		if ( 'yes' === get_option( 'mwb_mbfw_is_show_included_service' ) && 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_add_extra_services', true ) ) {
 			$mbfw_booking_service = get_the_terms( $product_id, 'mwb_booking_service' );
 			if ( $mbfw_booking_service && is_array( $mbfw_booking_service ) ) {
 				?>
@@ -422,6 +423,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			apply_filters( 'mbfw_add_meta_data_in_the_db_for_line_item', $line_item_meta, $custom_booking_values, $item );
 			foreach ( $line_item_meta as $meta_key => $meta_val ) {
 				$item->update_meta_data( $meta_key, $meta_val );
+			}
+			if ( 'yes' === get_post_meta( $custom_values['product_id'], 'mwb_mbfw_admin_confirmation', true ) ) {
+				update_option( 'check_order_status_mwb', $order->get_status() );
 			}
 		}
 	}

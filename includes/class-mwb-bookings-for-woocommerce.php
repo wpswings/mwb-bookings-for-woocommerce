@@ -262,6 +262,8 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_common, 'mwb_mbfw_show_extra_charges_in_total' );
 			$this->loader->add_action( 'woocommerce_new_order', $mbfw_plugin_common, 'mwb_bfwp_set_order_as_mwb_booking', 10, 2 );
+			$this->loader->add_action( 'woocommerce_thankyou', $mbfw_plugin_common, 'mwb_bfwp_change_order_status' );
+			$this->loader->add_filter( 'woocommerce_valid_order_statuses_for_cancel', $mbfw_plugin_common, 'mwb_mbfw_set_cancel_order_link_order_statuses', 10, 2 );
 		}
 	}
 

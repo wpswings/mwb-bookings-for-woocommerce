@@ -82,6 +82,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
 
 	}
 
@@ -180,10 +181,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'parent' => null,
 				'group'  => null,
 				'title'  => sprintf(
-					/* translators:%1$s Booking text. */
-					/* translators:%2$s Booking count. */
-					/* translators:%3$s Booking count. */
-					/* translators:%4$s Booking text for screeen readers. */
+					/* translators: 1- Booking text, 2- Booking count, 3- Booking count, 4- Booking text for screeen readers. */
 					'<span class="mwb-admin-bar-booking-icon">%1$s</span>
 					<span class="mwb-mbfw-booking-count">%2$s</span>
 					<span class="screen-reader-text">%3$s %4$s</span>',
@@ -264,7 +262,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$services_checked = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
 		$service_quantity = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array();
 		$people_number    = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : 1;
+		$people_number    = $people_number > 0 ? $people_number : 1;
 		$quantity         = array_key_exists( 'quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['quantity'] ) ) : 1;
+		$quantity         = $quantity > 0 ? $quantity : 1;
 		$date_from        = array_key_exists( 'mwb_mbfw_booking_from_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_date'] ) ) : '';
 		$date_to          = array_key_exists( 'mwb_mbfw_booking_to_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_date'] ) ) : '';
 		$time_from        = array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) : '';
@@ -423,5 +423,43 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				break;
 			}
 		}
+	}
+
+	/**
+	 * Change order status.
+	 *
+	 * @param integer $order_id current order id.
+	 * @return void
+	 */
+	public function mwb_bfwp_change_order_status( $order_id ) {
+		if ( ! $order_id ) {
+			return;
+		}
+		$order = wc_get_order( $order_id );
+		if ( 'on-hold' === $order->get_status() ) {
+			return;
+		}
+		$items = $order->get_items();
+		foreach ( $items as $item ) {
+			if ( 'yes' === get_post_meta( $item->get_product_id(), 'mwb_mbfw_admin_confirmation', true ) ) {
+				$order->update_status('on-hold', __( 'confirmation required form admin.' ));
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Create cancel order link.
+	 *
+	 * @return void
+	 */
+	public function mwb_mbfw_set_cancel_order_link_order_statuses( $statuses, $order ) {
+		$items = $order->get_items();
+		foreach ( $items as $item ) {
+			if ( 'yes' === get_post_meta( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
+				break;
+			}
+		}
+		return $statuses;
 	}
 }

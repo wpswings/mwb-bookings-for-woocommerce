@@ -63,7 +63,7 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function add_to_cart_text() {
-		return apply_filters( 'woocommerce_product_add_to_cart_text', __( 'View Details', 'mwb-bookings-for-woocommerce' ), $this );
+		return __( 'View Details', 'mwb-bookings-for-woocommerce' );
 	}
 
 	/**
@@ -72,15 +72,7 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function add_to_cart_url() {
-		$url = $this->is_purchasable() && $this->is_in_stock() ? remove_query_arg(
-			'added-to-cart',
-			add_query_arg(
-				array(
-					'add-to-cart' => $this->get_id(),
-				),
-				( function_exists( 'is_feed' ) && is_feed() ) || ( function_exists( 'is_404' ) && is_404() ) ? $this->get_permalink() : ''
-			)
-		) : $this->get_permalink();
+		$url = $this->get_permalink();
 		return apply_filters( 'woocommerce_product_add_to_cart_url', $url, $this );
 	}
 	/**

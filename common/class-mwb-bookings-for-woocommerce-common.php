@@ -331,7 +331,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				<?php
 			}
 			?>
-			<div class="mbfw-total-listing-single-page__wrapper">
+			<div class="mbfw-total-listing-single-page__wrapper mbfw-total-cost__wrapper">
 				<div class="mbfw-total-listing-single-page">
 					<?php esc_html_e( 'Total', 'mwb-bookings-for-woocommerce' ); ?>
 				</div>

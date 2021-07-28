@@ -702,3 +702,12 @@ select {
     max-width: 50%;
   }
 }
+
+@media (max-width: 400px){
+  .mwb-form-group .mwb-form-group__label {
+    margin-bottom: 12px;
+  }
+  .mwb-form-group .mwb-form-group__control {
+    max-width: 100%;
+  }
+}

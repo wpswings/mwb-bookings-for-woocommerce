@@ -1,7 +1,10 @@
 /* Mixins */
 @mixin media($size) {
 
-	@if $size == mwb-phone {
+	@if $size == mwb-sm-phone {
+		@media (max-width: 400px) { @content; }
+	} 
+	@else if $size == mwb-phone {
 		@media (max-width: 768px) { @content; }
 	} 
 

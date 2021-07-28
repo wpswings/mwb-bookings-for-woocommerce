@@ -31,8 +31,10 @@
     $(document).ready(function(){
         $(document).on('change', 'form.cart :input', function(){
             var form_data = new FormData( $('form.cart')[0] );
-			if ( $('.mwb-mbfw-total-area').length > 0 ) {
-				retrieve_booking_total_ajax( form_data );
+			if ( $('.mwb_mbfw_booking_product_id').val() ) {
+				if ( $('.mwb-mbfw-total-area').length > 0 ) {
+					retrieve_booking_total_ajax( form_data );
+				}
 			}
         });
         function retrieve_booking_total_ajax( form_data ) {
@@ -46,11 +48,11 @@
                 contentType : false,
                 success     : function( msg ) {
                     $('.mwb-mbfw-total-area').html(msg);
-                },
-                error       : function() {
-                    alert('error');
                 }
             });
         }
+		if ( $('.mbfw_time_picker').length > 0 ) {
+			$('.mbfw_time_picker').timepicker();
+		}
     });
 })( jQuery );

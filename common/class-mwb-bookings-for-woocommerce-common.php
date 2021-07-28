@@ -447,7 +447,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$items = $order->get_items();
 		foreach ( $items as $item ) {
 			if ( 'yes' === get_post_meta( $item->get_product_id(), 'mwb_mbfw_admin_confirmation', true ) ) {
-				$order->update_status('on-hold', __( 'confirmation required form admin.' ));
+				$order->update_status('on-hold', __( 'confirmation required from admin.' ));
 				break;
 			}
 		}

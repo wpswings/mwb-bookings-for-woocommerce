@@ -17,9 +17,6 @@ jQuery(function($) {
             $('#mwb_mbfw_service_maximum_quantity').attr('disabled', 'disabled');
         }
     });
-    if ( $('.mbfw_time_picker').length > 0 ) {
-        $('.mbfw_time_picker').timepicker();
-    }
     if ( $('#mwb_bfwp_order_statuses_to_cancel').length > 0 ) {
         $('#mwb_bfwp_order_statuses_to_cancel').select2();
     }

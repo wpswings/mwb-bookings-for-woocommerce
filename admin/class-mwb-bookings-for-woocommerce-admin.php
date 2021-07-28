@@ -1396,9 +1396,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'_mwb_mbfw_enable_calendar',
 			'_mwb_mbfw_enable_time_picker',
 			'_mwb_mbfw_service_and_count',
-			'_mwb_mbfw_booking_extra_costs'
+			'_mwb_mbfw_booking_extra_costs',
 		);
-		return array_merge( $hidden_keys, $custom_line_item_key_name );
+		return apply_filters( 'mwb_mbfw_hide_custom_line_item_meta_keys', array_merge( $hidden_keys, $custom_line_item_key_name ) );
 	}
 
 	/**
@@ -1459,7 +1459,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				);
 			}
 		}
-		update_option( 'date_check_mbfw', $all_events );
 		wp_send_json( $all_events );
 		wp_die();
 	}

@@ -556,7 +556,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					<option value="customer_selected_unit" <?php selected( 'customer_selected_unit', $booking_criteria ); ?>><?php esc_html_e( 'Customer Selected Unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="fixed_unit" <?php selected( 'fixed_unit', $booking_criteria ); ?>><?php esc_html_e( 'Fixed Unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
-				<input type="number" step="1" min="1" max="" style="width: 4em;" <?php echo esc_attr( ( 'customer_selected_unit' === $booking_criteria ) ? 'disabled:disabled' : '' ); ?> id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( get_post_meta( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
+				<input type="number" step="1" min="1" max="" style="width: 4em;" <?php echo esc_attr( ( 'customer_selected_unit' === $booking_criteria ) ? 'disabled=disabled' : '' ); ?> id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( get_post_meta( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
 				<select name="mwb_mbfw_booking_unit" id="mwb_mbfw_booking_unit">
 					<option value="days" <?php selected( 'days', $booking_unit ); ?>><?php esc_html_e( 'Day(s)', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="hours" <?php selected( 'hours', $booking_unit ); ?>><?php esc_html_e( 'Hour(s)', 'mwb-bookings-for-woocommerce' ); ?></option>
@@ -668,18 +668,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'label'             => __( 'Unit Cost Per People', 'mwb-bookings-for-woocommerce' ),
 					'description'       => __( 'Unit Cost will be Multiplied by Number of People', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'          => true,
-					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
 			woocommerce_wp_text_input(
 				array(
-					'id'          => 'mwb_mbfw_booking_base_cost',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_base_cost', true ),
-					'label'       => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enter Base Cost', 'mwb-bookings-for-woocommerce' ),
-					'type'        => 'number',
-					'desc_tip'    => true,
-					'style'       => 'width:10em;',
+					'id'                => 'mwb_mbfw_booking_base_cost',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_base_cost', true ),
+					'label'             => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Enter Base Cost', 'mwb-bookings-for-woocommerce' ),
+					'type'              => 'number',
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
 			woocommerce_wp_checkbox(

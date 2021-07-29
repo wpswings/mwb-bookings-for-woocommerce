@@ -25,6 +25,7 @@ apply_filters( 'mbfw_general_settings_array', array() );
 		<?php
 		$mbfw_mwb_mbfw_obj->mwb_mbfw_plug_generate_html( $mbfw_genaral_settings );
 		wp_nonce_field( 'admin_save_data', 'mwb_tabs_nonce' );
+		do_action( 'mwb_mbfw_after_general_setting_tab_fields' );
 		?>
 	</div>
 </form>

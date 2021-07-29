@@ -915,10 +915,15 @@ class Mwb_Bookings_For_Woocommerce {
 										<div><?php echo esc_html( $title ); ?></div>
 									</div>
 									<div class="mwb-form-group__control">
-										<div>
+										<div class="mbfw-avl-days-wrap">
 											<?php foreach ( $mbfw_sub_components as $sub_components ) { ?>
+												<div class="mbfw-avl-days">
 													<label for="" class="mwb-form-label"><?php echo ( isset( $sub_components['label'] ) ? esc_html( $sub_components['label'] ) : '' ); ?></label>
-													<input type="text" name="<?php echo esc_attr( isset( $sub_components['name'] ) ? $sub_components['name'] : '' ); ?>" id="<?php echo esc_attr( isset( $sub_components['id'] ) ? $sub_components['id'] : '' ); ?>" value="<?php echo esc_attr( isset( $sub_components['value'] ) ? $sub_components['value'] : '' ); ?>" class="<?php echo esc_attr( isset( $sub_components['class'] ) ? $sub_components['class'] : '' ); ?>" autocomplete="off">
+													<div class="mbfw-avl-days-time">
+														<input type="text" name="<?php echo esc_attr( isset( $sub_components['name'] ) ? $sub_components['name'] : '' ); ?>" id="<?php echo esc_attr( isset( $sub_components['id'] ) ? $sub_components['id'] : '' ); ?>" value="<?php echo esc_attr( isset( $sub_components['value'] ) ? $sub_components['value'] : '' ); ?>" class="<?php echo esc_attr( isset( $sub_components['class'] ) ? $sub_components['class'] : '' ); ?>" autocomplete="off">
+														<span class="dashicons dashicons-clock"></span>
+													</div>
+												</div>
 											<?php } ?>
 										</div>
 									</div>

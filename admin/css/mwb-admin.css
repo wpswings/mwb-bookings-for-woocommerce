@@ -677,6 +677,10 @@ select {
 
 /*=====  End of DataTables  ======*/
 
+.mwb-section {
+  font-family: "NunitoSans-Regular";
+}
+
 @media (max-width: 768px){
   .mwb-header-container {
     justify-content: flex-start;
@@ -700,5 +704,14 @@ select {
   .mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item {
     flex: 0 0 50%;
     max-width: 50%;
+  }
+}
+
+@media (max-width: 400px){
+  .mwb-form-group .mwb-form-group__label {
+    margin-bottom: 12px;
+  }
+  .mwb-form-group .mwb-form-group__control {
+    max-width: 100%;
   }
 }

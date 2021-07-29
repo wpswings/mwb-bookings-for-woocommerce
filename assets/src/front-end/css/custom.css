@@ -1,6 +1,9 @@
 .mwb-mbfw-cart-page-data {
     width: 100%;
 }
+.mwb-mbfw-cart-page-data input[type=number] {
+    text-align: center;
+}
 .mwb-mbfw-cart-page-data input:focus {
     outline: none;
 }
@@ -8,18 +11,16 @@
     align-items: center;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 } 
 
-.mbfw-total-listing-single-page__wrapper:nth-last-child(2) {
-    border-bottom: 1px solid #cccccc;
-    margin-bottom: 5px;
-    padding: 0 0 5px;
-}
-
 .mbfw-date-picker-section  {
-    margin-right: 10px;
+    flex: 0 0 100%;
+    max-width: 45%;
 }
-
+.mbfw-date-picker-section input {
+    width: 100%;
+}
 .mbfw-date-picker-section label {
     display: block;
 }
@@ -43,6 +44,8 @@
 .mbfw-additionl-detail-listing-section {
     flex: 0 0 100%;
     max-width: 33%;
+    display: flex;
+    align-items: center;
 }
 
 
@@ -75,4 +78,72 @@
 
 .summary-container input {
     padding: 5px;
+}
+.mbfw-additionl-detail-listing-section input[type=checkbox] {
+    margin-right: 5px!important;
+}
+
+.mbfw-additionl-detail-listing-section span {
+    text-transform: capitalize;
+}
+
+.bfwp-people-options__wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.bfwp-people-options__wrapper .bfwp-people-type {
+    flex: 0 0 100%;
+    max-width: 50%;
+    text-transform: capitalize;
+}
+
+.bfwp-people-options__wrapper .bfwp-people-number {
+    flex: 0 0 100%;
+    max-width: 50%;
+    text-align: right;
+
+}
+
+.bfwp-people-number input {
+    width: 100px;
+    max-width: 100%;
+}
+.mbfw-total-cost__wrapper {
+    border-top: 1px solid #ccc;
+    padding: 10px 0;
+    margin-top: 15px;
+}
+.mbfw-total-cost__wrapper .mbfw-total-listing-single-page {
+    font-weight: 600;
+}
+.mwb_bfwp_booking_policy {
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.4px;
+    margin-bottom: 10px;
+}
+
+/* Theme compatibility css */
+
+/* For betheme */
+.entry-summary .mwb-mbfw-cart-page-data input {
+    margin-bottom: 0;
+    margin: 0;
+    display: inline;
+}
+.entry-summary .mwb-mbfw-cart-page-data .bfwp-people-title {
+    margin: 10px 0;
+}
+
+/* For Divi */
+.theme-Divi .mwb-mbfw-cart-page-data input:not([type=checkbox]) {
+    padding: .7em;
+    border: 1px solid #ddd;
+    color: #666;
+    font-size: 14px;
+    line-height: normal!important;
 }

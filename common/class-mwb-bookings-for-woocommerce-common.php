@@ -270,7 +270,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$time_from        = array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) : '';
 		$time_to          = array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) : '';
 		$services_cost    = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
-		$extra_charges    = $this->mbfw_extra_charges_calculation( $product_id , $people_number);
+		$extra_charges    = $this->mbfw_extra_charges_calculation( $product_id , $people_number );
 		$product_price    = get_post_meta( $product_id, '_price', true );
 		$product_price    = ! empty( $product_price ) ? $product_price : 0;
 		$base_cost        = get_post_meta( $product_id, 'mwb_mbfw_booking_base_cost', true );

@@ -574,7 +574,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'type'              => 'number',
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
-					'custom_attributes' => array( 'min' => 0, 'disabled' => 'disabled' ),
+					'custom_attributes' => ( 'fixed_unit' === $booking_criteria ) ? array( 'min' => 0, 'disabled' => 'disabled' ) : array( 'min' => 0 ) ,
 				)
 			);
 			woocommerce_wp_checkbox(

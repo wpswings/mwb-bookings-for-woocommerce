@@ -621,7 +621,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'          => 'mwb_mbfw_cancellation_allowed',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_cancellation_allowed', true ),
 					'label'       => __( 'Cancellation Allowed', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Cancellation will be allowed by Users', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Cancellation will be allowed for Users', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -1411,14 +1411,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_change_line_item_meta_key_order_edit_page( $display_key, $meta, $item  ) {
 		switch ( $display_key ) {
-			case '_mwb_mbfw_booking_from_date':
-				return __( 'From date', 'mwb-bookings-for-woocommerce' );
-			case '_mwb_mbfw_booking_to_date':
-				return __( 'To date', 'mwb-bookings-for-woocommerce' );
-			case '_mwb_mbfw_booking_from_time':
-				return __( 'From time', 'mwb-bookings-for-woocommerce' );
-			case '_mwb_mbfw_booking_to_time':
-				return __( 'To time', 'mwb-bookings-for-woocommerce' );
+			case '_mwb_bfwp_date_time':
+				return __( 'Date time', 'mwb-bookings-for-woocommerce' );
 			default:
 				break;
 		}
@@ -1444,18 +1438,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		foreach ( $orders as $order ) {
 			$items = $order->get_items();
 			foreach ( $items as $item ) {
-				if ( 'no' === $item->get_meta( '_mwb_mbfw_enable_calendar', true ) ) {
-					$all_events[] = array(
-							'title' => $item['name'],
-							'start' => current_time( 'Y-m-d' ) . 'T' . $item->get_meta( '_mwb_mbfw_booking_from_time', true ),
-							'end'   => current_time( 'Y-m-d' ) . 'T' . $item->get_meta( '_mwb_mbfw_booking_to_time', true ),
-					);
-					continue;
-				}
+				$date_time    = explode( ',', $item->get_meta( '_mwb_bfwp_date_time', true ) );
+				$start        = strtotime( ! empty( $date_time[0] ) ? $date_time[0] : $order->get_date_created() );
+				$end          = strtotime( ! empty( $date_time[1] ) ? $date_time[1] : $order->get_date_created() );
 				$all_events[] = array(
-					'title' => $item['name'],
-					'start' => gmdate( 'Y-m-d', strtotime( $item->get_meta( '_mwb_mbfw_booking_from_date', true ) ) ) . 'T' . $item->get_meta( '_mwb_mbfw_booking_from_time', true ),
-					'end'   => gmdate( 'Y-m-d', strtotime( $item->get_meta( '_mwb_mbfw_booking_to_date', true ) ) ) . 'T' . $item->get_meta( '_mwb_mbfw_booking_to_time', true ),
+						'title' => $item['name'],
+						'start' => gmdate( 'Y-m-d', $start ) . 'T' . gmdate( 'H:i', $start ),
+						'end'   => gmdate( 'Y-m-d', $end ) . 'T' . gmdate( 'H:i', $end ),
 				);
 			}
 		}

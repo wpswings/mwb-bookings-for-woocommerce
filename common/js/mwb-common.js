@@ -51,8 +51,55 @@
                 }
             });
         }
-		if ( $('.mbfw_time_picker').length > 0 ) {
-			$('.mbfw_time_picker').timepicker();
+		if ( $('.mwb_mbfw_time_date_picker_frontend').length > 0 ) {
+			$('.mwb_mbfw_time_date_picker_frontend').daterangepicker({
+				autoUpdateInput  : false,
+				timePicker       : true,
+				timePicker24Hour : true,
+				showDropdowns    : true,
+				autoApply        : true,
+				locale           : {
+					format: 'DD/MM/YYYY hh:mm'
+				},
+				opens            : 'center',
+				minDate          : mwb_mbfw_common_obj.minDate,
+			});
 		}
+		$('.mwb_mbfw_time_date_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
+			$(this).val(picker.startDate.format('DD/MM/YYYY hh:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY hh:mm'));
+		});
+		if ( $('.mwb_mbfw_date_picker_frontend').length > 0 ) {
+			$('.mwb_mbfw_date_picker_frontend').daterangepicker({
+				autoUpdateInput : false,
+				showDropdowns   : true,
+				autoApply       : true,
+				locale          : {
+					format : 'DD/MM/YYYY'
+				},
+				opens           : 'center',
+				minDate         : mwb_mbfw_common_obj.minDate,
+			});
+		}
+		$('.mwb_mbfw_date_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
+			$(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+		});
+		if ( $('.mwb_mbfw_time_picker_frontend').length > 0 ) {
+			$('.mwb_mbfw_time_picker_frontend').daterangepicker({
+				autoUpdateInput  : false,
+				timePicker       : true,
+				timePicker24Hour : true,
+				showDropdowns    : true,
+				autoApply        : true,
+				locale           : {
+					format : 'DD/MM/YYYY hh:mm'
+				},
+				opens            : 'center',
+				minDate          : mwb_mbfw_common_obj.minDate,
+				maxDate          : mwb_mbfw_common_obj.maxTime,
+			});
+		}
+		$('.mwb_mbfw_time_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
+			$(this).val(picker.startDate.format('DD/MM/YYYY hh:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY hh:mm'));
+		});
     });
 })( jQuery );

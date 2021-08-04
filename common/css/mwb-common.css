@@ -17,3 +17,7 @@ li#wp-admin-bar-mwb-mbfw-custom-admin-menu-bookings .mwb-mbfw-booking-count {
   margin-left: 4px;
   line-height: normal;
 }
+
+.daterangepicker .drp-calendar {
+  max-width: unset !important;
+}

@@ -82,6 +82,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
 
 	}
 
@@ -180,10 +181,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'parent' => null,
 				'group'  => null,
 				'title'  => sprintf(
-					/* translators:%1$s Booking text. */
-					/* translators:%2$s Booking count. */
-					/* translators:%3$s Booking count. */
-					/* translators:%4$s Booking text for screeen readers. */
+					/* translators: 1- Booking text, 2- Booking count, 3- Booking count, 4- Booking text for screeen readers. */
 					'<span class="mwb-admin-bar-booking-icon">%1$s</span>
 					<span class="mwb-mbfw-booking-count">%2$s</span>
 					<span class="screen-reader-text">%3$s %4$s</span>',
@@ -219,9 +217,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
 				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
 				$base_price       = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
-				$base_price       = ! empty( $base_price ) ? $base_price : 0;
+				$base_price       = ! empty( $base_price ) ? (float) $base_price : 0;
 				$unit_price       = get_post_meta( $cart['product_id'], '_price', true );
-				$unit_price       = ! empty( $unit_price ) ? $unit_price : 0;
+				$unit_price       = ! empty( $unit_price ) ? (float) $unit_price : 0;
 				
 				// adding unit cost.
 				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
@@ -264,15 +262,19 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$services_checked = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
 		$service_quantity = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array();
 		$people_number    = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : 1;
+		$people_number    = $people_number > 0 ? $people_number : 1;
 		$quantity         = array_key_exists( 'quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['quantity'] ) ) : 1;
+		$quantity         = $quantity > 0 ? $quantity : 1;
 		$date_from        = array_key_exists( 'mwb_mbfw_booking_from_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_date'] ) ) : '';
 		$date_to          = array_key_exists( 'mwb_mbfw_booking_to_date', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_date'] ) ) : '';
 		$time_from        = array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) : '';
 		$time_to          = array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) : '';
 		$services_cost    = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
-		$extra_charges    = $this->mbfw_extra_charges_calculation( $product_id , $people_number);
+		$extra_charges    = $this->mbfw_extra_charges_calculation( $product_id , $people_number );
 		$product_price    = get_post_meta( $product_id, '_price', true );
+		$product_price    = ! empty( $product_price ) ? $product_price : 0;
 		$base_cost        = get_post_meta( $product_id, 'mwb_mbfw_booking_base_cost', true );
+		$base_cost        = ! empty( $base_cost ) ? (float) $base_cost : 0;
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 			$product_price = (float) $product_price * (int) $people_number;
 		}
@@ -357,6 +359,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( is_array( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$cost = get_term_meta( $term->term_id, 'mwb_mbfw_booking_cost', true );
+				$cost = ! empty( $cost ) ? (float) $cost : 0;
 				if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true ) ) {
 					$extra_charges += $cost * $people_number;
 				} else {
@@ -381,7 +384,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( is_array( $services_checked ) ) {
 			foreach ( $services_checked as $term_id ) {
 				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
-				$service_price = (float) get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
+				$service_price = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
+				$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
 				if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
 					$services_cost += $service_count * $service_price * $people_number;
 				} else {
@@ -395,6 +399,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				if ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) ) {
 					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
 					$service_price = (float) get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true );
+					$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
 					if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
 						$services_cost += $service_count * $service_price * $people_number;
 					} else {
@@ -423,5 +428,53 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				break;
 			}
 		}
+	}
+
+	/**
+	 * Change order status.
+	 *
+	 * @param integer $order_id current order id.
+	 * @return void
+	 */
+	public function mwb_bfwp_change_order_status( $order_id ) {
+		if ( ! $order_id ) {
+			return;
+		}
+		$order = wc_get_order( $order_id );
+		if ( 'on-hold' === $order->get_status() ) {
+			return;
+		}
+		$items = $order->get_items();
+		foreach ( $items as $item ) {
+			if ( 'yes' === get_post_meta( $item->get_product_id(), 'mwb_mbfw_admin_confirmation', true ) ) {
+				$order->update_status('on-hold', __( 'confirmation required from admin.' ));
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Create cancel order link.
+	 *
+	 * @param array $statuses array containing order statuses on which to triger cancel button.
+	 * @return array
+	 */
+	public function mwb_mbfw_set_cancel_order_link_order_statuses( $statuses, $order ) {
+		$items = $order->get_items();
+		foreach ( $items as $item ) {
+			if ( 'yes' === get_post_meta( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
+				$order_statuses = get_post_meta( $item->get_product_id(), 'mwb_bfwp_order_statuses_to_cancel', true );
+				$order_statuses = is_array( $order_statuses ) ? map_deep(
+						$order_statuses,
+						function ( $status ) {
+							return preg_replace( '/wc-/', '', $status );
+						}
+					) : array();
+				if ( in_array( $order->get_status(), $order_statuses, true ) ) {
+					return array( $order->get_status() );
+				}
+			}
+		}
+		return $statuses;
 	}
 }

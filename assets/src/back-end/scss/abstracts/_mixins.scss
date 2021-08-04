@@ -1,6 +1,5 @@
 /* Mixins */
 @mixin media($size) {
-
 	@if $size == mwb-sm-phone {
 		@media (max-width: 400px) { @content; }
 	} 

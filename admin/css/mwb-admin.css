@@ -677,6 +677,10 @@ select {
 
 /*=====  End of DataTables  ======*/
 
+.mwb-section {
+  font-family: "NunitoSans-Regular";
+}
+
 @media (max-width: 768px){
   .mwb-header-container {
     justify-content: flex-start;

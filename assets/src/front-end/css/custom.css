@@ -1,28 +1,26 @@
 .mwb-mbfw-cart-page-data {
     width: 100%;
 }
-
+.mwb-mbfw-cart-page-data input[type=number] {
+    text-align: center;
+}
 .mwb-mbfw-cart-page-data input:focus {
     outline: none;
 }
-
 .mbfw-date-picker-section__wrapper {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-}
+} 
 
 .mbfw-date-picker-section  {
-    /* margin-right: 10px; */
     flex: 0 0 100%;
     max-width: 45%;
 }
-
 .mbfw-date-picker-section input {
     width: 100%;
 }
-
 .mbfw-date-picker-section label {
     display: block;
 }
@@ -50,39 +48,6 @@
     align-items: center;
 }
 
-.mbfw-additionl-detail-listing-section input[type=checkbox] {
-    margin-right: 5px;
-}
-
-.mbfw-additionl-detail-listing-section span {
-    text-transform: capitalize;
-}
-
-.bfwp-people-options__wrapper {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.bfwp-people-options__wrapper .bfwp-people-type {
-    flex: 0 0 100%;
-    max-width: 50%;
-    text-transform: capitalize;
-}
-
-.bfwp-people-options__wrapper .bfwp-people-number {
-    flex: 0 0 100%;
-    max-width: 50%;
-    text-align: right;
-  
-}
-
-.bfwp-people-number input {
-    width: 100px;
-    max-width: 100%;
-}
 
 .mwb_mbfw_detail-listing-wrap .mbfw-additionl-detail-listing-section .mwb-mbfw-additional-service-quantity {
     display: block;
@@ -113,6 +78,39 @@
 
 .summary-container input {
     padding: 5px;
+}
+.mbfw-additionl-detail-listing-section input[type=checkbox] {
+    margin-right: 5px!important;
+}
+
+.mbfw-additionl-detail-listing-section span {
+    text-transform: capitalize;
+}
+
+.bfwp-people-options__wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.bfwp-people-options__wrapper .bfwp-people-type {
+    flex: 0 0 100%;
+    max-width: 50%;
+    text-transform: capitalize;
+}
+
+.bfwp-people-options__wrapper .bfwp-people-number {
+    flex: 0 0 100%;
+    max-width: 50%;
+    text-align: right;
+
+}
+
+.bfwp-people-number input {
+    width: 100px;
+    max-width: 100%;
 }
 .mbfw-total-cost__wrapper {
     border-top: 1px solid #ccc;
@@ -149,3 +147,7 @@
     font-size: 14px;
     line-height: normal!important;
 }
+
+/* Theme compatibility css ends */
+
+

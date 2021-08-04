@@ -262,6 +262,8 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_common, 'mwb_mbfw_show_extra_charges_in_total' );
 			$this->loader->add_action( 'woocommerce_new_order', $mbfw_plugin_common, 'mwb_bfwp_set_order_as_mwb_booking', 10, 2 );
+			$this->loader->add_action( 'woocommerce_thankyou', $mbfw_plugin_common, 'mwb_bfwp_change_order_status' );
+			$this->loader->add_filter( 'woocommerce_valid_order_statuses_for_cancel', $mbfw_plugin_common, 'mwb_mbfw_set_cancel_order_link_order_statuses', 10, 2 );
 		}
 	}
 
@@ -904,7 +906,6 @@ class Mwb_Bookings_For_Woocommerce {
 						case 'availability_select':
 							?>
 							<div class="mbfw-admin-suggestion-text"><?php esc_html_e( 'Availability by Days', 'mwb-bookings-for-woocommerce' ); ?></div>
-							
 							<?php
 							$sub_tabs = $mbfw_component['sub_tabs'];
 							foreach ( $sub_tabs as $title => $mbfw_sub_components ) {
@@ -916,13 +917,13 @@ class Mwb_Bookings_For_Woocommerce {
 									<div class="mwb-form-group__control">
 										<div class="mbfw-avl-days-wrap">
 											<?php foreach ( $mbfw_sub_components as $sub_components ) { ?>
-											<div class="mbfw-avl-days">
+												<div class="mbfw-avl-days">
 													<label for="" class="mwb-form-label"><?php echo ( isset( $sub_components['label'] ) ? esc_html( $sub_components['label'] ) : '' ); ?></label>
 													<div class="mbfw-avl-days-time">
-													<input type="text" name="<?php echo esc_attr( isset( $sub_components['name'] ) ? $sub_components['name'] : '' ); ?>" id="<?php echo esc_attr( isset( $sub_components['id'] ) ? $sub_components['id'] : '' ); ?>" value="<?php echo esc_attr( isset( $sub_components['value'] ) ? $sub_components['value'] : '' ); ?>" class="<?php echo esc_attr( isset( $sub_components['class'] ) ? $sub_components['class'] : '' ); ?>" autocomplete="off">
-													<span class="dashicons dashicons-clock"></span>
+														<input type="text" name="<?php echo esc_attr( isset( $sub_components['name'] ) ? $sub_components['name'] : '' ); ?>" id="<?php echo esc_attr( isset( $sub_components['id'] ) ? $sub_components['id'] : '' ); ?>" value="<?php echo esc_attr( isset( $sub_components['value'] ) ? $sub_components['value'] : '' ); ?>" class="<?php echo esc_attr( isset( $sub_components['class'] ) ? $sub_components['class'] : '' ); ?>" autocomplete="off">
+														<span class="dashicons dashicons-clock"></span>
 													</div>
-													</div>
+												</div>
 											<?php } ?>
 										</div>
 									</div>

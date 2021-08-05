@@ -393,11 +393,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 			$line_item_meta['_mwb_mbfw_service_and_count'] = $service_id_and_quant;
-			$line_item_meta['_mwb_bfwp_date_time']                  = isset( $custom_booking_values['date_time'] ) ? $custom_booking_values['date_time'] : '';
-			// $line_item_meta['_mwb_mbfw_booking_from_date'] = isset( $custom_booking_values['booking_from_date'] ) ? $custom_booking_values['booking_from_date'] : '';
-			// $line_item_meta['_mwb_mbfw_booking_to_date']   = isset( $custom_booking_values['booking_to_date'] ) ? $custom_booking_values['booking_to_date'] : '';
-			// $line_item_meta['_mwb_mbfw_booking_from_time'] = isset( $custom_booking_values['booking_from_time'] ) ? $custom_booking_values['booking_from_time'] : '';
-			// $line_item_meta['_mwb_mbfw_booking_to_time']   = isset( $custom_booking_values['booking_to_time'] ) ? $custom_booking_values['booking_to_time'] : '';
+			$line_item_meta['_mwb_bfwp_date_time']         = isset( $custom_booking_values['date_time'] ) ? $custom_booking_values['date_time'] : '';
 			$terms = get_the_terms( $custom_values['product_id'], 'mwb_booking_cost' );
 			if ( $terms && is_array( $terms ) ) {
 				$term_ids = array();

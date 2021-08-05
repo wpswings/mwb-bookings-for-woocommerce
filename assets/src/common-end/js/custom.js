@@ -33,24 +33,21 @@
             var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				if ( $('.mwb-mbfw-total-area').length > 0 ) {
-					retrieve_booking_total_ajax( form_data );
+					form_data.append('action', 'mbfw_retrieve_booking_total_single_page');
+					form_data.append('nonce', mwb_mbfw_common_obj.nonce);
+					jQuery.ajax({
+						url         : mwb_mbfw_common_obj.ajax_url,
+						method      : 'post',
+						data        : form_data,
+						processData : false,
+						contentType : false,
+						success     : function( msg ) {
+							$('.mwb-mbfw-total-area').html(msg);
+						}
+					});
 				}
 			}
         });
-        function retrieve_booking_total_ajax( form_data ) {
-            form_data.append('action', 'mbfw_retrieve_booking_total_single_page');
-            form_data.append('nonce', mwb_mbfw_common_obj.nonce);
-            jQuery.ajax({
-                url         : mwb_mbfw_common_obj.ajax_url,
-                method      : 'post',
-                data        : form_data,
-                processData : false,
-                contentType : false,
-                success     : function( msg ) {
-                    $('.mwb-mbfw-total-area').html(msg);
-                }
-            });
-        }
 		if ( $('.mwb_mbfw_time_date_picker_frontend').length > 0 ) {
 			$('.mwb_mbfw_time_date_picker_frontend').daterangepicker({
 				autoUpdateInput  : false,

@@ -1,3 +1,21 @@
+<?php
+/**
+ * Provide a admin area view for the plugin
+ *
+ * This file is used to list all the hooks and filter with their descriptions.
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Mwb_Bookings_For_Woocommerce
+ * @subpackage Mwb_Bookings_For_Woocommerce/admin/partials
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
 <div class="mwb-overview__wrapper">
 	<div class="mwb-overview__banner">
 		<img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/image/banner.jpg" alt="Overview banner image">

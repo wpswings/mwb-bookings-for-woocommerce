@@ -203,6 +203,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * Showing extra charges on cart listing total.
 	 *
+	 * @param object $cart_object cart object.
 	 * @return void
 	 */
 	public function mwb_mbfw_show_extra_charges_in_total( $cart_object ) {
@@ -253,7 +254,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * Retrieve total cost at single booking.
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public function mbfw_retrieve_booking_total_single_page() {
 		check_ajax_referer( 'mbfw_common_nonce', 'nonce' );
@@ -314,6 +315,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * Booking total listing on single product page.
 	 *
 	 * @param array $charges array containing all the charges.
+	 * @param int   $quantity quantity of booked product.
 	 * @return void
 	 */
 	public function mbfw_booking_total_listing_single_page( $charges, $quantity ) {
@@ -380,7 +382,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @param int   $product_id current product id.
 	 * @param array $services_checked array containing optional services checked by user.
 	 * @param array $service_quantity quantity array containing services and there count.
-	 * @param int   $people_number
+	 * @param int   $people_number number of people.
 	 * @return float
 	 */
 	public function mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number ) {
@@ -460,7 +462,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * Create cancel order link.
 	 *
-	 * @param array $statuses array containing order statuses on which to triger cancel button.
+	 * @param array  $statuses array containing order statuses on which to triger cancel button.
+	 * @param object $order current order object.
 	 * @return array
 	 */
 	public function mwb_mbfw_set_cancel_order_link_order_statuses( $statuses, $order ) {
@@ -480,5 +483,81 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			}
 		}
 		return $statuses;
+	}
+
+	/**
+	 * Show additional order details to user account page.
+	 *
+	 * @param int    $item_id item id.
+	 * @param object $item current item object.
+	 * @param object $order current order object.
+	 * @return void
+	 */
+	public function mbfw_show_booking_details_on_my_account_page_user( $item_id, $item, $order ) {
+		if ( 'mwb_booking' === $item->get_product()->get_type() ) {
+			?>
+			<table class="mwb-mbfw-user-booking-meta-data-listing">
+				<?php
+				$people_number = $item->get_meta( '_mwb_mbfw_people_number', true );
+				if ( ! empty( $people_number ) ) {
+					?>
+					<tr>
+						<th><?php esc_html_e( 'People', 'mwb-bookings-for-woocommerce' ); ?></th>
+					</tr>
+					<tr>
+						<td><?php echo esc_attr( $people_number ); ?></td>
+					</tr>
+					<?php
+				} else {
+					// People type show in user booking.
+					do_action( 'mwb_mbfw_people_user_booking_my_account', $item_id, $item, $order );
+				}
+				$services_and_count = $item->get_meta( '_mwb_mbfw_service_and_count', true );
+				if ( ! empty( $services_and_count ) && is_array( $services_and_count ) ) {
+					?>
+					<tr>
+						<th>
+							<?php esc_html_e( 'Service(s)', 'mwb-bookings-for-woocommerce' ); ?>
+						</th>
+					</tr>
+					<?php
+					foreach ( $services_and_count as $term_id => $count ) {
+						$term = get_term( $term_id, 'mwb_booking_service' );
+						?>
+						<tr>
+							<td>
+								<?php echo esc_html( isset( $term->name ) ? $term->name . '( ' . $count . ' )' : '' ); ?>
+							</td>
+						</tr>
+						<?php
+					}
+				}
+				$date_time = $item->get_meta( '_mwb_bfwp_date_time', true );
+				if ( ! empty( $date_time ) ) {
+					?>
+					<tr>
+						<th>
+							<?php esc_html_e( 'Duration', 'mwb-bookings-for-woocommerce' ); ?>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<?php echo esc_html( $date_time ); ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<?php
+							// Reschedule user booking link.
+							do_action( 'mwb_mbfw_reschedule_user_booking_my_account', $item_id, $item, $order );
+							?>
+						</td>
+					</tr>
+					<?php
+				}
+				?>
+			</table>
+			<?php
+		}
 	}
 }

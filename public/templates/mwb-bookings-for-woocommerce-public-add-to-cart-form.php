@@ -23,6 +23,7 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 ?>
 <div class="mwb-mbfw-cart-page-data">
 	<?php
+	wp_nonce_field( 'mwb_booking_frontend', '_mwb_nonce' );
 	//desc - Before Booking add to cart form.
 	do_action( 'mwb_booking_before_add_to_cart_form', $product_id, $product );
 	//desc - Add Time selector on frontend for booking.

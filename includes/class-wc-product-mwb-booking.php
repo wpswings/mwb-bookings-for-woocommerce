@@ -14,7 +14,12 @@
 /**
  * Extending WC_Product class.
  */
-class WC_Product_Mwb_Booking extends WC_Product {	
+class WC_Product_Mwb_Booking extends WC_Product {
+	/**
+	 * Constructor for extended class WC_Product.
+	 *
+	 * @param object $product product object.
+	 */	
 	public function __construct( $product ) {
 		$this->product_type = 'mwb_booking';
 		$this->virtual      = 'yes';
@@ -34,7 +39,7 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * Set product as virtual.
 	 *
 	 * @param string $context What the value is for. Valid values are 'view' and 'edit'.
-	 * @return void
+	 * @return bool
 	 */
 	public function get_virtual( $context = 'view' ) {
 		return true;

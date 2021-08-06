@@ -92,7 +92,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	/**
 	 * Check if we are in the booking hours.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function mwb_mbfw_is_enable_booking() {
 		$start_time = get_option( 'mwb_mbfw_daily_start_time' );
@@ -197,6 +197,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	/**
 	 * Add date selector on single product listing page.
 	 *
+	 * @param int    $product_id current product id.
+	 * @param object $product current product object.
 	 * @return void
 	 */
 	public function mwb_mbfw_show_date_time_selector_on_single_product_page( $product_id, $product ) {
@@ -233,7 +235,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	public function mwb_mbfw_add_additional_data_in_cart( $cart_item_data, $product_id, $variation_id, $quantity ) {
 		$product = wc_get_product( $product_id );
 		if ( is_object( $product ) && 'mwb_booking' === $product->get_type() ) {
-			// phpcs:disable:WordPress.Security.NonceVerification
+			if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_booking_frontend' ) ) {
+				return;
+			}
 			$custom_data = array(
 				'people_number'    => array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : '',
 				'service_option'   => array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array(),
@@ -244,7 +248,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$custom_data =
 			//desc - adding extra details in cart.
 			apply_filters( 'mbfw_add_extra_custom_details_in_cart', $custom_data );
-			// phpcs:enable:WordPress.Security.NonceVerification
 			$cart_item_data['mwb_mbfw_booking_values'] = $custom_data;
 		}
 		return $cart_item_data;
@@ -255,7 +258,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 *
 	 * @param array $other_data array containing other data.
 	 * @param array $cart_item array containing cart items.
-	 * @return void
+	 * @return array
 	 */
 	public function mwb_mbfw_show_additional_data_on_cart_and_checkout_page( $other_data, $cart_item ) {
 		if ( isset( $cart_item['mwb_mbfw_booking_values'] ) ) {
@@ -293,24 +296,10 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					'display' => join( ', ', $service_name ),
 				);
 			}
-			if ( ! empty( $custom_cart_data['booking_from_date'] ) && ! empty( $custom_cart_data['booking_to_date'] ) ) {
+			if ( ! empty( $custom_cart_data['date_time'] ) ) {
 				$other_data[] = array(
-					'name'    => __( 'From Date', 'mwb-bookings-for-woocommerce' ),
-					'display' => wp_kses_post( $custom_cart_data['booking_from_date'] ),
-				);
-				$other_data[] = array(
-					'name'    => __( 'To Date', 'mwb-bookings-for-woocommerce' ),
-					'display' => wp_kses_post( $custom_cart_data['booking_to_date'] ),
-				);
-			}
-			if ( ! empty( $custom_cart_data['booking_from_time'] ) && ! empty( $custom_cart_data['booking_to_time'] ) ) {
-				$other_data[] = array(
-					'name'    => __( 'From Time', 'mwb-bookings-for-woocommerce' ),
-					'display' => wp_kses_post( $custom_cart_data['booking_from_time'] ),
-				);
-				$other_data[] = array(
-					'name'    => __( 'To Time', 'mwb-bookings-for-woocommerce' ),
-					'display' => wp_kses_post( $custom_cart_data['booking_to_time'] ),
+					'name'    => __( 'Duration', 'mwb-bookings-for-woocommerce' ),
+					'display' => wp_kses_post( $custom_cart_data['date_time'] ),
 				);
 			}
 			$other_data =

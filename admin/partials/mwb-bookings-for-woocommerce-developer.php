@@ -99,6 +99,12 @@ $count_public = filtered_array($mbfw_developer_public_hooks);
 </div>
 
 <?php
+/**
+ * Filter hooks.
+ *
+ * @param array $argu array containing arguments.
+ * @return array
+ */
 function filtered_array( $argu ) {
 	$count_admin = array();
 	foreach ( $argu as $key => $value) {

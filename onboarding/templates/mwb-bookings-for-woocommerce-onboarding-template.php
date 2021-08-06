@@ -10,6 +10,7 @@
  * @package    Makewebbetter_Onboarding
  * @subpackage Makewebbetter_Onboarding/admin/onboarding
  */
+
 global $mbfw_mwb_mbfw_obj;
 $mbfw_onboarding_form_fields = 
 //desc - filter for trial.
@@ -17,9 +18,13 @@ apply_filters('mwb_mbfw_on_boarding_form_fields', array());
 ?>
 
 <?php if ( ! empty( $mbfw_onboarding_form_fields ) ) : ?>
-	<div class="mdc-dialog mdc-dialog--scrollable <? echo 
+	<div class="mdc-dialog mdc-dialog--scrollable
+	<?php
+	echo wp_kses_post(
 	//desc - filter for trial.
-	apply_filters('mwb_stand_dialog_classes', 'mwb-bookings-for-woocommerce' )?>">
+	apply_filters( 'mwb_stand_dialog_classes', 'mwb-bookings-for-woocommerce' ) );
+	?>
+	">
 		<div class="mwb-mbfw-on-boarding-wrapper-background mdc-dialog__container">
 			<div class="mwb-mbfw-on-boarding-wrapper mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
 				<div class="mdc-dialog__content">

@@ -413,7 +413,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 			),
 
 			wp_rand() => array(
-				'id' => 'mwb-mbfw-plugin-name',
+				'id'          => 'mwb-mbfw-plugin-name',
 				'title'       => '',
 				'description' => '',
 				'type'        => 'hidden',
@@ -482,7 +482,11 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 
 			wp_rand() => array(
 				'id'          => 'mwb-mbfw-deactivation-reason-text',
-				'title'       => esc_html__( 'Let us know why you are deactivating ' . self::$mwb_mbfw_plugin_name_label . ' so we can improve the plugin', 'mwb-bookings-for-woocommerce' ),
+				'title'       => sprintf(
+					/* translators: %s plugin name. */
+					__( 'Let us know why you are deactivating %s so we can improve the plugin', 'mwb-bookings-for-woocommerce' ),
+					self::$mwb_mbfw_plugin_name_label
+				),
 				'type'        => 'textarea',
 				'description' => '',
 				'name'        => 'deactivation_reason_text',

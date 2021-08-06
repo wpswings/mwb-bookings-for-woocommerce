@@ -34,8 +34,8 @@ class Mwb_Bookings_For_Woocommerce_Deactivator {
 				'slm_action'        => 'slm_deactivate',
 				'secret_key'        => MWB_BOOKINGS_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY,
 				'license_key'       => $license_key,
-				'registered_domain' => $_SERVER['SERVER_NAME'],
-				'item_reference'    => urlencode( MWB_BOOKINGS_FOR_WOOCOMMERCE_ITEM_REFERENCE ),
+				'registered_domain' => isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '',
+				'item_reference'    => rawurlencode( MWB_BOOKINGS_FOR_WOOCOMMERCE_ITEM_REFERENCE ),
 				'product_reference' => 'MWBPK-2965',
 			);
 			$query       = esc_url_raw(add_query_arg($api_params, MWB_BOOKINGS_FOR_WOOCOMMERCE_LICENSE_SERVER_URL));

@@ -193,7 +193,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Mwb developer admin hooks listing.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function mwb_developer_admin_hooks_listing() {
 		$admin_hooks = array();
@@ -387,7 +387,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			)
 		);
 		$mbfw_availability_settings =
-		//desc - avilability setting fields array
+		//desc - avilability setting fields array.
 		apply_filters( 'mwb_mbfw_availability_setting_fields_array', $mbfw_availability_settings );
 		$mbfw_availability_settings[] = array(
 			'type'        => 'button',
@@ -565,6 +565,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria, max booking number, and unit. Unit will be used to calculate booking charge based on duration ( if selected in Booking services and booking costs in taxonomy ).', 'mwb-booking-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
+			wp_nonce_field( 'mwb_booking_product_meta', '_mwb_nonce' );
 			woocommerce_wp_text_input(
 				array(
 					'label'             => __( 'Maximum Booking Per User', 'mwb-bookings-for-woocommerce' ),
@@ -783,6 +784,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Multiselect field html.
 	 *
+	 * @param array $field array containing fields for html input fields.
 	 * @return void
 	 */
 	public function mbfw_multi_select_field_html( $field ) {
@@ -835,7 +837,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_save_custom_product_meta_boxes_data( $id, $post ) {
 		$product = wc_get_product( $id );
 		if ( $product && 'mwb_booking' === $product->get_type() ) {
-			// phpcs:disable WordPress.Security.NonceVerification
+			if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_booking_product_meta' ) ) {
+				return;
+			}
 			$product_meta_data = array(
 				'mwb_mbfw_booking_criteria'                => array_key_exists( 'mwb_mbfw_booking_criteria', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_criteria'] ) ) : '',
 				'mwb_mbfw_booking_count'                   => array_key_exists( 'mwb_mbfw_booking_count', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_count'] ) ) : '',
@@ -860,7 +864,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			$product_meta_data =
 			//desc - save booking product meta data.
 			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data, $id );
-			// phpcs:enable WordPress.Security.NonceVerification
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 				update_post_meta( $id, $meta_key, $meta_value );
 			}
@@ -876,6 +879,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_adding_custom_fields_at_booking_cost_taxonomy_page() {
+		wp_nonce_field( 'mwb_edit_taxonomy_page', '_mwb_nonce' );
 		$fields = array(
 			array(
 				'id'          => 'mwb_mbfw_booking_cost',
@@ -983,6 +987,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_adding_custom_fields_at_booking_cost_taxonomy_edit_page( $term, $taxonomy ) {
+		wp_nonce_field( 'mwb_edit_taxonomy_page', '_mwb_nonce' );
 		$term_fields_arr = array(
 			array(
 				'id'          => 'mwb_mbfw_booking_cost',
@@ -1020,13 +1025,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_saving_custom_fields_at_booking_cost_taxonomy_page( $term_id ) {
-		// phpcs:disable WordPress.Security.NonceVerification
+		if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_edit_taxonomy_page' ) ) {
+			return;
+		}
 		$term_meta_data = array(
 			'mwb_mbfw_booking_cost'                      => array_key_exists( 'mwb_mbfw_booking_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_cost'] ) ) : '',
 			'mwb_mbfw_is_booking_cost_multiply_people'   => array_key_exists( 'mwb_mbfw_is_booking_cost_multiply_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_cost_multiply_people'] ) ) : '',
 			'mwb_mbfw_is_booking_cost_multiply_duration' => array_key_exists( 'mwb_mbfw_is_booking_cost_multiply_duration', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_cost_multiply_duration'] ) ) : '',
 		);
-		// phpcs:enable WordPress.Security.NonceVerification
 		foreach ( $term_meta_data as $term_meta_key => $term_meta_value ) {
 			update_term_meta( $term_id, $term_meta_key, $term_meta_value );
 		}
@@ -1036,7 +1042,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * Adding custom column to mwb_booking_cost taxonomy table.
 	 *
 	 * @param array $columns array containing columns.
-	 * @return void
+	 * @return array
 	 */
 	public function mbfw_adding_custom_column_booking_costs_taxonomy_table( $columns ) {
 		unset( $columns['description'] );
@@ -1054,7 +1060,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @param string $content content of the column.
 	 * @param string $column_name column name of the table.
 	 * @param int    $term_id current term id.
-	 * @return void
+	 * @return string
 	 */
 	public function mbfw_adding_custom_column_data_booking_costs_taxonomy_table( $content, $column_name, $term_id ) {
 		switch ( $column_name ) {
@@ -1079,6 +1085,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_adding_custom_fields_at_booking_service_taxonomy_page() {
+		wp_nonce_field( 'mwb_edit_taxonomy_page', '_mwb_nonce' );
 		$fields = array(
 			array(
 				'id'          => 'mwb_mbfw_service_cost',
@@ -1153,6 +1160,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_adding_custom_fields_at_booking_service_taxonomy_edit_page( $term, $taxonomy ) {
+		wp_nonce_field( 'mwb_edit_taxonomy_page', '_mwb_nonce' );
 		$term_fields_arr = array(
 			array(
 				'id'          => 'mwb_mbfw_service_cost',
@@ -1234,7 +1242,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_saving_custom_fields_at_booking_service_taxonomy_page( $term_id ) {
-		// phpcs:disable WordPress.Security.NonceVerification
+		if ( ! isset( $_POST['_mwb_nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_edit_taxonomy_page' ) ) {
+			return;
+		}
 		$term_meta_data = array(
 			'mwb_mbfw_service_cost'                      => array_key_exists( 'mwb_mbfw_service_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_cost'] ) ) : '',
 			'mwb_mbfw_is_service_cost_multiply_people'   => array_key_exists( 'mwb_mbfw_is_service_cost_multiply_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_service_cost_multiply_people'] ) ) : '',
@@ -1245,7 +1255,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'mwb_mbfw_service_minimum_quantity'          => array_key_exists( 'mwb_mbfw_service_minimum_quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_minimum_quantity'] ) ) : '',
 			'mwb_mbfw_service_maximum_quantity'          => array_key_exists( 'mwb_mbfw_service_maximum_quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_maximum_quantity'] ) ) : '',
 		);
-		// phpcs:enable WordPress.Security.NonceVerification
 
 		foreach ( $term_meta_data as $term_meta_key => $term_meta_value ) {
 			update_term_meta( $term_id, $term_meta_key, $term_meta_value );
@@ -1256,7 +1265,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * Adding custom column to mwb_booking_service taxonomy table.
 	 *
 	 * @param array $columns array containing columns.
-	 * @return void
+	 * @return array
 	 */
 	public function mbfw_adding_custom_column_booking_services_taxonomy_table( $columns ) {
 		unset( $columns['description'] );
@@ -1277,7 +1286,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @param string $content content of the column.
 	 * @param string $column_name column name of the table.
 	 * @param int    $term_id current term id.
-	 * @return void
+	 * @return string
 	 */
 	public function mbfw_adding_custom_column_data_booking_services_taxonomy_table( $content, $column_name, $term_id ) {
 		switch ( $column_name ) {

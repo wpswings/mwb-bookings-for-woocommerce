@@ -53,6 +53,11 @@
   align-items: center;
 }
 
+.mbfw-additionl-detail-listing-section input[type=number] {
+  width: 100px !important;
+  max-width: 100% !important;
+}
+
 .mwb_mbfw_detail-listing-wrap .mbfw-additionl-detail-listing-section .mwb-mbfw-additional-service-quantity {
   display: block;
   margin-left: auto;
@@ -114,8 +119,8 @@
 }
 
 .bfwp-people-number input {
-  width: 100px;
-  max-width: 100%;
+  width: 100px !important;
+  max-width: 100% !important;
 }
 
 .mbfw-total-cost__wrapper {

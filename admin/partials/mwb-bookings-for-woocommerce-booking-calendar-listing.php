@@ -20,4 +20,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="mbfw-booking-calender-notice"><?php esc_html_e( 'List of all upcoming Bookings', 'mwb-bookings-for-woocommerce' ); ?></div>
 	<div id="mwb-mbfw-booking-calendar"></div>
 </div>
-<?php

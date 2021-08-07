@@ -559,9 +559,6 @@ class Mwb_Bookings_For_Woocommerce {
 		// Get the PHP maximum execution time.
 		$mbfw_system_status['php_max_execution_time'] = function_exists('ini_get') ? ini_get('max_execution_time') : __('N/A (ini_get function does not exist)', 'mwb-bookings-for-woocommerce');
 
-		// Get outgoing IP address.
-		$mbfw_system_status['outgoing_ip'] = function_exists('file_get_contents') ? file_get_contents( 'http://ipecho.net/plain') : __( 'N/A (file_get_contents function does not exist)', 'mwb-bookings-for-woocommerce' ); // phpcs:ignore
-
 		$mbfw_system_data['php'] = $mbfw_system_status;
 		$mbfw_system_data['wp']  = $mbfw_wordpress_status;
 

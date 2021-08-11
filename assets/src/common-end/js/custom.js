@@ -63,14 +63,14 @@
 				showDropdowns   : true,
 				autoApply       : true,
 				locale          : {
-					format : 'DD/MM/YYYY'
+					format : 'DD/MM/YYYY hh:mm'
 				},
 				opens           : 'center',
 				minDate         : mwb_mbfw_common_obj.minDate,
 			});
 		}
 		$('.mwb_mbfw_date_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+			$(this).val(picker.startDate.format('DD/MM/YYYY hh:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY hh:mm'));
 			var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );

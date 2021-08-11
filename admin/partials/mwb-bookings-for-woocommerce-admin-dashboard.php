@@ -16,7 +16,8 @@ if (! defined('ABSPATH') ) {
 }
 
 global $mbfw_mwb_mbfw_obj;
-$mbfw_active_tab = isset( $_GET['mbfw_tab'] ) ? sanitize_key( $_GET['mbfw_tab'] ) : 'mwb-bookings-for-woocommerce-general'; // phpcs:ignore
+do_action( 'mwb_mbfw_license_notice_admin' );
+$mbfw_active_tab   = isset( $_GET['mbfw_tab'] ) ? sanitize_key( $_GET['mbfw_tab'] ) : 'mwb-bookings-for-woocommerce-overview'; // phpcs:ignore
 $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 ?>
 <header>

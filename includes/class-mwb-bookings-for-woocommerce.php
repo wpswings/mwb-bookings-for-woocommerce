@@ -363,6 +363,13 @@ class Mwb_Bookings_For_Woocommerce {
 	 */
 	public function mwb_mbfw_plug_default_tabs() {
 		$mbfw_default_tabs = array();
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-overview'] = array(
+			'title'       => esc_html__('Overview', 'mwb-bookings-for-woocommerce'),
+			'name'        => 'mwb-bookings-for-woocommerce-overview',
+			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-overview.php'
+		);
+
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-general'] = array(
 			'title'       => esc_html__('General Settings', 'mwb-bookings-for-woocommerce'),
 			'name'        => 'mwb-bookings-for-woocommerce-general',
@@ -390,12 +397,6 @@ class Mwb_Bookings_For_Woocommerce {
 		$mbfw_default_tabs = 
 		//desc - add admin setting tabs.
 		apply_filters('mwb_mbfw_plugin_standard_admin_settings_tabs', $mbfw_default_tabs);
-
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-overview'] = array(
-			'title'       => esc_html__('Overview', 'mwb-bookings-for-woocommerce'),
-			'name'        => 'mwb-bookings-for-woocommerce-overview',
-			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-overview.php'
-		);
 
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
 			'title'       => esc_html__('Developer', 'mwb-bookings-for-woocommerce'),

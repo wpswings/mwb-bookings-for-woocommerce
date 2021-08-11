@@ -34,6 +34,19 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 	do_action( 'mwb_mbfw_booking_services_details_on_form', $product_id, $product );
 	//desc - After Boooking add to cart form.
 	do_action( 'mwb_booking_after_add_to_cart_form', $product_id, $product );
+	if ( 'fixed_unit' === get_post_meta( $product_id, 'mwb_mbfw_booking_criteria', true ) ) {
+		$booking_quantity = get_post_meta( $product_id, 'mwb_mbfw_booking_count', true );
+		if ( ! empty( $booking_quantity ) ) {
+			?>
+			<div class="mwb-bfwp-booking-quantity__public-show">
+				<?php esc_html_e( 'Quantity : ', 'mwb-bookings-for-woocommerce' ); ?>
+				<span>
+					<?php echo esc_html( $booking_quantity ); ?>
+				</span>
+			</div>
+			<?php
+		}
+	}
 	?>
 	<input type="hidden" name="mwb_mbfw_booking_product_id" class="mwb_mbfw_booking_product_id" value="<?php echo esc_html( $product_id ); ?>">
 	<?php

@@ -391,12 +391,6 @@ class Mwb_Bookings_For_Woocommerce {
 		//desc - add admin setting tabs.
 		apply_filters('mwb_mbfw_plugin_standard_admin_settings_tabs', $mbfw_default_tabs);
 
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-system-status'] = array(
-			'title'       => esc_html__('System Status', 'mwb-bookings-for-woocommerce'),
-			'name'        => 'mwb-bookings-for-woocommerce-system-status',
-			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-system-status.php'
-		);
-
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-overview'] = array(
 			'title'       => esc_html__('Overview', 'mwb-bookings-for-woocommerce'),
 			'name'        => 'mwb-bookings-for-woocommerce-overview',
@@ -463,109 +457,6 @@ class Mwb_Bookings_For_Woocommerce {
 	}
 
 	/**
-	 * Show WordPress and server info.
-	 *
-	 * @since  2.0.0
-	 * @return array $mbfw_system_data returns array of all WordPress and server related information.
-	 */
-	public function mwb_mbfw_plug_system_status() {
-		global $wpdb;
-		$mbfw_system_status    = array();
-		$mbfw_wordpress_status = array();
-		$mbfw_system_data      = array();
-
-		// Get the web server.
-		$mbfw_system_status['web_server'] = isset($_SERVER['SERVER_SOFTWARE']) ? sanitize_text_field(wp_unslash($_SERVER['SERVER_SOFTWARE'])) : '';
-
-		// Get PHP version.
-		$mbfw_system_status['php_version'] = function_exists('phpversion') ? phpversion() : __('N/A (phpversion function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Get the server's IP address.
-		$mbfw_system_status['server_ip'] = isset($_SERVER['SERVER_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['SERVER_ADDR'])) : '';
-
-		// Get the server's port.
-		$mbfw_system_status['server_port'] = isset($_SERVER['SERVER_PORT']) ? sanitize_text_field(wp_unslash($_SERVER['SERVER_PORT'])) : '';
-
-		// Get the uptime.
-		$mbfw_system_status['uptime'] = function_exists('exec') ? @exec('uptime -p') : __('N/A (make sure exec function is enabled)', 'mwb-bookings-for-woocommerce'); // phpcs:ignore
-
-		// Get the server path.
-		$mbfw_system_status['server_path'] = defined('ABSPATH') ? ABSPATH : __('N/A (ABSPATH constant not defined)', 'mwb-bookings-for-woocommerce');
-
-		// Get the OS.
-		$mbfw_system_status['os'] = function_exists('php_uname') ? php_uname('s') : __('N/A (php_uname function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Get WordPress version.
-		$mbfw_wordpress_status['wp_version'] = function_exists('get_bloginfo') ? get_bloginfo('version') : __('N/A (get_bloginfo function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Get and count active WordPress plugins.
-		$mbfw_wordpress_status['wp_active_plugins'] = function_exists('get_option') ? count(get_option('active_plugins')) : __('N/A (get_option function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// See if this site is multisite or not.
-		$mbfw_wordpress_status['wp_multisite'] = function_exists('is_multisite') && is_multisite() ? __('Yes', 'mwb-bookings-for-woocommerce') : __('No', 'mwb-bookings-for-woocommerce');
-
-		// See if WP Debug is enabled.
-		$mbfw_wordpress_status['wp_debug_enabled'] = defined('WP_DEBUG') ? __('Yes', 'mwb-bookings-for-woocommerce') : __('No', 'mwb-bookings-for-woocommerce');
-
-		// See if WP Cache is enabled.
-		$mbfw_wordpress_status['wp_cache_enabled'] = defined('WP_CACHE') ? __('Yes', 'mwb-bookings-for-woocommerce') : __('No', 'mwb-bookings-for-woocommerce');
-
-		// Get the total number of WordPress users on the site.
-		$mbfw_wordpress_status['wp_users'] = function_exists('count_users') ? count_users() : __('N/A (count_users function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Get the number of published WordPress posts.
-		$mbfw_wordpress_status['wp_posts'] = wp_count_posts()->publish >= 1 ? wp_count_posts()->publish : __('0', 'mwb-bookings-for-woocommerce');
-
-		// Get PHP memory limit.
-		$mbfw_system_status['php_memory_limit'] = function_exists('ini_get') ? (int) ini_get('memory_limit') : __('N/A (ini_get function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Get the PHP error log path.
-		$mbfw_system_status['php_error_log_path'] = ! ini_get('error_log') ? __('N/A', 'mwb-bookings-for-woocommerce') : ini_get('error_log');
-
-		// Get PHP max upload size.
-		$mbfw_system_status['php_max_upload'] = function_exists('ini_get') ? (int) ini_get('upload_max_filesize') : __('N/A (ini_get function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Get PHP max post size.
-		$mbfw_system_status['php_max_post'] = function_exists('ini_get') ? (int) ini_get('post_max_size') : __('N/A (ini_get function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Get the PHP architecture.
-		if (PHP_INT_SIZE == 4 ) { // phpcs:ignore
-			$mbfw_system_status['php_architecture'] = '32-bit';
-		} elseif (PHP_INT_SIZE == 8 ) { // phpcs:ignore
-			$mbfw_system_status['php_architecture'] = '64-bit';
-		} else {
-			$mbfw_system_status['php_architecture'] = 'N/A';
-		}
-
-		// Get server host name.
-		$mbfw_system_status['server_hostname'] = function_exists('gethostname') ? gethostname() : __('N/A (gethostname function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Show the number of processes currently running on the server.
-		$mbfw_system_status['processes'] = function_exists('exec') ? @exec('ps aux | wc -l') : __('N/A (make sure exec is enabled)', 'mwb-bookings-for-woocommerce'); // phpcs:ignore
-
-		// Get the memory usage.
-		$mbfw_system_status['memory_usage'] = function_exists('memory_get_peak_usage') ? round(memory_get_peak_usage(true) / 1024 / 1024, 2) : 0;
-
-		// Get CPU usage.
-		// Check to see if system is Windows, if so then use an alternative since sys_getloadavg() won't work.
-		if (stristr(PHP_OS, 'win') ) {
-			$mbfw_system_status['is_windows']        = true;
-			$mbfw_system_status['windows_cpu_usage'] = function_exists('exec') ? @exec('wmic cpu get loadpercentage /all') : __('N/A (make sure exec is enabled)', 'mwb-bookings-for-woocommerce'); // phpcs:ignore
-		}
-
-		// Get the memory limit.
-		$mbfw_system_status['memory_limit'] = function_exists('ini_get') ? (int) ini_get('memory_limit') : __('N/A (ini_get function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		// Get the PHP maximum execution time.
-		$mbfw_system_status['php_max_execution_time'] = function_exists('ini_get') ? ini_get('max_execution_time') : __('N/A (ini_get function does not exist)', 'mwb-bookings-for-woocommerce');
-
-		$mbfw_system_data['php'] = $mbfw_system_status;
-		$mbfw_system_data['wp']  = $mbfw_wordpress_status;
-
-		return $mbfw_system_data;
-	}
-
-	/**
 	 * Generate html components.
 	 *
 	 * @param string $mbfw_components html to display.
@@ -603,6 +494,14 @@ class Mwb_Bookings_For_Woocommerce {
 										type="<?php echo esc_attr( $mbfw_component['type'] ); ?>"
 										value="<?php echo ( isset( $mbfw_component['value'] ) ? esc_attr( $mbfw_component['value'] ) : '' ); ?>"
 										placeholder="<?php echo ( isset( $mbfw_component['placeholder'] ) ? esc_attr( $mbfw_component['placeholder'] ) : '' ); ?>"
+										<?php
+										if ( isset( $mbfw_component['custom_attribute'] ) ) {
+											$custom_attributes = $mbfw_component['custom_attribute'];
+											foreach ( $custom_attributes as $attr_key => $attr_val ) {
+												echo esc_attr( $attr_key . '=' . $attr_val . ' ' );
+											}
+										}
+										?>
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">
@@ -799,7 +698,7 @@ class Mwb_Bookings_For_Woocommerce {
 										</div>
 									</div>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mbfw_component['description'] ) ? esc_attr( $mbfw_component['description'] ) : '' ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mbfw_component['description'] ) ? wp_kses_post( $mbfw_component['description'] ) : '' ); ?></div>
 									</div>
 								</div>
 							</div>

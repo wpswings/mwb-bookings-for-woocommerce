@@ -158,7 +158,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 									<?php
 									}
 									?>
-									<span title="<?php echo esc_html( do_action( 'mbfw_add_tooltip_show_additional_details', $custom_term->term_id, 'mwb_booking_service' ) ); ?>" >
+									<span title="
+									<?php
+									echo esc_html(
+										//desc - add tooltip to show description for additinal details while booking.
+										do_action( 'mbfw_add_tooltip_show_additional_details', $custom_term->term_id, 'mwb_booking_service' )
+									);
+									?>
+									" >
 										<?php echo esc_html( $custom_term->name ); ?>
 									</span>
 								</div>
@@ -190,7 +197,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_mbfw_show_people_while_booking( $product_id, $product ) {
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_people_option', true ) ) {
-			require_once apply_filters( 'mbfw_load_people_option_template', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php', 'public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php' );
+			$file = MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php';
+			$path = 'public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php';
+			require_once
+			//desc - load templates to show custom people types.
+			apply_filters( 'mbfw_load_people_option_template', $file, $path );
 		}
 	}
 

@@ -269,7 +269,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$quantity         = array_key_exists( 'quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['quantity'] ) ) : 1;
 		$quantity         = $quantity > 0 ? $quantity : 1;
 		$date_time        = array_key_exists( 'mwb_mbfw_booking_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_time'] ) ) : '';
-		$date_time        = explode( ',', $date_time );
+		$date_time        = explode( '-', $date_time );
 		$date_from        = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'd-m-Y' ) ) );
 		$date_to          = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[1] ) ? $date_time[1] : current_time( 'd-m-Y' ) ) );
 		$time_from        = gmdate( 'H:i', strtotime( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'H:i' ) ) );
@@ -391,7 +391,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			foreach ( $services_checked as $term_id ) {
 				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
 				$service_price = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
-				$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
+				$service_price = ( ! empty( $service_price ) && $service_price > 0 ) ? (float) $service_price : 0;
 				if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
 					$services_cost += $service_count * $service_price * $people_number;
 				} else {
@@ -496,6 +496,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	public function mbfw_show_booking_details_on_my_account_page_user( $item_id, $item, $order ) {
 		if ( 'mwb_booking' === $item->get_product()->get_type() ) {
 			?>
+			<span class="mwb-mbfw-ser-booking-toggler"></span>
 			<table class="mwb-mbfw-user-booking-meta-data-listing">
 				<?php
 				$people_number = $item->get_meta( '_mwb_mbfw_people_number', true );

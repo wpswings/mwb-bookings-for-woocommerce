@@ -140,6 +140,15 @@
   margin-bottom: 10px;
 }
 
+.mwb-mbfw-user-booking-meta-data-listing th {
+  font-weight: 700 !important;
+  text-align: left !important;
+}
+
+.mwb-mbfw-user-booking-meta-data-listing td {
+  text-align: left !important;
+}
+
 /* Theme compatibility css */
 /* For betheme */
 .entry-summary .mwb-mbfw-cart-page-data input {
@@ -159,4 +168,33 @@
   color: #666;
   font-size: 14px;
   line-height: normal !important;
+}
+
+.mwb-mbfw-ser-booking-toggler {
+  display: block;
+  height: 12px;
+  width: 12px;
+  border-width: 0 2px 2px 0;
+  border-color: inherit;
+  border-style: solid;
+  transform: rotate(45deg);
+  margin: 30px;
+}
+
+.mwb-mbfw-ser-booking-toggler:hover {
+  cursor: pointer;
+}
+
+.mwb-mbfw-ser-booking-toggler.booking-toggler-reverse {
+  transform: rotate(-135deg);
+}
+
+.mwb-bfwp-reschedule-user-booking-link__wrapper a {
+  color: inherit;
+  font-weight: 600;
+}
+
+.mwb-bfwp-reschedule-user-booking-link__wrapper a:focus, .mwb-bfwp-reschedule-user-booking-link__wrapper a:hover {
+  outline: none;
+  text-decoration: none !important;
 }

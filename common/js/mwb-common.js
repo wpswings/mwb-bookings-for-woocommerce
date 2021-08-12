@@ -44,14 +44,14 @@
 				showDropdowns    : true,
 				autoApply        : true,
 				locale           : {
-					format: 'DD/MM/YYYY hh:mm'
+					format: 'DD/MM/YYYY HH:mm'
 				},
 				opens            : 'center',
 				minDate          : mwb_mbfw_common_obj.minDate,
 			});
 		}
 		$('.mwb_mbfw_time_date_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('DD/MM/YYYY hh:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY hh:mm'));
+			$(this).val(picker.startDate.format('DD/MM/YYYY HH:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY HH:mm'));
 			var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );
@@ -63,14 +63,14 @@
 				showDropdowns   : true,
 				autoApply       : true,
 				locale          : {
-					format : 'DD/MM/YYYY hh:mm'
+					format : 'DD/MM/YYYY HH:mm'
 				},
 				opens           : 'center',
 				minDate         : mwb_mbfw_common_obj.minDate,
 			});
 		}
 		$('.mwb_mbfw_date_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('DD/MM/YYYY hh:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY hh:mm'));
+			$(this).val(picker.startDate.format('DD/MM/YYYY HH:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY HH:mm'));
 			var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );
@@ -84,7 +84,7 @@
 				showDropdowns    : true,
 				autoApply        : true,
 				locale           : {
-					format : 'DD/MM/YYYY hh:mm'
+					format : 'DD/MM/YYYY HH:mm'
 				},
 				opens            : 'center',
 				minDate          : mwb_mbfw_common_obj.minDate,
@@ -92,7 +92,7 @@
 			});
 		}
 		$('.mwb_mbfw_time_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('DD/MM/YYYY hh:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY hh:mm'));
+			$(this).val(picker.startDate.format('DD/MM/YYYY HH:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY HH:mm'));
 			var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );
@@ -100,8 +100,8 @@
 		});
 		$('input[name="mwb_mbfw_booking_time"]').on('change',function(){
 			var date_time = $(this).val().split('-');
-			var from_date = moment( date_time[0], 'DD/MM/YYYY hh:mm ', true ).isValid();
-			var to_date   = moment( date_time[1], ' DD/MM/YYYY hh:mm', true ).isValid();
+			var from_date = moment( date_time[0], 'DD/MM/YYYY HH:mm ', true ).isValid();
+			var to_date   = moment( date_time[1], ' DD/MM/YYYY HH:mm', true ).isValid();
 			if ( ! from_date || ! to_date ) {
 				$(this).val('');
 				alert( mwb_mbfw_common_obj.date_time_format );

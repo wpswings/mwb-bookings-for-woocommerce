@@ -271,11 +271,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$quantity         = $quantity > 0 ? $quantity : 1;
 		$date_time        = array_key_exists( 'mwb_mbfw_booking_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_time'] ) ) : '';
 		$date_time        = map_deep( explode( '-', $date_time ), function( $date ) {
-			return trim( $date );
+			return str_replace( '/', '-', trim( $date ) );
 		} );
 
-		$date_from     = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[0] ) ? str_replace( '/', '-', $date_time[0] ) : current_time( 'd-m-Y H:i' ) ) );
-		$date_to       = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[1] ) ? str_replace( '/', '-', $date_time[1] ) : current_time( 'd-m-Y H:i' ) ) );
+		$date_from     = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'd-m-Y H:i' ) ) );
+		$date_to       = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[1] ) ? $date_time[1] : current_time( 'd-m-Y H:i' ) ) );
 		$time_from     = gmdate( 'H:i', strtotime( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'H:i' ) ) );
 		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time[1] ) ? $date_time[1] : current_time( 'H:i' ) ) );
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );

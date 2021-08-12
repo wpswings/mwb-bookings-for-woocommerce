@@ -102,6 +102,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'reloadurl'                 => admin_url('admin.php?page=mwb_bookings_for_woocommerce_menu'),
 					'mbfw_gen_tab_enable'       => get_option('mbfw_radio_switch_demo'),
 					'mbfw_admin_param_location' => ( admin_url( 'admin.php' ) . '?page=mwb_bookings_for_woocommerce_menu&mbfw_tab=mwb-bookings-for-woocommerce-general' ),
+					'full_cal_button_text'      => array(
+						'today' => __( 'Today', 'mwb-bookings-for-woocommerce' ),
+						'month' => __( 'Month', 'mwb-bookings-for-woocommerce' ),
+						'week'  => __( 'Week', 'mwb-bookings-for-woocommerce' ),
+						'day'   => __( 'Day', 'mwb-bookings-for-woocommerce' ),
+						'list'  => __( 'List', 'mwb-bookings-for-woocommerce' ),
+					),
 				)
 			);
 			wp_enqueue_script($this->plugin_name . 'admin-js');
@@ -1455,10 +1462,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			$items = $order->get_items();
 			foreach ( $items as $item ) {
 				$date_time      = map_deep( explode( '-', $item->get_meta( '_mwb_bfwp_date_time', true ) ), function( $date ) {
-					return trim( $date );
+					return str_replace( '/', '-', trim( $date ) );
 				} );
-				$date_time_from = ( ! empty( $date_time[0] ) ? str_replace( '/', '-', $date_time[0] ) : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
-				$date_time_to   = ( ! empty( $date_time[1] ) ? str_replace( '/', '-', $date_time[1] ) : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
+				$date_time_from = ( ! empty( $date_time[0] ) ? $date_time[0] : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
+				$date_time_to   = ( ! empty( $date_time[1] ) ? $date_time[1] : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
 				$all_events[]   = array(
 						'title' => $item['name'],
 						'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),

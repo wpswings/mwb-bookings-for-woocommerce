@@ -226,7 +226,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			<div class="mbfw-date-picker-section__wrapper">
 				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-single-booking-time-selector-from"><?php esc_html_e( 'Duration', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="mwb_mbfw_booking_time" id="mwb-mbfw-single-booking-time-selector-from" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="DD/MM/YYYY hh:ss - DD/MM/YYYY hh:ss" pattern="(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}) - (\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$" required />
+					<input type="text" name="mwb_mbfw_booking_time" id="mwb-mbfw-single-booking-time-selector-from" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php esc_attr_e( 'from - to', 'mwb-bookings-for-woocommerce' ); ?>" pattern="(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}) - (\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$" required />
 				</div>
 			</div>
 			<?php

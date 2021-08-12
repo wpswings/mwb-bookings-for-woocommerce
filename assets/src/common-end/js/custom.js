@@ -107,6 +107,9 @@
 				alert( mwb_mbfw_common_obj.date_time_format );
 			}
 		});
+		$('#mwb-mbfw-single-booking-time-selector-from').on('keydown paste focus mousedown',function(e){
+			e.preventDefault();
+		});
     });
 })( jQuery );
 

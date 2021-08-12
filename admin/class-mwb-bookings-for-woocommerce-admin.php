@@ -1457,12 +1457,12 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				$date_time      = map_deep( explode( '-', $item->get_meta( '_mwb_bfwp_date_time', true ) ), function( $date ) {
 					return trim( $date );
 				} );
-				$date_time_from = ( ! empty( $date_time[0] ) ? $date_time[0] : gmdate( 'd/m/Y H:i', $order->get_date_created() ) );
-				$date_time_to   = ( ! empty( $date_time[1] ) ? $date_time[1] : gmdate( 'd/m/Y H:i', $order->get_date_created() ) );
+				$date_time_from = ( ! empty( $date_time[0] ) ? str_replace( '/', '-', $date_time[0] ) : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
+				$date_time_to   = ( ! empty( $date_time[1] ) ? str_replace( '/', '-', $date_time[1] ) : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
 				$all_events[]   = array(
 						'title' => $item['name'],
-						'start' => date_format( date_create_from_format( 'd/m/Y H:i', $date_time_from ), 'Y-m-d' ) . 'T' . gmdate( 'H:i', $date_time_from ),
-						'end'   => date_format( date_create_from_format( 'd/m/Y H:i', $date_time_to ), 'Y-m-d' ) . 'T' . gmdate( 'H:i', $date_time_to ),
+						'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
+						'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
 				);
 			}
 		}

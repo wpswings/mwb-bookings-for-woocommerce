@@ -76,10 +76,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'mwb-mbfw-common-js',
 			'mwb_mbfw_common_obj',
 			array(
-				'ajax_url'   => admin_url( 'admin-ajax.php' ),
-				'nonce'      => wp_create_nonce( 'mbfw_common_nonce' ),
-				'minDate'    => current_time( 'd/m/Y H:m' ),
-				'maxTime'    => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
+				'ajax_url'         => admin_url( 'admin-ajax.php' ),
+				'nonce'            => wp_create_nonce( 'mbfw_common_nonce' ),
+				'minDate'          => current_time( 'd/m/Y H:m' ),
+				'maxTime'          => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
+				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 		wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -272,16 +273,17 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$date_time        = map_deep( explode( '-', $date_time ), function( $date ) {
 			return trim( $date );
 		} );
-		$date_from        = date_format( date_create_from_format( 'd/m/Y H:i', ( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'd/m/Y H:i' ) ) ), 'd-m-Y' );
-		$date_to          = date_format( date_create_from_format( 'd/m/Y H:i', ( ! empty( $date_time[1] ) ? $date_time[1] : current_time( 'd/m/Y H:i' ) ) ), 'd-m-Y' );
-		$time_from        = gmdate( 'H:i', strtotime( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'H:i' ) ) );
-		$time_to          = gmdate( 'H:i', strtotime( ! empty( $date_time[1] ) ? $date_time[1] : current_time( 'H:i' ) ) );
-		$services_cost    = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
-		$extra_charges    = $this->mbfw_extra_charges_calculation( $product_id , $people_number );
-		$product_price    = get_post_meta( $product_id, '_price', true );
-		$product_price    = apply_filters( 'mwb_mbfw_change_price_ajax_global_rule', ( ! empty( $product_price ) ? $product_price : 0 ), $date_from, $date_to, $time_from, $time_to, $quantity, $people_number, 'unit_cost' );
-		$base_cost        = get_post_meta( $product_id, 'mwb_mbfw_booking_base_cost', true );
-		$base_cost        = apply_filters( 'mwb_mbfw_change_price_ajax_global_rule', ( ! empty( $base_cost ) ? (float) $base_cost : 0 ), $date_from, $date_to, $time_from, $time_to, $quantity, $people_number, 'base_cost' );
+
+		$date_from     = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[0] ) ? str_replace( '/', '-', $date_time[0] ) : current_time( 'd-m-Y H:i' ) ) );
+		$date_to       = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[1] ) ? str_replace( '/', '-', $date_time[1] ) : current_time( 'd-m-Y H:i' ) ) );
+		$time_from     = gmdate( 'H:i', strtotime( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'H:i' ) ) );
+		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time[1] ) ? $date_time[1] : current_time( 'H:i' ) ) );
+		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
+		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id , $people_number );
+		$product_price = get_post_meta( $product_id, '_price', true );
+		$product_price = apply_filters( 'mwb_mbfw_change_price_ajax_global_rule', ( ! empty( $product_price ) ? $product_price : 0 ), $date_from, $date_to, $time_from, $time_to, $quantity, $people_number, 'unit_cost' );
+		$base_cost     = get_post_meta( $product_id, 'mwb_mbfw_booking_base_cost', true );
+		$base_cost     = apply_filters( 'mwb_mbfw_change_price_ajax_global_rule', ( ! empty( $base_cost ) ? (float) $base_cost : 0 ), $date_from, $date_to, $time_from, $time_to, $quantity, $people_number, 'base_cost' );
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 			$product_price = (float) $product_price * (int) $people_number;
 		}

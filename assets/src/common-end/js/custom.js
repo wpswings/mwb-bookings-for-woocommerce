@@ -98,8 +98,18 @@
 				retrieve_booking_total_ajax( form_data );
 			}
 		});
+		$('input[name="mwb_mbfw_booking_time"]').on('change',function(){
+			var date_time = $(this).val().split('-');
+			var from_date = moment( date_time[0], 'DD/MM/YYYY hh:mm ', true ).isValid();
+			var to_date   = moment( date_time[1], ' DD/MM/YYYY hh:mm', true ).isValid();
+			if ( ! from_date || ! to_date ) {
+				$(this).val('');
+				alert( mwb_mbfw_common_obj.date_time_format );
+			}
+		});
     });
 })( jQuery );
+
 function retrieve_booking_total_ajax( form_data ) {
 	if ( $('.mwb-mbfw-total-area').length > 0 ) {
 		form_data.append('action', 'mbfw_retrieve_booking_total_single_page');

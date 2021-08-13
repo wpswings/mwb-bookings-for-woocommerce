@@ -8,18 +8,20 @@
     outline: none;
 }
 .mbfw-date-picker-section__wrapper {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    margin-bottom: 20px;
 } 
 
 .mbfw-date-picker-section  {
     flex: 0 0 100%;
-    max-width: 45%;
+    max-width: 260px;
 }
 .mbfw-date-picker-section input {
     width: 100%;
+    text-align: center;
+}
+.mbfw-date-picker-section input::placeholder {
+    text-transform: capitalize;
+    letter-spacing: 1.2px;
 }
 .mbfw-date-picker-section label {
     display: block;

@@ -14,13 +14,15 @@
  * @wordpress-plugin
  * Plugin Name:       Mwb Bookings For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/mwb-bookings-for-woocommerce/
- * Description:       Provides Booking system for woocommerce
+ * Description:       MWB Bookings for WooCommerce helps you stay focused while offering a better online booking system for your business growth. Just stop speculating and opt for the best one out.
  * Version:           2.0.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       mwb-bookings-for-woocommerce
  * Domain Path:       /languages
  *
+  * Requires at least:   4.6
+ * Tested up to:         5.7
  * Requires at least:    4.6
  * Tested up to:         5.8
  * WC requires at least: 4.0.0
@@ -140,7 +142,8 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	function mwb_bookings_for_woocommerce_settings_link( $links ) {
 		$my_link = array(
-		'<a href="' . admin_url('admin.php?page=mwb_bookings_for_woocommerce_menu') . '">' . __('Settings', 'mwb-bookings-for-woocommerce') . '</a>',
+			'<a href="' . admin_url('admin.php?page=mwb_bookings_for_woocommerce_menu') . '">' . __('Settings', 'mwb-bookings-for-woocommerce') . '</a>',
+			'<a href="#" target="_blank" id="mbfw-go-pro-link">' . __( 'Go Pro', 'mwb-bookings-for-woocommerce' ) . '</a>'
 		);
 		return array_merge($my_link, $links);
 	}
@@ -154,9 +157,9 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	function mwb_bookings_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
 		if (strpos($plugin_file_name, basename(__FILE__)) ) {
-			$links_array[] = '<a href="#" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Demo.svg" class="mwb-info-img" alt="Demo image">' . __('Demo', 'mwb-bookings-for-woocommerce') . '</a>';
-			$links_array[] = '<a href="#" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Documentation.svg" class="mwb-info-img" alt="documentation image">' . __('Documentation', 'mwb-bookings-for-woocommerce') . '</a>';
-			$links_array[] = '<a href="#" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">' . __('Support', 'mwb-bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-demo" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Demo.svg" class="mwb-info-img" alt="Demo image">' . __('Demo', 'mwb-bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Documentation.svg" class="mwb-info-img" alt="documentation image">' . __('Documentation', 'mwb-bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">' . __('Support', 'mwb-bookings-for-woocommerce') . '</a>';
 		}
 		return $links_array;
 	}

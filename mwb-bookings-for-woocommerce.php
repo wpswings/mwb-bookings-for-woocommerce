@@ -142,9 +142,11 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	function mwb_bookings_for_woocommerce_settings_link( $links ) {
 		$my_link = array(
-			'<a href="' . admin_url('admin.php?page=mwb_bookings_for_woocommerce_menu') . '">' . __('Settings', 'mwb-bookings-for-woocommerce') . '</a>',
-			'<a href="#" target="_blank" id="mbfw-go-pro-link">' . __( 'Go Pro', 'mwb-bookings-for-woocommerce' ) . '</a>'
+			'<a href="' . admin_url('admin.php?page=mwb_bookings_for_woocommerce_menu') . '">' . __('Settings', 'mwb-bookings-for-woocommerce') . '</a>'
 		);
+		if ( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', get_option( 'active_plugins', array() ), true ) ) {
+			$my_link[] = '<a href="#" target="_blank" id="mbfw-go-pro-link">' . __( 'Go Pro', 'mwb-bookings-for-woocommerce' ) . '</a>';
+		}
 		return array_merge($my_link, $links);
 	}
 

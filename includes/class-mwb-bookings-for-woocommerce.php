@@ -208,6 +208,7 @@ class Mwb_Bookings_For_Woocommerce {
 
 		// Saving tab settings.
 		$this->loader->add_action('mwb_mbfw_settings_saved_notice', $mbfw_plugin_admin, 'mbfw_admin_save_tab_settings');
+		$this->loader->add_action( 'init', $mbfw_plugin_admin, 'mwb_mbfw_migrate_settings_from_older_plugin' );
 
 		//Developer's Hook Listing.
 		$this->loader->add_action('mbfw_developer_admin_hooks_array', $mbfw_plugin_admin, 'mwb_developer_admin_hooks_listing');

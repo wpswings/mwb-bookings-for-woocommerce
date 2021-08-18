@@ -26,8 +26,26 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 		do_action('mwb_mbfw_settings_saved_notice');
 	?>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
-		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', apply_filters( 'mwb_mbfw_update_plugin_name_from_pro', $mbfw_mwb_mbfw_obj->mbfw_get_plugin_name() ) ) ) ); ?></h1>
-		<a href="<?php echo esc_url( apply_filters( 'mwb_mbfw_update_doc_link', 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc' ) ); ?>" target="_blank" class="mwb-link"><?php esc_html_e('Documentation', 'mwb-bookings-for-woocommerce'); ?></a>
+		<h1 class="mwb-header-title">
+			<?php
+			echo esc_attr(
+				strtoupper(
+					str_replace(
+						'-',
+						' ',
+						//desc - update name for pro plugin.
+						apply_filters( 'mwb_mbfw_update_plugin_name_from_pro', $mbfw_mwb_mbfw_obj->mbfw_get_plugin_name() )
+					)
+				)
+			);
+			?>
+		</h1>
+		<a href="
+		<?php
+		echo esc_url(
+			apply_filters( 'mwb_mbfw_update_doc_link', 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc' )
+			);
+		?>" target="_blank" class="mwb-link"><?php esc_html_e('Documentation', 'mwb-bookings-for-woocommerce'); ?></a>
 		<span>|</span>
 		<a href="<?php echo esc_url( apply_filters( 'mwb_mbfw_update_query_link', 'https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support' ) ); ?>" target="_blank" class="mwb-link"><?php esc_html_e('Support', 'mwb-bookings-for-woocommerce'); ?></a>
 	</div>

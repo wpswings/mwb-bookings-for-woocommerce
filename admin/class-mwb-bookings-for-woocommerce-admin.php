@@ -554,6 +554,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_product_data_tabs_html() {
 		$booking_criteria = get_post_meta( get_the_ID(), 'mwb_mbfw_booking_criteria', true );
+		wp_nonce_field( 'mwb_booking_product_meta', '_mwb_nonce' );
 		?>
 		<div id="mwb_booking_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<p class="form-field mwb_mbfw_booking_criteria_field">
@@ -566,7 +567,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria. if fixed please enter the fixed number, else if customers can choose please choose the maximum number a user can book.', 'mwb-booking-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
-			wp_nonce_field( 'mwb_booking_product_meta', '_mwb_nonce' );
 			woocommerce_wp_text_input(
 				array(
 					'label'             => __( 'Max. Booking Per User', 'mwb-bookings-for-woocommerce' ),
@@ -1475,5 +1475,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 		wp_send_json( $all_events );
 		wp_die();
+	}
+
+	/**
+	 * Migrate old plugin settings.
+	 *
+	 * @return void
+	 * @version 1.0.0
+	 */
+	public function mwb_mbfw_migrate_settings_from_older_plugin() {
+		if ( ! get_option( 'mwb_mbfw_plugin_setting_migrated' ) ) {
+			include_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-mwb-bookings-for-woocommerce-activator.php';
+			Mwb_Bookings_For_Woocommerce_Activator::mwb_migrate_old_plugin_settings();
+		}
 	}
 }

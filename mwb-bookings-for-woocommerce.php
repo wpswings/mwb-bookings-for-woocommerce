@@ -21,8 +21,6 @@
  * Text Domain:       mwb-bookings-for-woocommerce
  * Domain Path:       /languages
  *
-  * Requires at least:   4.6
- * Tested up to:         5.7
  * Requires at least:    4.6
  * Tested up to:         5.8
  * WC requires at least: 4.0.0
@@ -75,14 +73,14 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		$mwb_mbfw_active_plugin = get_option('mwb_all_plugins_active', false);
 		if (is_array($mwb_mbfw_active_plugin) && ! empty($mwb_mbfw_active_plugin) ) {
 			$mwb_mbfw_active_plugin['mwb-bookings-for-woocommerce'] = array(
-			'plugin_name' => __('Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce'),
-			'active' => '1',
+				'plugin_name' => __('Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce'),
+				'active' => '1',
 			);
 		} else {
 			$mwb_mbfw_active_plugin                                 = array();
 			$mwb_mbfw_active_plugin['mwb-bookings-for-woocommerce'] = array(
-			'plugin_name' => __('Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce'),
-			'active' => '1',
+				'plugin_name' => __('Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce'),
+				'active' => '1',
 			);
 		}
 		update_option('mwb_all_plugins_active', $mwb_mbfw_active_plugin);

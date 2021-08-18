@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+do_action( 'mwb_mbfw_overview_content_top' );
 ?>
 <div class="mwb-overview__wrapper">
 	<div class="mwb-overview__banner">
@@ -39,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li><?php esc_html_e( 'Define the maximum number of bookings per day or per user with ease.', 'mwb-bookings-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Can offer easy booking management parameters from the backend i.e. admin area.', 'mwb-bookings-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Confirm the booking requests made by the customers.', 'mwb-bookings-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'Provide reminder emails on the day before booking accessibility.', 'mwb-bookings-for-woocommerce' ); ?></li>
+				<li><?php esc_html_e( 'Easy cancellation is allowed for booking orders.', 'mwb-bookings-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Can easily define their offered WooCommerce booking services and additional costs.', 'mwb-bookings-for-woocommerce' ); ?></li>
 			</ul>
 		</div>
@@ -123,13 +124,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
 					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Easy-Email-Reminder-for-Bookings.png' ); ?>" alt="Variable product image">
+						<img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Easy-Booking-Cancellation-&-Confirmations.png' ); ?>" alt="Variable product image">
 					</div>
 					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( 'Easy Email Reminder for Bookings', 'mwb-bookings-for-woocommerce' ); ?></h3>
+						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( 'Easy Booking Cancellation', 'mwb-bookings-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('On the day of the booking, the admin can send a smart pre-booking reminder email to the consumer. The customizable template and shortcodes offered can be used to send a reminder email, assisting with easy booking management.', 'mwb-bookings-for-woocommerce' );
+							esc_html_e(
+								'Admin managers can now effortlessly offer easy booking cancellation for the booking requests by the customers making use of the plugin features. 
+								In order to utilize the feature, the administrator needs to turn ON the toggle for Cancellation Allowed settings available in the specified booking
+								product setting and specify the Order Statuses for the same.',
+								'mwb-bookings-for-woocommerce'
+							);
 							?>
 						</p>
 					</div>

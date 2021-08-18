@@ -28,13 +28,14 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<h1 class="mwb-header-title">
 			<?php
+			$plugin_name = $mbfw_mwb_mbfw_obj->mbfw_get_plugin_name();
 			echo esc_attr(
 				strtoupper(
 					str_replace(
 						'-',
 						' ',
 						//desc - update name for pro plugin.
-						apply_filters( 'mwb_mbfw_update_plugin_name_from_pro', $mbfw_mwb_mbfw_obj->mbfw_get_plugin_name() )
+						apply_filters( 'mwb_mbfw_update_plugin_name_from_pro', $plugin_name )
 					)
 				)
 			);
@@ -42,12 +43,23 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 		</h1>
 		<a href="
 		<?php
+		$doc_link = 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc';
 		echo esc_url(
-			apply_filters( 'mwb_mbfw_update_doc_link', 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc' )
-			);
-		?>" target="_blank" class="mwb-link"><?php esc_html_e('Documentation', 'mwb-bookings-for-woocommerce'); ?></a>
+			//desc - Documentation link for pro update.
+			apply_filters( 'mwb_mbfw_update_doc_link', $doc_link )
+		);
+		?>
+		" target="_blank" class="mwb-link"><?php esc_html_e('Documentation', 'mwb-bookings-for-woocommerce'); ?></a>
 		<span>|</span>
-		<a href="<?php echo esc_url( apply_filters( 'mwb_mbfw_update_query_link', 'https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support' ) ); ?>" target="_blank" class="mwb-link"><?php esc_html_e('Support', 'mwb-bookings-for-woocommerce'); ?></a>
+		<a href="
+		<?php
+		$query_link = 'https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support';
+		echo esc_url(
+			//desc - Query link update.
+			apply_filters( 'mwb_mbfw_update_query_link', $query_link )
+		);
+		?>
+		" target="_blank" class="mwb-link"><?php esc_html_e('Support', 'mwb-bookings-for-woocommerce'); ?></a>
 	</div>
 </header>
 <main class="mwb-main mwb-bg-white mwb-r-8">

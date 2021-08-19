@@ -281,9 +281,33 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
 		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id , $people_number );
 		$product_price = get_post_meta( $product_id, '_price', true );
-		$product_price = apply_filters( 'mwb_mbfw_change_price_ajax_global_rule', ( ! empty( $product_price ) ? $product_price : 0 ), $date_from, $date_to, $time_from, $time_to, $quantity, $people_number, 'unit_cost' );
+		$product_price = apply_filters(
+			'mwb_mbfw_change_price_ajax_global_rule',
+			( ! empty( $product_price ) ? $product_price : 0 ),
+			array(
+				'date_from'     => $date_from,
+				'date_to'       => $date_to,
+				'time_from'     => $time_from,
+				'time_to'       => $time_to,
+				'quantity'      => $quantity,
+				'people_number' => $people_number,
+				'cost_type'     => 'unit_cost',
+			)
+		);
 		$base_cost     = get_post_meta( $product_id, 'mwb_mbfw_booking_base_cost', true );
-		$base_cost     = apply_filters( 'mwb_mbfw_change_price_ajax_global_rule', ( ! empty( $base_cost ) ? (float) $base_cost : 0 ), $date_from, $date_to, $time_from, $time_to, $quantity, $people_number, 'base_cost' );
+		$base_cost     = apply_filters(
+			'mwb_mbfw_change_price_ajax_global_rule',
+			( ! empty( $base_cost ) ? (float) $base_cost : 0 ),
+			array(
+				'date_from'     => $date_from,
+				'date_to'       => $date_to,
+				'time_from'     => $time_from,
+				'time_to'       => $time_to,
+				'quantity'      => $quantity,
+				'people_number' => $people_number,
+				'cost_type'     => 'base_cost',
+			)
+		);
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 			$product_price = (float) $product_price * (int) $people_number;
 		}
@@ -309,7 +333,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			),
 		);
 		$charges =
-		//desc - ajax loading total listings.
+		// desc - ajax loading total listings.
 		apply_filters( 'mbfw_ajax_load_total_booking_charge_individually', $charges, $product_id );
 		$this->mbfw_booking_total_listing_single_page( $charges, $quantity );
 		wp_die();

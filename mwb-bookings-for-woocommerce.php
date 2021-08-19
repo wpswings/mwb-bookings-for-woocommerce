@@ -24,7 +24,7 @@
  * Requires at least:    4.6
  * Tested up to:         5.8
  * WC requires at least: 4.0.0
- * WC tested up to:      5.5.2
+ * WC tested up to:      5.6.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html

@@ -403,7 +403,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$line_item_meta['_mwb_mbfw_booking_extra_costs'] = $term_ids;
 			}
 			$line_item_meta =
-			//desc - add custom data in the db for line items.
+			// desc - add custom data in the db for line items.
 			apply_filters( 'mbfw_add_meta_data_in_the_db_for_line_item', $line_item_meta, $custom_booking_values, $item );
 			foreach ( $line_item_meta as $meta_key => $meta_val ) {
 				$item->update_meta_data( $meta_key, $meta_val );

@@ -26,12 +26,14 @@ You can now simply book WordPress time slots, confirm/reject bookings, display r
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 **WITH THE BOOKINGS FOR WOOCOMMERCE PLUGIN ON YOUR STORE YOU CAN:**
+
 * Easily define additional booking costs and services from the backend.
 * Unit, base, and additional cost-based WooCommerce bookable products can be defined.
 * Easily define the maximum number of bookings per day with the HMS unit.
 * Provide an easy upcoming booking list using the Booking Calendar.
 * Can define WooCommerce bookings availability Start and End time for the day with ease.
 * It’s compatible with our [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
 [**Download Now!!**](https://downloads.wordpress.org/plugin/mwb-bookings-for-woocommerce.zip)
 
@@ -65,10 +67,12 @@ Admin managers may easily specify booking and scheduling for WooCommerce based a
 **9) Avoid Unwanted Bookings**
 Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoiding unnecessary bookings, and easily indicate unavailability.
 
-[**Free Demo of Bookings for WooCommerce**](https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org).
+[**Free Demo of Bookings for WooCommerce**](https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
 
 Visit [**Bookings for WooCommerce Documentation**](https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) and learn more about the features and working of the plugin. 
 Check out [**Bookings Plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
 
 
 == WHAT PREMIUM VERSION OF BOOKINGS FOR WOOCOMMERCE PRO OFFERS ==
@@ -97,6 +101,14 @@ Check out [**Bookings Plugin knowledge base**](https://support.makewebbetter.com
 > Note:  Get [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
 
 
+== LIVE DEMO OF PREMIUM VERSION ==
+
+ * [**WooCommerce Bookings Frontend demo**](https://demo.makewebbetter.com/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
+
+ * [**WooCommerce Bookings Backend demo**](https://demo.makewebbetter.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
+
 
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
@@ -116,6 +128,7 @@ In the search field type **"MWB Bookings for WooCommerce"** and click Search Plu
 = Manual installation =
 
 The manual installation method involves downloading our MWB Bookings for WooCommerce and uploading it to your webserver via your favorite FTP application. The WordPress contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
+
 
 ==  Screenshots  ==
 
@@ -169,18 +182,13 @@ In our plugin, there are two types of booking units-
 
 
 
-
-
-
-
-
 == Changelog ==
 
-= 2.0.0 - Released on 19 July 2021 =
+= 2.0.0 - Released on 25 August 2021 =
 * New: Date and time selector
 * New: UI/UX change for easy understanding.
-* New: Compatibility with the PRO Version
-* New: Compatibility with the latest WooCommerce 5.5.2
+* New: Compatibility with [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
+* New: Compatibility with the latest WooCommerce 5.6.0
 * New: Compatibility with the latest WordPress 5.8
 * New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
 * Fix: Updated settings for admin.
@@ -198,11 +206,11 @@ In our plugin, there are two types of booking units-
 
 == Upgrade Notice ==
 
-= 2.0.0 - Released on 19 July 2021 =
+= 2.0.0 - Released on 25 August 2021 =
 * New: Date and time selector
 * New: UI/UX change for easy understanding.
-* New: Compatibility with the PRO Version
-* New: Compatibility with the latest WooCommerce 5.5.2
+* New: Compatibility with [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
+* New: Compatibility with the latest WooCommerce 5.6.0
 * New: Compatibility with the latest WordPress 5.8
 * New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
 * Fix: Updated settings for admin.

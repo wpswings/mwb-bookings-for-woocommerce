@@ -53,10 +53,11 @@
     );
 
     $(".mwb-password-hidden").click(function() {
-      if ($(".mwb-form__password").attr("type") == "text") {
-        $(".mwb-form__password").attr("type", "password");
+      var cur_targetEl = $(this).siblings(".mwb-form__password");
+      if (cur_targetEl.attr("type") == "text") {
+        cur_targetEl.attr("type", "password");
       } else {
-        $(".mwb-form__password").attr("type", "text");
+        cur_targetEl.attr("type", "text");
       }
     });
   });

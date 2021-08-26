@@ -1,0 +1,22 @@
+@import 
+    'base/base',
+    'components/components',
+    'layout/layout',
+    'pages/page';
+
+    .mwb-form-group {
+        .mwb-form-group__label {
+            @include media (mwb-sm-phone)  {
+                margin-bottom: 12px;
+            }
+        }
+        .mwb-form-group__control {
+            @include media (mwb-sm-phone)  {
+                max-width: 100%;
+            }
+        }
+    }
+
+.mwb-section {
+    font-family: "NunitoSans-Regular";
+}

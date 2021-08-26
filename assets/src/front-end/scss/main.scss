@@ -1,0 +1,11 @@
+@import 
+    'base/base',
+    'components/components',
+    'layout/layout',
+    'pages/page';
+    .mbfw-date-picker-section__wrapper {
+        .mbfw-date-picker-section {
+            flex: 0 0 100%;
+            max-width: 45%;
+        }
+    } 

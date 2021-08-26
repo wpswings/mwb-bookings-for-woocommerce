@@ -1,0 +1,61 @@
+<?php
+/**
+ * Fired during plugin activation
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Mwb_Bookings_For_Woocommerce
+ * @subpackage Mwb_Bookings_For_Woocommerce/includes
+ */
+
+/**
+ * Fired during plugin activation.
+ *
+ * This class defines all code necessary to run during the plugin's activation.
+ *
+ * @since      2.0.0
+ * @package    Mwb_Bookings_For_Woocommerce
+ * @subpackage Mwb_Bookings_For_Woocommerce/includes
+ */
+class Mwb_Bookings_For_Woocommerce_Activator {
+
+	/**
+	 * Activator main method to update default values at plugin activation.
+	 *
+	 * @since 2.0.0
+	 * @return void
+	 */
+	public static function mwb_bookings_for_woocommerce_activate() {
+		if ( ! get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
+			update_option( 'mwb_mbfw_is_plugin_enable', 'yes' );
+			update_option( 'mwb_mbfw_is_booking_enable', 'yes' );
+			update_option( 'mwb_mbfw_is_show_included_service', 'yes' );
+			update_option( 'mwb_mbfw_is_show_totals', 'yes' );
+			update_option( 'mwb_mbfw_daily_start_time', '05:24' );
+			update_option( 'mwb_mbfw_daily_end_time', '23:26' );
+		}
+		if ( ! get_option( 'mwb_mbfw_plugin_setting_migrated' ) ) {
+			( new self() )->mwb_migrate_old_plugin_settings();
+		}
+	}
+
+	/**
+	 * Migrate old plugin settings.
+	 *
+	 * @since 2.0.0
+	 * @return void
+	 */
+	public static function mwb_migrate_old_plugin_settings() {
+		$mwb_booking_old_settings = get_option( 'mwb_booking_settings_options' );
+		if ( ! empty( $mwb_booking_old_settings ) && is_array( $mwb_booking_old_settings ) ) {
+			update_option( 'mwb_mbfw_is_plugin_enable', 'yes' );
+			update_option( 'mwb_mbfw_is_booking_enable', isset( $mwb_booking_old_settings['mwb_booking_setting_go_enable'] ) ? $mwb_booking_old_settings['mwb_booking_setting_go_enable'] : '' );
+			update_option( 'mwb_mbfw_is_show_included_service', isset( $mwb_booking_old_settings['mwb_booking_setting_bo_inc_service_enable'] ) ? $mwb_booking_old_settings['mwb_booking_setting_bo_inc_service_enable'] : '' );
+			update_option( 'mwb_mbfw_is_show_totals', isset( $mwb_booking_old_settings['mwb_booking_setting_bo_service_total'] ) ? $mwb_booking_old_settings['mwb_booking_setting_bo_service_total'] : '' );
+			update_option( 'mwb_mbfw_daily_start_time', '05:24' );
+			update_option( 'mwb_mbfw_daily_end_time', '23:26' );
+		}
+		update_option( 'mwb_mbfw_plugin_setting_migrated', 'yes' );
+	}
+}

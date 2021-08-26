@@ -1,85 +1,120 @@
-=== MWB Bookings for WooCommerce ===
+=== MWB Bookings for WooCommerce - Schedule Appointments, Manage Bookings, Show Availability, Calendar Listings ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
-Tags: booking, booking system, booking calendar, reservation, appointment booking, booking plugin
-Requires at least: 4.0
-Tested up to: 5.7
-WC requires at least: 3.0.0
-WC tested up to: 5.2.2
-Stable tag: 1.0.1
+Tags: bookings, calendar, appointments, booking calendar, scheduling, availability calendar, booking system, booking plugin
+Requires at least: 4.6
+Tested up to: 5.8
+WC requires at least: 4.0.0
+WC tested up to: 5.6.0
+Stable tag: 2.0.0
 Requires PHP: 7.2
-License: GPLv3 or later 
+License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-
-Bookings System for WooCommerce turns your products into bookable resources that can be accessed as services.
-
+WooCommerce Bookings offer easy booking management, confirm/reject bookings, enable booking cancellations, restrict durations, etc
 
 == Description ==
+**GET BOOKINGS FOR WOOCOMMERCE AND START SCHEDULING APPOINTMENTS FOR YOUR CUSTOMERS. MANAGE YOUR BOOKINGS UTILIZING THE LISTING CALENDAR AND REGULATING THE BOOKING DURATIONS WITH ALL EASE.**
 
-**BOOKINGS PLUGIN ENHANCE CUSTOMER SERVICE BY OFFERING PRODUCTS AS BOOKABLE RESOURCES**
+WooCommerce Booking is a powerful plugin that enables store owners to [**create an online booking system**](https://makewebbetter.com/blog/woocommerce-online-booking-system/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) that allows them to turn their products into online booking solutions and make them available to customers for a set period of time.
 
-MWB Bookings for WooCommerce is a robust plugin that allows store owners to transform their time, products, and product-related services into bookable resources.
-The bookings plugin for WordPress helps you to empower your bookings for WooCommerce as store-based products with bookable solutions, which would benefit almost all types of businesses.     
+You can now simply book WordPress time slots, confirm/reject bookings, display reservation calendar listings, enable booking cancellations, promote booking availability, regulate booking duration, and much more using the Booking Calendar plugin's capabilities.
 
+
+[youtube https://www.youtube.com/watch?v=9ow97SzMHnM&w=560&h=315&rel=0]
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 **WITH THE BOOKINGS FOR WOOCOMMERCE PLUGIN ON YOUR STORE YOU CAN:**
 
-* Customers can make conceivable WooCommerce bookings following the flexibility criteria offered by the merchant
-* All booking redundancies can easily be managed using the planner calendar i.e. Bookings Calendar.
-* Merchants can define their additional and included services that customers can choose from conveniently at the time of bookings.
-* Offers mobile-friendly booking interface i.e. responsive interface on different devices.
-* Customers can structure their bookings criteria based on their budget, occasion, and requirements.
-* Make WooCommerce booking services more affordable like any other product.
-* No phone call required for bookings i.e. can effortlessly book using comfort your device.
-* Store owners can enforce regulations prior to bookings for WooCommerce, such as global booking availability rules that apply to all bookable products, people types allowed, not allowed days for booking, min-max booking time duration, and more.
-* On WooCommerce stores, merchants can easily add additional costs for customers while performing the booking process.
-* Custom settings, including services, service totals, service details, and additional costs can all be comfortably hidden from consumers on the front end.
+* Easily define additional booking costs and services from the backend.
+* Unit, base, and additional cost-based WooCommerce bookable products can be defined.
+* Easily define the maximum number of bookings per day with the HMS unit.
+* Provide an easy upcoming booking list using the Booking Calendar.
+* Can define WooCommerce bookings availability Start and End time for the day with ease.
+* It’s compatible with our [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+
+== PLUGIN MEETS YOUR REQUIREMENT, SO ==
+[**Download Now!!**](https://downloads.wordpress.org/plugin/mwb-bookings-for-woocommerce.zip)
+
+== WHAT’S INCLUDED IN OUR FREE WOOCOMMERCE BOOKINGS PLUGIN:  ==
+
+**1) Enable Bookings**
+Using WordPress Bookings plugin General Settings tab toggle button functionality, admin managers can simply enable/disable the plugin as well as the plugin's bookings feature.
+
+**2) Flexible Bookings**
+With the Appointment Booking Calendar, customers can tailor their booking criteria to their specific budget, event, and requirements. You can make reservations without bothering to place a call, thus you can do so from the comfort of the home following easy booking management.
+
+**3) Booking Confirmations & Cancellation Offered**
+With the Appointment booking WordPress plugin, Admin managers can easily offer confirmations for booking requests made by customers, as well as easy booking cancellations, by utilizing the plugin's capabilities.
+
+**4) Booking Listing and Sorting by Tag**
+All requested WooCommerce bookings orders made by the customers are to be listed in the WooCommerce Order Listing table. Admin managers can conveniently sort the booking out of the orders using the Bookings tag available there.
+
+**5) Ease of Structuring Bookings Calendar**
+The WooCommerce Calendar Booking view allows merchants to build and analyze how their day or month is progressing. They can also make changes to current bookings or availability according to that. 
+
+**6) Offered Services & Additional Costs**
+Admin managers can easily create WooCommerce booking services and additional costs using the backend settings, and also can easily display them over the checkout page as well as over the individual bookable resource page.
+
+**7) Responsive Interface**
+WordPress Online Booking provides an online mobile-friendly WooCommerce easy booking interface, i.e. a responsive UI that works on a variety of devices. In short, offering ease of access for their customers.
 
 
-== WHAT’S INCLUDED IN OUR FREE BOOKINGS FOR WOOCOMMERCE PLUGIN:  ==
-**1)** **Enable Bookings**
-With the WordPress booking plugin, you can easily enable/disable booking WooCommerce products for your customers, using the smart checkbox setting at the backend.
+**8) Offer Bookings Availability Settings**
+Admin managers may easily specify booking and scheduling for WooCommerce based availability for the day, as well as the exact deadline for making reservations. They only need to modify the Start and End times in the WooCommerce booking Availability tab of the plugin settings area to do so.
 
-**2)** **Customizable booking for customers**
-Admin managers can easily sell and manage booking parameters from the backend. Including, setting their booking time slots (booking units), opting for adjustable time durations, and so on, and also enabling their customers to choose from the front end.
+**9) Avoid Unwanted Bookings**
+Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoiding unnecessary bookings, and easily indicate unavailability.
 
-**3)** **Ease of listing included and addon services**  
-Admin managers can easily allocate included and add-on services, along with bookable product-based services.  For example, included parking service in hotel booking, extra bed as an add-on service in accommodation service, and so on.
+[**Free Demo of Bookings for WooCommerce**](https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
 
-**4)** **Avoid unwanted bookings**
-You can easily set up the minimum and maximum duration for your booking. As a result, easily avoid unwanted bookings for your products and define unavailability with all ease.
 
-**5)** **Easily send booking notifications**
-Customers can receive booking notifications via email from the admin manager. The purpose of a notification email is to notify your customers about pending payments or to remind them about modifications to their booking status.
+Visit [**Bookings for WooCommerce Documentation**](https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) and learn more about the features and working of the plugin. 
+Check out [**Bookings Plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
 
-**6)** **Ease of structuring bookings calendar**
-The WooCommerce product calendar view allows merchants to build and analyze how their day or month is progressing. They can also make changes to current bookings or availability according to that. 
 
-**7)** **Booking Payments**
-Admin managers can easily collect booking payments from customers at the time of bookings if they wish.
 
-**8)** **Fully customized duration settings**
-You can easily offer a customizable duration setting i.e. fix or flexible for your bookable products. Duration variations can be full-day bookings, hourly bookings, week-based bookings i.e. 7 days, day-wise bookings, etc.
+== WHAT PREMIUM VERSION OF BOOKINGS FOR WOOCOMMERCE PRO OFFERS ==
+* Offers a distinct Booking List.
+* You can create different People Types for your bookings.
+* Provide specific status settings for paid Bookings to confirm after days.
+* Admin can also reject Bookings after days.
+* Render setting to show/hide the Additional Booking’s details.
+* Advance Bookings setting options.
+* Admins can offer Early Bird Discounts.
+* Customizable business type Templates.
+* Layout a distinct Booking Search page.
+* Admin can Manage Booking for registered customers from the backend.
+* To change the total Booking cost, offer Global Cost Rules.
+* Can offer Booking Reschedule settings.
+* The Booking Service setup tab has a Start Time and an End Time.
+* Admin can easily offer Unavailability for Bookings on Weekdays.
+* Email and SMS Reminders before service avail.
+* Easy Booking Social Share button available integration with Facebook.
+* Admin can easily provide Booking Refunds, easy RMA plugin compatibility.
+* Provide a specific Booking Policy Section likewise description tab.
 
-**9)** **Bookings for multiple slots/durations**
-Customers would be able to make reservations for several slots in a day/hour/minute or can avail of a single booking for multiple days if the admin creates bookable items likewise.
-**For instance,** as people book rentals for hotels, camping events, resorts, etc.
 
-[**Free Demo of Bookings for WooCommerce**](https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org).
+== TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE BOOKINGS PLUGIN ==
 
-Visit [**Bookings for WooCommerce Documentation**](https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) and learn more about the features and working of the plugin. Check out [**Bookings Plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+> Note:  Get [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
 
-== WHAT PREMIUM VERSION OF WOOCOMMERCE BOOKINGS PLUGIN OFFERS [COMING SOON]: ==
-* You can effectively strategize booking-related global cost rules.
-* Full-day bookings can also be accommodated well.
-* Enable your customers to cancel their bookings using the min-max day settings.
-* Offer discounts based on days, weeks, and custom bookings with ease.
-* Can set bookings on buffer regulations with ease.
-* Allow bookings for “people as separate”.
-* Effortlessly plan local cost and local availability rules for a bookable product.
+
+== LIVE DEMO OF PREMIUM VERSION ==
+
+ * [**WooCommerce Bookings Frontend demo**](https://demo.makewebbetter.com/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
+
+ * [**WooCommerce Bookings Backend demo**](https://demo.makewebbetter.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
+
 
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
+If our documentation doesn't contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) with your question.
+
 
 
 == Installation ==
@@ -95,52 +130,70 @@ In the search field type **"MWB Bookings for WooCommerce"** and click Search Plu
 The manual installation method involves downloading our MWB Bookings for WooCommerce and uploading it to your webserver via your favorite FTP application. The WordPress contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
 
 
-== Screenshots ==
+==  Screenshots  ==
 
-1. Additional costs
-2. Calendar view 
-3. Add new services 
-4. General Settings 
-5. Global Availability rules 
-6. Add custom new rule 
-7. People types
-8. Placed Bookings Listing Panel Backend
-9. Customer selected unit 
-10. Fixed unit 
-11. Normal cost and extra cost
-12. Availability preferences 
-13. Max/Min per booking
-14. Booking services
-15. Booking Product Frontend View 
+1. General Settings
+2. Booking Form Settings
+3. Availability settings
+4. Bookings calendar
+5. Booking Product
+6. Customer selected type booking unit 
+7. Booking Cost
+8. Booking people option
+9. Booking Additional services
+10. Booking Product Availability
+11. Bookings Order
+12. Bookings Frontend view
+
+
 
 == Frequently Asked Questions ==
 
-= Is it feasible for the admin to change the booking's status? =
-Yes, the admin can change the booking status easily for this, you need to navigate in plugin Settings > General option > Change Status to confirm after days.
+= How can the admins show Include Services in the booking form? =
+Navigate to the Admin Dashboard > Plugin Back End Settings > Booking Form Settings to see the Included Services on the front end booking form. Then turn ON the Show Included Services toggle switch.
 
-= Can the admin reject unpaid booking? =
-Yes, the admin can reject unpaid bookings easily. This just requires to Enable the settings from the backend and navigate to Plugin Settings > General Option > Reject Unpaid Booking after the selected specified days.
+= Is it possible to display the calendar on the frontend for picking booking dates? =
+Yes, the Bookings plugin has such functionality that allows customers to select a booking date from a calendar. To do so, go to the Edit Product page > General Settings > Activate the Calendar.
 
-= From where admin can check all the bookings? =
-The admin can easily review all of the bookings that have been made by heading to the Booking Tab, where we have included all of the booking sections for the admin to check.
+= Is it possible for the administrator to define the maximum and a minimum number of persons who can place bookings? =
+Yes, the number of people for the bookings can be modified by the admin. Go to the Product Edit page >  People > Enable the checkbox option for People > Opt on something like a Min and Max number of individuals.
 
-= Is it possible for the admin to set the booking and non-booking based on days? =
-Yes, the admin can set the booking and non-booking days as required. We have a setting called Global Availability Rules for this.
+= How can Admin set the start time and end time of any booking? = 
+Admin can easily specify the day's booking availability as well as the specific booking deadline. To do so, they only need to adjust the Start and End times under the Availability tab of the plugin settings area.
 
-= Is there a feature in your plugin that automatically confirms bookings? =
-Yes, we have a setting for this. Please get over to Plugin Settings > General Options > Change Status. After specified days, change the status to confirm. (You can also set the days to confirm the booking automatically from here.)
+= Is there any option so that customers can cancel the booking from their side? = 
+Yes, you can do so with our plugin. Navigate towards the General Settings section of the Edit Product page. Then, use the smart checkbox setting for the Cancellation Allowed option to set up the order cancellations allowed for their customer bookings.
 
-= Is there any functionality through which the admin can add the services in a powerful booking system? =
-To do so, just go to Admin Dashboard > Booking Tab > Services and assign that according to your preferences.
+= How can we utilize the plugin to offer additional booking services for customers? = 
+Yes, you can easily offer additional services to your booking solutions by utilizing the plugin's features. To add additional services, simply go to Admin Dashboard > Products > Booking Services and add any additional booking service you wish.
 
-= Is it possible to add the hidden services with a booking order? = 
-Yes, using our plugin, you can add hidden services. Just go to the Admin Dashboard > Booking Tab > Services >Add Services (enable if hidden).
+And in order to include them within a booking service, just make use of the Booking Service widget on the sidebar of the specific booking product and include them.
+
+= Can the admin set the maximum booking per user? = 
+Yes, the admin can set the maximum booking per user to achieve this Go to the Product edit page >> General settings>> Set maximum booking per user according to your need.
 
 = What is the appropriate way to add the booking product? = 
-To the Admin Dashboard > Products > New Product > Select Data Type > Select MWB Booking and make the settings accordingly.
+In order to create a bookable product for your bookings plugin, you need to first navigate towards your Admin Dashboard > Products > New Product > Select Data Type > Select Booking Product and perform the settings accordingly. 
+
+= How many types of booking units are present in your plugin? =
+In our plugin, there are two types of booking units-
+* Fixed Unit
+* Customer Selected Unit 
+
 
 
 == Changelog ==
+
+= 2.0.0 - Released on 25 August 2021 =
+* New: Date and time selector
+* New: UI/UX change for easy understanding.
+* New: Compatibility with [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
+* New: Compatibility with the latest WooCommerce 5.6.0
+* New: Compatibility with the latest WordPress 5.8
+* New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+* Fix: Updated settings for admin.
+* Fix: Minor bug fixes and performance improvement
+
 
 = 1.0.1 - Released on 31 May 2021 =
 * Fix: Minor issues
@@ -153,7 +206,12 @@ To the Admin Dashboard > Products > New Product > Select Data Type > Select MWB 
 
 == Upgrade Notice ==
 
-= 1.0.1 - Released on 31 May 2021 =
-* Fix: Minor issues
-* Fix: Booking Total Currency Symbol
-* New: Compatibility with WooCommerce 5.3 and WordPress 5.7
+= 2.0.0 - Released on 25 August 2021 =
+* New: Date and time selector
+* New: UI/UX change for easy understanding.
+* New: Compatibility with [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
+* New: Compatibility with the latest WooCommerce 5.6.0
+* New: Compatibility with the latest WordPress 5.8
+* New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+* Fix: Updated settings for admin.
+* Fix: Minor bug fixes and performance improvement

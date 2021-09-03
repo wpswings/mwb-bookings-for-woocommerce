@@ -37,7 +37,7 @@ if (! defined('ABSPATH') ) {
 	die;
 }
 
-if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', array() ), true ) ) {
+if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', array() ), true ) || ( is_multisite() && array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins', array() ), true ) ) ) {
 
 	/**
 	 * Define plugin constants.
@@ -68,25 +68,49 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	/**
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-mwb-bookings-for-woocommerce-activator.php
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
-	function activate_mwb_bookings_for_woocommerce() {
+	function activate_mwb_bookings_for_woocommerce( $network_wide ) {
 		include_once plugin_dir_path(__FILE__) . 'includes/class-mwb-bookings-for-woocommerce-activator.php';
-		Mwb_Bookings_For_Woocommerce_Activator::mwb_bookings_for_woocommerce_activate();
-		$mwb_mbfw_active_plugin = get_option('mwb_all_plugins_active', false);
-		if (is_array($mwb_mbfw_active_plugin) && ! empty($mwb_mbfw_active_plugin) ) {
+		Mwb_Bookings_For_Woocommerce_Activator::mwb_bookings_for_woocommerce_activate( $network_wide );
+		$mwb_mbfw_active_plugin = get_option('mwb_all_plugins_active', false );
+		if ( is_array( $mwb_mbfw_active_plugin ) && ! empty( $mwb_mbfw_active_plugin ) ) {
 			$mwb_mbfw_active_plugin['mwb-bookings-for-woocommerce'] = array(
-				'plugin_name' => __('Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce'),
-				'active' => '1',
+				'plugin_name' => __( 'Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
+				'active'      => '1',
 			);
 		} else {
 			$mwb_mbfw_active_plugin                                 = array();
 			$mwb_mbfw_active_plugin['mwb-bookings-for-woocommerce'] = array(
-				'plugin_name' => __('Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce'),
-				'active' => '1',
+				'plugin_name' => __( 'Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
+				'active'      => '1',
 			);
 		}
 		update_option('mwb_all_plugins_active', $mwb_mbfw_active_plugin);
 	}
+
+	/**
+	 * Will be used when new blog is created on multisite.
+	 *
+	 * @param object $new_site current blog object.
+	 * @since 1.0.0
+	 * @return void
+	 */
+	function mwb_bookings_for_woocommerce_on_new_blog_creation( $new_site ) {
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+		if ( is_plugin_active_for_network( 'mwb-bookings-for-woocommerce/mwb-bookings-for-woocommerce.php' ) ) {
+			$blog_id = isset( $new_site->blog_id ) ? $new_site->blog_id : '';
+			switch_to_blog( $blog_id );
+			include_once plugin_dir_path(__FILE__) . 'includes/class-mwb-bookings-for-woocommerce-activator.php';
+			Mwb_Bookings_For_Woocommerce_Activator::mwb_bookings_for_woocommerce_update_default_value();
+			restore_current_blog();
+		}
+	}
+	add_action( 'wp_initialize_site', 'mwb_bookings_for_woocommerce_on_new_blog_creation' );
 
 	/**
 	 * The code that runs during plugin deactivation.
@@ -105,14 +129,14 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		}
 		update_option('mwb_all_plugins_active', $mwb_mbfw_deactive_plugin);
 	}
-	register_activation_hook(__FILE__, 'activate_mwb_bookings_for_woocommerce');
-	register_deactivation_hook(__FILE__, 'deactivate_mwb_bookings_for_woocommerce');
+	register_activation_hook( __FILE__, 'activate_mwb_bookings_for_woocommerce' );
+	register_deactivation_hook( __FILE__, 'deactivate_mwb_bookings_for_woocommerce' );
 
 	/**
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and public-facing site hooks.
 	 */
-	require plugin_dir_path(__FILE__) . 'includes/class-mwb-bookings-for-woocommerce.php';
+	require plugin_dir_path( __FILE__ ) . 'includes/class-mwb-bookings-for-woocommerce.php';
 
 
 	/**

@@ -26,7 +26,30 @@ class Mwb_Bookings_For_Woocommerce_Activator {
 	 * @since 2.0.0
 	 * @return void
 	 */
-	public static function mwb_bookings_for_woocommerce_activate() {
+	public static function mwb_bookings_for_woocommerce_activate( $network_wide ) {
+		global $wpdb;
+		if ( is_multisite() && $network_wide ) {
+			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+				require_once ABSPATH . '/wp-admin/includes/plugin.php';
+			}
+			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			foreach ( $blogids as $blog_id ) {
+				switch_to_blog($blog_id);
+				( new self() )->mwb_bookings_for_woocommerce_update_default_value();
+				restore_current_blog();
+			}
+			return;
+		}
+		( new self() )->mwb_bookings_for_woocommerce_update_default_value();
+	}
+	
+	/**
+	 * Update default value on plugin activation.
+	 *
+	 * @since 2.0.0
+	 * @return void
+	 */
+	public static function mwb_bookings_for_woocommerce_update_default_value() {
 		if ( ! get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			update_option( 'mwb_mbfw_is_plugin_enable', 'yes' );
 			update_option( 'mwb_mbfw_is_booking_enable', 'yes' );

@@ -558,13 +558,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		?>
 		<div id="mwb_booking_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<p class="form-field mwb_mbfw_booking_criteria_field">
-				<label for="mwb_mbfw_booking_criteria"><?php esc_html_e( 'Quantity', 'mwb-booking-for-woocommerce' ); ?></label>
+				<label for="mwb_mbfw_booking_criteria"><?php esc_html_e( 'Quantity', 'mwb-bookings-for-woocommerce' ); ?></label>
 				<select name="mwb_mbfw_booking_criteria" id="mwb_mbfw_booking_criteria">
 					<option value="customer_selected_unit" <?php selected( 'customer_selected_unit', $booking_criteria ); ?>><?php esc_html_e( 'Customers can choose', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="fixed_unit" <?php selected( 'fixed_unit', $booking_criteria ); ?>><?php esc_html_e( 'Fixed unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
 				<input type="number" step="1" min="1" max="" style="width: 4em;" <?php echo esc_attr( ( ( 'customer_selected_unit' === $booking_criteria ) || empty( $booking_criteria ) ) ? 'disabled=disabled' : '' ); ?> id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( get_post_meta( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
-				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria. if fixed please enter the fixed number, else if customers can choose please choose the maximum number a user can book.', 'mwb-booking-for-woocommerce' ); ?>"></span>
+				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria. if fixed please enter the fixed number, else if customers can choose please choose the maximum number a user can book.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
 			woocommerce_wp_text_input(

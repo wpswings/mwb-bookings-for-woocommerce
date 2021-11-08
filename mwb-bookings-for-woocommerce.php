@@ -162,7 +162,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 * Settings link.
 	 *
 	 * @since 2.0.0
-	 * @param Array $links Settings link array.
+	 * @param array $links Settings link array.
 	 */
 	function mwb_bookings_for_woocommerce_settings_link( $links ) {
 		$my_link = array(

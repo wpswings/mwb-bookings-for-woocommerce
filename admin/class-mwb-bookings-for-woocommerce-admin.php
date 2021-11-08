@@ -1434,8 +1434,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_change_line_item_meta_key_order_edit_page( $display_key, $meta, $item  ) {
 		switch ( $display_key ) {
-			case '_mwb_bfwp_date_time':
-				return __( 'Date time', 'mwb-bookings-for-woocommerce' );
+			case '_mwb_bfwp_date_time_from':
+				return __( 'From', 'mwb-bookings-for-woocommerce' );
+			case '_mwb_bfwp_date_time_to':
+				return __( 'To', 'mwb-bookings-for-woocommerce' );
 			default:
 				break;
 		}
@@ -1461,15 +1463,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		foreach ( $orders as $order ) {
 			$items = $order->get_items();
 			foreach ( $items as $item ) {
-				$date_time      = map_deep( explode( '-', $item->get_meta( '_mwb_bfwp_date_time', true ) ), function( $date ) {
-					return str_replace( '/', '-', trim( $date ) );
-				} );
-				$date_time_from = ( ! empty( $date_time[0] ) ? $date_time[0] : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
-				$date_time_to   = ( ! empty( $date_time[1] ) ? $date_time[1] : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
+				$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
+				$date_time_to   = $item->get_meta( '_mwb_bfwp_date_time_to', true );
+				$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
+				$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
 				$all_events[]   = array(
-						'title' => $item['name'],
-						'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
-						'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
+					'title' => $item['name'],
+					'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
+					'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
 				);
 			}
 		}

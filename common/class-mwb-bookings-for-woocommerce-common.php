@@ -23,8 +23,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    2.0.0
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var   string    $plugin_name    The ID of this plugin.
+	 * @since 2.0.0
 	 */
 	private $plugin_name;
 
@@ -59,7 +59,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_enqueue_style( 'mwb-mbfw-common-custom-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/css/mwb-common.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'mwb-mbfw-time-picker-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/css/timepicker.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'jquery-ui', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/jquery-ui-css/jquery-ui.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'date-range-picker-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/daterangepicker-master/daterangepicker.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'datetime-picker-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -78,7 +78,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			array(
 				'ajax_url'         => admin_url( 'admin-ajax.php' ),
 				'nonce'            => wp_create_nonce( 'mbfw_common_nonce' ),
-				'minDate'          => current_time( 'd/m/Y H:m' ),
+				'minDate'          => current_time( 'd-m-Y H:m' ),
+				'minTime'          => current_time( 'H:m' ),
 				'maxTime'          => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
 				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'mwb-bookings-for-woocommerce' ),
 			)
@@ -86,7 +87,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( 'date-range-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/daterangepicker-master/daterangepicker.js', array( 'moment-js', 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.min.js', array( 'jquery', 'moment-js' ), $this->version, true );
 	}
 
 	/**
@@ -269,15 +270,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$people_number    = $people_number > 0 ? $people_number : 1;
 		$quantity         = array_key_exists( 'quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['quantity'] ) ) : 1;
 		$quantity         = $quantity > 0 ? $quantity : 1;
-		$date_time        = array_key_exists( 'mwb_mbfw_booking_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_time'] ) ) : '';
-		$date_time        = map_deep( explode( '-', $date_time ), function( $date ) {
-			return str_replace( '/', '-', trim( $date ) );
-		} );
+		$date_time_from   = array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) : '';
+		$date_time_to     = array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) : '';
 
-		$date_from     = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'd-m-Y H:i' ) ) );
-		$date_to       = gmdate( 'd-m-Y', strtotime( ! empty( $date_time[1] ) ? $date_time[1] : current_time( 'd-m-Y H:i' ) ) );
-		$time_from     = gmdate( 'H:i', strtotime( ! empty( $date_time[0] ) ? $date_time[0] : current_time( 'H:i' ) ) );
-		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time[1] ) ? $date_time[1] : current_time( 'H:i' ) ) );
+		$date_from     = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'd-m-Y H:i' ) ) );
+		$date_to       = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'd-m-Y H:i' ) ) );
+		$time_from     = gmdate( 'H:i', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'H:i' ) ) );
+		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'H:i' ) ) );
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
 		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id , $people_number );
 		$product_price = get_post_meta( $product_id, '_price', true );
@@ -561,17 +560,24 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						<?php
 					}
 				}
-				$date_time = $item->get_meta( '_mwb_bfwp_date_time', true );
-				if ( ! empty( $date_time ) ) {
+				$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
+				$date_time_to   = $item->get_meta( '_mwb_bfwp_date_time_to', true );
+				if ( ! empty( $date_time_from ) && ! empty( $date_time_to ) ) {
 					?>
 					<tr>
 						<th>
-							<?php esc_html_e( 'Duration', 'mwb-bookings-for-woocommerce' ); ?>
+							<?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?>
+						</th>
+						<th>
+							<?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?>
 						</th>
 					</tr>
 					<tr>
 						<td>
-							<?php echo esc_html( $date_time ); ?>
+							<?php echo esc_html( $date_time_from ); ?>
+						</td>
+						<td>
+							<?php echo esc_html( $date_time_to ); ?>
 						</td>
 					</tr>
 					<tr>
@@ -581,6 +587,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							do_action( 'mwb_mbfw_reschedule_user_booking_my_account', $item_id, $item, $order );
 							?>
 						</td>
+						<td></td>
 					</tr>
 					<?php
 				}

@@ -596,4 +596,15 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			<?php
 		}
 	}
+
+	/**
+	 * Hide reorder button on the my account page.
+	 *
+	 * @param array $order_statuses array containing the order statuses.
+	 * @since 2.0.2
+	 * @return array
+	 */
+	public function mwb_mbfw_hide_reorder_button_my_account_orders( $order_statuses ) {
+		return array();
+	}
 }

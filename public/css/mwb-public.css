@@ -217,6 +217,10 @@
   gap: 18px;
 }
 
+td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-actions a {
+  margin: 2px;
+}
+
 @media only screen and (max-width: 400px) {
   .mbfw-date-picker-section__wrapper {
     gap: 5px;

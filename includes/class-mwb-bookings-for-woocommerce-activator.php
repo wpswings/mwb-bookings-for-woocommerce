@@ -23,6 +23,7 @@ class Mwb_Bookings_For_Woocommerce_Activator {
 	/**
 	 * Activator main method to update default values at plugin activation.
 	 *
+	 * @param boolean $network_wide either network activated or not.
 	 * @since 2.0.0
 	 * @return void
 	 */

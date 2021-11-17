@@ -600,7 +600,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'          => 'mwb_mbfw_enable_calendar',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_calendar', true ),
 					'label'       => __( 'Enable Dates Selection', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable calender at frontend for choosing dates while booking ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable calendar at frontend for choosing dates while booking ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -759,7 +759,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'label'       => __( 'Add Extra Services', 'mwb-bookings-for-woocommerce' ),
 					'id'          => 'mwb_mbfw_is_add_extra_services',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_is_add_extra_services', true ),
-					'description' => __( 'Add Extra Services, will be choosen by Customer while Booking.', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Add Extra Services, will be chosen by Customer while Booking.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);

@@ -22,9 +22,9 @@
  * Domain Path:       /languages
  *
  * Requires at least:    4.6
- * Tested up to:         5.8.1
+ * Tested up to:         5.8.2
  * WC requires at least: 4.0.0
- * WC tested up to:      5.8.0
+ * WC tested up to:      5.9.0
  * Requires PHP:         7.2
  * Stable tag:           2.0.2
  *
@@ -69,6 +69,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-mwb-bookings-for-woocommerce-activator.php
 	 *
+	 * @param boolean $network_wide either network activated or not.
 	 * @since 1.0.0
 	 * @return void
 	 */

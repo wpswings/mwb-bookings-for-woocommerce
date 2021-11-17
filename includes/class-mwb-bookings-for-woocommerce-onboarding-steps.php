@@ -5,15 +5,15 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package     mwb_bookings_for_woocommerce
- * @subpackage  mwb_bookings_for_woocommerce/includes
+ * @package     Mwb_Bookings_For_Woocommerce
+ * @subpackage  Mwb_Bookings_For_Woocommerce/includes
  */
 
 /**
  * The Onboarding-specific functionality of the plugin admin side.
  *
- * @package     mwb_bookings_for_woocommerce
- * @subpackage  mwb_bookings_for_woocommerce/includes
+ * @package     Mwb_Bookings_For_Woocommerce
+ * @subpackage  Mwb_Bookings_For_Woocommerce/includes
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -558,8 +558,8 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 
 		check_ajax_referer( 'mwb_mbfw_onboarding_nonce', 'nonce' );
 
-		$form_data = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
-
+		$form_data      = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
+		$form_data      = is_array( $form_data ) ? map_deep( wp_unslash( $form_data ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $form_data ) );
 		$formatted_data = array();
 
 		if ( ! empty( $form_data ) && is_array( $form_data ) ) {

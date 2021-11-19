@@ -20,8 +20,8 @@ if ( ! class_exists( 'Mwb_Bookings_For_Woocommerce_Api_Process' ) ) {
 	 * This is used to define the functions and data manipulation for custom endpoints.
 	 *
 	 * @since      2.0.0
-	 * @package    Hydroshop_Api_Management
-	 * @subpackage Hydroshop_Api_Management/includes
+	 * @package    Mwb_Bookings_For_Woocommerce
+	 * @subpackage Mwb_Bookings_For_Woocommerce/includes
 	 * @author     MakeWebBetter <makewebbetter.com>
 	 */
 	class Mwb_Bookings_For_Woocommerce_Api_Process {

@@ -16,7 +16,7 @@
 
 .mbfw-date-picker-section {
   flex: 0 0 100%;
-  max-width: 260px;
+  max-width: 150px;
 }
 
 .mbfw-date-picker-section input {
@@ -210,4 +210,22 @@
 .mwb-bfwp-reschedule-user-booking-link__wrapper a:focus, .mwb-bfwp-reschedule-user-booking-link__wrapper a:hover {
   outline: none;
   text-decoration: none !important;
+}
+
+.mbfw-date-picker-section__wrapper {
+  display: flex;
+  gap: 18px;
+}
+
+td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-actions a {
+  margin: 2px;
+}
+
+@media only screen and (max-width: 400px) {
+  .mbfw-date-picker-section__wrapper {
+    gap: 5px;
+  }
+  .mbfw-date-picker-section {
+    max-width: 130px;
+  }
 }

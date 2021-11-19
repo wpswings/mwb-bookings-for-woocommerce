@@ -29,86 +29,51 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
     $(document).ready(function(){
+		if ( $('.mbfw_time_picker').length > 0 ) {
+			$('.mbfw_time_picker').timepicker();
+		}
         $(document).on('change', 'form.cart :input', function(){
             var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );
 			}
         });
-
-		if ( $('.mwb_mbfw_time_date_picker_frontend').length > 0 ) {
-			$('.mwb_mbfw_time_date_picker_frontend').daterangepicker({
-				autoUpdateInput  : false,
-				timePicker       : true,
-				timePicker24Hour : true,
-				showDropdowns    : true,
-				autoApply        : true,
-				locale           : {
-					format: 'DD/MM/YYYY HH:mm'
-				},
-				opens            : 'center',
-				minDate          : mwb_mbfw_common_obj.minDate,
-			});
-		}
-		$('.mwb_mbfw_time_date_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('DD/MM/YYYY HH:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY HH:mm'));
-			var form_data = new FormData( $('form.cart')[0] );
-			if ( $('.mwb_mbfw_booking_product_id').val() ) {
-				retrieve_booking_total_ajax( form_data );
-			}
-		});
-		if ( $('.mwb_mbfw_date_picker_frontend').length > 0 ) {
-			$('.mwb_mbfw_date_picker_frontend').daterangepicker({
-				autoUpdateInput : false,
-				showDropdowns   : true,
-				autoApply       : true,
-				locale          : {
-					format : 'DD/MM/YYYY HH:mm'
-				},
-				opens           : 'center',
-				minDate         : mwb_mbfw_common_obj.minDate,
-			});
-		}
-		$('.mwb_mbfw_date_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('DD/MM/YYYY HH:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY HH:mm'));
-			var form_data = new FormData( $('form.cart')[0] );
-			if ( $('.mwb_mbfw_booking_product_id').val() ) {
-				retrieve_booking_total_ajax( form_data );
-			}
-		});
-		if ( $('.mwb_mbfw_time_picker_frontend').length > 0 ) {
-			$('.mwb_mbfw_time_picker_frontend').daterangepicker({
-				autoUpdateInput  : false,
-				timePicker       : true,
-				timePicker24Hour : true,
-				showDropdowns    : true,
-				autoApply        : true,
-				locale           : {
-					format : 'DD/MM/YYYY HH:mm'
-				},
-				opens            : 'center',
-				minDate          : mwb_mbfw_common_obj.minDate,
-				maxDate          : mwb_mbfw_common_obj.maxTime,
-			});
-		}
-		$('.mwb_mbfw_time_picker_frontend').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('DD/MM/YYYY HH:mm') + ' - ' + picker.endDate.format('DD/MM/YYYY HH:mm'));
-			var form_data = new FormData( $('form.cart')[0] );
-			if ( $('.mwb_mbfw_booking_product_id').val() ) {
-				retrieve_booking_total_ajax( form_data );
-			}
-		});
-		$('input[name="mwb_mbfw_booking_time"]').on('change',function(){
-			var date_time = $(this).val().split('-');
-			var from_date = moment( date_time[0], 'DD/MM/YYYY HH:mm ', true ).isValid();
-			var to_date   = moment( date_time[1], ' DD/MM/YYYY HH:mm', true ).isValid();
-			if ( ! from_date || ! to_date ) {
-				$(this).val('');
-				alert( mwb_mbfw_common_obj.date_time_format );
-			}
-		});
-		$('#mwb-mbfw-single-booking-time-selector-from').on('keydown paste focus mousedown',function(e){
+		$('#mwb-mbfw-booking-from-time, #mwb-mbfw-booking-to-time').on('keydown paste focus mousedown',function(e){
 			e.preventDefault();
+		});
+		$('.mwb_mbfw_time_date_picker_frontend').datetimepicker({
+			format  : 'd-m-Y H:i',
+			minDate : mwb_mbfw_common_obj.minDate,
+			minTime : mwb_mbfw_common_obj.minTime
+		});
+		$('.mwb_mbfw_date_picker_frontend').datetimepicker({
+			format     : 'd-m-Y',
+			timepicker : false,
+			minDate    : mwb_mbfw_common_obj.minDate,
+		});
+		$('.mwb_mbfw_time_picker_frontend').datetimepicker({
+			format     : 'H:i',
+			datepicker : false,
+		});
+		$('#mwb-mbfw-booking-from-time').on('change', function(){
+			var from_time = $(this).val();
+			var to_time   = $('#mwb-mbfw-booking-to-time').val();
+			if ( from_time && to_time ) {
+				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+					$(this).val('');
+					alert( mwb_mbfw_public_obj.wrong_order_date );
+				}
+			}
+		});
+		$('#mwb-mbfw-booking-to-time').on('change', function(){
+			var from_time = $('#mwb-mbfw-booking-from-time').val();
+			var to_time   = $(this).val();
+			if ( from_time && to_time ) {
+				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+					$(this).val('');
+					alert( mwb_mbfw_public_obj.wrong_order_date );
+				}
+			}
 		});
     });
 })( jQuery );

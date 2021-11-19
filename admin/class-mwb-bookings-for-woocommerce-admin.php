@@ -161,7 +161,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_admin_submenu_page( $menus = array() ) {
 		$menus[] = array(
-			'name'      => __( 'Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
+			'name'      => __( 'MWB Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
 			'slug'      => 'mwb_bookings_for_woocommerce_menu',
 			'menu_link' => 'mwb_bookings_for_woocommerce_menu',
 			'instance'  => $this,
@@ -558,13 +558,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		?>
 		<div id="mwb_booking_general_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<p class="form-field mwb_mbfw_booking_criteria_field">
-				<label for="mwb_mbfw_booking_criteria"><?php esc_html_e( 'Quantity', 'mwb-booking-for-woocommerce' ); ?></label>
+				<label for="mwb_mbfw_booking_criteria"><?php esc_html_e( 'Quantity', 'mwb-bookings-for-woocommerce' ); ?></label>
 				<select name="mwb_mbfw_booking_criteria" id="mwb_mbfw_booking_criteria">
 					<option value="customer_selected_unit" <?php selected( 'customer_selected_unit', $booking_criteria ); ?>><?php esc_html_e( 'Customers can choose', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="fixed_unit" <?php selected( 'fixed_unit', $booking_criteria ); ?>><?php esc_html_e( 'Fixed unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
 				<input type="number" step="1" min="1" max="" style="width: 4em;" <?php echo esc_attr( ( ( 'customer_selected_unit' === $booking_criteria ) || empty( $booking_criteria ) ) ? 'disabled=disabled' : '' ); ?> id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( get_post_meta( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
-				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria. if fixed please enter the fixed number, else if customers can choose please choose the maximum number a user can book.', 'mwb-booking-for-woocommerce' ); ?>"></span>
+				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria. if fixed please enter the fixed number, else if customers can choose please choose the maximum number a user can book.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
 			woocommerce_wp_text_input(
@@ -600,7 +600,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'          => 'mwb_mbfw_enable_calendar',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_calendar', true ),
 					'label'       => __( 'Enable Dates Selection', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable calender at frontend for choosing dates while booking ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable calendar at frontend for choosing dates while booking ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -759,7 +759,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'label'       => __( 'Add Extra Services', 'mwb-bookings-for-woocommerce' ),
 					'id'          => 'mwb_mbfw_is_add_extra_services',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_is_add_extra_services', true ),
-					'description' => __( 'Add Extra Services, will be choosen by Customer while Booking.', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Add Extra Services, will be chosen by Customer while Booking.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -1434,8 +1434,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_change_line_item_meta_key_order_edit_page( $display_key, $meta, $item  ) {
 		switch ( $display_key ) {
-			case '_mwb_bfwp_date_time':
-				return __( 'Date time', 'mwb-bookings-for-woocommerce' );
+			case '_mwb_bfwp_date_time_from':
+				return __( 'From', 'mwb-bookings-for-woocommerce' );
+			case '_mwb_bfwp_date_time_to':
+				return __( 'To', 'mwb-bookings-for-woocommerce' );
 			default:
 				break;
 		}
@@ -1461,15 +1463,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		foreach ( $orders as $order ) {
 			$items = $order->get_items();
 			foreach ( $items as $item ) {
-				$date_time      = map_deep( explode( '-', $item->get_meta( '_mwb_bfwp_date_time', true ) ), function( $date ) {
-					return str_replace( '/', '-', trim( $date ) );
-				} );
-				$date_time_from = ( ! empty( $date_time[0] ) ? $date_time[0] : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
-				$date_time_to   = ( ! empty( $date_time[1] ) ? $date_time[1] : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
+				$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
+				$date_time_to   = $item->get_meta( '_mwb_bfwp_date_time_to', true );
+				$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
+				$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
 				$all_events[]   = array(
-						'title' => $item['name'],
-						'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
-						'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
+					'title' => $item['name'],
+					'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
+					'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
 				);
 			}
 		}

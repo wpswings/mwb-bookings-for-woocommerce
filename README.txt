@@ -1,12 +1,12 @@
 === MWB Bookings for WooCommerce - Schedule Appointments, Manage Bookings, Show Availability, Calendar Listings ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
-Tags: bookings, calendar, appointments, booking calendar, scheduling, availability calendar, booking system, booking plugin
+Tags: bookings, calendar, appointments, booking calendar, scheduling, availability calendar, booking system, booking plugin, appointment booking, reservation calendar
 Requires at least: 4.6
-Tested up to: 5.8
+Tested up to: 5.8.2
 WC requires at least: 4.0.0
-WC tested up to: 5.6.0
-Stable tag: 2.0.0
+WC tested up to: 5.9.0
+Stable tag: 2.0.2
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,7 +16,7 @@ WooCommerce Bookings offer easy booking management, confirm/reject bookings, ena
 == Description ==
 **GET BOOKINGS FOR WOOCOMMERCE AND START SCHEDULING APPOINTMENTS FOR YOUR CUSTOMERS. MANAGE YOUR BOOKINGS UTILIZING THE LISTING CALENDAR AND REGULATING THE BOOKING DURATIONS WITH ALL EASE.**
 
-WooCommerce Booking is a powerful plugin that enables store owners to [**create an online booking system**](https://makewebbetter.com/blog/woocommerce-online-booking-system/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) that allows them to turn their products into online booking solutions and make them available to customers for a set period of time.
+WooCommerce Booking is a powerful plugin that enables store owners to create an online booking system that allows them to turn their products into online booking solutions and make them available to customers for a set period of time.
 
 You can now simply book WordPress time slots, confirm/reject bookings, display reservation calendar listings, enable booking cancellations, promote booking availability, regulate booking duration, and much more using the Booking Calendar plugin's capabilities.
 
@@ -32,7 +32,7 @@ You can now simply book WordPress time slots, confirm/reject bookings, display r
 * Easily define the maximum number of bookings per day with the HMS unit.
 * Provide an easy upcoming booking list using the Booking Calendar.
 * Can define WooCommerce bookings availability Start and End time for the day with ease.
-* It’s compatible with our [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
 [**Download Now!!**](https://downloads.wordpress.org/plugin/mwb-bookings-for-woocommerce.zip)
@@ -55,24 +55,26 @@ All requested WooCommerce bookings orders made by the customers are to be listed
 The WooCommerce Calendar Booking view allows merchants to build and analyze how their day or month is progressing. They can also make changes to current bookings or availability according to that. 
 
 **6) Offered Services & Additional Costs**
-Admin managers can easily create WooCommerce booking services and additional costs using the backend settings, and also can easily display them over the checkout page as well as over the individual bookable resource page.
+With the Booking system for WordPress, Admin managers can easily create WooCommerce booking services and additional costs using the backend settings, and also can easily display them over the checkout page as well as over the individual bookable resource page.
 
 **7) Responsive Interface**
 WordPress Online Booking provides an online mobile-friendly WooCommerce easy booking interface, i.e. a responsive UI that works on a variety of devices. In short, offering ease of access for their customers.
-
 
 **8) Offer Bookings Availability Settings**
 Admin managers may easily specify booking and scheduling for WooCommerce based availability for the day, as well as the exact deadline for making reservations. They only need to modify the Start and End times in the WooCommerce booking Availability tab of the plugin settings area to do so.
 
 **9) Avoid Unwanted Bookings**
-Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoiding unnecessary bookings, and easily indicate unavailability.
+Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoid unnecessary bookings, and easily indicate unavailability.
 
 [**Free Demo of Bookings for WooCommerce**](https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
-
 
 Visit [**Bookings for WooCommerce Documentation**](https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) and learn more about the features and working of the plugin. 
 Check out [**Bookings Plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
 
+== PLUGIN COMPATIBILITIES ==
+* WooCommerce Bookings plugin is compatible with [**Return Refund and Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://makewebbetter.com/product/woocommerce-rma-return-refund-exchange/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
+
+* The Bookings for WooCommerce is compatible with WordPress Multilingual i.e. WPML plugin and Multisite.
 
 
 == WHAT PREMIUM VERSION OF BOOKINGS FOR WOOCOMMERCE PRO OFFERS ==
@@ -98,13 +100,14 @@ Check out [**Bookings Plugin knowledge base**](https://support.makewebbetter.com
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE BOOKINGS PLUGIN ==
 
+Bookings for WooCommerce turn your ordinary WooCommerce store into an effective booking solution provider. Making use of bookings plugin features, you can create an online booking system that caters to all your customer’s requirements with ease. Get Bookings plugin and easily create an online booking system that provides versatile booking solutions with flexible booking slots, easy booking management, and a lot more.
+
 > Note:  Get [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
 
 
 == LIVE DEMO OF PREMIUM VERSION ==
 
  * [**WooCommerce Bookings Frontend demo**](https://demo.makewebbetter.com/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
-
 
  * [**WooCommerce Bookings Backend demo**](https://demo.makewebbetter.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
 
@@ -113,7 +116,7 @@ Check out [**Bookings Plugin knowledge base**](https://support.makewebbetter.com
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
 
-If our documentation doesn't contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) with your question.
+> If our documentation doesn't contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org) with your question.
 
 
 
@@ -177,6 +180,7 @@ In order to create a bookable product for your bookings plugin, you need to firs
 
 = How many types of booking units are present in your plugin? =
 In our plugin, there are two types of booking units-
+
 * Fixed Unit
 * Customer Selected Unit 
 
@@ -184,16 +188,25 @@ In our plugin, there are two types of booking units-
 
 == Changelog ==
 
+= 2.0.2 - Released on 18 November 2021 =
+* New: UI update
+* New: Compatibility with WC 5.9.0 and WP 5.8.2
+* Fix: Minor bugs fixes
+
+= 2.0.1 - Released on 13 September 2021 = 
+* New: WPML compatibility added
+* New: Multisite compatibility added
+* Fix: Minor bug fixes
+
 = 2.0.0 - Released on 25 August 2021 =
 * New: Date and time selector
 * New: UI/UX change for easy understanding.
 * New: Compatibility with [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
 * New: Compatibility with the latest WooCommerce 5.6.0
 * New: Compatibility with the latest WordPress 5.8
-* New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+* New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://makewebbetter.com/product/woocommerce-rma-return-refund-exchange/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org)
 * Fix: Updated settings for admin.
 * Fix: Minor bug fixes and performance improvement
-
 
 = 1.0.1 - Released on 31 May 2021 =
 * Fix: Minor issues
@@ -205,13 +218,7 @@ In our plugin, there are two types of booking units-
 
 
 == Upgrade Notice ==
-
-= 2.0.0 - Released on 25 August 2021 =
-* New: Date and time selector
-* New: UI/UX change for easy understanding.
-* New: Compatibility with [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-org&utm_medium=MWB-org-page&utm_campaign=MWB-bookings-org  )
-* New: Compatibility with the latest WooCommerce 5.6.0
-* New: Compatibility with the latest WordPress 5.8
-* New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
-* Fix: Updated settings for admin.
-* Fix: Minor bug fixes and performance improvement
+= 2.0.2 - Released on 18 November 2021 =
+* New: UI update
+* New: Compatibility with WC 5.9.0 and WP 5.8.2
+* Fix: Minor bugs fixes

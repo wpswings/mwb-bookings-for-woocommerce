@@ -266,6 +266,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_thankyou', $mbfw_plugin_common, 'mwb_bfwp_change_order_status' );
 			$this->loader->add_filter( 'woocommerce_valid_order_statuses_for_cancel', $mbfw_plugin_common, 'mwb_mbfw_set_cancel_order_link_order_statuses', 10, 2 );
 			$this->loader->add_action( 'woocommerce_order_item_meta_end', $mbfw_plugin_common, 'mbfw_show_booking_details_on_my_account_page_user', 10, 3 );
+			$this->loader->add_filter( 'woocommerce_valid_order_statuses_for_order_again', $mbfw_plugin_common, 'mwb_mbfw_hide_reorder_button_my_account_orders' );
 		}
 	}
 

@@ -7,17 +7,17 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package    Mwb_Bookings_For_Woocommerce
+ * @subpackage Mwb_Bookings_For_Woocommerce/admin/onboarding
  */
 
 global $pagenow, $mbfw_mwb_mbfw_obj;
 if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
 	return false;
 }
-$mwb_plugin_name                = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
-$mwb_plugin_deactivation_id     = $mwb_plugin_name . '-no_thanks_deactive';
-$mwb_plugin_onboarding_popup_id = $mwb_plugin_name . '-onboarding_popup';
+$mwb_plugin_name                 = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
+$mwb_plugin_deactivation_id      = $mwb_plugin_name . '-no_thanks_deactive';
+$mwb_plugin_onboarding_popup_id  = $mwb_plugin_name . '-onboarding_popup';
 $mbfw_onboarding_form_deactivate = 
 //desc - filter for trial.
 apply_filters('mwb_mbfw_deactivation_form_fields', array());

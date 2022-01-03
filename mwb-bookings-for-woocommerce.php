@@ -45,7 +45,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 * @since 2.0.0
 	 */
 	function define_mwb_bookings_for_woocommerce_constants() {
-		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '2.0.2');
+		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '2.0.3');
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path(__FILE__));
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url(__FILE__));
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com');

@@ -15,7 +15,7 @@
  * Plugin Name:       Mwb Bookings For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/mwb-bookings-for-woocommerce/
  * Description:       MWB Bookings for WooCommerce helps you stay focused while offering a better online booking system for your business growth. Just stop speculating and opt for the best one out.
- * Version:           2.0.2
+ * Version:           2.0.3
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       mwb-bookings-for-woocommerce
@@ -24,9 +24,9 @@
  * Requires at least:    4.6
  * Tested up to:         5.8.2
  * WC requires at least: 4.0.0
- * WC tested up to:      5.9.0
+ * WC tested up to:      6.0.0
  * Requires PHP:         7.2
- * Stable tag:           2.0.2
+ * Stable tag:           2.0.3
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html

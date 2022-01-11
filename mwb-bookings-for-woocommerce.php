@@ -206,18 +206,11 @@ function mwb_bookings_for_woocommerce_dashboard_upgrade_notice() {
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-error inline update-message notice-alt">
 					<div class='ppec-notice-title ppec-notice-section'>
-						<strong>IMPORTANT NOTICE-</strong>
+						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 					</div>
 					<div class='ppec-notice-content ppec-notice-section'>
-						<p>From this update(version 2.0.4) onwards, the plugin and its support will be handled by WP Swings. WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.</p>
-						<p>Please connect with us for all setup, support, and update related queries without hesitation.</p>
-					</div>
-					<div class='ppec-notice-buttons ppec-notice-section hidden'>
-						<?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<a id="ppec-install-paypal-payments" href="<?php echo $paypal_payments_install_link; ?>" class="button button-primary">Upgrade to PayPal Payments now</a>
-						<?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<a id="ppec-activate-paypal-payments" href="<?php echo $paypal_payments_activate_link; ?>" class="button button-primary">Activate PayPal Payments now</a>
-						<a href="https://docs.woocommerce.com/document/woocommerce-paypal-payments/paypal-payments-upgrade-guide/" target="_blank" class="button woocommerce-save-button">Learn more</a>
+						<p><?php esc_html_e( 'From this update(version 2.0.4) onwards, the plugin and its support will be handled by WP Swings. WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'mwb-bookings-for-woocommerce' ); ?></p>
+						<p><?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'mwb-bookings-for-woocommerce' ); ?></p>
 					</div>
 				</div>
 			</td>
@@ -243,18 +236,11 @@ function mwb_bookings_for_woocommerce_upgrade_notice( $plugin_file, $plugin_data
 	<td colspan="4" class="plugin-update colspanchange">
 		<div class="notice notice-error inline update-message notice-alt">
 			<div class='ppec-notice-title ppec-notice-section'>
-				<p><strong>IMPORTANT NOTICE-</strong></p>
+				<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 			</div>
 			<div class='ppec-notice-content ppec-notice-section'>
-				<p>From this update(version 2.0.4) onwards, the plugin and its support will be handled by WP Swings. WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.</p>
-				<p>Please connect with us for all setup, support, and update related queries without hesitation.</p>
-			</div>
-			<div class='ppec-notice-buttons ppec-notice-section hidden'>
-				<?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<a id="ppec-install-paypal-payments" href="<?php echo $paypal_payments_install_link; ?>" class="button button-primary">Upgrade to PayPal Payments now</a>
-				<?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<a id="ppec-activate-paypal-payments" href="<?php echo $paypal_payments_activate_link; ?>" class="button button-primary">Activate PayPal Payments now</a>
-				<a href="https://docs.woocommerce.com/document/woocommerce-paypal-payments/paypal-payments-upgrade-guide/" target="_blank" class="button woocommerce-save-button">Learn more</a>
+				<p><?php esc_html_e( 'From this update(version 2.0.4) onwards, the plugin and its support will be handled by WP Swings. WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'mwb-bookings-for-woocommerce' ); ?></p>
+				<p><?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'mwb-bookings-for-woocommerce' ); ?></p>
 			</div>
 		</div>
 	</td>
@@ -263,8 +249,6 @@ function mwb_bookings_for_woocommerce_upgrade_notice( $plugin_file, $plugin_data
 <?php
 
 }
-
-
 
 } else {
 	mwb_mbfw_dependency_checkup();

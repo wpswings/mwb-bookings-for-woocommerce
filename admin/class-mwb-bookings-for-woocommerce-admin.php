@@ -126,7 +126,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( 'MakeWebBetter', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15);
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15);
 			$mbfw_menus = 
 			//desc - Add Menu Page.
 			apply_filters( 'mwb_add_plugins_menus_array', array() );

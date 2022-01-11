@@ -15,8 +15,8 @@
  * Plugin Name:       Mwb Bookings For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/mwb-bookings-for-woocommerce/
  * Description:       MWB Bookings for WooCommerce helps you stay focused while offering a better online booking system for your business growth. Just stop speculating and opt for the best one out.
- * Version:           2.0.3
- * Author:            MakeWebBetter
+ * Version:           2.0.4
+ * Author:            WP Swings
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       mwb-bookings-for-woocommerce
  * Domain Path:       /languages
@@ -26,7 +26,7 @@
  * WC requires at least: 4.0.0
  * WC tested up to:      6.0.0
  * Requires PHP:         7.2
- * Stable tag:           2.0.3
+ * Stable tag:           2.0.4
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -45,7 +45,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 * @since 2.0.0
 	 */
 	function define_mwb_bookings_for_woocommerce_constants() {
-		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '2.0.3');
+		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '2.0.4');
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path(__FILE__));
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url(__FILE__));
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com');
@@ -139,7 +139,6 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	require plugin_dir_path( __FILE__ ) . 'includes/class-mwb-bookings-for-woocommerce.php';
 
-
 	/**
 	 * Begins execution of the plugin.
 	 *
@@ -191,6 +190,81 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		return $links_array;
 	}
 	add_filter('plugin_row_meta', 'mwb_bookings_for_woocommerce_custom_settings_at_plugin_tab', 10, 2);
+// Upgrade notice on plugin dashboard.
+	add_action( 'admin_notices', 'mwb_bookings_for_woocommerce_dashboard_upgrade_notice' );
+// Upgrade notice.
+add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mwb_bookings_for_woocommerce_upgrade_notice', 0, 3 );
+
+/**
+ * Displays notice to upgrade to WP Swings on plugin row.
+ *
+ * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+ * @param array $plugin_data An array of plugin data.
+ * @param string $status Status filter currently applied to the plugin list.
+ */
+function mwb_bookings_for_woocommerce_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+?>
+
+<tr class="plugin-update-tr active notice-warning notice-alt">
+	<td colspan="4" class="plugin-update colspanchange">
+		<div class="notice notice-error inline update-message notice-alt">
+			<div class='ppec-notice-title ppec-notice-section'>
+				<p><strong>IMPORTANT NOTICE-</strong></p>
+			</div>
+			<div class='ppec-notice-content ppec-notice-section'>
+				<p>From this update[here]onwards, the plugin and its support will be handled by WP Swings. WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.</p>
+				<p>Please connect with us for all setup, support, and update related queries without hesitation.</p>
+			</div>
+			<div class='ppec-notice-buttons ppec-notice-section hidden'>
+				<?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<a id="ppec-install-paypal-payments" href="<?php echo $paypal_payments_install_link; ?>" class="button button-primary">Upgrade to PayPal Payments now</a>
+				<?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<a id="ppec-activate-paypal-payments" href="<?php echo $paypal_payments_activate_link; ?>" class="button button-primary">Activate PayPal Payments now</a>
+				<a href="https://docs.woocommerce.com/document/woocommerce-paypal-payments/paypal-payments-upgrade-guide/" target="_blank" class="button woocommerce-save-button">Learn more</a>
+			</div>
+		</div>
+	</td>
+</tr>
+
+<?php
+
+}
+/**
+ * Displays notice to upgrade to WP Swings on plugin dashboard.
+ *
+ * @return void
+ */
+function mwb_bookings_for_woocommerce_dashboard_upgrade_notice() {
+	$screen = get_current_screen();
+	if (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) {
+		?>
+		
+		<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-error inline update-message notice-alt">
+					<div class='ppec-notice-title ppec-notice-section'>
+						<p><strong>IMPORTANT NOTICE-</strong></p>
+					</div>
+					<div class='ppec-notice-content ppec-notice-section'>
+						<p>From this update[here]onwards, the plugin and its support will be handled by WP Swings. WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.</p>
+						<p>Please connect with us for all setup, support, and update related queries without hesitation.</p>
+					</div>
+					<div class='ppec-notice-buttons ppec-notice-section hidden'>
+						<?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<a id="ppec-install-paypal-payments" href="<?php echo $paypal_payments_install_link; ?>" class="button button-primary">Upgrade to PayPal Payments now</a>
+						<?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<a id="ppec-activate-paypal-payments" href="<?php echo $paypal_payments_activate_link; ?>" class="button button-primary">Activate PayPal Payments now</a>
+						<a href="https://docs.woocommerce.com/document/woocommerce-paypal-payments/paypal-payments-upgrade-guide/" target="_blank" class="button woocommerce-save-button">Learn more</a>
+					</div>
+				</div>
+			</td>
+		</tr>
+		
+		<?php
+		}
+	}
+
+
 } else {
 	mwb_mbfw_dependency_checkup();
 }

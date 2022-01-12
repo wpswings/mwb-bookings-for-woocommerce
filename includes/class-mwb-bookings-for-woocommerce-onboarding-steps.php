@@ -340,7 +340,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 					'startups'              => 'Startups',
 					'restaurant'            => 'Restaurant',
 					'fitness'               => 'Fitness',
-					'jewelry'               => 'Jewelry',
+					'jewellery'               => 'Jewellery',
 					'beauty'                => 'Beauty',
 					'celebrity'             => 'Celebrity',
 					'gaming'                => 'Gaming',

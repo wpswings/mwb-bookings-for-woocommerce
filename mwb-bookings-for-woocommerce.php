@@ -210,7 +210,7 @@ function mwb_bookings_for_woocommerce_dashboard_upgrade_notice() {
 					<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 				</div>
 				<div class='wps-notice-content wps-notice-section'>
-					<p><?php esc_html_e( 'From this update(version 2.0.4) onwards, the plugin and its support will be handled by ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong>.</p>
+					<p><?php esc_html_e( 'From this update(here) onwards, the plugin and its support will be handled by ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong>.</p>
 					<p> <strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong> <?php esc_html_e( 'is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'mwb-bookings-for-woocommerce' ); ?>
 					<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'mwb-bookings-for-woocommerce' ); ?></p>
 				</div>
@@ -247,7 +247,7 @@ function mwb_bookings_for_woocommerce_upgrade_notice( $plugin_file, $plugin_data
 				<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 				</div>
 				<div class='wps-notice-content wps-notice-section'>
-					<p><?php esc_html_e( 'From this update(version 2.0.4) onwards, the plugin and its support will be handled by ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong>.</p>
+					<p><?php esc_html_e( 'From this update(here) onwards, the plugin and its support will be handled by ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong>.</p>
 					<p> <strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong> <?php esc_html_e( 'is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'mwb-bookings-for-woocommerce' ); ?>
 					<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'mwb-bookings-for-woocommerce' ); ?></p>
 				</div>

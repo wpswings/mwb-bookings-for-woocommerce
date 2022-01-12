@@ -217,7 +217,11 @@ function mwb_bookings_for_woocommerce_dashboard_upgrade_notice() {
 			</div>
 		</td>
 	</tr>
-	
+	<style>
+	.wps-notice-section > p:before {
+		content: none;
+	}
+</style>
 	<?php
 	
 		}
@@ -250,7 +254,11 @@ function mwb_bookings_for_woocommerce_upgrade_notice( $plugin_file, $plugin_data
 			</div>
 		</td>
 	</tr>
-	
+	<style>
+	.wps-notice-section > p:before {
+		content: none;
+	}
+</style>
 	<?php
 
 

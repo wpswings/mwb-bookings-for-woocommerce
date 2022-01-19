@@ -201,8 +201,6 @@ function mwb_bookings_for_woocommerce_dashboard_upgrade_notice() {
 	$screen = get_current_screen();
 	if (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) {
 		?>
-		
-	
 		<tr class="plugin-update-tr active notice-warning notice-alt">
 		<td colspan="4" class="plugin-update colspanchange">
 			<div class="notice notice-success inline update-message notice-alt">
@@ -210,7 +208,7 @@ function mwb_bookings_for_woocommerce_dashboard_upgrade_notice() {
 					<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 				</div>
 				<div class='wps-notice-content wps-notice-section'>
-					<p><?php esc_html_e( 'From this update(here) onwards, the plugin and its support will be handled by ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong>.</p>
+					<p><?php esc_html_e( 'From this update ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'Version 2.0.4', 'mwb-bookings-for-woocommerce' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong>.</p>
 					<p> <strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong> <?php esc_html_e( 'is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'mwb-bookings-for-woocommerce' ); ?>
 					<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'mwb-bookings-for-woocommerce' ); ?></p>
 				</div>
@@ -221,7 +219,7 @@ function mwb_bookings_for_woocommerce_dashboard_upgrade_notice() {
 	.wps-notice-section > p:before {
 		content: none;
 	}
-</style>
+	</style>
 	<?php
 	
 		}
@@ -237,17 +235,15 @@ add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mwb_bookings_for
  * @param string $status Status filter currently applied to the plugin list.
  */
 function mwb_bookings_for_woocommerce_upgrade_notice( $plugin_file, $plugin_data, $status ) {
-?>
-
-	
-<tr class="plugin-update-tr active notice-warning notice-alt">
+	?>
+	<tr class="plugin-update-tr active notice-warning notice-alt">
 		<td colspan="4" class="plugin-update colspanchange">
 			<div class="notice notice-success inline update-message notice-alt">
 				<div class='wps-notice-title wps-notice-section'>
 				<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 				</div>
 				<div class='wps-notice-content wps-notice-section'>
-					<p><?php esc_html_e( 'From this update(here) onwards, the plugin and its support will be handled by ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong>.</p>
+					<p><?php esc_html_e( 'From this update ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'Version 2.0.4', 'mwb-bookings-for-woocommerce' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by ', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong>.</p>
 					<p> <strong><?php esc_html_e( 'WP Swings', 'mwb-bookings-for-woocommerce' ); ?></strong> <?php esc_html_e( 'is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'mwb-bookings-for-woocommerce' ); ?>
 					<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'mwb-bookings-for-woocommerce' ); ?></p>
 				</div>
@@ -258,10 +254,8 @@ function mwb_bookings_for_woocommerce_upgrade_notice( $plugin_file, $plugin_data
 	.wps-notice-section > p:before {
 		content: none;
 	}
-</style>
+	</style>
 	<?php
-
-
 }
 
 } else {

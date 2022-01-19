@@ -13,11 +13,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Mwb Bookings For WooCommerce
- * Plugin URI:        https://makewebbetter.com/product/mwb-bookings-for-woocommerce/
+ * Plugin URI:        https://wpswings.com/product/mwb-bookings-for-woocommerce/
  * Description:       MWB Bookings for WooCommerce helps you stay focused while offering a better online booking system for your business growth. Just stop speculating and opt for the best one out.
  * Version:           2.0.4
  * Author:            WP Swings
- * Author URI:        https://makewebbetter.com/
+ * Author URI:        https://wpswings.com/
  * Text Domain:       mwb-bookings-for-woocommerce
  * Domain Path:       /languages
  *
@@ -48,7 +48,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '2.0.4');
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path(__FILE__));
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url(__FILE__));
-		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com');
+		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com');
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'Mwb Bookings For WooCommerce');
 	}
 

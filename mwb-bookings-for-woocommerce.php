@@ -21,10 +21,10 @@
  * Text Domain:       mwb-bookings-for-woocommerce
  * Domain Path:       /languages
  *
- * Requires at least:    4.6
- * Tested up to:         5.8.2
+ * Requires at least:    5.0.0
+ * Tested up to:         5.9
  * WC requires at least: 4.0.0
- * WC tested up to:      6.0.0
+ * WC tested up to:      6.1.0
  * Requires PHP:         7.2
  * Stable tag:           2.0.4
  *
@@ -169,7 +169,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 			'<a href="' . admin_url('admin.php?page=mwb_bookings_for_woocommerce_menu') . '">' . __('Settings', 'mwb-bookings-for-woocommerce') . '</a>'
 		);
 		if ( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', get_option( 'active_plugins', array() ), true ) ) {
-			$my_link[] = '<a href="https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-site&utm_medium=MWB-site-backend&utm_campaign=MWB-bookings-gopro" target="_blank" id="mbfw-go-pro-link">' . __( 'Go Pro', 'mwb-bookings-for-woocommerce' ) . '</a>';
+			$my_link[] = '<a href="https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-demo&utm_campaign=go-pro" target="_blank" id="mbfw-go-pro-link">' . __( 'Go Pro', 'mwb-bookings-for-woocommerce' ) . '</a>';
 		}
 		return array_merge($my_link, $links);
 	}
@@ -183,16 +183,16 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	function mwb_bookings_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
 		if (strpos($plugin_file_name, basename(__FILE__)) ) {
-			$links_array[] = '<a href="https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-demo" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Demo.svg" class="mwb-info-img" alt="Demo image">' . __('Demo', 'mwb-bookings-for-woocommerce') . '</a>';
-			$links_array[] = '<a href="https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Documentation.svg" class="mwb-info-img" alt="documentation image">' . __('Documentation', 'mwb-bookings-for-woocommerce') . '</a>';
-			$links_array[] = '<a href="https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">' . __('Support', 'mwb-bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://demo.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-demo&utm_medium=booikngs-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Demo.svg" class="mwb-info-img" alt="Demo image">' . __('Demo', 'mwb-bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-demo&utm_campaign=documentation" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Documentation.svg" class="mwb-info-img" alt="documentation image">' . __('Documentation', 'mwb-bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-bookings-support&utm_medium=bookings-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">' . __('Support', 'mwb-bookings-for-woocommerce') . '</a>';
 		}
 		return $links_array;
 	}
 	add_filter('plugin_row_meta', 'mwb_bookings_for_woocommerce_custom_settings_at_plugin_tab', 10, 2);
 // Upgrade notice on plugin dashboard.
 	add_action( 'admin_notices', 'mwb_bookings_for_woocommerce_dashboard_upgrade_notice' );
-	/**
+/**
  * Displays notice to upgrade to WP Swings on plugin dashboard.
  *
  * @return void

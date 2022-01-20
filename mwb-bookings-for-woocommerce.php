@@ -22,7 +22,7 @@
  * Domain Path:       /languages
  *
  * Requires at least:    5.0.0
- * Tested up to:         5.9
+ * Tested up to:         5.9.0
  * WC requires at least: 4.0.0
  * WC tested up to:      6.1.0
  * Requires PHP:         7.2
@@ -145,7 +145,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 * Since everything within the plugin is registered via hooks,
 	 * then kicking off the plugin from this point in the file does
 	 * not affect the page life cycle.
-	 *
+	 *	
 	 * @since 2.0.0
 	 */
 	function run_mwb_bookings_for_woocommerce() {

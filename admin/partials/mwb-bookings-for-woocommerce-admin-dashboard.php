@@ -43,7 +43,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 		</h1>
 		<a href="
 		<?php
-		$doc_link = 'https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-demo&utm_campaign=documentation';
+		$doc_link = 'https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-backend&utm_campaign=documentation';
 		echo esc_url(
 			//desc - Documentation link for pro update.
 			apply_filters( 'mwb_mbfw_update_doc_link', $doc_link )

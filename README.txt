@@ -3,7 +3,7 @@ Contributors: WP Swings
 Donate link:  https://wpswings.com/
 Tags: bookings, calendar, appointments, booking calendar, scheduling, availability calendar, booking system, booking plugin, appointment booking, reservation calendar
 Requires at least: 4.6
-Tested up to: 5.9.0
+Tested up to: 5.8.3
 WC requires at least: 4.0.0
 WC tested up to: 6.1.0
 Stable tag: 2.0.4

@@ -778,7 +778,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	public function mwb_mbfw_valid_page_screen_check() {
 		$mwb_mbfw_screen  = get_current_screen();
 		$mwb_mbfw_is_flag = false;
-		if ( isset( $mwb_mbfw_screen->id ) && 'wpswings_page_mwb_bookings_for_woocommerce_menu' == $mwb_mbfw_screen->id ) { // phpcs:ignore
+		if ( isset( $mwb_mbfw_screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' == $mwb_mbfw_screen->id ) { // phpcs:ignore
 			$mwb_mbfw_is_flag = true;
 		}
 

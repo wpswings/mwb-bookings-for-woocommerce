@@ -2,7 +2,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Mwb_Bookings_For_Woocommerce

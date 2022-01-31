@@ -77,7 +77,7 @@ Admin managers may easily specify booking and scheduling for WooCommerce based a
 **9) Avoid Unwanted Bookings**
 Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoid unnecessary bookings, and easily indicate unavailability.
 
-[**Free Demo of Bookings for WooCommerce**](https://demo.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-freedemo&utm_medium=bookings-org-page&utm_campaign=free-demo)
+[**Free Demo of Bookings for WooCommerce**](https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-freedemo&utm_medium=bookings-org-page&utm_campaign=free-demo)
 
 Visit [**Bookings for WooCommerce Documentation**](https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-page&utm_campaign=bookings-doc) and learn more about the features and working of the plugin. 
 

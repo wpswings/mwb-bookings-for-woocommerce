@@ -4,7 +4,7 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link  https://makewebbetter.com/
+ * @link  https://wpswings.com/
  * @since 1.0.0
  *
  * @package    Mwb_Bookings_For_Woocommerce
@@ -43,7 +43,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 		</h1>
 		<a href="
 		<?php
-		$doc_link = 'https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-doc';
+		$doc_link = 'https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-backend&utm_campaign=documentation';
 		echo esc_url(
 			//desc - Documentation link for pro update.
 			apply_filters( 'mwb_mbfw_update_doc_link', $doc_link )
@@ -53,7 +53,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 		<span>|</span>
 		<a href="
 		<?php
-		$query_link = 'https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-org&utm_medium=MWB-org-backend&utm_campaign=MWB-bookings-support';
+		$query_link = 'https://wpswings.com/submit-query/?utm_source=wpswings-bookings-support&utm_medium=bookings-org-backend&utm_campaign=support';
 		echo esc_url(
 			//desc - Query link update.
 			apply_filters( 'mwb_mbfw_update_query_link', $query_link )

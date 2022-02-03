@@ -4,7 +4,7 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       https://makewebbetter.com
+ * @link       https://wpswings.com
  * @since      1.0.0
  *
  * @package    Mwb_Bookings_For_Woocommerce
@@ -31,7 +31,7 @@ apply_filters('mwb_mbfw_on_boarding_form_fields', array());
 					<div class="mwb-mbfw-on-boarding-close-btn">
 						<a href="#"><span class="mbfw-close-form material-icons mwb-mbfw-close-icon mdc-dialog__button" data-mdc-dialog-action="close">clear</span></a>
 					</div>
-					<h3 class="mwb-mbfw-on-boarding-heading mdc-dialog__title"><?php esc_html_e( 'Welcome to MakeWebBetter', 'mwb-bookings-for-woocommerce' ); ?> </h3>
+					<h3 class="mwb-mbfw-on-boarding-heading mdc-dialog__title"><?php esc_html_e( 'Welcome to WP Swings', 'mwb-bookings-for-woocommerce' ); ?> </h3>
 					<p class="mwb-mbfw-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'mwb-bookings-for-woocommerce' ); ?></p>
 
 					<form action="#" method="post" class="mwb-mbfw-on-boarding-form">

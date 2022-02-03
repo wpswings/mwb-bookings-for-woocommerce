@@ -4,7 +4,7 @@
  *
  * This file is used to extend WC_Product class.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Mwb_Bookings_For_Woocommerce

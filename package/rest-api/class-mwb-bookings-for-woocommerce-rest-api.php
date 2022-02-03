@@ -4,7 +4,7 @@
  *
  * A class definition that includes api's endpoints and functions used across the plugin
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Mwb_Bookings_For_Woocommerce

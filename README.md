@@ -1,9 +1,9 @@
 
 [![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-20%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.9.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.2-blue)
-# MWB Bookings for WooCommerce - Schedule Appointments, Manage Bookings, Show Availability, Calendar Listings
-![MWB Bookings for WooCommerce](https://ps.w.org/mwb-bookings-for-woocommerce/assets/banner-772x250.png?rev=2588623)
-* Contributors: MakeWebBetter
-* Author URI: [http://makewebbetter.com/](http://makewebbetter.com/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
+# Bookings for WooCommerce - Schedule Appointments, Manage Bookings, Show Availability, Calendar Listings
+![ Bookings for WooCommerce](https://ps.w.org/mwb-bookings-for-woocommerce/assets/banner-772x250.jpg?rev=2672038)
+* Contributors: WP Swings
+* Author URI: [WP Swings](https://wpswings.com/?utm_source=bookings-github-official&utm_medium=bookings-github-page&utm_campaign=official)
 * Tags: bookings, calendar, appointments, booking calendar, scheduling, availability calendar, booking system, booking plugin
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -15,7 +15,7 @@
 
 You can now simply book WordPress time slots, confirm/reject bookings, display reservation calendar listings, enable booking cancellations, promote booking availability, regulate booking duration, and much more using the Booking Calendar plugin’s capabilities.
 
-[**How to Create an Online Booking System with MWB Bookings For WooCommerce plugin?**](https://www.youtube.com/watch?v=9ow97SzMHnM&t=658s)
+[**How to Create an Online Booking System with  Bookings For WooCommerce plugin?**](https://www.youtube.com/watch?v=9ow97SzMHnM&t=658s)
 
 
 
@@ -63,14 +63,21 @@ Admin managers may easily specify booking and scheduling for WooCommerce based a
 Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoid unnecessary bookings, and easily indicate unavailability.
 
 
-[**Free Demo of Bookings for WooCommerce**](https://demo.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
+Visit [**Bookings for WooCommerce Documentation**](https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-github-page&utm_campaign=bookings-doc) and learn more about the features and working of the plugin.
 
-Visit [**Bookings for WooCommerce Documentation**](https://docs.makewebbetter.com/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git) and learn more about the features and working of the plugin.
-Check out the [**Bookings Plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/mwb-bookings-for-woocommerce/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
+Check out the [**Bookings Plugin knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/bookings-for-woocommerce/?utm_source=wpswings-bookings-kb&utm_medium=bookings-github-page&utm_campaign=bookings-kb)
+
+
+## LIVE DEMO OF PREMIUM VERSION
+
+* [**WooCommerce Bookings Frontend demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-demo&utm_medium=bookings-github-page&utm_campaign=frontend-demo)
+
+* [**WooCommerce Bookings Backend demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-bookings-pro&utm_medium=bookings-github-page&utm_campaign=backend-demo)
 
 
 ## PLUGIN COMPATIBILITIES 
-* WooCommerce Bookings plugin is compatible with [**Return Refund and Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://makewebbetter.com/product/woocommerce-rma-return-refund-exchange/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
+* WooCommerce Bookings plugin is compatible with [**Return Refund and Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=bookings-github&utm_medium=bookings-github-page&utm_campaign=rma-pro-plugin)
+
 
 * The Bookings for WooCommerce is compatible with WordPress Multilingual i.e. WPML plugin and Multisite.
 
@@ -104,32 +111,27 @@ Check out the [**Bookings Plugin knowledge base**](https://support.makewebbetter
 
 Bookings for WooCommerce turn your ordinary WooCommerce store into an effective booking solution provider. Making use of bookings plugin features, you can create an online booking system that caters to all your customer’s requirements with ease. Get Bookings plugin and easily create an online booking system that provides versatile booking solutions with flexible booking slots, easy booking management, and a lot more.
 
-> Note:  Get [**Bookings for WooCommerce Pro**](https://makewebbetter.com/product/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
+> Note:  Get [**Bookings for WooCommerce Pro**](https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-github-page&utm_campaign=go-pro)
 
-## LIVE DEMO OF PREMIUM VERSION
 
-* [**WooCommerce Bookings Frontend demo**](https://demo.makewebbetter.com/bookings-for-woocommerce-pro/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
-* [**WooCommerce Bookings Backend demo**](https://demo.makewebbetter.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
+
+## DOCUMENTATION OF PREMIUM VERSION
+[**WooCommerce Bookings Pro Documentation**](https://docs.wpswings.com/bookings-for-woocommerce-pro/?utm_source=bookings-pro-docs&utm_medium=bookings-github-page&utm_campaign=bookings-pro)
 
 
 
 ### **SUPPORT**
-If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
-
-> If our documentation doesn’t contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git) with your question.
+If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=bookings-github-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-bookings-query&utm_medium=bookings-github-page&utm_campaign=query)
 
 
+### **MORE ABOUT WP Swings**
 
-
-
-### **MORE ABOUT MAKEWEBBETTER**
-
-- [**Our Official Website**](https://makewebbetter.com/?utm_source=MWB-bookings-git&utm_medium=MWB-git-page&utm_campaign=MWB-bookings-git)
-- [**Follow us on Facebook Page**](https://www.facebook.com/makewebbetter)
-- [**Tweet us on @MakeWebBetter**](https://twitter.com/makewebbetter)
-- [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
+- [**Our Official Website**](https://wpswings.com/?utm_source=bookings-github-page&utm_medium=bookings-github-page&utm_campaign=official)
+- [**Follow us on Facebook Page**](https://www.facebook.com/wpswings)
+- [**Tweet us on @wpswings**](https://twitter.com/wpswings)
+- [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
-- [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
+
 
 
 

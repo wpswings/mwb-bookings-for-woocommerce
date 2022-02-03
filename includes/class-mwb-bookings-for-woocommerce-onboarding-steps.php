@@ -2,7 +2,7 @@
 /**
  * The admin-specific on-boarding functionality of the plugin.
  *
- * @link       https://makewebbetter.com
+ * @link       https://wpswings.com
  * @since      1.0.0
  *
  * @package     Mwb_Bookings_For_Woocommerce
@@ -48,7 +48,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 * @since 2.0.0
 	 * @var string Portal id.
 	 */
-	private static $mwb_mbfw_portal_id = '6493626';
+	private static $mwb_mbfw_portal_id = '25444144';
 
 	/**
 	 * Form id of hubspot api for mwb-bookings-for-woocommerce.
@@ -56,7 +56,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 * @since 2.0.0
 	 * @var string Form id.
 	 */
-	private static $mwb_mbfw_onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	private static $mwb_mbfw_onboarding_form_id = '2a2fe23c-0024-43f5-9473-cbfefdb06fe2';
 
 	/**
 	 * Form id of hubspot api for mwb-bookings-for-woocommerce.
@@ -64,7 +64,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 * @since 2.0.0
 	 * @var string Form id.
 	 */
-	private static $mwb_mbfw_deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
+	private static $mwb_mbfw_deactivation_form_id = '67feecaa-9a93-4fda-8f85-f73168da2672';
 
 	/**
 	 * Define some variables for mwb-bookings-for-woocommerce.
@@ -340,7 +340,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 					'startups'              => 'Startups',
 					'restaurant'            => 'Restaurant',
 					'fitness'               => 'Fitness',
-					'jewelry'               => 'Jewelry',
+					'jewellery'               => 'Jewellery',
 					'beauty'                => 'Beauty',
 					'celebrity'             => 'Celebrity',
 					'gaming'                => 'Gaming',
@@ -681,9 +681,8 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 
 		$url = 'submissions/v3/integration/submit/' . self::$mwb_mbfw_portal_id . '/' . $form_id;
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-		);
+		$headers = 'Content-Type: application/json';
+
 
 		$form_data = wp_json_encode(
 			array(
@@ -779,7 +778,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	public function mwb_mbfw_valid_page_screen_check() {
 		$mwb_mbfw_screen  = get_current_screen();
 		$mwb_mbfw_is_flag = false;
-		if ( isset( $mwb_mbfw_screen->id ) && 'makewebbetter_page_mwb_bookings_for_woocommerce_menu' == $mwb_mbfw_screen->id ) { // phpcs:ignore
+		if ( isset( $mwb_mbfw_screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' == $mwb_mbfw_screen->id ) { // phpcs:ignore
 			$mwb_mbfw_is_flag = true;
 		}
 

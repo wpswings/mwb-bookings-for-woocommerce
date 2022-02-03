@@ -26,7 +26,7 @@ You can now simply book WordPress time slots, confirm/reject bookings, display r
 
 >_**From this update Version 2.0.4 onwards, the Bookings plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=bookings-org-page&utm_campaign=official).**_
 
->_**WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end. Please [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-bookings-contactus&utm_medium=par-org-page&utm_campaign=contactus) for all setup, support, and update related queries without hesitation.**_
+>_**WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end. Please [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-bookings-contactus&utm_medium=bookings-org-page&utm_campaign=contactus) for all setup, support, and update related queries without hesitation.**_
 
 ***
 
@@ -77,14 +77,18 @@ Admin managers may easily specify booking and scheduling for WooCommerce based a
 **9) Avoid Unwanted Bookings**
 Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoid unnecessary bookings, and easily indicate unavailability.
 
-[**Free Demo of Bookings for WooCommerce**](https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-freedemo&utm_medium=bookings-org-page&utm_campaign=free-demo)
-
 Visit [**Bookings for WooCommerce Documentation**](https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-page&utm_campaign=bookings-doc) and learn more about the features and working of the plugin. 
 
 Check out [**Bookings Plugin knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/bookings-for-woocommerce/?utm_source=wpswings-bookings-kb&utm_medium=bookings-org-page&utm_campaign=bookings-kb)
 
+
+== LIVE DEMO OF WOOCOMMERCE BOOKINGS PLUGIN ==
+* [**WooCommerce Bookings Frontend Demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=frontend-demo)
+
+* [**WooCommerce Bookings Backend Demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=backend-demo)
+
 == PLUGIN COMPATIBILITIES ==
-* WooCommerce Bookings plugin is compatible with [**Return Refund and Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://wpswings.com/product/woocommerce-rma-return-refund-exchange/?utm_source=wpswings-rma-pro&utm_medium=rma-org-page&utm_campaign=RMA)
+* WooCommerce Bookings plugin is compatible with [**Return Refund and Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-page&utm_campaign=rma-pro-plugin)
 
 * The Bookings for WooCommerce is compatible with WordPress Multilingual i.e. WPML plugin and Multisite.
 
@@ -118,13 +122,10 @@ Bookings for WooCommerce turn your ordinary WooCommerce store into an effective 
 
 
 
-== LIVE DEMO OF PREMIUM VERSION ==
-[**WooCommerce Bookings Frontend Demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=frontend-demo)
 
-[**WooCommerce Bookings Backend Demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=backend-demo)
 
 == DOCUMENTATION OF PREMIUM VERSION ==
-[**WooCommerce Bookings Documentation**](https://docs.wpswings.com/bookings-for-woocommerce-pro/?utm_source=bookings-pro-docs&utm_medium=bookings-org-pag&utm_campaign=bookings-pro)
+[**WooCommerce Bookings Pro Documentation**](https://docs.wpswings.com/bookings-for-woocommerce-pro/?utm_source=bookings-pro-docs&utm_medium=bookings-org-page&utm_campaign=bookings-pro)
 
 
 
@@ -142,6 +143,9 @@ Bookings for WooCommerce turn your ordinary WooCommerce store into an effective 
 10. Booking Product Availability
 11. Bookings Order
 12. Bookings Frontend view
+13. Bookings form
+14. Booking Cost Fom
+15. New Booking Service Form
 
 
 
@@ -182,8 +186,9 @@ In our plugin, there are two types of booking units-
 
 
 == Changelog ==
-= 2.0.4 - Released on 19 January 2022 =
-* New: Notice display of current version for WP Swings.
+= 2.0.4 - Released on 3 February 2022 =
+* New: Change author from MakeWebBetter to WP Swings
+* New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=bookings-org-page&utm_campaign=official).
 * New: Minor Bug fixes
 * New: Compatible with latest WP and WC 
 
@@ -203,7 +208,7 @@ In our plugin, there are two types of booking units-
 * New: Compatibility with [**Bookings for WooCommerce Pro**](https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=bookings-pro  )
 * New: Compatibility with the latest WooCommerce 5.6.0
 * New: Compatibility with the latest WordPress 5.8
-* New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://wpswings.com/product/woocommerce-rma-return-refund-exchange/?utm_source=wpswings-rma-pro&utm_medium=rma-org-page&utm_campaign=RMA)
+* New: Compatibility with [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-page&utm_campaign=rma-pro-plugin)
 * Fix: Updated settings for admin.
 * Fix: Minor bug fixes and performance improvement
 
@@ -217,7 +222,8 @@ In our plugin, there are two types of booking units-
 
 
 == Upgrade Notice ==
-= 2.0.4 - Released on 19 January 2022 =
-* New: Notice display of current version for WP Swings.
+= 2.0.4 - Released on 3 February 2022 =
+* New: Change author from MakeWebBetter to WP Swings
+* New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=bookings-org-page&utm_campaign=official).
 * New: Minor Bug fixes
-* New: Compatible with latest WP and WC 
+* New: Compatible with latest WP and WC

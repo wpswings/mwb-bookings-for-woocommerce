@@ -15,7 +15,7 @@
  * Plugin Name:       Mwb Bookings For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/mwb-bookings-for-woocommerce/
  * Description:       MWB Bookings for WooCommerce helps you stay focused while offering a better online booking system for your business growth. Just stop speculating and opt for the best one out.
- * Version:           2.0.0
+ * Version:           2.0.4
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-bookings-official&utm_medium=bookings-org-backend&utm_campaign=official
  * Text Domain:       mwb-bookings-for-woocommerce

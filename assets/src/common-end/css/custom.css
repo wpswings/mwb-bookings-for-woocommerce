@@ -6,7 +6,7 @@
 .mbfw-total-listing-single-page{
     float: left;
 }
-li#wp-admin-bar-mwb-mbfw-custom-admin-menu-bookings .mwb-mbfw-booking-count {
+li#wp-admin-bar-wps-mbfw-custom-admin-menu-bookings .wps-mbfw-booking-count {
     font-weight: 700!important;
     background: #d63638;
     display: inline-block;

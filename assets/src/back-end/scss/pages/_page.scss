@@ -7,16 +7,16 @@
 ====================================*/
 
 
-.mwb-navbar {
+.wps-navbar {
     padding: 0 32px;
     border-bottom: 1px solid rgba(63, 71, 86, 0.25);
 
-    .mwb-navbar__items {
+    .wps-navbar__items {
         display: flex;
         flex-wrap: wrap;
     }
     
-    .mwb-navbar__items {
+    .wps-navbar__items {
         li {
             margin-right: 32px;
             margin-bottom: 0;
@@ -36,7 +36,7 @@
 =           License Section CSS          =
 =============================================*/
 
-.mwb-mbfw-wrap {
+.wps-mbfw-wrap {
     border-radius: 10px;
     border: 1px solid $c-alto;
     box-shadow: 0px 4px 10px $c-gallery;
@@ -54,14 +54,14 @@
         text-align: left;
     }
 
-    .mwb_mbfw_license_text {
+    .wps_bfw_license_text {
         > p {
             margin: 10px 0;
         }
 
-        #mwb_mbfw_license_form {
-            .mwb-mbfw-form-table {
-                input#mwb_mbfw_license_key {
+        #wps_bfw_license_form {
+            .wps-mbfw-form-table {
+                input#wps_bfw_license_key {
                     width: 100%;
                     transition: 0.3s ease;
                     height: 50px;
@@ -79,7 +79,7 @@
                 }
             }
 
-            #mwb_mbfw_license_activation_status {
+            #wps_bfw_license_activation_status {
                 padding: 0 10px;
                 font-weight: 600;
             }
@@ -144,7 +144,7 @@
         }
        
     }
-    .mwb-dt-buttons {
+    .wps-dt-buttons {
         display: flex;
         align-items: center;
         justify-content: flex-end;

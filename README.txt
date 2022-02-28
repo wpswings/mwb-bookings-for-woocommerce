@@ -46,7 +46,7 @@ You can now simply book WordPress time slots, confirm/reject bookings, display r
 
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
-[**Download Now!!**](https://downloads.wordpress.org/plugin/mwb-bookings-for-woocommerce.zip)
+[**Download Now!!**](https://downloads.wordpress.org/plugin/bookings-for-woocommerce.zip)
 
 == WHAT’S INCLUDED IN OUR FREE WOOCOMMERCE BOOKINGS PLUGIN:  ==
 

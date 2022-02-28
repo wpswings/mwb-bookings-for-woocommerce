@@ -21,7 +21,7 @@
  * @link       https://wpswings.com/
  * @since      2.0.0
  *
- * @package    Mwb_Bookings_For_Woocommerce
+ * @package    Bookings_For_Woocommerce
  */
 
 // If uninstall not called from WordPress, then exit.

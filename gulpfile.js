@@ -102,7 +102,7 @@ function css()
     './assets/src/front-end/css/custom.css',
   ])
   .pipe(plumber())
-  .pipe(concat('mwb-public.css'))
+  .pipe(concat('wps-public.css'))
   .pipe(sass({ outputStyle: "expanded" }))
   .pipe(gulp.dest("public/css"))
   .pipe(postcss([autoprefixer(), combineMediaQuery()]))
@@ -120,7 +120,7 @@ function cssCommonEnd()
     'assets/src/common-end/css/custom.css',
   ])
   .pipe(plumber())
-  .pipe(concat('mwb-common.css'))
+  .pipe(concat('wps-common.css'))
   .pipe(sass({ outputStyle: "expanded" }))
   .pipe(gulp.dest("common/css"))
   .pipe(postcss([autoprefixer(), combineMediaQuery()]))
@@ -138,7 +138,7 @@ function cssBackend()
     'assets/src/back-end/scss/main.scss',
   ])
   .pipe(plumber())
-  .pipe(concat('mwb-admin.css'))
+  .pipe(concat('wps-admin.css'))
   .pipe(sass({ outputStyle: "expanded" }))
   .pipe(gulp.dest("admin/css"))
   .pipe(postcss([autoprefixer(), combineMediaQuery()]))
@@ -156,7 +156,7 @@ function cssBackendCustom()
     'assets/src/back-end/scss/admin-global-custom.scss',
   ])
   .pipe(plumber())
-  .pipe(concat('mwb-admin-global-custom.css'))
+  .pipe(concat('wps-admin-global-custom.css'))
   .pipe(sass({ outputStyle: "expanded" }))
   .pipe(gulp.dest("admin/css"))
   .pipe(postcss([autoprefixer(), combineMediaQuery()]))
@@ -177,7 +177,7 @@ function scripts()
     'assets/src/front-end/js/**/*',
     ])
     .pipe(plumber())
-    .pipe(concat('mwb-public.js'))
+    .pipe(concat('wps-public.js'))
     .pipe(gulp.dest('public/js'))
     .pipe(terser())
     .pipe(rename({ suffix: '.min' }))
@@ -195,7 +195,7 @@ function CommonScripts()
     'assets/src/common-end/js/**/*',
     ])
     .pipe(plumber())
-    .pipe(concat('mwb-common.js'))
+    .pipe(concat('wps-common.js'))
     .pipe(gulp.dest('common/js'))
     .pipe(terser())
     .pipe(rename({ suffix: '.min' }))
@@ -215,7 +215,7 @@ function scriptsBackend()
 
     ])
     .pipe(plumber())
-    .pipe(concat('mwb-admin.js'))
+    .pipe(concat('wps-admin.js'))
     .pipe(gulp.dest('admin/js'))
     .pipe(terser())
     .pipe(rename({ suffix: '.min' }))
@@ -229,11 +229,11 @@ function scriptsBackendCustom()
   return (
   gulp
     .src([
-    'assets/src/back-end/js/mwb-bookings-for-woocommerce-admin-custom-global.js',
+    'assets/src/back-end/js/bookings-for-woocommerce-admin-custom-global.js',
 
     ])
     .pipe(plumber())
-    .pipe(concat('mwb-admin-global-custom.js'))
+    .pipe(concat('wps-admin-global-custom.js'))
     .pipe(gulp.dest('admin/js'))
     .pipe(terser())
     .pipe(rename({ suffix: '.min' }))
@@ -279,7 +279,7 @@ function watchFiles()
   gulp.watch('assets/src/common-end/css/custom.css', cssCommonEnd);
   gulp.watch('assets/src/back-end/scss/admin-global-custom.scss', cssBackendCustom);
   gulp.watch('assets/src/back-end/js/admin.js', scriptsBackend);
-  gulp.watch('assets/src/back-end/js/mwb-bookings-for-woocommerce-admin-custom-global.js', scriptsBackendCustom);
+  gulp.watch('assets/src/back-end/js/bookings-for-woocommerce-admin-custom-global.js', scriptsBackendCustom);
   gulp.watch('assets/src/front-end/fonts/**/*', fontsBackend);
 }
 

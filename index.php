@@ -7,8 +7,8 @@
  * @link       https://wpswings.com/
  * @since      2.0.0
  *
- * @package    Mwb_Bookings_For_Woocommerce
- * @subpackage Mwb_Bookings_For_Woocommerce
+ * @package    Bookings_For_Woocommerce
+ * @subpackage Bookings_For_Woocommerce
  */
 
-esc_html_e( 'oops looks like nothing is here', 'mwb-bookings-for-woocommerce' );
+esc_html_e( 'oops looks like nothing is here', 'bookings-for-woocommerce' );

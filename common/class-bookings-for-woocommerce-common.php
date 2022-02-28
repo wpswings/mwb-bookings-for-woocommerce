@@ -1,0 +1,611 @@
+<?php
+/**
+ * The common functionality of the plugin.
+ *
+ * @link       https://wpswings.com/
+ * @since      1.0.0
+ *
+ * @package    Bookings_For_Woocommerce
+ * @subpackage Bookings_For_Woocommerce/common
+ */
+
+/**
+ * The common functionality of the plugin.
+ *
+ * Defines the plugin name, version, and two examples hooks for how to
+ * enqueue the common stylesheet and JavaScript.
+ * namespace bookings_for_woocommerce_common.
+ *
+ * @package    Bookings_For_Woocommerce
+ * @subpackage Bookings_For_Woocommerce/common
+ */
+class Bookings_For_Woocommerce_Common {
+	/**
+	 * The ID of this plugin.
+	 *
+	 * @var   string    $plugin_name    The ID of this plugin.
+	 * @since 2.0.0
+	 */
+	private $plugin_name;
+
+	/**
+	 * The version of this plugin.
+	 *
+	 * @since    2.0.0
+	 * @var      string    $version    The current version of this plugin.
+	 */
+	private $version;
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since 2.0.0
+	 * @param string $plugin_name       The name of the plugin.
+	 * @param string $version    The version of this plugin.
+	 */
+	public function __construct( $plugin_name, $version ) {
+		
+		$this->plugin_name = $plugin_name;
+		$this->version     = $version;
+	}
+
+	/**
+	 * Register the stylesheets for the common side of the site.
+	 *
+	 * @since 2.0.0
+	 */
+	public function bfw_common_enqueue_styles() {
+		wp_enqueue_style( $this->plugin_name . 'common', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/css/bookings-for-woocommerce-common.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wps-mbfw-common-custom-css', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/css/wps-common.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'wps-mbfw-time-picker-css', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/css/timepicker.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'jquery-ui', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/jquery-ui-css/jquery-ui.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'datetime-picker-css', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.min.css', array(), $this->version, 'all' );
+	}
+
+	/**
+	 * Register the JavaScript for the common side of the site.
+	 *
+	 * @since 2.0.0
+	 */
+	public function bfw_common_enqueue_scripts() {
+		wp_register_script( $this->plugin_name . 'common', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/bookings-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->plugin_name . 'common', 'bfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_enqueue_script( $this->plugin_name . 'common' );
+		wp_enqueue_script( 'wps-mbfw-common-js', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/wps-common.min.js', array(), $this->version, true );
+		wp_localize_script(
+			'wps-mbfw-common-js',
+			'wps_bfw_common_obj',
+			array(
+				'ajax_url'         => admin_url( 'admin-ajax.php' ),
+				'nonce'            => wp_create_nonce( 'bfw_common_nonce' ),
+				'minDate'          => current_time( 'd-m-Y H:m' ),
+				'minTime'          => current_time( 'H:m' ),
+				'maxTime'          => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
+				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'bookings-for-woocommerce' ),
+			)
+		);
+		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'wps-mbfw-time-picker-js', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'moment-js', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'datetime-picker-js', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.min.js', array( 'jquery', 'moment-js' ), $this->version, true );
+	}
+
+	/**
+	 * Registering custom taxonomy for wps_booking product type.
+	 *
+	 * @return void
+	 */
+	public function bfw_custom_taxonomy_for_products() {
+		$labels = array(
+			'name'          => _x( 'Booking Costs', 'taxonomy general name', 'bookings-for-woocommerce' ),
+			'singular_name' => _x( 'Booking Costs', 'taxonomy singular name', 'bookings-for-woocommerce' ),
+			'search_items'  => __( 'Search Booking Cost', 'bookings-for-woocommerce' ),
+			'all_items'     => __( 'All Booking Costs', 'bookings-for-woocommerce' ),
+			'view_item'     => __( 'View Booking Cost', 'bookings-for-woocommerce' ),
+			'edit_item'     => __( 'Edit Booking Cost', 'bookings-for-woocommerce' ),
+			'update_item'   => __( 'Update Booking Cost', 'bookings-for-woocommerce' ),
+			'add_new_item'  => __( 'Add New Booking Cost', 'bookings-for-woocommerce' ),
+			'new_item_name' => __( 'New Booking Cost Name', 'bookings-for-woocommerce' ),
+			'not_found'     => __( 'No Booking Cost Found', 'bookings-for-woocommerce' ),
+			'back_to_items' => __( 'Back to Booking Costs', 'bookings-for-woocommerce' ),
+			'menu_name'     => __( 'Booking Costs', 'bookings-for-woocommerce' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => array( 'slug' => 'wps_booking_cost' ),
+			'show_in_rest'      => true,
+		);
+		register_taxonomy( 'wps_booking_cost', 'product', $args );
+
+		$labels = array(
+			'name'          => _x( 'Booking Services', 'taxonomy general name', 'bookings-for-woocommerce' ),
+			'singular_name' => _x( 'Booking Services', 'taxonomy singular name', 'bookings-for-woocommerce' ),
+			'search_items'  => __( 'Search Booking Service', 'bookings-for-woocommerce' ),
+			'all_items'     => __( 'All Booking Services', 'bookings-for-woocommerce' ),
+			'view_item'     => __( 'View Booking Service', 'bookings-for-woocommerce' ),
+			'edit_item'     => __( 'Edit Booking Service', 'bookings-for-woocommerce' ),
+			'update_item'   => __( 'Update Booking Service', 'bookings-for-woocommerce' ),
+			'add_new_item'  => __( 'Add New Booking Service', 'bookings-for-woocommerce' ),
+			'new_item_name' => __( 'New Booking Service Name', 'bookings-for-woocommerce' ),
+			'not_found'     => __( 'No Booking Service Found', 'bookings-for-woocommerce' ),
+			'back_to_items' => __( 'Back to Booking Services', 'bookings-for-woocommerce' ),
+			'menu_name'     => __( 'Booking Services', 'bookings-for-woocommerce' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => array( 'slug' => 'wps_booking_service' ),
+			'show_in_rest'      => true,
+		);
+		register_taxonomy( 'wps_booking_service', 'product', $args );
+	}
+
+	/**
+	 * Registering custom product type.
+	 *
+	 * @return void
+	 */
+	public function bfw_registering_custom_product_type() {
+		require_once BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-wps-booking.php';
+	}
+
+	/**
+	 * Adding Bookings menu on admin bar.
+	 *
+	 * @param object $admin_bar object to add custom menu items.
+	 * @return void
+	 */
+	public function bfw_add_admin_menu_custom_tab( $admin_bar ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		$order_count   = count(
+			wc_get_orders(
+				array(
+					'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
+					'return'   => 'ids',
+					'limit'    => -1,
+					'meta_key' => 'wps_order_type', // phpcs:ignore WordPress
+					'meta_val' => 'booking',
+				)
+			)
+		);
+		$booking_title = _n( 'Booking', 'Bookings', $order_count, 'bookings-for-woocommerce' );
+		$admin_bar->add_menu(
+			array(
+				'id'     => 'wps-mbfw-custom-admin-menu-bookings',
+				'parent' => null,
+				'group'  => null,
+				'title'  => sprintf(
+					/* translators: 1- Booking text, 2- Booking count, 3- Booking count, 4- Booking text for screeen readers. */
+					'<span class="wps-admin-bar-booking-icon">%1$s</span>
+					<span class="wps-mbfw-booking-count">%2$s</span>
+					<span class="screen-reader-text">%3$s %4$s</span>',
+					$booking_title,
+					$order_count,
+					$order_count,
+					$booking_title
+				),
+				'href'   => admin_url( 'edit.php?post_status=all&post_type=shop_order&filter_booking=booking&filter_action=Filter' ),
+				'meta'   => array(
+					'title' => __( 'List All Bookings', 'bookings-for-woocommerce' ),
+				)
+			)
+		);
+	}
+
+	/**
+	 * Showing extra charges on cart listing total.
+	 *
+	 * @param object $cart_object cart object.
+	 * @return void
+	 */
+	public function wps_bfw_show_extra_charges_in_total( $cart_object ) {
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+		if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) {
+			return;
+		}
+		$cart_data = $cart_object->get_cart();
+		foreach ( $cart_data as $cart ) {
+			if ( 'wps_booking' === $cart['data']->get_type() && isset( $cart['wps_bfw_booking_values'] ) ) {
+				$new_price        = $cart['data']->get_price();
+				$custom_cart_data = $cart['wps_bfw_booking_values'];
+				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
+				$base_price       = get_post_meta( $cart['product_id'], 'wps_bfw_booking_base_cost', true );
+				$base_price       = apply_filters( 'wps_bfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
+				$unit_price       = get_post_meta( $cart['product_id'], '_price', true );
+				$unit_price       = apply_filters( 'wps_bfw_vary_product_unit_price', ( ! empty( $unit_price ) ? (float) $unit_price : 0 ), $custom_cart_data, $cart_object, $cart );
+				
+				// adding unit cost.
+				if ( 'yes' === get_post_meta( $cart['product_id'], 'wps_bfw_is_booking_unit_cost_per_people', true ) ) {
+					$new_price = (float) $unit_price * (int) $people_number;
+				} else {
+					$new_price = (float) $unit_price;
+				}
+				
+				// adding base cost.
+				if ( 'yes' === get_post_meta( $cart['product_id'], 'wps_bfw_is_booking_base_cost_per_people', true ) ) {
+					$new_price = $new_price + (float) $base_price * (int) $people_number;
+				} else {
+					$new_price = $new_price + (float) $base_price;
+				}
+
+				$service_option_checked = isset( $custom_cart_data['service_option'] ) ? $custom_cart_data['service_option'] : array();
+				$service_option_count   = isset( $custom_cart_data['service_quantity'] ) ? $custom_cart_data['service_quantity'] : array();
+				$new_price             += $this->bfw_extra_service_charge( $cart['product_id'], $service_option_checked, $service_option_count, $people_number );
+				$new_price             += $this->bfw_extra_charges_calculation( $cart['product_id'], $people_number );
+				
+				$new_price =
+				apply_filters( 'bfw_set_price_individually_during_adding_in_cart', $new_price, $custom_cart_data, $cart_object );
+				// setting the new price.
+				$cart['data']->set_price( $new_price );
+			}
+		}
+	}
+
+	/**
+	 * Retrieve total cost at single booking.
+	 *
+	 * @return void
+	 */
+	public function bfw_retrieve_booking_total_single_page() {
+		check_ajax_referer( 'bfw_common_nonce', 'nonce' );
+		$product_id = array_key_exists( 'wps_bfw_booking_product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_bfw_booking_product_id'] ) ) : '';
+		if ( ! $product_id ) {
+			wp_die();
+		}
+		$services_checked = array_key_exists( 'wps_bfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['wps_bfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
+		$service_quantity = array_key_exists( 'wps_bfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['wps_bfw_service_quantity'] ), 'sanitize_text_field' ) : array();
+		$people_number    = array_key_exists( 'wps_bfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_bfw_people_number'] ) ) : 1;
+		$people_number    = $people_number > 0 ? $people_number : 1;
+		$quantity         = array_key_exists( 'quantity', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['quantity'] ) ) : 1;
+		$quantity         = $quantity > 0 ? $quantity : 1;
+		$date_time_from   = array_key_exists( 'wps_bfw_booking_from_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_bfw_booking_from_time'] ) ) : '';
+		$date_time_to     = array_key_exists( 'wps_bfw_booking_to_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_bfw_booking_to_time'] ) ) : '';
+
+		$date_from     = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'd-m-Y H:i' ) ) );
+		$date_to       = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'd-m-Y H:i' ) ) );
+		$time_from     = gmdate( 'H:i', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'H:i' ) ) );
+		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'H:i' ) ) );
+		$services_cost = $this->bfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
+		$extra_charges = $this->bfw_extra_charges_calculation( $product_id , $people_number );
+		$product_price = get_post_meta( $product_id, '_price', true );
+		$product_price = apply_filters(
+			'wps_bfw_change_price_ajax_global_rule',
+			( ! empty( $product_price ) ? $product_price : 0 ),
+			array(
+				'date_from'     => $date_from,
+				'date_to'       => $date_to,
+				'time_from'     => $time_from,
+				'time_to'       => $time_to,
+				'quantity'      => $quantity,
+				'people_number' => $people_number,
+				'cost_type'     => 'unit_cost',
+			)
+		);
+		$base_cost     = get_post_meta( $product_id, 'wps_bfw_booking_base_cost', true );
+		$base_cost     = apply_filters(
+			'wps_bfw_change_price_ajax_global_rule',
+			( ! empty( $base_cost ) ? (float) $base_cost : 0 ),
+			array(
+				'date_from'     => $date_from,
+				'date_to'       => $date_to,
+				'time_from'     => $time_from,
+				'time_to'       => $time_to,
+				'quantity'      => $quantity,
+				'people_number' => $people_number,
+				'cost_type'     => 'base_cost',
+			)
+		);
+		if ( 'yes' === get_post_meta( $product_id, 'wps_bfw_is_booking_unit_cost_per_people', true ) ) {
+			$product_price = (float) $product_price * (int) $people_number;
+		}
+		if ( 'yes' === get_post_meta( $product_id, 'wps_bfw_is_booking_base_cost_per_people', true ) ) {
+			$base_cost = (float) $base_cost * (int) $people_number;
+		}
+		$charges = array(
+			'service_cost' => array(
+				'title' => __( 'Service Cost', 'bookings-for-woocommerce' ),
+				'value' => $services_cost,
+			),
+			'base_cost' => array(
+				'title' => __( 'Base Cost', 'bookings-for-woocommerce' ),
+				'value' => $base_cost,
+			),
+			'general_cost' => array(
+				'title' => __( 'General Cost', 'bookings-for-woocommerce' ),
+				'value' => $product_price,
+			),
+			'additional_charge' => array(
+				'title' => __( 'Additional Charges', 'bookings-for-woocommerce' ),
+				'value' => $extra_charges,
+			),
+		);
+		$charges =
+		// desc - ajax loading total listings.
+		apply_filters( 'bfw_ajax_load_total_booking_charge_individually', $charges, $product_id );
+		$this->bfw_booking_total_listing_single_page( $charges, $quantity );
+		wp_die();
+	}
+
+	/**
+	 * Booking total listing on single product page.
+	 *
+	 * @param array $charges array containing all the charges.
+	 * @param int   $quantity quantity of booked product.
+	 * @return void
+	 */
+	public function bfw_booking_total_listing_single_page( $charges, $quantity ) {
+		?>
+		<div class="mbfw-total-listing-single-page__wrapper-parent">
+			<?php
+			$total = 0;
+			foreach ( $charges as $types ) {
+				$price  = $types['value'];
+				$title  = $types['title'];
+				$total += (float) $price * (int) $quantity;
+				?>
+				<div class="mbfw-total-listing-single-page__wrapper">
+					<div class="mbfw-total-listing-single-page">
+						<?php echo wp_kses_post( $title ); ?>
+					</div>
+					<div class="mbfw-total-listing-single-page">
+						<?php echo wp_kses_post( wc_price( $price ) ); ?>
+					</div>
+				</div>
+				<?php
+			}
+			?>
+			<div class="mbfw-total-listing-single-page__wrapper mbfw-total-cost__wrapper">
+				<div class="mbfw-total-listing-single-page">
+					<?php esc_html_e( 'Total', 'bookings-for-woocommerce' ); ?>
+				</div>
+				<div class="mbfw-total-listing-single-page">
+					<?php echo wp_kses_post( wc_price( $total ) ); ?>
+				</div>
+			</div>
+			<?php do_action( 'bfw_show_booking_policy' ); ?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Extra charges calculation.
+	 *
+	 * @param int $product_id current product id.
+	 * @param int $people_number number of people in the booking.
+	 * @return float
+	 */
+	public function bfw_extra_charges_calculation( $product_id, $people_number ) {
+		$extra_charges = 0;
+		$terms         = get_the_terms( $product_id, 'wps_booking_cost' );
+		if ( is_array( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$cost = get_term_meta( $term->term_id, 'wps_bfw_booking_cost', true );
+				$cost = ! empty( $cost ) ? (float) $cost : 0;
+				if ( 'yes' === get_term_meta( $term->term_id, 'wps_bfw_is_booking_cost_multiply_people', true ) ) {
+					$extra_charges += $cost * $people_number;
+				} else {
+					$extra_charges += $cost;
+				}
+			}
+		}
+		return $extra_charges;
+	}
+
+	/**
+	 * Extra service charges calculation.
+	 *
+	 * @param int   $product_id current product id.
+	 * @param array $services_checked array containing optional services checked by user.
+	 * @param array $service_quantity quantity array containing services and there count.
+	 * @param int   $people_number number of people.
+	 * @return float
+	 */
+	public function bfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number ) {
+		$services_cost = 0;
+		if ( is_array( $services_checked ) ) {
+			foreach ( $services_checked as $term_id ) {
+				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
+				$service_price = get_term_meta( $term_id, 'wps_bfw_service_cost', true );
+				$service_price = ( ! empty( $service_price ) && $service_price > 0 ) ? (float) $service_price : 0;
+				if ( 'yes' === get_term_meta( $term_id, 'wps_bfw_is_service_cost_multiply_people', true ) ) {
+					$services_cost += $service_count * $service_price * $people_number;
+				} else {
+					$services_cost += $service_count * $service_price;
+				}
+			}
+		}
+		$terms = get_the_terms( $product_id, 'wps_booking_service' );
+		if ( is_array( $terms ) ) {
+			foreach ( $terms as $term ) {
+				if ( 'yes' !== get_term_meta( $term->term_id, 'wps_bfw_is_service_optional', true ) ) {
+					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
+					$service_price = (float) get_term_meta( $term->term_id, 'wps_bfw_service_cost', true );
+					$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
+					if ( 'yes' === get_term_meta( $term->term_id, 'wps_bfw_is_service_cost_multiply_people', true ) ) {
+						$services_cost += $service_count * $service_price * $people_number;
+					} else {
+						$services_cost += $service_count * $service_price;
+					}
+				}
+			}
+		}
+		return $services_cost;
+	}
+
+	/**
+	 * Set order as booking type.
+	 *
+	 * @param int    $order_id current order id.
+	 * @param object $order current order object.
+	 * @return void
+	 */
+	public function wps_bfwp_set_order_as_wps_booking( $order_id, $order ) {
+		$order_items = $order->get_items();
+		foreach ( $order_items as $item ) {
+			$product = $item->get_product();
+			if ( 'wps_booking' === $product->get_type() ) {
+				$order->update_meta_data( 'wps_order_type', 'booking' );
+				$order->save();
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Change order status.
+	 *
+	 * @param integer $order_id current order id.
+	 * @return void
+	 */
+	public function wps_bfwp_change_order_status( $order_id ) {
+		if ( ! $order_id ) {
+			return;
+		}
+		$order = wc_get_order( $order_id );
+		if ( 'on-hold' === $order->get_status() ) {
+			return;
+		}
+		$items = $order->get_items();
+		foreach ( $items as $item ) {
+			if ( 'yes' === get_post_meta( $item->get_product_id(), 'wps_bfw_admin_confirmation', true ) ) {
+				$order->update_status( 'on-hold', __( 'confirmation required from admin.', 'bookings-for-woocommerce' ) );
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Create cancel order link.
+	 *
+	 * @param array  $statuses array containing order statuses on which to triger cancel button.
+	 * @param object $order current order object.
+	 * @return array
+	 */
+	public function wps_bfw_set_cancel_order_link_order_statuses( $statuses, $order ) {
+		$items = $order->get_items();
+		foreach ( $items as $item ) {
+			if ( 'yes' === get_post_meta( $item->get_product_id(), 'wps_bfw_cancellation_allowed', true ) ) {
+				$order_statuses = get_post_meta( $item->get_product_id(), 'wps_bfwp_order_statuses_to_cancel', true );
+				$order_statuses = is_array( $order_statuses ) ? map_deep(
+						$order_statuses,
+						function ( $status ) {
+							return preg_replace( '/wc-/', '', $status );
+						}
+					) : array();
+				if ( in_array( $order->get_status(), $order_statuses, true ) ) {
+					return array( $order->get_status() );
+				}
+			}
+		}
+		return $statuses;
+	}
+
+	/**
+	 * Show additional order details to user account page.
+	 *
+	 * @param int    $item_id item id.
+	 * @param object $item current item object.
+	 * @param object $order current order object.
+	 * @return void
+	 */
+	public function bfw_show_booking_details_on_my_account_page_user( $item_id, $item, $order ) {
+		if ( 'wps_booking' === $item->get_product()->get_type() ) {
+			?>
+			<span class="wps-mbfw-ser-booking-toggler"></span>
+			<table class="wps-mbfw-user-booking-meta-data-listing">
+				<?php
+				$people_number = $item->get_meta( '_wps_bfw_people_number', true );
+				if ( ! empty( $people_number ) ) {
+					?>
+					<tr>
+						<th><?php esc_html_e( 'People', 'bookings-for-woocommerce' ); ?></th>
+					</tr>
+					<tr>
+						<td><?php echo esc_attr( $people_number ); ?></td>
+					</tr>
+					<?php
+				} else {
+					// People type show in user booking.
+					do_action( 'wps_bfw_people_user_booking_my_account', $item_id, $item, $order );
+				}
+				$services_and_count = $item->get_meta( '_wps_bfw_service_and_count', true );
+				if ( ! empty( $services_and_count ) && is_array( $services_and_count ) ) {
+					?>
+					<tr>
+						<th>
+							<?php esc_html_e( 'Service(s)', 'bookings-for-woocommerce' ); ?>
+						</th>
+					</tr>
+					<?php
+					foreach ( $services_and_count as $term_id => $count ) {
+						$term = get_term( $term_id, 'wps_booking_service' );
+						?>
+						<tr>
+							<td>
+								<?php echo esc_html( isset( $term->name ) ? $term->name . '( ' . $count . ' )' : '' ); ?>
+							</td>
+						</tr>
+						<?php
+					}
+				}
+				$date_time_from = $item->get_meta( '_wps_bfwp_date_time_from', true );
+				$date_time_to   = $item->get_meta( '_wps_bfwp_date_time_to', true );
+				if ( ! empty( $date_time_from ) && ! empty( $date_time_to ) ) {
+					?>
+					<tr>
+						<th>
+							<?php esc_html_e( 'From', 'bookings-for-woocommerce' ); ?>
+						</th>
+						<th>
+							<?php esc_html_e( 'To', 'bookings-for-woocommerce' ); ?>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<?php echo esc_html( $date_time_from ); ?>
+						</td>
+						<td>
+							<?php echo esc_html( $date_time_to ); ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<?php
+							// Reschedule user booking link.
+							do_action( 'wps_bfw_reschedule_user_booking_my_account', $item_id, $item, $order );
+							?>
+						</td>
+						<td></td>
+					</tr>
+					<?php
+				}
+				?>
+			</table>
+			<?php
+		}
+	}
+
+	/**
+	 * Hide reorder button on the my account page.
+	 *
+	 * @param array $order_statuses array containing the order statuses.
+	 * @since 2.0.2
+	 * @return array
+	 */
+	public function wps_bfw_hide_reorder_button_my_account_orders( $order_statuses ) {
+		return array();
+	}
+}

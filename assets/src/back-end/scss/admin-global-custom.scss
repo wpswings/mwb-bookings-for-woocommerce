@@ -1,23 +1,23 @@
-th#taxonomy-mwb_booking_service, th#taxonomy-mwb_booking_cost{
+th#taxonomy-wps_booking_service, th#taxonomy-wps_booking_cost{
     width: 10%;
 }
-#woocommerce-product-data ul.wc-tabs li.general_settings_tab.show_if_mwb_booking a:before{
+#woocommerce-product-data ul.wc-tabs li.general_settings_tab.show_if_wps_booking a:before{
     font-family: WooCommerce;
     content: '\e028';
 }
-#woocommerce-product-data ul.wc-tabs li.people_tab.show_if_mwb_booking a:before{
+#woocommerce-product-data ul.wc-tabs li.people_tab.show_if_wps_booking a:before{
     font-family: WooCommerce;
     content: '\e03a';
 }
-#woocommerce-product-data ul.wc-tabs li.availability_tab.show_if_mwb_booking a:before{
+#woocommerce-product-data ul.wc-tabs li.availability_tab.show_if_wps_booking a:before{
     font-family: WooCommerce;
     content: '\e02c';
 }
-#woocommerce-product-data ul.wc-tabs li.services_tab.show_if_mwb_booking a:before{
+#woocommerce-product-data ul.wc-tabs li.services_tab.show_if_wps_booking a:before{
     font-family: WooCommerce;
     content: '\e02b';
 }
-#woocommerce-product-data ul.wc-tabs li.cost_tab.show_if_mwb_booking a:before{
+#woocommerce-product-data ul.wc-tabs li.cost_tab.show_if_wps_booking a:before{
     font-family: Dashicons;
     content: '\f111';
 }
@@ -26,7 +26,7 @@ th#taxonomy-mwb_booking_service, th#taxonomy-mwb_booking_cost{
     text-align: center;
     text-transform: capitalize;
 }
-span.mwb-mbfw-booking-product-order-listing {
+span.wps-mbfw-booking-product-order-listing {
     background-color: #2196f3;
     color: #ffffff;
     font-weight: 600;
@@ -36,8 +36,8 @@ span.mwb-mbfw-booking-product-order-listing {
 
 li
 {
-    &#wp-admin-bar-mwb-mbfw-custom-admin-menu-bookings {
-        .mwb-mbfw-booking-count {
+    &#wp-admin-bar-wps-mbfw-custom-admin-menu-bookings {
+        .wps-mbfw-booking-count {
             font-weight: 700!important;
             background: #d63638;
             display: inline-block;

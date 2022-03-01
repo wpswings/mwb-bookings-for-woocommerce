@@ -102,7 +102,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
-		if ( is_plugin_active_for_network( 'bookings-for-woocommerce/bookings-for-woocommerce.php' ) ) {
+		if ( is_plugin_active_for_network( 'mwb-bookings-for-woocommerce/bookings-for-woocommerce.php' ) ) {
 			$blog_id = isset( $new_site->blog_id ) ? $new_site->blog_id : '';
 			switch_to_blog( $blog_id );
 			include_once plugin_dir_path(__FILE__) . 'includes/class-bookings-for-woocommerce-activator.php';

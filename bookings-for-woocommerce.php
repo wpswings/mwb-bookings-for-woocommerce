@@ -38,6 +38,20 @@ if (! defined('ABSPATH') ) {
 }
 
 if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', array() ), true ) || ( is_multisite() && array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins', array() ) ) ) ) {
+		include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		if ( is_plugin_active( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ) ) {
+			$plug = get_plugins();
+		
+			if ( isset( $plug[ 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ] ) ) {
+				if ( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php']['Version'] < '1.0.5' ) {
+				
+					unset( $_GET['activate'] );
+					deactivate_plugins( plugin_basename( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ) );
+					add_action( 'admin_notices', 'wps_bfw_show_pro_deactivate_notice' );
+				}
+		
+			}
+		}
 	/**
 	 * Define plugin constants.
 	 *
@@ -297,4 +311,13 @@ function wps_bfw_show_admin_notices() {
 	if ( isset( $_GET['activate'] ) ) { // phpcs:ignore
 		unset( $_GET['activate'] ); //phpcs:ignore
 	}
+}
+function wps_bfw_show_pro_deactivate_notice() {
+	$wps_bfw_child_plugin  = __( 'Bookings For WooCommerce Pro', 'bookings-for-woocommerce' );
+	$wps_bfw_parent_plugin = __( 'Bookings For WooCommerce', 'bookings-for-woocommerce' );
+	$wps_bfw_pro_version = __( 'Version 1.0.5', 'bookings-for-woocommerce' );
+	echo '<div class="notice notice-error is-dismissible"><p>'
+	/* translators: %s: dependency checks */
+	. sprintf( esc_html__( '%1$s requires %2$s %3$s and above to function correctly. Please update %2$s to %3$s before activating %1$s. For now, the plugin has been deactivated.', 'bookings-for-woocommerce' ), '<strong>' . esc_html( $wps_bfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $wps_bfw_parent_plugin ) . '</strong>', '<strong>' . esc_html( $wps_bfw_pro_version ) . '</strong>' )
+	. '</p></div>';
 }

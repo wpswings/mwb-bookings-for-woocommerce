@@ -78,7 +78,6 @@ class Wps_Bfw_Data_Handler {
 	 */
 	public static function wps_bfw_migrate_post_meta_keys() {
 		$wps_booking_old_post_meta_keys = array(
-			'mwb_all_plugins_active'                   => '',
 			'mwb_mbfw_booking_criteria'                => '',
 			'mwb_mbfw_maximum_booking_per_unit'        => '',
 			'mwb_mbfw_booking_unit'                    => '',
@@ -87,7 +86,6 @@ class Wps_Bfw_Data_Handler {
 			'mwb_mbfw_admin_confirmation'              => '',
 			'mwb_mbfw_cancellation_allowed'            => '',
 			'mwb_bfwp_order_statuses_to_cancel'        => '',
-			'mwb_mbfw_cancellation_allowed'		       => '',
 			'mwb_mbfw_booking_unit_cost'               => '',
 			'mwb_mbfw_is_booking_unit_cost_per_people' => '',
 			'mwb_mbfw_booking_base_cost'               => '',
@@ -208,8 +206,8 @@ class Wps_Bfw_Data_Handler {
 			$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `name` = 'wps_booking',`slug`='wps_booking'
 			WHERE  `name` = 'mwb_booking'", $term_table ) );
 		}
-
 	}
+	
 	/**
 	 * Function to migrate user meta values.
 	 *
@@ -262,6 +260,7 @@ class Wps_Bfw_Data_Handler {
 			}
 		}
 	}
+
 	/**
 	 * function to migrate item meta keys.
 	 *
@@ -291,6 +290,7 @@ class Wps_Bfw_Data_Handler {
 			}
 		}
 	}
+
 	/**
 	 * Function to migrate sessions value.
 	 *
@@ -318,7 +318,6 @@ class Wps_Bfw_Data_Handler {
 			}
 		}
 	}
-
 
 	// End of class.
 }

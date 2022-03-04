@@ -76,7 +76,7 @@ class Bookings_For_Woocommerce {
 			$this->version = BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.0.0';
+			$this->version = '2.0.5';
 		}
 
 		$this->plugin_name = 'bookings-for-woocommerce';

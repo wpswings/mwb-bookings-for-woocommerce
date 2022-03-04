@@ -15,7 +15,7 @@
  * Plugin Name:       Bookings For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/bookings-for-woocommerce/
  * Description:       WPS Bookings for WooCommerce helps you stay focused while offering a better online booking system for your business growth. Just stop speculating and opt for the best one out.
- * Version:           2.0.4
+ * Version:           2.0.5
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-bookings-official&utm_medium=bookings-org-backend&utm_campaign=official
  * Text Domain:       bookings-for-woocommerce
@@ -26,7 +26,7 @@
  * WC requires at least: 4.0.0
  * WC tested up to:      6.1.0
  * Requires PHP:         7.2
- * Stable tag:           2.0.4
+ * Stable tag:           2.0.5
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -58,7 +58,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 * @since 2.0.0
 	 */
 	function define_bookings_for_woocommerce_constants() {
-		bookings_for_woocommerce_constants('BOOKINGS_FOR_WOOCOMMERCE_VERSION', '2.0.4');
+		bookings_for_woocommerce_constants('BOOKINGS_FOR_WOOCOMMERCE_VERSION', '2.0.5');
 		bookings_for_woocommerce_constants('BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path(__FILE__));
 		bookings_for_woocommerce_constants('BOOKINGS_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url(__FILE__));
 		bookings_for_woocommerce_constants('BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com');

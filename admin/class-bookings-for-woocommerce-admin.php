@@ -82,6 +82,22 @@ class Bookings_For_Woocommerce_Admin {
 	 */
 	public function bfw_admin_enqueue_scripts( $hook ) {
 
+		$wps_migrator_params =array(
+			'ajaxurl'              => admin_url( 'admin-ajax.php' ),
+			'nonce'                => wp_create_nonce( 'wps_bfw_popup_nonce' ),
+			'wps_bfw_callback'     => 'wps_bfw_ajax_callbacks',
+
+			'wps_post_meta_count'  => $this->wps_bfw_get_count( 'pending', 'count', 'post' ),
+			'wps_pending_post_meta' => $this->wps_bfw_get_count( 'pending', 'result', 'post' ),
+
+			'wps_term_meta_count' => $this->wps_bfw_get_count( 'pending', 'count', 'terms' ),
+			'wps_pending_term_meta' => $this->wps_bfw_get_count( 'pending', 'result', 'terms' ),
+
+			'wps_pending_user_count'=>$this->wps_bfw_get_count( 'pending', 'count', 'users' ),
+			'wps_pending_user_meta'=>$this->wps_bfw_get_count( 'pending', 'result', 'users' ),
+		);
+		$wps_migrator_params = apply_filters('wps_bfw_migrator_params_array',$wps_migrator_params);
+		
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && 'wp-swings_page_bookings_for_woocommerce_menu' === $screen->id ) {
 			wp_enqueue_script('wps-mbfw-select2', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false);
@@ -115,6 +131,16 @@ class Bookings_For_Woocommerce_Admin {
 			wp_enqueue_script($this->plugin_name . 'admin-js');
 			wp_enqueue_script('wps-mbfw-admin-min-js', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-admin.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'wps-admin-full-calendar-js', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.js', array( 'jquery' ), '5.8.0', true );
+
+
+			
+			wp_enqueue_script( $this->plugin_name . '-popup-migrate', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-bfw-migrator-popoup.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( $this->plugin_name . '-swal-migrate', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/swal.js', array( 'jquery' ), $this->version, false );
+			wp_localize_script(
+				$this->plugin_name . '-popup-migrate',
+				'localised',
+				$wps_migrator_params
+			);
 		}
 		wp_enqueue_script( 'wps-mbfw-admin-custom-global-js', BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-admin-global-custom.min.js', array( 'jquery' ), $this->version, true );
 	}
@@ -1491,7 +1517,453 @@ class Bookings_For_Woocommerce_Admin {
 	public function wps_bfw_migrate_settings_from_older_plugin() {
 		if ( ! get_option( 'wps_bfw_plugin_setting_migrated' ) ) {
 			include_once BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-bookings-for-woocommerce-activator.php';
-			Bookings_For_Woocommerce_Activator::wps_migrate_old_plugin_settings();
+			// Bookings_For_Woocommerce_Activator::wps_migrate_old_plugin_settings();
 		}
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $type
+	 * @param string $action
+	 * @return void
+	 */
+	public function wps_bfw_get_count( $status = 'all', $action = 'count', $type = false ) {
+		global $wpdb;
+
+		if ( 'post' === $type ) {
+			switch ( $status ) {
+				case 'pending':
+					$table = $wpdb->prefix . 'postmeta';
+					if ( 'result' === $action ) {
+						$sql = "SELECT DISTINCT (`post_id`) FROM `$table` WHERE `meta_key` LIKE '%mwb_mbfw%' ";
+					} else {
+						$sql = "SELECT (`post_id`) FROM `$table` WHERE `meta_key` LIKE '%mwb_mbfw%' ";
+					}
+					$sql = apply_filters( 'wps_bfw_sql_for_post_meta', $sql, $table, $action );
+					break;
+				default:
+					$sql = false;
+					break;
+			}
+			if ( empty( $sql ) ) {
+				return 0;
+			}
+			$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
+
+		} elseif ( 'terms' === $type ) {
+			switch ( $status ) {
+				case 'pending':
+					$term_query = new WP_Term_Query();
+					$term_args_cost = array( 
+						'taxonomy' => 'mwb_booking_cost',
+						'hide_empty' => false,
+					);
+					$term_cost = $term_query->query( $term_args_cost );
+					
+					$result = array();
+					if ( ! empty( $term_cost ) ) {
+						foreach( $term_cost as $index => $value ) {
+							array_push( $result, array( 'term_id' => "$value->term_id" ) );
+						}
+					}
+					$term_args = array(
+						'taxonomy' => 'mwb_booking_service',
+						'hide_empty' => false,
+					);
+			
+					$terms = $term_query->query( $term_args );
+			
+					if (! empty($terms)) {
+						foreach($terms as $index => $value) {
+							array_push( $result, array( 'term_id' => "$value->term_id" ) );
+						}
+					}
+					$result = apply_filters('wps_bfw_migrate_get_terms_id_array', $result );
+					break;
+				default:
+					$result = false;
+					break;
+			}
+		} elseif ( 'users' === $type ) {
+			switch ( $status ) {
+				case 'pending':
+					$table = $wpdb->prefix . 'usermeta';
+					if ( 'result' === $action ) {
+						$sql = "SELECT DISTINCT (`user_id`) FROM `$table` WHERE (`meta_key` LIKE '%_woocommerce_persistent_cart_1%' OR `meta_key` LIKE '%meta-box-order_product%') AND `meta_value` LIKE '%mwb_%' ";
+						
+					} else {
+						$sql = "SELECT (`user_id`) FROM `$table` WHERE ((`meta_key` LIKE '%_woocommerce_persistent_cart_1%' OR `meta_key` LIKE '%meta-box-order_product%') AND `meta_value` LIKE '%mwb_%') ";
+					}
+					break;
+
+				default:
+					$sql = false;
+					break;
+			}
+			if ( empty( $sql ) ) {
+				return 0;
+			}
+			$result = $wpdb->get_results( $sql, ARRAY_A );
+		}
+
+
+		if ( 'count' === $action ) {
+			$result = ! empty( $result ) ? count( $result ) : 0;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Ajax Call back.
+	 */
+	public function wps_bfw_ajax_callbacks() {
+		check_ajax_referer( 'wps_bfw_popup_nonce', 'nonce' );
+		$event = ! empty( $_POST['wps_event'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_event'] ) ) : '';
+		if ( method_exists( $this, $event ) ) {
+			$data = $this->$event( $_POST );
+		} else {
+			$data = esc_html__( 'method not found', 'bookings-for-woocommerce' );
+		}
+		echo wp_json_encode( $data );
+		wp_die();
+	}
+	/**
+	 * Function to migrate post meta.
+	 *
+	 * @param array $posted_data
+	 * @return void
+	 */
+	public function wps_bfw_import_single_post( $posted_data = array() ) {
+		$posts = ! empty( $posted_data['posts'] ) ? $posted_data['posts'] : array();
+		if ( empty( $posts ) ) {
+			return array();
+		}
+
+		// Remove this order from request.
+		foreach ( $posts as $key => $post ) {
+			$post_id = ! empty( $post['post_id'] ) ? $post['post_id'] : false;
+			unset( $posts[ $key ] );
+			break;
+		}
+		// Attempt for one order.
+		// if ( ! empty( $post_id ) ) {
+		// 	try {
+
+		// 		$post_meta_keys = array(
+		// 			'mwb_mbfw_booking_criteria'                => '',
+		// 			'mwb_mbfw_maximum_booking_per_unit'        => '',
+		// 			'mwb_mbfw_booking_unit'                    => '',
+		// 			'mwb_mbfw_enable_calendar'                 => '',
+		// 			'mwb_mbfw_enable_time_picker'              => '',
+		// 			'mwb_mbfw_admin_confirmation'              => '',
+		// 			'mwb_mbfw_cancellation_allowed'            => '',
+		// 			'mwb_bfwp_order_statuses_to_cancel'        => '',
+		// 			'mwb_mbfw_booking_unit_cost'               => '',
+		// 			'mwb_mbfw_is_booking_unit_cost_per_people' => '',
+		// 			'mwb_mbfw_booking_base_cost'               => '',
+		// 			'mwb_mbfw_is_booking_base_cost_per_people' => '',
+		// 			'mwb_mbfw_is_people_option'                => '',
+		// 			'mwb_mbfw_minimum_people_per_booking'      => '',
+		// 			'mwb_mbfw_maximum_people_per_booking'      => '',
+		// 			'mwb_mbfw_is_add_extra_services'           => '',
+		// 			'mwb_mbfw_max_bookings'                    => '',
+		// 			'mwb_mbfw_booking_count'                   => '',
+		// 		);
+				// $post_meta_keys = apply_filters( 'wps_bfw_migrate_post_meta_array', $post_meta_keys );
+
+		// 		foreach ( $post_meta_keys as $key => $meta_keys ) {
+
+		// 			if ( ! empty( $post_id ) ) {
+		// 				$value   = get_post_meta( $post_id, $key, true );
+						// if ( 'mwb_mbfw_rescheduling_allowed' === $key ) {
+						// 	$new_key = str_replace( 'mwb_', 'wps_', $key );
+						// } elseif (str_contains($key,'mwb_mbfw_')) {
+						// 	$new_key = str_replace( 'mwb_mbfw_', 'wps_bfw_', $key );
+						// } else {
+						// 	$new_key = str_replace( 'mwb_', 'wps_', $key );
+						// }
+		// 				if ( ! empty( get_post_meta( $post_id, $new_key, true ) ) ) {
+		// 					continue;
+		// 				}
+		// 				update_post_meta($post_id,$new_key,$value);
+		// 			}
+		// 		}
+		// 	} catch ( \Throwable $th ) {
+		// 		wp_die( esc_html( $th->getMessage() ) );
+		// 	}
+		// }
+		return compact( 'posts' );
+	}
+	/**
+	 * Function to migrate term meta.
+	 *
+	 * @param array $posted_data
+	 * @return void
+	 */
+	public function wps_bfw_import_single_term( $posted_data = array() ) {
+		$terms = ! empty( $posted_data['terms'] ) ? $posted_data['terms'] : array();
+		if ( empty( $terms ) ) {
+			return array();
+		}
+
+		// Remove this order from request.
+		foreach ( $terms as $key => $term ) {
+			$term_id = ! empty( $term['term_id'] ) ? $term['term_id'] : false;
+			unset( $terms[ $key ] );
+			break;
+		}
+		// Attempt for one order.
+		// if ( ! empty( $term_id ) ) {
+		// 	try {
+
+		// 		$term_meta_keys = array(
+		// 			'mwb_mbfw_booking_cost'                      => '',
+		// 			'mwb_mbfw_is_booking_cost_multiply_people'   => '',
+		// 			'mwb_mbfw_is_booking_cost_multiply_duration' => '',
+		// 			'mwb_mbfw_service_cost'                      => '',
+		// 			'mwb_mbfw_is_service_cost_multiply_people'   => '',
+		// 			'mwb_mbfw_is_service_cost_multiply_duration' => '',
+		// 			'mwb_mbfw_is_service_optional' 				 => '',
+		// 			'mwb_mbfw_is_service_hidden'                 => '',
+		// 			'mwb_mbfw_is_service_has_quantity'           => '',
+		// 			'mwb_mbfw_service_minimum_quantity'		     => '',
+		// 			'mwb_mbfw_service_maximum_quantity'          => '',
+		// 		);
+		// $term_meta_keys = apply_filters( 'wps_bfw_migrate_term_meta_array', $term_meta_keys );
+
+		// 		foreach ( $term_meta_keys as $key => $meta_keys ) {
+
+		// 			if ( ! empty( $term_id ) ) {
+		// 				$value   = get_term_meta( $term_id, $key, true );
+		// 				if (str_contains($key,'mwb_mbfw_')) {
+						// 	$new_key = str_replace( 'mwb_mbfw_', 'wps_bfw_', $key );
+						// } else {
+						// 	$new_key = str_replace( 'mwb_', 'wps_', $key );
+						// }
+		// 				if ( ! empty( get_term_meta( $term_id, $new_key, true ) ) || empty ( $value ) ) {
+		// 					continue;
+		// 				}
+		// 				update_term_meta( $term_id, $new_key, $value );
+		// 			}
+		// 		}
+		// 	} catch ( \Throwable $th ) {
+		// 		wp_die( esc_html( $th->getMessage() ) );
+		// 	}
+		// }
+		return compact( 'terms' );
+	}
+
+		/**
+	 * Function to migrate term meta.
+	 *
+	 * @param array $posted_data
+	 * @return void
+	 */
+	public function wps_bfw_import_single_user( $posted_data = array() ) {
+
+		$users = ! empty( $posted_data['users'] ) ? $posted_data['users'] : array();
+		if ( empty( $users ) ) {
+			return array();
+		}
+
+		// Remove this order from request.
+		foreach ( $users as $key => $user ) {
+			$user_id = ! empty( $user['user_id'] ) ? $user['user_id'] : false;
+			unset( $users[ $key ] );
+			break;
+		}
+		// Attempt for one order.
+		// if ( ! empty( $user_id ) ) {
+		// 	try {
+
+		// 		$user_meta_keys = array(
+		// 			'_woocommerce_persistent_cart_1' => '',
+		// 			'meta-box-order_product'         => '',
+		// 		);
+		// 		foreach ( $user_meta_keys as $meta_keys => $meta_val ) {
+
+		// 			$value   = get_user_meta( $user_id, $meta_keys, true );
+		// 			if ( '_woocommerce_persistent_cart_1' === $meta_keys ) {
+		// 				if ( ! empty($value['cart'] ) ) {
+		// 					foreach ( $value['cart'] as $key => $v ) {
+		// 						if ( isset( $v['mwb_mbfw_booking_values'] ) ) {
+		// 							$v['wps_bfw_booking_values'] = $v['mwb_mbfw_booking_values'];
+		// 							unset( $v['mwb_mbfw_booking_values'] );
+		// 							$value['cart'][$key] = $v;
+		// 							update_user_meta( $user_id, $meta_keys, $value );
+		// 						}
+		// 					}
+		// 				}
+		// 			} else if ( 'meta-box-order_product' === $meta_keys ) {
+		// 				if ( ! empty($value['side']) ) {
+		// 					$a=explode(',',$value['side']);
+		// 					foreach( $a as $key => $val) {
+		// 						if ( str_contains($val, 'mwb_booking') ) { 
+		// 							$new_val = str_replace( 'mwb', 'wps', $val );
+		// 							$a[$key] = $new_val;
+		// 						}
+		// 					}
+		// 					$str = implode( ',', $a );
+		// 					$value['side'] = $str;
+		// 				}
+		// 				update_user_meta( $user_id, $meta_keys, $value );
+		// 			}
+					
+		// 		}
+		// 	} catch ( \Throwable $th ) {
+		// 		wp_die( esc_html( $th->getMessage() ) );
+		// 	}
+		// }
+		return compact( 'users' );
+		
+	}
+
+	public static function wps_bfw_migrate_taxonomy_values(){
+		// global $wpdb;
+		
+		// $post_table = $wpdb->prefix . 'term_taxonomy';
+		
+		// if ( $wpdb->query( $wpdb->prepare("SELECT * FROM %1s WHERE  `taxonomy` = 'mwb_booking_cost'", $post_table ) ) ) {
+		// 	$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `taxonomy` = 'wps_booking_cost' 
+		// 	WHERE  `taxonomy` = 'mwb_booking_cost'", $post_table ) );
+		// }
+
+		// if ( $wpdb->query( $wpdb->prepare("SELECT * FROM %1s WHERE  `taxonomy` = 'mwb_booking_service'", $post_table ) ) ) {
+		// 	$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `taxonomy` = 'wps_booking_service' 
+		// 	WHERE  `taxonomy` = 'mwb_booking_service'", $post_table ) );
+		// }
+		// do_action('wps_migrate_pro_taxonomy',$post_table);
+		// $term_table = $wpdb->prefix . 'terms';
+		// if ( $wpdb->query( $wpdb->prepare("SELECT * FROM %1s WHERE  `name` = 'mwb_booking'", $term_table ) ) ) {
+		// 	$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `name` = 'wps_booking',`slug`='wps_booking'
+		// 	WHERE  `name` = 'mwb_booking'", $term_table ) );
+		// }
+		return array();
+		}
+		/**
+		 * Undocumented function
+		 *
+		 * @return void
+		 */
+		public static function wps_bfw_migrate_option_values(){
+			// $wps_booking_old_settings_options = array(
+			// 	'mwb_mbfw_is_plugin_enable'         => 'yes',
+			// 	'mwb_mbfw_is_booking_enable'        => '',
+			// 	'mwb_mbfw_is_show_included_service' => '',
+			// 	'mwb_mbfw_is_show_totals'           => '',
+			// 	'mwb_mbfw_daily_start_time'         => '05:24',
+			// 	'mwb_mbfw_daily_end_time'           => '23:26',
+			// );
+			// foreach ( $wps_booking_old_settings_options as $key => $value ) {
+			// 	$new_key = str_replace( 'mwb_mbfw_', 'wps_bfw_', $key );
+	
+			// 	if ( ! empty( get_option( $new_key ) ) ) {
+			// 		continue;
+			// 	}
+	
+			// 	$new_value = get_option( $key, $value );
+			// 	update_option( $new_key, $new_value );
+			// }
+			// do_action('wps_bfw_migrate_pro_options_keys');
+			return array();
+		}
+		/**
+		 * Undocumented function migrate order itemmeta values
+		 *
+		 * @return void
+		 */
+		public static function wps_bfw_migrate_order_itemmeta_values(){
+			// global $wpdb;
+	
+			// $key_like  = '_mwb';
+			// $order_item_meta_table = $wpdb->prefix . 'woocommerce_order_itemmeta';
+			// $sql = $wpdb->prepare(
+			// 	"SELECT * FROM $order_item_meta_table WHERE meta_key LIKE %s;",
+			// 	'%' . $wpdb->esc_like( $key_like ) . '%'
+			// );
+			// $result_keys = $wpdb->get_results($sql);
+			// if ( ! empty ($result_keys) ) {
+			// 	foreach ( $result_keys as $item_meta_row ) {
+			// 		if ( str_contains( $item_meta_row->meta_key, '_mwb_mbfw') ) { 
+			// 			$new_key = str_replace( '_mwb_mbfw', '_wps_bfw', $item_meta_row->meta_key );
+			// 			$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `meta_key` = '%2s' 
+			// 			WHERE `meta_id` = $item_meta_row->meta_id", $order_item_meta_table, $new_key ) );
+			// 		} elseif ( str_contains( $item_meta_row->meta_key, '_mwb') ) {
+			// 			$new_key = str_replace( '_mwb', '_wps', $item_meta_row->meta_key );
+			// 			$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `meta_key` = '%2s' 
+			// 			WHERE `meta_id` = $item_meta_row->meta_id", $order_item_meta_table, $new_key ) );
+			// 		}
+			// 	}
+			// }
+			return array();
+		}
+	/**
+	 * Function to migrate sessions value.
+	 *
+	 * @return void
+	 */
+	public static function wps_bfw_migrate_sessions_values() {
+		// global $wpdb;
+	
+		// $key_like  = 'mwb';
+		// $woocommerce_sessions_table = $wpdb->prefix . 'woocommerce_sessions';
+		// $sql = $wpdb->prepare(
+		// 	"SELECT * FROM $woocommerce_sessions_table WHERE session_value LIKE %s;",
+		// 	'%' . $wpdb->esc_like( $key_like ) . '%'
+		// );
+		// $result_keys = $wpdb->get_results( $sql );
+		// var_dump($result_keys);
+		// if ( ! empty ( $result_keys ) ) {
+		// 	foreach ( $result_keys as $item_meta_row ) {
+		// 		if ( str_contains($item_meta_row->session_value, 'mwb_mbfw_booking_values') ) { 
+		// 			$new_val = str_replace( 'mwb_mbfw_booking_values', 'wps_bfw_booking_values', $item_meta_row->session_value );
+		// 			$item_meta_row->session_value = $new_val;
+		// 			$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `session_value` = %2s 
+		// 			WHERE  `session_id` = %3s", $woocommerce_sessions_table, $item_meta_row->session_value, $item_meta_row->session_id ) );
+		// 		}
+		// 	}
+		// }
+		return array();
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @param array $posted_data
+	 * @return void
+	 */
+	public static function wps_bfw_import_single_shortcode( $posted_data = array() ) {
+		$shortcodes = ! empty( $posted_data['shortcodes'] ) ? $posted_data['shortcodes'] : array();
+		if ( empty( $shortcodes ) ) {
+			return array();
+		}
+
+		// Remove this order from request.
+		foreach ( $shortcodes as $key => $shortcode ) {
+			$page_id = ! empty( $shortcode['ID'] ) ? $shortcode['ID'] : false;
+			unset( $shortcodes[ $key ] );
+			break;
+		}
+		// Attempt for one order.
+		if ( ! empty( $page_id ) ) {
+			try {
+
+				$post = get_post( $page_id );
+				$content = $post->post_content;
+
+				$content = str_replace( 'MWB_', 'WPS_', $content );
+				// $content = str_replace( 'mwb_', 'wps_', $content );
+				$my_post = array(
+					'ID'           => $page_id,
+					'post_content' => $content,
+				);
+		
+				wp_update_post( $my_post );
+
+			} catch ( \Throwable $th ) {
+				wp_die( esc_html( $th->getMessage() ) );
+			}
+		}
+		return compact( 'shortcodes' );
 	}
 }

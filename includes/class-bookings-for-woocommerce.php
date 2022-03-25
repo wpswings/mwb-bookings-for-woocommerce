@@ -76,7 +76,7 @@ class Bookings_For_Woocommerce {
 			$this->version = BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.0.5';
+			$this->version = '3.0.0';
 		}
 
 		$this->plugin_name = 'bookings-for-woocommerce';
@@ -213,6 +213,7 @@ class Bookings_For_Woocommerce {
 		//Developer's Hook Listing.
 		$this->loader->add_action('bfw_developer_admin_hooks_array', $bfw_plugin_admin, 'wps_developer_admin_hooks_listing');
 		$this->loader->add_action('bfw_developer_public_hooks_array', $bfw_plugin_admin, 'wps_developer_public_hooks_listing');
+		$this->loader->add_action( 'wp_ajax_wps_bfw_ajax_callbacks', $bfw_plugin_admin, 'wps_bfw_ajax_callbacks' );
 
 		if ( 'yes' === get_option( 'wps_bfw_is_plugin_enable' ) ) {
 			$this->loader->add_filter( 'product_type_selector', $bfw_plugin_admin, 'bfw_add_product_type_in_dropdown', 10, 1 );

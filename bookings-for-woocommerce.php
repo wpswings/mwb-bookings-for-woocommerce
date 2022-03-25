@@ -43,7 +43,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 			$plug = get_plugins();
 		
 			if ( isset( $plug[ 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ] ) ) {
-				if ( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php']['Version'] < '1.0.5' ) {
+				if ( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php']['Version'] < '2.0.0' ) {
 				
 					unset( $_GET['activate'] );
 					deactivate_plugins( plugin_basename( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ) );

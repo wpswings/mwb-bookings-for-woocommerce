@@ -39,14 +39,6 @@ $bfw_default_tabs = $bfw_wps_bfw_obj->wps_bfw_plug_default_tabs();
 					)
 				)
 			);
-			$bfw_migration_button[] = array(
-				'type'        => 'button',
-				'id'          => 'wps_bfw_migration_button',
-				'button_text' => __('Migrate', 'bookings-for-woocommerce'),
-				'class'       => 'wps_bfw_availability_settings_save',
-				'name'        => 'wps_bfw_availability_settings_save',
-			);
-			$bfw_wps_bfw_obj->wps_bfw_plug_generate_html( $bfw_migration_button );
 			?>
 		</h1>
 		<a href="
@@ -100,6 +92,14 @@ $bfw_default_tabs = $bfw_wps_bfw_obj->wps_bfw_plug_default_tabs();
 			if ( empty( $bfw_active_tab ) ) {
 				$bfw_active_tab = 'wps_bfw_plug_general';
 			}
+			$bfw_migration_button[] = array(
+				'type'        => 'button',
+				'id'          => 'wps_bfw_migration_button',
+				'button_text' => __('Migrate settings', 'bookings-for-woocommerce'),
+				'class'       => 'wps_bfw_availability_settings_save',
+				'name'        => 'wps_bfw_availability_settings_save',
+			);
+			$bfw_wps_bfw_obj->wps_bfw_plug_generate_html( $bfw_migration_button );
 			// look for the path based on the tab id in the admin templates.
 			$bfw_default_tabs     = $bfw_wps_bfw_obj->wps_bfw_plug_default_tabs();
 			$bfw_tab_content_path = $bfw_default_tabs[ $bfw_active_tab ]['file_path'];

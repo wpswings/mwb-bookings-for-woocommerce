@@ -265,6 +265,14 @@ jQuery(document).ready( function($) {
 			} else { 
 				// All orders imported!
 				if (pro_active){
+					Swal.fire({
+						title   : 'Shortcode are being imported!',
+						html    : 'Do not reload/close this tab.',
+						footer  : '<span class="order-progress-report">' + pending_shortcode_count + ' are left to import',
+						didOpen: () => {
+							Swal.showLoading()
+						}
+					});
 					startImportShortcode(pending_shortcode);
 				} else {
 					Swal.fire({

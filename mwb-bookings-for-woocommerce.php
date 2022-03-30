@@ -36,7 +36,46 @@
 if (! defined('ABSPATH') ) {
 	die;
 }
+$old_pro_exists = false;
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+$plug           = get_plugins();
+if ( isset( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php'] ) ) {
+	if ( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php']['Version'] < '2.0.0' ) {
+		$old_pro_exists = true;
+	}
+}
+add_action( 'after_plugin_row_bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', 'wps_bfw_old_upgrade_notice', 0, 3 );
+/**
+ * Migration to ofl pro plugin.
+ *
+ * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+ * @param array  $plugin_data An array of plugin data.
+ * @param string $status Status filter currently applied to the plugin list.
+ */
+function wps_bfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
+	global $old_pro_exists;
+	if ( $old_pro_exists ) {
+		?>
+		<tr class="plugin-update-tr active notice-warning notice-alt">
+		<td colspan="4" class="plugin-update colspanchange">
+			<div class="notice notice-error inline update-message notice-alt">
+				<p class='wps-notice-title wps-notice-section'>
+					<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'woo-gift-cards-lite' ); ?></strong><br>
+					<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'woo-gift-cards-lite' ); ?><br>
+					<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'woo-gift-cards-lite' ); ?>
+				</p>
+			</div>
+		</td>
+	</tr>
+	<style>
+		.wps-notice-section > p:before {
+			content: none;
+		}
+	</style>
+		<?php
+	}
+}
 if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', array() ), true ) || ( is_multisite() && array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins', array() ) ) ) ) {
 		include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		if ( is_plugin_active( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ) ) {
@@ -116,7 +155,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
-		if ( is_plugin_active_for_network( 'mwb-bookings-for-woocommerce/bookings-for-woocommerce.php' ) ) {
+		if ( is_plugin_active_for_network( 'mwb-bookings-for-woocommerce/mwb-bookings-for-woocommerce.php' ) ) {
 			$blog_id = isset( $new_site->blog_id ) ? $new_site->blog_id : '';
 			switch_to_blog( $blog_id );
 			include_once plugin_dir_path(__FILE__) . 'includes/class-bookings-for-woocommerce-activator.php';

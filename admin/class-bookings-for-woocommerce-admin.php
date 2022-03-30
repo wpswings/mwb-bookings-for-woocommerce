@@ -874,9 +874,6 @@ class Bookings_For_Woocommerce_Admin {
 	 */
 	public function bfw_save_custom_product_meta_boxes_data( $id, $post ) {
 		$product = wc_get_product( $id );
-		// var_dump($product);
-		
-		// var_dump($product->get_type());die;
 		if ( $product && 'wps_booking' === $product->get_type() ) {
 			if ( ! isset( $_POST['_wps_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wps_nonce'] ) ), 'wps_booking_product_meta' ) ) {
 				return;
@@ -1839,6 +1836,11 @@ class Bookings_For_Woocommerce_Admin {
 			$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `name` = 'wps_booking',`slug`='wps_booking'
 			WHERE  `name` = 'mwb_booking'", $term_table ) );
 		}
+		$postmeta_table = $wpdb->prefix . 'postmeta';
+		if ( $wpdb->query( $wpdb->prepare("SELECT * FROM %1s WHERE  `meta_key` = 'mwb_order_type'", $postmeta_table ) ) ) {
+			$wpdb->query( $wpdb->prepare( "UPDATE %1s SET `meta_key` = 'wps_order_type'
+			WHERE  `meta_key` = 'mwb_order_type'", $postmeta_table ) );
+		}
 		return array();
 		}
 		/**
@@ -1913,7 +1915,6 @@ class Bookings_For_Woocommerce_Admin {
 			'%' . $wpdb->esc_like( $key_like ) . '%'
 		);
 		$result_keys = $wpdb->get_results( $sql );
-		var_dump($result_keys);
 		if ( ! empty ( $result_keys ) ) {
 			foreach ( $result_keys as $item_meta_row ) {
 				if ( str_contains($item_meta_row->session_value, 'mwb_mbfw_booking_values') ) { 

@@ -264,7 +264,7 @@ jQuery(document).ready( function($) {
 				})
 			} else { 
 				// All orders imported!
-				if (pro_active){
+				if ( pro_active ){
 					Swal.fire({
 						title   : 'Shortcode are being imported!',
 						html    : 'Do not reload/close this tab.',

@@ -92,6 +92,26 @@ $bfw_default_tabs = $bfw_wps_bfw_obj->wps_bfw_plug_default_tabs();
 			if ( empty( $bfw_active_tab ) ) {
 				$bfw_active_tab = 'wps_bfw_plug_general';
 			}
+			$old_pro_exists = false;
+			include_once ABSPATH . 'wp-admin/includes/plugin.php';
+			$plug           = get_plugins();
+			if ( isset( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php'] ) ) {
+				if ( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php']['Version'] >= '2.0.0' ) {
+					$old_pro_exists = true;
+				}
+			}
+			if ( $old_pro_exists ) {
+				if( ! get_option('wps_bfw_pro_migration_complete')){
+					$bfw_migration_button[] = array(
+						'type'        => 'button',
+						'id'          => 'wps_bfw_migration_button',
+						'button_text' => __('Migrate settings', 'bookings-for-woocommerce'),
+						'class'       => 'wps_bfw_availability_settings_save',
+						'name'        => 'wps_bfw_availability_settings_save',
+					);
+					$bfw_wps_bfw_obj->wps_bfw_plug_generate_html( $bfw_migration_button );
+				}
+			} else if(!get_option('wps_bfw_org_migration_complete')){
 			$bfw_migration_button[] = array(
 				'type'        => 'button',
 				'id'          => 'wps_bfw_migration_button',
@@ -100,6 +120,7 @@ $bfw_default_tabs = $bfw_wps_bfw_obj->wps_bfw_plug_default_tabs();
 				'name'        => 'wps_bfw_availability_settings_save',
 			);
 			$bfw_wps_bfw_obj->wps_bfw_plug_generate_html( $bfw_migration_button );
+			}
 			// look for the path based on the tab id in the admin templates.
 			$bfw_default_tabs     = $bfw_wps_bfw_obj->wps_bfw_plug_default_tabs();
 			$bfw_tab_content_path = $bfw_default_tabs[ $bfw_active_tab ]['file_path'];

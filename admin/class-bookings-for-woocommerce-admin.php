@@ -1967,4 +1967,20 @@ class Bookings_For_Woocommerce_Admin {
 		}
 		return compact( 'shortcodes' );
 	}
+	/**
+	 * Function to update org  migration completed.
+	 *
+	 * @return void
+	 */
+	public static function wps_bfw_org_migration_complete() {
+		return update_option('wps_bfw_org_migration_complete','yes');
+	}
+	/**
+	 * Function to update pro  migration completed.
+	 *
+	 * @return void
+	 */
+	public static function wps_bfw_pro_migration_complete() {
+		return update_option('wps_bfw_pro_migration_complete','yes');
+	}
 }

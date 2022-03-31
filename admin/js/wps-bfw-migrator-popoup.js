@@ -264,7 +264,7 @@ jQuery(document).ready( function($) {
 				})
 			} else { 
 				// All orders imported!
-				if ( pro_active ){
+				if (pro_active){
 					Swal.fire({
 						title   : 'Shortcode are being imported!',
 						html    : 'Do not reload/close this tab.',
@@ -275,9 +275,22 @@ jQuery(document).ready( function($) {
 					});
 					startImportShortcode(pending_shortcode);
 				} else {
-					Swal.fire({
-						title   : 'All Data are migrated successfully!',
+					var wps_event   = 'wps_bfw_org_migration_complete';
+					var request = { action, wps_event, nonce };
+					jQuery.post( ajaxUrl , request ).done(function( response ){
+						if(response){
+							Swal.fire({
+								title   : 'All Data are migrated successfully!',
+							}).then(
+								function(result){
+									location.reload();
+								}
+							)
+							
+						}
+						
 					})
+
 				}
 			}
 		}, function(error) {
@@ -301,8 +314,20 @@ jQuery(document).ready( function($) {
 				jQuery('.order-progress-report').text( count + ' are left to import' );
 				startImportShortcode(shortcodes);
 			} else {
-				Swal.fire({
-					title   : 'All Data are migrated successfully!',
+				var wps_event   = 'wps_bfw_pro_migration_complete';
+				var request = { action, wps_event, nonce };
+				jQuery.post( ajaxUrl , request ).done(function( response ){
+					if(response){
+						Swal.fire({
+							title   : 'All Data are migrated successfully!',
+						}).then(
+							function(result){
+								location.reload();
+							}
+						)
+						
+					}
+					
 				})
 
 			}

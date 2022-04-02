@@ -44,36 +44,107 @@ if ( isset( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php
 		$old_pro_exists = true;
 	}
 }
-add_action( 'after_plugin_row_bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', 'wps_bfw_old_upgrade_notice', 0, 3 );
-/**
- * Migration to ofl pro plugin.
- *
- * @param string $plugin_file Path to the plugin file relative to the plugins directory.
- * @param array  $plugin_data An array of plugin data.
- * @param string $status Status filter currently applied to the plugin list.
- */
-function wps_bfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
-	global $old_pro_exists;
-	if ( $old_pro_exists ) {
+add_action( 'after_plugin_row_bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', 'wps_wgm_old_upgrade_notice', 0, 3 );
+	/**
+	 * Migration to ofl pro plugin.
+	 *
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param array  $plugin_data An array of plugin data.
+	 * @param string $status Status filter currently applied to the plugin list.
+	 */
+	function wps_wgm_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+		global $old_pro_exists;
+		if ( $old_pro_exists ) {
+			?>
+			<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-error inline update-message notice-alt">
+					<p class='wps-notice-title wps-notice-section'>
+						<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'woo-gift-cards-lite' ); ?></strong><br>
+						<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'woo-gift-cards-lite' ); ?><br>
+						<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'woo-gift-cards-lite' ); ?>
+					</p>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+			<?php
+
+
+		}
+	}
+
+if ( true === $old_pro_exists ) {
+
+	add_action( 'admin_notices', 'wps_bfw_add_updatenow_notice' );
+
+	/**
+	 * Displays notice to upgrade to Bookings.
+	 */
+	function wps_bfw_add_updatenow_notice() {
+		$screen = get_current_screen();
+		if ( isset( $screen->id ) && 'wp-swings_page_bookings_for_woocommerce_menu' === $screen->id ) {
 		?>
 		<tr class="plugin-update-tr active notice-warning notice-alt">
-		<td colspan="4" class="plugin-update colspanchange">
-			<div class="notice notice-error inline update-message notice-alt">
-				<p class='wps-notice-title wps-notice-section'>
-					<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'woo-gift-cards-lite' ); ?></strong><br>
-					<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'woo-gift-cards-lite' ); ?><br>
-					<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'woo-gift-cards-lite' ); ?>
-				</p>
-			</div>
-		</td>
-	</tr>
-	<style>
-		.wps-notice-section > p:before {
-			content: none;
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-error inline update-message notice-alt">
+					<div class='wps-notice-title wps-notice-section'>
+						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'bookings-for-woocommerce' ); ?></strong></p>
+					</div>
+					<div class='wps-notice-content wps-notice-section'>
+						<p><strong><?php esc_html_e( 'Your Woocommerce Bookings Pro plugin update is here! Please Update it now via plugins page.', 'bookings-for-woocommerce' ); ?></strong></p>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+
+				<?php
 		}
-	</style>
-		<?php
+
+	}//end wps_bfw_add_updatenow_notice()
+	add_action( 'admin_notices', 'wps_bfw_check_and_inform_update' );
+
+	/**
+	 * Check update if pro is old.
+	 */
+	function wps_bfw_check_and_inform_update() {
+		$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'bookings-for-woocommerce-pro/class-wps-bookings-for-woocommerce-pro-update.php';
+
+		// If present but not active.
+		if ( ! is_plugin_active( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ) ) {
+			if ( file_exists( $update_file ) ) {
+				$wps_bfw_pro_license_key = get_option( 'mwb_bfwp_license_key', '' );
+				! defined( 'BOOKINGS_FOR_WOOCOMMERCE_PRO_LICENSE_KEY' ) && define( 'BOOKINGS_FOR_WOOCOMMERCE_PRO_LICENSE_KEY', $wps_bfw_pro_license_key );
+				! defined( 'BOOKINGS_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) && define( 'BOOKINGS_FOR_WOOCOMMERCE_PRO_BASE_FILE', 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' );
+			}
+			require_once $update_file;
+		}
+
+		if ( defined( 'BOOKINGS_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) ) {
+			$wps_sfw_version_old_pro = new Mwb_Bookings_For_Woocommerce_Pro_Update();
+			$wps_sfw_version_old_pro->mwb_check_update();
+			$plugin_transient  = get_site_transient( 'update_plugins' );
+			$update_obj        = ! empty( $plugin_transient->response[ BOOKINGS_FOR_WOOCOMMERCE_PRO_BASE_FILE ] ) ? $plugin_transient->response[ BOOKINGS_FOR_WOOCOMMERCE_PRO_BASE_FILE ] : false;
+
+			if ( ! empty( $update_obj ) ) :
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><?php esc_html_e( 'Your Bookings For WooCommerce Pro plugin update is here! Please Update it now.', 'bookings-for-woocommerce' ); ?></p>
+				</div>
+				<?php
+			endif;
+		}
 	}
 }
 if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', array() ), true ) || ( is_multisite() && array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins', array() ) ) ) ) {
@@ -83,7 +154,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		
 			if ( isset( $plug[ 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ] ) ) {
 				if ( $plug['bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php']['Version'] < '2.0.0' ) {
-				
+					sleep(60);
 					unset( $_GET['activate'] );
 					deactivate_plugins( plugin_basename( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php' ) );
 					add_action( 'admin_notices', 'wps_bfw_show_pro_deactivate_notice' );

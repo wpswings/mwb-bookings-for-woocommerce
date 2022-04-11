@@ -15,7 +15,6 @@ jQuery(document).ready( function($) {
 
 	const pending_shortcode = localised.wps_pending_shortcode;
 	const pending_shortcode_count = localised.wps_shortcode_pending_count;
-	const pro_active = localised.wps_booking_pro_active;
 	const pending_taxonomy = (localised.wps_pending_taxonomy);
 	const pending_count  = localised.wps_pending_count;
 	const pending_orders = localised.wps_pending_orders;
@@ -27,22 +26,23 @@ jQuery(document).ready( function($) {
 	/* Close Button Click */
 	jQuery( document ).on( 'click','#wps_bfw_migration_button',function(e){
 		e.preventDefault();
-		Swal.fire({
-			icon: 'warning',
-			title: 'We Have got ' + post_meta_count + ' Booking post data!',
-			text: 'Click to start import',
-			footer: 'Please do not reload/close this page until prompted',
-			showCloseButton: true,
-			showCancelButton: true,
-			focusConfirm: false,
-			confirmButtonText:
-			  '<i class="fa fa-thumbs-up"></i> Start',
-			confirmButtonAriaLabel: 'Thumbs up',
-			cancelButtonText:
-			  '<i class="fa fa-thumbs-down">Cancel</i>',
-			cancelButtonAriaLabel: 'Thumbs down'
-		}).then((result) => {
-			if (result.isConfirmed) {
+		// Swal.fire({
+		// 	icon: 'warning',
+		// 	title: 'We Have got ' + post_meta_count + ' Booking post data!',
+		// 	text: 'Click to start import',
+		// 	footer: 'Please do not reload/close this page until prompted',
+		// 	showCloseButton: true,
+		// 	showCancelButton: true,
+		// 	closeOnClickOutside: false,
+		// 	focusConfirm: false,
+		// 	confirmButtonText:
+		// 	  '<i class="fa fa-thumbs-up"></i> Start',
+		// 	confirmButtonAriaLabel: 'Thumbs up',
+		// 	cancelButtonText:
+		// 	  '<i class="fa fa-thumbs-down">Cancel</i>',
+		// 	cancelButtonAriaLabel: 'Thumbs down'
+		// }).then((result) => {
+		// 	if (result.isConfirmed) {
 
 				Swal.fire({
 					title   : 'Bookings posts are being imported!',
@@ -55,14 +55,13 @@ jQuery(document).ready( function($) {
 			
 				startImportPosts( pending_post_meta );
 
-			} else if (result.isDismissed) {
-			  Swal.fire('Import Stopped', '', 'info');
-			}
-		})
+		// 	} else if (result.isDismissed) {
+		// 	  Swal.fire('Import Stopped', '', 'info');
+		// 	}
+		// })
 	});
 
 	const startImportPosts = ( posts ) => {
-		
 
 		var wps_event   = 'wps_bfw_import_single_post';
 		var request = { action, wps_event, nonce, posts };
@@ -263,8 +262,7 @@ jQuery(document).ready( function($) {
 					title   : 'Error occured',
 				})
 			} else { 
-				// All orders imported!
-				if (pro_active){
+
 					Swal.fire({
 						title   : 'Shortcode are being imported!',
 						html    : 'Do not reload/close this tab.',
@@ -274,24 +272,7 @@ jQuery(document).ready( function($) {
 						}
 					});
 					startImportShortcode(pending_shortcode);
-				} else {
-					var wps_event   = 'wps_bfw_org_migration_complete';
-					var request = { action, wps_event, nonce };
-					jQuery.post( ajaxUrl , request ).done(function( response ){
-						if(response){
-							Swal.fire({
-								title   : 'All Data are migrated successfully!',
-							}).then(
-								function(result){
-									location.reload();
-								}
-							)
-							
-						}
-						
-					})
 
-				}
 			}
 		}, function(error) {
 			console.error(error);
@@ -314,7 +295,7 @@ jQuery(document).ready( function($) {
 				jQuery('.order-progress-report').text( count + ' are left to import' );
 				startImportShortcode(shortcodes);
 			} else {
-				var wps_event   = 'wps_bfw_pro_migration_complete';
+				var wps_event   = 'wps_bfw_org_migration_complete';
 				var request = { action, wps_event, nonce };
 				jQuery.post( ajaxUrl , request ).done(function( response ){
 					if(response){
@@ -335,5 +316,18 @@ jQuery(document).ready( function($) {
 			console.error(error);
 		});
 	}
-	// End of scripts.
+
 });
+	// End of scripts.
+	var wps_bookings_migration_success = function() {
+	
+		if ( localised.wps_shortcode_pending_count != 0 && localised.wps_term_meta_count != 0 && localised.wps_pending_post_meta != 0 ) {
+			
+			jQuery( "#wps_bfw_migration_button" ).click();
+			jQuery( "#wps_bfw_migration_button" ).show();
+		}else{
+			jQuery( "#wps_bfw_migration_button" ).hide();
+			
+		}
+	}
+

@@ -30,11 +30,11 @@ $count_public = filtered_array($bfw_developer_public_hooks);
 		<div id="admin-hooks-listing" class="table-responsive mdc-data-table">
 			<table class="wps-mbfw-table mdc-data-table__table wps-table"  id="wps-mbfw-wp">
 				<thead>
-				<tr><th class="mdc-data-table__header-cell"><?php esc_html_e( 'Admin Hooks', 'bookings-for-woocommerce' ); ?></th></tr>
+				<tr><th class="mdc-data-table__header-cell"><?php esc_html_e( 'Admin Hooks', 'mwb-bookings-for-woocommerce' ); ?></th></tr>
 				<tr>
-					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Type of Hook', 'bookings-for-woocommerce' ); ?></th>
-					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Hooks', 'bookings-for-woocommerce' ); ?></th>
-					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Hooks description', 'bookings-for-woocommerce' ); ?></th>
+					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Type of Hook', 'mwb-bookings-for-woocommerce' ); ?></th>
+					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Hooks', 'mwb-bookings-for-woocommerce' ); ?></th>
+					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Hooks description', 'mwb-bookings-for-woocommerce' ); ?></th>
 				</tr>
 				</thead>
 				<tbody class="mdc-data-table__content">
@@ -43,17 +43,17 @@ $count_public = filtered_array($bfw_developer_public_hooks);
 					foreach ( $count_admin as $k => $v ) {
 						if ( isset( $v['action_hook'] ) ) {
 							?>
-							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Action Hook', 'bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['action_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
+							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Action Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['action_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
 							<?php
 						} else {
 							?>
-							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Filter Hook', 'bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['filter_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
+							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Filter Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['filter_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
 							<?php
 						}
 					}
 				} else {
 					?>
-					<tr class="mdc-data-table__row"><td><?php esc_html_e( 'No Hooks Found', 'bookings-for-woocommerce' ); ?><td></tr>
+					<tr class="mdc-data-table__row"><td><?php esc_html_e( 'No Hooks Found', 'mwb-bookings-for-woocommerce' ); ?><td></tr>
 					<?php
 				}
 				?>
@@ -65,11 +65,11 @@ $count_public = filtered_array($bfw_developer_public_hooks);
 		<div id="public-hooks-listing" class="table-responsive mdc-data-table">
 			<table class="wps-mbfw-table mdc-data-table__table wps-table" id="wps-mbfw-sys">
 				<thead>
-				<tr><th class="mdc-data-table__header-cell"><?php esc_html_e( 'Public Hooks', 'bookings-for-woocommerce' ); ?></th></tr>
+				<tr><th class="mdc-data-table__header-cell"><?php esc_html_e( 'Public Hooks', 'mwb-bookings-for-woocommerce' ); ?></th></tr>
 				<tr>
-					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Type of Hook', 'bookings-for-woocommerce' ); ?></th>
-					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Hooks', 'bookings-for-woocommerce' ); ?></th>
-					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Hooks description', 'bookings-for-woocommerce' ); ?></th>
+					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Type of Hook', 'mwb-bookings-for-woocommerce' ); ?></th>
+					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Hooks', 'mwb-bookings-for-woocommerce' ); ?></th>
+					<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Hooks description', 'mwb-bookings-for-woocommerce' ); ?></th>
 				</tr>
 				</thead>
 				<tbody class="mdc-data-table__content">
@@ -78,17 +78,17 @@ $count_public = filtered_array($bfw_developer_public_hooks);
 					foreach ( $count_public as $k => $v ) {
 						if ( isset( $v['action_hook'] ) ) {
 							?>
-							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Action Hook', 'bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['action_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
+							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Action Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['action_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
 							<?php
 						} else {
 							?>
-							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Filter Hook', 'bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['filter_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
+							<tr class="mdc-data-table__row"><td class="mdc-data-table__cell"><?php esc_html_e( 'Filter Hook', 'mwb-bookings-for-woocommerce' ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['filter_hook'] ); ?></td><td class="mdc-data-table__cell"><?php echo esc_html( $v['desc'] ); ?></td></tr>
 							<?php
 						}
 					}
 				} else {
 					?>
-					<tr class="mdc-data-table__row"><td><?php esc_html_e( 'No Hooks Found', 'bookings-for-woocommerce' ); ?><td></tr>
+					<tr class="mdc-data-table__row"><td><?php esc_html_e( 'No Hooks Found', 'mwb-bookings-for-woocommerce' ); ?><td></tr>
 					<?php
 				}
 				?>

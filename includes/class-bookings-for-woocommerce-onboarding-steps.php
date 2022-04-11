@@ -298,7 +298,7 @@ class Bookings_For_Woocommerce_Onboarding_Steps {
 
 			wp_rand() => array(
 				'id'          => 'wps-mbfw-monthly-revenue',
-				'title'       => esc_html__( 'What is your monthly revenue?', 'bookings-for-woocommerce' ),
+				'title'       => esc_html__( 'What is your monthly revenue?', 'mwb-bookings-for-woocommerce' ),
 				'type'        => 'radio',
 				'description' => '',
 				'name'        => 'monthly_revenue_',
@@ -317,13 +317,13 @@ class Bookings_For_Woocommerce_Onboarding_Steps {
 
 			wp_rand() => array(
 				'id'          => 'wps_bfw_industry_type',
-				'title'       => esc_html__( 'What industry defines your business?', 'bookings-for-woocommerce' ),
+				'title'       => esc_html__( 'What industry defines your business?', 'mwb-bookings-for-woocommerce' ),
 				'type'        => 'select',
 				'name'        => 'industry_type_',
 				'value'       => '',
 				'description' => '',
 				'multiple'    => 'yes',
-				'placeholder' => esc_html__( 'Industry Type', 'bookings-for-woocommerce' ),
+				'placeholder' => esc_html__( 'Industry Type', 'mwb-bookings-for-woocommerce' ),
 				'required'    => 'yes',
 				'class'       => '',
 				'options'     => array(
@@ -354,11 +354,11 @@ class Bookings_For_Woocommerce_Onboarding_Steps {
 
 			wp_rand() => array(
 				'id'          => 'wps-mbfw-onboard-email',
-				'title'       => esc_html__( 'What is the best email address to contact you?', 'bookings-for-woocommerce' ),
+				'title'       => esc_html__( 'What is the best email address to contact you?', 'mwb-bookings-for-woocommerce' ),
 				'type'        => 'email',
 				'description' => '',
 				'name'        => 'email',
-				'placeholder' => esc_html__( 'Email', 'bookings-for-woocommerce' ),
+				'placeholder' => esc_html__( 'Email', 'mwb-bookings-for-woocommerce' ),
 				'value'       => $current_user_email,
 				'required'    => 'yes',
 				'class'       => 'mbfw-text-class',
@@ -366,12 +366,12 @@ class Bookings_For_Woocommerce_Onboarding_Steps {
 
 			wp_rand() => array(
 				'id'          => 'wps-mbfw-onboard-number',
-				'title'       => esc_html__( 'What is your contact number?', 'bookings-for-woocommerce' ),
+				'title'       => esc_html__( 'What is your contact number?', 'mwb-bookings-for-woocommerce' ),
 				'type'        => 'text',
 				'description' => '',
 				'name'        => 'phone',
 				'value'       => '',
-				'placeholder' => esc_html__( 'Contact Number', 'bookings-for-woocommerce' ),
+				'placeholder' => esc_html__( 'Contact Number', 'mwb-bookings-for-woocommerce' ),
 				'required'    => 'yes',
 				'class'       => '',
 			),
@@ -484,13 +484,13 @@ class Bookings_For_Woocommerce_Onboarding_Steps {
 				'id'          => 'wps-mbfw-deactivation-reason-text',
 				'title'       => sprintf(
 					/* translators: %s plugin name. */
-					__( 'Let us know why you are deactivating %s so we can improve the plugin', 'bookings-for-woocommerce' ),
+					__( 'Let us know why you are deactivating %s so we can improve the plugin', 'mwb-bookings-for-woocommerce' ),
 					self::$wps_bfw_plugin_name_label
 				),
 				'type'        => 'textarea',
 				'description' => '',
 				'name'        => 'deactivation_reason_text',
-				'placeholder' => esc_html__( 'Reason', 'bookings-for-woocommerce' ),
+				'placeholder' => esc_html__( 'Reason', 'mwb-bookings-for-woocommerce' ),
 				'value'       => '',
 				'required'    => '',
 				'class'       => 'wps-keep-hidden',
@@ -730,7 +730,7 @@ class Bookings_For_Woocommerce_Onboarding_Steps {
 		$response = wp_remote_post( $url, $request );
 		if ( is_wp_error( $response ) ) {
 			$status_code = 500;
-			$response    = esc_html__( 'Unexpected Error Occured', 'bookings-for-woocommerce' );
+			$response    = esc_html__( 'Unexpected Error Occured', 'mwb-bookings-for-woocommerce' );
 			$curl_errors = $response;
 		} else {
 			$response    = wp_remote_retrieve_body( $response );

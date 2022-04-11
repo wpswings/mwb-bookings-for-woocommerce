@@ -17,6 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="mbfw-secion-wrap">
-	<div class="mbfw-booking-calender-notice"><?php esc_html_e( 'List of all upcoming Bookings', 'bookings-for-woocommerce' ); ?></div>
+	<div class="mbfw-booking-calender-notice"><?php esc_html_e( 'List of all upcoming Bookings', 'mwb-bookings-for-woocommerce' ); ?></div>
 	<div id="wps-mbfw-booking-calendar"></div>
 </div>

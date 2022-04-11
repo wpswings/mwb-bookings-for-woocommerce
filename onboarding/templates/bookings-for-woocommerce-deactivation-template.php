@@ -26,7 +26,7 @@ apply_filters('wps_bfw_deactivation_form_fields', array());
 <?php if ( ! empty( $bfw_onboarding_form_deactivate ) ) : ?>
 	<div id="<?php echo esc_attr( $wps_plugin_onboarding_popup_id ); ?>" class="mdc-dialog mdc-dialog--scrollable <? echo 
 	//desc - filter for trial.
-	apply_filters('wps_stand_dialog_classes', 'bookings-for-woocommerce' )?>">
+	apply_filters('wps_stand_dialog_classes', 'mwb-bookings-for-woocommerce' )?>">
 		<div class="wps-mbfw-on-boarding-wrapper-background mdc-dialog__container">
 			<div class="wps-mbfw-on-boarding-wrapper mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
 				<div class="mdc-dialog__content">
@@ -37,7 +37,7 @@ apply_filters('wps_bfw_deactivation_form_fields', array());
 					</div>
 
 					<h3 class="wps-mbfw-on-boarding-heading mdc-dialog__title"></h3>
-					<p class="wps-mbfw-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'bookings-for-woocommerce' ); ?></p>
+					<p class="wps-mbfw-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'mwb-bookings-for-woocommerce' ); ?></p>
 					<form action="#" method="post" class="wps-mbfw-on-boarding-form">
 						<?php 
 						$bfw_onboarding_deactive_html = $bfw_wps_bfw_obj->wps_bfw_plug_generate_html( $bfw_onboarding_form_deactivate );
@@ -50,7 +50,7 @@ apply_filters('wps_bfw_deactivation_form_fields', array());
 							<div class="wps-mbfw-on-boarding-form-no_thanks">
 								<a href="#" id="<?php echo esc_attr( $wps_plugin_deactivation_id ); ?>" class="<? echo 
 								//desc - filter for trial.
-								apply_filters('wps_stand_no_thank_classes', 'bookings-for-woocommerce-no_thanks' )?> mdc-button"><?php esc_html_e( 'Skip and Deactivate Now', 'bookings-for-woocommerce' ); ?></a>
+								apply_filters('wps_stand_no_thank_classes', 'bookings-for-woocommerce-no_thanks' )?> mdc-button"><?php esc_html_e( 'Skip and Deactivate Now', 'mwb-bookings-for-woocommerce' ); ?></a>
 							</div>
 						</div>
 					</form>

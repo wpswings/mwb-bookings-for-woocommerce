@@ -72,7 +72,7 @@ class Bookings_For_Woocommerce_Public {
 			'wps_bfw_public_obj',
 			array(
 				'today_date'       => current_time( 'd-m-Y' ),
-				'wrong_order_date' => __( 'To date can not be less than from date.', 'bookings-for-woocommerce' ),
+				'wrong_order_date' => __( 'To date can not be less than from date.', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 	}
@@ -145,7 +145,7 @@ class Bookings_For_Woocommerce_Public {
 			$bfw_booking_service = get_the_terms( $product_id, 'wps_booking_service' );
 			if ( $bfw_booking_service && is_array( $bfw_booking_service ) ) {
 				?>
-				<div class="wps_bfw_included_service_title"><?php esc_html_e( 'Additional services', 'bookings-for-woocommerce' ); ?></div>
+				<div class="wps_bfw_included_service_title"><?php esc_html_e( 'Additional services', 'mwb-bookings-for-woocommerce' ); ?></div>
 				<div class="mbfw-additionl-detail-listing-section__wrapper">
 					<?php
 					foreach ( $bfw_booking_service as $custom_term ) {
@@ -228,12 +228,12 @@ class Bookings_For_Woocommerce_Public {
 			?>
 			<div class="mbfw-date-picker-section__wrapper">
 				<div class="mbfw-date-picker-section">
-					<label for="wps-mbfw-booking-from-time"><?php esc_html_e( 'From', 'bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="wps_bfw_booking_from_time" id="wps-mbfw-booking-from-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php esc_attr_e( 'from', 'bookings-for-woocommerce' ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
+					<label for="wps-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
+					<input type="text" name="wps_bfw_booking_from_time" id="wps-mbfw-booking-from-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php esc_attr_e( 'from', 'mwb-bookings-for-woocommerce' ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
 				</div>
 				<div class="mbfw-date-picker-section">
-					<label for="wps-mbfw-booking-to-time"><?php esc_html_e( 'To', 'bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="wps_bfw_booking_to_time" id="wps-mbfw-booking-to-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php esc_attr_e( 'to', 'bookings-for-woocommerce' ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
+					<label for="wps-mbfw-booking-to-time"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
+					<input type="text" name="wps_bfw_booking_to_time" id="wps-mbfw-booking-to-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php esc_attr_e( 'to', 'mwb-bookings-for-woocommerce' ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
 				</div>
 			</div>
 			<?php
@@ -284,7 +284,7 @@ class Bookings_For_Woocommerce_Public {
 			$custom_cart_data = $cart_item['wps_bfw_booking_values'];
 			if ( ! empty( $custom_cart_data['people_number'] ) ) {
 				$other_data[] =  array(
-					'name'    => _n( 'People', 'Peoples', $custom_cart_data['people_number'], 'bookings-for-woocommerce' ),
+					'name'    => _n( 'People', 'Peoples', $custom_cart_data['people_number'], 'mwb-bookings-for-woocommerce' ),
 					'display' => wp_kses_post( $custom_cart_data['people_number'] ),
 				);
 			}
@@ -295,7 +295,7 @@ class Bookings_For_Woocommerce_Public {
 				foreach ( $terms as $term ) {
 					if ( 'yes' !== get_term_meta( $term->term_id, 'wps_bfw_is_service_optional', true ) ) {
 						$service_count  = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
-						$service_name[] = isset( $term->name ) ? $term->name . '( ' . $service_count . ' )' : __( 'not found', 'bookings-for-woocommerce' );
+						$service_name[] = isset( $term->name ) ? $term->name . '( ' . $service_count . ' )' : __( 'not found', 'mwb-bookings-for-woocommerce' );
 					}
 				}
 			}
@@ -305,23 +305,23 @@ class Bookings_For_Woocommerce_Public {
 					foreach ( $selected_services as $term_id ) {
 						$term           = get_term( $term_id );
 						$service_count  = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
-						$service_name[] = isset( $term->name ) ? $term->name . '( ' . $service_count . ' )' : __( 'not found', 'bookings-for-woocommerce' );
+						$service_name[] = isset( $term->name ) ? $term->name . '( ' . $service_count . ' )' : __( 'not found', 'mwb-bookings-for-woocommerce' );
 					}
 				}
 			}
 			if ( $service_name ) {
 				$other_data[] =  array(
-					'name'    => _n( 'Service', 'Services', count( $service_name ), 'bookings-for-woocommerce' ),
+					'name'    => _n( 'Service', 'Services', count( $service_name ), 'mwb-bookings-for-woocommerce' ),
 					'display' => join( ', ', $service_name ),
 				);
 			}
 			if ( ! empty( $custom_cart_data['date_time_from'] ) && ! empty( $custom_cart_data['date_time_to'] ) ) {
 				$other_data[] = array(
-					'name'    => __( 'From', 'bookings-for-woocommerce' ),
+					'name'    => __( 'From', 'mwb-bookings-for-woocommerce' ),
 					'display' => wp_kses_post( $custom_cart_data['date_time_from'] ),
 				);
 				$other_data[] = array(
-					'name'    => __( 'To', 'bookings-for-woocommerce' ),
+					'name'    => __( 'To', 'mwb-bookings-for-woocommerce' ),
 					'display' => wp_kses_post( $custom_cart_data['date_time_to'] ),
 				);
 			}
@@ -341,7 +341,7 @@ class Bookings_For_Woocommerce_Public {
 	 */
 	public function wps_bfw_show_readmore_button_on_archieve_page( $button, $product ) {
 		if ( 'wps_booking' === $product->get_type() ) {
-			$button_text = __( 'View Details', 'bookings-for-woocommerce' );
+			$button_text = __( 'View Details', 'mwb-bookings-for-woocommerce' );
 			$button      = '<a class="button" href="' . $product->get_permalink() . '">' . $button_text . '</a>';
 		}
 		return $button;

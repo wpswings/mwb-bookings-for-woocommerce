@@ -81,7 +81,7 @@ class Bookings_For_Woocommerce_Common {
 				'minDate'          => current_time( 'd-m-Y H:m' ),
 				'minTime'          => current_time( 'H:m' ),
 				'maxTime'          => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
-				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'bookings-for-woocommerce' ),
+				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 		wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -97,18 +97,18 @@ class Bookings_For_Woocommerce_Common {
 	 */
 	public function bfw_custom_taxonomy_for_products() {
 		$labels = array(
-			'name'          => _x( 'Booking Costs', 'taxonomy general name', 'bookings-for-woocommerce' ),
-			'singular_name' => _x( 'Booking Costs', 'taxonomy singular name', 'bookings-for-woocommerce' ),
-			'search_items'  => __( 'Search Booking Cost', 'bookings-for-woocommerce' ),
-			'all_items'     => __( 'All Booking Costs', 'bookings-for-woocommerce' ),
-			'view_item'     => __( 'View Booking Cost', 'bookings-for-woocommerce' ),
-			'edit_item'     => __( 'Edit Booking Cost', 'bookings-for-woocommerce' ),
-			'update_item'   => __( 'Update Booking Cost', 'bookings-for-woocommerce' ),
-			'add_new_item'  => __( 'Add New Booking Cost', 'bookings-for-woocommerce' ),
-			'new_item_name' => __( 'New Booking Cost Name', 'bookings-for-woocommerce' ),
-			'not_found'     => __( 'No Booking Cost Found', 'bookings-for-woocommerce' ),
-			'back_to_items' => __( 'Back to Booking Costs', 'bookings-for-woocommerce' ),
-			'menu_name'     => __( 'Booking Costs', 'bookings-for-woocommerce' ),
+			'name'          => _x( 'Booking Costs', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
+			'singular_name' => _x( 'Booking Costs', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
+			'search_items'  => __( 'Search Booking Cost', 'mwb-bookings-for-woocommerce' ),
+			'all_items'     => __( 'All Booking Costs', 'mwb-bookings-for-woocommerce' ),
+			'view_item'     => __( 'View Booking Cost', 'mwb-bookings-for-woocommerce' ),
+			'edit_item'     => __( 'Edit Booking Cost', 'mwb-bookings-for-woocommerce' ),
+			'update_item'   => __( 'Update Booking Cost', 'mwb-bookings-for-woocommerce' ),
+			'add_new_item'  => __( 'Add New Booking Cost', 'mwb-bookings-for-woocommerce' ),
+			'new_item_name' => __( 'New Booking Cost Name', 'mwb-bookings-for-woocommerce' ),
+			'not_found'     => __( 'No Booking Cost Found', 'mwb-bookings-for-woocommerce' ),
+			'back_to_items' => __( 'Back to Booking Costs', 'mwb-bookings-for-woocommerce' ),
+			'menu_name'     => __( 'Booking Costs', 'mwb-bookings-for-woocommerce' ),
 		);
 
 		$args = array(
@@ -123,18 +123,18 @@ class Bookings_For_Woocommerce_Common {
 		register_taxonomy( 'wps_booking_cost', 'product', $args );
 
 		$labels = array(
-			'name'          => _x( 'Booking Services', 'taxonomy general name', 'bookings-for-woocommerce' ),
-			'singular_name' => _x( 'Booking Services', 'taxonomy singular name', 'bookings-for-woocommerce' ),
-			'search_items'  => __( 'Search Booking Service', 'bookings-for-woocommerce' ),
-			'all_items'     => __( 'All Booking Services', 'bookings-for-woocommerce' ),
-			'view_item'     => __( 'View Booking Service', 'bookings-for-woocommerce' ),
-			'edit_item'     => __( 'Edit Booking Service', 'bookings-for-woocommerce' ),
-			'update_item'   => __( 'Update Booking Service', 'bookings-for-woocommerce' ),
-			'add_new_item'  => __( 'Add New Booking Service', 'bookings-for-woocommerce' ),
-			'new_item_name' => __( 'New Booking Service Name', 'bookings-for-woocommerce' ),
-			'not_found'     => __( 'No Booking Service Found', 'bookings-for-woocommerce' ),
-			'back_to_items' => __( 'Back to Booking Services', 'bookings-for-woocommerce' ),
-			'menu_name'     => __( 'Booking Services', 'bookings-for-woocommerce' ),
+			'name'          => _x( 'Booking Services', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
+			'singular_name' => _x( 'Booking Services', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
+			'search_items'  => __( 'Search Booking Service', 'mwb-bookings-for-woocommerce' ),
+			'all_items'     => __( 'All Booking Services', 'mwb-bookings-for-woocommerce' ),
+			'view_item'     => __( 'View Booking Service', 'mwb-bookings-for-woocommerce' ),
+			'edit_item'     => __( 'Edit Booking Service', 'mwb-bookings-for-woocommerce' ),
+			'update_item'   => __( 'Update Booking Service', 'mwb-bookings-for-woocommerce' ),
+			'add_new_item'  => __( 'Add New Booking Service', 'mwb-bookings-for-woocommerce' ),
+			'new_item_name' => __( 'New Booking Service Name', 'mwb-bookings-for-woocommerce' ),
+			'not_found'     => __( 'No Booking Service Found', 'mwb-bookings-for-woocommerce' ),
+			'back_to_items' => __( 'Back to Booking Services', 'mwb-bookings-for-woocommerce' ),
+			'menu_name'     => __( 'Booking Services', 'mwb-bookings-for-woocommerce' ),
 		);
 
 		$args = array(
@@ -179,7 +179,7 @@ class Bookings_For_Woocommerce_Common {
 				)
 			)
 		);
-		$booking_title = _n( 'Booking', 'Bookings', $order_count, 'bookings-for-woocommerce' );
+		$booking_title = _n( 'Booking', 'Bookings', $order_count, 'mwb-bookings-for-woocommerce' );
 		$admin_bar->add_menu(
 			array(
 				'id'     => 'wps-mbfw-custom-admin-menu-bookings',
@@ -197,7 +197,7 @@ class Bookings_For_Woocommerce_Common {
 				),
 				'href'   => admin_url( 'edit.php?post_status=all&post_type=shop_order&filter_booking=booking&filter_action=Filter' ),
 				'meta'   => array(
-					'title' => __( 'List All Bookings', 'bookings-for-woocommerce' ),
+					'title' => __( 'List All Bookings', 'mwb-bookings-for-woocommerce' ),
 				)
 			)
 		);
@@ -316,19 +316,19 @@ class Bookings_For_Woocommerce_Common {
 		}
 		$charges = array(
 			'service_cost' => array(
-				'title' => __( 'Service Cost', 'bookings-for-woocommerce' ),
+				'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $services_cost,
 			),
 			'base_cost' => array(
-				'title' => __( 'Base Cost', 'bookings-for-woocommerce' ),
+				'title' => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $base_cost,
 			),
 			'general_cost' => array(
-				'title' => __( 'General Cost', 'bookings-for-woocommerce' ),
+				'title' => __( 'General Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $product_price,
 			),
 			'additional_charge' => array(
-				'title' => __( 'Additional Charges', 'bookings-for-woocommerce' ),
+				'title' => __( 'Additional Charges', 'mwb-bookings-for-woocommerce' ),
 				'value' => $extra_charges,
 			),
 		);
@@ -369,7 +369,7 @@ class Bookings_For_Woocommerce_Common {
 			?>
 			<div class="mbfw-total-listing-single-page__wrapper mbfw-total-cost__wrapper">
 				<div class="mbfw-total-listing-single-page">
-					<?php esc_html_e( 'Total', 'bookings-for-woocommerce' ); ?>
+					<?php esc_html_e( 'Total', 'mwb-bookings-for-woocommerce' ); ?>
 				</div>
 				<div class="mbfw-total-listing-single-page">
 					<?php echo wp_kses_post( wc_price( $total ) ); ?>
@@ -481,7 +481,7 @@ class Bookings_For_Woocommerce_Common {
 		$items = $order->get_items();
 		foreach ( $items as $item ) {
 			if ( 'yes' === get_post_meta( $item->get_product_id(), 'wps_bfw_admin_confirmation', true ) ) {
-				$order->update_status( 'on-hold', __( 'confirmation required from admin.', 'bookings-for-woocommerce' ) );
+				$order->update_status( 'on-hold', __( 'confirmation required from admin.', 'mwb-bookings-for-woocommerce' ) );
 				break;
 			}
 		}
@@ -531,7 +531,7 @@ class Bookings_For_Woocommerce_Common {
 				if ( ! empty( $people_number ) ) {
 					?>
 					<tr>
-						<th><?php esc_html_e( 'People', 'bookings-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'People', 'mwb-bookings-for-woocommerce' ); ?></th>
 					</tr>
 					<tr>
 						<td><?php echo esc_attr( $people_number ); ?></td>
@@ -546,7 +546,7 @@ class Bookings_For_Woocommerce_Common {
 					?>
 					<tr>
 						<th>
-							<?php esc_html_e( 'Service(s)', 'bookings-for-woocommerce' ); ?>
+							<?php esc_html_e( 'Service(s)', 'mwb-bookings-for-woocommerce' ); ?>
 						</th>
 					</tr>
 					<?php
@@ -567,10 +567,10 @@ class Bookings_For_Woocommerce_Common {
 					?>
 					<tr>
 						<th>
-							<?php esc_html_e( 'From', 'bookings-for-woocommerce' ); ?>
+							<?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?>
 						</th>
 						<th>
-							<?php esc_html_e( 'To', 'bookings-for-woocommerce' ); ?>
+							<?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?>
 						</th>
 					</tr>
 					<tr>

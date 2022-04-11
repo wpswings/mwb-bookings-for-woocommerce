@@ -62,9 +62,9 @@ add_action( 'after_plugin_row_bookings-for-woocommerce-pro/bookings-for-woocomme
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-error inline update-message notice-alt">
 					<p class='wps-notice-title wps-notice-section'>
-						<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'woo-gift-cards-lite' ); ?></strong><br>
-						<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'woo-gift-cards-lite' ); ?><br>
-						<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'woo-gift-cards-lite' ); ?>
+						<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'mwb-bookings-for-woocommerce' ); ?></strong><br>
+						<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'mwb-bookings-for-woocommerce' ); ?><br>
+						<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'mwb-bookings-for-woocommerce' ); ?>
 					</p>
 				</div>
 			</td>
@@ -75,8 +75,6 @@ add_action( 'after_plugin_row_bookings-for-woocommerce-pro/bookings-for-woocomme
 			}
 		</style>
 			<?php
-
-
 		}
 	}
 
@@ -95,10 +93,10 @@ if ( true === $old_pro_exists ) {
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-error inline update-message notice-alt">
 					<div class='wps-notice-title wps-notice-section'>
-						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'bookings-for-woocommerce' ); ?></strong></p>
+						<p><strong><?php esc_html_e( 'IMPORTANT NOTICE:', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p><strong><?php esc_html_e( 'Your Woocommerce Bookings Pro plugin update is here! Please Update it now via plugins page.', 'bookings-for-woocommerce' ); ?></strong></p>
+						<p><strong><?php esc_html_e( 'Your Woocommerce Bookings Pro plugin update is here! Please Update it now via plugins page.', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 					</div>
 				</div>
 			</td>
@@ -140,7 +138,7 @@ if ( true === $old_pro_exists ) {
 			if ( ! empty( $update_obj ) ) :
 				?>
 				<div class="notice notice-error is-dismissible">
-					<p><?php esc_html_e( 'Your Bookings For WooCommerce Pro plugin update is here! Please Update it now.', 'bookings-for-woocommerce' ); ?></p>
+					<p><?php esc_html_e( 'Your Bookings For WooCommerce Pro plugin update is here! Please Update it now.', 'mwb-bookings-for-woocommerce' ); ?></p>
 				</div>
 				<?php
 			endif;
@@ -202,13 +200,13 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		$wps_bfw_active_plugin = get_option('wps_all_plugins_active', false );
 		if ( is_array( $wps_bfw_active_plugin ) && ! empty( $wps_bfw_active_plugin ) ) {
 			$wps_bfw_active_plugin['bookings-for-woocommerce'] = array(
-				'plugin_name' => __( 'Bookings For WooCommerce', 'bookings-for-woocommerce' ),
+				'plugin_name' => __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
 				'active'      => '1',
 			);
 		} else {
 			$wps_bfw_active_plugin                                 = array();
 			$wps_bfw_active_plugin['bookings-for-woocommerce'] = array(
-				'plugin_name' => __( 'Bookings For WooCommerce', 'bookings-for-woocommerce' ),
+				'plugin_name' => __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
 				'active'      => '1',
 			);
 		}
@@ -277,9 +275,6 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		$bfw_plugin_standard = new Bookings_For_Woocommerce();
 		$bfw_plugin_standard->bfw_run();
 		$GLOBALS['bfw_wps_bfw_obj'] = $bfw_plugin_standard;
-
-		// $bfw_migrator = new Wps_Bfw_Data_Handler();
-		// $bfw_migrator->wps_bfw_run_data_change_code();
 	}
 	run_bookings_for_woocommerce();
 	// Add settings link on plugin page.
@@ -293,10 +288,10 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	function bookings_for_woocommerce_settings_link( $links ) {
 		$my_link = array(
-			'<a href="' . admin_url('admin.php?page=bookings_for_woocommerce_menu') . '">' . __('Settings', 'bookings-for-woocommerce') . '</a>'
+			'<a href="' . admin_url('admin.php?page=bookings_for_woocommerce_menu') . '">' . __('Settings', 'mwb-bookings-for-woocommerce') . '</a>'
 		);
 		if ( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', get_option( 'active_plugins', array() ), true ) ) {
-			$my_link[] = '<a href="https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=booikings-org-backend&utm_campaign=go-pro" target="_blank" id="mbfw-go-pro-link">' . __( 'Go Pro', 'bookings-for-woocommerce' ) . '</a>';
+			$my_link[] = '<a href="https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=booikings-org-backend&utm_campaign=go-pro" target="_blank" id="mbfw-go-pro-link">' . __( 'Go Pro', 'mwb-bookings-for-woocommerce' ) . '</a>';
 		}
 		return array_merge($my_link, $links);
 	}
@@ -310,9 +305,9 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	function bookings_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
 		if (strpos($plugin_file_name, basename(__FILE__)) ) {
-			$links_array[] = '<a href="https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-demo&utm_medium=booikngs-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html(BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Demo.svg" class="wps-info-img" alt="Demo image">' . __('Demo', 'bookings-for-woocommerce') . '</a>';
-			$links_array[] = '<a href="https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html(BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Documentation.svg" class="wps-info-img" alt="documentation image">' . __('Documentation', 'bookings-for-woocommerce') . '</a>';
-			$links_array[] = '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-bookings-support&utm_medium=bookings-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html(BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="wps-info-img" alt="support image">' . __('Support', 'bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-demo&utm_medium=booikngs-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html(BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Demo.svg" class="wps-info-img" alt="Demo image">' . __('Demo', 'mwb-bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html(BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Documentation.svg" class="wps-info-img" alt="documentation image">' . __('Documentation', 'mwb-bookings-for-woocommerce') . '</a>';
+			$links_array[] = '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-bookings-support&utm_medium=bookings-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html(BOOKINGS_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="wps-info-img" alt="support image">' . __('Support', 'mwb-bookings-for-woocommerce') . '</a>';
 		}
 		return $links_array;
 	}
@@ -332,12 +327,16 @@ function bookings_for_woocommerce_dashboard_upgrade_notice() {
 		<td colspan="4" class="plugin-update colspanchange">
 			<div class="notice notice-success inline update-message notice-alt">
 				<div class='wps-notice-title wps-notice-section'>
-					<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'bookings-for-woocommerce' ); ?></strong></p>
+					<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'mwb-bookings-for-woocommerce' ); ?></strong></p>
 				</div>
 				<div class='wps-notice-content wps-notice-section'>
-					<p><?php esc_html_e( 'From this update ', 'bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'Version 2.0.4', 'bookings-for-woocommerce' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by ', 'bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'bookings-for-woocommerce' ); ?></strong>.</p>
-					<p> <strong><?php esc_html_e( 'WP Swings', 'bookings-for-woocommerce' ); ?></strong> <?php esc_html_e( 'is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'bookings-for-woocommerce' ); ?>
-					<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'bookings-for-woocommerce' ); ?></p>
+				<p>
+						<?php esc_html_e( 'Heads up, The latest update includes some substantial changes across different areas of the plugin.', 'mwb-bookings-for-woocommerce' ); ?>
+						</p>
+						<p><b><?php esc_html_e( 'Please Click on the Start Migration button to start migration.', 'mwb-bookings-for-woocommerce' ); ?></b>
+						<span><button class="cls-migration-button mdc-button mdc-button--raised mdc-ripple-upgraded" id="wps_bfw_migration_button">Start Migration</button></span>
+					</p>
+					
 				</div>
 			</div>
 		</td>
@@ -351,9 +350,8 @@ function bookings_for_woocommerce_dashboard_upgrade_notice() {
 	
 		}
 	}
-// Upgrade notice.
+	// Upgrade notice.
 add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'bookings_for_woocommerce_upgrade_notice', 0, 3 );
-
 /**
  * Displays notice to upgrade to WP Swings on plugin row.
  *
@@ -362,29 +360,27 @@ add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'bookings_for_woo
  * @param string $status Status filter currently applied to the plugin list.
  */
 function bookings_for_woocommerce_upgrade_notice( $plugin_file, $plugin_data, $status ) {
-	?>
-	<tr class="plugin-update-tr active notice-warning notice-alt">
-		<td colspan="4" class="plugin-update colspanchange">
-			<div class="notice notice-success inline update-message notice-alt">
-				<div class='wps-notice-title wps-notice-section'>
-				<p><strong><?php esc_html_e( 'IMPORTANT NOTICE-', 'bookings-for-woocommerce' ); ?></strong></p>
-				</div>
-				<div class='wps-notice-content wps-notice-section'>
-					<p><?php esc_html_e( 'From this update ', 'bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'Version 2.0.4', 'bookings-for-woocommerce' ); ?></strong><?php esc_html_e( ' onwards, the plugin and its support will be handled by ', 'bookings-for-woocommerce' ); ?><strong><?php esc_html_e( 'WP Swings', 'bookings-for-woocommerce' ); ?></strong>.</p>
-					<p> <strong><?php esc_html_e( 'WP Swings', 'bookings-for-woocommerce' ); ?></strong> <?php esc_html_e( 'is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.', 'bookings-for-woocommerce' ); ?>
-					<?php esc_html_e( 'Please connect with us for all setup, support, and update related queries without hesitation.', 'bookings-for-woocommerce' ); ?></p>
-				</div>
-			</div>
-		</td>
-	</tr>
-	<style>
-	.wps-notice-section > p:before {
-		content: none;
-	}
-	</style>
-	<?php
-}
 
+		global $wps_count;
+		if ( ! empty( $wps_count ) ) {
+			?>
+			<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-error inline update-message notice-alt">
+					<p class='wps-notice-title wps-notice-section'>
+						<?php esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. Hence, if you are not a new user then', 'mwb-bookings-for-woocommerce' ); ?><strong><?php esc_html_e( ' please migrate your old data and settings from ', 'mwb-bookings-for-woocommerce' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'admin.php?page=bookings_for_woocommerce_menu' ) ); ?>"><?php esc_html_e( 'Dashboard', 'mwb-bookings-for-woocommerce' ); ?></strong></a><?php esc_html_e( ' page then Click On Start Import Button.', 'mwb-bookings-for-woocommerce' ); ?>
+					</p>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+			<?php
+		}
+	}
 } else {
 	wps_bfw_dependency_checkup();
 }
@@ -412,22 +408,27 @@ function wps_bfw_deactivate_child_plugin() {
  * @return void
  */
 function wps_bfw_show_admin_notices() {
-	$wps_bfw_child_plugin  = __( 'Bookings For WooCommerce', 'bookings-for-woocommerce' );
-	$wps_bfw_parent_plugin = __( 'WooCommerce', 'bookings-for-woocommerce' );
+	$wps_bfw_child_plugin  = __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' );
+	$wps_bfw_parent_plugin = __( 'WooCommerce', 'mwb-bookings-for-woocommerce' );
 	echo '<div class="notice notice-error is-dismissible"><p>'
 		/* translators: %s: dependency checks */
-		. sprintf( esc_html__( '%1$s requires %2$s to function correctly. Please activate %2$s before activating %1$s. For now, the plugin has been deactivated.', 'bookings-for-woocommerce' ), '<strong>' . esc_html( $wps_bfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $wps_bfw_parent_plugin ) . '</strong>' )
+		. sprintf( esc_html__( '%1$s requires %2$s to function correctly. Please activate %2$s before activating %1$s. For now, the plugin has been deactivated.', 'mwb-bookings-for-woocommerce' ), '<strong>' . esc_html( $wps_bfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $wps_bfw_parent_plugin ) . '</strong>' )
 		. '</p></div>';
 	if ( isset( $_GET['activate'] ) ) { // phpcs:ignore
 		unset( $_GET['activate'] ); //phpcs:ignore
 	}
 }
+/**
+ * Undocumented function
+ *
+ * @return void
+ */
 function wps_bfw_show_pro_deactivate_notice() {
-	$wps_bfw_child_plugin  = __( 'Bookings For WooCommerce Pro', 'bookings-for-woocommerce' );
-	$wps_bfw_parent_plugin = __( 'Bookings For WooCommerce', 'bookings-for-woocommerce' );
-	$wps_bfw_pro_version = __( 'Version 1.0.5', 'bookings-for-woocommerce' );
+	$wps_bfw_child_plugin  = __( 'Bookings For WooCommerce Pro', 'mwb-bookings-for-woocommerce' );
+	$wps_bfw_parent_plugin = __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' );
+	$wps_bfw_pro_version = __( 'Version 1.0.5', 'mwb-bookings-for-woocommerce' );
 	echo '<div class="notice notice-error is-dismissible"><p>'
 	/* translators: %s: dependency checks */
-	. sprintf( esc_html__( '%1$s requires %2$s %3$s and above to function correctly. Please update %2$s to %3$s before activating %1$s. For now, the plugin has been deactivated.', 'bookings-for-woocommerce' ), '<strong>' . esc_html( $wps_bfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $wps_bfw_parent_plugin ) . '</strong>', '<strong>' . esc_html( $wps_bfw_pro_version ) . '</strong>' )
+	. sprintf( esc_html__( '%1$s requires %2$s %3$s and above to function correctly. Please update %2$s to %3$s before activating %1$s. For now, the plugin has been deactivated.', 'mwb-bookings-for-woocommerce' ), '<strong>' . esc_html( $wps_bfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $wps_bfw_parent_plugin ) . '</strong>', '<strong>' . esc_html( $wps_bfw_pro_version ) . '</strong>' )
 	. '</p></div>';
 }

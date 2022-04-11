@@ -51,7 +51,7 @@ class Bookings_For_Woocommerce {
 	 * @var   string    $version    The current version of the plugin.
 	 */
 	protected $version;
-
+	
 	/**
 	 * The current version of the plugin.
 	 *
@@ -191,7 +191,7 @@ class Bookings_For_Woocommerce {
 	 */
 	private function bookings_for_woocommerce_admin_hooks() {
 		$bfw_plugin_admin = new Bookings_For_Woocommerce_Admin($this->bfw_get_plugin_name(), $this->bfw_get_version());
-
+		$GLOBALS['wps_count'] = $bfw_plugin_admin->wps_bfw_get_count( 'pending', 'count', 'terms' ) + $bfw_plugin_admin->wps_bfw_get_count( 'pending', 'count', 'post' ) + $bfw_plugin_admin->wps_bfw_get_count( 'pending', 'count', 'shortcode' );
 		$this->loader->add_action('admin_enqueue_scripts', $bfw_plugin_admin, 'bfw_admin_enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $bfw_plugin_admin, 'bfw_admin_enqueue_scripts');
 
@@ -368,25 +368,25 @@ class Bookings_For_Woocommerce {
 		$bfw_default_tabs = array();
 
 		$bfw_default_tabs['bookings-for-woocommerce-general'] = array(
-			'title'       => esc_html__('General Settings', 'bookings-for-woocommerce'),
+			'title'       => esc_html__('General Settings', 'mwb-bookings-for-woocommerce'),
 			'name'        => 'bookings-for-woocommerce-general',
 			'file_path'   => BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/bookings-for-woocommerce-general.php'
 		);
 
 		$bfw_default_tabs['bookings-for-woocommerce-booking-form-settings'] = array(
-			'title'       => esc_html__( 'Booking Form Settings', 'bookings-for-woocommerce' ),
+			'title'       => esc_html__( 'Booking Form Settings', 'mwb-bookings-for-woocommerce' ),
 			'name'        => 'bookings-for-woocommerce-booking-form-settings',
 			'file_path'   =>  BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/bookings-for-woocommerce-booking-form-settings.php'
 		);
 
 		$bfw_default_tabs['bookings-for-woocommerce-booking-availability-settings'] = array(
-			'title'       => esc_html__( 'Availability Settings', 'bookings-for-woocommerce' ),
+			'title'       => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
 			'name'        => 'bookings-for-woocommerce-booking-availability-settings',
 			'file_path'   =>  BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/bookings-for-woocommerce-booking-availability-settings.php'
 		);
 
 		$bfw_default_tabs['bookings-for-woocommerce-booking-calendar-listing'] = array(
-			'title'       => esc_html__( 'Bookings Calendar', 'bookings-for-woocommerce' ),
+			'title'       => esc_html__( 'Bookings Calendar', 'mwb-bookings-for-woocommerce' ),
 			'name'        => 'bookings-for-woocommerce-booking-calendar-listing',
 			'file_path'   =>  BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/bookings-for-woocommerce-booking-calendar-listing.php'
 		);
@@ -396,13 +396,13 @@ class Bookings_For_Woocommerce {
 		apply_filters('wps_bfw_plugin_standard_admin_settings_tabs', $bfw_default_tabs);
 
 		$bfw_default_tabs['bookings-for-woocommerce-overview'] = array(
-			'title'       => esc_html__('Overview', 'bookings-for-woocommerce'),
+			'title'       => esc_html__('Overview', 'mwb-bookings-for-woocommerce'),
 			'name'        => 'bookings-for-woocommerce-overview',
 			'file_path'   => BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/bookings-for-woocommerce-overview.php'
 		);
 		
 		$bfw_default_tabs['bookings-for-woocommerce-developer'] = array(
-			'title'       => esc_html__('Developer', 'bookings-for-woocommerce'),
+			'title'       => esc_html__('Developer', 'mwb-bookings-for-woocommerce'),
 			'name'        => 'bookings-for-woocommerce-developer',
 			'file_path'   => BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/bookings-for-woocommerce-developer.php'
 		);
@@ -421,7 +421,7 @@ class Bookings_For_Woocommerce {
 			include $path;
 		} else {
 			/* translators: %s: file path */
-			$bfw_notice = sprintf(esc_html__('Unable to locate file at location "%s". Some features may not work properly in this plugin. Please contact us!', 'bookings-for-woocommerce'), $path);
+			$bfw_notice = sprintf(esc_html__('Unable to locate file at location "%s". Some features may not work properly in this plugin. Please contact us!', 'mwb-bookings-for-woocommerce'), $path);
 			$this->wps_bfw_plug_admin_notice($bfw_notice, 'error');
 		}
 	}
@@ -806,7 +806,7 @@ class Bookings_For_Woocommerce {
 							break;
 						case 'availability_select':
 							?>
-							<div class="mbfw-admin-suggestion-text"><?php esc_html_e( 'Availability by Days', 'bookings-for-woocommerce' ); ?></div>
+							<div class="mbfw-admin-suggestion-text"><?php esc_html_e( 'Availability by Days', 'mwb-bookings-for-woocommerce' ); ?></div>
 							<?php
 							$sub_tabs = $bfw_component['sub_tabs'];
 							foreach ( $sub_tabs as $title => $bfw_sub_components ) {

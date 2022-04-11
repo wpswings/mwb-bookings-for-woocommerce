@@ -11,4 +11,4 @@
  * @subpackage Bookings_For_Woocommerce
  */
 
-esc_html_e( 'oops looks like nothing is here', 'bookings-for-woocommerce' );
+esc_html_e( 'oops looks like nothing is here', 'mwb-bookings-for-woocommerce' );

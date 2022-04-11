@@ -39,7 +39,7 @@ if ( empty( $product->get_type() ) || 'wps_booking' !== $product->get_type() ) {
 		if ( ! empty( $booking_quantity ) ) {
 			?>
 			<div class="wps-bfwp-booking-quantity__public-show">
-				<?php esc_html_e( 'Quantity : ', 'bookings-for-woocommerce' ); ?>
+				<?php esc_html_e( 'Quantity : ', 'mwb-bookings-for-woocommerce' ); ?>
 				<span>
 					<?php echo esc_html( $booking_quantity ); ?>
 				</span>

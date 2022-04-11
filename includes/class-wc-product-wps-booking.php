@@ -60,7 +60,7 @@ class WC_Product_Wps_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function single_add_to_cart_text() {
-		return apply_filters( 'woocommerce_product_single_add_to_cart_text', $this->get_button_text() ? $this->get_button_text() : _x( 'Book Now', 'placeholder', 'bookings-for-woocommerce' ), $this );
+		return apply_filters( 'woocommerce_product_single_add_to_cart_text', $this->get_button_text() ? $this->get_button_text() : _x( 'Book Now', 'placeholder', 'mwb-bookings-for-woocommerce' ), $this );
 	}
 	/**
 	 * Get the add to cart button text.
@@ -68,7 +68,7 @@ class WC_Product_Wps_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function add_to_cart_text() {
-		return apply_filters( 'woocommerce_product_add_to_cart_text', __( 'View Details', 'bookings-for-woocommerce' ), $this );
+		return apply_filters( 'woocommerce_product_add_to_cart_text', __( 'View Details', 'mwb-bookings-for-woocommerce' ), $this );
 	}
 
 	/**
@@ -128,6 +128,6 @@ class WC_Product_Wps_Booking extends WC_Product {
 	 */
 	public function add_to_cart_description() {
 		/* translators: %s: Product title */
-		return apply_filters( 'woocommerce_product_add_to_cart_description', $this->get_button_text() ? $this->get_button_text() : sprintf( __( 'Book &ldquo;%s&rdquo;', 'bookings-for-woocommerce' ), $this->get_name() ), $this );
+		return apply_filters( 'woocommerce_product_add_to_cart_description', $this->get_button_text() ? $this->get_button_text() : sprintf( __( 'Book &ldquo;%s&rdquo;', 'mwb-bookings-for-woocommerce' ), $this->get_name() ), $this );
 	}
 }

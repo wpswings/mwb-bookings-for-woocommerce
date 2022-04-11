@@ -22,7 +22,7 @@ apply_filters('wps_bfw_on_boarding_form_fields', array());
 	<?php
 	echo wp_kses_post(
 	//desc - filter for trial.
-	apply_filters( 'wps_stand_dialog_classes', 'bookings-for-woocommerce' ) );
+	apply_filters( 'wps_stand_dialog_classes', 'mwb-bookings-for-woocommerce' ) );
 	?>
 	">
 		<div class="wps-mbfw-on-boarding-wrapper-background mdc-dialog__container">
@@ -31,8 +31,8 @@ apply_filters('wps_bfw_on_boarding_form_fields', array());
 					<div class="wps-mbfw-on-boarding-close-btn">
 						<a href="#"><span class="mbfw-close-form material-icons wps-mbfw-close-icon mdc-dialog__button" data-mdc-dialog-action="close">clear</span></a>
 					</div>
-					<h3 class="wps-mbfw-on-boarding-heading mdc-dialog__title"><?php esc_html_e( 'Welcome to WP Swings', 'bookings-for-woocommerce' ); ?> </h3>
-					<p class="wps-mbfw-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'bookings-for-woocommerce' ); ?></p>
+					<h3 class="wps-mbfw-on-boarding-heading mdc-dialog__title"><?php esc_html_e( 'Welcome to WP Swings', 'mwb-bookings-for-woocommerce' ); ?> </h3>
+					<p class="wps-mbfw-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'mwb-bookings-for-woocommerce' ); ?></p>
 
 					<form action="#" method="post" class="wps-mbfw-on-boarding-form">
 						<?php 
@@ -44,7 +44,7 @@ apply_filters('wps_bfw_on_boarding_form_fields', array());
 								<input type="submit" class="wps-mbfw-on-boarding-submit wps-on-boarding-verify mdc-button mdc-button--raised" value="Send Us">
 							</div>
 							<div class="wps-mbfw-on-boarding-form-no_thanks">
-								<a href="#" class="wps-mbfw-on-boarding-no_thanks mdc-button" data-mdc-dialog-action="discard"><?php esc_html_e( 'Skip For Now', 'bookings-for-woocommerce' ); ?></a>
+								<a href="#" class="wps-mbfw-on-boarding-no_thanks mdc-button" data-mdc-dialog-action="discard"><?php esc_html_e( 'Skip For Now', 'mwb-bookings-for-woocommerce' ); ?></a>
 							</div>
 						</div>
 					</form>

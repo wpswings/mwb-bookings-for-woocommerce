@@ -33,7 +33,7 @@ class Bookings_For_Woocommerce_I18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'bookings-for-woocommerce',
+			'mwb-bookings-for-woocommerce',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

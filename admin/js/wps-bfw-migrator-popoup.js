@@ -321,7 +321,7 @@ jQuery(document).ready( function($) {
 	// End of scripts.
 	var wps_bookings_migration_success = function() {
 	
-		if ( localised.wps_shortcode_pending_count != 0 && localised.wps_term_meta_count != 0 && localised.wps_pending_post_meta != 0 ) {
+		if ( localised.wps_shortcode_pending_count != 0 || localised.wps_term_meta_count != 0 || localised.wps_pending_post_meta != 0 ) {
 			
 			jQuery( "#wps_bfw_migration_button" ).click();
 			jQuery( "#wps_bfw_migration_button" ).show();

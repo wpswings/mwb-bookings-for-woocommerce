@@ -1911,7 +1911,11 @@ class Bookings_For_Woocommerce_Admin {
 				}
 	
 				$new_value = get_option( $key, $value );
+				if(empty($new_value)){
+					continue;
+				}
 				update_option( $new_key, $new_value );
+				delete_option( $key );
 			}
 			// do_action('wps_bfw_migrate_pro_options_keys');
 			$wps_booking_old_settings_options = array(
@@ -1953,7 +1957,11 @@ class Bookings_For_Woocommerce_Admin {
 				}
 	
 				$new_value = get_option( $key, $value );
+				if(empty($new_value)){
+					continue;
+				}
 				update_option( $new_key, $new_value );
+				delete_option( $key );
 			}
 
 			return array();

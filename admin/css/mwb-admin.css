@@ -682,6 +682,10 @@ select {
   font-family: "NunitoSans-Regular";
 }
 
+#screen-options-link-wrap {
+  display: none;
+}
+
 @media (max-width: 768px){
   .mwb-header-container {
     justify-content: flex-start;

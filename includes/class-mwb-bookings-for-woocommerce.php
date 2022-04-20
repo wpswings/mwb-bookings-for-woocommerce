@@ -214,6 +214,13 @@ class Mwb_Bookings_For_Woocommerce {
 		$this->loader->add_action('mbfw_developer_admin_hooks_array', $mbfw_plugin_admin, 'mwb_developer_admin_hooks_listing');
 		$this->loader->add_action('mbfw_developer_public_hooks_array', $mbfw_plugin_admin, 'mwb_developer_public_hooks_listing');
 
+
+		//taxonomy page hooks v3.0.0
+		$this->loader->add_action( 'all_admin_notices', $mbfw_plugin_admin, 'mwb_bfw_taxonomy_page_display_html');
+		$this->loader->add_action('admin_footer', $mbfw_plugin_admin,'mwb_bfw_footer_custom_taxonomy_edit_page_callback');
+		$this->loader->add_action( 'parent_file',$mbfw_plugin_admin, 'prefix_highlight_taxonomy_parent_menu' );
+
+
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_filter( 'product_type_selector', $mbfw_plugin_admin, 'mbfw_add_product_type_in_dropdown', 10, 1 );
 			$this->loader->add_filter( 'woocommerce_product_data_tabs', $mbfw_plugin_admin, 'mbfw_add_product_data_tabs' );
@@ -372,23 +379,30 @@ class Mwb_Bookings_For_Woocommerce {
 			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-general.php'
 		);
 
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-form-settings'] = array(
-			'title'       => esc_html__( 'Booking Form Settings', 'mwb-bookings-for-woocommerce' ),
-			'name'        => 'mwb-bookings-for-woocommerce-booking-form-settings',
-			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-form-settings.php'
-		);
+		// $mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-form-settings'] = array(
+		// 	'title'       => esc_html__( 'Booking Form Settings', 'mwb-bookings-for-woocommerce' ),
+		// 	'name'        => 'mwb-bookings-for-woocommerce-booking-form-settings',
+		// 	'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-form-settings.php'
+		// );
 
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
-			'title'       => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
-			'name'        => 'mwb-bookings-for-woocommerce-booking-availability-settings',
-			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php'
-		);
+		// $mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
+		// 	'title'       => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
+		// 	'name'        => 'mwb-bookings-for-woocommerce-booking-availability-settings',
+		// 	'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php'
+		// );
 
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-calendar-listing'] = array(
 			'title'       => esc_html__( 'Bookings Calendar', 'mwb-bookings-for-woocommerce' ),
 			'name'        => 'mwb-bookings-for-woocommerce-booking-calendar-listing',
 			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-calendar-listing.php'
 		);
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-configuration'] = array(
+			'title'       => esc_html__('Configuration', 'bookings-for-woocommerce'),
+			'name'        => 'mwb-bookings-for-woocommerce-configuration',
+			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-configuration.php'
+		);
+
 
 		$mbfw_default_tabs = 
 		//desc - add admin setting tabs.
@@ -407,6 +421,32 @@ class Mwb_Bookings_For_Woocommerce {
 		);
 		return $mbfw_default_tabs;
 	}
+	/**
+	 * Predefined default wps_bfw_plug tabs.
+	 *
+	 * @return array An key=>value pair of Bookings For WooCommerce tabs.
+	 */
+	public function mwb_bfw_plug_config_sub_tabs() {
+		$mbfw_default_tabs = array();
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-form-settings'] = array(
+			'title'       => esc_html__( 'Booking Form Settings', 'mwb-bookings-for-woocommerce' ),
+			'name'        => 'mwb-bookings-for-woocommerce-booking-form-settings',
+			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-form-settings.php'
+		);
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
+			'title'       => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
+			'name'        => 'mwb-bookings-for-woocommerce-booking-availability-settings',
+			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php'
+		);
+
+		$mbfw_default_tabs = 
+		//desc - add admin setting tabs.
+		apply_filters('mwb_bfw_configuration_settings_sub_tabs', $mbfw_default_tabs);
+
+		return $mbfw_default_tabs;
+	}
 
 	/**
 	 * Locate and load appropriate tempate.
@@ -416,6 +456,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @param array  $params parameters to pass to the file for access.
 	 */
 	public function mwb_mbfw_plug_load_template( $path, $params = array() ) {
+		// var_dump($path);
 		if (file_exists($path) ) {
 			include $path;
 		} else {

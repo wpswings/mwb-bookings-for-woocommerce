@@ -37,6 +37,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	private $version;
 
 	/**
+	 * List of tabs and sub tabs.
+	 *
+	 * @var array
+	 */
+	public $mwb_settings = array();
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since 2.0.0
@@ -57,7 +64,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-		if (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) {
+		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+		if ( (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || (in_array( get_current_screen()->taxonomy,$mwb_bfw_taxonomy_array ) ) ) {
+		// if (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) {
 
 			wp_enqueue_style('mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all');
 
@@ -82,7 +91,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) {
+		// if ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) {
+			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+			if ( (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || (in_array( get_current_screen()->taxonomy,$mwb_bfw_taxonomy_array ) ) ) {
 			wp_enqueue_script('mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false);
 			
 			wp_enqueue_script('mwb-mbfw-metarial-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false);
@@ -94,7 +105,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			wp_register_script($this->plugin_name . 'admin-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-bookings-for-woocommerce-admin.js', array( 'jquery', 'mwb-mbfw-select2', 'mwb-mbfw-metarial-js', 'mwb-mbfw-metarial-js2', 'mwb-mbfw-metarial-lite' ), $this->version, false);
 			wp_localize_script(
 				$this->plugin_name . 'admin-js',
-				'mbfw_admin_param',
+		  		'mbfw_admin_param',
 				array(
 					'todays_date'               => current_time( 'Y-m-d' ),
 					'ajaxurl'                   => admin_url('admin-ajax.php'),
@@ -161,7 +172,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_admin_submenu_page( $menus = array() ) {
 		$menus[] = array(
-			'name'      => __( 'Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
+			'name'      => __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
 			'slug'      => 'mwb_bookings_for_woocommerce_menu',
 			'menu_link' => 'mwb_bookings_for_woocommerce_menu',
 			'instance'  => $this,
@@ -1490,4 +1501,50 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			Mwb_Bookings_For_Woocommerce_Activator::mwb_migrate_old_plugin_settings();
 		}
 	}
+
+		//new feature plugin simplification start
+
+		function prefix_highlight_taxonomy_parent_menu( $parent_file ) {
+			global $submenu_file, $current_screen, $pagenow;
+			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+			if ( in_array( get_current_screen()->taxonomy,$mwb_bfw_taxonomy_array ) ) {
+				$parent_file = 'mwb-plugins';
+			}
+			return $parent_file;
+		}
+		public function mwb_bfw_taxonomy_page_display_html() {
+	
+			global $current_screen;
+			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+			if ( in_array(get_current_screen()->taxonomy,$mwb_bfw_taxonomy_array )	) {
+				$this->mbfw_options_menu_html();
+				echo '<section class="mwb-section"><div>';
+			}
+			
+		}
+	
+		/**
+		 * Undocumented function
+		 *
+		 * @return array
+		 */
+		public static function mwb_get_taxonomy_array() {
+			$taxonomy_array = array('mwb_booking_cost','mwb_booking_service');
+			$taxonomy_array = apply_filters( 'mwb_bfw_booking_taxonomy_array', $taxonomy_array );
+			return $taxonomy_array;
+		}
+	
+		/**
+		 * Custom taxonomy footer.
+		 *
+		 * @return void
+		 */
+		public function mwb_bfw_footer_custom_taxonomy_edit_page_callback() {
+			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+	
+			if ( in_array(get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array )	) {
+				echo '</div></section>'; 
+			}
+		}
+		
 }

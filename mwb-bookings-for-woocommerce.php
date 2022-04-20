@@ -12,9 +12,9 @@
  * @package Mwb_Bookings_For_Woocommerce
  *
  * @wordpress-plugin
- * Plugin Name:       Mwb Bookings For WooCommerce
+ * Plugin Name:       Bookings For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/mwb-bookings-for-woocommerce/
- * Description:       MWB Bookings for WooCommerce helps you stay focused while offering a better online booking system for your business growth. Just stop speculating and opt for the best one out.
+ * Description:       Bookings for WooCommerce helps you stay focused while offering a better online booking system for your business growth. Just stop speculating and opt for the best one out.<a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-bookings&utm_medium=bookings-org-backend&utm_campaign=official" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
  * Version:           2.0.4
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-bookings-official&utm_medium=bookings-org-backend&utm_campaign=official
@@ -49,7 +49,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path(__FILE__));
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url(__FILE__));
 		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com');
-		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'Mwb Bookings For WooCommerce');
+		mwb_bookings_for_woocommerce_constants('MWB_BOOKINGS_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'Bookings For WooCommerce');
 	}
 
 	/**
@@ -79,13 +79,13 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		$mwb_mbfw_active_plugin = get_option('mwb_all_plugins_active', false );
 		if ( is_array( $mwb_mbfw_active_plugin ) && ! empty( $mwb_mbfw_active_plugin ) ) {
 			$mwb_mbfw_active_plugin['mwb-bookings-for-woocommerce'] = array(
-				'plugin_name' => __( 'Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
+				'plugin_name' => __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
 				'active'      => '1',
 			);
 		} else {
 			$mwb_mbfw_active_plugin                                 = array();
 			$mwb_mbfw_active_plugin['mwb-bookings-for-woocommerce'] = array(
-				'plugin_name' => __( 'Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
+				'plugin_name' => __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
 				'active'      => '1',
 			);
 		}
@@ -285,7 +285,7 @@ function mwb_mbfw_deactivate_child_plugin() {
  * @return void
  */
 function mwb_mbfw_show_admin_notices() {
-	$mwb_mbfw_child_plugin  = __( 'Mwb Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' );
+	$mwb_mbfw_child_plugin  = __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' );
 	$mwb_mbfw_parent_plugin = __( 'WooCommerce', 'mwb-bookings-for-woocommerce' );
 	echo '<div class="notice notice-error is-dismissible"><p>'
 		/* translators: %s: dependency checks */

@@ -110,7 +110,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		self::$mwb_mbfw_store_name        = get_bloginfo( 'name' );
 		self::$mwb_mbfw_store_url         = home_url();
 		self::$mwb_mbfw_plugin_name       = 'mwb-bookings-for-woocommerce';
-		self::$mwb_mbfw_plugin_name_label = 'Mwb Bookings for WooCommerce';
+		self::$mwb_mbfw_plugin_name_label = 'Bookings for WooCommerce';
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mbfw_onboarding_enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mbfw_onboarding_enqueue_scripts' ) );

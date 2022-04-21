@@ -939,26 +939,28 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_taxonomy_adding_fields_html( $fields ) {
 		foreach ( $fields as $field ) {
 			?>
-			<p class="form-field">
+			<div class="wps-bfw-form-field">
 				<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_attr( isset( $field['label'] ) ? $field['label'] : '' ); ?></label>
-				<input
-				type="<?php echo esc_attr( $field['type'] ); ?>"
-				class="<?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : 'short' ); ?>"
-				style="<?php echo esc_attr( isset( $field['style'] ) ? $field['style'] : '' ); ?>"
-				name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $field['id'] ); ?>"
-				id="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>"
-				placeholder=""
-				<?php
-				if ( isset( $field['custom_attribute'] ) && is_array( $field['custom_attribute'] ) ) {
-					$custom_attributes = $field['custom_attribute'];
-					foreach ( $custom_attributes as $attr_name => $attr_val ) {
-						echo esc_html( $attr_name . '=' . $attr_val );
+				<div class="wps-form-field-wrap">
+					<input
+					type="<?php echo esc_attr( $field['type'] ); ?>"
+					class="<?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : 'short' ); ?>"
+					style="<?php echo esc_attr( isset( $field['style'] ) ? $field['style'] : '' ); ?>"
+					name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $field['id'] ); ?>"
+					id="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>"
+					placeholder=""
+					<?php
+					if ( isset( $field['custom_attribute'] ) && is_array( $field['custom_attribute'] ) ) {
+						$custom_attributes = $field['custom_attribute'];
+						foreach ( $custom_attributes as $attr_name => $attr_val ) {
+							echo esc_html( $attr_name . '=' . $attr_val );
+						}
 					}
-				}
-				?>
-				>
-				<p class="description"><?php echo wp_kses_post( isset( $field['description'] ) ? $field['description'] : '' ); ?></p>
-			</p>
+					?>
+					/>
+					<span class="description"><?php echo wp_kses_post( isset( $field['description'] ) ? $field['description'] : '' ); ?></span>
+				</div>
+			</div>
 			<?php
 		}
 	}

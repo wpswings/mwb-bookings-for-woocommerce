@@ -2,8 +2,8 @@
     'base/base',
     'components/components',
     'layout/layout',
-    'pages/page';
-
+    'pages/page',
+    'pages/update';
     .mwb-form-group {
         .mwb-form-group__label {
             @include media (mwb-sm-phone)  {

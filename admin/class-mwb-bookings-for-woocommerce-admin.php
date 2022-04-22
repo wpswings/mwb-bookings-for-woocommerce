@@ -63,20 +63,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @param string $hook The plugin page slug.
 	 */
 	public function mbfw_admin_enqueue_styles( $hook ) {
-		$screen = get_current_screen();
+		$screen                 = get_current_screen();
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
-		if ( (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || (in_array( get_current_screen()->taxonomy,$mwb_bfw_taxonomy_array ) ) ) {
-		// if (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) {
+		if ( ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
+			wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all' );
 
-			wp_enqueue_style('mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all');
+			wp_enqueue_style( 'mwb-mbfw-meterial-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'mwb-mbfw-meterial-css2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'mwb-mbfw-meterial-lite', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
 
-			wp_enqueue_style('mwb-mbfw-meterial-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all');
-			wp_enqueue_style('mwb-mbfw-meterial-css2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all');
-			wp_enqueue_style('mwb-mbfw-meterial-lite', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all');
-
-			wp_enqueue_style('mwb-mbfw-meterial-icons-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all');
-			wp_enqueue_style('mwb-mbfw-admin-min-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.min.css', array(), $this->version, 'all');
-			wp_enqueue_style('mwb-datatable-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all');
+			wp_enqueue_style( 'mwb-mbfw-meterial-icons-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all' );
+			wp_enqueue_style( 'mwb-mbfw-admin-min-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'mwb-datatable-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'mwb-admin-full-calendar-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.css', array(), '5.8.0', 'all' );
 		}
 		wp_enqueue_style( 'mwb-mbfw-global-custom-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin-global-custom.min.css', array(), $this->version, 'all' );
@@ -90,28 +88,27 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_admin_enqueue_scripts( $hook ) {
 
-		$screen = get_current_screen();
-		// if ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) {
+		$screen                     = get_current_screen();
 			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
-			if ( (isset($screen->id) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || (in_array( get_current_screen()->taxonomy,$mwb_bfw_taxonomy_array ) ) ) {
-			wp_enqueue_script('mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false);
-			
-			wp_enqueue_script('mwb-mbfw-metarial-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false);
-			wp_enqueue_script('mwb-mbfw-metarial-js2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false);
-			wp_enqueue_script('mwb-mbfw-metarial-lite', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false);
-			wp_enqueue_script('mwb-mbfw-datatable', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/js/jquery.dataTables.min.js', array(), time(), false);
-			wp_enqueue_script('mwb-mbfw-datatable-btn', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/buttons/dataTables.buttons.min.js', array(), time(), false);
-			wp_enqueue_script('mwb-mbfw-datatable-btn-2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/buttons/buttons.html5.min.js', array(), time(), false);
-			wp_register_script($this->plugin_name . 'admin-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-bookings-for-woocommerce-admin.js', array( 'jquery', 'mwb-mbfw-select2', 'mwb-mbfw-metarial-js', 'mwb-mbfw-metarial-js2', 'mwb-mbfw-metarial-lite' ), $this->version, false);
+		if ( ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
+			wp_enqueue_script( 'mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
+
+			wp_enqueue_script( 'mwb-mbfw-metarial-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
+			wp_enqueue_script( 'mwb-mbfw-metarial-js2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
+			wp_enqueue_script( 'mwb-mbfw-metarial-lite', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false );
+			wp_enqueue_script( 'mwb-mbfw-datatable', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/js/jquery.dataTables.min.js', array(), time(), false );
+			wp_enqueue_script( 'mwb-mbfw-datatable-btn', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/buttons/dataTables.buttons.min.js', array(), time(), false );
+			wp_enqueue_script( 'mwb-mbfw-datatable-btn-2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/buttons/buttons.html5.min.js', array(), time(), false );
+			wp_register_script( $this->plugin_name . 'admin-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-bookings-for-woocommerce-admin.js', array( 'jquery', 'mwb-mbfw-select2', 'mwb-mbfw-metarial-js', 'mwb-mbfw-metarial-js2', 'mwb-mbfw-metarial-lite' ), $this->version, false );
 			wp_localize_script(
 				$this->plugin_name . 'admin-js',
-		  		'mbfw_admin_param',
+				'mbfw_admin_param',
 				array(
 					'todays_date'               => current_time( 'Y-m-d' ),
-					'ajaxurl'                   => admin_url('admin-ajax.php'),
+					'ajaxurl'                   => admin_url( 'admin-ajax.php' ),
 					'nonce'                     => wp_create_nonce( 'mwb_mbfw_admin_nonce' ),
-					'reloadurl'                 => admin_url('admin.php?page=mwb_bookings_for_woocommerce_menu'),
-					'mbfw_gen_tab_enable'       => get_option('mbfw_radio_switch_demo'),
+					'reloadurl'                 => admin_url( 'admin.php?page=mwb_bookings_for_woocommerce_menu' ),
+					'mbfw_gen_tab_enable'       => get_option( 'mbfw_radio_switch_demo' ),
 					'mbfw_admin_param_location' => ( admin_url( 'admin.php' ) . '?page=mwb_bookings_for_woocommerce_menu&mbfw_tab=mwb-bookings-for-woocommerce-general' ),
 					'full_cal_button_text'      => array(
 						'today' => __( 'Today', 'mwb-bookings-for-woocommerce' ),
@@ -122,8 +119,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					),
 				)
 			);
-			wp_enqueue_script($this->plugin_name . 'admin-js');
-			wp_enqueue_script('mwb-mbfw-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( $this->plugin_name . 'admin-js' );
+			wp_enqueue_script( 'mwb-mbfw-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( 'mwb-admin-full-calendar-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.js', array( 'jquery' ), '5.8.0', true );
 		}
 		wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-custom.min.js', array( 'jquery' ), $this->version, true );
@@ -137,9 +134,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15);
-			$mbfw_menus = 
-			//desc - Add Menu Page.
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
+			$mbfw_menus =
+			// desc - Add Menu Page.
 			apply_filters( 'mwb_add_plugins_menus_array', array() );
 			if ( is_array( $mbfw_menus ) && ! empty( $mbfw_menus ) ) {
 				foreach ( $mbfw_menus as $mbfw_key => $mbfw_value ) {
@@ -158,7 +155,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		global $submenu;
 		if ( is_array( $submenu ) && array_key_exists( 'mwb-plugins', $submenu ) ) {
 			if ( isset( $submenu['mwb-plugins'][0] ) ) {
-				unset($submenu['mwb-plugins'][0]);
+				unset( $submenu['mwb-plugins'][0] );
 			}
 		}
 	}
@@ -187,8 +184,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @since 2.0.0
 	 */
 	public function mwb_plugins_listing_page() {
-		$active_marketplaces = 
-		//desc - Add Menu Page.
+		$active_marketplaces =
+		// desc - Add Menu Page.
 		apply_filters( 'mwb_add_plugins_menus_array', array() );
 		if ( is_array( $active_marketplaces ) && ! empty( $active_marketplaces ) ) {
 			include MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/welcome.php';
@@ -214,12 +211,12 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		$val         = self::mwb_developer_hooks_function( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/' );
 		if ( ! empty( $val['hooks'] ) ) {
 			$admin_hooks[] = $val['hooks'];
-			unset($val['hooks']);
+			unset( $val['hooks'] );
 		}
 		$data = array();
 		foreach ( $val['files'] as $v ) {
 			if ( 'css' !== $v && 'js' !== $v && 'images' !== $v ) {
-				$helo = self::mwb_developer_hooks_function(MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/' . $v . '/');
+				$helo = self::mwb_developer_hooks_function( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/' . $v . '/' );
 				if ( ! empty( $helo['hooks'] ) ) {
 					$admin_hooks[] = $helo['hooks'];
 					unset( $helo['hooks'] );
@@ -242,7 +239,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		$val          = self::mwb_developer_hooks_function( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'public/' );
 		if ( ! empty( $val['hooks'] ) ) {
 			$public_hooks[] = $val['hooks'];
-			unset($val['hooks']);
+			unset( $val['hooks'] );
 		}
 		$data = array();
 		foreach ( $val['files'] as $v ) {
@@ -250,7 +247,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				$helo = self::mwb_developer_hooks_function( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'public/' . $v . '/' );
 				if ( ! empty( $helo['hooks'] ) ) {
 					$public_hooks[] = $helo['hooks'];
-					unset($helo['hooks']);
+					unset( $helo['hooks'] );
 				}
 				if ( ! empty( $helo ) ) {
 					$data[] = $helo;
@@ -276,11 +273,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				foreach ( $myfile as $key => $lines ) {
 					if ( preg_match( '/do_action/i', $lines ) && ! strpos( $lines, 'str_replace' ) && ! strpos( $lines, 'preg_match' ) ) {
 						$all_hooks[ $key ]['action_hook'] = $lines;
-						$all_hooks[ $key ]['desc']        = $myfile[ $key-1 ];
+						$all_hooks[ $key ]['desc']        = $myfile[ $key - 1 ];
 					}
-					if ( preg_match( '/apply_filters/i', $lines ) && ! strpos( $lines, 'str_replace') && ! strpos( $lines, 'preg_match' ) ) {
+					if ( preg_match( '/apply_filters/i', $lines ) && ! strpos( $lines, 'str_replace' ) && ! strpos( $lines, 'preg_match' ) ) {
 						$all_hooks[ $key ]['filter_hook'] = $lines;
-						$all_hooks[ $key ]['desc']        = $myfile[ $key-1 ];
+						$all_hooks[ $key ]['desc']        = $myfile[ $key - 1 ];
 					}
 				}
 			} elseif ( strpos( $file, '.' ) == '' && strpos( $file, '.' ) !== 0 ) { // phpcs:ignore
@@ -302,9 +299,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_admin_general_settings_page( $mbfw_settings_general ) {
 		$mbfw_settings_general = array(
 			array(
-				'title'       => __('Enable Plugin', 'mwb-bookings-for-woocommerce'),
+				'title'       => __( 'Enable Plugin', 'mwb-bookings-for-woocommerce' ),
 				'type'        => 'radio-switch',
-				'description' => __('Enable plugin.', 'mwb-bookings-for-woocommerce'),
+				'description' => __( 'Enable plugin.', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_plugin_enable',
 				'value'       => get_option( 'mwb_mbfw_is_plugin_enable' ),
 				'class'       => 'mwb_mbfw_is_plugin_enable',
@@ -318,15 +315,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'value'       => get_option( 'mwb_mbfw_is_booking_enable' ),
 				'class'       => 'mwb_mbfw_is_booking_enable',
 				'name'        => 'mwb_mbfw_is_booking_enable',
-			)
+			),
 		);
 		$mbfw_settings_general =
-		//desc - General settings tab add html fields.
+		// desc - General settings tab add html fields.
 		apply_filters( 'mbfw_general_settings_array_filter', $mbfw_settings_general );
 		$mbfw_settings_general[] = array(
 			'type'        => 'button',
 			'id'          => 'mwb_mbfw_general_settings_save',
-			'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
+			'button_text' => __( 'Save Settings', 'mwb-bookings-for-woocommerce' ),
 			'class'       => 'mwb_mbfw_general_settings_save',
 			'name'        => 'mwb_mbfw_general_settings_save',
 		);
@@ -342,11 +339,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_booking_form_settings_page( $mbfw_booking_form_array ) {
 		$mbfw_booking_form_array = array(
 			array(
-				'title'       => __('Show Included Services', 'mwb-bookings-for-woocommerce'),
+				'title'       => __( 'Booking Form Settings', 'mwb-bookings-for-woocommerce' ),
+				'type'        => 'heading',
+				'description' => __( 'Booking Form Settings Heading', 'mwb-bookings-for-woocommerce' ),
+				'id'          => 'mwb_mbfw_form_settings_heading',
+				'class'       => 'mwb_mbfw_is_show_included_service',
+			),
+			array(
+				'title'       => __( 'Display Included Services', 'mwb-bookings-for-woocommerce' ),
 				'type'        => 'radio-switch',
 				'description' => sprintf(
 					/* translators:%s booking services link */
-					__('Enable this to show %s on the booking form.', 'mwb-bookings-for-woocommerce'),
+					__( 'Enable this to show %s on the booking form.', 'mwb-bookings-for-woocommerce' ),
 					'<a href="' . admin_url( 'edit-tags.php?taxonomy=mwb_booking_service&post_type=product' ) . '" class="mwb-bfwp-helper-link__admin" target="_blank">' . __( 'booking services', 'mwb-bookings-for-woocommerce' ) . '</a>'
 				),
 				'id'          => 'mwb_mbfw_is_show_included_service',
@@ -355,22 +359,22 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'name'        => 'mwb_mbfw_is_show_included_service',
 			),
 			array(
-				'title'       => __('Show Totals', 'mwb-bookings-for-woocommerce'),
+				'title'       => __( 'Display Totals', 'mwb-bookings-for-woocommerce' ),
 				'type'        => 'radio-switch',
-				'description' => __( 'Enable this to show booking total on varying services and quantity while booking.', 'mwb-bookings-for-woocommerce'),
+				'description' => __( 'Enable this to display the booking total for different services and quantities while booking.', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_is_show_totals',
 				'value'       => get_option( 'mwb_mbfw_is_show_totals' ),
 				'class'       => 'mwb_mbfw_is_show_totals',
-				'name'        => 'mwb_mbfw_is_show_totals'
-			)
+				'name'        => 'mwb_mbfw_is_show_totals',
+			),
 		);
 		$mbfw_booking_form_array =
-		//desc - setting fields at booking form setting tab.
+		// desc - setting fields at booking form setting tab.
 		apply_filters( 'mbfw_booking_form_setting_array_filter', $mbfw_booking_form_array );
 		$mbfw_booking_form_array[] = array(
 			'type'        => 'button',
 			'id'          => 'mwb_mbfw_booking_form_settings_save',
-			'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
+			'button_text' => __( 'Save Settings', 'mwb-bookings-for-woocommerce' ),
 			'class'       => 'mwb_mbfw_booking_form_settings_save',
 			'name'        => 'mwb_mbfw_booking_form_settings_save',
 		);
@@ -402,15 +406,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'value'       => get_option( 'mwb_mbfw_daily_end_time' ),
 				'type'        => 'time',
 				'description' => __( 'Please choose daily end time, bookings will be closed for users after this time.', 'mwb-bookings-for-woocommerce' ),
-			)
+			),
 		);
 		$mbfw_availability_settings =
-		//desc - avilability setting fields array.
+		// desc - avilability setting fields array.
 		apply_filters( 'mwb_mbfw_availability_setting_fields_array', $mbfw_availability_settings );
 		$mbfw_availability_settings[] = array(
 			'type'        => 'button',
 			'id'          => 'mwb_mbfw_availability_settings_save',
-			'button_text' => __('Save Settings', 'mwb-bookings-for-woocommerce'),
+			'button_text' => __( 'Save Settings', 'mwb-bookings-for-woocommerce' ),
 			'class'       => 'mwb_mbfw_availability_settings_save',
 			'name'        => 'mwb_mbfw_availability_settings_save',
 		);
@@ -434,22 +438,22 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 		if ( isset( $_POST['mwb_mbfw_general_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
-			$mbfw_genaral_settings = 
-			//desc - general setting tab fields.
+			$mbfw_genaral_settings =
+			// desc - general setting tab fields.
 			apply_filters( 'mbfw_general_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}
 		if ( isset( $_POST['mwb_mbfw_booking_form_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
-			$mbfw_genaral_settings = 
-			//desc - booking setting tab fields.
+			$mbfw_genaral_settings =
+			// desc - booking setting tab fields.
 			apply_filters( 'mbfw_booking_form_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}
 		if ( isset( $_POST['mwb_mbfw_availability_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
-			$mbfw_genaral_settings = 
-			//desc - availability setting tab fields.
+			$mbfw_genaral_settings =
+			// desc - availability setting tab fields.
 			apply_filters( 'mbfw_availability_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}
@@ -478,7 +482,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 								if ( isset( $_POST[ $mbfw_genaral_setting['id'] ] ) ) {
 									update_option( $mbfw_genaral_setting['id'], is_array( $_POST[ $mbfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $mbfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $mbfw_genaral_setting['id'] ] ) ) );
 								} else {
-									update_option($mbfw_genaral_setting['id'], '');
+									update_option( $mbfw_genaral_setting['id'], '' );
 								}
 							}
 						} else {
@@ -505,7 +509,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_add_product_type_in_dropdown( $types ) {
 		$types['mwb_booking'] = __( 'Booking product', 'mwb-bookings-for-woocommerce' );
-		return $types;	
+		return $types;
 	}
 
 	/**
@@ -547,7 +551,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 40,
 				),
-				'availability'      => array(
+				'availability'     => array(
 					'label'    => __( 'Availability', 'mwb-bookings-for-woocommerce' ),
 					'target'   => 'mwb_booking_availability_data',
 					'class'    => array( 'show_if_mwb_booking' ),
@@ -587,7 +591,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'type'              => 'number',
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
-					'custom_attributes' => ( 'fixed_unit' === $booking_criteria ) ? array( 'min' => 0, 'disabled' => 'disabled' ) : array( 'min' => 0 ) ,
+					'custom_attributes' => ( 'fixed_unit' === $booking_criteria ) ? array(
+						'min'      => 0,
+						'disabled' => 'disabled',
+					) : array( 'min' => 0 ),
 				)
 			);
 			woocommerce_wp_select(
@@ -611,7 +618,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'          => 'mwb_mbfw_enable_calendar',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_calendar', true ),
 					'label'       => __( 'Enable Dates Selection', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable calendar at frontend for choosing dates while booking ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'This option would enable booking dates to be selected from a calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -620,7 +627,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'          => 'mwb_mbfw_enable_time_picker',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_time_picker', true ),
 					'label'       => __( 'Enable Time Selection', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable time picker at frontend for choosing time while booking ( time picker will be enabled while booking ).', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'This feature would offer a front end time picker for selecting a time slot while booking ( time picker will be enabled while booking ).', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -638,7 +645,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'          => 'mwb_mbfw_cancellation_allowed',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_cancellation_allowed', true ),
 					'label'       => __( 'Cancellation Allowed', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Cancellation will be allowed for users, after enabling this please select the order statuses from below multiselect field.', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'When you enable this option, your users will be able to effortlessly cancel any booking requests they previously placed.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -661,7 +668,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'custom_attr' => ( 'yes' !== get_post_meta( get_the_ID(), 'mwb_mbfw_cancellation_allowed', true ) ) ? array( 'disabled' => 'disabled' ) : array(),
 				)
 			);
-			//desc - add meta fields in general settings meta section for products.
+			// desc - add meta fields in general settings meta section for products.
 			do_action( 'mwb_mbfw_add_extra_field_product_gen_setting', get_the_ID() );
 			?>
 		</div>
@@ -671,8 +678,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				array(
 					'id'                => 'mwb_mbfw_booking_unit_cost',
 					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit_cost', true ),
-					'label'             => __( 'Unit Cost', 'mwb-bookings-for-woocommerce' ),
-					'description'       => __( 'Enter unit cost.', 'mwb-bookings-for-woocommerce' ),
+					'label'             => __( 'Booking Unit Cost', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Enter unit cost i.e. the booking unit cost for the particular service that you’re opting to book for.', 'mwb-bookings-for-woocommerce' ),
 					'type'              => 'number',
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
@@ -681,11 +688,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			);
 			woocommerce_wp_checkbox(
 				array(
-					'id'                => 'mwb_mbfw_is_booking_unit_cost_per_people',
-					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_is_booking_unit_cost_per_people', true ),
-					'label'             => __( 'Unit Cost Per People', 'mwb-bookings-for-woocommerce' ),
-					'description'       => __( 'Unit cost will be multiplied by number of people while booking.', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'          => true,
+					'id'          => 'mwb_mbfw_is_booking_unit_cost_per_people',
+					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_is_booking_unit_cost_per_people', true ),
+					'label'       => __( 'Booking Unit Cost Per People', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enabling this would determine your booking unit cost multiplied by number of people.', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
 				)
 			);
 			woocommerce_wp_text_input(
@@ -693,7 +700,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'                => 'mwb_mbfw_booking_base_cost',
 					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_base_cost', true ),
 					'label'             => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
-					'description'       => __( 'Enter base cost.', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Enter base cost i.e. the base rental cost for the service that you’re opting to book for. ', 'mwb-bookings-for-woocommerce' ),
 					'type'              => 'number',
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
@@ -705,7 +712,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'          => 'mwb_mbfw_is_booking_base_cost_per_people',
 					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_is_booking_base_cost_per_people', true ),
 					'label'       => __( 'Base Cost Per People', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Base cost will be multiplied by number of people while booking.', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enabling this would determine your booking base cost multiplied by number of people.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -720,7 +727,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				?>
 			</p>
 			<?php
-			//desc - add meta fields in booking cost meta section for products.
+			// desc - add meta fields in booking cost meta section for products.
 			do_action( 'mwb_mbfw_booking_costs_meta_section_add_fields', get_the_ID() );
 			?>
 		</div>
@@ -759,7 +766,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
-			//desc - add fields in people meta sections in product.
+			// desc - add fields in people meta sections in product.
 			do_action( 'mwb_mbfw_people_meta_section_add_fields', get_the_ID() );
 			?>
 		</div>
@@ -787,7 +794,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		</div>
 		<div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<?php
-			//desc - add fields in booking availability meta section.
+			// desc - add fields in booking availability meta section.
 			do_action( 'mwb_mbfw_booking_availability_meta_tab_fields', get_the_ID() );
 			?>
 			<p class="mwb-mbfw-additional-notice">
@@ -853,7 +860,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * Save custom product meta boxes data.
 	 *
 	 * @param int    $id post id.
-	 * @param object $post post object. 
+	 * @param object $post post object.
 	 * @return void
 	 */
 	public function mbfw_save_custom_product_meta_boxes_data( $id, $post ) {
@@ -884,14 +891,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_bfwp_order_statuses_to_cancel'        => array_key_exists( 'mwb_bfwp_order_statuses_to_cancel', $_POST ) ? ( is_array( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ? map_deep( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ) ) : array(),
 			);
 			$product_meta_data =
-			//desc - save booking product meta data.
+			// desc - save booking product meta data.
 			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data, $id );
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 				update_post_meta( $id, $meta_key, $meta_value );
 			}
 			wp_set_object_terms( $id, array( 'booking' ), 'product_cat', true );
 			wp_remove_object_terms( $id, 'uncategorized', 'product_cat' );
-			//desc - after saving product custom meta data.
+			// desc - after saving product custom meta data.
 			do_action( 'mwb_mbfw_share_product_on_fb', $id );
 		}
 	}
@@ -939,26 +946,28 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_taxonomy_adding_fields_html( $fields ) {
 		foreach ( $fields as $field ) {
 			?>
-			<p class="form-field">
+			<div class="wps-bfw-form-field">
 				<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_attr( isset( $field['label'] ) ? $field['label'] : '' ); ?></label>
-				<input
-				type="<?php echo esc_attr( $field['type'] ); ?>"
-				class="<?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : 'short' ); ?>"
-				style="<?php echo esc_attr( isset( $field['style'] ) ? $field['style'] : '' ); ?>"
-				name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $field['id'] ); ?>"
-				id="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>"
-				placeholder=""
-				<?php
-				if ( isset( $field['custom_attribute'] ) && is_array( $field['custom_attribute'] ) ) {
-					$custom_attributes = $field['custom_attribute'];
-					foreach ( $custom_attributes as $attr_name => $attr_val ) {
-						echo esc_html( $attr_name . '=' . $attr_val );
+				<div class="wps-form-field-wrap">
+					<input
+					type="<?php echo esc_attr( $field['type'] ); ?>"
+					class="<?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : 'short' ); ?>"
+					style="<?php echo esc_attr( isset( $field['style'] ) ? $field['style'] : '' ); ?>"
+					name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $field['id'] ); ?>"
+					id="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>"
+					placeholder=""
+					<?php
+					if ( isset( $field['custom_attribute'] ) && is_array( $field['custom_attribute'] ) ) {
+						$custom_attributes = $field['custom_attribute'];
+						foreach ( $custom_attributes as $attr_name => $attr_val ) {
+							echo esc_html( $attr_name . '=' . $attr_val );
+						}
 					}
-				}
-				?>
-				>
-				<p class="description"><?php echo wp_kses_post( isset( $field['description'] ) ? $field['description'] : '' ); ?></p>
-			</p>
+					?>
+					/>
+					<span class="description"><?php echo wp_kses_post( isset( $field['description'] ) ? $field['description'] : '' ); ?></span>
+				</div>
+			</div>
 			<?php
 		}
 	}
@@ -975,7 +984,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				?>
 				<tr class="form-field">
 					<th>
-						<label for="<?php echo esc_attr( $tag_arr['id'] ); ?>"><?php echo wp_kses_post( isset( $tag_arr['label'] ) ?  $tag_arr['label'] : '' ); ?></label>
+						<label for="<?php echo esc_attr( $tag_arr['id'] ); ?>"><?php echo wp_kses_post( isset( $tag_arr['label'] ) ? $tag_arr['label'] : '' ); ?></label>
 					</th>
 					<td>
 						<input
@@ -1044,7 +1053,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Saving custom field at mwb_booking_cost taxonomy.
 	 *
-	 * @param int   $term_id current term id for custom taxonomy.
+	 * @param int $term_id current term id for custom taxonomy.
 	 * @return void
 	 */
 	public function mbfw_saving_custom_fields_at_booking_cost_taxonomy_page( $term_id ) {
@@ -1192,7 +1201,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'type'        => 'number',
 				'term_id'     => $term->term_id,
 				'description' => __( 'Please Add service cost here.', 'mwb-bookings-for-woocommerce' ),
-				'style'       => 'width:10em;'
+				'style'       => 'width:10em;',
 			),
 			array(
 				'id'          => 'mwb_mbfw_is_service_cost_multiply_people',
@@ -1261,7 +1270,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Saving custom field at mwb_booking_cost taxonomy.
 	 *
-	 * @param int   $term_id current term id for custom taxonomy.
+	 * @param int $term_id current term id for custom taxonomy.
 	 * @return void
 	 */
 	public function mbfw_saving_custom_fields_at_booking_service_taxonomy_page( $term_id ) {
@@ -1411,7 +1420,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			);
 			$query->set( 'meta_query', $meta_query );
 			$query->set( 'posts_per_page', 10 );
-			$query->set( 'paged', ( get_query_var('paged') ? get_query_var('paged') : 1 ) );
+			$query->set( 'paged', ( get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1 ) );
 		}
 		// phpcs:enable WordPress
 	}
@@ -1430,8 +1439,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'_mwb_mbfw_service_and_count',
 			'_mwb_mbfw_booking_extra_costs',
 		);
-		return
-		//desc - hide custom line item meta fields.
+		return // desc - hide custom line item meta fields.
 		apply_filters( 'mwb_mbfw_hide_custom_line_item_meta_keys', array_merge( $hidden_keys, $custom_line_item_key_name ) );
 	}
 
@@ -1443,7 +1451,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @param object $item current item object.
 	 * @return string
 	 */
-	public function mbfw_change_line_item_meta_key_order_edit_page( $display_key, $meta, $item  ) {
+	public function mbfw_change_line_item_meta_key_order_edit_page( $display_key, $meta, $item ) {
 		switch ( $display_key ) {
 			case '_mwb_bfwp_date_time_from':
 				return __( 'From', 'mwb-bookings-for-woocommerce' );
@@ -1502,49 +1510,77 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 	}
 
-		//new feature plugin simplification start
-
-		function prefix_highlight_taxonomy_parent_menu( $parent_file ) {
-			global $submenu_file, $current_screen, $pagenow;
-			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
-			if ( in_array( get_current_screen()->taxonomy,$mwb_bfw_taxonomy_array ) ) {
-				$parent_file = 'mwb-plugins';
-			}
-			return $parent_file;
-		}
-		public function mwb_bfw_taxonomy_page_display_html() {
-	
-			global $current_screen;
-			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
-			if ( in_array(get_current_screen()->taxonomy,$mwb_bfw_taxonomy_array )	) {
-				$this->mbfw_options_menu_html();
-				echo '<section class="mwb-section"><div>';
-			}
-			
-		}
-	
+		// new feature plugin simplification start.
 		/**
-		 * Undocumented function
+		 * Return mwb-plugin menu at customtaxonomy page.
+		 *
+		 * @param mixed $parent_file parent_file.
+		 * @return mixed
+		 */
+	public function prefix_highlight_taxonomy_parent_menu( $parent_file ) {
+		global $submenu_file, $current_screen, $pagenow;
+		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+		if ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) {
+			$parent_file = 'mwb-plugins';
+		}
+		return $parent_file;
+	}
+
+		/**
+		 * Return booking sub-menu at custom taxonomy page.
+		 *
+		 * @param mixed $submenu_file submenu_file.
+		 * @param mixed $parent_file parent_file.
+		 * @return mixed
+		 */
+	public function mwb_bfw_set_submenu_file_to_handle_menu_for_wp_pages( $submenu_file, $parent_file ) {
+
+		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+		if ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array, true ) ) {
+			$submenu_file = 'mwb_bookings_for_woocommerce_menu';
+		}
+
+		return $submenu_file;
+	}
+
+		/**
+		 * Display booking html at custom taxonomy page.
+		 *
+		 * @return void
+		 */
+	public function mwb_bfw_taxonomy_page_display_html() {
+
+		global $current_screen;
+		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+		if ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) {
+			$this->mbfw_options_menu_html();
+			echo '<section class="mwb-section mwb-taxonomy-section_wrap"><div>';
+		}
+
+	}
+
+		/**
+		 * Function returning array of custom taxonomy.
 		 *
 		 * @return array
 		 */
-		public static function mwb_get_taxonomy_array() {
-			$taxonomy_array = array('mwb_booking_cost','mwb_booking_service');
-			$taxonomy_array = apply_filters( 'mwb_bfw_booking_taxonomy_array', $taxonomy_array );
-			return $taxonomy_array;
-		}
-	
+	public static function mwb_get_taxonomy_array() {
+		$taxonomy_array = array( 'mwb_booking_cost', 'mwb_booking_service' );
+		$taxonomy_array = apply_filters( 'mwb_bfw_booking_taxonomy_array', $taxonomy_array );
+		return $taxonomy_array;
+	}
+
 		/**
 		 * Custom taxonomy footer.
 		 *
 		 * @return void
 		 */
-		public function mwb_bfw_footer_custom_taxonomy_edit_page_callback() {
-			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
-	
-			if ( in_array(get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array )	) {
-				echo '</div></section>'; 
-			}
+	public function mwb_bfw_footer_custom_taxonomy_edit_page_callback() {
+		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
+
+		if ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) {
+			echo '</div></section>';
 		}
-		
+	}
+
 }

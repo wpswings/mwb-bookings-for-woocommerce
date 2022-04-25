@@ -19,8 +19,6 @@ global $mbfw_mwb_mbfw_obj;
 ?>
 
 <div class="wrap mwb_bfw_config_tab">
-		<!-- <h2>Configurations</h2>
-		<div class="description">This is description of the page.</div> -->
 		<?php
 		if ( class_exists( 'Mwb_Bookings_For_Woocommerce_Admin' ) ) {
 			$mwb_bfw_active_sub_tab;
@@ -36,7 +34,7 @@ global $mbfw_mwb_mbfw_obj;
 				$active_sub_tab = 'mwb-bookings-for-woocommerce-booking-form-settings';
 			}
 			?>
-			<h2 class="nav-tab-wrapper">
+			<h3 class="nav-tab-wrapper">
 			<?php
 			foreach ( $mwb_bfw_sub_tabs_array as $key => $taxonomy_slug ) {
 				$mwb_sub_tab_title = $taxonomy_slug['name'];
@@ -51,7 +49,7 @@ global $mbfw_mwb_mbfw_obj;
 			}
 
 			?>
-			</h2>
+			</h3>
 
 			<?php
 			if ( in_array( $active_sub_tab, $mwb_bfw_taxonomies_array, true ) ) {

@@ -102,3 +102,4 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			?>
 		</div>
 	</section>
+

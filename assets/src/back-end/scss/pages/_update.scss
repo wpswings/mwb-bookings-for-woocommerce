@@ -2,7 +2,7 @@
 .mwb_bfw_config_tab {
     margin: 0;
     
-    h2 {
+    h3 {
       &.nav-tab-wrapper {
         @include media(mwb-phone) {
           border-bottom: 2px solid #c3c4c7;

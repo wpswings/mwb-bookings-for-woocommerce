@@ -682,7 +682,7 @@ select {
   margin: 0;
 }
 
-.mwb_bfw_config_tab h2 .mwb-bfw-nav-tab {
+.mwb_bfw_config_tab h3 .mwb-bfw-nav-tab {
   background-color: transparent;
   border: none;
   float: unset;
@@ -696,18 +696,18 @@ select {
   margin: 0;
 }
 
-.mwb_bfw_config_tab h2 .mwb-bfw-nav-tab:hover {
+.mwb_bfw_config_tab h3 .mwb-bfw-nav-tab:hover {
   background-color: transparent;
   border: none;
   color: #2196f3;
 }
 
-.mwb_bfw_config_tab h2 .mwb-bfw-nav-tab.nav-tab-active {
+.mwb_bfw_config_tab h3 .mwb-bfw-nav-tab.nav-tab-active {
   color: #2196f3;
   position: relative;
 }
 
-.mwb_bfw_config_tab h2 .mwb-bfw-nav-tab.nav-tab-active:after {
+.mwb_bfw_config_tab h3 .mwb-bfw-nav-tab.nav-tab-active:after {
   position: absolute;
   content: "";
   left: 0;
@@ -986,6 +986,17 @@ select {
   display: none;
 }
 
+.mbfw-admin-suggestion-text {
+  font-size: 18px;
+  font-size: 20px;
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+  color: #000000;
+  font-family: "NunitoSans-Bold";
+}
+
 @media (max-width: 768px){
   .mwb-header-container {
     justify-content: flex-start;
@@ -1003,7 +1014,7 @@ select {
     flex: 0 0 100%;
     max-width: 100%;
   }
-  .mwb_bfw_config_tab h2.nav-tab-wrapper {
+  .mwb_bfw_config_tab h3.nav-tab-wrapper {
     border-bottom: 2px solid #c3c4c7;
   }
   .mwb_bfw_config_tab .mwb-form-group {

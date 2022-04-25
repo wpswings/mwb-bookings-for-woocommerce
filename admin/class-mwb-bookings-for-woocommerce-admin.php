@@ -133,14 +133,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_options_page() {
 		global $submenu;
-		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
+		if ( empty( $GLOBALS['admin_page_hooks']['wps-plugins'] ) ) {
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
 			$mbfw_menus =
 			// desc - Add Menu Page.
-			apply_filters( 'mwb_add_plugins_menus_array', array() );
+			apply_filters( 'wps_add_plugins_menus_array', array() );
 			if ( is_array( $mbfw_menus ) && ! empty( $mbfw_menus ) ) {
 				foreach ( $mbfw_menus as $mbfw_key => $mbfw_value ) {
-					add_submenu_page( 'mwb-plugins', $mbfw_value['name'], $mbfw_value['name'], 'manage_options', $mbfw_value['menu_link'], array( $mbfw_value['instance'], $mbfw_value['function'] ) );
+					add_submenu_page( 'wps-plugins', $mbfw_value['name'], $mbfw_value['name'], 'manage_options', $mbfw_value['menu_link'], array( $mbfw_value['instance'], $mbfw_value['function'] ) );
 				}
 			}
 		}
@@ -153,9 +153,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mwb_mbfw_remove_default_submenu() {
 		global $submenu;
-		if ( is_array( $submenu ) && array_key_exists( 'mwb-plugins', $submenu ) ) {
-			if ( isset( $submenu['mwb-plugins'][0] ) ) {
-				unset( $submenu['mwb-plugins'][0] );
+		if ( is_array( $submenu ) && array_key_exists( 'wps-plugins', $submenu ) ) {
+			if ( isset( $submenu['wps-plugins'][0] ) ) {
+				unset( $submenu['wps-plugins'][0] );
 			}
 		}
 	}
@@ -186,7 +186,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mwb_plugins_listing_page() {
 		$active_marketplaces =
 		// desc - Add Menu Page.
-		apply_filters( 'mwb_add_plugins_menus_array', array() );
+		apply_filters( 'wps_add_plugins_menus_array', array() );
 		if ( is_array( $active_marketplaces ) && ! empty( $active_marketplaces ) ) {
 			include MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/welcome.php';
 		}
@@ -1521,7 +1521,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		global $submenu_file, $current_screen, $pagenow;
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
 		if ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) {
-			$parent_file = 'mwb-plugins';
+			$parent_file = 'wps-plugins';
 		}
 		return $parent_file;
 	}

@@ -79,7 +79,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->version = '3.0.0';
 		}
 
-		$this->plugin_name = 'mwb-bookings-for-woocommerce';
+		$this->plugin_name = 'bookings-for-woocommerce';
 
 		$this->mwb_bookings_for_woocommerce_dependencies();
 		$this->mwb_bookings_for_woocommerce_locale();
@@ -200,7 +200,7 @@ class Mwb_Bookings_For_Woocommerce {
 		$this->loader->add_action( 'admin_menu', $mbfw_plugin_admin, 'mwb_mbfw_remove_default_submenu', 50 );
 
 		// All admin actions and filters after License Validation goes here.
-		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $mbfw_plugin_admin, 'mbfw_admin_submenu_page', 15 );
+		$this->loader->add_filter( 'wps_add_plugins_menus_array', $mbfw_plugin_admin, 'mbfw_admin_submenu_page', 15 );
 		$this->loader->add_filter( 'mbfw_general_settings_array', $mbfw_plugin_admin, 'mbfw_admin_general_settings_page', 10 );
 		$this->loader->add_filter( 'mbfw_booking_form_settings_array', $mbfw_plugin_admin, 'mbfw_booking_form_settings_page', 10 );
 		$this->loader->add_filter( 'mbfw_availability_settings_array', $mbfw_plugin_admin, 'mbfw_add_availability_settings_page' );
@@ -381,12 +381,6 @@ class Mwb_Bookings_For_Woocommerce {
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-general.php',
 		);
 
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-calendar-listing'] = array(
-			'title'     => esc_html__( 'Bookings Calendar', 'mwb-bookings-for-woocommerce' ),
-			'name'      => 'mwb-bookings-for-woocommerce-booking-calendar-listing',
-			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-calendar-listing.php',
-		);
-
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-configuration'] = array(
 			'title'     => esc_html__( 'Configuration Settings', 'bookings-for-woocommerce' ),
 			'name'      => 'mwb-bookings-for-woocommerce-configuration',
@@ -396,6 +390,12 @@ class Mwb_Bookings_For_Woocommerce {
 		$mbfw_default_tabs =
 		// desc - add admin setting tabs.
 		apply_filters( 'mwb_mbfw_plugin_standard_admin_settings_tabs', $mbfw_default_tabs );
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-calendar-listing'] = array(
+			'title'     => esc_html__( 'Bookings Calendar', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-booking-calendar-listing',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-calendar-listing.php',
+		);
 
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-overview'] = array(
 			'title'     => esc_html__( 'Overview', 'mwb-bookings-for-woocommerce' ),

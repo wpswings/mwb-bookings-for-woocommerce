@@ -382,7 +382,7 @@ class Mwb_Bookings_For_Woocommerce {
 		);
 
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-configuration'] = array(
-			'title'     => esc_html__( 'Configuration Settings', 'bookings-for-woocommerce' ),
+			'title'     => esc_html__( 'Configuration Settings', 'mwb-bookings-for-woocommerce' ),
 			'name'      => 'mwb-bookings-for-woocommerce-configuration',
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-configuration.php',
 		);

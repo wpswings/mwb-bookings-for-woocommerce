@@ -7,8 +7,8 @@
  * @link       https://wpswings.com/
  * @since      1.0.0
  *
- * @package    Bookings_For_Woocommerce
- * @subpackage Bookings_For_Woocommerce/admin/partials
+ * @package    Mwb_Bookings_For_Woocommerce
+ * @subpackage Mwb_Bookings_For_Woocommerce/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

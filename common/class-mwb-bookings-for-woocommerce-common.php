@@ -44,7 +44,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @param string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-		
+
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 	}
@@ -97,7 +97,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 */
 	public function mbfw_custom_taxonomy_for_products() {
 		$labels = array(
-			'name'          => _x( 'Booking Costs', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
+			'name'          => _x( 'Additional Costs', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
 			'singular_name' => _x( 'Booking Costs', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
 			'search_items'  => __( 'Search Booking Cost', 'mwb-bookings-for-woocommerce' ),
 			'all_items'     => __( 'All Booking Costs', 'mwb-bookings-for-woocommerce' ),
@@ -113,16 +113,21 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 		$args = array(
 			'labels'            => $labels,
+			'description'       => __( 'This setting tab allows you to create different types of additional booking costs for your booking products i.e. the part of your booking product’s additional resources or addons.', 'mwb-bookings-for-woocommerce' ),
 			'public'            => true,
 			'show_ui'           => true,
 			'show_admin_column' => true,
 			'query_var'         => true,
+			'show_in_menu'      => false,
+			'show_in_nav_menus' => false,
+			'show_admin_column' => false,
+			'menu_position'     => 10,
 			'rewrite'           => array( 'slug' => 'mwb_booking_cost' ),
 			'show_in_rest'      => true,
 		);
 		register_taxonomy( 'mwb_booking_cost', 'product', $args );
 		$labels = array(
-			'name'          => _x( 'Booking Services', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
+			'name'          => _x( 'Additional Services', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
 			'singular_name' => _x( 'Booking Services', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
 			'search_items'  => __( 'Search Booking Service', 'mwb-bookings-for-woocommerce' ),
 			'all_items'     => __( 'All Booking Services', 'mwb-bookings-for-woocommerce' ),
@@ -141,6 +146,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'public'            => true,
 			'show_ui'           => true,
 			'show_admin_column' => true,
+			'show_in_menu'      => false,
+			'show_in_nav_menus' => false,
+			'show_admin_column' => false,
+			'menu_position'     => 10,
 			'query_var'         => true,
 			'rewrite'           => array( 'slug' => 'mwb_booking_service' ),
 			'show_in_rest'      => true,
@@ -155,6 +164,30 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 */
 	public function mbfw_registering_custom_product_type() {
 		require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-wc-product-mwb-booking.php';
+	}
+
+	/**
+	 * Cost taxonomy description.
+	 *
+	 * @return void
+	 */
+	public function mbfw_booking_cost_add_description() {
+		echo wp_kses(
+			wpautop( __( 'This setting tab allows you to create different types of additional booking costs for your booking products i.e. the part of your booking product’s additional resources or addons.', 'mwb-bookings-for-woocommerce' ) ),
+			array( 'span' => array() )
+		);
+	}
+
+	/**
+	 * Service taxonomy description.
+	 *
+	 * @return void
+	 */
+	public function mbfw_booking_services_add_description() {
+		echo wp_kses(
+			wpautop( __( 'This setting tab allows you to create different types of additional booking services for your booking products i.e. the part of your booking product’s additional resources or addons.', 'mwb-bookings-for-woocommerce' ) ),
+			array( 'span' => array() )
+		);
 	}
 
 	/**
@@ -197,7 +230,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'href'   => admin_url( 'edit.php?post_status=all&post_type=shop_order&filter_booking=booking&filter_action=Filter' ),
 				'meta'   => array(
 					'title' => __( 'List All Bookings', 'mwb-bookings-for-woocommerce' ),
-				)
+				),
 			)
 		);
 	}
@@ -225,14 +258,14 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$base_price       = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
 				$unit_price       = get_post_meta( $cart['product_id'], '_price', true );
 				$unit_price       = apply_filters( 'mwb_mbfw_vary_product_unit_price', ( ! empty( $unit_price ) ? (float) $unit_price : 0 ), $custom_cart_data, $cart_object, $cart );
-				
+
 				// adding unit cost.
 				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 					$new_price = (float) $unit_price * (int) $people_number;
 				} else {
 					$new_price = (float) $unit_price;
 				}
-				
+
 				// adding base cost.
 				if ( 'yes' === get_post_meta( $cart['product_id'], 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
 					$new_price = $new_price + (float) $base_price * (int) $people_number;
@@ -244,7 +277,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$service_option_count   = isset( $custom_cart_data['service_quantity'] ) ? $custom_cart_data['service_quantity'] : array();
 				$new_price             += $this->mbfw_extra_service_charge( $cart['product_id'], $service_option_checked, $service_option_count, $people_number );
 				$new_price             += $this->mbfw_extra_charges_calculation( $cart['product_id'], $people_number );
-				
+
 				$new_price =
 				apply_filters( 'mbfw_set_price_individually_during_adding_in_cart', $new_price, $custom_cart_data, $cart_object );
 				// setting the new price.
@@ -278,7 +311,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$time_from     = gmdate( 'H:i', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'H:i' ) ) );
 		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'H:i' ) ) );
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
-		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id , $people_number );
+		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number );
 		$product_price = get_post_meta( $product_id, '_price', true );
 		$product_price = apply_filters(
 			'mwb_mbfw_change_price_ajax_global_rule',
@@ -314,15 +347,15 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			$base_cost = (float) $base_cost * (int) $people_number;
 		}
 		$charges = array(
-			'service_cost' => array(
+			'service_cost'      => array(
 				'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $services_cost,
 			),
-			'base_cost' => array(
+			'base_cost'         => array(
 				'title' => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $base_cost,
 			),
-			'general_cost' => array(
+			'general_cost'      => array(
 				'title' => __( 'General Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $product_price,
 			),
@@ -499,11 +532,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			if ( 'yes' === get_post_meta( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
 				$order_statuses = get_post_meta( $item->get_product_id(), 'mwb_bfwp_order_statuses_to_cancel', true );
 				$order_statuses = is_array( $order_statuses ) ? map_deep(
-						$order_statuses,
-						function ( $status ) {
-							return preg_replace( '/wc-/', '', $status );
-						}
-					) : array();
+					$order_statuses,
+					function ( $status ) {
+						return preg_replace( '/wc-/', '', $status );
+					}
+				) : array();
 				if ( in_array( $order->get_status(), $order_statuses, true ) ) {
 					return array( $order->get_status() );
 				}

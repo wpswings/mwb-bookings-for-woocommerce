@@ -71,15 +71,15 @@ class Mwb_Bookings_For_Woocommerce {
 	 */
 	public function __construct() {
 
-		if (defined('MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION') ) {
+		if ( defined( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION' ) ) {
 
 			$this->version = MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.0.0';
+			$this->version = '3.0.0';
 		}
 
-		$this->plugin_name = 'mwb-bookings-for-woocommerce';
+		$this->plugin_name = 'bookings-for-woocommerce';
 
 		$this->mwb_bookings_for_woocommerce_dependencies();
 		$this->mwb_bookings_for_woocommerce_locale();
@@ -116,42 +116,42 @@ class Mwb_Bookings_For_Woocommerce {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		include_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-mwb-bookings-for-woocommerce-loader.php';
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-bookings-for-woocommerce-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		include_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-mwb-bookings-for-woocommerce-i18n.php';
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-bookings-for-woocommerce-i18n.php';
 
-		if (is_admin() ) {
+		if ( is_admin() ) {
 
 			// The class responsible for defining all actions that occur in the admin area.
-			include_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-mwb-bookings-for-woocommerce-admin.php';
+			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-mwb-bookings-for-woocommerce-admin.php';
 
 			// The class responsible for on-boarding steps for plugin.
-			if (is_dir(plugin_dir_path(dirname(__FILE__)) . 'onboarding') && ! class_exists('Mwb_Bookings_For_Woocommerce_Onboarding_Steps') ) {
-				include_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php';
+			if ( is_dir( plugin_dir_path( dirname( __FILE__ ) ) . 'onboarding' ) && ! class_exists( 'Mwb_Bookings_For_Woocommerce_Onboarding_Steps' ) ) {
+				include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php';
 			}
 
-			if (class_exists('Mwb_Bookings_For_Woocommerce_Onboarding_Steps') ) {
+			if ( class_exists( 'Mwb_Bookings_For_Woocommerce_Onboarding_Steps' ) ) {
 				$mbfw_onboard_steps = new Mwb_Bookings_For_Woocommerce_Onboarding_Steps();
 			}
 		} else {
 
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
-			include_once plugin_dir_path(dirname(__FILE__)) . 'public/class-mwb-bookings-for-woocommerce-public.php';
+			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-mwb-bookings-for-woocommerce-public.php';
 
 		}
 
-		include_once plugin_dir_path(dirname(__FILE__)) . 'package/rest-api/class-mwb-bookings-for-woocommerce-rest-api.php';
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-mwb-bookings-for-woocommerce-rest-api.php';
 
 		/**
 		 * This class responsible for defining common functionality
 		 * of the plugin.
 		 */
-		include_once plugin_dir_path(dirname(__FILE__)) . 'common/class-mwb-bookings-for-woocommerce-common.php';
-		
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-mwb-bookings-for-woocommerce-common.php';
+
 		$this->loader = new Mwb_Bookings_For_Woocommerce_Loader();
 
 	}
@@ -168,7 +168,7 @@ class Mwb_Bookings_For_Woocommerce {
 
 		$plugin_i18n = new Mwb_Bookings_For_Woocommerce_I18n();
 
-		$this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
+		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 
@@ -178,7 +178,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @since 2.0.0
 	 */
 	private function mwb_saved_notice_hook_name() {
-		$mwb_plugin_name                            = ! empty(explode('/', plugin_basename(__FILE__))) ? explode('/', plugin_basename(__FILE__))[0] : '';
+		$mwb_plugin_name                            = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
 		$mwb_plugin_settings_saved_notice_hook_name = $mwb_plugin_name . '_settings_saved_notice';
 		return $mwb_plugin_settings_saved_notice_hook_name;
 	}
@@ -190,29 +190,34 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_admin_hooks() {
-		$mbfw_plugin_admin = new Mwb_Bookings_For_Woocommerce_Admin($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
+		$mbfw_plugin_admin = new Mwb_Bookings_For_Woocommerce_Admin( $this->mbfw_get_plugin_name(), $this->mbfw_get_version() );
 
-		$this->loader->add_action('admin_enqueue_scripts', $mbfw_plugin_admin, 'mbfw_admin_enqueue_styles');
-		$this->loader->add_action('admin_enqueue_scripts', $mbfw_plugin_admin, 'mbfw_admin_enqueue_scripts');
+		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_admin, 'mbfw_admin_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_admin, 'mbfw_admin_enqueue_scripts' );
 
 		// Add settings menu for Mwb Bookings For WooCommerce.
-		$this->loader->add_action('admin_menu', $mbfw_plugin_admin, 'mbfw_options_page');
-		$this->loader->add_action('admin_menu', $mbfw_plugin_admin, 'mwb_mbfw_remove_default_submenu', 50);
+		$this->loader->add_action( 'admin_menu', $mbfw_plugin_admin, 'mbfw_options_page' );
+		$this->loader->add_action( 'admin_menu', $mbfw_plugin_admin, 'mwb_mbfw_remove_default_submenu', 50 );
 
 		// All admin actions and filters after License Validation goes here.
-		$this->loader->add_filter('mwb_add_plugins_menus_array', $mbfw_plugin_admin, 'mbfw_admin_submenu_page', 15);
-		$this->loader->add_filter('mbfw_general_settings_array', $mbfw_plugin_admin, 'mbfw_admin_general_settings_page', 10);
-		$this->loader->add_filter('mbfw_booking_form_settings_array', $mbfw_plugin_admin, 'mbfw_booking_form_settings_page', 10);
+		$this->loader->add_filter( 'wps_add_plugins_menus_array', $mbfw_plugin_admin, 'mbfw_admin_submenu_page', 15 );
+		$this->loader->add_filter( 'mbfw_general_settings_array', $mbfw_plugin_admin, 'mbfw_admin_general_settings_page', 10 );
+		$this->loader->add_filter( 'mbfw_booking_form_settings_array', $mbfw_plugin_admin, 'mbfw_booking_form_settings_page', 10 );
 		$this->loader->add_filter( 'mbfw_availability_settings_array', $mbfw_plugin_admin, 'mbfw_add_availability_settings_page' );
 
-
 		// Saving tab settings.
-		$this->loader->add_action('mwb_mbfw_settings_saved_notice', $mbfw_plugin_admin, 'mbfw_admin_save_tab_settings');
+		$this->loader->add_action( 'mwb_mbfw_settings_saved_notice', $mbfw_plugin_admin, 'mbfw_admin_save_tab_settings' );
 		$this->loader->add_action( 'init', $mbfw_plugin_admin, 'mwb_mbfw_migrate_settings_from_older_plugin' );
 
-		//Developer's Hook Listing.
-		$this->loader->add_action('mbfw_developer_admin_hooks_array', $mbfw_plugin_admin, 'mwb_developer_admin_hooks_listing');
-		$this->loader->add_action('mbfw_developer_public_hooks_array', $mbfw_plugin_admin, 'mwb_developer_public_hooks_listing');
+		// Developer's Hook Listing.
+		$this->loader->add_action( 'mbfw_developer_admin_hooks_array', $mbfw_plugin_admin, 'mwb_developer_admin_hooks_listing' );
+		$this->loader->add_action( 'mbfw_developer_public_hooks_array', $mbfw_plugin_admin, 'mwb_developer_public_hooks_listing' );
+
+		// taxonomy page hooks v3.0.0.
+		$this->loader->add_action( 'all_admin_notices', $mbfw_plugin_admin, 'mwb_bfw_taxonomy_page_display_html' );
+		$this->loader->add_action( 'admin_footer', $mbfw_plugin_admin, 'mwb_bfw_footer_custom_taxonomy_edit_page_callback' );
+		$this->loader->add_action( 'parent_file', $mbfw_plugin_admin, 'prefix_highlight_taxonomy_parent_menu' );
+		$this->loader->add_filter( 'submenu_file', $mbfw_plugin_admin, 'mwb_bfw_set_submenu_file_to_handle_menu_for_wp_pages', 10, 2 );
 
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_filter( 'product_type_selector', $mbfw_plugin_admin, 'mbfw_add_product_type_in_dropdown', 10, 1 );
@@ -250,7 +255,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_common_hooks() {
-		$mbfw_plugin_common = new Mwb_Bookings_For_Woocommerce_Common($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
+		$mbfw_plugin_common = new Mwb_Bookings_For_Woocommerce_Common( $this->mbfw_get_plugin_name(), $this->mbfw_get_version() );
 		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_scripts' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_styles' );
@@ -258,6 +263,10 @@ class Mwb_Bookings_For_Woocommerce {
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_action( 'plugins_loaded', $mbfw_plugin_common, 'mbfw_registering_custom_product_type' );
 			$this->loader->add_action( 'init', $mbfw_plugin_common, 'mbfw_custom_taxonomy_for_products' );
+
+			$this->loader->add_action( 'mwb_booking_cost_pre_add_form', $mbfw_plugin_common, 'mbfw_booking_cost_add_description' );
+			$this->loader->add_action( 'mwb_booking_service_pre_add_form', $mbfw_plugin_common, 'mbfw_booking_services_add_description' );
+
 			$this->loader->add_action( 'admin_bar_menu', $mbfw_plugin_common, 'mbfw_add_admin_menu_custom_tab', 100 );
 			$this->loader->add_action( 'wp_ajax_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
@@ -277,9 +286,9 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_public_hooks() {
-		$mbfw_plugin_public = new Mwb_Bookings_For_Woocommerce_Public($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
-		$this->loader->add_action('wp_enqueue_scripts', $mbfw_plugin_public, 'mbfw_public_enqueue_styles');
-		$this->loader->add_action('wp_enqueue_scripts', $mbfw_plugin_public, 'mbfw_public_enqueue_scripts');
+		$mbfw_plugin_public = new Mwb_Bookings_For_Woocommerce_Public( $this->mbfw_get_plugin_name(), $this->mbfw_get_version() );
+		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_public, 'mbfw_public_enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_public, 'mbfw_public_enqueue_scripts' );
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_filter( 'woocommerce_product_class', $mbfw_plugin_public, 'mbfw_return_custom_product_class', 10, 2 );
 			$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $mbfw_plugin_public, 'mbfw_add_custom_fields_before_add_to_cart_button', 20 );
@@ -289,7 +298,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_get_item_data', $mbfw_plugin_public, 'mwb_mbfw_show_additional_data_on_cart_and_checkout_page', 10, 2 );
 			$this->loader->add_action( 'woocommerce_mwb_booking_add_to_cart', $mbfw_plugin_public, 'mwb_mbfw_load_single_page_template' );
 			$this->loader->add_action( 'woocommerce_loop_add_to_cart_link', $mbfw_plugin_public, 'mwb_mbfw_show_readmore_button_on_archieve_page', 10, 2 );
-			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item' , $mbfw_plugin_public, 'mwb_mbfw_add_custom_order_item_meta_data', 10, 4 );
+			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $mbfw_plugin_public, 'mwb_mbfw_add_custom_order_item_meta_data', 10, 4 );
 			$this->loader->add_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $mbfw_plugin_public, 'mwb_mbfw_show_date_time_selector_on_single_product_page', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_quantity_input_args', $mbfw_plugin_public, 'mwb_mbfw_set_max_quantity_to_be_booked_by_individual', 10, 2 );
 		}
@@ -302,8 +311,8 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_api_hooks() {
-		$mbfw_plugin_api = new Mwb_Bookings_For_Woocommerce_Rest_Api($this->mbfw_get_plugin_name(), $this->mbfw_get_version());
-		$this->loader->add_action('rest_api_init', $mbfw_plugin_api, 'mwb_mbfw_add_endpoint');
+		$mbfw_plugin_api = new Mwb_Bookings_For_Woocommerce_Rest_Api( $this->mbfw_get_plugin_name(), $this->mbfw_get_version() );
+		$this->loader->add_action( 'rest_api_init', $mbfw_plugin_api, 'mwb_mbfw_add_endpoint' );
 	}
 
 
@@ -367,44 +376,64 @@ class Mwb_Bookings_For_Woocommerce {
 		$mbfw_default_tabs = array();
 
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-general'] = array(
-			'title'       => esc_html__('General Settings', 'mwb-bookings-for-woocommerce'),
-			'name'        => 'mwb-bookings-for-woocommerce-general',
-			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-general.php'
+			'title'     => esc_html__( 'General Settings', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-general',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-general.php',
 		);
 
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-configuration'] = array(
+			'title'     => esc_html__( 'Configuration Settings', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-configuration',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-configuration.php',
+		);
+
+		$mbfw_default_tabs =
+		// desc - add admin setting tabs.
+		apply_filters( 'mwb_mbfw_plugin_standard_admin_settings_tabs', $mbfw_default_tabs );
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-calendar-listing'] = array(
+			'title'     => esc_html__( 'Bookings Calendar', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-booking-calendar-listing',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-calendar-listing.php',
+		);
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-overview'] = array(
+			'title'     => esc_html__( 'Overview', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-overview',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-overview.php',
+		);
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
+			'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-developer',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php',
+		);
+		return $mbfw_default_tabs;
+	}
+	/**
+	 * Predefined default wps_bfw_plug tabs.
+	 *
+	 * @return array An key=>value pair of Bookings For WooCommerce tabs.
+	 */
+	public function mwb_bfw_plug_config_sub_tabs() {
+		$mbfw_default_tabs = array();
+
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-form-settings'] = array(
-			'title'       => esc_html__( 'Booking Form Settings', 'mwb-bookings-for-woocommerce' ),
-			'name'        => 'mwb-bookings-for-woocommerce-booking-form-settings',
-			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-form-settings.php'
+			'title'     => esc_html__( 'Booking Form Settings', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-booking-form-settings',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-form-settings.php',
 		);
 
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
-			'title'       => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
-			'name'        => 'mwb-bookings-for-woocommerce-booking-availability-settings',
-			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php'
+			'title'     => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-booking-availability-settings',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php',
 		);
 
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-calendar-listing'] = array(
-			'title'       => esc_html__( 'Bookings Calendar', 'mwb-bookings-for-woocommerce' ),
-			'name'        => 'mwb-bookings-for-woocommerce-booking-calendar-listing',
-			'file_path'   =>  MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-calendar-listing.php'
-		);
+		$mbfw_default_tabs =
+		// desc - add admin setting tabs.
+		apply_filters( 'mwb_bfw_configuration_settings_sub_tabs', $mbfw_default_tabs );
 
-		$mbfw_default_tabs = 
-		//desc - add admin setting tabs.
-		apply_filters('mwb_mbfw_plugin_standard_admin_settings_tabs', $mbfw_default_tabs);
-
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-overview'] = array(
-			'title'       => esc_html__('Overview', 'mwb-bookings-for-woocommerce'),
-			'name'        => 'mwb-bookings-for-woocommerce-overview',
-			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-overview.php'
-		);
-		
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
-			'title'       => esc_html__('Developer', 'mwb-bookings-for-woocommerce'),
-			'name'        => 'mwb-bookings-for-woocommerce-developer',
-			'file_path'   => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php'
-		);
 		return $mbfw_default_tabs;
 	}
 
@@ -416,12 +445,12 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @param array  $params parameters to pass to the file for access.
 	 */
 	public function mwb_mbfw_plug_load_template( $path, $params = array() ) {
-		if (file_exists($path) ) {
+		if ( file_exists( $path ) ) {
 			include $path;
 		} else {
 			/* translators: %s: file path */
-			$mbfw_notice = sprintf(esc_html__('Unable to locate file at location "%s". Some features may not work properly in this plugin. Please contact us!', 'mwb-bookings-for-woocommerce'), $path);
-			$this->mwb_mbfw_plug_admin_notice($mbfw_notice, 'error');
+			$mbfw_notice = sprintf( esc_html__( 'Unable to locate file at location "%s". Some features may not work properly in this plugin. Please contact us!', 'mwb-bookings-for-woocommerce' ), $path );
+			$this->mwb_mbfw_plug_admin_notice( $mbfw_notice, 'error' );
 		}
 	}
 
@@ -456,7 +485,7 @@ class Mwb_Bookings_For_Woocommerce {
 		$mbfw_notice .= '<p>' . esc_html( $mbfw_message ) . '</p>';
 		$mbfw_notice .= '</div>';
 
-		echo wp_kses_post($mbfw_notice);
+		echo wp_kses_post( $mbfw_notice );
 	}
 
 	/**
@@ -466,26 +495,26 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @since 2.0.0
 	 */
 	public function mwb_mbfw_plug_generate_html( $mbfw_components = array() ) {
-		if (is_array($mbfw_components) && ! empty($mbfw_components) ) {
+		if ( is_array( $mbfw_components ) && ! empty( $mbfw_components ) ) {
 			foreach ( $mbfw_components as $mbfw_component ) {
-				if (! empty($mbfw_component['type']) && ! empty($mbfw_component['id']) ) {
+				if ( ! empty( $mbfw_component['type'] ) && ! empty( $mbfw_component['id'] ) ) {
 					switch ( $mbfw_component['type'] ) {
 						case 'hidden':
 						case 'number':
 						case 'email':
 						case 'text':
 							?>
-							<div class="mwb-form-group mwb-mbfw-<?php echo esc_attr($mbfw_component['type']); ?>" style="<?php echo esc_attr( isset( $mbfw_component['parent-style'] ) ? $mbfw_component['parent-style'] : '' ); ?>">
+							<div class="mwb-form-group mwb-mbfw-<?php echo esc_attr( $mbfw_component['type'] ); ?>" style="<?php echo esc_attr( isset( $mbfw_component['parent-style'] ) ? $mbfw_component['parent-style'] : '' ); ?>">
 								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr($mbfw_component['id']); ?>" class="mwb-form-label"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label for="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control">
 									<label class="mdc-text-field mdc-text-field--outlined">
 										<span class="mdc-notched-outline">
 											<span class="mdc-notched-outline__leading"></span>
 											<span class="mdc-notched-outline__notch">
-												<?php if ('number' !== $mbfw_component['type'] ) { ?>
-													<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset($mbfw_component['placeholder']) ? esc_attr($mbfw_component['placeholder']) : '' ); ?></span>
+												<?php if ( 'number' !== $mbfw_component['type'] ) { ?>
+													<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $mbfw_component['placeholder'] ) ? esc_attr( $mbfw_component['placeholder'] ) : '' ); ?></span>
 												<?php } ?>
 											</span>
 											<span class="mdc-notched-outline__trailing"></span>
@@ -508,7 +537,7 @@ class Mwb_Bookings_For_Woocommerce {
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset($mbfw_component['description']) ? esc_attr($mbfw_component['description']) : '' ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mbfw_component['description'] ) ? esc_attr( $mbfw_component['description'] ) : '' ); ?></div>
 									</div>
 								</div>
 							</div>
@@ -519,7 +548,7 @@ class Mwb_Bookings_For_Woocommerce {
 							?>
 							<div class="mwb-form-group">
 								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr($mbfw_component['id']); ?>" class="mwb-form-label"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label for="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control">
 									<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
@@ -530,17 +559,17 @@ class Mwb_Bookings_For_Woocommerce {
 											<span class="mdc-notched-outline__trailing"></span>
 										</span>
 										<input 
-										class="mdc-text-field__input <?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?> mwb-form__password" 
-										name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
-										id="<?php echo esc_attr($mbfw_component['id']); ?>"
-										type="<?php echo esc_attr($mbfw_component['type']); ?>"
-										value="<?php echo ( isset($mbfw_component['value']) ? esc_attr($mbfw_component['value']) : '' ); ?>"
-										placeholder="<?php echo ( isset($mbfw_component['placeholder']) ? esc_attr($mbfw_component['placeholder']) : '' ); ?>"
+										class="mdc-text-field__input <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?> mwb-form__password" 
+										name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
+										id="<?php echo esc_attr( $mbfw_component['id'] ); ?>"
+										type="<?php echo esc_attr( $mbfw_component['type'] ); ?>"
+										value="<?php echo ( isset( $mbfw_component['value'] ) ? esc_attr( $mbfw_component['value'] ) : '' ); ?>"
+										placeholder="<?php echo ( isset( $mbfw_component['placeholder'] ) ? esc_attr( $mbfw_component['placeholder'] ) : '' ); ?>"
 										>
 										<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mwb-password-hidden" tabindex="0" role="button">visibility</i>
 									</label>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset($mbfw_component['description']) ? esc_attr($mbfw_component['description']) : '' ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mbfw_component['description'] ) ? esc_attr( $mbfw_component['description'] ) : '' ); ?></div>
 									</div>
 								</div>
 							</div>
@@ -551,19 +580,19 @@ class Mwb_Bookings_For_Woocommerce {
 							?>
 							<div class="mwb-form-group" style="<?php echo esc_attr( isset( $mbfw_component['parent-style'] ) ? $mbfw_component['parent-style'] : '' ); ?>">
 								<div class="mwb-form-group__label">
-									<label class="mwb-form-label" for="<?php echo esc_attr($mbfw_component['id']); ?>"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label class="mwb-form-label" for="<?php echo esc_attr( $mbfw_component['id'] ); ?>"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control">
 									<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea"      for="text-field-hero-input">
 										<span class="mdc-notched-outline">
 											<span class="mdc-notched-outline__leading"></span>
 											<span class="mdc-notched-outline__notch">
-												<span class="mdc-floating-label"><?php echo ( isset($mbfw_component['placeholder']) ? esc_attr($mbfw_component['placeholder']) : '' ); ?></span>
+												<span class="mdc-floating-label"><?php echo ( isset( $mbfw_component['placeholder'] ) ? esc_attr( $mbfw_component['placeholder'] ) : '' ); ?></span>
 											</span>
 											<span class="mdc-notched-outline__trailing"></span>
 										</span>
 										<span class="mdc-text-field__resizer">
-											<textarea class="mdc-text-field__input <?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>" rows="2" cols="25" aria-label="Label" name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>" id="<?php echo esc_attr($mbfw_component['id']); ?>" placeholder="<?php echo ( isset($mbfw_component['placeholder']) ? esc_attr($mbfw_component['placeholder']) : '' ); ?>"><?php echo ( isset($mbfw_component['value']) ? esc_textarea($mbfw_component['value']) : '' ); ?></textarea>
+											<textarea class="mdc-text-field__input <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>" rows="2" cols="25" aria-label="Label" name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>" id="<?php echo esc_attr( $mbfw_component['id'] ); ?>" placeholder="<?php echo ( isset( $mbfw_component['placeholder'] ) ? esc_attr( $mbfw_component['placeholder'] ) : '' ); ?>"><?php echo ( isset( $mbfw_component['value'] ) ? esc_textarea( $mbfw_component['value'] ) : '' ); ?></textarea>
 										</span>
 									</label>
 								</div>
@@ -576,30 +605,30 @@ class Mwb_Bookings_For_Woocommerce {
 							?>
 							<div class="mwb-form-group">
 								<div class="mwb-form-group__label">
-									<label class="mwb-form-label" for="<?php echo esc_attr($mbfw_component['id']); ?>"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label class="mwb-form-label" for="<?php echo esc_attr( $mbfw_component['id'] ); ?>"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control">
 									<div class="mwb-form-select">
-										<select id="<?php echo esc_attr($mbfw_component['id']); ?>" name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?><?php echo ( 'multiselect' === $mbfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr($mbfw_component['id']); ?>" class="mdl-textfield__input <?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>" <?php echo 'multiselect' === $mbfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
+										<select id="<?php echo esc_attr( $mbfw_component['id'] ); ?>" name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?><?php echo ( 'multiselect' === $mbfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mdl-textfield__input <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>" <?php echo 'multiselect' === $mbfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
 											<?php
 											foreach ( $mbfw_component['options'] as $mbfw_key => $mbfw_val ) {
 												?>
-												<option value="<?php echo esc_attr($mbfw_key); ?>"
+												<option value="<?php echo esc_attr( $mbfw_key ); ?>"
 													<?php
 													if ( is_array( $mbfw_component['value'] ) ) {
-														selected( in_array((string) $mbfw_key, $mbfw_component['value'], true ), true );
+														selected( in_array( (string) $mbfw_key, $mbfw_component['value'], true ), true );
 													} else {
 														selected( $mbfw_component['value'], (string) $mbfw_key );
 													}
 													?>
 													>
-													<?php echo esc_html($mbfw_val); ?>
+													<?php echo esc_html( $mbfw_val ); ?>
 												</option>
 												<?php
 											}
 											?>
 										</select>
-										<label class="mdl-textfield__label" for="<?php echo esc_attr($mbfw_component['id']); ?>"><?php echo esc_html($mbfw_component['description']); ?><?php echo ( isset($mbfw_component['description']) ? esc_attr($mbfw_component['description']) : '' ); ?></label>
+										<label class="mdl-textfield__label" for="<?php echo esc_attr( $mbfw_component['id'] ); ?>"><?php echo esc_html( $mbfw_component['description'] ); ?></label>
 									</div>
 								</div>
 							</div>
@@ -610,18 +639,18 @@ class Mwb_Bookings_For_Woocommerce {
 							?>
 							<div class="mwb-form-group">
 								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr($mbfw_component['id']); ?>" class="mwb-form-label"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label for="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control mwb-pl-4">
 									<div class="mdc-form-field">
 										<div class="mdc-checkbox">
 											<input 
-											name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
-											id="<?php echo esc_attr($mbfw_component['id']); ?>"
+											name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
+											id="<?php echo esc_attr( $mbfw_component['id'] ); ?>"
 											type="checkbox"
-											class="mdc-checkbox__native-control <?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>"
-											value="<?php echo ( isset($mbfw_component['value']) ? esc_attr($mbfw_component['value']) : '' ); ?>"
-											<?php checked($mbfw_component['value'], '1'); ?>
+											class="mdc-checkbox__native-control <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>"
+											value="<?php echo ( isset( $mbfw_component['value'] ) ? esc_attr( $mbfw_component['value'] ) : '' ); ?>"
+											<?php checked( $mbfw_component['value'], '1' ); ?>
 											/>
 											<div class="mdc-checkbox__background">
 												<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -631,7 +660,7 @@ class Mwb_Bookings_For_Woocommerce {
 											</div>
 											<div class="mdc-checkbox__ripple"></div>
 										</div>
-										<label for="checkbox-1"><?php echo ( isset($mbfw_component['description']) ? esc_attr($mbfw_component['description']) : '' ); ?></label>
+										<label for="checkbox-1"><?php echo ( isset( $mbfw_component['description'] ) ? esc_attr( $mbfw_component['description'] ) : '' ); ?></label>
 									</div>
 								</div>
 							</div>
@@ -642,7 +671,7 @@ class Mwb_Bookings_For_Woocommerce {
 							?>
 							<div class="mwb-form-group">
 								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr($mbfw_component['id']); ?>" class="mwb-form-label"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label for="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control mwb-pl-4">
 									<div class="mwb-flex-col">
@@ -652,11 +681,11 @@ class Mwb_Bookings_For_Woocommerce {
 											<div class="mdc-form-field">
 												<div class="mdc-radio">
 													<input
-													name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
-													value="<?php echo esc_attr($mbfw_radio_key); ?>"
+													name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
+													value="<?php echo esc_attr( $mbfw_radio_key ); ?>"
 													type="radio"
-													class="mdc-radio__native-control <?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>"
-													<?php checked($mbfw_radio_key, $mbfw_component['value']); ?>
+													class="mdc-radio__native-control <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>"
+													<?php checked( $mbfw_radio_key, $mbfw_component['value'] ); ?>
 													>
 													<div class="mdc-radio__background">
 														<div class="mdc-radio__outer-circle"></div>
@@ -664,7 +693,7 @@ class Mwb_Bookings_For_Woocommerce {
 													</div>
 													<div class="mdc-radio__ripple"></div>
 												</div>
-												<label for="radio-1"><?php echo esc_html($mbfw_radio_val); ?></label>
+												<label for="radio-1"><?php echo esc_html( $mbfw_radio_val ); ?></label>
 											</div>
 											<?php
 										}
@@ -679,7 +708,7 @@ class Mwb_Bookings_For_Woocommerce {
 							?>
 							<div class="mwb-form-group">
 								<div class="mwb-form-group__label">
-									<label for="" class="mwb-form-label"><?php echo ( isset($mbfw_component['title'] ) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label for="" class="mwb-form-label"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control">
 									<div>
@@ -688,14 +717,14 @@ class Mwb_Bookings_For_Woocommerce {
 											<div class="mdc-switch__thumb-underlay">
 												<div class="mdc-switch__thumb"></div>
 												<input
-												name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
+												name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
 												type="checkbox"
-												id="<?php echo esc_html($mbfw_component['id']); ?>"
+												id="<?php echo esc_html( $mbfw_component['id'] ); ?>"
 												value="yes"
-												class="mdc-switch__native-control <?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>"
+												class="mdc-switch__native-control <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>"
 												role="switch" 
 												aria-checked="<?php echo esc_html( 'yes' === $mbfw_component['value'] ) ? 'true' : 'false'; ?>"
-												<?php checked( $mbfw_component['value'], 'yes'); ?>
+												<?php checked( $mbfw_component['value'], 'yes' ); ?>
 												>
 											</div>
 										</div>
@@ -713,9 +742,9 @@ class Mwb_Bookings_For_Woocommerce {
 							<div class="mwb-form-group">
 								<div class="mwb-form-group__label"></div>
 								<div class="mwb-form-group__control">
-									<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
-										id="<?php echo esc_attr($mbfw_component['id']); ?>"> <span class="mdc-button__ripple"></span>
-										<span class="mdc-button__label <?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>"><?php echo ( isset($mbfw_component['button_text']) ? esc_html($mbfw_component['button_text']) : '' ); ?></span>
+									<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
+										id="<?php echo esc_attr( $mbfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+										<span class="mdc-button__label <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mbfw_component['button_text'] ) ? esc_html( $mbfw_component['button_text'] ) : '' ); ?></span>
 									</button>
 								</div>
 							</div>
@@ -725,9 +754,9 @@ class Mwb_Bookings_For_Woocommerce {
 
 						case 'multi':
 							?>
-							<div class="mwb-form-group mwb-mbfw-<?php echo esc_attr($mbfw_component['type']); ?>">
+							<div class="mwb-form-group mwb-mbfw-<?php echo esc_attr( $mbfw_component['type'] ); ?>">
 								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr($mbfw_component['id']); ?>" class="mwb-form-label"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label for="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 									</div>
 									<div class="mwb-form-group__control">
 										<?php
@@ -737,25 +766,25 @@ class Mwb_Bookings_For_Woocommerce {
 												<span class="mdc-notched-outline">
 													<span class="mdc-notched-outline__leading"></span>
 													<span class="mdc-notched-outline__notch">
-														<?php if ('number' !== $component['type'] ) { ?>
-															<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset($mbfw_component['placeholder']) ? esc_attr($mbfw_component['placeholder']) : '' ); ?></span>
+														<?php if ( 'number' !== $component['type'] ) { ?>
+															<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $mbfw_component['placeholder'] ) ? esc_attr( $mbfw_component['placeholder'] ) : '' ); ?></span>
 														<?php } ?>
 													</span>
 													<span class="mdc-notched-outline__trailing"></span>
 												</span>
 												<input 
-												class="mdc-text-field__input <?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>" 
-												name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
-												id="<?php echo esc_attr($component['id']); ?>"
-												type="<?php echo esc_attr($component['type']); ?>"
-												value="<?php echo ( isset($mbfw_component['value']) ? esc_attr($mbfw_component['value']) : '' ); ?>"
-												placeholder="<?php echo ( isset($mbfw_component['placeholder']) ? esc_attr($mbfw_component['placeholder']) : '' ); ?>"
-												<?php echo esc_attr( ( 'number' === $component['type'] ) ? 'max=10 min=0' : ''); ?>
+												class="mdc-text-field__input <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>" 
+												name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
+												id="<?php echo esc_attr( $component['id'] ); ?>"
+												type="<?php echo esc_attr( $component['type'] ); ?>"
+												value="<?php echo ( isset( $mbfw_component['value'] ) ? esc_attr( $mbfw_component['value'] ) : '' ); ?>"
+												placeholder="<?php echo ( isset( $mbfw_component['placeholder'] ) ? esc_attr( $mbfw_component['placeholder'] ) : '' ); ?>"
+												<?php echo esc_attr( ( 'number' === $component['type'] ) ? 'max=10 min=0' : '' ); ?>
 												>
 											</label>
 										<?php } ?>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset($mbfw_component['description']) ? esc_attr($mbfw_component['description']) : '' ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mbfw_component['description'] ) ? esc_attr( $mbfw_component['description'] ) : '' ); ?></div>
 									</div>
 								</div>
 							</div>
@@ -766,23 +795,23 @@ class Mwb_Bookings_For_Woocommerce {
 						case 'file':
 						case 'time':
 							?>
-							<div class="mwb-form-group mwb-mbfw-<?php echo esc_attr($mbfw_component['type']); ?>">
+							<div class="mwb-form-group mwb-mbfw-<?php echo esc_attr( $mbfw_component['type'] ); ?>">
 								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr($mbfw_component['id']); ?>" class="mwb-form-label"><?php echo ( isset($mbfw_component['title']) ? esc_html($mbfw_component['title']) : '' ); ?></label>
+									<label for="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control">
 									<label>
 										<input 
-										class="<?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>" 
-										name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
-										id="<?php echo esc_attr($mbfw_component['id']); ?>"
-										type="<?php echo esc_attr( ( 'date' === $mbfw_component['type'] || 'time' === $mbfw_component['type'] ) ? 'text' : $mbfw_component['type']); ?>"
-										value="<?php echo ( isset($mbfw_component['value']) ? esc_attr($mbfw_component['value']) : '' ); ?>"
+										class="<?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>" 
+										name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
+										id="<?php echo esc_attr( $mbfw_component['id'] ); ?>"
+										type="<?php echo esc_attr( ( 'date' === $mbfw_component['type'] || 'time' === $mbfw_component['type'] ) ? 'text' : $mbfw_component['type'] ); ?>"
+										value="<?php echo ( isset( $mbfw_component['value'] ) ? esc_attr( $mbfw_component['value'] ) : '' ); ?>"
 										autocomplete="off"
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset($mbfw_component['description']) ? esc_attr($mbfw_component['description']) : '' ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mbfw_component['description'] ) ? esc_attr( $mbfw_component['description'] ) : '' ); ?></div>
 									</div>
 								</div>
 							</div>
@@ -794,10 +823,10 @@ class Mwb_Bookings_For_Woocommerce {
 							<tr valign="top">
 								<td scope="row">
 									<input type="submit" class="button button-primary" 
-									name="<?php echo ( isset($mbfw_component['name']) ? esc_html($mbfw_component['name']) : esc_html($mbfw_component['id']) ); ?>"
-									id="<?php echo esc_attr($mbfw_component['id']); ?>"
-									class="<?php echo ( isset($mbfw_component['class']) ? esc_attr($mbfw_component['class']) : '' ); ?>"
-									value="<?php echo esc_attr($mbfw_component['button_text']); ?>"
+									name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
+									id="<?php echo esc_attr( $mbfw_component['id'] ); ?>"
+									class="<?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>"
+									value="<?php echo esc_attr( $mbfw_component['button_text'] ); ?>"
 									/>
 								</td>
 							</tr>
@@ -834,6 +863,11 @@ class Mwb_Bookings_For_Woocommerce {
 						case 'full_calendar':
 							?>
 							<input id="<?php echo esc_attr( isset( $mbfw_component['id'] ) ? $mbfw_component['id'] : '' ); ?>" class="<?php echo esc_attr( isset( $mbfw_component['class'] ) ? $mbfw_component['class'] : '' ); ?>" type="text" autocomplete="off"/>
+							<?php
+							break;
+						case 'heading':
+							?>
+							<div class="mbfw-admin-suggestion-text"><?php echo ( isset( $mbfw_component['title'] ) ? esc_html( $mbfw_component['title'] ) : '' ); ?></div>
 							<?php
 							break;
 						default:

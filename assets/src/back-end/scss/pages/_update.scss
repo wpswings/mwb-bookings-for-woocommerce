@@ -1,0 +1,345 @@
+/* Updates changes v3.0.0_alpha */
+.mwb_bfw_config_tab {
+    margin: 0;
+    
+    h3 {
+      &.nav-tab-wrapper {
+        @include media(mwb-phone) {
+          border-bottom: 2px solid #c3c4c7;
+        }
+      }
+  
+      .mwb-bfw-nav-tab {
+        background-color: transparent;
+        border: none;
+        float: unset;
+        display: inline-block;
+        color: #000;
+        font-size: 14px;
+        font-family: "NunitoSans-Bold";
+        line-height: 24px;
+        letter-spacing: 0.3px;
+        padding: 15px 20px 15px 0;
+        margin: 0;
+        &:hover {
+          background-color: transparent;
+          border: none;
+          color: #2196f3;
+        }
+        &.nav-tab-active {
+          color: #2196f3;
+          position: relative;
+          &:after {
+            position: absolute;
+            content: "";
+            left: 0;
+            right: 20px;
+            bottom: 0;
+            background-color: #2196f3;
+            height: 3px;
+          }
+        }
+      }
+    }
+  
+    .mwb-form-group {
+      @include media(mwb-phone) {
+        display: block;
+      }
+      .mwb-form-group__label {
+        @include media(mwb-phone) {
+          max-width: 300px;
+        }
+      }
+      .mwb-form-group__control {
+        @include media(mwb-phone) {
+          max-width: 350px;
+          margin-top: 15px;
+        }
+        input {
+          &.bfwp_availability_page_calendar {
+            border-radius: 5px;
+            min-height: 32px;
+            padding: 8px 16px;
+          }
+        }
+        label.mdl-textfield__label {
+          padding: 0;
+          margin-top: 5px;
+        }
+      }
+      .mdc-text-field-helper-line {
+        padding: 0;
+        margin-top: 5px;
+      }
+    }
+    .wps-bfwp__integration-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      @include media(mwb-tablet) {
+        display: block;
+      }
+      .mwb_wps_integration_setting_wrapper {
+        padding: 15px;
+        margin: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        flex: 1 0 calc(50% - 40px);
+        @include media(mwb-tablet) {
+          flex: 1 0 calc(50% - 25px);
+          margin: 15px 5px 0;
+        }
+        .mwb-form-group{
+            margin-bottom: 20px;
+        }
+      }
+      & > .mwb-form-group {
+        flex: 1;
+        text-align: center;
+        margin: 20px 0;
+        .mwb-form-group__label{
+            display: none;
+        }
+        .mwb-form-group__control{
+            max-width: unset;
+        }
+      }
+  
+      .mwb_bfwp_parent_divider {
+        margin-bottom: 10px !important;
+        padding-bottom: 0;
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+  
+  .mwb-section {
+    
+    @include media(mwb-sm-phone) {
+      padding: 15px;
+    }
+    #bulk-action-selector-top,
+    #bulk-action-selector-bottom {
+      padding: 5px 24px 5px 8px !important;
+      line-height: unset;
+    }
+    .search-box {
+      @include media(mwb-phone) {
+        width: auto;
+        bottom: 15px;
+        left: 0;
+        right: 15px;
+        padding: 15px;
+        height: auto;
+        border-radius: 0 0 5px 5px;
+        background-color: #fff;
+      }
+    }
+    #col-left {
+      background-color: #e5f4fe;
+      padding: 15px;
+    }
+    
+    #submit,.edit-tag-actions .button {
+      background-color: #2196f3;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-family: "NunitoSans-Regular";
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      margin-top: 15px;
+      opacity: 0.9;
+      text-transform: uppercase;
+      transition: opacity 0.3s ease;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    h1,
+    h2,
+    h3 {
+      font-family: "NunitoSans-Bold", sans-serif;
+    }
+  
+    label {
+      font-family: "NunitoSans-SemiBold", sans-serif;
+    }
+  
+    p {
+      font-family: "NunitoSans-Regular", sans-serif;
+    }
+    .wps-bfw-form-field {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      @include media(mwb-phone) {
+        display: block;
+      }
+  
+      label {
+        padding-right: 15px;
+        flex: 0 0 150px;
+      }
+      .wps-form-field-wrap {
+        flex: 1;
+        &+.submit {
+          text-align: center;
+         }
+        @include media(mwb-sm-phone) {
+          padding-top: 10px;
+        }
+        input[type="number"] {
+          & + span {
+            display: block;
+          }
+        }
+        input[type="checkbox"] {
+          width: 35px;
+          height: 15px;
+          border-radius: 50px;
+          background: #a7a7a7;
+          border: none;
+          appearance: none;
+          cursor: pointer;
+          position: relative;
+          &:before {
+            content: "";
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.5);
+            position: absolute;
+            padding: 0;
+            margin: 0;
+            top: -2.8px;
+            left: 0;
+            transition: left 0.2s linear;
+          }
+          &:checked {
+            &:before {
+              left: 18px;
+            }
+          }
+          &:hover {
+            &:before {
+              box-shadow: 0 0 0 10px rgba(0, 0, 0,0.25);
+            }
+          }
+          &:focus {
+            &:before {
+              box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.25);
+            }
+          }
+          &:checked {
+            background: #2196f3;
+            opacity: 0.8;
+          }
+          &:focus {
+            box-shadow: none;
+            outline: none;
+          }
+        }
+  
+        span {
+          padding-top: 5px;
+          display: block;
+          @include media(mwb-tablet) {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+
+  .mwb-taxonomy-section_wrap {
+    padding-top: 0;
+    #edittag {
+      input[type="checkbox"] {
+        width: 35px;
+        height: 15px;
+        border-radius: 50px;
+        background: #a7a7a7;
+        border: none;
+        appearance: none;
+        cursor: pointer;
+        position: relative;
+        &:before {
+          content: "";
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #fff;
+          box-shadow: 0 3px 5px rgba(0,0,0,0.5);
+          position: absolute;
+          padding: 0;
+          margin: 0;
+          top: -2.8px;
+          left: 0;
+          transition: left 0.2s linear;
+        }
+        &:checked {
+          &:before {
+            left: 18px;
+          }
+        }
+        &:hover {
+          &:before {
+            box-shadow: 0 0 0 10px rgba(0, 0, 0,0.25);
+          }
+        }
+        &:focus {
+          &:before {
+            box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.25);
+          }
+        }
+        &:checked {
+          background: #2196f3;
+          opacity: 0.8;
+        }
+        &:focus {
+          box-shadow: none;
+          outline: none;
+        }
+      }
+    }
+
+    .edit-tag-actions {
+        display: flex;
+        align-items: center;
+        .button {
+          margin: 0;
+        }
+        #delete-link {
+            margin: 0 0 0 20px;
+            font-size: 16px;
+        }
+      }
+  }
+  .mbfw-admin-suggestion-svg {
+      svg {
+        margin-right: 5px;
+        margin-top: -2px;
+      }
+}
+.bfwp_booking_order_product_user_admin__wrapper {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  @include media(mwb-phone) {
+    flex-wrap :wrap;
+  }
+  .mwb-booking-order_setting_wrapper {
+    @include media(mwb-phone) {
+      margin-top:20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 0;
+      max-width: 575px;
+    }
+  }
+}
+

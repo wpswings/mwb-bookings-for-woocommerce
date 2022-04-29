@@ -361,6 +361,11 @@ input#s2id_autogen1 {
     display: none !important;
 }
 
+.wps-info-img{
+    margin-right: 6px;
+    margin-top: -3px;
+    max-width: 15px;
+}
 
 /*=====  End of MWB POPUP FORM CSS  ======*/
 

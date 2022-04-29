@@ -23,11 +23,11 @@ do_action( 'mwb_mbfw_overview_content_top' );
 	</div>
 	<div class="mwb-overview__content">
 		<div class="mwb-overview__content-description">
-			<h2><?php esc_html_e( 'What is MWB Bookings for WooCommerce?', 'mwb-bookings-for-woocommerce' ); ?></h2>
+			<h2><?php esc_html_e( 'What is Bookings for WooCommerce?', 'mwb-bookings-for-woocommerce' ); ?></h2>
 			<p>
 				<?php
 				esc_html_e(
-					'MWB Bookings for WooCommerce is a sophisticated plugin that lets online retailers create an online booking system and easily transform their merchandise into online booking solutions and make them accessible to their customers for a particular time frame.
+					'Bookings for WooCommerce is a sophisticated plugin that lets online retailers create an online booking system and easily transform their merchandise into online booking solutions and make them accessible to their customers for a particular time frame.
 					This plugin is simple yet powerful because it is a one-stop medium to offer online booking solutions for nearly all types of businesses. You can use it to book a hotel room, rent a product, reserve a course or class, sell a tour package online, buy an event ticket,
 					schedule an appointment, and many other things.',
 					'mwb-bookings-for-woocommerce'

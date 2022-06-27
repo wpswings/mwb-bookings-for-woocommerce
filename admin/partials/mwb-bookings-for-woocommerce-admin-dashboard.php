@@ -16,13 +16,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $mbfw_mwb_mbfw_obj;
+
+/**
+ * Filter is for returning something.
+ *
+ * @since 1.0.0
+ */
 do_action( 'mwb_mbfw_license_notice_admin' );
-$mbfw_active_tab   = isset( $_GET['mbfw_tab'] ) ? sanitize_key( $_GET['mbfw_tab'] ) : ( isset( $_GET['taxonomy'] ) ? 'mwb-bookings-for-woocommerce-configuration' : 'mwb-bookings-for-woocommerce-general');// phpcs:ignore
+$mbfw_active_tab   = isset( $_GET['mbfw_tab'] ) ? sanitize_key( $_GET['mbfw_tab'] ) : ( isset( $_GET['taxonomy'] ) ? 'mwb-bookings-for-woocommerce-configuration' : 'mwb-bookings-for-woocommerce-general' );// phpcs:ignore
 $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 ?>
 <header>
 	<?php
-		// desc - setting saved notice.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		do_action( 'mwb_mbfw_settings_saved_notice' );
 	?>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
@@ -34,7 +44,11 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 					str_replace(
 						'-',
 						' ',
-						// desc - update name for pro plugin.
+						/**
+						 * Filter is for returning something.
+						 *
+						 * @since 1.0.0
+						 */
 						apply_filters( 'mwb_mbfw_update_plugin_name_from_pro', $plugin_name )
 					)
 				)
@@ -45,7 +59,11 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 		<?php
 		$doc_link = 'https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-backend&utm_campaign=documentation';
 		echo esc_url(
-			// desc - Documentation link for pro update.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mwb_mbfw_update_doc_link', $doc_link )
 		);
 		?>
@@ -55,7 +73,11 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 		<?php
 		$query_link = 'https://wpswings.com/submit-query/?utm_source=wpswings-bookings-support&utm_medium=bookings-org-backend&utm_campaign=support';
 		echo esc_url(
-			// desc - Query link update.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mwb_mbfw_update_query_link', $query_link )
 		);
 		?>
@@ -86,7 +108,11 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 	<section class="mwb-section">
 		<div>
 			<?php
-			// desc - Before Setting Form.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'mwb_mbfw_before_general_settings_form' );
 			// if submenu is directly clicked on woocommerce.
 			if ( empty( $mbfw_active_tab ) ) {
@@ -96,7 +122,11 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			$mbfw_default_tabs     = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			$mbfw_tab_content_path = $mbfw_default_tabs[ $mbfw_active_tab ]['file_path'];
 			$mbfw_mwb_mbfw_obj->mwb_mbfw_plug_load_template( $mbfw_tab_content_path );
-			// desc - After Setting Form.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'mwb_mbfw_after_general_settings_form' );
 			?>
 		</div>

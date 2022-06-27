@@ -13,7 +13,11 @@
 
 global $mbfw_mwb_mbfw_obj;
 $mbfw_onboarding_form_fields = 
-//desc - filter for trial.
+/**
+ * Filter is for returning something.
+ *
+ * @since 1.0.0
+ */
 apply_filters('mwb_mbfw_on_boarding_form_fields', array());
 ?>
 
@@ -21,7 +25,11 @@ apply_filters('mwb_mbfw_on_boarding_form_fields', array());
 	<div class="mdc-dialog mdc-dialog--scrollable
 	<?php
 	echo wp_kses_post(
-	//desc - filter for trial.
+	/**
+	 * Filter is for returning something.
+	 *
+	 * @since 1.0.0
+	 */
 	apply_filters( 'mwb_stand_dialog_classes', 'mwb-bookings-for-woocommerce' ) );
 	?>
 	">

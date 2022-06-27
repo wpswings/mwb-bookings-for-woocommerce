@@ -16,7 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $mbfw_mwb_mbfw_obj;
 $mbfw_booking_form_settings = 
-//desc - Booking setting tab fields.
+/**
+ * Filter is for returning something.
+ *
+ * @since 1.0.0
+ */
 apply_filters( 'mbfw_booking_form_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->

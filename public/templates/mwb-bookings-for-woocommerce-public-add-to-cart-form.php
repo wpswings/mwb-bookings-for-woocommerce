@@ -24,15 +24,40 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 <div class="mwb-mbfw-cart-page-data">
 	<?php
 	wp_nonce_field( 'mwb_booking_frontend', '_mwb_nonce' );
-	//desc - Before Booking add to cart form.
+
+	/**
+	 * Before Booking add to cart form..
+	 *
+	 * @since 1.0.0
+	 */
 	do_action( 'mwb_booking_before_add_to_cart_form', $product_id, $product );
-	//desc - Add Time selector on frontend for booking.
+ 
+	/**
+	 * Add Time selector on frontend for booking.
+	 *
+	 * @since 1.0.0
+	 */
 	do_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $product_id, $product );
-	//desc - Show input field for number of people selection.
+
+	/**
+	 * Show input field for number of people selection.
+	 *
+	 * @since 1.0.0
+	 */
 	do_action( 'mwb_mbfw_number_of_people_while_booking_on_form', $product_id, $product );
-	//desc - Show Booking services details on form.
+ 
+	/**
+	 * Show Booking services details on form.
+	 *
+	 * @since 1.0.0
+	 */
 	do_action( 'mwb_mbfw_booking_services_details_on_form', $product_id, $product );
-	//desc - After Boooking add to cart form.
+
+	/**
+	 * After Boooking add to cart form.
+	 *
+	 * @since 1.0.0
+	 */
 	do_action( 'mwb_booking_after_add_to_cart_form', $product_id, $product );
 	if ( 'fixed_unit' === get_post_meta( $product_id, 'mwb_mbfw_booking_criteria', true ) ) {
 		$booking_quantity = get_post_meta( $product_id, 'mwb_mbfw_booking_count', true );

@@ -111,10 +111,18 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	public function mwb_mbfw_load_single_page_template() {
 		
 		$is_booking_available =
-		//desc - enable or disable booking.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		apply_filters( 'mwb_mbfw_is_booking_available_filter', $this->mwb_mbfw_is_enable_booking() );
 		if ( $is_booking_available ) {
-			//desc - Template for Booking Product Type.
+			/**
+			 * Template for Booking Product Type.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'woocommerce_simple_add_to_cart' );
 		}
 	}
@@ -161,7 +169,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 									<span title="
 									<?php
 									echo esc_html(
-										//desc - add tooltip to show description for additinal details while booking.
+										/**
+										 * Filter is for returning something.
+										 *
+										 * @since 1.0.0
+										 */
 										do_action( 'mbfw_add_tooltip_show_additional_details', $custom_term->term_id, 'mwb_booking_service' )
 									);
 									?>
@@ -200,7 +212,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$file = MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php';
 			$path = 'public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php';
 			require_once
-			//desc - load templates to show custom people types.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mbfw_load_people_option_template', $file, $path );
 		}
 	}
@@ -265,7 +281,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			);
 			
 			$custom_data =
-			//desc - adding extra details in cart.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mbfw_add_extra_custom_details_in_cart', $custom_data );
 			$cart_item_data['mwb_mbfw_booking_values'] = $custom_data;
 		}
@@ -326,7 +346,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				);
 			}
 			$other_data =
-			//desc - Additional detail to show on cart and checkout page from plugins.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mbfw_show_additional_details_on_cart_and_checkout_pro', $other_data, $custom_cart_data, $cart_item );
 		}
 		return $other_data;
@@ -416,7 +440,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$line_item_meta['_mwb_mbfw_booking_extra_costs'] = $term_ids;
 			}
 			$line_item_meta =
-			// desc - add custom data in the db for line items.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mbfw_add_meta_data_in_the_db_for_line_item', $line_item_meta, $custom_booking_values, $item );
 			foreach ( $line_item_meta as $meta_key => $meta_val ) {
 				$item->update_meta_data( $meta_key, $meta_val );

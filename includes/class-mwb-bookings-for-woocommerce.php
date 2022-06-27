@@ -388,7 +388,11 @@ class Mwb_Bookings_For_Woocommerce {
 		);
 
 		$mbfw_default_tabs =
-		// desc - add admin setting tabs.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		apply_filters( 'mwb_mbfw_plugin_standard_admin_settings_tabs', $mbfw_default_tabs );
 
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-calendar-listing'] = array(
@@ -431,7 +435,11 @@ class Mwb_Bookings_For_Woocommerce {
 		);
 
 		$mbfw_default_tabs =
-		// desc - add admin setting tabs.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		apply_filters( 'mwb_bfw_configuration_settings_sub_tabs', $mbfw_default_tabs );
 
 		return $mbfw_default_tabs;

@@ -51,6 +51,12 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return boolean
 	 */
 	public function is_purchasable() {
+
+		/**
+		 * Filter to make product purchasable.
+		 *
+		 * @since 1.0.0
+		 */
 		return apply_filters( 'woocommerce_is_purchasable', true, $this );
 	}
 
@@ -60,6 +66,12 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function single_add_to_cart_text() {
+
+		/**
+		 * Filter to make product purchasable.
+		 *
+		 * @since 1.0.0
+		 */
 		return apply_filters( 'woocommerce_product_single_add_to_cart_text', $this->get_button_text() ? $this->get_button_text() : _x( 'Book Now', 'placeholder', 'mwb-bookings-for-woocommerce' ), $this );
 	}
 	/**
@@ -68,6 +80,12 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function add_to_cart_text() {
+
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		return apply_filters( 'woocommerce_product_add_to_cart_text', __( 'View Details', 'mwb-bookings-for-woocommerce' ), $this );
 	}
 
@@ -78,6 +96,13 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 */
 	public function add_to_cart_url() {
 		$url = $this->get_permalink();
+
+
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		return apply_filters( 'woocommerce_product_add_to_cart_url', $url, $this );
 	}
 	/**

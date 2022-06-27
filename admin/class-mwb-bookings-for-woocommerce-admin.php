@@ -136,7 +136,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( empty( $GLOBALS['admin_page_hooks']['wps-plugins'] ) ) {
 			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
 			$mbfw_menus =
-			// desc - Add Menu Page.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'wps_add_plugins_menus_array', array() );
 			if ( is_array( $mbfw_menus ) && ! empty( $mbfw_menus ) ) {
 				foreach ( $mbfw_menus as $mbfw_key => $mbfw_value ) {
@@ -185,7 +189,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mwb_plugins_listing_page() {
 		$active_marketplaces =
-		// desc - Add Menu Page.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		apply_filters( 'wps_add_plugins_menus_array', array() );
 		if ( is_array( $active_marketplaces ) && ! empty( $active_marketplaces ) ) {
 			include MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/welcome.php';
@@ -318,7 +326,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			),
 		);
 		$mbfw_settings_general =
-		// desc - General settings tab add html fields.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		apply_filters( 'mbfw_general_settings_array_filter', $mbfw_settings_general );
 		$mbfw_settings_general[] = array(
 			'type'        => 'button',
@@ -369,7 +381,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			),
 		);
 		$mbfw_booking_form_array =
-		// desc - setting fields at booking form setting tab.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		apply_filters( 'mbfw_booking_form_setting_array_filter', $mbfw_booking_form_array );
 		$mbfw_booking_form_array[] = array(
 			'type'        => 'button',
@@ -409,7 +425,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			),
 		);
 		$mbfw_availability_settings =
-		// desc - avilability setting fields array.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		apply_filters( 'mwb_mbfw_availability_setting_fields_array', $mbfw_availability_settings );
 		$mbfw_availability_settings[] = array(
 			'type'        => 'button',
@@ -439,21 +459,33 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( isset( $_POST['mwb_mbfw_general_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
 			$mbfw_genaral_settings =
-			// desc - general setting tab fields.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mbfw_general_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}
 		if ( isset( $_POST['mwb_mbfw_booking_form_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
 			$mbfw_genaral_settings =
-			// desc - booking setting tab fields.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mbfw_booking_form_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}
 		if ( isset( $_POST['mwb_mbfw_availability_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;
 			$mbfw_genaral_settings =
-			// desc - availability setting tab fields.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mbfw_availability_settings_array', array() );
 			$mwb_settings_save_progress = true;
 		}
@@ -668,7 +700,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'custom_attr' => ( 'yes' !== get_post_meta( get_the_ID(), 'mwb_mbfw_cancellation_allowed', true ) ) ? array( 'disabled' => 'disabled' ) : array(),
 				)
 			);
-			// desc - add meta fields in general settings meta section for products.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'mwb_mbfw_add_extra_field_product_gen_setting', get_the_ID() );
 			?>
 		</div>
@@ -727,7 +763,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				?>
 			</p>
 			<?php
-			// desc - add meta fields in booking cost meta section for products.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'mwb_mbfw_booking_costs_meta_section_add_fields', get_the_ID() );
 			?>
 		</div>
@@ -766,7 +806,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'custom_attributes' => array( 'min' => 0 ),
 				)
 			);
-			// desc - add fields in people meta sections in product.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'mwb_mbfw_people_meta_section_add_fields', get_the_ID() );
 			?>
 		</div>
@@ -794,7 +838,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		</div>
 		<div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<?php
-			// desc - add fields in booking availability meta section.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'mwb_mbfw_booking_availability_meta_tab_fields', get_the_ID() );
 			?>
 			<p class="mwb-mbfw-additional-notice">
@@ -891,14 +939,22 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_bfwp_order_statuses_to_cancel'        => array_key_exists( 'mwb_bfwp_order_statuses_to_cancel', $_POST ) ? ( is_array( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ? map_deep( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ) ) : array(),
 			);
 			$product_meta_data =
-			// desc - save booking product meta data.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data, $id );
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 				update_post_meta( $id, $meta_key, $meta_value );
 			}
 			wp_set_object_terms( $id, array( 'booking' ), 'product_cat', true );
 			wp_remove_object_terms( $id, 'uncategorized', 'product_cat' );
-			// desc - after saving product custom meta data.
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'mwb_mbfw_share_product_on_fb', $id );
 		}
 	}
@@ -1439,7 +1495,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'_mwb_mbfw_service_and_count',
 			'_mwb_mbfw_booking_extra_costs',
 		);
-		return // desc - hide custom line item meta fields.
+		return /**
+				* Filter is for returning something.
+				*
+				* @since 1.0.0
+				*/
 		apply_filters( 'mwb_mbfw_hide_custom_line_item_meta_keys', array_merge( $hidden_keys, $custom_line_item_key_name ) );
 	}
 
@@ -1566,6 +1626,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		 */
 	public static function mwb_get_taxonomy_array() {
 		$taxonomy_array = array( 'mwb_booking_cost', 'mwb_booking_service' );
+							/**
+							 * Filter is for returning something.
+							 *
+							 * @since 1.0.0
+							 */
 		$taxonomy_array = apply_filters( 'mwb_bfw_booking_taxonomy_array', $taxonomy_array );
 		return $taxonomy_array;
 	}

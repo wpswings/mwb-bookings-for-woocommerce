@@ -255,8 +255,18 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
 				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
 				$base_price       = get_post_meta( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
+									/**
+									 * Filter is for returning something.
+									 *
+									 * @since 1.0.0
+									 */
 				$base_price       = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
 				$unit_price       = get_post_meta( $cart['product_id'], '_price', true );
+									/**
+									 * Filter is for returning something.
+									 *
+									 * @since 1.0.0
+									 */
 				$unit_price       = apply_filters( 'mwb_mbfw_vary_product_unit_price', ( ! empty( $unit_price ) ? (float) $unit_price : 0 ), $custom_cart_data, $cart_object, $cart );
 
 				// adding unit cost.
@@ -279,6 +289,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$new_price             += $this->mbfw_extra_charges_calculation( $cart['product_id'], $people_number );
 
 				$new_price =
+				/**
+				 * Filter is for returning something.
+				 *
+				 * @since 1.0.0
+				 */
 				apply_filters( 'mbfw_set_price_individually_during_adding_in_cart', $new_price, $custom_cart_data, $cart_object );
 				// setting the new price.
 				$cart['data']->set_price( $new_price );
@@ -313,6 +328,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
 		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number );
 		$product_price = get_post_meta( $product_id, '_price', true );
+							/**
+							 * Filter is for returning something.
+							 *
+							 * @since 1.0.0
+							 */
 		$product_price = apply_filters(
 			'mwb_mbfw_change_price_ajax_global_rule',
 			( ! empty( $product_price ) ? $product_price : 0 ),
@@ -327,6 +347,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			)
 		);
 		$base_cost     = get_post_meta( $product_id, 'mwb_mbfw_booking_base_cost', true );
+							/**
+							 * Filter is for returning something.
+							 *
+							 * @since 1.0.0
+							 */
 		$base_cost     = apply_filters(
 			'mwb_mbfw_change_price_ajax_global_rule',
 			( ! empty( $base_cost ) ? (float) $base_cost : 0 ),
@@ -365,7 +390,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			),
 		);
 		$charges =
-		// desc - ajax loading total listings.
+		/**
+		 * Filter is for returning something.
+		 *
+		 * @since 1.0.0
+		 */
 		apply_filters( 'mbfw_ajax_load_total_booking_charge_individually', $charges, $product_id );
 		$this->mbfw_booking_total_listing_single_page( $charges, $quantity );
 		wp_die();
@@ -407,7 +436,14 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					<?php echo wp_kses_post( wc_price( $total ) ); ?>
 				</div>
 			</div>
-			<?php do_action( 'mbfw_show_booking_policy' ); ?>
+			<?php 
+			/**
+			 * Filter is for returning something.
+			 *
+			 * @since 1.0.0
+			 */
+			do_action( 'mbfw_show_booking_policy' ); 
+			?>
 		</div>
 		<?php
 	}
@@ -570,7 +606,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					</tr>
 					<?php
 				} else {
-					// People type show in user booking.
+					/**
+					 * Filter is for returning something.
+					 *
+					 * @since 1.0.0
+					 */
 					do_action( 'mwb_mbfw_people_user_booking_my_account', $item_id, $item, $order );
 				}
 				$services_and_count = $item->get_meta( '_mwb_mbfw_service_and_count', true );
@@ -616,7 +656,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					<tr>
 						<td>
 							<?php
-							// Reschedule user booking link.
+							/**
+							 * Filter is for returning something.
+							 *
+							 * @since 1.0.0
+							 */
 							do_action( 'mwb_mbfw_reschedule_user_booking_my_account', $item_id, $item, $order );
 							?>
 						</td>

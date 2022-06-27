@@ -16,7 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $mbfw_mwb_mbfw_obj;
 $mbfw_availability_settings = 
-//desc - availability setting tab fields.
+/**
+ * Filter is for returning something.
+ *
+ * @since 1.0.0
+ */
 apply_filters( 'mbfw_availability_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->

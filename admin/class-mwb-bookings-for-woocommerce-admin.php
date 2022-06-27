@@ -802,7 +802,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				printf(
 					/* translators:%s admin setting page link. */
 					esc_html__( 'To Choose daily start time and end time please %s.', 'mwb-bookings-for-woocommerce' ),
-					'<a href="' . esc_url( admin_url( 'admin.php?page=mwb_bookings_for_woocommerce_menu&mbfw_tab=mwb-bookings-for-woocommerce-booking-availability-settings' ) ) . '" target="_blank">' . esc_html__( 'visit here', 'mwb-bookings-for-woocommerce' ) . '</a>'
+					'<a href="' . esc_url( admin_url( 'admin.php?page=mwb_bookings_for_woocommerce_menu&mbfw_tab=mwb-bookings-for-woocommerce-configuration&bfw_sub_nav=mwb-bookings-for-woocommerce-booking-availability-settings' ) ) . '" target="_blank">' . esc_html__( 'visit here', 'mwb-bookings-for-woocommerce' ) . '</a>'
 				);
 				?>
 			</p>

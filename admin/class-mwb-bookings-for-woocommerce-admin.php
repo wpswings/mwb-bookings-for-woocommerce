@@ -64,8 +64,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_admin_enqueue_styles( $hook ) {
 		$screen                 = get_current_screen();
+		
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
-		if ( ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
+		if ( ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id || 'wp-swings_page_home' === $screen->id ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
 			wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all' );
 
 			wp_enqueue_style( 'mwb-mbfw-meterial-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
@@ -90,7 +91,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		$screen                     = get_current_screen();
 			$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
-		if ( ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
+		if ( ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id || 'wp-swings_page_home' === $screen->id ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
 			wp_enqueue_script( 'mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 
 			wp_enqueue_script( 'mwb-mbfw-metarial-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
@@ -135,6 +136,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['wps-plugins'] ) ) {
 			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
+			add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
 			$mbfw_menus =
 			/**
 			 * Filter is for returning something.
@@ -149,6 +151,19 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			}
 		}
 	}
+
+
+	/**
+	 *
+	 * Adding the default menu into the WordPress menu.
+	 *
+	 * @name wpswings_callback_function
+	 * @since 1.0.0
+	 */
+	public function wpswings_welcome_callback_function() {
+		include MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-welcome.php';
+	}
+
 
 	/**
 	 * Removing default submenu of parent menu in backend dashboard
@@ -455,6 +470,17 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 		if ( ! isset( $_POST['mwb_tabs_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_tabs_nonce'] ) ), 'admin_save_data' ) ) {
 			return;
+		}
+		
+
+		if ( isset( $_POST['mbfw_button_demo'] ) ) {
+			
+			$screen = get_current_screen();
+			if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id ) {
+				$enable_tracking = ! empty( $_POST['mbfw_enable_tracking'] ) ? sanitize_text_field( wp_unslash( $_POST['mbfw_enable_tracking'] ) ) : '';
+				update_option( 'mbfw_enable_tracking', $enable_tracking );
+				return;
+			}
 		}
 		if ( isset( $_POST['mwb_mbfw_general_settings_save'] ) ) {
 			$mwb_mbfw_gen_flag     = false;

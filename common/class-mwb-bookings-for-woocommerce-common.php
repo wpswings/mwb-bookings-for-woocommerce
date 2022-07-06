@@ -385,7 +385,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'value' => $product_price,
 			),
 			'additional_charge' => array(
-				'title' => __( 'Additional Charges', 'mwb-bookings-for-woocommerce' ),
+				'title' => __( 'Additional Costs', 'mwb-bookings-for-woocommerce' ),
 				'value' => $extra_charges,
 			),
 		);

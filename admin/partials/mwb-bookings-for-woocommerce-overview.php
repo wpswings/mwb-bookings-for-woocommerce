@@ -15,6 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Filter is for returning something.
+ *
+ * @since 1.0.0
+ */
 do_action( 'mwb_mbfw_overview_content_top' );
 ?>
 <div class="mwb-overview__wrapper">

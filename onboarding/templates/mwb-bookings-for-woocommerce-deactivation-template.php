@@ -19,13 +19,20 @@ $mwb_plugin_name                 = ! empty( explode( '/', plugin_basename( __FIL
 $mwb_plugin_deactivation_id      = $mwb_plugin_name . '-no_thanks_deactive';
 $mwb_plugin_onboarding_popup_id  = $mwb_plugin_name . '-onboarding_popup';
 $mbfw_onboarding_form_deactivate = 
-//desc - filter for trial.
+/**
+ * Filter is for returning something.
+ *
+ * @since 1.0.0
+ */
 apply_filters('mwb_mbfw_deactivation_form_fields', array());
 
 ?>
 <?php if ( ! empty( $mbfw_onboarding_form_deactivate ) ) : ?>
 	<div id="<?php echo esc_attr( $mwb_plugin_onboarding_popup_id ); ?>" class="mdc-dialog mdc-dialog--scrollable <? echo 
-	//desc - filter for trial.
+	/**
+	 * Filter is for returning something.
+	 * @since 1.0.0
+	 */
 	apply_filters('mwb_stand_dialog_classes', 'mwb-bookings-for-woocommerce' )?>">
 		<div class="mwb-mbfw-on-boarding-wrapper-background mdc-dialog__container">
 			<div class="mwb-mbfw-on-boarding-wrapper mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
@@ -49,7 +56,10 @@ apply_filters('mwb_mbfw_deactivation_form_fields', array());
 							</div>
 							<div class="mwb-mbfw-on-boarding-form-no_thanks">
 								<a href="#" id="<?php echo esc_attr( $mwb_plugin_deactivation_id ); ?>" class="<? echo 
-								//desc - filter for trial.
+								/**
+								 * Filter is for returning something.
+								 * @since 1.0.0
+								 */
 								apply_filters('mwb_stand_no_thank_classes', 'mwb-bookings-for-woocommerce-no_thanks' )?> mdc-button"><?php esc_html_e( 'Skip and Deactivate Now', 'mwb-bookings-for-woocommerce' ); ?></a>
 							</div>
 						</div>

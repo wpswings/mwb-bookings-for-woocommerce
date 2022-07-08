@@ -216,7 +216,11 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 					'mbfw_auth_nonce'    => wp_create_nonce( 'mwb_mbfw_onboarding_nonce' ),
 					'mbfw_current_screen'    => $pagenow,
 					'mbfw_current_supported_slug'    => 
-					//desc - filter for trial.
+					/**
+					 * Desc - filter for trial.
+					 *
+					 * @since 1.0.0
+					 */
 					apply_filters('mwb_mbfw_deactivation_supported_slug', array( $mbfw_current_slug ) ),
 				)
 			);

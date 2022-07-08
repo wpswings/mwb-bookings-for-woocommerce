@@ -16,11 +16,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $mbfw_mwb_mbfw_obj;
 $mbfw_developer_admin_hooks = 
-//desc - Admin Hooks listing.
+/**
+ * Filter is for returning something.
+ *
+ * @since 1.0.0
+ */
 apply_filters('mbfw_developer_admin_hooks_array', array());
 $count_admin                 = filtered_array($mbfw_developer_admin_hooks);
 $mbfw_developer_public_hooks = 
-//desc - Public Hooks listing.
+/**
+ * Filter is for returning something.
+ *
+ * @since 1.0.0
+ */
 apply_filters('mbfw_developer_public_hooks_array', array());
 $count_public = filtered_array($mbfw_developer_public_hooks);
 ?>

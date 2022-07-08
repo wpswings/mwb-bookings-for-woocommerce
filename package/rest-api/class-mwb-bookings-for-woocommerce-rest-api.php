@@ -23,7 +23,6 @@
  * @since      2.0.0
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/package/rest-api/version1
- * @author     makewebbetter <webmaster@makewebbetter.com>
  */
 class Mwb_Bookings_For_Woocommerce_Rest_Api {
 

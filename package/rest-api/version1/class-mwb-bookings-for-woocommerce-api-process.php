@@ -22,7 +22,6 @@ if ( ! class_exists( 'Mwb_Bookings_For_Woocommerce_Api_Process' ) ) {
 	 * @since      2.0.0
 	 * @package    Mwb_Bookings_For_Woocommerce
 	 * @subpackage Mwb_Bookings_For_Woocommerce/includes
-	 * @author     MakeWebBetter <makewebbetter.com>
 	 */
 	class Mwb_Bookings_For_Woocommerce_Api_Process {
 

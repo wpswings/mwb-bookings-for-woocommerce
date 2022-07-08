@@ -97,8 +97,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 */
 	public function mbfw_custom_taxonomy_for_products() {
 		$labels = array(
-			'name'          => _x( 'Additional Costs', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
-			'singular_name' => _x( 'Booking Costs', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
+			'name'          => __( 'Additional Costs', 'mwb-bookings-for-woocommerce' ),
+			'singular_name' => __( 'Booking Costs', 'mwb-bookings-for-woocommerce' ),
 			'search_items'  => __( 'Search Booking Cost', 'mwb-bookings-for-woocommerce' ),
 			'all_items'     => __( 'All Booking Costs', 'mwb-bookings-for-woocommerce' ),
 			'view_item'     => __( 'View Booking Cost', 'mwb-bookings-for-woocommerce' ),
@@ -127,8 +127,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		);
 		register_taxonomy( 'mwb_booking_cost', 'product', $args );
 		$labels = array(
-			'name'          => _x( 'Additional Services', 'taxonomy general name', 'mwb-bookings-for-woocommerce' ),
-			'singular_name' => _x( 'Booking Services', 'taxonomy singular name', 'mwb-bookings-for-woocommerce' ),
+			'name'          => __( 'Additional Services', 'mwb-bookings-for-woocommerce' ),
+			'singular_name' => __( 'Booking Services', 'mwb-bookings-for-woocommerce' ),
 			'search_items'  => __( 'Search Booking Service', 'mwb-bookings-for-woocommerce' ),
 			'all_items'     => __( 'All Booking Services', 'mwb-bookings-for-woocommerce' ),
 			'view_item'     => __( 'View Booking Service', 'mwb-bookings-for-woocommerce' ),

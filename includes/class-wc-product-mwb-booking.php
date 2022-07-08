@@ -152,7 +152,14 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function add_to_cart_description() {
+
 		/* translators: %s: Product title */
-		return apply_filters( 'woocommerce_product_add_to_cart_description', $this->get_button_text() ? $this->get_button_text() : sprintf( __( 'Book &ldquo;%s&rdquo;', 'mwb-bookings-for-woocommerce' ), $this->get_name() ), $this );
+		$temp_var = $this->get_button_text() ? $this->get_button_text() : sprintf( __( 'Book &ldquo;%s&rdquo;', 'mwb-bookings-for-woocommerce' ), $this->get_name() );
+
+		/**
+		 * Filter for description.
+		 * @since 1.0.0
+		 */																														
+		return apply_filters( 'woocommerce_product_add_to_cart_description', $temp_var, $this );
 	}
 }

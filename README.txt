@@ -23,7 +23,8 @@ You can now simply book WordPress time slots booking, confirm/reject bookings, d
 
 [youtube https://www.youtube.com/watch?v=9ow97SzMHnM&w=560&h=315&rel=0]
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 **WITH THE BOOKINGS FOR WOOCOMMERCE PLUGIN ON YOUR STORE YOU CAN:**
+
+**WITH THE BOOKINGS FOR WOOCOMMERCE PLUGIN ON YOUR STORE YOU CAN:**
 
 * With WooCommerce Calendar Booking you can Easily define additional booking costs and services from the backend.
 * Unit, base, and additional cost-based WooCommerce bookable products can be defined.

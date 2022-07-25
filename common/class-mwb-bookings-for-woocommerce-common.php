@@ -71,7 +71,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_register_script( $this->plugin_name . 'common', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-bookings-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name . 'common', 'mbfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name . 'common' );
-		wp_enqueue_script( 'mwb-mbfw-common-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-common.min.js', array(), $this->version, true );
+		wp_enqueue_script( 'mwb-mbfw-common-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-common.js', array(), $this->version, true );
 		wp_localize_script(
 			'mwb-mbfw-common-js',
 			'mwb_mbfw_common_obj',
@@ -261,7 +261,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 									 * @since 1.0.0
 									 */
 				$base_price       = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
-				$unit_price       = get_post_meta( $cart['product_id'], '_price', true );
+				$unit_price       = get_post_meta( $cart['product_id'], 'general_price', true );
+
 									/**
 									 * Filter is for returning something.
 									 *
@@ -365,6 +366,21 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'cost_type'     => 'base_cost',
 			)
 		);
+		
+		if( 'day' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
+			$from_timestamp = strtotime( $date_from );
+			$to_timestamp = strtotime( $date_to );
+			$unit_timestamp = $to_timestamp - $from_timestamp;
+			$unit = $unit_timestamp/86400 ;
+			$product_price = (float) $product_price * (float) $unit;
+		} else if( 'hour' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
+			$from_timestamp = strtotime( $date_time_from );
+			$to_timestamp = strtotime( $date_time_to );
+			$unit_timestamp = $to_timestamp - $from_timestamp;
+			$unit = $unit_timestamp/3600;
+			$product_price = (float) $product_price * (float) $unit;
+		}
+		update_post_meta( $product_id, 'general_price', $product_price );
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 			$product_price = (float) $product_price * (int) $people_number;
 		}
@@ -396,7 +412,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		 * @since 1.0.0
 		 */
 		apply_filters( 'mbfw_ajax_load_total_booking_charge_individually', $charges, $product_id );
-		$this->mbfw_booking_total_listing_single_page( $charges, $quantity );
+		$this->mbfw_booking_total_listing_single_page( $charges, $quantity, $product_id );
 		wp_die();
 	}
 
@@ -407,7 +423,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @param int   $quantity quantity of booked product.
 	 * @return void
 	 */
-	public function mbfw_booking_total_listing_single_page( $charges, $quantity ) {
+	public function mbfw_booking_total_listing_single_page( $charges, $quantity, $product_id ) {
+		$general_price = get_post_meta( $product_id, '_price', true );
 		?>
 		<div class="mbfw-total-listing-single-page__wrapper-parent">
 			<?php
@@ -419,7 +436,22 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				?>
 				<div class="mbfw-total-listing-single-page__wrapper">
 					<div class="mbfw-total-listing-single-page">
-						<?php echo wp_kses_post( $title ); ?>
+						<?php echo wp_kses_post( $title ); 
+						if( 'General Cost' == $title ) { ?>
+							<strong>( <?php if( 'day' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
+								
+								echo wp_kses_post( wc_price( $general_price ) );
+								esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
+								
+							} else if( 'hour' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
+								
+								echo wp_kses_post( wc_price( $general_price ) );
+								esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
+								
+							} ?> )</strong>
+
+					<?php	}
+						?>
 					</div>
 					<div class="mbfw-total-listing-single-page">
 						<?php echo wp_kses_post( wc_price( $price ) ); ?>
@@ -442,10 +474,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			 *
 			 * @since 1.0.0
 			 */
-			do_action( 'mbfw_show_booking_policy' ); 
+			do_action( 'mbfw_show_booking_policy' );
+
 			?>
 		</div>
 		<?php
+
 	}
 
 	/**

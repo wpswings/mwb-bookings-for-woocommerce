@@ -80,5 +80,6 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 		<div class="mwb-mbfw-total-area"></div>
 		<?php
 	}
+	do_action('mwb_booking_before_add_to_cart_button', $product_id );
 	?>
 </div>

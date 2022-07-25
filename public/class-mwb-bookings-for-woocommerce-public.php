@@ -230,26 +230,33 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_mbfw_show_date_time_selector_on_single_product_page( $product_id, $product ) {
 		$class = false;
-		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_time_picker', true ) && 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
+		// if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_time_picker', true ) && 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
+		if( 'hour' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
+			$label1 = __( 'From', 'mwb-bookings-for-woocommerce' );
+			$label2 = __( 'To', 'mwb-bookings-for-woocommerce' );
 			$class            = 'mwb_mbfw_time_date_picker_frontend';
 			$accepted_pattern = '(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2})$';
-		} elseif ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
+		// } elseif ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
+		} else if( 'day' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
+			$label1 = __( 'Check in', 'mwb-bookings-for-woocommerce' );
+			$label2 = __( 'Check out', 'mwb-bookings-for-woocommerce' );
 			$class            = 'mwb_mbfw_date_picker_frontend';
 			$accepted_pattern = '(\d{2})-(\d{2})-(\d{4})$';
-		} elseif ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_time_picker', true ) ) {
-			$class            = 'mwb_mbfw_time_picker_frontend';
-			$accepted_pattern = '(\d{2}):(\d{2})$';
-		}
+		} 
+		// elseif ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_time_picker', true ) ) {
+		// 	$class            = 'mwb_mbfw_time_picker_frontend';
+		// 	$accepted_pattern = '(\d{2}):(\d{2})$';
+		// }
 		if ( $class ) {
 			?>
 			<div class="mbfw-date-picker-section__wrapper">
 				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="mwb_mbfw_booking_from_time" id="mwb-mbfw-booking-from-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php esc_attr_e( 'from', 'mwb-bookings-for-woocommerce' ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
+					<input type="text" name="mwb_mbfw_booking_from_time" id="mwb-mbfw-booking-from-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( $label1 ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
 				</div>
 				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-booking-to-time"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input type="text" name="mwb_mbfw_booking_to_time" id="mwb-mbfw-booking-to-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php esc_attr_e( 'to', 'mwb-bookings-for-woocommerce' ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
+					<input type="text" name="mwb_mbfw_booking_to_time" id="mwb-mbfw-booking-to-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( $label2 ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
 				</div>
 			</div>
 			<?php
@@ -452,6 +459,20 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			if ( 'yes' === get_post_meta( $custom_values['product_id'], 'mwb_mbfw_admin_confirmation', true ) ) {
 				update_option( 'check_order_status_mwb', $order->get_status() );
 			}
+		}
+	}
+
+	public function mwb_mbfw_show_location_on_map( $product_id ) {
+		$enable_location = get_option( 'mwb_mbfw_enable_location_site' );
+		$location = get_post_meta( $product_id, 'mwb_mbfw_booking_location', true );
+		if( 'yes' === $enable_location && ! empty( $location ) ) { ?>
+
+			<div class="mwb_mbfw_location_map_wrapper">
+			
+				<iframe width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q=<?php echo esc_html( $location ); ?>&output=embed"></iframe>
+			</div>
+
+		<?php 
 		}
 	}
 }

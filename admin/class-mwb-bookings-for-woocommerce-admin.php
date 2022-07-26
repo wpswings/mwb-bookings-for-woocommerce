@@ -340,17 +340,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'name'        => 'mwb_mbfw_is_booking_enable',
 			),
 
-			array(
-				'title' => __( 'Enable Booking Location Site', 'mwb-bookings-for-woocommerce' ),
-				'type'  => 'radio-switch',
-				'description'  => __( 'Enable this option to display location on Google Map.', 'mwb-bookings-for-woocommerce' ),
-				'id'    => 'mwb_mbfw_enable_location_site',
-				'value' => get_option( 'mwb_mbfw_enable_location_site' ),
-				'options' => array(
-					'yes' => __( 'YES', 'mwb-bookings-for-woocommerce' ),
-					'no' => __( 'NO', 'mwb-bookings-for-woocommerce' ),
-				),
-			),
 		);
 		$mbfw_settings_general =
 		/**
@@ -719,17 +708,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				)
 			);
 
-			woocommerce_wp_text_input(
-				array(
-					'id'                => 'mwb_mbfw_booking_location',
-					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_location', true ),
-					'label'             => __( 'Booking Location', 'mwb-bookings-for-woocommerce' ),
-					'description'       => __( 'Enter Location which will be shown on single product page', 'mwb-bookings-for-woocommerce' ),
-					'type'              => 'text',
-					'desc_tip'          => true,
-					'style'             => 'width:10em;',
-				)
-			);
 
 			$order_statuses = wc_get_order_statuses();
 			unset( $order_statuses['wc-completed'] );

@@ -89,7 +89,14 @@ function retrieve_booking_total_ajax( form_data ) {
 			processData : false,
 			contentType : false,
 			success     : function( msg ) {
-				$('.mwb-mbfw-total-area').html(msg);
+				
+				if( 'not allowed' === msg ) {
+					alert('Booking is not available on this date please choose another one !');
+					$('#mwb-mbfw-booking-from-time').val('');
+				} else {
+
+					$('.mwb-mbfw-total-area').html(msg);
+				}
 			}
 		});
 	}

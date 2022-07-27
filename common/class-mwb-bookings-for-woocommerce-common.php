@@ -323,6 +323,27 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$date_time_to     = array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) : '';
 
 		$date_from     = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'd-m-Y H:i' ) ) );
+
+		$allowed = '';
+		
+		$wps_booking_count = get_post_meta( $product_id, 'mwb_mbmf_booking_count', true );
+		$max_limit = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit', true );
+		if( ! empty( $max_limit ) && 0 < $max_limit ) {
+			if( ! empty( $wps_booking_count ) && is_array( $wps_booking_count ) ) {
+				if( key_exists( $date_from, $wps_booking_count ) ) {
+					
+					
+					if( $wps_booking_count[$date_from] >= $max_limit ) {
+						$allowed = 'not allowed';
+
+					}
+				}
+			}
+		}
+		if( 'not allowed' === $allowed ) {
+			echo $allowed;
+			wp_die();
+		}
 		$date_to       = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'd-m-Y H:i' ) ) );
 		$time_from     = gmdate( 'H:i', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'H:i' ) ) );
 		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'H:i' ) ) );

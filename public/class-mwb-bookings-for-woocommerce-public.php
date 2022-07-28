@@ -230,23 +230,24 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_mbfw_show_date_time_selector_on_single_product_page( $product_id, $product ) {
 		$class = false;
-		// if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_time_picker', true ) && 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
 		if( 'hour' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 			$label1 = __( 'From', 'mwb-bookings-for-woocommerce' );
 			$label2 = __( 'To', 'mwb-bookings-for-woocommerce' );
 			$class            = 'mwb_mbfw_time_date_picker_frontend';
 			$accepted_pattern = '(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2})$';
-		// } elseif ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_calendar', true ) ) {
 		} else if( 'day' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 			$label1 = __( 'Check in', 'mwb-bookings-for-woocommerce' );
 			$label2 = __( 'Check out', 'mwb-bookings-for-woocommerce' );
 			$class            = 'mwb_mbfw_date_picker_frontend';
 			$accepted_pattern = '(\d{2})-(\d{2})-(\d{4})$';
+			if( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_show_date_with_time', true ) ) {
+				$label1 = __( 'From', 'mwb-bookings-for-woocommerce' );
+				$label2 = __( 'To', 'mwb-bookings-for-woocommerce' );
+				$class            = 'mwb_mbfw_time_date_picker_frontend';
+				$accepted_pattern = '(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2})$';
+			}
 		} 
-		// elseif ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_enable_time_picker', true ) ) {
-		// 	$class            = 'mwb_mbfw_time_picker_frontend';
-		// 	$accepted_pattern = '(\d{2}):(\d{2})$';
-		// }
+		
 		if ( $class ) {
 			?>
 			<div class="mbfw-date-picker-section__wrapper">

@@ -28,3 +28,16 @@ jQuery(function($) {
         }
     });
 });
+
+
+jQuery(document).ready(function($){
+    $(document).on('change', '.woocommerce_options_panel #mwb_mbfw_booking_unit', function() {
+        if( 'hour' == $(this).val() ) {
+            $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();
+        }
+        if( 'day' == $(this).val() ) {
+            $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').show();
+        }
+    });
+    // $(document).on()
+});

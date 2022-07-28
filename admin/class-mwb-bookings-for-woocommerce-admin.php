@@ -121,10 +121,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				)
 			);
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
-			wp_enqueue_script( 'mwb-mbfw-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( 'mwb-admin-full-calendar-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.js', array( 'jquery' ), '5.8.0', true );
+			wp_enqueue_script( 'mwb-mbfw-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.min.js', array( 'jquery' ), time(), true );
+			wp_enqueue_script( 'mwb-admin-full-calendar-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.js', array( 'jquery' ), time(), true );
 		}
-		wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-custom.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-custom.js', array( 'jquery' ), time(), true );
 	}
 
 	/**
@@ -671,24 +671,20 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'style'       => 'width:10em',
 				)
 			);
-			// woocommerce_wp_checkbox(
-			// 	array(
-			// 		'id'          => 'mwb_mbfw_enable_calendar',
-			// 		'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_calendar', true ),
-			// 		'label'       => __( 'Enable Dates Selection', 'mwb-bookings-for-woocommerce' ),
-			// 		'description' => __( 'This option would enable booking dates to be selected from a calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
-			// 		'desc_tip'    => true,
-			// 	)
-			// );
-			// woocommerce_wp_checkbox(
-			// 	array(
-			// 		'id'          => 'mwb_mbfw_enable_time_picker',
-			// 		'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_enable_time_picker', true ),
-			// 		'label'       => __( 'Enable Time Selection', 'mwb-bookings-for-woocommerce' ),
-			// 		'description' => __( 'This feature would offer a front end time picker for selecting a time slot while booking ( time picker will be enabled while booking ).', 'mwb-bookings-for-woocommerce' ),
-			// 		'desc_tip'    => true,
-			// 	)
-			// );
+
+			if( 'day' == get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit', true ) ) {
+
+				woocommerce_wp_checkbox(
+					array(
+						'id'          => 'mwb_mbfw_show_date_with_time',
+						'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_show_date_with_time', true ),
+						'label'       => __( 'Enable to show time with date on calender', 'mwb-bookings-for-woocommerce' ),
+						'description' => __( 'This option would enable to show time with dates on calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
+						'desc_tip'    => true,
+					)
+				);
+			}
+			
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => 'mwb_mbfw_admin_confirmation',
@@ -953,6 +949,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_enable_calendar'                 => array_key_exists( 'mwb_mbfw_enable_calendar', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_enable_calendar'] ) ) : '',
 				'mwb_mbfw_enable_time_picker'              => array_key_exists( 'mwb_mbfw_enable_time_picker', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_enable_time_picker'] ) ) : '',
 				'mwb_mbfw_max_bookings'                    => array_key_exists( 'mwb_mbfw_max_bookings', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_max_bookings'] ) ) : '',
+				'mwb_mbfw_show_date_with_time'              => array_key_exists( 'mwb_mbfw_show_date_with_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_show_date_with_time'] ) ) : '',
 				'mwb_mbfw_admin_confirmation'              => array_key_exists( 'mwb_mbfw_admin_confirmation', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_admin_confirmation'] ) ) : '',
 				'mwb_mbfw_cancellation_allowed'            => array_key_exists( 'mwb_mbfw_cancellation_allowed', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_cancellation_allowed'] ) ) : '',
 				'mwb_mbfw_booking_unit_cost'               => array_key_exists( 'mwb_mbfw_booking_unit_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_unit_cost'] ) ) : '',

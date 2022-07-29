@@ -31,6 +31,9 @@ jQuery(function($) {
 
 
 jQuery(document).ready(function($){
+    if( 'hour' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val() ) {
+        $('.woocommerce_options_panel #mwb_mbfw_booking_unit').parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();
+    }
     $(document).on('change', '.woocommerce_options_panel #mwb_mbfw_booking_unit', function() {
         if( 'hour' == $(this).val() ) {
             $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();

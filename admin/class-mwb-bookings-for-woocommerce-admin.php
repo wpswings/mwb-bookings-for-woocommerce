@@ -672,18 +672,16 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				)
 			);
 
-			if( 'day' == get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit', true ) ) {
 
-				woocommerce_wp_checkbox(
-					array(
-						'id'          => 'mwb_mbfw_show_date_with_time',
-						'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_show_date_with_time', true ),
-						'label'       => __( 'Enable to show time with date on calender', 'mwb-bookings-for-woocommerce' ),
-						'description' => __( 'This option would enable to show time with dates on calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
-						'desc_tip'    => true,
-					)
-				);
-			}
+			woocommerce_wp_checkbox(
+				array(
+					'id'          => 'mwb_mbfw_show_date_with_time',
+					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_show_date_with_time', true ),
+					'label'       => __( 'Enable to show time with date on calender', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'This option would enable to show time with dates on calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
+				)
+			);
 			
 			woocommerce_wp_checkbox(
 				array(

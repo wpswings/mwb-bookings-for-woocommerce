@@ -463,6 +463,12 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		}
 	}
 
+	/**
+	 * Function for location.
+	 *
+	 * @param int $product_id is the id product.
+	 * @return void
+	 */
 	public function mwb_mbfw_show_location_on_map( $product_id ) {
 		$enable_location = get_option( 'mwb_mbfw_enable_location_site' );
 		$location = get_post_meta( $product_id, 'mwb_mbfw_booking_location', true );

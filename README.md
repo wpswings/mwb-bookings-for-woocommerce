@@ -1,5 +1,5 @@
 
-[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-40%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.9.3-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.4.1-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.2-blue)
+[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-100%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.0.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.6.1-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.2-blue)
 # Bookings for WooCommerce - Schedule Appointments, Manage Bookings, Show Availability, Calendar Listings
 ![ Bookings for WooCommerce](https://ps.w.org/mwb-bookings-for-woocommerce/assets/banner-772x250.jpg?rev=2672038)
 * Contributors: WP Swings
@@ -13,7 +13,7 @@
 
 [**WooCommerce Booking & Appointment**](https://wordpress.org/plugins/mwb-bookings-for-woocommerce/) is a powerful plugin that enables store owners to create an online booking system that allows them to turn their products into online booking solutions and make them available to customers for a set period of time.
 
-You can now simply book WordPress time slots, confirm/reject bookings, display reservation calendar listings, enable booking cancellations, promote booking availability, regulate booking duration, and much more using the Booking Calendar plugin’s capabilities.
+You can now simply book WordPress time slots, confirm/reject bookings, display reservation calendar listings, enable booking cancellations, promote booking availability, regulate booking duration, and much more using the [**Booking Calendar**](https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-github-page&utm_campaign=go-pro) plugin’s capabilities.
 
 [**How to Create an Online Booking System with  Bookings For WooCommerce plugin?**](https://www.youtube.com/watch?v=9ow97SzMHnM&t=658s)
 
@@ -119,9 +119,11 @@ Check out the [**Bookings Plugin knowledge base**](https://support.wpswings.com/
 [**WooCommerce Bookings Pro Documentation**](https://docs.wpswings.com/bookings-for-woocommerce-pro/?utm_source=bookings-pro-docs&utm_medium=bookings-github-page&utm_campaign=bookings-pro)
 
 
-
-### **SUPPORT**
+### SUPPORT
 If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=bookings-github-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-bookings-query&utm_medium=bookings-github-page&utm_campaign=query)
+
+Create and Revamp Your Store with  [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-bookings-services&utm_medium=bookings-github-page&utm_campaign=woocommerce-services)
+
 
 
 ### **MORE ABOUT WP Swings**
@@ -131,3 +133,4 @@ If you need support or have questions, kindly use our online chat window [**here
 - [**Tweet us on @wpswings**](https://twitter.com/wpswings)
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
+

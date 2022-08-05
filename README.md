@@ -1,5 +1,5 @@
 
-[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-100%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.0.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.6.1-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.2-blue)
+[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-100%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.0.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.7.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.2-blue)
 # Bookings for WooCommerce - Schedule Appointments, Manage Bookings, Show Availability, Calendar Listings
 ![ Bookings for WooCommerce](https://ps.w.org/mwb-bookings-for-woocommerce/assets/banner-772x250.jpg?rev=2672038)
 * Contributors: WP Swings
@@ -22,10 +22,10 @@ You can now simply book WordPress time slots, confirm/reject bookings, display r
 **WITH THE BOOKINGS FOR WOOCOMMERCE PLUGIN ON YOUR STORE YOU CAN:**
 
 * With WooCommerce Calendar Booking you can Easily define additional booking costs and services from the backend.
-* Unit, base, and additional cost-based WooCommerce bookable products can be defined.
-* Easily define the maximum number of bookings per day with the HMS unit.
+* Unit, base(days/hours), and additional cost-based WooCommerce bookable products can be defined.
+*  With Online Appointment Booking you can Easily define the maximum number of bookings per day with the HMS unit.
 * Provide an easy upcoming booking list using the Booking Calendar.
-* Can define WooCommerce bookings availability Start and End time for the day with ease.
+* Can define WooCommerce bookings availability Start and End time for the day with ease with a free online booking system.
 
 ## PLUGIN MEETS YOUR REQUIREMENT, SO
 [**Download now!!**](https://downloads.wordpress.org/plugin/mwb-bookings-for-woocommerce.zip)
@@ -37,7 +37,7 @@ You can now simply book WordPress time slots, confirm/reject bookings, display r
 Using the WordPress Bookings plugin General Settings tab toggle button functionality, admin managers can simply enable/disable the plugin as well as the plugin’s bookings feature.
 
 **2) Flexible Bookings**
-With the Appointment Booking Calendar, customers can tailor their booking criteria to their specific budget, event, and requirements. You can make reservations without bothering to place a call, thus you can do so from the comfort of the home following easy booking management.
+With the Appointment Booking Calendar, customers can tailor their booking criteria to their specific booking unit (hour, day), budget, event, and requirements. You can make reservations without bothering to place a call, thus you can do so from the comfort of the home following easy booking management.
 
 **3) Booking Confirmations & Cancellation Offered**
 With the Appointment booking WordPress plugin, Admin managers can easily offer confirmations for booking requests made by customers, as well as easy booking cancellations, by utilizing the plugin’s capabilities.
@@ -56,11 +56,11 @@ Admin managers can easily create WooCommerce booking services and additional cos
 WordPress Online Booking provides an online mobile-friendly WooCommerce easy booking interface, i.e. a responsive UI that works on a variety of devices. In short, offering ease of access for their customers for Online Booking Products.
 
 **8) Offer Bookings Availability Settings**
-Admin managers may easily specify booking and scheduling for WooCommerce-based availability for the day, as well as the exact deadline for making reservations. They only need to modify the Start and End times in the WooCommerce booking Availability tab of the plugin settings area to do so.
+Admin managers may easily specify booking and scheduling for WooCommerce-based availability for the day, as well as the exact deadline for making reservations with woocommerce appointments. They only need to modify the Start and End times in the WooCommerce booking Availability tab of the plugin settings area to do so.
 
 
 **9) Avoid Unwanted Bookings**
-Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoid unnecessary bookings, and easily indicate unavailability.
+Prior to a day, admin managers can easily determine the maximum amount of appointments that can be made. So that they may provide easy booking management for their items, avoid unnecessary bookings, and easily indicate unavailability with wordpress booking plugin.
 
 
 Visit [**Bookings for WooCommerce Documentation**](https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-github-page&utm_campaign=bookings-doc) and learn more about the features and working of the plugin.
@@ -104,6 +104,8 @@ Check out the [**Bookings Plugin knowledge base**](https://support.wpswings.com/
 * Easy Booking Social Share button available integration with Facebook.
 * Admin can easily provide Booking Refunds and easy RMA plugin compatibility.
 * Provide a specific Booking Policy Section likewise description tab.
+*  Maximum capacity of Booking for a single day
+* Showing Location On Map on Single Product Page
 
 
 
@@ -133,4 +135,5 @@ Create and Revamp Your Store with  [**WooCommerce Services**](https://wpswings.c
 - [**Tweet us on @wpswings**](https://twitter.com/wpswings)
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
+
 

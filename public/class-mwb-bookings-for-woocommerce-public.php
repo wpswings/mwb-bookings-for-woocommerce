@@ -249,7 +249,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		} 
 		
 		if ( $class ) {
+			do_action('wps_mbfw_add_html_before_calender');
 			?>
+			
 			<div class="mbfw-date-picker-section__wrapper">
 				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>

@@ -44,7 +44,7 @@
 		$('.mwb_mbfw_time_date_picker_frontend').datetimepicker({
 			format  : 'd-m-Y H:i',
 			minDate : mwb_mbfw_common_obj.minDate,
-			minTime : mwb_mbfw_common_obj.minTime
+			// minTime : mwb_mbfw_common_obj.minTime
 		});
 		$('.mwb_mbfw_date_picker_frontend').datetimepicker({
 			format     : 'd-m-Y',
@@ -89,13 +89,7 @@ function retrieve_booking_total_ajax( form_data ) {
 			processData : false,
 			contentType : false,
 			success     : function( msg ) {
-				if( 'not allowed' === msg ) {
-					alert('Booking is not available on this date please choose another one !');
-					$('#mwb-mbfw-booking-from-time').val('');
-				} else {
-
-					$('.mwb-mbfw-total-area').html(msg);
-				}
+				$('.mwb-mbfw-total-area').html(msg);
 			}
 		});
 	}

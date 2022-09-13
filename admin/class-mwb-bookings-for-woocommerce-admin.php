@@ -965,7 +965,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_bfwp_order_statuses_to_cancel'        => array_key_exists( 'mwb_bfwp_order_statuses_to_cancel', $_POST ) ? ( is_array( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ? map_deep( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ) ) : array(),
 				'mwb_mbfw_booking_location'      => array_key_exists( 'mwb_mbfw_booking_location', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_location'] ) ) : '',
 				'mwb_mbfw_booking_max_limit'      => array_key_exists( 'mwb_mbfw_booking_max_limit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_max_limit'] ) ) : '',
-				'mwb_mbfw_booking_max_limit_select_hour'      => array_key_exists( 'mwb_mbfw_booking_max_limit_select_hour', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_max_limit_select_hour'] ) ) : '',
 				'mwb_mbfw_booking_max_limit_for_hour'      => array_key_exists( 'mwb_mbfw_booking_max_limit_for_hour', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_max_limit_for_hour'] ) ) : '',
 			);
 			$product_meta_data =

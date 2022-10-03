@@ -531,10 +531,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
 				$service_price = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
 				$service_price = ( ! empty( $service_price ) && $service_price > 0 ) ? (float) $service_price : 0;
-				if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
-					$services_cost += $service_count * $service_price * $people_number;
-				} else {
-					$services_cost += $service_count * $service_price;
+				if( ! empty( $service_count ) ) {
+
+					if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
+						$services_cost += $service_count * $service_price * $people_number;
+					} else {
+						$services_cost += $service_count * $service_price;
+					}
 				}
 			}
 		}

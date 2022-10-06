@@ -72,7 +72,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			'mwb_mbfw_public_obj',
 			array(
 				'today_date'       => current_time( 'd-m-Y' ),
-				'wrong_order_date' => __( 'To date can not be less than from date.', 'mwb-bookings-for-woocommerce' ),
+				'wrong_order_date_1' => __( 'To date can not be less than from date.', 'mwb-bookings-for-woocommerce' ),
+				'wrong_order_date_2' => __( 'From date can not be greater than To date.', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 	}

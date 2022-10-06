@@ -61,7 +61,7 @@
 			if ( from_time && to_time ) {
 				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
 					$(this).val('');
-					alert( mwb_mbfw_public_obj.wrong_order_date );
+					alert( mwb_mbfw_public_obj.wrong_order_date_2 );
 				}
 			}
 		});
@@ -71,7 +71,7 @@
 			if ( from_time && to_time ) {
 				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
 					$(this).val('');
-					alert( mwb_mbfw_public_obj.wrong_order_date );
+					alert( mwb_mbfw_public_obj.wrong_order_date_1 );
 				}
 			}
 		});

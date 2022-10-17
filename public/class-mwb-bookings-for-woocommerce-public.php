@@ -72,7 +72,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			'mwb_mbfw_public_obj',
 			array(
 				'today_date'       => current_time( 'd-m-Y' ),
-				'wrong_order_date' => __( 'To date can not be less than from date.', 'mwb-bookings-for-woocommerce' ),
+				'wrong_order_date_1' => __( 'To date can not be less than from date.', 'mwb-bookings-for-woocommerce' ),
+				'wrong_order_date_2' => __( 'From date can not be greater than To date.', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 	}
@@ -186,7 +187,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								</div>
 								<div class="mbfw-additionl-detail-listing-section">
 									<?php if ( get_term_meta( $custom_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) { ?>
-										<input type="number" value="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_quantity[<?php echo esc_attr( $custom_term->term_id ); ?>]" min="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" max="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_maximum_quantity', true ) ); ?>" class="mwb-mbfw-additional-service-quantity" />
+										<input type="number" value="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>" data-term-id="<?php echo esc_attr( $custom_term->term_id ); ?>" name="mwb_mbfw_service_quantity[<?php echo esc_attr( $custom_term->term_id ); ?>]" min="<?php echo ! empty( esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ) ) ? esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ) : 0 ; ?>" max="<?php echo esc_attr( get_term_meta( $custom_term->term_id, 'mwb_mbfw_service_maximum_quantity', true ) ); ?>" class="mwb-mbfw-additional-service-quantity" />
 									<?php } ?>
 								</div>
 							</div>
@@ -249,7 +250,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		} 
 		
 		if ( $class ) {
+			do_action('wps_mbfw_add_html_before_calender');
 			?>
+			
 			<div class="mbfw-date-picker-section__wrapper">
 				<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>

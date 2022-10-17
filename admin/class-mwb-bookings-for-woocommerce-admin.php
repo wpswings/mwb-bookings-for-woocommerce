@@ -656,32 +656,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					) : array( 'min' => 0 ),
 				)
 			);
-			woocommerce_wp_select(
-				array(
-					'label'       => __( 'Booking Unit', 'mwb-bookings-for-woocommerce' ),
-					'id'          => 'mwb_mbfw_booking_unit',
-					'name'        => 'mwb_mbfw_booking_unit',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit', true ),
-					'desc_tip'    => true,
-					'description' => __( 'Please select booking unit to consider while booking.', 'mwb-bookings-for-woocommerce' ),
-					'options'     => array(
-						'day'    => __( 'Day(s)', 'mwb-bookings-for-woocommerce' ),
-						'hour'   => __( 'Hour(s)', 'mwb-bookings-for-woocommerce' ),
-					),
-					'style'       => 'width:10em',
-				)
-			);
-
-
-			woocommerce_wp_checkbox(
-				array(
-					'id'          => 'mwb_mbfw_show_date_with_time',
-					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_show_date_with_time', true ),
-					'label'       => __( 'Enable to show time with date on calender', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'This option would enable to show time with dates on calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'    => true,
-				)
-			);
 			
 			woocommerce_wp_checkbox(
 				array(
@@ -722,6 +696,34 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'custom_attr' => ( 'yes' !== get_post_meta( get_the_ID(), 'mwb_mbfw_cancellation_allowed', true ) ) ? array( 'disabled' => 'disabled' ) : array(),
 				)
 			);
+
+			woocommerce_wp_select(
+				array(
+					'label'       => __( 'Booking Unit', 'mwb-bookings-for-woocommerce' ),
+					'id'          => 'mwb_mbfw_booking_unit',
+					'name'        => 'mwb_mbfw_booking_unit',
+					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_booking_unit', true ),
+					'desc_tip'    => true,
+					'description' => __( 'Please select booking unit to consider while booking.', 'mwb-bookings-for-woocommerce' ),
+					'options'     => array(
+						'day'    => __( 'Day(s)', 'mwb-bookings-for-woocommerce' ),
+						'hour'   => __( 'Hour(s)', 'mwb-bookings-for-woocommerce' ),
+					),
+					'style'       => 'width:10em',
+				)
+			);
+
+
+			woocommerce_wp_checkbox(
+				array(
+					'id'          => 'mwb_mbfw_show_date_with_time',
+					'value'       => get_post_meta( get_the_ID(), 'mwb_mbfw_show_date_with_time', true ),
+					'label'       => __( 'Enable to show time with date on calender', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'This option would enable to show time with dates on calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
+				)
+			); 
+
 			/**
 			 * Filter is for returning something.
 			 *
@@ -961,8 +963,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_is_add_extra_services'           => array_key_exists( 'mwb_mbfw_is_add_extra_services', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_add_extra_services'] ) ) : '',
 				'mwb_mbfw_maximum_booking_per_unit'        => array_key_exists( 'mwb_mbfw_maximum_booking_per_unit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_maximum_booking_per_unit'] ) ) : '',
 				'mwb_bfwp_order_statuses_to_cancel'        => array_key_exists( 'mwb_bfwp_order_statuses_to_cancel', $_POST ) ? ( is_array( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ? map_deep( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ) ) : array(),
-				'mwb_mbfw_booking_location'      => array_key_exists( 'mwb_mbfw_booking_location', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_location'] ) ) : '',
-				'mwb_mbfw_booking_max_limit'      => array_key_exists( 'mwb_mbfw_booking_max_limit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_max_limit'] ) ) : '',
+				
 			);
 			$product_meta_data =
 			/**

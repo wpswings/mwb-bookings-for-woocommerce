@@ -72,6 +72,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_localize_script( $this->plugin_name . 'common', 'mbfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name . 'common' );
 		wp_enqueue_script( 'mwb-mbfw-common-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-common.js', array(), $this->version, true );
+
 		wp_localize_script(
 			'mwb-mbfw-common-js',
 			'mwb_mbfw_common_obj',

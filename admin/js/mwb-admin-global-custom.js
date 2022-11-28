@@ -27,6 +27,16 @@ jQuery(function($) {
             $('#mwb_bfwp_order_statuses_to_cancel').attr('disabled', 'disabled');
         }
     });
+    $('#mwb_mbfw_daily_calendar_end_time').datetimepicker({
+        format     : 'H:i',
+        datepicker : false,
+		
+    });
+    $('#mwb_mbfw_daily_calendar_start_time').datetimepicker({
+        format     : 'H:i',
+        datepicker : false,
+		
+    });
 });
 
 

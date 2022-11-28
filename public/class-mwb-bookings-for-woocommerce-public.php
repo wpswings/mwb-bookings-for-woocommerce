@@ -66,7 +66,20 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @since 2.0.0
 	 */
 	public function mbfw_public_enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
+		$daily_start_time = '';
+		$daily_end_time = '';
+		if ( is_single() ) {
+			global $post;
+			$product_id = $post->ID;
+			$temp_product = wc_get_product( $product_id );
+
+			if ( 'mwb_booking' == $temp_product->get_type() ) {
+				$daily_start_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_start_time', true );
+				$daily_end_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_end_time', true );
+			 }
+		}
+		
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
@@ -74,6 +87,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'today_date'       => current_time( 'd-m-Y' ),
 				'wrong_order_date_1' => __( 'To date can not be less than from date.', 'mwb-bookings-for-woocommerce' ),
 				'wrong_order_date_2' => __( 'From date can not be greater than To date.', 'mwb-bookings-for-woocommerce' ),
+				'daily_start_time'   => $daily_start_time,
+				'daily_end_time'   => $daily_end_time,
 			)
 		);
 	}

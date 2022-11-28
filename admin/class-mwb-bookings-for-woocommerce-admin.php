@@ -723,6 +723,30 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			); 
+			woocommerce_wp_text_input(
+				array(
+					'label'             => __( 'Daily booking start time on calendar', 'mwb-bookings-for-woocommerce' ),
+					'id'                => 'mwb_mbfw_daily_calendar_start_time',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_daily_calendar_start_time', true ),
+					'type'              => 'text',
+					'description'       => __( 'Set daily booking start time on frond end', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					
+				)
+			);
+			woocommerce_wp_text_input(
+				array(
+					'label'             => __( 'Daily booking end time on calendar', 'mwb-bookings-for-woocommerce' ),
+					'id'                => 'mwb_mbfw_daily_calendar_end_time',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_daily_calendar_end_time', true ),
+					'type'              => 'text',
+					'description'       => __( 'Set daily booking end time on frond end', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					
+				)
+			);
 
 			/**
 			 * Filter is for returning something.
@@ -963,8 +987,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_is_add_extra_services'           => array_key_exists( 'mwb_mbfw_is_add_extra_services', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_add_extra_services'] ) ) : '',
 				'mwb_mbfw_maximum_booking_per_unit'        => array_key_exists( 'mwb_mbfw_maximum_booking_per_unit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_maximum_booking_per_unit'] ) ) : '',
 				'mwb_bfwp_order_statuses_to_cancel'        => array_key_exists( 'mwb_bfwp_order_statuses_to_cancel', $_POST ) ? ( is_array( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ? map_deep( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ) ) : array(),
+				'mwb_mbfw_daily_calendar_start_time'        => array_key_exists( 'mwb_mbfw_daily_calendar_start_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_daily_calendar_start_time'] ) ) : '',
+				'mwb_mbfw_daily_calendar_end_time'        => array_key_exists( 'mwb_mbfw_daily_calendar_end_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_daily_calendar_end_time'] ) ) : '',
 				
 			);
+			
 			$product_meta_data =
 			/**
 			 * Filter is for returning something.

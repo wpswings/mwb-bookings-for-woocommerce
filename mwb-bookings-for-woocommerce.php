@@ -17,7 +17,7 @@
  * Description:        <code><strong>Bookings for WooCommerce</strong></code> enable store owners to create an online booking system that allows them to turn their products into Booking Solutions.<a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-bookings&utm_medium=bookings-org-backend&utm_campaign=official" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
  * Version:           3.0.4
  * Author:            WP Swings
- * Author URI:        https://wpswings.com/?utm_source=wpswings-bookings-official&utm_medium=bookings-org-backend&utm_campaign=official
+ * Author URI:        https://wpswings.com/?utm_source=wpswings-bookings-official&utm_medium=bookings-org-page&utm_campaign=official
  * Text Domain:       mwb-bookings-for-woocommerce
  * Domain Path:       /languages
  *
@@ -26,7 +26,7 @@
  * WC requires at least: 5.1.0
  * WC tested up to:      7.1.0
  * Requires PHP:         7.2
- * Stable tag:           3.0.3
+ * Stable tag:           3.0.4
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html

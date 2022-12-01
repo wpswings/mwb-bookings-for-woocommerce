@@ -53,4 +53,19 @@ jQuery(document).ready(function($){
         }
     });
     // $(document).on()
+    $('#publish').on('click', function(e){
+        var start = $('#mwb_mbfw_daily_calendar_start_time').val();
+        var end = $('#mwb_mbfw_daily_calendar_end_time').val();
+        if( start != '' && end != '') {
+
+            start = parseInt( start.substr(0,2) );
+            end = parseInt( end.substr(0,2) );
+           
+            
+            if( start >= end ){
+                alert('Start time should be less than end time');
+                e.preventDefault();
+            }
+        }
+    });
 });

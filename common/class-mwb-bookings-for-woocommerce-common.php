@@ -263,6 +263,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 									 */
 				$base_price       = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
 				$unit_price       = get_post_meta( $cart['product_id'], 'general_price', true );
+				$unit = (int)($unit_price/$new_price);
 
 									/**
 									 * Filter is for returning something.
@@ -287,8 +288,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 				$service_option_checked = isset( $custom_cart_data['service_option'] ) ? $custom_cart_data['service_option'] : array();
 				$service_option_count   = isset( $custom_cart_data['service_quantity'] ) ? $custom_cart_data['service_quantity'] : array();
-				$new_price             += $this->mbfw_extra_service_charge( $cart['product_id'], $service_option_checked, $service_option_count, $people_number );
-				$new_price             += $this->mbfw_extra_charges_calculation( $cart['product_id'], $people_number );
+				$new_price             += $this->mbfw_extra_service_charge( $cart['product_id'], $service_option_checked, $service_option_count, $people_number, $unit );
+				$new_price             += $this->mbfw_extra_charges_calculation( $cart['product_id'], $people_number, $unit );
 
 				$new_price =
 				/**
@@ -328,8 +329,21 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$date_to       = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'd-m-Y H:i' ) ) );
 		$time_from     = gmdate( 'H:i', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'H:i' ) ) );
 		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'H:i' ) ) );
-		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number );
-		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number );
+		if ( 'day' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
+			$from_timestamp = strtotime( $date_from );
+			$to_timestamp = strtotime( $date_to );
+			$unit_timestamp = $to_timestamp - $from_timestamp;
+			$unit = $unit_timestamp / 86400;
+			
+		} else if ( 'hour' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
+			$from_timestamp = strtotime( $date_time_from );
+			$to_timestamp = strtotime( $date_time_to );
+			$unit_timestamp = $to_timestamp - $from_timestamp;
+			$unit = $unit_timestamp / 3600;
+			
+		}
+		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit );
+		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number, $unit );
 		$product_price = get_post_meta( $product_id, '_price', true );
 							/**
 							 * Filter is for returning something.
@@ -369,19 +383,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			)
 		);
 
-		if ( 'day' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
-			$from_timestamp = strtotime( $date_from );
-			$to_timestamp = strtotime( $date_to );
-			$unit_timestamp = $to_timestamp - $from_timestamp;
-			$unit = $unit_timestamp / 86400;
-			$product_price = (float) $product_price * (float) $unit;
-		} else if ( 'hour' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
-			$from_timestamp = strtotime( $date_time_from );
-			$to_timestamp = strtotime( $date_time_to );
-			$unit_timestamp = $to_timestamp - $from_timestamp;
-			$unit = $unit_timestamp / 3600;
-			$product_price = (float) $product_price * (float) $unit;
-		}
+		$product_price = (float) $product_price * (float) $unit;
 		update_post_meta( $product_id, 'general_price', $product_price );
 		if ( 'yes' === get_post_meta( $product_id, 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 			$product_price = (float) $product_price * (int) $people_number;
@@ -499,13 +501,16 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @param int $people_number number of people in the booking.
 	 * @return float
 	 */
-	public function mbfw_extra_charges_calculation( $product_id, $people_number ) {
+	public function mbfw_extra_charges_calculation( $product_id, $people_number, $unit ) {
 		$extra_charges = 0;
 		$terms         = get_the_terms( $product_id, 'mwb_booking_cost' );
 		if ( is_array( $terms ) ) {
 			foreach ( $terms as $term ) {
 				$cost = get_term_meta( $term->term_id, 'mwb_mbfw_booking_cost', true );
 				$cost = ! empty( $cost ) ? (float) $cost : 0;
+				if( 'yes' == get_term_meta( $term->term_id, 'mwb_mbfw_is_booking_cost_multiply_duration', true ) ) {
+					$cost = $cost * $unit;
+				}
 				if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true ) ) {
 					$extra_charges += $cost * $people_number;
 				} else {
@@ -525,13 +530,16 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @param int   $people_number number of people.
 	 * @return float
 	 */
-	public function mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number ) {
+	public function mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit ) {
 		$services_cost = 0;
 		if ( is_array( $services_checked ) ) {
 			foreach ( $services_checked as $term_id ) {
 				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
 				$service_price = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
 				$service_price = ( ! empty( $service_price ) && $service_price > 0 ) ? (float) $service_price : 0;
+				if( 'yes' == get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
+					$service_price = $service_price * $unit;
+				}
 				if( ! empty( $service_count ) ) {
 
 					if ( 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
@@ -549,6 +557,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
 					$service_price = (float) get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true );
 					$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
+					if( 'yes' == get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
+						$service_price = $service_price * $unit;
+					}
 					if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {
 						$services_cost += $service_count * $service_price * $people_number;
 					} else {

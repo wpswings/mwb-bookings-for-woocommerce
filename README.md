@@ -15,7 +15,7 @@
 
 You can now simply book WordPress time slots, confirm/reject bookings, display reservation calendar listings, enable booking cancellations, promote booking availability, regulate booking duration, and much more using the [**Booking Calendar**](https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-github-page&utm_campaign=go-pro) plugin’s capabilities.
 
-[**How to Create an Online Booking System with  Bookings For WooCommerce plugin?**](https://www.youtube.com/watch?v=h0uP_DKhHE0?rel=0)
+[**How To Create An Appointment Booking Website?**](https://youtu.be/QTIiZDAtWKA?rel=0)
 
 
 
@@ -27,7 +27,7 @@ You can now simply book WordPress time slots, confirm/reject bookings, display r
 * Provide an easy upcoming booking list using the Booking Calendar.
 * Can define WooCommerce bookings availability Start and End time for the day with ease with a free online booking system.
 
-## PLUGIN MEETS YOUR REQUIREMENT, SO
+## BOOKINGS PLUGIN MEETS YOUR REQUIREMENT, SO
 [**Download now!!**](https://downloads.wordpress.org/plugin/mwb-bookings-for-woocommerce.zip)
 
 
@@ -123,6 +123,8 @@ Check out the [**Bookings Plugin knowledge base**](https://support.wpswings.com/
 
 ### SUPPORT
 If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=bookings-github-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-bookings-query&utm_medium=bookings-github-page&utm_campaign=query)
+
+> If our documentation doesn’t contain the solution to your problem, you can visit the [**WP Swings Forums Community**](https://forums.wpswings.com/?utm_source=wpswings-forums&utm_medium=bookings-github-page&utm_campaign=forum)
 
 > Create and Revamp Your Store with  [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-bookings-services&utm_medium=bookings-github-page&utm_campaign=woocommerce-services)
 

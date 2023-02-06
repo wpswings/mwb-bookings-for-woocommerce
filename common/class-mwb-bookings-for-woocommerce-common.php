@@ -263,7 +263,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 									 */
 				$base_price       = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
 				$unit_price       = get_post_meta( $cart['product_id'], 'general_price', true );
-				$unit = (int)($unit_price/$new_price);
+				if( 0 != $unit_price)
+				{
+					$unit = (int)($unit_price/$new_price);
+				} else{
+					$unit = 0;
+				}
 
 									/**
 									 * Filter is for returning something.

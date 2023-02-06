@@ -51,6 +51,11 @@
 			timepicker : false,
 			minDate    : mwb_mbfw_common_obj.minDate,
 		});
+		$('#mwb_mbfw_choose_holiday').datepicker({
+			dateFormat : 'dd-mm-yy',
+			minDate: mwb_mbfw_common_obj.minDate,
+			
+		});
 		$('.mwb_mbfw_time_picker_frontend').datetimepicker({
 			format     : 'H:i',
 			datepicker : false,

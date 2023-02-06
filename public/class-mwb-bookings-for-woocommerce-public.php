@@ -69,6 +69,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
 		$daily_start_time = '';
 		$daily_end_time = '';
+		$upcoming_holiday = '';
 		if ( is_single() ) {
 			global $post;
 			$product_id = $post->ID;
@@ -77,6 +78,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			if ( 'mwb_booking' == $temp_product->get_type() ) {
 				$daily_start_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_start_time', true );
 				$daily_end_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_end_time', true );
+				$upcoming_holiday = get_post_meta( $product_id, 'mwb_mbfw_choose_holiday', true );
+				$upcoming_holiday = gmdate( 'Y-m-d', strtotime( $upcoming_holiday ) );
 			 }
 		}
 		
@@ -89,6 +92,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'wrong_order_date_2' => __( 'From date can not be greater than To date.', 'mwb-bookings-for-woocommerce' ),
 				'daily_start_time'   => $daily_start_time,
 				'daily_end_time'   => $daily_end_time,
+				'upcoming_holiday' => array( $upcoming_holiday ),
 			)
 		);
 	}

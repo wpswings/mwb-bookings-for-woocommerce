@@ -244,6 +244,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'pre_get_posts', $mbfw_plugin_admin, 'mbfw_vary_query_to_list_only_booking_types' );
 			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data' );
 			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $mbfw_plugin_admin, 'mbfw_change_line_item_meta_key_order_edit_page', 10, 3 );
+			
 		}
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );
 	}
@@ -302,7 +303,13 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $mbfw_plugin_public, 'mwb_mbfw_show_date_time_selector_on_single_product_page', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_quantity_input_args', $mbfw_plugin_public, 'mwb_mbfw_set_max_quantity_to_be_booked_by_individual', 10, 2 );
 			$this->loader->add_action('mwb_booking_before_add_to_cart_button', $mbfw_plugin_public, 'mwb_mbfw_show_location_on_map', 10, 1 );
-
+			$this->loader->add_action( 'init', $mbfw_plugin_public, 'wps_my_bookings_register_endpoint' );
+			// Add query variable.
+			$this->loader->add_action( 'query_vars', $mbfw_plugin_public, 'wps_mybookings_endpoint_query_var', 0 );
+			// Inserting custom My Event tab.
+			$this->loader->add_action( 'woocommerce_account_menu_items', $mbfw_plugin_public, 'wps_bookings_add_mybookings_tab',1,1 );
+			// Populate mmbership details tab.
+			$this->loader->add_action( 'woocommerce_account_wps-mybookings-tab_endpoint', $mbfw_plugin_public, 'wps_mybookings_populate_tab' );
 		}
 	}
 

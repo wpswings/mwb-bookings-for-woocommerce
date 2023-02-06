@@ -421,6 +421,16 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_add_availability_settings_page( $mbfw_availability_settings ) {
 		$mbfw_availability_settings = array(
+
+			array(
+				'title'       => __( 'Enable availability setting', 'mwb-bookings-for-woocommerce' ),
+				'id'          => 'mwb_mbfw_enable_availibility_setting',
+				'name'        => 'mwb_mbfw_enable_availibility_setting',
+				'value'       => get_option( 'mwb_mbfw_enable_availibility_setting' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to apply availability setting for your product, Your Product will appear only in available time set up by you.', 'mwb-bookings-for-woocommerce' ),
+			),
+
 			array(
 				'title'       => __( 'Daily Start Time', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_daily_start_time',

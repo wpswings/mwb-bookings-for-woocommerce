@@ -111,12 +111,18 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function mwb_mbfw_is_enable_booking() {
-		$start_time = get_option( 'mwb_mbfw_daily_start_time' );
-		$end_time   = get_option( 'mwb_mbfw_daily_end_time' );
-		if ( strtotime( $start_time ) <= strtotime( current_time( 'H:i' ) ) &&  strtotime( current_time( 'H:i' ) ) <= strtotime( $end_time ) && 'yes' === get_option( 'mwb_mbfw_is_booking_enable' ) ) {
+		$check = get_option( 'mwb_mbfw_enable_availibility_setting' );
+		if( 'yes' == $check ){
+
+			$start_time = get_option( 'mwb_mbfw_daily_start_time' );
+			$end_time   = get_option( 'mwb_mbfw_daily_end_time' );
+			if ( strtotime( $start_time ) <= strtotime( current_time( 'H:i' ) ) &&  strtotime( current_time( 'H:i' ) ) <= strtotime( $end_time ) && 'yes' === get_option( 'mwb_mbfw_is_booking_enable' ) ) {
+				return true;
+			}
+			return false;
+		} else {
 			return true;
 		}
-		return false;
 	}
 
 	/**

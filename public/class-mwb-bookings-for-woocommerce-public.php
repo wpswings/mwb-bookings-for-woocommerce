@@ -516,7 +516,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function wps_my_bookings_register_endpoint() {
 
-		add_rewrite_endpoint( 'wps-myevent-tab', EP_PERMALINK | EP_PAGES );
+		add_rewrite_endpoint( 'wps-mybookings-tab', EP_PERMALINK | EP_PAGES );
 		flush_rewrite_rules();
 
 	}

@@ -83,6 +83,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			 }
 		}
 		
+		$active_plugins = get_option( 'active_plugins' );
+		if( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) { 
+			$is_pro_active = 'yes';
+		}
+
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
@@ -93,6 +98,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'daily_start_time'   => $daily_start_time,
 				'daily_end_time'   => $daily_end_time,
 				'upcoming_holiday' => array( $upcoming_holiday ),
+				'is_pro_active' => $is_pro_active,
 			)
 		);
 	}

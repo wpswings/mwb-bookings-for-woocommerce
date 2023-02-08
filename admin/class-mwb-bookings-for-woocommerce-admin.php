@@ -897,18 +897,22 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		<div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<?php
 
-			woocommerce_wp_text_input(
-				array(
-					'label'             => __( 'Choose Upcoming Holiday to disable booking on that day', 'bookings-for-woocommerce-pro' ),
-					'id'                => 'mwb_mbfw_choose_holiday',
-					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_choose_holiday', true ),
-					'description'       => __( 'Bookings will be unavailable on that day.', 'bookings-for-woocommerce-pro' ),
-					'type'              => 'text',
-					'desc_tip'          => true,
-					'style'             => 'width:10em;',
-					'custom_attributes' => array( 'autocomplete' => 'off' ),
-				)
-			);
+			$active_plugins = get_option( 'active_plugins' );
+			if( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
+
+				woocommerce_wp_text_input(
+					array(
+						'label'             => __( 'Choose Upcoming Holiday to disable booking on that day', 'mwb-bookings-for-woocommerce' ),
+						'id'                => 'mwb_mbfw_choose_holiday',
+						'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_choose_holiday', true ),
+						'description'       => __( 'Bookings will be unavailable on that day.', 'mwb-bookings-for-woocommerce' ),
+						'type'              => 'text',
+						'desc_tip'          => true,
+						'style'             => 'width:10em;',
+						'custom_attributes' => array( 'autocomplete' => 'off' ),
+					)
+				);
+			}
 
 			/**
 			 * Filter is for returning something.

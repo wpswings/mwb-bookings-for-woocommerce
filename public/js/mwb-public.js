@@ -15,28 +15,32 @@ jQuery(document).ready(function($){
         });
     }
     var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday;
-    if( upcoming_holiday.length > 0 ){
-        
-			
-        function disableSpecificDate(date) {
-            
-            // To disable specific day
-            var dateArr = [String(date.getFullYear()), String(date.getMonth() + 1), String(date.getDate())];
-            if (dateArr[1].length == 1) dateArr[1] = "0" + dateArr[1];
-            if (dateArr[2].length == 1) dateArr[2] = "0" + dateArr[2];
-            return upcoming_holiday.indexOf(dateArr.join("-")) == -1;
-        }
-        jQuery("#mwb-mbfw-booking-from-time").datetimepicker({
-            beforeShowDay: function (date) {
-                return [disableSpecificDate(date)];
-            }
-        });
-        jQuery("#mwb-mbfw-booking-to-time").datetimepicker({
-            beforeShowDay: function (date) {
-                return [disableSpecificDate(date)];
-            }
-        });
-        
+    var is_pro_active = mwb_mbfw_public_obj.is_pro_active
+    if( is_pro_active != 'yes' ) {
 
+        if( upcoming_holiday.length > 0 ){
+            
+                
+            function disableSpecificDate(date) {
+                
+                // To disable specific day
+                var dateArr = [String(date.getFullYear()), String(date.getMonth() + 1), String(date.getDate())];
+                if (dateArr[1].length == 1) dateArr[1] = "0" + dateArr[1];
+                if (dateArr[2].length == 1) dateArr[2] = "0" + dateArr[2];
+                return upcoming_holiday.indexOf(dateArr.join("-")) == -1;
+            }
+            jQuery("#mwb-mbfw-booking-from-time").datetimepicker({
+                beforeShowDay: function (date) {
+                    return [disableSpecificDate(date)];
+                }
+            });
+            jQuery("#mwb-mbfw-booking-to-time").datetimepicker({
+                beforeShowDay: function (date) {
+                    return [disableSpecificDate(date)];
+                }
+            });
+            
+    
+        }
     }
 });

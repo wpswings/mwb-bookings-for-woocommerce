@@ -84,6 +84,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		}
 		
 		$active_plugins = get_option( 'active_plugins' );
+		$is_pro_active = '';
 		if( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) { 
 			$is_pro_active = 'yes';
 		}

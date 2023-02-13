@@ -1,4 +1,16 @@
 <?php
+/**
+ * Provide a public-facing view for the plugin
+ *
+ * This file is used to markup the public-facing aspects of the plugin.
+ *
+ * @link       https://wpswings.com/
+ * @since      1.0.0
+ *
+ * @package    Mwb_Bookings_For_Woocommerce
+ * @subpackage Mwb_Bookings_For_Woocommerce/public/partials
+ */
+
 
 $table_headers = array(
     'order-id'        => esc_html__( 'Order ID', 'membership-for-woocommerce' ),
@@ -62,7 +74,7 @@ $event_attendees_details = array();
                      <td><?php echo esc_html( $_order->get_status() );?></td>
                      <td><?php echo esc_html( $_order->get_total() );?></td>
                      <td>
-                     <a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
+                     <a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
                      <a class="button" href="<?php echo esc_attr( get_site_url() );esc_html_e('/my-account/view-order/'); echo esc_attr( $value );?>  "><?php esc_html_e( 'View','mwb-bookings-for-woocommerce' ); ?></a></td>
                 </tr>
             <?php

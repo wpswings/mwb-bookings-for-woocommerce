@@ -1732,4 +1732,35 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 	}
 
+	/**
+	 * Function to set quantity
+	 *
+	 * @param object $cart is object.
+	 * @return void
+	 */
+	public function wps_mbfw_change_cart_item_quantities ( $cart ) {
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+			return;
+	
+		if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 )
+			return;
+	
+		
+		foreach( $cart->get_cart() as $cart_item_key => $cart_item ) {
+			$product_id = $cart_item['data']->get_id();
+			if( ! empty($product_id ) ) {
+				$_product = wc_get_product( $product_id );
+				
+				if( 'mwb_booking' == $_product->get_type() ) {
+					$max_booking = get_post_meta( $product_id, 'mwb_mbfw_maximum_booking_per_unit', true );
+	
+					if( ! empty( $max_booking ) && $cart_item['quantity'] > $max_booking ){
+						$cart->set_quantity( $cart_item_key, $max_booking ); 
+					}
+				}
+			}
+		 
+		}
+	}
+
 }

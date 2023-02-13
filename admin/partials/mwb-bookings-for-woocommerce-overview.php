@@ -24,7 +24,7 @@ do_action( 'mwb_mbfw_overview_content_top' );
 ?>
 <div class="mwb-overview__wrapper">
 	<div class="mwb-overview__banner">
-		<img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/image/banner-image.png" alt="Overview banner image">
+		<img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/image/banner-image.jpg" alt="Overview banner image">
 	</div>
 	<div class="mwb-overview__content">
 		<div class="mwb-overview__content-description">

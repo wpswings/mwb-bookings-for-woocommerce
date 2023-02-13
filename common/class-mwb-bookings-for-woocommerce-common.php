@@ -504,6 +504,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 *
 	 * @param int $product_id current product id.
 	 * @param int $people_number number of people in the booking.
+	 * @param int $unit is used for pricing.
 	 * @return float
 	 */
 	public function mbfw_extra_charges_calculation( $product_id, $people_number, $unit ) {
@@ -533,6 +534,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @param array $services_checked array containing optional services checked by user.
 	 * @param array $service_quantity quantity array containing services and there count.
 	 * @param int   $people_number number of people.
+	 * @param int   $unit is for pricing. 
 	 * @return float
 	 */
 	public function mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit ) {

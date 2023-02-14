@@ -11,7 +11,6 @@
  * @subpackage Mwb_Bookings_For_Woocommerce/public/partials
  */
 
-
 $table_headers = array(
     'order-id'        => esc_html__( 'Order ID', 'membership-for-woocommerce' ),
     'booking-date'    => esc_html__( 'Booking Date', 'membership-for-woocommerce' ),

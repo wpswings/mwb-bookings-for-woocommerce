@@ -421,6 +421,16 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_add_availability_settings_page( $mbfw_availability_settings ) {
 		$mbfw_availability_settings = array(
+
+			array(
+				'title'       => __( 'Enable availability setting', 'mwb-bookings-for-woocommerce' ),
+				'id'          => 'mwb_mbfw_enable_availibility_setting',
+				'name'        => 'mwb_mbfw_enable_availibility_setting',
+				'value'       => get_option( 'mwb_mbfw_enable_availibility_setting' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to apply availability setting for your product, Your Product will appear only in available time set up by you.', 'mwb-bookings-for-woocommerce' ),
+			),
+
 			array(
 				'title'       => __( 'Daily Start Time', 'mwb-bookings-for-woocommerce' ),
 				'id'          => 'mwb_mbfw_daily_start_time',
@@ -886,6 +896,24 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		</div>
 		<div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<?php
+
+			$active_plugins = get_option( 'active_plugins' );
+			if( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
+
+				woocommerce_wp_text_input(
+					array(
+						'label'             => __( 'Choose Upcoming Holiday to disable booking on that day', 'mwb-bookings-for-woocommerce' ),
+						'id'                => 'mwb_mbfw_choose_holiday',
+						'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_choose_holiday', true ),
+						'description'       => __( 'Bookings will be unavailable on that day.', 'mwb-bookings-for-woocommerce' ),
+						'type'              => 'text',
+						'desc_tip'          => true,
+						'style'             => 'width:10em;',
+						'custom_attributes' => array( 'autocomplete' => 'off' ),
+					)
+				);
+			}
+
 			/**
 			 * Filter is for returning something.
 			 *
@@ -987,8 +1015,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_is_add_extra_services'           => array_key_exists( 'mwb_mbfw_is_add_extra_services', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_add_extra_services'] ) ) : '',
 				'mwb_mbfw_maximum_booking_per_unit'        => array_key_exists( 'mwb_mbfw_maximum_booking_per_unit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_maximum_booking_per_unit'] ) ) : '',
 				'mwb_bfwp_order_statuses_to_cancel'        => array_key_exists( 'mwb_bfwp_order_statuses_to_cancel', $_POST ) ? ( is_array( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ? map_deep( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_order_statuses_to_cancel'] ) ) ) : array(),
-				'mwb_mbfw_daily_calendar_start_time'        => array_key_exists( 'mwb_mbfw_daily_calendar_start_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_daily_calendar_start_time'] ) ) : '',
-				'mwb_mbfw_daily_calendar_end_time'        => array_key_exists( 'mwb_mbfw_daily_calendar_end_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_daily_calendar_end_time'] ) ) : '',
+				'mwb_mbfw_daily_calendar_start_time'       => array_key_exists( 'mwb_mbfw_daily_calendar_start_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_daily_calendar_start_time'] ) ) : '',
+				'mwb_mbfw_daily_calendar_end_time'         => array_key_exists( 'mwb_mbfw_daily_calendar_end_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_daily_calendar_end_time'] ) ) : '',
+				'mwb_mbfw_choose_holiday'       		   => array_key_exists( 'mwb_mbfw_choose_holiday', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_choose_holiday'] ) ) : '',
+				
 				
 			);
 			
@@ -1699,6 +1729,37 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		if ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) {
 			echo '</div></section>';
+		}
+	}
+
+	/**
+	 * Function to set quantity
+	 *
+	 * @param object $cart is object.
+	 * @return void
+	 */
+	public function wps_mbfw_change_cart_item_quantities ( $cart ) {
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+			return;
+	
+		if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 )
+			return;
+	
+		
+		foreach( $cart->get_cart() as $cart_item_key => $cart_item ) {
+			$product_id = $cart_item['data']->get_id();
+			if( ! empty($product_id ) ) {
+				$_product = wc_get_product( $product_id );
+				
+				if( 'mwb_booking' == $_product->get_type() ) {
+					$max_booking = get_post_meta( $product_id, 'mwb_mbfw_maximum_booking_per_unit', true );
+	
+					if( ! empty( $max_booking ) && $cart_item['quantity'] > $max_booking ){
+						$cart->set_quantity( $cart_item_key, $max_booking ); 
+					}
+				}
+			}
+		 
 		}
 	}
 

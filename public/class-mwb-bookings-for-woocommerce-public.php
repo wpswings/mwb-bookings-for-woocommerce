@@ -69,6 +69,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
 		$daily_start_time = '';
 		$daily_end_time = '';
+		$upcoming_holiday = '';
 		if ( is_single() ) {
 			global $post;
 			$product_id = $post->ID;
@@ -77,9 +78,17 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			if ( 'mwb_booking' == $temp_product->get_type() ) {
 				$daily_start_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_start_time', true );
 				$daily_end_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_end_time', true );
+				$upcoming_holiday = get_post_meta( $product_id, 'mwb_mbfw_choose_holiday', true );
+				$upcoming_holiday = gmdate( 'Y-m-d', strtotime( $upcoming_holiday ) );
 			 }
 		}
 		
+		$active_plugins = get_option( 'active_plugins' );
+		$is_pro_active = '';
+		if( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) { 
+			$is_pro_active = 'yes';
+		}
+
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
@@ -89,6 +98,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'wrong_order_date_2' => __( 'From date can not be greater than To date.', 'mwb-bookings-for-woocommerce' ),
 				'daily_start_time'   => $daily_start_time,
 				'daily_end_time'   => $daily_end_time,
+				'upcoming_holiday' => array( $upcoming_holiday ),
+				'is_pro_active' => $is_pro_active,
 			)
 		);
 	}
@@ -111,12 +122,18 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function mwb_mbfw_is_enable_booking() {
-		$start_time = get_option( 'mwb_mbfw_daily_start_time' );
-		$end_time   = get_option( 'mwb_mbfw_daily_end_time' );
-		if ( strtotime( $start_time ) <= strtotime( current_time( 'H:i' ) ) &&  strtotime( current_time( 'H:i' ) ) <= strtotime( $end_time ) && 'yes' === get_option( 'mwb_mbfw_is_booking_enable' ) ) {
+		$check = get_option( 'mwb_mbfw_enable_availibility_setting' );
+		if( 'yes' == $check ){
+
+			$start_time = get_option( 'mwb_mbfw_daily_start_time' );
+			$end_time   = get_option( 'mwb_mbfw_daily_end_time' );
+			if ( strtotime( $start_time ) <= strtotime( current_time( 'H:i' ) ) &&  strtotime( current_time( 'H:i' ) ) <= strtotime( $end_time ) && 'yes' === get_option( 'mwb_mbfw_is_booking_enable' ) ) {
+				return true;
+			}
+			return false;
+		} else {
 			return true;
 		}
-		return false;
 	}
 
 	/**
@@ -500,4 +517,64 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		<?php 
 		}
 	}
+
+	/**
+	 * Register Endpoint for My Event Tab.
+	 */
+	public function wps_my_bookings_register_endpoint() {
+
+		add_rewrite_endpoint( 'wps-mybookings-tab', EP_PERMALINK | EP_PAGES );
+		flush_rewrite_rules();
+
+	}
+
+	/**
+	 * Adding a query variable for the Endpoint.
+	 *
+	 * @param array $vars An array of query variables.
+	 */
+	public function wps_mybookings_endpoint_query_var( $vars ) {
+
+		$vars[] = 'wps-mybookings-tab';
+
+		/**
+		 * Filter for endpoints.
+		 *
+		 * @since 1.0.0
+		 */
+		$vars = apply_filters( 'wps_mybookings_endpoint_query_var', $vars );
+
+		return $vars;
+	}
+
+
+
+	/**
+	 * Inserting custom membership endpoint.
+	 *
+	 * @param array $items An array of all menu items on My Account page.
+	 */
+	public function wps_bookings_add_mybookings_tab( $items ) {
+		// Placing the custom tab just above logout tab.
+		$items['wps-mybookings-tab'] = esc_html__( 'my bookings', 'membership-for-woocommerce' );
+
+		/**
+		 * Filter for my event tab.
+		 *
+		 * @since 1.0.0
+		 */
+		$items = apply_filters( 'wps_bookings_add_mybookings_tab_filter', $items );
+
+		return $items;
+	}
+
+	/**
+	 * Add content to My Event details tab.
+	 *
+	 * @return void
+	 */
+	public function wps_mybookings_populate_tab() {
+		require plugin_dir_path( __FILE__ ) . 'partials/wps-mybookings-details-tab.php';
+	}
+	
 }

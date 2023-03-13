@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Bookings For WooCommerce 3.0.6\n"
-"POT-Creation-Date: 2023-02-14 12:03+0530\n"
-"PO-Revision-Date: 2023-02-14 12:09+0530\n"
+"Project-Id-Version: Bookings For WooCommerce 3.0.7\n"
+"POT-Creation-Date: 2023-03-07 14:16+0530\n"
+"PO-Revision-Date: 2023-03-07 14:18+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -144,7 +144,7 @@ msgstr ""
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:600
 #: includes/class-mwb-bookings-for-woocommerce.php:389
 msgid "General Settings"
-msgstr ""
+msgstr "General Settings"
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:606
 msgid "Costs"
@@ -154,7 +154,7 @@ msgstr ""
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:1224
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:1447
 #: common/class-mwb-bookings-for-woocommerce-common.php:667
-#: public/class-mwb-bookings-for-woocommerce-public.php:350
+#: public/class-mwb-bookings-for-woocommerce-public.php:353
 #: public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php:21
 msgid "People"
 msgstr ""
@@ -540,19 +540,19 @@ msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:1601
 #: common/class-mwb-bookings-for-woocommerce-common.php:707
-#: public/class-mwb-bookings-for-woocommerce-public.php:267
-#: public/class-mwb-bookings-for-woocommerce-public.php:277
-#: public/class-mwb-bookings-for-woocommerce-public.php:290
-#: public/class-mwb-bookings-for-woocommerce-public.php:383
+#: public/class-mwb-bookings-for-woocommerce-public.php:270
+#: public/class-mwb-bookings-for-woocommerce-public.php:280
+#: public/class-mwb-bookings-for-woocommerce-public.php:293
+#: public/class-mwb-bookings-for-woocommerce-public.php:386
 msgid "From"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:1603
 #: common/class-mwb-bookings-for-woocommerce-common.php:710
-#: public/class-mwb-bookings-for-woocommerce-public.php:268
-#: public/class-mwb-bookings-for-woocommerce-public.php:278
-#: public/class-mwb-bookings-for-woocommerce-public.php:294
-#: public/class-mwb-bookings-for-woocommerce-public.php:387
+#: public/class-mwb-bookings-for-woocommerce-public.php:271
+#: public/class-mwb-bookings-for-woocommerce-public.php:281
+#: public/class-mwb-bookings-for-woocommerce-public.php:297
+#: public/class-mwb-bookings-for-woocommerce-public.php:390
 msgid "To"
 msgstr ""
 
@@ -1003,11 +1003,11 @@ msgid "Book Now"
 msgstr ""
 
 #: includes/class-wc-product-mwb-booking.php:89
-#: public/class-mwb-bookings-for-woocommerce-public.php:411
+#: public/class-mwb-bookings-for-woocommerce-public.php:414
 msgid "View Details"
 msgstr ""
 
-#: includes/class-wc-product-mwb-booking.php:157
+#: includes/class-wc-product-mwb-booking.php:160
 #, php-format
 msgid "Book &ldquo;%s&rdquo;"
 msgstr ""
@@ -1062,36 +1062,36 @@ msgstr ""
 msgid "Skip For Now"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:97
+#: public/class-mwb-bookings-for-woocommerce-public.php:100
 msgid "To date can not be less than from date."
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:98
+#: public/class-mwb-bookings-for-woocommerce-public.php:101
 msgid "From date can not be greater than To date."
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:189
+#: public/class-mwb-bookings-for-woocommerce-public.php:192
 msgid "Additional services"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:272
+#: public/class-mwb-bookings-for-woocommerce-public.php:275
 msgid "Check in"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:273
+#: public/class-mwb-bookings-for-woocommerce-public.php:276
 msgid "Check out"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:361
-#: public/class-mwb-bookings-for-woocommerce-public.php:371
+#: public/class-mwb-bookings-for-woocommerce-public.php:364
+#: public/class-mwb-bookings-for-woocommerce-public.php:374
 msgid "not found"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:377
+#: public/class-mwb-bookings-for-woocommerce-public.php:380
 msgid "Service"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:559
+#: public/class-mwb-bookings-for-woocommerce-public.php:562
 msgid "my bookings"
 msgstr ""
 

@@ -74,13 +74,16 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			global $post;
 			$product_id = $post->ID;
 			$temp_product = wc_get_product( $product_id );
+			if( ! empty( $temp_product ) ) {
 
-			if ( 'mwb_booking' == $temp_product->get_type() ) {
-				$daily_start_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_start_time', true );
-				$daily_end_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_end_time', true );
-				$upcoming_holiday = get_post_meta( $product_id, 'mwb_mbfw_choose_holiday', true );
-				$upcoming_holiday = gmdate( 'Y-m-d', strtotime( $upcoming_holiday ) );
-			 }
+				if ( 'mwb_booking' == $temp_product->get_type() ) {
+					$daily_start_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_start_time', true );
+					$daily_end_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_end_time', true );
+					$upcoming_holiday = get_post_meta( $product_id, 'mwb_mbfw_choose_holiday', true );
+					$upcoming_holiday = gmdate( 'Y-m-d', strtotime( $upcoming_holiday ) );
+				}
+			}
+
 		}
 		
 		$active_plugins = get_option( 'active_plugins' );

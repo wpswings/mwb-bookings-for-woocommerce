@@ -122,7 +122,10 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function get_product_url( $context = 'view' ) {
-		return esc_url_raw( $this->get_prop( 'product_url', $context ) );
+		if( ! empty ($this->get_prop( 'product_url', $context ) ) ) {
+
+			return esc_url_raw( $this->get_prop( 'product_url', $context ) );
+		}
 	}
 
 	/**

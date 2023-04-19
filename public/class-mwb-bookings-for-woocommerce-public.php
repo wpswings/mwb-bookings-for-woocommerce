@@ -70,6 +70,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$daily_start_time = '';
 		$daily_end_time = '';
 		$upcoming_holiday = '';
+		$booking_product = '';
 		if ( is_single() ) {
 			global $post;
 			$product_id = $post->ID;
@@ -81,6 +82,10 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					$daily_end_time = get_post_meta( $product_id, 'mwb_mbfw_daily_calendar_end_time', true );
 					$upcoming_holiday = get_post_meta( $product_id, 'mwb_mbfw_choose_holiday', true );
 					$upcoming_holiday = gmdate( 'Y-m-d', strtotime( $upcoming_holiday ) );
+					if( 'yes' == get_option( 'mwb_mbfw_disable_book_now' ) ) {
+
+						$booking_product = 'yes';
+					}
 				}
 			}
 
@@ -103,6 +108,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'daily_end_time'   => $daily_end_time,
 				'upcoming_holiday' => array( $upcoming_holiday ),
 				'is_pro_active' => $is_pro_active,
+				'booking_product' => $booking_product,
 			)
 		);
 	}

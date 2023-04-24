@@ -858,7 +858,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'description'       => __( 'Minimum Number of People Per Booking', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
-					'custom_attributes' => array( 'min' => 0 ),
+					'custom_attributes' => array( 'min' => 0, 'class' => 'hide_if_bfwp_active' ),
+					
+					
 				)
 			);
 			woocommerce_wp_text_input(

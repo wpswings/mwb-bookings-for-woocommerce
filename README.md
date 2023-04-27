@@ -49,6 +49,7 @@ All requested WooCommerce booking plugin-based orders made by the customers are 
 **5) Disable Book Now button on Empty Form**
 The plugin comes equipped with a useful feature that allows you to disable the "Book Now" button in the event that the form is empty. Additionally, this feature can also be configured to disable the "Book Now" button until dates have been selected on the calendar. 
 By utilizing this feature, you can ensure that your customers are only able to submit complete and accurate booking requests, leading to a more efficient and streamlined booking process.
+
 **6) Add your Bookings to Google Calendar**
 With the click of a button, you can now instantly add your Booking requests utilizing our plugin-based setting option to your Google Calendar. 
 
@@ -151,10 +152,3 @@ If you need support or have questions, kindly use our online chat window [**here
 - [**Tweet us on @wpswings**](https://twitter.com/wpswings)
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
-
-
-
-
-
-
-

@@ -347,6 +347,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			$unit = $unit_timestamp / 3600;
 			
 		}
+		$wps_bfwp_msg = apply_filters( 'wps_mbfw_check_availablity', $product_id, $date_time_from, $date_time_to );
+		if( 'fail' == $wps_bfwp_msg ) {
+			echo 'fail';
+			wp_die();
+		}
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit );
 		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number, $unit );
 		$product_price = get_post_meta( $product_id, '_price', true );

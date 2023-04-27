@@ -339,6 +339,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'class'       => 'mwb_mbfw_is_booking_enable',
 				'name'        => 'mwb_mbfw_is_booking_enable',
 			),
+			array(
+				'title'       => __( 'Disable book now button on empty form', 'mwb-bookings-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Disable book now button if dates are not choosen on calendar .', 'mwb-bookings-for-woocommerce' ),
+				'id'          => 'mwb_mbfw_disable_book_now',
+				'value'       => get_option( 'mwb_mbfw_disable_book_now' ),
+				'class'       => 'mwb_mbfw_disable_book_now',
+				'name'        => 'mwb_mbfw_disable_book_now',
+			),
 
 		);
 		$mbfw_settings_general =
@@ -849,7 +858,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'description'       => __( 'Minimum Number of People Per Booking', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
-					'custom_attributes' => array( 'min' => 0 ),
+					'custom_attributes' => array( 'min' => 0, 'class' => 'hide_if_bfwp_active' ),
+					
+					
 				)
 			);
 			woocommerce_wp_text_input(

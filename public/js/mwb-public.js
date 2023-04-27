@@ -14,6 +14,21 @@ jQuery(document).ready(function($){
             // minTime : mwb_mbfw_common_obj.minTime
         });
     }
+
+    var booking_product = mwb_mbfw_public_obj.booking_product;
+    if (booking_product == 'yes') {
+        
+        jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+        jQuery(document).on('change', '.mwb_mbfw_time_date_picker_frontend', function () {
+            if (jQuery('#mwb-mbfw-booking-from-time').val() == '' || jQuery('#mwb-mbfw-booking-to-time').val() == '') {
+                
+                jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+            } else {
+                jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+            }
+        });
+    }
+
     var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday;
     var is_pro_active = mwb_mbfw_public_obj.is_pro_active
     if( is_pro_active != 'yes' ) {

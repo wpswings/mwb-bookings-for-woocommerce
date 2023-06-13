@@ -70,5 +70,8 @@ jQuery(document).ready(function($){
     });
 
    
-
+    $('#wps_mbfw_set_availability').multiDatesPicker({
+        dateFormat: "dd-mm-yy",
+        minDate: new Date(),
+    });
 });

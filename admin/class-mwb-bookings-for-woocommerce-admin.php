@@ -918,18 +918,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		</div>
 		<div id="mwb_booking_availability_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<?php
-			woocommerce_wp_text_input(
-				array(
-					'label'             => __( 'Set availability', 'bookings-for-woocommerce-pro' ),
-					'id'                => 'wps_mbfw_set_availability',
-					'value'             => get_post_meta( get_the_ID(), 'wps_mbfw_set_availability', true ),
-					'description'       => __( 'Bookings will be available on these days.', 'bookings-for-woocommerce-pro' ),
-					'type'              => 'text',
-					'desc_tip'          => true,
-					'style'             => 'width:10em;',
-					'custom_attributes' => array( 'autocomplete' => 'off' ),
-				)
-			);
+			
+
+			
 			$active_plugins = get_option( 'active_plugins' );
 			if( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 
@@ -946,7 +937,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					)
 				);
 			}
-
+			
+			
+			
 			/**
 			 * Filter is for returning something.
 			 *
@@ -963,6 +956,21 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				);
 				?>
 			</p>
+			<?php
+			woocommerce_wp_text_input(
+				array(
+					'label'             => __( 'Set days availability', 'mwb-bookings-for-woocommerce' ),
+					'id'                => 'wps_mbfw_set_availability',
+					'value'             => get_post_meta( get_the_ID(), 'wps_mbfw_set_availability', true ),
+					'description'       => __( 'Bookings will be available on these days.', 'mwb-bookings-for-woocommerce' ),
+					'type'              => 'text',
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'autocomplete' => 'off' ),
+				)
+			);
+			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH .'/admin/partials/mwb-bookings-for-woocommerce_time_slot.php';
+			?>
 		</div>
 		<?php
 	}
@@ -1053,6 +1061,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_daily_calendar_end_time'         => array_key_exists( 'mwb_mbfw_daily_calendar_end_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_daily_calendar_end_time'] ) ) : '',
 				'mwb_mbfw_choose_holiday'       		   => array_key_exists( 'mwb_mbfw_choose_holiday', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_choose_holiday'] ) ) : '',
 				'wps_mbfw_set_availability'       		   => array_key_exists( 'wps_mbfw_set_availability', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_set_availability'] ) ) : '',
+				'wps_mbfw_time_slots'        => array_key_exists( 'mbfw_fields', $_POST ) ? ( is_array( $_POST['mbfw_fields'] ) ? map_deep( wp_unslash( $_POST['mbfw_fields'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mbfw_fields'] ) ) ) : array(),
 				
 				
 				

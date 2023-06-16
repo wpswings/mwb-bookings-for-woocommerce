@@ -37,6 +37,14 @@
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );
 			}
+		});
+		
+		$(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
+			
+            var form_data = new FormData( $('form.cart')[0] );
+			if ( $('.mwb_mbfw_booking_product_id').val() ) {
+				retrieve_booking_total_ajax( form_data );
+			}
         });
 		$('#mwb-mbfw-booking-from-time, #mwb-mbfw-booking-to-time').on('keydown paste focus mousedown',function(e){
 			e.preventDefault();
@@ -51,6 +59,8 @@
 			timepicker : false,
 			minDate    : mwb_mbfw_common_obj.minDate,
 		});
+		
+		
 		$('#mwb_mbfw_choose_holiday').datepicker({
 			dateFormat : 'dd-mm-yy',
 			minDate: mwb_mbfw_common_obj.minDate,

@@ -615,7 +615,7 @@ var datetimepickerFactory = function ($) {
 
 		lazyInit: false,
 		mask: false,
-		validateOnBlur: true,
+		validateOnBlur: false,
 		allowBlank: true,
 		yearStart: 1950,
 		yearEnd: 2050,
@@ -2008,8 +2008,12 @@ var datetimepickerFactory = function ($) {
 					currentTime.setDate($this.data('date'));
 
 					datetimepicker.trigger('select.xdsoft', [currentTime]);
-
-					input.val(_xdsoft_datetime.str());
+					
+					if (jQuery('.wps_single_cal_hourly').val() === undefined) {
+							
+						
+						input.val(_xdsoft_datetime.str());
+					}
 
 					if (options.onSelectDate &&	$.isFunction(options.onSelectDate)) {
 						options.onSelectDate.call(datetimepicker, _xdsoft_datetime.currentTime, datetimepicker.data('input'), xdevent);
@@ -2019,7 +2023,10 @@ var datetimepickerFactory = function ($) {
 					datetimepicker.trigger('xchange.xdsoft');
 					datetimepicker.trigger('changedatetime.xdsoft');
 					if ((timerclick > 1 || (options.closeOnDateSelect === true || (options.closeOnDateSelect === false && !options.timepicker))) && !options.inline) {
-						datetimepicker.trigger('close.xdsoft');
+						if (jQuery('.wps_single_cal_hourly').val() == undefined) {
+							
+							datetimepicker.trigger('close.xdsoft');
+						}
 					}
 					setTimeout(function () {
 						timerclick = 0;

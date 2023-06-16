@@ -58,4 +58,62 @@ jQuery(document).ready(function($){
     
         }
     }
+
+
+    var wps_available_slots = mwb_mbfw_public_obj.wps_available_slots;
+    var booking_unit = mwb_mbfw_public_obj.booking_unit;
+    if (booking_unit === 'hour') {
+        $('#wps_booking_single_calendar_form').datetimepicker({
+			format     : 'd-m-Y',
+			timepicker : false,
+			minDate: new Date(),
+			
+		});
+        
+        if (wps_available_slots != '') {
+            
+            var html = '<div class="wps_cal_timeslot">\n\ ';
+            for(let i=0; i< wps_available_slots.length; i++ ) { 
+                html += '\n\ <span><button>' + wps_available_slots[i]._from + ' - ' + wps_available_slots[i]._to + '</button>\n\ </span>';
+            }
+            html += '\n\  </div>'
+            jQuery("#wps_booking_single_calendar_form").datetimepicker({
+                
+                onSelectDate: function (ct) {
+                    // setTimeout(function () {
+                    jQuery('.wps_cal_timeslot').remove();
+                        jQuery(".xdsoft_calendar")
+                            .after(html);
+        
+                        // });
+                    
+                    jQuery('.wps_cal_timeslot button').on('click', function (e) {
+                        e.preventDefault();
+                        var date = jQuery(".xdsoft_calendar").find(' table .xdsoft_current').data("date");
+                        var month = jQuery(".xdsoft_calendar").find(' table .xdsoft_current').data("month");
+                        var year = jQuery(".xdsoft_calendar").find(' table .xdsoft_current').data("year");
+                       
+                        month = month.toString();
+                        if (month.length === 1) {
+                            month = '0' + month;
+                        }
+                        var finalhtml = date.toString() + '-' + month + '-' + year.toString() + ' ' + jQuery(this).html();
+                        jQuery(this).trigger('close.xdsoft');
+                        jQuery("#wps_booking_single_calendar_form").val(finalhtml); 
+                        
+                        
+                    });
+               
+                },
+            });
+            
+        }
+    } else {
+        
+        $('#wps_booking_single_calendar_form').multiDatesPicker({
+            dateFormat: "dd-mm-yy",
+            minDate: new Date(),
+        });
+    }
+    
 });

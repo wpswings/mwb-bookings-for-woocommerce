@@ -1645,6 +1645,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				return __( 'From', 'mwb-bookings-for-woocommerce' );
 			case '_mwb_bfwp_date_time_to':
 				return __( 'To', 'mwb-bookings-for-woocommerce' );
+
+			case '_wps_single_cal_date_time_from':
+				return __( 'From', 'mwb-bookings-for-woocommerce' );
+			case '_wps_single_cal_date_time_to':
+				return __( 'To', 'mwb-bookings-for-woocommerce' );
+			case '_wps_single_cal_booking_dates':
+				return __( 'Booking Dates', 'mwb-bookings-for-woocommerce' );
 			default:
 				break;
 		}

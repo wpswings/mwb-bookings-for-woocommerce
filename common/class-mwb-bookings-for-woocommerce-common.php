@@ -730,6 +730,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				}
 				$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
 				$date_time_to   = $item->get_meta( '_mwb_bfwp_date_time_to', true );
+				$wps_date_time_from = $item->get_meta( '_wps_single_cal_date_time_from', true );
+				$wps_date_time_to   = $item->get_meta( '_wps_single_cal_date_time_to', true );
+				$wps_booking_dates   = $item->get_meta( '_wps_single_cal_booking_dates', true );
+
 				if ( ! empty( $date_time_from ) && ! empty( $date_time_to ) ) {
 					?>
 					<tr>
@@ -746,6 +750,64 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						</td>
 						<td>
 							<?php echo esc_html( $date_time_to ); ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<?php
+							/**
+							 * Filter is for returning something.
+							 *
+							 * @since 1.0.0
+							 */
+							do_action( 'mwb_mbfw_reschedule_user_booking_my_account', $item_id, $item, $order );
+							?>
+						</td>
+						<td></td>
+					</tr>
+					<?php
+				} else if( ! empty( $wps_date_time_from ) && ! empty( $wps_date_time_to ) ) {
+					?>
+					<tr>
+						<th>
+							<?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?>
+						</th>
+						<th>
+							<?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<?php echo esc_html( $wps_date_time_from ); ?>
+						</td>
+						<td>
+							<?php echo esc_html( $wps_date_time_to ); ?>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<?php
+							/**
+							 * Filter is for returning something.
+							 *
+							 * @since 1.0.0
+							 */
+							do_action( 'mwb_mbfw_reschedule_user_booking_my_account', $item_id, $item, $order );
+							?>
+						</td>
+						<td></td>
+					</tr>
+					<?php
+				} else {
+					?>
+					<tr>
+						<th>
+							<?php esc_html_e( 'Booking Dates', 'mwb-bookings-for-woocommerce' ); ?>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<?php echo esc_html( $wps_booking_dates ); ?>
 						</td>
 					</tr>
 					<tr>

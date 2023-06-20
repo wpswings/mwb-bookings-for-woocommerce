@@ -27,6 +27,15 @@ jQuery(document).ready(function($){
                 jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
             }
         });
+        $(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
+          
+            if (jQuery('#wps_booking_single_calendar_form').val() == '') {
+                
+                jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+            } else {
+                jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+            }
+        });
     }
 
     var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday;

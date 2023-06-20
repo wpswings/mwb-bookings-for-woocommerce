@@ -968,7 +968,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'custom_attributes' => array( 'autocomplete' => 'off' ),
 				)
 			);
-			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH .'/admin/partials/mwb-bookings-for-woocommerce_time_slot.php';
+			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH .'/admin/partials/mwb-bookings-for-woocommerce-time-slot.php';
 			?>
 		</div>
 		<?php

@@ -57,7 +57,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @since    2.0.0
 	 */
 	public function mbfw_public_enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public.css', array(), $this->version, 'all' );
 	}
 
 	/**

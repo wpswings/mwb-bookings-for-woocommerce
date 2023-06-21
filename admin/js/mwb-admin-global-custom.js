@@ -75,6 +75,8 @@ jQuery(document).ready(function($){
         $(document).find('.mwb_mbfw_daily_calendar_end_time_field').hide();
         $(document).find('.mwb_bfwp_choose_multiple_holiday_field').hide();
         $(document).find('.wps_bfwp_weekly_off_day_field').hide();
+        $(document).find('.mwb_mbfw_rescheduling_allowed_field').hide();
+        $(document).find('.mwb_bfwp_order_statuses_to_reschedule_field').hide();
         $(document).find('.wps_mbfw_set_availability_field').show();
         $(document).find('#wps_mbfw_add_fields_wrapper').show();
     } else {
@@ -85,6 +87,8 @@ jQuery(document).ready(function($){
         $(document).find('.wps_bfwp_weekly_off_day_field').show();
         $(document).find('.wps_mbfw_set_availability_field').hide();
         $(document).find('#wps_mbfw_add_fields_wrapper').hide();
+        $(document).find('.mwb_mbfw_rescheduling_allowed_field').show();
+        $(document).find('.mwb_bfwp_order_statuses_to_reschedule_field').show();
        
     }
 
@@ -95,6 +99,8 @@ jQuery(document).ready(function($){
             $(document).find('.mwb_mbfw_daily_calendar_end_time_field').hide();
             $(document).find('.mwb_bfwp_choose_multiple_holiday_field').hide();
             $(document).find('.wps_bfwp_weekly_off_day_field').hide();
+            $(document).find('.mwb_mbfw_rescheduling_allowed_field').hide();
+            $(document).find('.mwb_bfwp_order_statuses_to_reschedule_field').hide();
             $(document).find('.wps_mbfw_set_availability_field').show();
             $(document).find('#wps_mbfw_add_fields_wrapper').show();
         } else {
@@ -105,6 +111,8 @@ jQuery(document).ready(function($){
             $(document).find('.wps_bfwp_weekly_off_day_field').show();
             $(document).find('.wps_mbfw_set_availability_field').hide();
             $(document).find('#wps_mbfw_add_fields_wrapper').hide();
+            $(document).find('.mwb_mbfw_rescheduling_allowed_field').show();
+            $(document).find('.mwb_bfwp_order_statuses_to_reschedule_field').show();
            
         }
     });

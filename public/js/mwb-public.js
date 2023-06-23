@@ -27,6 +27,15 @@ jQuery(document).ready(function($){
                 jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
             }
         });
+        $(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
+          
+            if (jQuery('#wps_booking_single_calendar_form').val() == '') {
+                
+                jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+            } else {
+                jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+            }
+        });
     }
 
     var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday;
@@ -58,4 +67,84 @@ jQuery(document).ready(function($){
     
         }
     }
+
+
+    var wps_available_slots = mwb_mbfw_public_obj.wps_available_slots;
+    var booking_unit = mwb_mbfw_public_obj.booking_unit;
+    var booking_unavailable = mwb_mbfw_public_obj.booking_unavailable;
+    if (booking_unit === 'hour') {
+        $('#wps_booking_single_calendar_form').datetimepicker({
+			format     : 'd-m-Y',
+			timepicker : false,
+			minDate: new Date(),
+			
+		});
+        
+        if (wps_available_slots != '') {
+            
+            
+            jQuery("#wps_booking_single_calendar_form").datetimepicker({
+                
+                onSelectDate: function (ct,$i) {
+                    var selected_date = moment(ct).format('D-M-Y');
+                    var date_array = selected_date.split("-");
+                    
+                    var date = date_array[0];
+                    var month = date_array[1];
+                    var year = date_array[2];
+                    
+                    if (month.length === 1) {
+                        month = '0' + month;
+                    }
+                    var temp_date = date + '-' + month + '-' + year + ' ';
+                    var html = '<div class="wps_cal_timeslot">\n\ ';
+                  
+                    for(let i=0; i< wps_available_slots.length; i++ ) { 
+                        var temp =  wps_available_slots[i]._from + ' - ' + wps_available_slots[i]._to;
+                        var temp_check = temp_date + temp;
+                        if (booking_unavailable.length > 0) {
+                            
+                            if (!booking_unavailable.includes(temp_check)) {
+                                html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                                    
+                                
+                            }
+                        } else {
+                            html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                        }
+                    }
+                    html += '\n\  </div>'
+                    jQuery('.wps_cal_timeslot').remove();
+                        jQuery(".xdsoft_calendar")
+                            .after(html);
+        
+                     
+                    
+                    jQuery('.wps_cal_timeslot button').on('click', function (e) {
+                        e.preventDefault();
+                    
+                        jQuery(this).trigger('close.xdsoft');
+                        jQuery("#wps_booking_single_calendar_form").val(temp_date + jQuery(this).html()); 
+                        
+                        
+                    });
+               
+                },
+            });
+            
+        }
+    } else {
+        var available_dates = mwb_mbfw_public_obj.single_available_dates;
+        console.log(available_dates);
+        $('#wps_booking_single_calendar_form').multiDatesPicker({
+            dateFormat: "yy-mm-dd",
+            minDate: new Date(),
+            addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
+            beforeShowDay: function (date) {
+                var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                return [available_dates.indexOf(formattedDate) > -1];
+            }
+        });
+    }
+    
 });

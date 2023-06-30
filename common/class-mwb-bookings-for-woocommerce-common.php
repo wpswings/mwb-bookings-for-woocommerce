@@ -256,6 +256,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		foreach ( $cart_data as $cart ) {
 			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
 				$new_price        = $cart['data']->get_price();
+				
 				$product_id = $cart['data']->get_id();
 				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
 				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
@@ -311,7 +312,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				}
 				if( $unit )
 				{
-					$unit_price= $new_price*$unit;
+					$unit_price= (float)$new_price * $unit;
 				} 
 
 									/**

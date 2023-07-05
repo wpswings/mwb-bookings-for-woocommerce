@@ -86,12 +86,28 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
-		wp_enqueue_script( 'jquery-ui-datepicker' );
-		wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'moment-js' ), $this->version, true );
-		wp_enqueue_script( 'jquery-ui-core' );
-		wp_enqueue_script( 'mwb-bfwp-multi-date-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/multi-date-picker/jquery-ui.multidatespicker.js', array( 'jquery-ui-core', 'jquery', 'jquery-ui-datepicker' ), time(), true );
+		if( is_admin(  ) ) {
+
+			$screen                     = get_current_screen();
+			
+			
+			if ( isset( $screen->id ) && 'toplevel_page_theme-general-settings' !== $screen->id && 'page' !== $screen->id  ){
+	
+				wp_enqueue_script( 'jquery-ui-datepicker' );
+				wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'moment-js' ), $this->version, true );
+				wp_enqueue_script( 'jquery-ui-core' );
+				wp_enqueue_script( 'mwb-bfwp-multi-date-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/multi-date-picker/jquery-ui.multidatespicker.js', array( 'jquery-ui-core', 'jquery', 'jquery-ui-datepicker' ), time(), true );
+			}
+		} else{
+			wp_enqueue_script( 'jquery-ui-datepicker' );
+				wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'moment-js' ), $this->version, true );
+				wp_enqueue_script( 'jquery-ui-core' );
+				wp_enqueue_script( 'mwb-bfwp-multi-date-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/multi-date-picker/jquery-ui.multidatespicker.js', array( 'jquery-ui-core', 'jquery', 'jquery-ui-datepicker' ), time(), true );
+		}
 	}
 
 	/**
@@ -255,7 +271,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$cart_data = $cart_object->get_cart();
 		foreach ( $cart_data as $cart ) {
 			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
-				$new_price        = $cart['data']->get_price();
+				$new_price        = (float)$cart['data']->get_price();
 				
 				$product_id = $cart['data']->get_id();
 				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
@@ -381,6 +397,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$time_to       = gmdate( 'H:i', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'H:i' ) ) );
 		$booking_type = get_post_meta( $product_id, 'wps_mbfw_booking_type', true );
 		$booking_dates = array_key_exists( 'wps_booking_single_calendar_form', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_booking_single_calendar_form'] ) ) : '';
+		$unit = 1;
 		if( 'single_cal' === $booking_type ) {
 			
 			if( 'day' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) ) {

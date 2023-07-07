@@ -120,7 +120,7 @@ jQuery(document).ready(function($){
         
                      
                     
-                    jQuery('.wps_cal_timeslot button').on('click', function (e) {
+                    jQuery('.wps_cal_timeslot button').on('click touchstart', function (e) {
                         e.preventDefault();
                     
                         jQuery(this).trigger('close.xdsoft');

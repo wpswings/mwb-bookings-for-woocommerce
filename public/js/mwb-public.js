@@ -135,7 +135,12 @@ jQuery(document).ready(function($){
         }
     } else {
         var available_dates = mwb_mbfw_public_obj.single_available_dates;
-        console.log(available_dates);
+        $('#wps_booking_single_calendar_form').multiDatesPicker({
+            dateFormat: "yy-mm-dd",
+            minDate: new Date(),
+            
+        });
+        
         $('#wps_booking_single_calendar_form').multiDatesPicker({
             dateFormat: "yy-mm-dd",
             minDate: new Date(),

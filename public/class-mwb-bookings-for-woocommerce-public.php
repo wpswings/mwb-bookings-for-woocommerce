@@ -99,8 +99,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					$booking_unit = get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true );
 					$active_plugins = get_option( 'active_plugins' );
 					
-					if( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) { 
-						$is_pro_active = 'yes';
+					
 
 						$booking_type = get_post_meta( $product_id, 'wps_mbfw_booking_type', true );
 						$single_availables = get_post_meta( $product_id, 'wps_mbfw_set_availability', true  );
@@ -192,7 +191,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							}
 						}
 						
-					}
+					
 				}
 			}
 

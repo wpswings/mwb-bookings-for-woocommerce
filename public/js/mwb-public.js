@@ -40,6 +40,7 @@ jQuery(document).ready(function($){
 
     var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday;
     var is_pro_active = mwb_mbfw_public_obj.is_pro_active
+    var available_dates = mwb_mbfw_public_obj.single_available_dates;
     if( is_pro_active != 'yes' ) {
 
         if( upcoming_holiday.length > 0 ){
@@ -76,7 +77,11 @@ jQuery(document).ready(function($){
         $('#wps_booking_single_calendar_form').datetimepicker({
 			format     : 'd-m-Y',
 			timepicker : false,
-			minDate: new Date(),
+            minDate: new Date(),
+            beforeShowDay: function (date) {
+                var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                return [available_dates.indexOf(formattedDate) > -1];
+            }
 			
 		});
         
@@ -134,7 +139,7 @@ jQuery(document).ready(function($){
             
         }
     } else {
-        var available_dates = mwb_mbfw_public_obj.single_available_dates;
+        
         $('#wps_booking_single_calendar_form').multiDatesPicker({
             dateFormat: "yy-mm-dd",
             minDate: new Date(),

@@ -20,7 +20,7 @@ $wps_mbfw_field_data = get_post_meta(get_the_ID(), 'wps_mbfw_time_slots', true )
 <div id="wps_mbfw_add_fields_wrapper">
 	<div class="wps_mbfw_add_fields_title">
 		<h2>
-			<strong class="attribute_name"><?php esc_html_e( 'Set Daily time slots', 'event-tickets-manager-for-woocommerce' ); ?></strong></h2>
+			<strong class="attribute_name"><?php esc_html_e( 'Set Daily time slots', 'mwb-bookings-for-woocommerce' ); ?></strong></h2>
 		</div>
 		<div class="wps_mbfw_add_fields_data">
 			<div class="wps_mbfw_fields_panel">
@@ -28,9 +28,9 @@ $wps_mbfw_field_data = get_post_meta(get_the_ID(), 'wps_mbfw_time_slots', true )
 					<thead>
 						<tr>
 							<th></th>
-							<th class="mbfw_field_from"><?php esc_html_e( 'From', 'event-tickets-manager-for-woocommerce' ); ?></th>
-							<th class="mbfw_field_to"><?php esc_html_e( 'To', 'event-tickets-manager-for-woocommerce' ); ?></th>
-                            <th class="etmfw_field_actions"><?php esc_html_e( 'Actions', 'event-tickets-manager-for-woocommerce' ); ?></th>
+							<th class="mbfw_field_from"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></th>
+							<th class="mbfw_field_to"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></th>
+                            <th class="etmfw_field_actions"><?php esc_html_e( 'Actions', 'mwb-bookings-for-woocommerce' ); ?></th>
 						</tr>
 					</thead>
 					<tbody class="wps_mbfw_field_body">
@@ -75,7 +75,7 @@ $wps_mbfw_field_data = get_post_meta(get_the_ID(), 'wps_mbfw_time_slots', true )
 					<tfoot>
 						<tr>
 							<td colspan="5">
-								<input type="button" name="wps_mbfw_add_fields_button" class="button wps_mbfw_add_fields_button" value="<?php esc_attr_e( 'Add More', 'event-tickets-manager-for-woocommerce' ); ?>">
+								<input type="button" name="wps_mbfw_add_fields_button" class="button wps_mbfw_add_fields_button" value="<?php esc_attr_e( 'Add More', 'mwb-bookings-for-woocommerce' ); ?>">
 							</td>
 						</tr>
 					</tfoot>

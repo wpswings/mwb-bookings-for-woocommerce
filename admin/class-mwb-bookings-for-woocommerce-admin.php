@@ -1102,6 +1102,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'label'       => __( 'Booking Cost', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add Booking cost here.', 'mwb-bookings-for-woocommerce' ),
 				'style'       => 'width:10em;',
+				
 			),
 			array(
 				'label'       => __( 'Multiply by No. of People', 'mwb-bookings-for-woocommerce' ),
@@ -1213,6 +1214,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'term_id'     => $term->term_id,
 				'description' => __( 'Please Add booking cost here.', 'mwb-bookings-for-woocommerce' ),
 				'style'       => 'width:10em;',
+				
 			),
 			array(
 				'id'          => 'mwb_mbfw_is_booking_cost_multiply_people',
@@ -1242,6 +1244,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_saving_custom_fields_at_booking_cost_taxonomy_page( $term_id ) {
 		if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_edit_taxonomy_page' ) ) {
+			return;
+		}
+		$b_cost =  array_key_exists( 'mwb_mbfw_booking_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_cost'] ) ) : '';
+		if(  0 > $b_cost ){
 			return;
 		}
 		$term_meta_data = array(
@@ -1459,6 +1465,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_saving_custom_fields_at_booking_service_taxonomy_page( $term_id ) {
 		if ( ! isset( $_POST['_mwb_nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_edit_taxonomy_page' ) ) {
+			return;
+		}
+		$b_service = array_key_exists( 'mwb_mbfw_service_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_cost'] ) ) : '';
+		if( 0 > $b_service ){
 			return;
 		}
 		$term_meta_data = array(

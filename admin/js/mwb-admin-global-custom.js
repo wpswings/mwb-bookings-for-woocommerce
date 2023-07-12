@@ -1,4 +1,14 @@
-jQuery(function($) {
+jQuery(function ($) {
+    jQuery('p.submit #submit').on('click', function (e) {
+        var value = jQuery('#mwb_mbfw_booking_cost').val();
+        if (value < 0) {
+            
+            alert('Booking cost should not be less than 0  !');
+            e.preventDefault();
+        }
+
+    });
+
     $(document).on('change', '#mwb_mbfw_booking_criteria', function(){
         if ( $(this).val() == 'fixed_unit' ) {
             $('#mwb_mbfw_booking_count').removeAttr('disabled');
@@ -158,4 +168,36 @@ jQuery(document).ready(function($){
         datepicker : false,
 		
     });
+
+
+    jQuery(document).on('change', '#mwb_mbfw_minimum_people_per_booking', function () {
+        var min = jQuery(this).val();
+        if (min > 0) {
+            jQuery('#mwb_mbfw_maximum_people_per_booking').attr('min', min);
+        }
+    });
+    jQuery(document).on('change', '#mwb_mbfw_maximum_people_per_booking', function () {
+        var max = jQuery(this).val();
+        if (max > 0) {
+            jQuery('#mwb_mbfw_minimum_people_per_booking').attr('max', max);
+        }
+    });
+   
+    $('#mwb_mbfw_availability_settings_save').on('click', function(e){
+        var start = $('#mwb_mbfw_daily_start_time').val();
+        var end = $('#mwb_mbfw_daily_end_time').val();
+        if( start != '' && end != '') {
+
+            start = parseInt( start.substr(0,2) );
+            end = parseInt( end.substr(0,2) );
+           
+            
+            if( start >= end ){
+                alert('Start time should be less than end time');
+                e.preventDefault();
+            }
+        }
+    });
+
+   
 });

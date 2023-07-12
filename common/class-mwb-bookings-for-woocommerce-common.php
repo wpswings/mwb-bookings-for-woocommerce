@@ -417,7 +417,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 		} else {
 
-			
+			$wps_bfwp_msg = apply_filters( 'wps_mbfw_check_availablity', $product_id, $date_time_from, $date_time_to );
+			if( 'fail' === $wps_bfwp_msg ) {
+				echo 'fail';
+				wp_die();
+			}
 			if ( 'day' === get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
 				$from_timestamp = strtotime( $date_from );
 				$to_timestamp = strtotime( $date_to );
@@ -502,11 +506,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'value' => $extra_charges,
 			),
 		);
-		$wps_bfwp_msg = apply_filters( 'wps_mbfw_check_availablity', $product_id, $date_time_from, $date_time_to );
-		if( 'fail' === $wps_bfwp_msg ) {
-			echo 'fail';
-			wp_die();
-		}
+		
 		$charges =
 		/**
 		 * Filter is for returning something.

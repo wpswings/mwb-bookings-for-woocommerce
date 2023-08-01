@@ -72,7 +72,7 @@ class WC_Product_Mwb_Booking extends WC_Product {
 		 *
 		 * @since 1.0.0
 		 */
-		return apply_filters( 'woocommerce_product_single_add_to_cart_text', $this->get_button_text() ? $this->get_button_text() : _x( 'Book Now', 'placeholder', 'mwb-bookings-for-woocommerce' ), $this );
+		return apply_filters( 'woocommerce_product_single_add_to_cart_text', $this->get_button_text() ? $this->get_button_text() : __( 'Book Now', 'mwb-bookings-for-woocommerce' ), $this );
 	}
 	/**
 	 * Get the add to cart button text.

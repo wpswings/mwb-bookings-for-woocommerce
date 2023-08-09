@@ -94,6 +94,12 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 						$booking_product = 'yes';
 					}
+					$active_plugins = get_option( 'active_plugins' );
+					
+
+					if( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) { 
+						$is_pro_active = 'yes';
+					}
 					$wps_cal_type = get_post_meta( $product_id, 'wps_mbfw_booking_type', true );
 					$wps_available_slots = get_post_meta($product_id, 'wps_mbfw_time_slots', true );
 					$booking_unit = get_post_meta( $product_id, 'mwb_mbfw_booking_unit', true );
@@ -111,11 +117,10 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						}
 						
 						if( 'single_cal' === $booking_type ) { 
-							$active_plugins = get_option( 'active_plugins' );
-							$is_pro_active = '';
+							
 
 							if( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) { 
-								$is_pro_active = 'yes';
+								
 								$_orders     = wc_get_orders(
 									array(
 										'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),

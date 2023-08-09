@@ -657,7 +657,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
 					$service_price = (float) get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true );
 					$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
-					if( 'yes' == get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
+					if( 'yes' == get_term_meta($term->term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
 						$service_price = $service_price * $unit;
 					}
 					if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) {

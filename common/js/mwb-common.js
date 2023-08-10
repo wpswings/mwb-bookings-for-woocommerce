@@ -50,7 +50,7 @@
 			e.preventDefault();
 		});
 		$('.mwb_mbfw_time_date_picker_frontend').datetimepicker({
-			format  : 'd-m-Y H:i',
+			format  : 'd-m-Y H:00',
 			minDate : mwb_mbfw_common_obj.minDate,
 			// minTime : mwb_mbfw_common_obj.minTime
 		});

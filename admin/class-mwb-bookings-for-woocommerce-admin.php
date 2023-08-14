@@ -659,6 +659,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					<option value="dual_cal" <?php selected( 'dual_cal', $booking_type ); ?>><?php esc_html_e( 'Dual Calendar', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="single_cal" <?php selected( 'single_cal', $booking_type ); ?>><?php esc_html_e( 'Single Calendar', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
+			<p class="mbfw_notice"><?php esc_html_e( 'Notice : Please go to availability setting and set available days and time slot !', 'mwb-bookings-for-woocommerce' ) ?></p>
 			</p>
 			<p class="form-field mwb_mbfw_booking_criteria_field">
 				<label for="mwb_mbfw_booking_criteria"><?php esc_html_e( 'Quantity', 'mwb-bookings-for-woocommerce' ); ?></label>

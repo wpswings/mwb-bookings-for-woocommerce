@@ -416,8 +416,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			}
 
 		} else {
-
+			$wps_unv_day = get_post_meta( $product_id, 'mwb_mbfw_choose_holiday', true);
+			if( strtotime( $date_time_from ) < strtotime( $wps_unv_day ) &&   strtotime( $date_time_to ) > strtotime( $wps_unv_day ) ) {
+				echo 'fail';
+				wp_die();
+			}
 			$wps_bfwp_msg = apply_filters( 'wps_mbfw_check_availablity', $product_id, $date_time_from, $date_time_to );
+			
 			if( 'fail' === $wps_bfwp_msg ) {
 				echo 'fail';
 				wp_die();

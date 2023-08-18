@@ -2,11 +2,11 @@
 Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: bookings, calendar, appointments, booking calendar, scheduling, availability calendar, booking system, booking plugin, appointment booking, woocommerce
-Requires at least: 5.1.0
-Tested up to: 6.2.2
-WC requires at least: 5.1.0
-WC tested up to: 7.8.2
-Stable tag: 3.1.1
+Requires at least: 5.5.0
+Tested up to: 6.3.0
+WC requires at least: 5.5.0
+WC tested up to: 8.0.2
+Stable tag: 3.1.2
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -227,9 +227,10 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
-= 3.1.1 - Released on 13 July 2023 = 
-* fix - Calendar issue in mobile view is fixed
-* New - Compatibility with latest WP(6.2.2) and WC(7.8.2)
+= 3.1.2 - Released on 18 August 2023 =
+* Fix: Translation issue fix
+* Fix: Single calendar issue fix
+* New: Compatible with latest wp(6.3.0) wc(8.0.2)
 
 = 3.1.0 - Released on 22 June 2023 =
 * New: Providing one more type of booking calendar.
@@ -314,6 +315,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.1 - Released on 13 July 2023 = 
-* fix - Calendar issue in mobile view is fixed
-* New - Compatibility with latest WP(6.2.2) and WC(7.8.2)
+= 3.1.2 - Released on 18 August 2023 =
+* Fix: Translation issue fix
+* Fix: Single calendar issue fix
+* New: Compatible with latest wp(6.3.0) wc(8.0.2)

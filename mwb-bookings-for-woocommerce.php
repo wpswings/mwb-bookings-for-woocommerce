@@ -96,37 +96,6 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 		}
 	} );
-
-	// replace get_post_meta with wps_booking_get_meta_data
-	function wps_booking_get_meta_data( $id, $key, $v ) {
-		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
-			// HPOS usage is enabled.
-			$order    = wc_get_order( $id );
-			if ( '_customer_user' == $key ) {
-				$meta_val = $order->get_customer_id();
-				return $meta_val;
-			}
-			$meta_val = $order->get_meta( $key );
-			return $meta_val;
-		} else {
-			// Traditional CPT-based orders are in use.
-			$meta_val = get_post_meta( $id, $key, $v );
-			return $meta_val; 
-		}
-	}
-
-	// replace update_post_meta with wps_booking_update_meta_data
-	function wps_booking_update_meta_data( $id, $key, $value ) {
-		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
-			// HPOS usage is enabled.
-			$order = wc_get_order( $id );
-			$order->update_meta_data( $key, $value );
-			$order->save();
-		} else {
-			// Traditional CPT-based orders are in use.
-			update_post_meta( $id, $key, $value );
-		}
-	}
 	/**
 	 * Will be used when new blog is created on multisite.
 	 *

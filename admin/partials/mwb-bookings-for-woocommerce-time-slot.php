@@ -14,7 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
-$wps_mbfw_field_data = wps_booking_get_meta_data(get_the_ID(), 'wps_mbfw_time_slots', true );
+$wps_mbfw_field_data = get_post_meta(get_the_ID(), 'wps_mbfw_time_slots', true );
 
 ?>
 <div id="wps_mbfw_add_fields_wrapper">

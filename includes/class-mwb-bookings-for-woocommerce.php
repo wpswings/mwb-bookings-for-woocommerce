@@ -191,7 +191,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 */
 	private function mwb_bookings_for_woocommerce_admin_hooks() {
 		$mbfw_plugin_admin = new Mwb_Bookings_For_Woocommerce_Admin( $this->mbfw_get_plugin_name(), $this->mbfw_get_version() );
-
+		
 		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_admin, 'mbfw_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_admin, 'mbfw_admin_enqueue_scripts' );
 
@@ -239,7 +239,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter( 'manage_edit-mwb_booking_service_columns', $mbfw_plugin_admin, 'mbfw_adding_custom_column_booking_services_taxonomy_table' );
 			$this->loader->add_filter( 'manage_mwb_booking_service_custom_column', $mbfw_plugin_admin, 'mbfw_adding_custom_column_data_booking_services_taxonomy_table', 10, 3 );
 			// customisation on order listing page.
-			$this->loader->add_action( 'manage_shop_order_posts_custom_column', $mbfw_plugin_admin, 'mbfw_add_label_for_booking_type', 20, 2 );
+			$this->loader->add_action( 'manage_woocommerce_page_wc-orders_custom_column', $mbfw_plugin_admin, 'mbfw_add_label_for_booking_type', 20, 2 );
 			$this->loader->add_action( 'restrict_manage_posts', $mbfw_plugin_admin, 'mbfw_add_filter_on_order_listing_page' );
 			$this->loader->add_action( 'pre_get_posts', $mbfw_plugin_admin, 'mbfw_vary_query_to_list_only_booking_types' );
 			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data' );

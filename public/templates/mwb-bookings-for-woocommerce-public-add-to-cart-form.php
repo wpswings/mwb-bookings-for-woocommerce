@@ -59,8 +59,8 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 	 * @since 1.0.0
 	 */
 	do_action( 'mwb_booking_after_add_to_cart_form', $product_id, $product );
-	if ( 'fixed_unit' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_criteria', true ) ) {
-		$booking_quantity = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_count', true );
+	if ( 'fixed_unit' === get_post_meta( $product_id, 'mwb_mbfw_booking_criteria', true ) ) {
+		$booking_quantity = get_post_meta( $product_id, 'mwb_mbfw_booking_count', true );
 		if ( ! empty( $booking_quantity ) ) {
 			?>
 			<div class="mwb-bfwp-booking-quantity__public-show">

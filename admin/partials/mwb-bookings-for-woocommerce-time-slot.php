@@ -14,7 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
-$wps_mbfw_field_data = get_post_meta(get_the_ID(), 'wps_mbfw_time_slots', true );
+$wps_mbfw_field_data = wps_booking_get_meta_data(get_the_ID(), 'wps_mbfw_time_slots', true );
 
 ?>
 <div id="wps_mbfw_add_fields_wrapper">
@@ -60,10 +60,10 @@ $wps_mbfw_field_data = get_post_meta(get_the_ID(), 'wps_mbfw_time_slots', true )
 										<i class="dashicons dashicons-move"></i>
 									</td>
 									<td class="form-field wps_mbfw_from_fields">
-										<input type="text" class="wps_mbfw_field_from" style="" name="mbfw_fields[<?php echo esc_attr( $row_id ); ?>][_from]" id="from_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( $row_value['_from'] ); ?>" placeholder="">
+										<input type="text" class="wps_mbfw_field_from" style="" name="mbfw_fields[<?php echo esc_attr( $row_id ); ?>][_from]"  id="from_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( $row_value['_from'] ); ?>" placeholder="">
 									</td>
 									<td class="form-field wps_mbfw_to_fields">
-										<input type="text" class="wps_mbfw_field_to" style="" name="mbfw_fields[<?php echo esc_attr( $row_id ); ?>][_to]" id="to_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( $row_value['_to'] ); ?>">
+										<input type="text" class="wps_mbfw_field_to" style="" min="<?php echo esc_attr( $row_value['_from'] ); ?>" name="mbfw_fields[<?php echo esc_attr( $row_id ); ?>][_to]" id="to_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( $row_value['_to'] ); ?>">
 									</td>
 									<td class="wps_mbfw_remove_row">
 										<input type="button" name="wps_mbfw_remove_fields_button" class="wps_mbfw_remove_row_btn" value="Remove">

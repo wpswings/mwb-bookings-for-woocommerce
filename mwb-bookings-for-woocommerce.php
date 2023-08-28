@@ -15,7 +15,7 @@
  * Plugin Name:       Bookings For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/mwb-bookings-for-woocommerce/
  * Description:        <code><strong>Bookings for WooCommerce</strong></code> enable store owners to create an online booking system that allows them to turn their products into Booking Solutions.<a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-bookings&utm_medium=bookings-org-backend&utm_campaign=official" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           3.1.2
+ * Version:           3.1.3
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-bookings-official&utm_medium=bookings-org-page&utm_campaign=official
  * Text Domain:       mwb-bookings-for-woocommerce
@@ -36,7 +36,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
-
+use Automattic\WooCommerce\Utilities\OrderUtil;
 if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', array() ), true ) || ( is_multisite() && array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins', array() ) ) ) ) {
 
 	/**
@@ -45,7 +45,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 * @since 2.0.0
 	 */
 	function define_mwb_bookings_for_woocommerce_constants() {
-		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '3.1.2' );
+		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '3.1.3' );
 		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
@@ -91,7 +91,42 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		}
 		update_option( 'mwb_all_plugins_active', $mwb_mbfw_active_plugin );
 	}
+	add_action( 'before_woocommerce_init', function() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	} );
 
+	// replace get_post_meta with wps_booking_get_meta_data
+	function wps_booking_get_meta_data( $id, $key, $v ) {
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS usage is enabled.
+			$order    = wc_get_order( $id );
+			if ( '_customer_user' == $key ) {
+				$meta_val = $order->get_customer_id();
+				return $meta_val;
+			}
+			$meta_val = $order->get_meta( $key );
+			return $meta_val;
+		} else {
+			// Traditional CPT-based orders are in use.
+			$meta_val = get_post_meta( $id, $key, $v );
+			return $meta_val; 
+		}
+	}
+
+	// replace update_post_meta with wps_booking_update_meta_data
+	function wps_booking_update_meta_data( $id, $key, $value ) {
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS usage is enabled.
+			$order = wc_get_order( $id );
+			$order->update_meta_data( $key, $value );
+			$order->save();
+		} else {
+			// Traditional CPT-based orders are in use.
+			update_post_meta( $id, $key, $value );
+		}
+	}
 	/**
 	 * Will be used when new blog is created on multisite.
 	 *

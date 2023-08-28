@@ -68,13 +68,13 @@ jQuery(document).ready(function($){
         var end = $('#mwb_mbfw_daily_calendar_end_time').val();
         if( start != '' && end != '') {
 
-            start = parseInt( start.substr(0,2) );
-            end = parseInt( end.substr(0,2) );
            
-            
-            if( start >= end ){
+            if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+                
                 alert('Start time should be less than end time');
                 e.preventDefault();
+               
+                
             }
         }
     });
@@ -196,13 +196,82 @@ jQuery(document).ready(function($){
         var end = $('#mwb_mbfw_daily_end_time').val();
         if( start != '' && end != '') {
 
-            start = parseInt( start.substr(0,2) );
-            end = parseInt( end.substr(0,2) );
-           
-            
-            if( start >= end ){
+            if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+                
                 alert('Start time should be less than end time');
                 e.preventDefault();
+                
+            }
+        }
+        let day_array = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        for (let i = 0; i < day_array.length; i++){
+            let morning = jQuery('#mbfw_' + day_array[i] + '_morning').val();
+            let lunch_in = jQuery('#mbfw_' + day_array[i] + '_lunch_in').val();
+            let lunch_out = jQuery('#mbfw_' + day_array[i] + '_lunch_out').val();
+            let night = jQuery('#mbfw_' + day_array[i] + '_night').val();
+            if (morning == '') {
+                morning = '00:00';
+            }
+            if (lunch_in == '') {
+                lunch_in = '00:00';
+            }
+            if (lunch_out == '') {
+                lunch_out = '00:00';
+            }
+            if (night == '') {
+                night = '00:00';
+            }
+            morning = parseInt(morning.substr(0, 2)) * 60 + parseInt(morning.substr(3,));
+            lunch_in = parseInt(lunch_in.substr(0, 2)) * 60 + parseInt(lunch_in.substr(3,));
+            lunch_out = parseInt(lunch_out.substr(0, 2)) * 60 + parseInt(lunch_out.substr(3,));
+            night = parseInt(night.substr(0, 2)) * 60 + parseInt(night.substr(3,));
+       
+           
+            if ( morning >= lunch_in || lunch_in >= lunch_out || lunch_out >= night ) {
+                
+                alert(' Please Enter timing in correct format!,  it Should be --------------- morning < lunch in < lunch out < night ');
+                jQuery('#mbfw_' + day_array[i] + '_morning').val('');
+                jQuery('#mbfw_' + day_array[i] + '_lunch_in').val('');
+                jQuery('#mbfw_' + day_array[i] + '_lunch_out').val('');
+                jQuery('#mbfw_' + day_array[i] + '_night').val('');
+                e.preventDefault();
+                break; 
+            }
+    }
+    });
+
+    $('.wps_mbfw_field_from').change(function () {
+        var start = $(this).val();
+        var end   = $('#to_fields_' + $(this).attr('id').substr(-1)).val();
+        
+        if( start != '' && end != '') {
+
+            start = parseInt( start.substr(0,2) );
+            end = parseInt( end.substr(0,2) );
+               
+            
+            if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+                
+                alert('Start time should be less than end time');
+                $(this).val('');
+               
+                
+            }
+        }
+    });
+
+    $('.wps_mbfw_field_to').change(function () {
+        var start = $('#from_fields_' + $(this).attr('id').substr(-1)).val();
+        var end = $(this).val();
+        start = parseInt( start.substr(0,2) );
+        end = parseInt( end.substr(0,2) );
+        if( start != '' && end != '') {
+            
+            if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+                
+                alert('Start time should be less than end time');
+                $(this).val('');
+                
             }
         }
     });

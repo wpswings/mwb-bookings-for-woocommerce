@@ -59,7 +59,7 @@ $event_attendees_details = array();
             $pro_short_desc = $product->get_short_description();
             if ( $product instanceof WC_Product && $product->is_type( 'mwb_booking' ) ) { 
                 $booking_name = $product->get_name();
-                $event_venue = get_post_meta( $product->get_id(), 'mwb_mbfw_booking_location', true );
+                $event_venue = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_location', true );
                 $date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
                 $start_timestamp = strtotime( $date_time_from );
                 $date_time_to  = $item->get_meta( '_mwb_bfwp_date_time_to', true );

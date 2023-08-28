@@ -91,11 +91,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		}
 		update_option( 'mwb_all_plugins_active', $mwb_mbfw_active_plugin );
 	}
-	add_action( 'before_woocommerce_init', function() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-		}
-	} );
+	
 	/**
 	 * Will be used when new blog is created on multisite.
 	 *
@@ -237,3 +233,8 @@ function mwb_mbfw_show_admin_notices() {
 }
 
 
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );

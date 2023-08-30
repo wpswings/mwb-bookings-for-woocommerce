@@ -54,12 +54,17 @@ jQuery(document).ready(function($){
     if( 'hour' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val() ) {
         $('.woocommerce_options_panel #mwb_mbfw_booking_unit').parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();
     }
-    $(document).on('change', '.woocommerce_options_panel #mwb_mbfw_booking_unit', function() {
-        if( 'hour' == $(this).val() ) {
+    $(document).on('change', '.woocommerce_options_panel #mwb_mbfw_booking_unit', function () {
+        if ($('#wps_mbfw_booking_type').val() == 'single_cal') { 
             $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();
-        }
-        if( 'day' == $(this).val() ) {
-            $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').show();
+        } else {
+
+            if( 'hour' == $(this).val() ) {
+                $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();
+            }
+            if( 'day' == $(this).val() ) {
+                $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').show();
+            }
         }
     });
     // $(document).on()
@@ -93,7 +98,10 @@ jQuery(document).ready(function($){
         $(document).find('.mbfw_notice').show();
         
     } else {
-        $(document).find('.mwb_mbfw_show_date_with_time_field').show();
+        if ('day' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
+
+            $(document).find('.mwb_mbfw_show_date_with_time_field').show();
+        }
         $(document).find('.mwb_mbfw_daily_calendar_start_time_field').show();
         $(document).find('.mwb_mbfw_daily_calendar_end_time_field').show();
         $(document).find('.mwb_bfwp_choose_multiple_holiday_field').show();
@@ -121,7 +129,11 @@ jQuery(document).ready(function($){
             $(document).find('#wps_mbfw_add_fields_wrapper').show();
             $(document).find('.mbfw_notice').show();
         } else {
-            $(document).find('.mwb_mbfw_show_date_with_time_field').show();
+            if ('day' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
+
+                $(document).find('.mwb_mbfw_show_date_with_time_field').show();
+            }
+           
             $(document).find('.mwb_mbfw_daily_calendar_start_time_field').show();
             $(document).find('.mwb_mbfw_daily_calendar_end_time_field').show();
             $(document).find('.mwb_bfwp_choose_multiple_holiday_field').show();
@@ -191,7 +203,8 @@ jQuery(document).ready(function($){
         }
     });
    
-    $('#mwb_mbfw_availability_settings_save').on('click', function(e){
+    $('#mwb_mbfw_availability_settings_save').on('click', function (e) {
+        
         var start = $('#mwb_mbfw_daily_start_time').val();
         var end = $('#mwb_mbfw_daily_end_time').val();
         if( start != '' && end != '') {
@@ -209,31 +222,42 @@ jQuery(document).ready(function($){
             let lunch_in = jQuery('#mbfw_' + day_array[i] + '_lunch_in').val();
             let lunch_out = jQuery('#mbfw_' + day_array[i] + '_lunch_out').val();
             let night = jQuery('#mbfw_' + day_array[i] + '_night').val();
-            if (morning == '') {
-                morning = '00:00';
-            }
-            if (lunch_in == '') {
-                lunch_in = '00:00';
-            }
-            if (lunch_out == '') {
-                lunch_out = '00:00';
-            }
-            if (night == '') {
-                night = '00:00';
-            }
-            morning = parseInt(morning.substr(0, 2)) * 60 + parseInt(morning.substr(3,));
-            lunch_in = parseInt(lunch_in.substr(0, 2)) * 60 + parseInt(lunch_in.substr(3,));
-            lunch_out = parseInt(lunch_out.substr(0, 2)) * 60 + parseInt(lunch_out.substr(3,));
-            night = parseInt(night.substr(0, 2)) * 60 + parseInt(night.substr(3,));
-       
-           
-            if ( morning >= lunch_in || lunch_in >= lunch_out || lunch_out >= night ) {
+            let temp = false;
+            if (morning !== '') {
+                if (lunch_in != '' && morning > lunch_in) {
+                    temp = true;
+                }
+                if (lunch_out !== '' && morning > lunch_out) {
+                    temp = true;
+                }
+                if (night !== '' && morning > night) {
+                    temp = true;
+                }
                 
-                alert(' Please Enter timing in correct format!,  it Should be --------------- morning < lunch in < lunch out < night ');
-                jQuery('#mbfw_' + day_array[i] + '_morning').val('');
-                jQuery('#mbfw_' + day_array[i] + '_lunch_in').val('');
-                jQuery('#mbfw_' + day_array[i] + '_lunch_out').val('');
-                jQuery('#mbfw_' + day_array[i] + '_night').val('');
+            }
+            if (lunch_in !== '') {
+               
+                if (lunch_out !== '' && lunch_in > lunch_out) {
+                    temp = true;
+                }
+                if (night !== '' && lunch_in > night) {
+                    temp = true;
+                }
+                
+            }
+            if (lunch_out !== '') {
+               
+                if (night !== '' && lunch_out > night) {
+                    temp = true;
+                }
+                
+            }
+            
+           
+           
+            if ( temp === true ) {
+                
+                alert(' Timing in Wrong fromat! , it should be ----------------- morning < lunch in < lunch out < night');
                 e.preventDefault();
                 break; 
             }

@@ -1679,6 +1679,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mwb_mbfw_get_all_events_date() {
+		
 		check_ajax_referer( 'mwb_mbfw_admin_nonce', 'nonce' );
 		$orders     = wc_get_orders(
 			array(
@@ -1694,8 +1695,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			foreach ( $items as $item ) {
 				$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
 				$date_time_to   = $item->get_meta( '_mwb_bfwp_date_time_to', true );
-				$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
-				$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created() ) );
+				
+				$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
+				$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 				$all_events[]   = array(
 					'title' => $item['name'],
 					'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),

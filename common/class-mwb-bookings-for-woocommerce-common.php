@@ -566,6 +566,17 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 							<?php
 						}
+						if ( 'Base Cost' == $title ) { 
+							?>
+							<strong>( 
+								<?php
+								
+								$base_cost     = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_base_cost', true );
+								echo wp_kses_post( wc_price( $base_cost ) );
+								?>
+							)</strong>
+							<?php
+						}
 						?>
 					</div>
 					<div class="mbfw-total-listing-single-page">

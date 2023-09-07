@@ -68,13 +68,13 @@ jQuery(document).ready(function($){
         }
     });
     // $(document).on()
-    $('#publish').on('click', function(e){
+    $('#publish').on('click', function (e) {
         var start = $('#mwb_mbfw_daily_calendar_start_time').val();
         var end = $('#mwb_mbfw_daily_calendar_end_time').val();
-        if( start != '' && end != '') {
+        if (start != '' && end != '') {
 
            
-            if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+            if (moment(start, 'DD-MM-YYYY HH:mm') >= moment(end, 'DD-MM-YYYY HH:mm')) {
                 
                 alert('Start time should be less than end time');
                 e.preventDefault();
@@ -82,6 +82,24 @@ jQuery(document).ready(function($){
                 
             }
         }
+        $('.wps_mbfw_field_from').each(function (i, el) {
+
+            let start_time = $(el).val();
+            if ('' == start_time) {
+                alert('Time slot should not be empty!, please go to availability setting and set the correct slot');
+                e.preventDefault();
+                return false;
+            }
+            
+        });
+        $('.wps_mbfw_field_to').each(function (i, el) {
+            let end_time = $(el).val();
+            if ('' == end_time) {
+                alert('Time slot should not be empty!, please go to availability setting and set the correct slot');
+                e.preventDefault();
+                return false;
+            }
+        });
     });
 
     if ($('#wps_mbfw_booking_type').val() == 'single_cal') {

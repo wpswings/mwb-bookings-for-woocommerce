@@ -1,4 +1,6 @@
 <?php
+
+use Automattic\WooCommerce\Utilities\OrderUtil;
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -1562,16 +1564,41 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_add_label_for_booking_type( $column_name, $order_id ) {
-		if ( 'order_number' === $column_name ) {
-			$order = wc_get_order( $order_id );
-			if ( 'booking' === $order->get_meta( 'mwb_order_type', true ) ) {
-				?>
-				<span class="mwb-mbfw-booking-product-order-listing" title="<?php esc_html_e( 'This order contains Booking Service/Product.', 'mwb-bookings-for-woocommerce' ); ?>">
-					<?php esc_html_e( 'Booking Order', 'mwb-bookings-for-woocommerce' ); ?>
-				</span>
-				<?php
+		if( ! OrderUtil::custom_orders_table_usage_is_enabled() ){
+
+			if ( 'order_number' === $column_name ) {
+				$order = wc_get_order( $order_id );
+				if ( 'booking' === $order->get_meta( 'mwb_order_type', true ) ) {
+					?>
+					<span class="mwb-mbfw-booking-product-order-listing" title="<?php esc_html_e( 'This order contains Booking Service/Product.', 'mwb-bookings-for-woocommerce' ); ?>">
+						<?php esc_html_e( 'Booking Order', 'mwb-bookings-for-woocommerce' ); ?>
+					</span>
+					<?php
+				}
 			}
-		}
+		} 
+	}
+	/**
+	 * Add custom badge of booking at order listing page.
+	 *
+	 * @param string $column_name current table columnname.
+	 * @param int    $order_id current order id.
+	 * @return void
+	 */
+	public function mbfw_add_label_for_booking_type_temp( $column_name, $order_id ) {
+		if( OrderUtil::custom_orders_table_usage_is_enabled() ){
+
+			if ( 'order_number' === $column_name ) {
+				$order = wc_get_order( $order_id );
+				if ( 'booking' === $order->get_meta( 'mwb_order_type', true ) ) {
+					?>
+					<span class="mwb-mbfw-booking-product-order-listing" title="<?php esc_html_e( 'This order contains Booking Service/Product.', 'mwb-bookings-for-woocommerce' ); ?>">
+						<?php esc_html_e( 'Booking Order', 'mwb-bookings-for-woocommerce' ); ?>
+					</span>
+					<?php
+				}
+			}
+		} 
 	}
 
 	/**

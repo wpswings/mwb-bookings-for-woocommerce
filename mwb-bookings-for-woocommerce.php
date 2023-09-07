@@ -37,6 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 use Automattic\WooCommerce\Utilities\OrderUtil;
+
 if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', array() ), true ) || ( is_multisite() && array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins', array() ) ) ) ) {
 
 	/**
@@ -191,6 +192,8 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 				return $meta_val; 
 			}
 		}
+
+		
 	
 		// replace update_post_meta with wps_bookings_update_meta_data
 		function wps_booking_update_meta_data( $id, $key, $value ) {
@@ -202,6 +205,16 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 			} else {
 				// Traditional CPT-based orders are in use.
 				update_post_meta( $id, $key, $value );
+			}
+		}
+		if( ! function_exists('wps_mbfw_custom_order_table_is_enabled') ) {
+
+			function wps_mbfw_custom_order_table_is_enabled(){
+				if(OrderUtil::custom_orders_table_usage_is_enabled()){
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 
@@ -264,8 +277,10 @@ function mwb_mbfw_show_admin_notices() {
 }
 
 
+
 add_action( 'before_woocommerce_init', function() {
 	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 	}
 } );
+

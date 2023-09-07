@@ -172,6 +172,7 @@ jQuery(document).ready(function($){
             datepicker : false,
             
         });
+        check_time_slot();
     });
 
     $(document).on("click", ".wps_mbfw_remove_row_btn", function(e){
@@ -263,42 +264,46 @@ jQuery(document).ready(function($){
             }
     }
     });
-
-    $('.wps_mbfw_field_from').change(function () {
-        var start = $(this).val();
-        var end   = $('#to_fields_' + $(this).attr('id').substr(-1)).val();
-        
-        if( start != '' && end != '') {
-
+    check_time_slot();
+    function check_time_slot() {
+        $('.wps_mbfw_field_from').change(function () {
+            var start = $(this).val();
+            var end   = $('#to_fields_' + $(this).attr('id').substr(-1)).val();
+            
+            if( start != '' && end != '') {
+    
+                start = parseInt( start.substr(0,2) );
+                end = parseInt( end.substr(0,2) );
+                   
+                
+                if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+                    
+                    alert('Start time should be less than end time');
+                    $(this).val('');
+                   
+                    
+                }
+            }
+        });
+    
+        // console.log(jQuery('.wps_mbfw_field_to'));
+        $('.wps_mbfw_field_to').change(function () {
+            var start = $('#from_fields_' + $(this).attr('id').substr(-1)).val();
+            var end = $(this).val();
             start = parseInt( start.substr(0,2) );
             end = parseInt( end.substr(0,2) );
-               
-            
-            if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+            if( start != '' && end != '') {
                 
-                alert('Start time should be less than end time');
-                $(this).val('');
-               
-                
+                if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+                    
+                    alert('Start time should be less than end time');
+                    $(this).val('');
+                    
+                }
             }
-        }
-    });
-
-    $('.wps_mbfw_field_to').change(function () {
-        var start = $('#from_fields_' + $(this).attr('id').substr(-1)).val();
-        var end = $(this).val();
-        start = parseInt( start.substr(0,2) );
-        end = parseInt( end.substr(0,2) );
-        if( start != '' && end != '') {
-            
-            if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
-                
-                alert('Start time should be less than end time');
-                $(this).val('');
-                
-            }
-        }
-    });
+        });
+    
+}
 
    
 });

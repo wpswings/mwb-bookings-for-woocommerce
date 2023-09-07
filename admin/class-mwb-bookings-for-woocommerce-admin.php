@@ -1660,6 +1660,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'_mwb_mbfw_enable_time_picker',
 			'_mwb_mbfw_service_and_count',
 			'_mwb_mbfw_booking_extra_costs',
+			'_wps_booking_slot',
+			'_wps_single_cal_date_time_from',
+			'_wps_single_cal_date_time_to',
 		);
 		return /**
 		* Filter is for returning something.
@@ -1680,18 +1683,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_change_line_item_meta_key_order_edit_page( $display_key, $meta, $item ) {
 		
-		
 		switch ( $display_key ) {
 			case '_mwb_bfwp_date_time_from':
 				return __( 'From', 'mwb-bookings-for-woocommerce' );
 			case '_mwb_bfwp_date_time_to':
 				return __( 'To', 'mwb-bookings-for-woocommerce' );
-
-			case '_wps_single_cal_date_time_from':
-				return __( 'From', 'mwb-bookings-for-woocommerce' );
-			case '_wps_single_cal_date_time_to':
-				return __( 'To', 'mwb-bookings-for-woocommerce' );
-			case '_wps_single_cal_booking_dates':
+				
+				// case '_wps_single_cal_date_time_from':
+				// 	return __( 'From', 'mwb-bookings-for-woocommerce' );
+				// case '_wps_single_cal_date_time_to':
+				// 		return __( 'To', 'mwb-bookings-for-woocommerce' );
+				case '_wps_single_cal_booking_dates':
+							
 				return __( 'Booking Dates', 'mwb-bookings-for-woocommerce' );
 			default:
 				break;

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -12,6 +11,7 @@
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/includes
  */
+
 /**
  * The core plugin class.
  *
@@ -25,7 +25,6 @@
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/includes
  */
-
 class Mwb_Bookings_For_Woocommerce {
 
 	/**

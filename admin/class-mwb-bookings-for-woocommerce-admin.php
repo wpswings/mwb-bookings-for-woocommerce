@@ -1,6 +1,4 @@
 <?php
-
-use Automattic\WooCommerce\Utilities\OrderUtil;
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -10,6 +8,8 @@ use Automattic\WooCommerce\Utilities\OrderUtil;
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/admin
  */
+
+ use Automattic\WooCommerce\Utilities\OrderUtil;
 
 /**
  * The admin-specific functionality of the plugin.
@@ -1664,12 +1664,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'_wps_single_cal_date_time_from',
 			'_wps_single_cal_date_time_to',
 		);
-		return /**
+		return
+
+		/**
 		* Filter is for returning something.
 		*
 		* @since 1.0.0
 		*/
-		// print_r(array_merge( $hidden_keys, $custom_line_item_key_name ));die;
 		apply_filters( 'mwb_mbfw_hide_custom_line_item_meta_keys', array_merge( $hidden_keys, $custom_line_item_key_name ) );
 	}
 
@@ -1687,14 +1688,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			case '_mwb_bfwp_date_time_from':
 				return __( 'From', 'mwb-bookings-for-woocommerce' );
 			case '_mwb_bfwp_date_time_to':
-				return __( 'To', 'mwb-bookings-for-woocommerce' );
-				
-				// case '_wps_single_cal_date_time_from':
-				// 	return __( 'From', 'mwb-bookings-for-woocommerce' );
-				// case '_wps_single_cal_date_time_to':
-				// 		return __( 'To', 'mwb-bookings-for-woocommerce' );
-				case '_wps_single_cal_booking_dates':
-							
+				return __( 'To', 'mwb-bookings-for-woocommerce' );	
+			case '_wps_single_cal_booking_dates':				
 				return __( 'Booking Dates', 'mwb-bookings-for-woocommerce' );
 			default:
 				break;

@@ -175,7 +175,15 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		return array_merge( $my_link, $links );
 	}
 
-		// replace get_post_meta with wps_bookings_get_meta_data
+		
+		/**
+		 * Replace get_post_meta with wps_bookings_get_meta_data.
+		 *
+		 * @param integer $id is order id.
+		 * @param string $key is meta key.
+		 * @param string $v is meta value.
+		 * @return string
+		 */
 		function wps_booking_get_meta_data( $id, $key, $v ) {
 			if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 				// HPOS usage is enabled.
@@ -187,7 +195,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 				$meta_val = $order->get_meta( $key );
 				return $meta_val;
 			} else {
-				// Traditional CPT-based orders are in use.
+				
 				$meta_val = get_post_meta( $id, $key, $v );
 				return $meta_val; 
 			}
@@ -195,7 +203,14 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 
 		
 	
-		// replace update_post_meta with wps_bookings_update_meta_data
+		/**
+		 * Replace update_post_meta with wps_bookings_update_meta_data.
+		 *
+		 * @param integer $id is order id.
+		 * @param string $key is meta key.
+		 * @param string $value is meta value.
+		 * @return void
+		 */
 		function wps_booking_update_meta_data( $id, $key, $value ) {
 			if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 				// HPOS usage is enabled.
@@ -207,16 +222,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 				update_post_meta( $id, $key, $value );
 			}
 		}
-		if( ! function_exists('wps_mbfw_custom_order_table_is_enabled') ) {
-
-			function wps_mbfw_custom_order_table_is_enabled(){
-				if(OrderUtil::custom_orders_table_usage_is_enabled()){
-					return true;
-				} else {
-					return false;
-				}
-			}
-		}
+		
 
 	/**
 	 * Adding custom setting links at the plugin activation list.

@@ -40,11 +40,11 @@ $wps_mbfw_field_data = wps_booking_get_meta_data(get_the_ID(), 'wps_mbfw_time_sl
 									<i class="dashicons dashicons-move"></i>
 								</td>
 								<td class="form-field wps_mbfw_from_fields">
-									<input type="text" class="wps_mbfw_field_from" style="" name="mbfw_fields[0][_from]" id="from_fields_0" value="" placeholder="">
+									<input type="text" class="wps_mbfw_field_from" style="" name="mbfw_fields[0][_from]" id="from_fields_0" value="9:00" placeholder="">
 								</td>
 								
 								<td class="form-field wps_mbfw_to_fields">
-									<input type="text" class="wps_mbfw_field_to" style="" name="mbfw_fields[0][_to]" id="to_fields_0">
+									<input type="text" class="wps_mbfw_field_to" style="" name="mbfw_fields[0][_to]" id="to_fields_0" value="10:00">
 								</td>
 								<td class="wps_mbfw_remove_row">
 									<input type="button" name="wps_mbfw_remove_fields_button" class="wps_mbfw_remove_row_btn" value="Remove">

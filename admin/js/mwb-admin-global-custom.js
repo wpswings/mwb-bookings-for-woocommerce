@@ -82,24 +82,28 @@ jQuery(document).ready(function($){
                 
             }
         }
+        let count = 0;
         $('.wps_mbfw_field_from').each(function (i, el) {
 
             let start_time = $(el).val();
             if ('' == start_time) {
-                alert('Time slot should not be empty!, please go to availability setting and set the correct slot');
-                e.preventDefault();
-                return false;
+                
+                count += 1;
             }
             
         });
         $('.wps_mbfw_field_to').each(function (i, el) {
             let end_time = $(el).val();
             if ('' == end_time) {
-                alert('Time slot should not be empty!, please go to availability setting and set the correct slot');
-                e.preventDefault();
-                return false;
+               
+                count += 1;
             }
         });
+        if (count > 0) {
+            alert('Time slot should not be empty!, please go to availability setting and set the correct slot in Single Calendar.');
+            e.preventDefault();
+            return false;
+        }
     });
 
     if ($('#wps_mbfw_booking_type').val() == 'single_cal') {

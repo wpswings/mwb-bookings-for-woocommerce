@@ -135,13 +135,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 										$items = $order->get_items();
 										foreach ( $items as $item ) {
 											if ( $product_id == $item['product_id'] ) {
+												$quantity = $item['quantity'];
 												$wps_booking_slot = $item->get_meta( '_wps_booking_slot', true );
 												if( ! empty( $wps_booking_slot ) ) {
 	
 													if( key_exists( $wps_booking_slot, $booking_slot_array ) ) {
-														$booking_slot_array[$wps_booking_slot] += 1;
+														$booking_slot_array[$wps_booking_slot] += $quantity;
 													} else {
-														$booking_slot_array[$wps_booking_slot] = 1;
+														$booking_slot_array[$wps_booking_slot] = $quantity;
 													}
 												}
 											}
@@ -159,9 +160,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 													foreach($wps_single_bookings_dates as $key => $values) {
 
 														if( key_exists( $values, $wps_single_dates_temp ) ) {
-															$wps_single_dates_temp[trim( $values)] += 1;
+															$wps_single_dates_temp[trim( $values)] += $quantity = $item['quantity'];
 														} else {
-															$wps_single_dates_temp[trim( $values )] = 1;
+															$wps_single_dates_temp[trim( $values )] = $quantity = $item['quantity'];
 														}
 													}
 												}

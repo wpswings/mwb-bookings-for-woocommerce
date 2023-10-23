@@ -314,7 +314,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$to_timestamp = strtotime( $date_to );
 						$unit_timestamp = $to_timestamp - $from_timestamp;
 						$unit = $unit_timestamp / 86400;
-						
+						$wps_general_price = apply_filters('wps_mbfw_set_unit_cost_price_day', $new_price, $cart['product_id'], $date_from, $date_to, $unit );
 					} else if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 						$date_time_from = array_key_exists( 'date_time_from', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_from'] ) ) : '';;
 						$date_time_to = array_key_exists( 'date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_to'] ) ) : '';;
@@ -322,20 +322,26 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$to_timestamp = strtotime( $date_time_to );
 						$unit_timestamp = $to_timestamp - $from_timestamp;
 						$unit = $unit_timestamp / 3600;
-						
+						$wps_general_price = apply_filters('wps_mbfw_set_unit_cost_price_hour', $new_price, $cart['product_id'], $date_time_from, $date_time_to, $unit );
 					}
 					
 				}
-				if( $unit )
-				{
-					$unit_price= (float)$new_price * $unit;
-				} 
-
-									/**
-									 * Filter is for returning something.
-									 *
-									 * @since 1.0.0
-									 */
+				if( $wps_general_price === $new_price ) {
+					
+					if( $unit )
+					{
+						$unit_price= (float)$new_price * $unit;
+					} 
+				} else {
+					$unit_price= (float)$wps_general_price;
+				}
+				
+				/**
+				 * Filter is for returning something.
+				 *
+				 * @since 1.0.0
+				 */
+									
 				$unit_price       = apply_filters( 'mwb_mbfw_vary_product_unit_price', ( ! empty( $unit_price ) ? (float) $unit_price : 0 ), $custom_cart_data, $cart_object, $cart );
 
 				// adding unit cost.
@@ -398,6 +404,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$booking_type = wps_booking_get_meta_data( $product_id, 'wps_mbfw_booking_type', true );
 		$booking_dates = array_key_exists( 'wps_booking_single_calendar_form', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_booking_single_calendar_form'] ) ) : '';
 		$unit = 1;
+		$product_price = wps_booking_get_meta_data( $product_id, '_price', true );
 		if( 'single_cal' === $booking_type ) {
 			
 			if( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
@@ -432,21 +439,20 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$to_timestamp = strtotime( $date_to );
 				$unit_timestamp = $to_timestamp - $from_timestamp;
 				$unit = $unit_timestamp / 86400;
-				
+				$wps_general_price = apply_filters('wps_mbfw_set_unit_cost_price_day', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			} else if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
 				
 				$from_timestamp = strtotime( $date_time_from );
 				$to_timestamp = strtotime( $date_time_to );
 				$unit_timestamp = $to_timestamp - $from_timestamp;
 				$unit = $unit_timestamp / 3600;
-				
+				$wps_general_price = apply_filters('wps_mbfw_set_unit_cost_price_hour', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			}
 			
 		}
 		
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit );
 		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number, $unit );
-		$product_price = wps_booking_get_meta_data( $product_id, '_price', true );
 							/**
 							 * Filter is for returning something.
 							 *
@@ -485,7 +491,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			)
 		);
 
-		$product_price = (float) $product_price * (float) $unit;
+		if( $product_price === $wps_general_price ) {
+
+			$product_price = (float) $product_price * (float) $unit;
+		} else {
+			$product_price = (float)$wps_general_price;
+		}
+
 		
 		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 			$product_price = (float) $product_price * (int) $people_number;

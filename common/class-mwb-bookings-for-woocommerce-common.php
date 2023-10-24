@@ -84,6 +84,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'minTime'          => current_time( 'H:m' ),
 				'maxTime'          => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
 				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'mwb-bookings-for-woocommerce' ),
+				'date_format'      => get_option('date_format'),
 			)
 		);
 		if( is_admin(  ) ) {
@@ -289,9 +290,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				if( 'single_cal' === $booking_type ) {
 					
 					if( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
-						$booking_dates = explode(',',$booking_dates);
+						$booking_dates = explode(' | ',$booking_dates);
 
 						$unit = count( $booking_dates );
+					
+						$wps_general_price = apply_filters('wps_mbfw_set_unit_cost_price_day_single', $new_price, $cart['product_id'], $booking_dates , $unit );
 					} else {
 						
 						$date_time_from = array_key_exists( 'single_cal_date_time_from', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['single_cal_date_time_from'] ) ) : '';
@@ -300,7 +303,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$to_timestamp = strtotime( $date_time_to );
 						$unit_timestamp = $to_timestamp - $from_timestamp;
 						$unit = $unit_timestamp / 3600;
-						
+						$wps_general_price = apply_filters('wps_mbfw_set_unit_cost_price_hour', $new_price, $cart['product_id'], $date_time_from, $date_time_to, $unit );
 					}
 
 				} else {
@@ -326,15 +329,24 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					}
 					
 				}
-				if( $wps_general_price === $new_price ) {
+				if( $wps_general_price ) {
 					
+					if( $wps_general_price === $new_price ) {
+						
+						if( $unit )
+						{
+							$unit_price= (float)$new_price * $unit;
+						} 
+					} else {
+						$unit_price= (float)$wps_general_price;
+					}
+				} else {
 					if( $unit )
 					{
 						$unit_price= (float)$new_price * $unit;
 					} 
-				} else {
-					$unit_price= (float)$wps_general_price;
 				}
+			
 				
 				/**
 				 * Filter is for returning something.
@@ -409,8 +421,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			
 			if( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 				$booking_dates = explode(',',$booking_dates);
-
 				$unit = count( $booking_dates );
+				$wps_general_price = apply_filters('wps_mbfw_set_unit_cost_price_day_single', $product_price, $product_id, $booking_dates , $unit );
 			} else {
 				$booking_dates = explode(' ',$booking_dates);
 				$date_time_from = $booking_dates[0] . ' ' . $booking_dates[1];
@@ -419,7 +431,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$to_timestamp = strtotime( $date_time_to );
 				$unit_timestamp = $to_timestamp - $from_timestamp;
 				$unit = $unit_timestamp / 3600;
-				
+				$wps_general_price = apply_filters('wps_mbfw_set_unit_cost_price_hour', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			}
 
 		} else {

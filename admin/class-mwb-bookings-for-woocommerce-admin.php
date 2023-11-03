@@ -124,7 +124,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				)
 			);
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
-			wp_enqueue_script( 'mwb-mbfw-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.min.js', array( 'jquery' ), time(), true );
+			wp_enqueue_script( 'mwb-mbfw-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.js', array( 'jquery' ), time(), true );
 			wp_enqueue_script( 'mwb-admin-full-calendar-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.js', array( 'jquery' ), time(), true );
 		}
 		
@@ -675,21 +675,21 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria. if fixed please enter the fixed number, else if customers can choose please choose the maximum number a user can book.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
-			woocommerce_wp_text_input(
-				array(
-					'label'             => __( 'Max. Booking Per User', 'mwb-bookings-for-woocommerce' ),
-					'id'                => 'mwb_mbfw_maximum_booking_per_unit',
-					'value'             => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_maximum_booking_per_unit', true ),
-					'description'       => __( 'Maximum quantity of this product/service a user can book.', 'mwb-bookings-for-woocommerce' ),
-					'type'              => 'number',
-					'desc_tip'          => true,
-					'style'             => 'width:10em;',
-					'custom_attributes' => ( 'fixed_unit' === $booking_criteria ) ? array(
-						'min'      => 0,
-						'disabled' => 'disabled',
-					) : array( 'min' => 0 ),
-				)
-			);
+			// woocommerce_wp_text_input(
+			// 	array(
+			// 		'label'             => __( 'Max. Booking Per User', 'mwb-bookings-for-woocommerce' ),
+			// 		'id'                => 'mwb_mbfw_maximum_booking_per_unit',
+			// 		'value'             => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_maximum_booking_per_unit', true ),
+			// 		'description'       => __( 'Maximum quantity of this product/service a user can book.', 'mwb-bookings-for-woocommerce' ),
+			// 		'type'              => 'number',
+			// 		'desc_tip'          => true,
+			// 		'style'             => 'width:10em;',
+			// 		'custom_attributes' => ( 'fixed_unit' === $booking_criteria ) ? array(
+			// 			'min'      => 0,
+			// 			'disabled' => 'disabled',
+			// 		) : array( 'min' => 0 ),
+			// 	)
+			// );
 			
 			woocommerce_wp_checkbox(
 				array(
@@ -1724,17 +1724,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			foreach ( $items as $item ) {
 				$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
 				$date_time_to   = $item->get_meta( '_mwb_bfwp_date_time_to', true );
-				$date_format = get_option('date_format');
+				
 				$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 				$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 				$all_events[]   = array(
 					'title' => $item['name'],
-					'start' => gmdate( $date_format , strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
-					'end'   => gmdate( $date_format, strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
+					'start' => gmdate( 'Y-m-d' , strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
+					'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
 				);
 			}
 		}
-		wp_send_json( $all_events );
+	
+		echo wp_json_encode( $all_events );
 		wp_die();
 	}
 

@@ -253,3 +253,7 @@ input#wps_booking_single_calendar_form {
 .mwb-mbfw-total-area{
   margin-bottom: 10%;
 }
+
+.xdsoft_datetimepicker .xdsoft_calendar .xdsoft_date {
+  text-align: center;
+}

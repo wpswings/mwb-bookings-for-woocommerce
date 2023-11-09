@@ -3,21 +3,22 @@ jQuery(function ($) {
         var value = jQuery('#mwb_mbfw_booking_cost').val();
         if (value < 0) {
             
-            alert('Booking cost should not be less than 0  !');
+            alert(mbfw_product_ajax.alert_booking);
             e.preventDefault();
         }
-
     });
 
     $(document).on('change', '#mwb_mbfw_booking_criteria', function(){
         if ( $(this).val() == 'fixed_unit' ) {
-            $('#mwb_mbfw_booking_count').removeAttr('disabled');
-            $('#mwb_mbfw_maximum_booking_per_unit').attr('disabled', 'disabled');
+            jQuery('#mwb_mbfw_booking_count').show();
         } else {
-            $('#mwb_mbfw_booking_count').attr('disabled', 'disabled');
-            $('#mwb_mbfw_maximum_booking_per_unit').removeAttr('disabled');
+            jQuery('#mwb_mbfw_booking_count').hide();
         }
     });
+
+   
+
+
     $(document).on('change', '#mwb_mbfw_is_service_has_quantity', function(){
         if ( $(this).prop('checked') ) {
             $('#mwb_mbfw_service_minimum_quantity').removeAttr('disabled');
@@ -51,6 +52,71 @@ jQuery(function ($) {
 
 
 jQuery(document).ready(function($){
+
+
+    $("#mwb_mbfw_daily_calendar_start_time").blur(function(){
+        debugger;
+        var start = $('#mwb_mbfw_daily_calendar_start_time').val();
+      
+        let m = start.match(/^(\d+)[ :,](\d+)$/);
+        if (m) {
+             s_hour=parseInt(m[1]);
+            s_minute =parseInt(m[2]);
+        }
+        var end = $('#mwb_mbfw_daily_calendar_end_time').val();
+        let m_e = end.match(/^(\d+)[ :,](\d+)$/);
+        if (m_e) {
+             e_hour=parseInt(m_e[1]);
+            e_minute =parseInt(m_e[2]);
+        }
+        if (start != '' && end != '') {
+
+           
+            if ( s_hour >= e_hour) {
+                
+                alert(start_date_validate_booking);
+                $('#mwb_mbfw_daily_calendar_start_time').val('');
+                e.preventDefault();  
+            }
+        }
+    });
+
+    $("#mwb_mbfw_daily_calendar_end_time").blur(function(){
+        debugger;
+        var start = $('#mwb_mbfw_daily_calendar_start_time').val();
+      
+        let m = start.match(/^(\d+)[ :,](\d+)$/);
+        if (m) {
+             s_hour=parseInt(m[1]);
+            s_minute =parseInt(m[2]);
+        }
+        var end = $('#mwb_mbfw_daily_calendar_end_time').val();
+        let m_e = end.match(/^(\d+)[ :,](\d+)$/);
+        if (m_e) {
+             e_hour=parseInt(m_e[1]);
+            e_minute =parseInt(m_e[2]);
+        }
+        if (start != '' && end != '') {
+
+           
+            if ( s_hour >= e_hour) {
+                
+                alert(end_date_validate_booking);
+                $('#mwb_mbfw_daily_calendar_end_time').val('');
+                e.preventDefault();  
+            }
+        }
+    });
+     
+
+    var booking_criteria = jQuery('#mwb_mbfw_booking_criteria').val();
+
+    if ( booking_criteria == 'fixed_unit' ) {
+        jQuery('#mwb_mbfw_booking_count').show();
+    } else {
+        jQuery('#mwb_mbfw_booking_count').hide();
+    }
+
     if( 'hour' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val() ) {
         $('.woocommerce_options_panel #mwb_mbfw_booking_unit').parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();
     }
@@ -67,6 +133,13 @@ jQuery(document).ready(function($){
             }
         }
     });
+
+    
+   
+
+
+    
+
     // $(document).on()
     $('#publish').on('click', function (e) {
         var start = $('#mwb_mbfw_daily_calendar_start_time').val();

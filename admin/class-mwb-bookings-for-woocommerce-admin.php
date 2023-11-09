@@ -126,9 +126,24 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
 			wp_enqueue_script( 'mwb-mbfw-admin-min-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.js', array( 'jquery' ), time(), true );
 			wp_enqueue_script( 'mwb-admin-full-calendar-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/full-calendar/main.js', array( 'jquery' ), time(), true );
+			
 		}
+
+		wp_register_script( 'mwb-mbfw-admin-custom-global-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-custom.js', array( 'jquery' ), time(), false );
+			wp_localize_script(
+				'mwb-mbfw-admin-custom-global-js',
+				'mbfw_product_ajax',
+				array(
+					'alert_booking' => __( 'Booking cost should not be less than 0  !', 'mwb-bookings-for-woocommerce' ),
+					'end_date_validate_booking' => __( 'End time should be greater than start time', 'mwb-bookings-for-woocommerce' ),
+					'start_date_validate_booking' => __( 'Start time should be less than end time', 'mwb-bookings-for-woocommerce' ),
+					
+					
+				)
+			);
+
+			wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js' );
 		
-		wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-custom.js', array( 'jquery' ), time(), true );
 	}
 
 	/**
@@ -671,26 +686,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					<option value="customer_selected_unit" <?php selected( 'customer_selected_unit', $booking_criteria ); ?>><?php esc_html_e( 'Customers can choose', 'mwb-bookings-for-woocommerce' ); ?></option>
 					<option value="fixed_unit" <?php selected( 'fixed_unit', $booking_criteria ); ?>><?php esc_html_e( 'Fixed unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
-				<input type="number" step="1" min="1" max="" style="width: 4em;" <?php echo esc_attr( ( ( 'customer_selected_unit' === $booking_criteria ) || empty( $booking_criteria ) ) ? 'disabled=disabled' : '' ); ?> id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
+				<input type="number" step="1" min="1" max="" style="width: 4em;" id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
 				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria. if fixed please enter the fixed number, else if customers can choose please choose the maximum number a user can book.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
-			// woocommerce_wp_text_input(
-			// 	array(
-			// 		'label'             => __( 'Max. Booking Per User', 'mwb-bookings-for-woocommerce' ),
-			// 		'id'                => 'mwb_mbfw_maximum_booking_per_unit',
-			// 		'value'             => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_maximum_booking_per_unit', true ),
-			// 		'description'       => __( 'Maximum quantity of this product/service a user can book.', 'mwb-bookings-for-woocommerce' ),
-			// 		'type'              => 'number',
-			// 		'desc_tip'          => true,
-			// 		'style'             => 'width:10em;',
-			// 		'custom_attributes' => ( 'fixed_unit' === $booking_criteria ) ? array(
-			// 			'min'      => 0,
-			// 			'disabled' => 'disabled',
-			// 		) : array( 'min' => 0 ),
-			// 	)
-			// );
-			
 			woocommerce_wp_checkbox(
 				array(
 					'id'          => 'mwb_mbfw_admin_confirmation',

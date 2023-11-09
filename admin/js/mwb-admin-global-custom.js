@@ -74,7 +74,7 @@ jQuery(document).ready(function($){
            
             if ( s_hour >= e_hour) {
                 
-                alert(start_date_validate_booking);
+                alert(mbfw_product_ajax.start_date_validate_booking);
                 $('#mwb_mbfw_daily_calendar_start_time').val('');
                 e.preventDefault();  
             }
@@ -101,7 +101,7 @@ jQuery(document).ready(function($){
            
             if ( s_hour >= e_hour) {
                 
-                alert(end_date_validate_booking);
+                alert(mbfw_product_ajax.end_date_validate_booking);
                 $('#mwb_mbfw_daily_calendar_end_time').val('');
                 e.preventDefault();  
             }

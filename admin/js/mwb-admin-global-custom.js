@@ -249,6 +249,21 @@ jQuery(document).ready(function($){
         minDate: new Date(),
     });
 
+    $.datepicker._selectDateOverload = $.datepicker._selectDate;
+    $.datepicker._selectDate = function (id, dateStr) {
+        var target = $(id);
+        var inst = this._getInst(target[0]);
+        inst.inline = true;
+        $.datepicker._selectDateOverload(id, dateStr);
+        inst.inline = false;
+        if (target[0].multiDatesPicker != null) {
+            target[0].multiDatesPicker.changed = false;
+        } else {
+            target.multiDatesPicker.changed = false;
+        }
+             this._updateDatepicker(inst);
+    };
+    
 
 
     $(document).on( 'click', '.wps_mbfw_add_fields_button', function(){

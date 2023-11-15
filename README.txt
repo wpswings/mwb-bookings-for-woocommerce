@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: booking, calendar, appointments, booking calendar, scheduling, availability calendar, booking system, booking plugin, appointment booking, woocommerce.
 Requires at least: 5.5.0
-Tested up to: 6.3.1
+Tested up to: 6.4.1
 WC requires at least: 5.5.0
-WC tested up to: 8.0.3
-Stable tag: 3.1.3
+WC tested up to: 8.2.2
+Stable tag: 3.1.4
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -128,7 +128,9 @@ This option allows you to set the maximum booking limit for a single day. You ca
 
 This reminder settings tab offers multiple setting options for setting up your booking email and SMS-based reminders,
 
+**6. Set Different Prices For Different Dates**
 
+The WooCommerce bookings plugin enables the admins to set different prices for different dates throughout the year. 
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE BOOKINGS PLUGIN ==
 
@@ -228,6 +230,9 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.1.4 - Released on 15 November 2023 =
+* New: Compatibility with WP[6.4.1] and WC[8.2.2].
+
 = 3.1.3 - Released on 11 September 2023 =
 * New: HPOS compatibility.
 * New: Compatibility with WP[6.3.1] and WC[8.0.3].
@@ -320,6 +325,5 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.3 - Released on 11 September 2023 =
-* New: HPOS compatibility.
-* New: Compatibility with WP[6.3.1] and WC[8.0.3].
+= 3.1.4 - Released on 15 November 2023 =
+* New: Compatibility with WP[6.4.1] and WC[8.2.2].

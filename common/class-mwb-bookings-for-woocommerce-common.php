@@ -73,7 +73,16 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_localize_script( $this->plugin_name . 'common', 'mbfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name . 'common' );
 		wp_enqueue_script( 'mwb-mbfw-common-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-common.js', array(), $this->version, true );
+		// database error connection issue fixed
+		$is_single_cal = '';
+		if( is_single() ) {
+			global $post;
+			$booking_type = wps_booking_get_meta_data( $post->ID , 'wps_mbfw_booking_type', true );
+			if( 'single_cal' == $booking_type ) {
 
+				$is_single_cal = 'yes';
+			}
+		}
 		wp_localize_script(
 			'mwb-mbfw-common-js',
 			'mwb_mbfw_common_obj',
@@ -85,6 +94,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'maxTime'          => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
 				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'mwb-bookings-for-woocommerce' ),
 				'date_format'      => get_option('date_format'),
+				'is_single_cal'    => $is_single_cal,
 			)
 		);
 		if( is_admin(  ) ) {

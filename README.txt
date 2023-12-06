@@ -5,8 +5,8 @@ Tags: booking, calendar, appointments, booking calendar, scheduling, availabilit
 Requires at least: 5.5.0
 Tested up to: 6.4.1
 WC requires at least: 5.5.0
-WC tested up to: 8.2.2
-Stable tag: 3.1.4
+WC tested up to: 8.3.1
+Stable tag: 3.1.5
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -25,7 +25,7 @@ You can now simply book time slots utilizing the WordPress booking plugin, confi
 
 [youtube https://www.youtube.com/watch?v=QTIiZDAtWKA?rel=0]
 
-== SALIENT FEATURES OF THE WOOCOMMERCE BOOKING PLUGIN FREE VERSION: ==
+== SALIENT FEATURES OF THE BOOKING APPOINTMENT WORDPRESS FREE VERSION: ==
 
 **1) Toggle between Single Calendar & Dual Calendar**
 With WooCommerce calendar booking, the merchant gets a chance to toggle between Single or Dual Calendar based on the requirements of your organization. 
@@ -230,8 +230,12 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.1.5 - Released on 06 December 2023 =
+* Support : Compatibility With Latest WP[6.4.1] and WC[8.3.1].
+* Support : Compatibility With Cart and Checkout Block.
+
 = 3.1.4 - Released on 15 November 2023 =
-* New: Compatibility with WP[6.4.1] and WC[8.2.2].
+* New: Compatibility with WP[6.3.2] and WC[8.2.1].
 
 = 3.1.3 - Released on 11 September 2023 =
 * New: HPOS compatibility.
@@ -325,5 +329,6 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.4 - Released on 15 November 2023 =
-* New: Compatibility with WP[6.4.1] and WC[8.2.2].
+= 3.1.5 - Released on 06 December 2023 =
+* Support : Compatibility With Latest WP[6.4.1] and WC[8.3.1].
+* Support : Compatibility With Cart and Checkout Block.

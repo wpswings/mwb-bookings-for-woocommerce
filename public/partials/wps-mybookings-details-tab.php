@@ -22,35 +22,31 @@ $table_headers = array(
 
 
 $event_attendees_details = array();
-$customer = wp_get_current_user(); // do this when user is logged in.
+$customer               = wp_get_current_user(); // do this when user is logged in.
 if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 	$customer_orders = wc_get_orders(
 		array(
-			'limit' => -1,
+			'limit'       => -1,
 			'customer_id' => get_current_user_id(),
-			'status'       => array_keys( wc_get_order_statuses() ),
-			'return' => 'ids',
+			'status'      => array_keys( wc_get_order_statuses() ),
+			'return'      => 'ids',
 		)
 	);
-
-
 } else {
 
 	$customer_orders = get_posts(
 		array(
 			'numberposts' => -1,
-			'meta_key' => '_customer_user',
-			'orderby' => 'date',
-			'order' => 'DESC',
-			'meta_value' => get_current_user_id(),
-			'post_status'       => array_keys( wc_get_order_statuses() ),
-			'post_type' => 'shop_order',
-			'fields' => 'ids',
+			'meta_key'    => '_customer_user',
+			'orderby'     => 'date',
+			'order'       => 'DESC',
+			'meta_value'  => get_current_user_id(),
+			'post_status' => array_keys( wc_get_order_statuses() ),
+			'post_type'   => 'shop_order',
+			'fields'      => 'ids',
 		)
 	);
 }
-
-
 ?>
 
 <table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
@@ -61,109 +57,137 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			<?php endforeach; ?>
 		</tr>
 	</thead>
-
 	<?php
 	if ( ! empty( $customer_orders ) ) {
-
 		foreach ( $customer_orders as $key => $value ) {
 
 			$_order = wc_get_order( $value );
 			foreach ( $_order->get_items() as $item_id => $item ) {
-				$product = $item->get_product();
+
+				$product        = $item->get_product();
 				$pro_short_desc = $product->get_short_description();
 				if ( $product instanceof WC_Product && $product->is_type( 'mwb_booking' ) ) {
-					  $booking_name = $product->get_name();
-					  $event_venue = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_location', true );
-					$date_time_from = $item->get_meta( '_wps_single_cal_date_time_from', true );
-					$date_time_to  = $item->get_meta( '_wps_single_cal_date_time_to', true );
+
+					$booking_name     = $product->get_name();
+					$event_venue     = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_location', true );
+					$date_time_from   = $item->get_meta( '_wps_single_cal_date_time_from', true );
+					$date_time_to     = $item->get_meta( '_wps_single_cal_date_time_to', true );
 					$single_cal_dates = $item->get_meta( '_wps_single_cal_booking_dates', true );
 					if ( ! empty( $single_cal_dates ) ) {
-						$single_cal_dates = explode( ',', $single_cal_dates );
-						if ( ! empty( $single_cal_dates ) && is_array( $single_cal_dates ) ) {
-							foreach ( $single_cal_dates as $in => $date ) {
-								$start_timestamp = strtotime( gmdate( 'Y-m-d 00:00', strtotime( $date ) ) );
-								$end_timestamp = strtotime( gmdate( 'Y-m-d 23:59', strtotime( $date ) ) );
-								$gmt_offset_seconds = wps_mbfw_get_gmt_offset_seconds( $start_timestamp );
-								$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
-								?>
-								<tr>
-									 <td><?php echo esc_html( $value ); ?></td>
-									 <td><?php echo esc_html( $date ); ?></td>
-									 <td><?php echo esc_html( $_order->get_status() ); ?></td>
-									 <td><?php echo esc_html( $_order->get_total() ); ?></td>
-									 <td>
-									 <a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
-									 <a class="button" href="
-									 <?php
-										echo esc_attr( get_site_url() );
-										esc_html_e( '/my-account/view-order/' );
-										echo esc_attr( $value );
-										?>
-										  "><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?></a></td>
-								</tr>
-								<?php
+
+						$start_timestamp    = strtotime( gmdate( 'Y-m-d 00:00', strtotime( $single_cal_dates ) ) );
+						$end_timestamp      = strtotime( gmdate( 'Y-m-d 23:59', strtotime( $single_cal_dates ) ) );
+						$gmt_offset_seconds = wps_mbfw_get_gmt_offset_seconds( $start_timestamp );
+						$calendar_url       = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
+						?>
+						<tr>
+							<td><?php echo esc_html( $value ); ?></td>
+							<td><?php echo esc_html( $single_cal_dates ); ?></td>
+							<td><?php echo esc_html( $_order->get_status() ); ?></td>
+							<td><?php echo esc_html( $_order->get_total() ); ?></td>
+							<td>
+								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
+								<a class="button" href="
+									<?php
+									echo esc_attr( get_site_url() );
+									esc_html_e( '/my-account/view-order/' );
+									echo esc_attr( $value );
+									?>
+								"><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?>
+							</a>
+							<?php
+							if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
+								if ( 'cancelled' !== $_order->get_status() ) {
+									?>
+									<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ) ?>">Cancel</button>
+									<?php
+								}
 							}
-						}
+							?>
+							</td>
+						</tr>
+						<?php
 					} else if ( ! empty( $date_time_from ) && ! empty( $date_time_from ) ) {
 
-						$start_timestamp = strtotime( $date_time_from );
-						$end_timestamp = strtotime( $date_time_to );
+						$start_timestamp    = strtotime( $date_time_from );
+						$end_timestamp      = strtotime( $date_time_to );
 						$gmt_offset_seconds = wps_mbfw_get_gmt_offset_seconds( $start_timestamp );
-						$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
+						$calendar_url       = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 						?>
 						<tr>
 							<td><?php echo esc_html( $value ); ?></td>
 							<td>
 							<?php
 							echo esc_html( $date_time_from );
-									 esc_html_e( ' To ', 'mwb-bookings-for-woocommerce' );
-									 echo esc_html( $date_time_to );
+							esc_html_e( ' To ', 'mwb-bookings-for-woocommerce' );
+							echo esc_html( $date_time_to );
 							?>
-					</td>
+							</td>
 							<td><?php echo esc_html( $_order->get_status() ); ?></td>
 							<td><?php echo esc_html( $_order->get_total() ); ?></td>
 							<td>
-							<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
-							<a class="button" href="
-							<?php
-							echo esc_attr( get_site_url() );
-									 esc_html_e( '/my-account/view-order/' );
-									 echo esc_attr( $value );
-							?>
-					  "><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?></a></td>
+								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
+								<a class="button" href="
+								<?php
+								echo esc_attr( get_site_url() );
+								esc_html_e( '/my-account/view-order/' );
+								echo esc_attr( $value );
+								?>
+								"><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?>
+								</a>
+								<?php
+								if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
+									if ( 'cancelled' !== $_order->get_status() ) {
+										?>
+										<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ) ?>">Cancel</button>
+										<?php
+									}
+								}
+								?>
+							</td>
 						</tr>
-										 <?php
-
+						<?php
 					} else {
-						$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
 
-						$date_time_to  = $item->get_meta( '_mwb_bfwp_date_time_to', true );
-						$start_timestamp = strtotime( $date_time_from );
-						$end_timestamp = strtotime( $date_time_to );
+						$date_time_from     = $item->get_meta( '_mwb_bfwp_date_time_from', true );
+						$date_time_to       = $item->get_meta( '_mwb_bfwp_date_time_to', true );
+						$start_timestamp    = strtotime( $date_time_from );
+						$end_timestamp      = strtotime( $date_time_to );
 						$gmt_offset_seconds = wps_mbfw_get_gmt_offset_seconds( $start_timestamp );
-						$calendar_url = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
+						$calendar_url       = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 						?>
-				<tr>
-					 <td><?php echo esc_html( $value ); ?></td>
-					 <td>
-						<?php
-						echo esc_html( $date_time_from );
-						esc_html_e( ' To ', 'mwb-bookings-for-woocommerce' );
-						echo esc_html( $date_time_to );
-						?>
-						</td>
-					 <td><?php echo esc_html( $_order->get_status() ); ?></td>
-					 <td><?php echo esc_html( $_order->get_total() ); ?></td>
-					 <td>
-					 <a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
-					 <a class="button" href="
-						<?php
-						echo esc_attr( get_site_url() );
-						esc_html_e( '/my-account/view-order/' );
-						echo esc_attr( $value );
-						?>
-						  "><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?></a></td>
-				</tr>
+						<tr>
+							<td><?php echo esc_html( $value ); ?></td>
+							<td>
+								<?php
+								echo esc_html( $date_time_from );
+								esc_html_e( ' To ', 'mwb-bookings-for-woocommerce' );
+								echo esc_html( $date_time_to );
+								?>
+								</td>
+							<td><?php echo esc_html( $_order->get_status() ); ?></td>
+							<td><?php echo esc_html( $_order->get_total() ); ?></td>
+							<td>
+								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
+								<a class="button" href="
+									<?php
+									echo esc_attr( get_site_url() );
+									esc_html_e( '/my-account/view-order/' );
+									echo esc_attr( $value );
+									?>
+									"><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?>
+								</a>
+								<?php
+								if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
+									if ( 'cancelled' !== $_order->get_status() ) {
+										?>
+										<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ) ?>">Cancel</button>
+										<?php
+									}
+								}
+								?>
+							</td>
+						</tr>
 						<?php
 					}
 				}

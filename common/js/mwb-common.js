@@ -95,6 +95,28 @@
 			}
 		});
     });
+
+	// cancel order from my account page.
+	jQuery(document).on('click', '#wps_bfw_cancel_order', function(){
+
+		var product_id = jQuery(this).attr('data-product');
+		var order_id   = jQuery(this).attr('data-order');
+		var data       = {
+			'action'     : 'bfw_cancelled_booked_order',
+			'nonce'      : mwb_mbfw_common_obj.nonce,
+			'product_id' : product_id,
+			'order_id'   : order_id,
+		}
+		
+		jQuery.ajax({
+			url     : mwb_mbfw_common_obj.ajax_url,
+			method  : 'POST',
+			data    : data,
+			success : function( response ) {
+				window.location.reload();
+			}
+		});
+	});
 })( jQuery );
 
 function retrieve_booking_total_ajax( form_data ) {

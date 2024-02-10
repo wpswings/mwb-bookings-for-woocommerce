@@ -411,7 +411,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					?>
 					<div class="mbfw-date-picker-section">
 						<label for="wps_booking_single_calendar_form"><?php esc_html_e( 'Choose Booking date', 'mwb-bookings-for-woocommerce' ); ?></label>
-						<input type="text" name="wps_booking_single_calendar_form" id="wps_booking_single_calendar_form" class="<?php echo esc_attr( $class2 ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( 'Choose date/time', 'mwb-bookings-for-woocommerce' ); ?>"  required />
+						<input type="text" name="wps_booking_single_calendar_form" id="wps_booking_single_calendar_form" class="<?php echo esc_attr( $class2 ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>"  required />
 					</div>
 
 				<?php } else { ?>

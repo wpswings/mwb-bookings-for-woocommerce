@@ -540,11 +540,18 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'title' => __( 'General Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $product_price,
 			),
+		);
+
+		// check additional cost.
+		$mfw_additional_cost_check = array(
 			'additional_charge' => array(
 				'title' => __( 'Additional Costs', 'mwb-bookings-for-woocommerce' ),
 				'value' => $extra_charges,
 			),
 		);
+		if ( $extra_charges > 0 ) {
+			$charges = array_merge( $charges, $mfw_additional_cost_check );
+		}
 		
 		$charges =
 		/**
@@ -586,25 +593,39 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							<?php
 							if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 
-								echo wp_kses_post( wc_price( $general_price ) );
-								esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
+								// for unit cost for the year.
+								if ( ! empty( $price ) ) {
+
+									echo wp_kses_post( wc_price( $price ) );
+									esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
+								} else {
+									// for general unit cost.
+									echo wp_kses_post( wc_price( $general_price ) );
+									esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
+								}
 
 							} else if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 
-								echo wp_kses_post( wc_price( $general_price ) );
-								esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
+								// for unit cost for the year.
+								if ( ! empty( $price ) ) {
 
+									echo wp_kses_post( wc_price( $price ) );
+									esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
+								} else {
+
+									// for general unit cost.
+									echo wp_kses_post( wc_price( $general_price ) );
+									esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
+								}
 							}
 							?>
-							 )</strong>
-
+							)</strong>
 							<?php
 						}
 						if ( 'Base Cost' == $title ) { 
 							?>
 							<strong>( 
 								<?php
-								
 								$base_cost     = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_base_cost', true );
 								echo wp_kses_post( wc_price( $base_cost ) );
 								?>
@@ -635,11 +656,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			 * @since 1.0.0
 			 */
 			do_action( 'mbfw_show_booking_policy' );
-
 			?>
 		</div>
 		<?php
-
 	}
 
 	/**
@@ -774,19 +793,40 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$items = $order->get_items();
 		foreach ( $items as $item ) {
 			if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
+
 				$order_statuses = wps_booking_get_meta_data( $item->get_product_id(), 'mwb_bfwp_order_statuses_to_cancel', true );
-				$order_statuses = is_array( $order_statuses ) ? map_deep(
-					$order_statuses,
-					function ( $status ) {
-						return preg_replace( '/wc-/', '', $status );
-					}
-				) : array();
+				$order_statuses = is_array( $order_statuses ) ? map_deep( $order_statuses, function ( $status ) { return preg_replace( '/wc-/', '', $status ); } ) : array();
 				if ( in_array( $order->get_status(), $order_statuses, true ) ) {
+
 					return array( $order->get_status() );
 				}
 			}
 		}
 		return $statuses;
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @return void
+	 */
+	public function wps_bfw_cancelled_booked_order() {
+		check_ajax_referer( 'mbfw_common_nonce', 'nonce' );
+		
+		$product_id = array_key_exists( 'product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
+		$order_id   = array_key_exists( 'order_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : '';
+		if ( ! empty( $product_id ) && ! empty( $order_id ) ) {
+			
+			$order          = wc_get_order( $order_id );
+			$order_statuses = wps_booking_get_meta_data( $product_id, 'mwb_bfwp_order_statuses_to_cancel', true );
+			$order_statuses = preg_replace( '/wc-/', '', $order_statuses );
+			if ( in_array( $order->get_status(), $order_statuses, true ) ) {
+				
+				$order->update_status( 'wc-cancelled' );
+				$order->save();
+			}
+		}
+		wp_die();
 	}
 
 	/**

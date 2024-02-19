@@ -635,7 +635,17 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						?>
 					</div>
 					<div class="mbfw-total-listing-single-page">
-						<?php echo wp_kses_post( wc_price( $price ) ); ?>
+
+						<?php
+						if ( 'General Cost' == $title ) {
+							echo wp_kses_post( wc_price( $price ) ) . 'x' . $quantity;
+
+						}else{
+							echo wp_kses_post( wc_price( $price ) );
+						}
+						
+						
+						?>
 					</div>
 				</div>
 				<?php

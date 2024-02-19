@@ -55,7 +55,7 @@ jQuery(document).ready(function($){
 
 
     $("#mwb_mbfw_daily_calendar_start_time").blur(function(){
-        debugger;
+       
         var start = $('#mwb_mbfw_daily_calendar_start_time').val();
       
         let m = start.match(/^(\d+)[ :,](\d+)$/);
@@ -82,7 +82,7 @@ jQuery(document).ready(function($){
     });
 
     $("#mwb_mbfw_daily_calendar_end_time").blur(function(){
-        debugger;
+      
         var start = $('#mwb_mbfw_daily_calendar_start_time').val();
       
         let m = start.match(/^(\d+)[ :,](\d+)$/);

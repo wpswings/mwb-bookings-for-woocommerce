@@ -139,22 +139,37 @@ jQuery(document).ready(function($){
             
         }
     } else {
-        
+   
+       
         $('#wps_booking_single_calendar_form').multiDatesPicker({
             dateFormat: "yy-mm-dd",
             minDate: new Date(),
             
         });
         
-        $('#wps_booking_single_calendar_form').multiDatesPicker({
-            dateFormat: "yy-mm-dd",
-            minDate: new Date(),
-            addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
-            beforeShowDay: function (date) {
-                var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                return [available_dates.indexOf(formattedDate) > -1];
-            }
-        });
+       // if ( mwb_mbfw_public_obj.single_unavailable_dates != 0 ) {
+            $('#wps_booking_single_calendar_form').multiDatesPicker({
+                dateFormat: "yy-mm-dd",
+                minDate: new Date(),
+                
+                addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
+                beforeShowDay: function (date) {
+                   
+                    var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
+                    var price = mwb_mbfw_public_obj.single_unavailable_prices[formattedDate];
+                    var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    return [available_dates.indexOf(formattedDate) > -1, '', price];
+                }
+            });
+      //  }
+       
+
+
+     
+
+    
+
+
     }
     
 });

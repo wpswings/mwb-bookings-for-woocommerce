@@ -313,6 +313,8 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_account_menu_items', $mbfw_plugin_public, 'wps_bookings_add_mybookings_tab', 1, 1 );
 			// Populate mmbership details tab.
 			$this->loader->add_action( 'woocommerce_account_wps-mybookings-tab_endpoint', $mbfw_plugin_public, 'wps_mybookings_populate_tab' );
+			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_before', $mbfw_plugin_public, 'wps_mybookings_block_cart_page' );
+
 		}
 	}
 

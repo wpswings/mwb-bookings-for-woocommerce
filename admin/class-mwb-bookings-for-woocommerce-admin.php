@@ -684,7 +684,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					<option value="fixed_unit" <?php selected( 'fixed_unit', $booking_criteria ); ?>><?php esc_html_e( 'Fixed unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
 				<input type="number" step="1" min="1" max="" style="width: 4em;" id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
-				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Please choose the booking criteria. if fixed please enter the fixed number, else if customers can choose please choose the maximum number a user can book.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
+				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Select the booking criteria. If it iss predetermined, enter the fixed number; otherwise, customer will opt for any number for booking.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
 			woocommerce_wp_checkbox(
@@ -1697,33 +1697,60 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mwb_mbfw_get_all_events_date() {
 
+		
 		check_ajax_referer( 'mwb_mbfw_admin_nonce', 'nonce' );
 		$orders     = wc_get_orders(
 			array(
-				'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
+				'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending','wc-completed' ),
 				'limit'    => -1,
 				'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress_wps_single_cal_booking_dates
 				'meta_val' => 'booking',
 			)
 		);
+
+		
+
 		$all_events = array();
 		foreach ( $orders as $order ) {
 			$items = $order->get_items();
 			foreach ( $items as $item ) {
-
+ 
 				$booking_type = wps_booking_get_meta_data( $item['product_id'], 'wps_mbfw_booking_type', true );
 				// for single calender.
 				if ( ! empty( $item->get_meta( '_wps_single_cal_booking_dates', true ) ) ) {
 					$date_time_from = $item->get_meta( '_wps_single_cal_booking_dates', true );
 					$date_time_to   = $item->get_meta( '_wps_single_cal_booking_dates', true );
 
+
+
 					$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 					$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
-					$all_events[]   = array(
-						'title' => $item['name'],
-						'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
-						'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
-					);
+					
+					
+			
+					
+
+					$date_array_from = explode(" | ", $date_time_from);
+					$date_array_to = explode(" | ", $date_time_to);
+					if ( ! empty ( $date_array_from ) && is_array( $date_array_from ) ){
+
+						foreach ($date_array_from as $key => $value) {
+					
+							$all_events[]   = array(
+								'title' => $item['name'],
+								'start' => gmdate( 'Y-m-d', strtotime( $value ) ) . 'T' . gmdate( 'H:i', strtotime( $value ) ),
+								'end'   => gmdate( 'Y-m-d', strtotime( $date_array_to[$key] ) ) . 'T' . gmdate( 'H:i', strtotime( $date_array_to[$key] ) ),
+							);
+						}
+					} else{
+						$all_events[]   = array(
+							'title' => $item['name'],
+							'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
+							'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
+						);
+					}
+
+					
 				}
 
 				// for dual calender.

@@ -840,9 +840,6 @@ for ($day = 1; $day <= $numDays_next_month; $day++) {
 
 		wp_enqueue_script( 'mwb-booking-block-cart', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-booking-block-cart.js', array( 'jquery' ), $this->version, false );
 
-		
-
-		
 
 		$cart = WC()->cart;
 
@@ -875,8 +872,7 @@ for ($day = 1; $day <= $numDays_next_month; $day++) {
 			$not_fixed_value = 'not';
 			
 		}
-		$max_limit_days = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_max_limit', true );
-
+		
 
 		wp_register_script( 'mwb-booking-block-cart', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-booking-block-cart.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script(
@@ -886,7 +882,6 @@ for ($day = 1; $day <= $numDays_next_month; $day++) {
 				'ajaxurl'                   => admin_url( 'admin-ajax.php' ),
 				'nonce'                     => wp_create_nonce( 'ajax-nonce' ),
 				'quantity__check' => $data,
-				'max_limit_days' => $max_limit_days,
 				'not_fixed_value' => $not_fixed_value,
 				
 			)

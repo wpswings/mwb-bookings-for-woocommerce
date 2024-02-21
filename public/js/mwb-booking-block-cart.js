@@ -83,7 +83,7 @@ setTimeout(() => {
 
    }
 }
-    console.log(myArray_data);
+   
   }, "1000");
 
 

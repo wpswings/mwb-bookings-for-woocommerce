@@ -15,8 +15,12 @@
  * Extending WC_Product class.
  */
 class WC_Product_Mwb_Booking extends WC_Product {
+
+	protected $product_type;
+	protected $virtual;
 	/**
-	 * Constructor for extended class WC_Product.
+	 * Constructor for extende
+	 * d class WC_Product.
 	 *
 	 * @param object $product product object.
 	 */	

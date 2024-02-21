@@ -156,9 +156,16 @@ jQuery(document).ready(function($){
                 beforeShowDay: function (date) {
                    
                     var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
-                    var price = mwb_mbfw_public_obj.single_unavailable_prices[formattedDate];
-                    var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                    return [available_dates.indexOf(formattedDate) > -1, '', price];
+                   
+                    var price = mwb_mbfw_public_obj.single_available_dates[formattedDate];
+                    if ( price != undefined ){
+                        
+                        return [available_dates.indexOf(formattedDate) > -1, '', price];
+                    } else{
+                       
+                        return [available_dates.indexOf(formattedDate) > -1];
+                    }
+                    
                 }
             });
       //  }

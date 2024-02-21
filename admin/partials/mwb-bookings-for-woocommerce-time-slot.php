@@ -66,7 +66,15 @@ $wps_mbfw_field_data = wps_booking_get_meta_data(get_the_ID(), 'wps_mbfw_time_sl
 										<input type="text" class="wps_mbfw_field_to" style="" min="<?php echo esc_attr( $row_value['_from'] ); ?>" name="mbfw_fields[<?php echo esc_attr( $row_id ); ?>][_to]" id="to_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( $row_value['_to'] ); ?>">
 									</td>
 									<td class="wps_mbfw_remove_row">
-										<!-- <input type="button" name="wps_mbfw_remove_fields_button" class="wps_mbfw_remove_row_btn" value="Remove"> -->
+										<?php
+											  if ( $row_id != 0 ) {
+
+												?>
+													<input type="button" name="wps_mbfw_remove_fields_button" class="wps_mbfw_remove_row_btn" value="Remove">
+												<?php
+
+											  }
+										?>
 									</td>
 								</tr>
 							<?php endforeach; ?>

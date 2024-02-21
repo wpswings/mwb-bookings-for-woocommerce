@@ -684,7 +684,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					<option value="fixed_unit" <?php selected( 'fixed_unit', $booking_criteria ); ?>><?php esc_html_e( 'Fixed unit', 'mwb-bookings-for-woocommerce' ); ?></option>
 				</select>
 				<input type="number" step="1" min="1" max="" style="width: 4em;" id="mwb_mbfw_booking_count" name="mwb_mbfw_booking_count" value=<?php echo esc_attr( wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_count', true ) ); ?>>
-				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Select the booking criteria. If it iss predetermined, enter the fixed number; otherwise, customer will opt for any number for booking.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
+				<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Select the booking criteria. If it isSet Daily time slots predetermined, enter the fixed number; otherwise, customer will opt for any number for booking.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
 			</p>
 			<?php
 			woocommerce_wp_checkbox(

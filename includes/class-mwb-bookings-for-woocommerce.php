@@ -421,11 +421,11 @@ class Mwb_Bookings_For_Woocommerce {
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-overview.php',
 		);
 
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
-			'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
-			'name'      => 'mwb-bookings-for-woocommerce-developer',
-			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php',
-		);
+		// $mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
+		// 	'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
+		// 	'name'      => 'mwb-bookings-for-woocommerce-developer',
+		// 	'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php',
+		// );
 		return $mbfw_default_tabs;
 	}
 	/**

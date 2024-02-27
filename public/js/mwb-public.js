@@ -5,6 +5,10 @@ jQuery(document).ready(function($){
         jQuery(this).siblings('.mwb-mbfw-user-booking-meta-data-listing').slideToggle('slow');
     })
 
+
+
+   
+
     if( mwb_mbfw_public_obj.daily_start_time != '' && mwb_mbfw_public_obj.daily_end_time != '' ) {
         
         $('.mwb_mbfw_time_date_picker_frontend').datetimepicker({
@@ -89,11 +93,11 @@ jQuery(document).ready(function($){
             
             
             jQuery("#wps_booking_single_calendar_form").datetimepicker({
-                
+             
                 onSelectDate: function (ct,$i) {
                     var selected_date = moment(ct).format('D-M-Y');
                     var date_array = selected_date.split("-");
-                    
+                    debugger;
                     var date = date_array[0];
                     var month = date_array[1];
                     var year = date_array[2];
@@ -147,7 +151,7 @@ jQuery(document).ready(function($){
             
         });
         
-       // if ( mwb_mbfw_public_obj.single_unavailable_dates != 0 ) {
+      
             $('#wps_booking_single_calendar_form').multiDatesPicker({
                 dateFormat: "yy-mm-dd",
                 minDate: new Date(),
@@ -168,11 +172,7 @@ jQuery(document).ready(function($){
                     
                 }
             });
-      //  }
-       
-
-
-     
+    
 
     
 

@@ -58,6 +58,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mbfw_public_enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/datepicker.css', array(), $this->version, 'all' );
+		
 	}
 
 	/**
@@ -66,6 +68,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @since 2.0.0
 	 */
 	public function mbfw_public_enqueue_scripts() {
+	
 		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
 		$daily_start_time = '';
 		$daily_end_time = '';
@@ -83,37 +86,37 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		
 
 		$currentYear = date('Y');
-$currentMonth = date('m');
-$dateArray = [];
-// Get the number of days in the current month
-$numDays = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
+		$currentMonth = date('m');
+		$dateArray = [];
+		// Get the number of days in the current month
+		$numDays = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
 
-// Loop through the days of the current month and add them to the array
-for ($day = 1; $day <= $numDays; $day++) {
-    // Construct the date in 'Y-m-d' format
-    $date = sprintf('%04d-%02d-%02d', $currentYear, $currentMonth, $day);
-    // Add the date to the array
-    $dateArray[] = $date;
-}
-if ( $currentMonth == 12 ) {
-	$currentMonth = 01;
-	$currentYear = $currentYear+1;
-} else{
-	$currentMonth = $currentMonth+1;
-	
-}
-$numDays_next_month = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
+		// Loop through the days of the current month and add them to the array
+		for ($day = 1; $day <= $numDays; $day++) {
+			// Construct the date in 'Y-m-d' format
+			$date = sprintf('%04d-%02d-%02d', $currentYear, $currentMonth, $day);
+			// Add the date to the array
+			$dateArray[] = $date;
+		}
+		if ( $currentMonth == 12 ) {
+			$currentMonth = 01;
+			$currentYear = $currentYear+1;
+		} else{
+			$currentMonth = $currentMonth+1;
+			
+		}
+		$numDays_next_month = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
 
-// Initialize an empty array to store the dates
+		// Initialize an empty array to store the dates
 
 
 
-for ($day = 1; $day <= $numDays_next_month; $day++) {
-    // Construct the date in 'Y-m-d' format
-    $date = sprintf('%04d-%02d-%02d', $currentYear, $currentMonth, $day);
-    // Add the date to the array
-    $dateArray[] = $date;
-}
+		for ($day = 1; $day <= $numDays_next_month; $day++) {
+			// Construct the date in 'Y-m-d' format
+			$date = sprintf('%04d-%02d-%02d', $currentYear, $currentMonth, $day);
+			// Add the date to the array
+			$dateArray[] = $date;
+		}
 
 
 
@@ -479,6 +482,7 @@ for ($day = 1; $day <= $numDays_next_month; $day++) {
 					<div class="mbfw-date-picker-section">
 						<label for="wps_booking_single_calendar_form"><?php esc_html_e( 'Choose Booking date', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="text" name="wps_booking_single_calendar_form" id="wps_booking_single_calendar_form" class="<?php echo esc_attr( $class2 ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>"  required />
+					
 					</div>
 
 				<?php } else { ?>

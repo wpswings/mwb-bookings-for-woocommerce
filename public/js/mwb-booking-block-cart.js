@@ -2,9 +2,6 @@
 
 jQuery(document).ready( function() {
 
-  
-
-
     var hasExecuted = false;
     var myArray = [];
     var myArray_data = [];

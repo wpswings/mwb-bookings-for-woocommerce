@@ -87,16 +87,19 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'mwb-mbfw-common-js',
 			'mwb_mbfw_common_obj',
 			array(
-				'ajax_url'         => admin_url( 'admin-ajax.php' ),
-				'nonce'            => wp_create_nonce( 'mbfw_common_nonce' ),
-				'minDate'          => current_time( 'd-m-Y H:m' ),
-				'minTime'          => current_time( 'H:m' ),
-				'maxTime'          => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
-				'date_time_format' => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'mwb-bookings-for-woocommerce' ),
-				'date_format'      => get_option('date_format'),
-				'is_single_cal'    => $is_single_cal,
+				'ajax_url'             => admin_url( 'admin-ajax.php' ),
+				'nonce'                => wp_create_nonce( 'mbfw_common_nonce' ),
+				'minDate'              => current_time( 'd-m-Y H:m' ),
+				'minTime'              => current_time( 'H:m' ),
+				'maxTime'              => gmdate( 'd/m/Y', strtotime( current_time( 'mysql' ) . '+1 days' ) ) . '00:00',
+				'date_time_format'     => __( 'Please choose the dates from calendar with correct format, wrong format can not be entered', 'mwb-bookings-for-woocommerce' ),
+				'date_format'          => get_option('date_format'),
+				'is_single_cal'        => $is_single_cal,
+				'cancel_booking_order' => __( 'Are you sure to cancel Booking order?', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
+
+		
 		if( is_admin(  ) ) {
 
 			$screen                     = get_current_screen();
@@ -527,6 +530,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
 			$base_cost = (float) $base_cost * (int) $people_number;
 		}
+		
 		$charges = array(
 			'service_cost'      => array(
 				'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),

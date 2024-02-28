@@ -237,7 +237,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								foreach ( $wps_single_dates_temp as $k => $v ) {
 									if ( $v >= $max_limit_days ) {
 										$k = gmdate( 'Y-m-d', strtotime( $k ) );
-										$key = 'wps_mbfw_' . gmdate( 'd-M-Y', $k );
+										
+										$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $k ) );
 										
 										$single_unavailable_dates[] = $k;
 										if ( $is_pro_active ) {

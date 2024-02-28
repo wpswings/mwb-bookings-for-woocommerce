@@ -88,6 +88,8 @@ jQuery(document).ready(function($){
             }
 			
 		});
+
+       
         
         if (wps_available_slots != '') {
             
@@ -143,7 +145,7 @@ jQuery(document).ready(function($){
             
         }
     } else {
-   
+   debugger;
        
         $('#wps_booking_single_calendar_form').multiDatesPicker({
             dateFormat: "yy-mm-dd",
@@ -172,9 +174,21 @@ jQuery(document).ready(function($){
                     
                 }
             });
-    
 
-    
+            $("#wps_booking_single_calendar_form").multiDatesPicker({
+                beforeShowDay: function(date) {
+                  var availableDates = ["2024-02-28", "2024-03-01", "2024-03-02"]; // Example available dates
+                  var dateString = $.datepicker.formatDate('yy-mm-dd', date);
+                  debugger;
+                  if ($.inArray(dateString, available_dates) != -1) {
+                    // Date is available
+                    return [true, "available-day", "Available"];
+                  } else {
+                    // Date is unavailable
+                    return [false, "unavailable-day", "Unavailable"];
+                  }
+                }
+              });
 
 
     }

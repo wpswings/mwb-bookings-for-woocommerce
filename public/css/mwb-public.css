@@ -257,3 +257,10 @@ input#wps_booking_single_calendar_form {
 .xdsoft_datetimepicker .xdsoft_calendar .xdsoft_date {
   text-align: center;
 }
+
+.available-day a {
+  background-color: #00FF00; /* Green color for available days */
+}
+.unavailable-day a {
+  background-color: #FF0000; /* Red color for unavailable days */
+}

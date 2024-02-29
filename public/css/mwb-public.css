@@ -258,9 +258,14 @@ input#wps_booking_single_calendar_form {
   text-align: center;
 }
 
-.available-day a {
-  background-color: #00FF00; /* Green color for available days */
+
+
+.wps-available-day .ui-state-default {
+  background: green !important;
+  color: white!important;
 }
-.unavailable-day a {
-  background-color: #FF0000; /* Red color for unavailable days */
+
+.wps-unavailable-day .ui-state-default {
+  background: red !important;
+  color: white !important;
 }

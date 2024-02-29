@@ -182,10 +182,10 @@ jQuery(document).ready(function($){
                   debugger;
                   if ($.inArray(dateString, available_dates) != -1) {
                     // Date is available
-                    return [true, "available-day", "Available"];
+                    return [true, "wps-available-day", "Available"];
                   } else {
                     // Date is unavailable
-                    return [false, "unavailable-day", "Unavailable"];
+                    return [false, "wps-unavailable-day", "Unavailable"];
                   }
                 }
               });

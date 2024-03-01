@@ -1839,7 +1839,7 @@ var datetimepickerFactory = function ($) {
 									table += '<th>' + w + '</th>';
 								}
 							}
-
+debugger;
 							table += '<td data-date="' + d + '" data-month="' + m + '" data-year="' + y + '"' + ' class="xdsoft_date xdsoft_day_of_week' + start.getDay() + ' ' + classes.join(' ') + '" title="' + description + '">' +
 								'<div>' + d + '</div>' +
 								'</td>';

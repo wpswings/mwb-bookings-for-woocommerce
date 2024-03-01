@@ -14,7 +14,7 @@
 		var today_date = new Date();
 		var day_zero = new Date(0);
 		var mdp_events = {};
-		
+		debugger;
 		function removeDate(date, type) {
 			if(!type) type = 'picked';
 			date = dateConvert.call(this, date);

@@ -83,16 +83,18 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$single_available_dates = array();
 		$single_unavailable_dates = array();
 		$single_unavailable_prices = array();
-		
 
+
+		
 		$currentYear = date('Y');
+		$currentday = date('d');
 		$currentMonth = date('m');
 		$dateArray = [];
 		// Get the number of days in the current month
 		$numDays = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
 
 		// Loop through the days of the current month and add them to the array
-		for ($day = 1; $day <= $numDays; $day++) {
+		for ($day = $currentday; $day <= $numDays; $day++) {
 			// Construct the date in 'Y-m-d' format
 			$date = sprintf('%04d-%02d-%02d', $currentYear, $currentMonth, $day);
 			// Add the date to the array
@@ -483,7 +485,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					<div class="mbfw-date-picker-section">
 						<label for="wps_booking_single_calendar_form"><?php esc_html_e( 'Choose Booking date', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="text" name="wps_booking_single_calendar_form" id="wps_booking_single_calendar_form" class="<?php echo esc_attr( $class2 ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>"  required />
-					
 					</div>
 
 				<?php } else { ?>

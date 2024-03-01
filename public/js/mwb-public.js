@@ -4,9 +4,6 @@ jQuery(document).ready(function($){
         jQuery(this).toggleClass('booking-toggler-reverse');
         jQuery(this).siblings('.mwb-mbfw-user-booking-meta-data-listing').slideToggle('slow');
     })
-
-
-
    
 
     if( mwb_mbfw_public_obj.daily_start_time != '' && mwb_mbfw_public_obj.daily_end_time != '' ) {
@@ -77,6 +74,9 @@ jQuery(document).ready(function($){
     var wps_available_slots = mwb_mbfw_public_obj.wps_available_slots;
     var booking_unit = mwb_mbfw_public_obj.booking_unit;
     var booking_unavailable = mwb_mbfw_public_obj.booking_unavailable;
+    if (mwb_mbfw_public_obj.single_unavailable_dates==''){
+        mwb_mbfw_public_obj.single_unavailable_dates.push("1970-01-01");
+    }
     if (booking_unit === 'hour') {
         $('#wps_booking_single_calendar_form').datetimepicker({
 			format     : 'd-m-Y',
@@ -147,14 +147,13 @@ jQuery(document).ready(function($){
     } else {
    debugger;
        
-        $('#wps_booking_single_calendar_form').multiDatesPicker({
-            dateFormat: "yy-mm-dd",
-            minDate: new Date(),
-            
-        });
-        
+   $('#wps_booking_single_calendar_form').multiDatesPicker({
+    dateFormat: "yy-mm-dd",
+    minDate: new Date(),
+    
+});
       
-            $('#wps_booking_single_calendar_form').multiDatesPicker({
+            jQuery('#wps_booking_single_calendar_form').multiDatesPicker({
                 dateFormat: "yy-mm-dd",
                 minDate: new Date(),
                 
@@ -177,9 +176,9 @@ jQuery(document).ready(function($){
 
             $("#wps_booking_single_calendar_form").multiDatesPicker({
                 beforeShowDay: function(date) {
-                  var availableDates = ["2024-02-28", "2024-03-01", "2024-03-02"]; // Example available dates
+                
                   var dateString = $.datepicker.formatDate('yy-mm-dd', date);
-                  debugger;
+                
                   if ($.inArray(dateString, available_dates) != -1) {
                     // Date is available
                     return [true, "wps-available-day", "Available"];

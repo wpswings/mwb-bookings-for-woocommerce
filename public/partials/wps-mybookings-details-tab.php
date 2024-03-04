@@ -65,7 +65,12 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			foreach ( $_order->get_items() as $item_id => $item ) {
 
 				$product        = $item->get_product();
-				$pro_short_desc = $product->get_short_description();
+
+				if ( empty( $product ) ) {
+					continue;
+				}
+				$pro_short_desc = get_post_meta( $product->get_id(), '_short_description', true );
+
 				if ( $product instanceof WC_Product && $product->is_type( 'mwb_booking' ) ) {
 
 					$booking_name     = $product->get_name();

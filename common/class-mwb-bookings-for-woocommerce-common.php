@@ -297,7 +297,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$base_price       = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
 				$booking_type = wps_booking_get_meta_data( $product_id, 'wps_mbfw_booking_type', true );
 				$booking_dates = array_key_exists( 'single_cal_booking_dates', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['single_cal_booking_dates'] ) ) : '';
-
+				$wps_general_price = '';
 				if ( 'single_cal' === $booking_type ) {
 
 					if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
@@ -849,6 +849,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function mbfw_show_booking_details_on_my_account_page_user( $item_id, $item, $order ) {
+
 		if ( 'mwb_booking' === $item->get_product()->get_type() ) {
 			?>
 			<span class="mwb-mbfw-ser-booking-toggler"></span>

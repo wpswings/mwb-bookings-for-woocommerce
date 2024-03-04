@@ -16,8 +16,23 @@
  */
 class WC_Product_Mwb_Booking extends WC_Product {
 
+	/**
+	 * The unique identifier of this plugin.
+	 *
+	 * @since 2.0.0
+	 * @var   string    $product_type    The string used to uniquely identify this plugin.
+	 */
 	protected $product_type;
+
+	/**
+	 * The unique identifier of this plugin.
+	 *
+	 * @since 2.0.0
+	 * @var   string    $virtual    The string used to uniquely identify this plugin.
+	 */
 	protected $virtual;
+
+
 	/**
 	 * Constructor for extende
 	 * d class WC_Product.

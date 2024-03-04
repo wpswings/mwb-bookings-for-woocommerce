@@ -99,7 +99,7 @@ jQuery(document).ready(function($){
                 onSelectDate: function (ct,$i) {
                     var selected_date = moment(ct).format('D-M-Y');
                     var date_array = selected_date.split("-");
-                    debugger;
+                    
                     var date = date_array[0];
                     var month = date_array[1];
                     var year = date_array[2];
@@ -145,7 +145,7 @@ jQuery(document).ready(function($){
             
         }
     } else {
-   debugger;
+   
        
    $('#wps_booking_single_calendar_form').multiDatesPicker({
     dateFormat: "yy-mm-dd",
@@ -159,35 +159,19 @@ jQuery(document).ready(function($){
                 
                 addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
                 beforeShowDay: function (date) {
-                   
                     var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
                    
-                    var price = mwb_mbfw_public_obj.single_available_dates[formattedDate];
+                    var price = mwb_mbfw_public_obj.single_unavailable_prices[formattedDate];
                     if ( price != undefined ){
                         
-                        return [available_dates.indexOf(formattedDate) > -1, '', price];
+                        return [available_dates.indexOf(formattedDate) > -1, 'wps-available-day', price];
                     } else{
                        
-                        return [available_dates.indexOf(formattedDate) > -1];
+                        return [available_dates.indexOf(formattedDate) > -1,'wps-unavailable-day'];
                     }
                     
                 }
             });
-
-            $("#wps_booking_single_calendar_form").multiDatesPicker({
-                beforeShowDay: function(date) {
-                
-                  var dateString = $.datepicker.formatDate('yy-mm-dd', date);
-                
-                  if ($.inArray(dateString, available_dates) != -1) {
-                    // Date is available
-                    return [true, "wps-available-day", "Available"];
-                  } else {
-                    // Date is unavailable
-                    return [false, "wps-unavailable-day", "Unavailable"];
-                  }
-                }
-              });
 
 
     }

@@ -151,6 +151,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $values ) );
 
 							if ( $is_pro_active ) {
+								
 								$price = get_post_meta( $product_id, $key, true );
 								$date_price = gmdate( 'Y-m-d', strtotime( $values ) );
 								$date_price = str_replace( ',', '', $date_price );

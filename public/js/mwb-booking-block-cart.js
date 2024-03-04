@@ -47,7 +47,7 @@ jQuery(document).ready( function() {
 }
 
 setTimeout(() => {
-    debugger;
+    
     var all_booking_product_length = booking_block_public_param.quantity__check.length;
     var all_booking_product = booking_block_public_param.quantity__check;
 

@@ -14,7 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
-$wps_mbfw_field_data = wps_booking_get_meta_data(get_the_ID(), 'wps_mbfw_time_slots', true );
+$wps_mbfw_field_data = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_slots', true );
 
 ?>
 <div id="wps_mbfw_add_fields_wrapper">
@@ -30,7 +30,7 @@ $wps_mbfw_field_data = wps_booking_get_meta_data(get_the_ID(), 'wps_mbfw_time_sl
 							<th></th>
 							<th class="mbfw_field_from"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></th>
 							<th class="mbfw_field_to"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></th>
-                            <th class="etmfw_field_actions"><?php esc_html_e( 'Actions', 'mwb-bookings-for-woocommerce' ); ?></th>
+							<th class="etmfw_field_actions"><?php esc_html_e( 'Actions', 'mwb-bookings-for-woocommerce' ); ?></th>
 						</tr>
 					</thead>
 					<tbody class="wps_mbfw_field_body">
@@ -53,7 +53,7 @@ $wps_mbfw_field_data = wps_booking_get_meta_data(get_the_ID(), 'wps_mbfw_time_sl
 							<?php
 						else :
 							foreach ( $wps_mbfw_field_data as $row_id => $row_value ) :
-								
+
 								?>
 								<tr class="wps_mbfw_field_wrap" data-id="<?php echo esc_attr( $row_id ); ?>">
 									<td class="drag-icon">
@@ -67,13 +67,13 @@ $wps_mbfw_field_data = wps_booking_get_meta_data(get_the_ID(), 'wps_mbfw_time_sl
 									</td>
 									<td class="wps_mbfw_remove_row">
 										<?php
-											  if ( $row_id != 0 ) {
+										if ( 0 != $row_id ) {
 
-												?>
+											?>
 													<input type="button" name="wps_mbfw_remove_fields_button" class="wps_mbfw_remove_row_btn" value="Remove">
 												<?php
 
-											  }
+										}
 										?>
 									</td>
 								</tr>

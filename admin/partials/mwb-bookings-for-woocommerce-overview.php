@@ -60,7 +60,7 @@ do_action( 'mwb_mbfw_overview_content_top' );
 						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( 'Adaptable Bookings', 'mwb-bookings-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('Customers can personalize their booking criteria to fit their budget, event, and needs. You may make bookings without having to make a phone call, allowing you to do it from the convenience of your own home offering all WooCommerce easy booking services.', 'mwb-bookings-for-woocommerce' );
+							esc_html_e( 'Customers can personalize their booking criteria to fit their budget, event, and needs. You may make bookings without having to make a phone call, allowing you to do it from the convenience of your own home offering all WooCommerce easy booking services.', 'mwb-bookings-for-woocommerce' );
 							?>
 						</p>
 					</div>
@@ -75,7 +75,7 @@ do_action( 'mwb_mbfw_overview_content_top' );
 						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( 'Availability Settings to Offer Bookings', 'mwb-bookings-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('Admin managers may quickly specify booking availability for the day, as well as the exact deadline for booking online. They only need to change the timeframe in the Availability tab of the plugin General Settings area to perform easy booking management.', 'mwb-bookings-for-woocommerce' );
+							esc_html_e( 'Admin managers may quickly specify booking availability for the day, as well as the exact deadline for booking online. They only need to change the timeframe in the Availability tab of the plugin General Settings area to perform easy booking management.', 'mwb-bookings-for-woocommerce' );
 							?>
 						</p>
 					</div>
@@ -90,7 +90,7 @@ do_action( 'mwb_mbfw_overview_content_top' );
 						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( 'Ease of Setting a Booking Calendar', 'mwb-bookings-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('Merchants can use the WooCommerce Calendar Booking display listing to build and monitor how their day or month is performing. They can also adjust current bookings or availability with response to easy booking management.', 'mwb-bookings-for-woocommerce' );
+							esc_html_e( 'Merchants can use the WooCommerce Calendar Booking display listing to build and monitor how their day or month is performing. They can also adjust current bookings or availability with response to easy booking management.', 'mwb-bookings-for-woocommerce' );
 							?>
 						</p>
 					</div>
@@ -105,7 +105,7 @@ do_action( 'mwb_mbfw_overview_content_top' );
 						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( 'Subtly Stress Additional Costs On Demand Surge', 'mwb-bookings-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('An increase in demand can have a direct impact on the price of bookable products. When there is a significant demand for certain online booking solutions in a given location, admin administrators can easily set up WooCommerce bookings based on additional expenses.', 'mwb-bookings-for-woocommerce' );
+							esc_html_e( 'An increase in demand can have a direct impact on the price of bookable products. When there is a significant demand for certain online booking solutions in a given location, admin administrators can easily set up WooCommerce bookings based on additional expenses.', 'mwb-bookings-for-woocommerce' );
 							?>
 						</p>
 					</div>
@@ -120,7 +120,7 @@ do_action( 'mwb_mbfw_overview_content_top' );
 						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( 'Set-Forth Booking Limits For Day', 'mwb-bookings-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('To avoid being overbooked, store managers can set a maximum number of bookings per user for bookable products, as well as provide easy booking management and effective tracking.', 'mwb-bookings-for-woocommerce' );
+							esc_html_e( 'To avoid being overbooked, store managers can set a maximum number of bookings per user for bookable products, as well as provide easy booking management and effective tracking.', 'mwb-bookings-for-woocommerce' );
 							?>
 						</p>
 					</div>

@@ -35,7 +35,7 @@ class Mwb_Bookings_For_Woocommerce_Activator {
 			}
 			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 			foreach ( $blogids as $blog_id ) {
-				switch_to_blog($blog_id);
+				switch_to_blog( $blog_id );
 				( new self() )->mwb_bookings_for_woocommerce_update_default_value();
 				restore_current_blog();
 			}
@@ -43,7 +43,7 @@ class Mwb_Bookings_For_Woocommerce_Activator {
 		}
 		( new self() )->mwb_bookings_for_woocommerce_update_default_value();
 	}
-	
+
 	/**
 	 * Update default value on plugin activation.
 	 *

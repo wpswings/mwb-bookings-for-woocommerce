@@ -23,7 +23,7 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * d class WC_Product.
 	 *
 	 * @param object $product product object.
-	 */	
+	 */
 	public function __construct( $product ) {
 		$this->product_type = 'mwb_booking';
 		$this->virtual      = 'yes';
@@ -101,7 +101,6 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	public function add_to_cart_url() {
 		$url = $this->get_permalink();
 
-
 		/**
 		 * Filter is for returning something.
 		 *
@@ -126,7 +125,7 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function get_product_url( $context = 'view' ) {
-		if( ! empty ($this->get_prop( 'product_url', $context ) ) ) {
+		if ( ! empty( $this->get_prop( 'product_url', $context ) ) ) {
 
 			return esc_url_raw( $this->get_prop( 'product_url', $context ) );
 		}
@@ -165,8 +164,9 @@ class WC_Product_Mwb_Booking extends WC_Product {
 
 		/**
 		 * Filter for description.
+		 *
 		 * @since 1.0.0
-		 */																														
+		 */
 		return apply_filters( 'woocommerce_product_add_to_cart_description', $temp_var, $this );
 	}
 }

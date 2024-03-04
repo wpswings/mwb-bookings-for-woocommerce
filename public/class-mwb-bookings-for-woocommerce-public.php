@@ -8,6 +8,7 @@
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/public
  */
+
 use Automattic\WooCommerce\StoreApi\Utilities\QuantityLimits;
 /**
  * The public-facing functionality of the plugin.
@@ -59,7 +60,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	public function mbfw_public_enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/datepicker.css', array(), $this->version, 'all' );
-		
+
 	}
 
 	/**
@@ -68,7 +69,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @since 2.0.0
 	 */
 	public function mbfw_public_enqueue_scripts() {
-	
+
 		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
 		$daily_start_time = '';
 		$daily_end_time = '';
@@ -84,46 +85,37 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$single_unavailable_dates = array();
 		$single_unavailable_prices = array();
 
+		$current_year = gmdate( 'Y' );
+		$currentday = gmdate( 'd' );
+		$current_month = gmdate( 'm' );
+		$date_array = array();
+		// Get the number of days in the current month.
+		$num_days = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
 
-		
-		$currentYear = date('Y');
-		$currentday = date('d');
-		$currentMonth = date('m');
-		$dateArray = [];
-		// Get the number of days in the current month
-		$numDays = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
-
-		// Loop through the days of the current month and add them to the array
-		for ($day = $currentday; $day <= $numDays; $day++) {
-			// Construct the date in 'Y-m-d' format
-			$date = sprintf('%04d-%02d-%02d', $currentYear, $currentMonth, $day);
-			// Add the date to the array
-			$dateArray[] = $date;
+		// Loop through the days of the current month and add them to the array.
+		for ( $day = $currentday; $day <= $num_days; $day++ ) {
+			// Construct the date in 'Y-m-d' format.
+			$date = sprintf( '%04d-%02d-%02d', $current_year, $current_month, $day );
+			// Add the date to the array.
+			$date_array[] = $date;
 		}
-		if ( $currentMonth == 12 ) {
-			$currentMonth = 01;
-			$currentYear = $currentYear+1;
-		} else{
-			$currentMonth = $currentMonth+1;
-			
+		if ( 12 == $current_month ) {
+			$current_month = 01;
+			++$current_year;
+		} else {
+			++$current_month;
+
 		}
-		$numDays_next_month = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
+		$num_days_next_month = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
 
-		// Initialize an empty array to store the dates
+		// Initialize an empty array to store the dates.
 
-
-
-		for ($day = 1; $day <= $numDays_next_month; $day++) {
-			// Construct the date in 'Y-m-d' format
-			$date = sprintf('%04d-%02d-%02d', $currentYear, $currentMonth, $day);
-			// Add the date to the array
-			$dateArray[] = $date;
+		for ( $day = 1; $day <= $num_days_next_month; $day++ ) {
+			// Construct the date in 'Y-m-d' format.
+			$date = sprintf( '%04d-%02d-%02d', $current_year, $current_month, $day );
+			// Add the date to the array.
+			$date_array[] = $date;
 		}
-
-
-
-
-
 
 		if ( is_single() ) {
 			global $post;
@@ -157,14 +149,13 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						foreach ( $single_available_date_array as $key => $values ) {
 							$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
 							$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $values ) );
-							
-							
+
 							if ( $is_pro_active ) {
 								$price = get_post_meta( $product_id, $key, true );
 								$date_price = gmdate( 'Y-m-d', strtotime( $values ) );
-								$date_price = str_replace(",", "", $date_price);
+								$date_price = str_replace( ',', '', $date_price );
 								$currency_symbol = get_woocommerce_currency_symbol();
-								$single_unavailable_prices[$date_price] = $currency_symbol . $price ;
+								$single_unavailable_prices[ $date_price ] = $currency_symbol . $price;
 							}
 						}
 					}
@@ -239,16 +230,15 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								foreach ( $wps_single_dates_temp as $k => $v ) {
 									if ( $v >= $max_limit_days ) {
 										$k = gmdate( 'Y-m-d', strtotime( $k ) );
-										
+
 										$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $k ) );
-										
+
 										$single_unavailable_dates[] = $k;
 										if ( $is_pro_active ) {
 											$price = get_post_meta( $product_id, $key, true );
 
-											$single_unavailable_prices[$k] = $price;
+											$single_unavailable_prices[ $k ] = $price;
 										}
-
 									}
 								}
 							}
@@ -258,12 +248,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			}
 		}
 
-		
 		if ( ! empty( $single_available_dates ) ) {
- 
-			if ( '1970-01-01' == $single_available_dates[0]){
-				
-				$single_available_dates= $dateArray;
+
+			if ( '1970-01-01' == $single_available_dates[0] ) {
+
+				$single_available_dates = $date_array;
 			}
 		}
 
@@ -846,7 +835,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 		wp_enqueue_script( 'mwb-booking-block-cart', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-booking-block-cart.js', array( 'jquery' ), $this->version, false );
 
-
 		$cart = WC()->cart;
 
 		// Get cart items.
@@ -860,25 +848,22 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 				if ( ! empty( $cart_item ) ) {
 					$product = wc_get_product( $cart_item['product_id'] );
-					
-										
+
 					if ( 'mwb_booking' === $product->get_type() ) {
 						if ( 'fixed_unit' === wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_criteria', true ) ) {
-							array_push($data, $product->get_title());
+							array_push( $data, $product->get_title() );
 						}
 					}
-					
 				}
 			}
 		}
 		$not_fixed_value = '';
 
 		if ( empty( $data ) ) {
-			
+
 			$not_fixed_value = 'not';
-			
+
 		}
-		
 
 		wp_register_script( 'mwb-booking-block-cart', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-booking-block-cart.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script(
@@ -889,34 +874,40 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'nonce'                     => wp_create_nonce( 'ajax-nonce' ),
 				'quantity__check' => $data,
 				'not_fixed_value' => $not_fixed_value,
-				
+
 			)
 		);
 		wp_enqueue_script( 'mwb-booking-block-cart' );
-		
+
 	}
-}
-add_filter( 'woocommerce_store_api_product_quantity_limit', 'dzfskzf', 10,2);
-function dzfskzf( $limit, $product) {
-	//var_dump($limit);
 
-	if ( 'mwb_booking' === $product->get_type() ) {
-		$max_limit_days = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_max_limit', true );
+	/**
+	 * Add limit to booking product.
+	 *
+	 * @param [type] $limit current limit.
+	 * @param [type] $product current product details.
+	 * @return mixed
+	 */
+	public function mwb_mbfw_add_limit_to_cart_page_for_booking_product( $limit, $product ) {
 
-		
-		if ( 'fixed_unit' === wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_criteria', true ) ) {
-			$booking_count     = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_count', true );
-			
-			$limit =  $booking_count;
-			
-		}
-		if ( empty ( $booking_count) ) {
-			if (! empty( $max_limit_days ) ) {
-				$limit =  $max_limit_days;
+		if ( 'mwb_booking' === $product->get_type() ) {
+			$max_limit_days = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_max_limit', true );
+
+			if ( 'fixed_unit' === wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_criteria', true ) ) {
+				$booking_count     = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_count', true );
+
+				$limit = $booking_count;
+
+			}
+			if ( empty( $booking_count ) ) {
+				if ( ! empty( $max_limit_days ) ) {
+					$limit = $max_limit_days;
+				}
 			}
 		}
-		
+		return $limit;
 	}
-	return $limit;
 }
+
+
 

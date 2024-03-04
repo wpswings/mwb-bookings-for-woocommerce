@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 global $mbfw_mwb_mbfw_obj;
-$mbfw_genaral_settings = 
+$mbfw_genaral_settings =
 /**
  * Filter is for returning something.
  *

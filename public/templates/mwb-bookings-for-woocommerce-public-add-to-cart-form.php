@@ -31,7 +31,7 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 	 * @since 1.0.0
 	 */
 	do_action( 'mwb_booking_before_add_to_cart_form', $product_id, $product );
- 
+
 	/**
 	 * Add Time selector on frontend for booking.
 	 *
@@ -45,7 +45,7 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 	 * @since 1.0.0
 	 */
 	do_action( 'mwb_mbfw_number_of_people_while_booking_on_form', $product_id, $product );
- 
+
 	/**
 	 * Show Booking services details on form.
 	 *
@@ -80,6 +80,6 @@ if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 		<div class="mwb-mbfw-total-area"></div>
 		<?php
 	}
-	do_action('mwb_booking_before_add_to_cart_button', $product_id );
+	do_action( 'mwb_booking_before_add_to_cart_button', $product_id );
 	?>
 </div>

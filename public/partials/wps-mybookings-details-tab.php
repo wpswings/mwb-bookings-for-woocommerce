@@ -99,7 +99,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 							if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
 								if ( 'cancelled' !== $_order->get_status() ) {
 									?>
-									<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ) ?>">Cancel</button>
+									<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 									<?php
 								}
 							}
@@ -139,7 +139,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
 									if ( 'cancelled' !== $_order->get_status() ) {
 										?>
-										<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ) ?>">Cancel</button>
+										<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 										<?php
 									}
 								}
@@ -181,7 +181,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
 									if ( 'cancelled' !== $_order->get_status() ) {
 										?>
-										<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ) ?>">Cancel</button>
+										<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 										<?php
 									}
 								}

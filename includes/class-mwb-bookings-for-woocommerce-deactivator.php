@@ -38,19 +38,19 @@ class Mwb_Bookings_For_Woocommerce_Deactivator {
 				'item_reference'    => rawurlencode( MWB_BOOKINGS_FOR_WOOCOMMERCE_ITEM_REFERENCE ),
 				'product_reference' => 'MWBPK-2965',
 			);
-			$query       = esc_url_raw(add_query_arg($api_params, MWB_BOOKINGS_FOR_WOOCOMMERCE_LICENSE_SERVER_URL));
+			$query       = esc_url_raw( add_query_arg( $api_params, MWB_BOOKINGS_FOR_WOOCOMMERCE_LICENSE_SERVER_URL ) );
 			$response    = wp_remote_get(
 				$query,
 				array(
-				'timeout' => 20,
-				'sslverify' => false,
+					'timeout' => 20,
+					'sslverify' => false,
 				)
 			);
 
 			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 			if ( isset( $license_data->result ) && 'success' === $license_data->result ) {
-				   delete_option('mwb_mbfw_license_check');
-				   delete_option('mwb_mbfw_license_key');
+				   delete_option( 'mwb_mbfw_license_check' );
+				   delete_option( 'mwb_mbfw_license_key' );
 			}
 		}
 

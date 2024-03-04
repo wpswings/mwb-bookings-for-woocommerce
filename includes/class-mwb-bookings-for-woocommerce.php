@@ -314,7 +314,7 @@ class Mwb_Bookings_For_Woocommerce {
 			// Populate mmbership details tab.
 			$this->loader->add_action( 'woocommerce_account_wps-mybookings-tab_endpoint', $mbfw_plugin_public, 'wps_mybookings_populate_tab' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_before', $mbfw_plugin_public, 'wps_mybookings_block_cart_page' );
-
+			$this->loader->add_filter( 'woocommerce_store_api_product_quantity_limit', $mbfw_plugin_public, 'mwb_mbfw_add_limit_to_cart_page_for_booking_product', 10, 2 );
 		}
 	}
 
@@ -422,9 +422,9 @@ class Mwb_Bookings_For_Woocommerce {
 		);
 
 		// $mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
-		// 	'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
-		// 	'name'      => 'mwb-bookings-for-woocommerce-developer',
-		// 	'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php',
+		// 'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
+		// 'name'      => 'mwb-bookings-for-woocommerce-developer',
+		// 'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php',
 		// );
 		return $mbfw_default_tabs;
 	}

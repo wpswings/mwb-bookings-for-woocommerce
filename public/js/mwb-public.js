@@ -166,12 +166,22 @@ jQuery(document).ready(function($){
                         
                         return [available_dates.indexOf(formattedDate) > -1, 'wps-available-day', price];
                     } else{
+
+                        if ($.inArray(formattedDate, available_dates) != -1) {
+                            // Date is available
+                            return [available_dates.indexOf(formattedDate) > -1,'wps-available-day'];
+                          } else {
+                            // Date is unavailable
+                            return [available_dates.indexOf(formattedDate) > -1,'wps-unavailable-day'];
+                          }
                        
-                        return [available_dates.indexOf(formattedDate) > -1,'wps-unavailable-day'];
+                       
                     }
                     
                 }
             });
+
+
 
 
     }

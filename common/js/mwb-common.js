@@ -164,7 +164,7 @@ jQuery(function() {
 
 	// Add tooltip on hover
 	jQuery(".xdsoft_datetimepicker").on("mouseenter", "td", function() {
-		debugger;
+
 		var date = jQuery(this).text();
 		var amount = getAmountForDate(date); // You need to implement this function
 		if (amount !== null) {

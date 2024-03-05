@@ -89,6 +89,9 @@ jQuery(document).ready(function($){
 			
 		});
 
+
+        
+
        
         
         if (wps_available_slots != '') {
@@ -97,6 +100,7 @@ jQuery(document).ready(function($){
             jQuery("#wps_booking_single_calendar_form").datetimepicker({
              
                 onSelectDate: function (ct,$i) {
+                    debugger;
                     var selected_date = moment(ct).format('D-M-Y');
                     var date_array = selected_date.split("-");
                     

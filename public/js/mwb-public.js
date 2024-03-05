@@ -163,8 +163,7 @@ jQuery(document).ready(function($){
                 
                 addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
                 beforeShowDay: function (date) {
-                    var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
-                   debugger;
+                    var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);    
                     var price = mwb_mbfw_public_obj.single_unavailable_prices[formattedDate];
                     if ( price != undefined ){
                         

@@ -43,7 +43,6 @@
 	if (mwb_mbfw_common_obj.is_single_cal == 'yes') {
 		$(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
 			
-			
 			var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );
@@ -62,10 +61,7 @@
 			format     : 'd-m-Y',
 			timepicker : false,
 			minDate    : mwb_mbfw_common_obj.minDate,
-			
 		});
-
-
 		
 		
 		$('#mwb_mbfw_choose_holiday').datepicker({
@@ -98,6 +94,7 @@
 			}
 		});
     });
+
 
 	// cancel order from my account page.
 	jQuery(document).on('click', '#wps_bfw_cancel_order', function(){
@@ -148,42 +145,4 @@ function retrieve_booking_total_ajax( form_data ) {
 			}
 		});
 	}
-}
-
-
-jQuery(function() {
-	// Initialize datepickers
-	jQuery("#fromDate, #toDate").datepicker({
-		dateFormat: "yy-mm-dd",
-		numberOfMonths: 2,
-		showButtonPanel: true,
-		onSelect: function(dateText) {
-			// Do something when a date is selected
-		}
-	});
-
-	// Add tooltip on hover
-	jQuery(".xdsoft_datetimepicker").on("mouseenter", "td", function() {
-
-		var date = jQuery(this).text();
-		var amount = getAmountForDate(date); // You need to implement this function
-		if (amount !== null) {
-			var tooltip = jQuery("<div>").addClass("tooltip").text("Amount: " + amount);
-			jQuery(this).append(tooltip);
-			tooltip.fadeIn();
-		}
-	}).on("mouseleave", "td", function() {
-		jQuery(".tooltip").remove();
-	});
-});
-
-// Dummy function to get amount for a date (replace with your implementation)
-function getAmountForDate(date) {
-	// Dummy data for demonstration
-	var amounts = {
-		"2024-02-01": "$50",
-		"2024-02-05": "$70",
-		"2024-02-10": "$100"
-	};
-	return amounts[date] || null;
 }

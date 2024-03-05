@@ -100,7 +100,7 @@ jQuery(document).ready(function($){
             jQuery("#wps_booking_single_calendar_form").datetimepicker({
              
                 onSelectDate: function (ct,$i) {
-                    debugger;
+                  
                     var selected_date = moment(ct).format('D-M-Y');
                     var date_array = selected_date.split("-");
                     
@@ -164,7 +164,7 @@ jQuery(document).ready(function($){
                 addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
                 beforeShowDay: function (date) {
                     var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
-                   
+                   debugger;
                     var price = mwb_mbfw_public_obj.single_unavailable_prices[formattedDate];
                     if ( price != undefined ){
                         

@@ -249,6 +249,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			}
 		}
 
+	
+
+
 		if ( ! empty( $single_available_dates ) ) {
 
 			if ( '1970-01-01' == $single_available_dates[0] ) {
@@ -256,6 +259,33 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$single_available_dates = $date_array;
 			}
 		}
+
+		if ( ! empty( $single_available_date_array) ) {
+			if ( empty( $single_available_date_array[0] ) ) {
+				if ( ! empty( $single_available_dates ) && is_array( $single_available_dates ) ) {
+	
+
+					foreach ( $single_available_dates as $key => $values ) {
+						$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
+						$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $values ) );
+
+						if ( $is_pro_active ) {
+							$price = get_post_meta( $product_id, $key, true );
+							$date_price = gmdate( 'Y-m-d', strtotime( $values ) );
+							$date_price = str_replace( ',', '', $date_price );
+							$currency_symbol = get_woocommerce_currency_symbol();
+							if ( ! empty( $price ) ) {
+								$single_unavailable_prices[ $date_price ] = $currency_symbol . $price;
+							}
+							
+						}
+					}
+				}
+			}
+		}
+		
+
+
 
 		wp_localize_script(
 			$this->plugin_name . 'public',

@@ -1,6 +1,6 @@
 //code for datatable
 jQuery(document).ready(function($) {
-    
+   
     var calendarEl = document.getElementById('mwb-mbfw-booking-calendar');
     if ( calendarEl ) {
         var calendar = new FullCalendar.Calendar( calendarEl, {

@@ -15,11 +15,30 @@
  * Extending WC_Product class.
  */
 class WC_Product_Mwb_Booking extends WC_Product {
+
 	/**
-	 * Constructor for extended class WC_Product.
+	 * The unique identifier of this plugin.
+	 *
+	 * @since 2.0.0
+	 * @var   string    $product_type    The string used to uniquely identify this plugin.
+	 */
+	protected $product_type;
+
+	/**
+	 * The unique identifier of this plugin.
+	 *
+	 * @since 2.0.0
+	 * @var   string    $virtual    The string used to uniquely identify this plugin.
+	 */
+	protected $virtual;
+
+
+	/**
+	 * Constructor for extende
+	 * d class WC_Product.
 	 *
 	 * @param object $product product object.
-	 */	
+	 */
 	public function __construct( $product ) {
 		$this->product_type = 'mwb_booking';
 		$this->virtual      = 'yes';
@@ -72,7 +91,7 @@ class WC_Product_Mwb_Booking extends WC_Product {
 		 *
 		 * @since 1.0.0
 		 */
-		return apply_filters( 'woocommerce_product_single_add_to_cart_text', $this->get_button_text() ? $this->get_button_text() : _x( 'Book Now', 'placeholder', 'mwb-bookings-for-woocommerce' ), $this );
+		return apply_filters( 'woocommerce_product_single_add_to_cart_text', $this->get_button_text() ? $this->get_button_text() : __( 'Book Now', 'mwb-bookings-for-woocommerce' ), $this );
 	}
 	/**
 	 * Get the add to cart button text.
@@ -96,7 +115,6 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 */
 	public function add_to_cart_url() {
 		$url = $this->get_permalink();
-
 
 		/**
 		 * Filter is for returning something.
@@ -122,7 +140,7 @@ class WC_Product_Mwb_Booking extends WC_Product {
 	 * @return string
 	 */
 	public function get_product_url( $context = 'view' ) {
-		if( ! empty ($this->get_prop( 'product_url', $context ) ) ) {
+		if ( ! empty( $this->get_prop( 'product_url', $context ) ) ) {
 
 			return esc_url_raw( $this->get_prop( 'product_url', $context ) );
 		}
@@ -161,8 +179,9 @@ class WC_Product_Mwb_Booking extends WC_Product {
 
 		/**
 		 * Filter for description.
+		 *
 		 * @since 1.0.0
-		 */																														
+		 */
 		return apply_filters( 'woocommerce_product_add_to_cart_description', $temp_var, $this );
 	}
 }

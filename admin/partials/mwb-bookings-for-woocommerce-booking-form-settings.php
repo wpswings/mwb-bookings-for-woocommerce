@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 global $mbfw_mwb_mbfw_obj;
-$mbfw_booking_form_settings = 
+$mbfw_booking_form_settings =
 /**
  * Filter is for returning something.
  *

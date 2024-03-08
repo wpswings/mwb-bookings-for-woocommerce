@@ -15,22 +15,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 global $mbfw_mwb_mbfw_obj;
-$mbfw_developer_admin_hooks = 
+$mbfw_developer_admin_hooks =
 /**
  * Filter is for returning something.
  *
  * @since 1.0.0
  */
-apply_filters('mbfw_developer_admin_hooks_array', array());
-$count_admin                 = filtered_array($mbfw_developer_admin_hooks);
-$mbfw_developer_public_hooks = 
+apply_filters( 'mbfw_developer_admin_hooks_array', array() );
+$count_admin                 = filtered_array( $mbfw_developer_admin_hooks );
+$mbfw_developer_public_hooks =
 /**
  * Filter is for returning something.
  *
  * @since 1.0.0
  */
-apply_filters('mbfw_developer_public_hooks_array', array());
-$count_public = filtered_array($mbfw_developer_public_hooks);
+apply_filters( 'mbfw_developer_public_hooks_array', array() );
+$count_public = filtered_array( $mbfw_developer_public_hooks );
 ?>
 <!--  template file for admin settings. -->
 <div class="mbfw-section-wrap">
@@ -47,7 +47,7 @@ $count_public = filtered_array($mbfw_developer_public_hooks);
 				</thead>
 				<tbody class="mdc-data-table__content">
 				<?php
-				if ( !empty( $count_admin ) ) {
+				if ( ! empty( $count_admin ) ) {
 					foreach ( $count_admin as $k => $v ) {
 						if ( isset( $v['action_hook'] ) ) {
 							?>
@@ -115,23 +115,23 @@ $count_public = filtered_array($mbfw_developer_public_hooks);
  */
 function filtered_array( $argu ) {
 	$count_admin = array();
-	foreach ( $argu as $key => $value) {
-		foreach ( $value as $k => $originvalue) {
+	foreach ( $argu as $key => $value ) {
+		foreach ( $value as $k => $originvalue ) {
 			if ( isset( $originvalue['action_hook'] ) ) {
 				$val                            = str_replace( ' ', '', $originvalue['action_hook'] );
-				$val                            = str_replace("do_action('", '', $val );
-				$val                            = str_replace("');", '', $val);
-				$val                            = str_replace(');', '', $val);
-				$count_admin[$k]['action_hook'] = $val;
+				$val                            = str_replace( "do_action('", '', $val );
+				$val                            = str_replace( "');", '', $val );
+				$val                            = str_replace( ');', '', $val );
+				$count_admin[ $k ]['action_hook'] = $val;
 			}
 			if ( isset( $originvalue['filter_hook'] ) ) {
-				$val                            = str_replace(' ', '', $originvalue['filter_hook']);
-				$val                            = str_replace("apply_filters('", '', $val );
-				$val                            = str_replace("',array());", '', $val);
-				$count_admin[$k]['filter_hook'] = $val;
+				$val                            = str_replace( ' ', '', $originvalue['filter_hook'] );
+				$val                            = str_replace( "apply_filters('", '', $val );
+				$val                            = str_replace( "',array());", '', $val );
+				$count_admin[ $k ]['filter_hook'] = $val;
 			}
 			$vale                    = str_replace( '//desc - ', '', $originvalue['desc'] );
-			$count_admin[$k]['desc'] = $vale;
+			$count_admin[ $k ]['desc'] = $vale;
 		}
 	}
 	return $count_admin;

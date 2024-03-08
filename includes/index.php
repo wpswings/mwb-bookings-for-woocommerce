@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Provide a includes area view for the plugin
  *

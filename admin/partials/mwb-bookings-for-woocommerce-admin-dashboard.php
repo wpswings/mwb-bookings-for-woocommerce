@@ -116,12 +116,22 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			do_action( 'mwb_mbfw_before_general_settings_form' );
 			// if submenu is directly clicked on woocommerce.
 			if ( empty( $mbfw_active_tab ) ) {
-				$mbfw_active_tab = 'mwb_mbfw_plug_general';
+				$mbfw_active_tab = 'mwb-bookings-for-woocommerce-general';
 			}
-			// look for the path based on the tab id in the admin templates.
-			$mbfw_default_tabs     = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
-			$mbfw_tab_content_path = $mbfw_default_tabs[ $mbfw_active_tab ]['file_path'];
-			$mbfw_mwb_mbfw_obj->mwb_mbfw_plug_load_template( $mbfw_tab_content_path );
+
+			// Look for the path based on the tab id in the admin templates.
+			$mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
+
+			// Check if the key exists before accessing it.
+			if ( isset( $mbfw_default_tabs[ $mbfw_active_tab ]['file_path'] ) ) {
+				$mbfw_tab_content_path = $mbfw_default_tabs[ $mbfw_active_tab ]['file_path'];
+				$mbfw_mwb_mbfw_obj->mwb_mbfw_plug_load_template( $mbfw_tab_content_path );
+			} else {
+				// Handle the case where the key does not exist.
+				// You might want to set a default value or display an error message.
+				$mbfw_tab_content_path = $mbfw_default_tabs['mwb-bookings-for-woocommerce-general']['file_path'];
+				$mbfw_mwb_mbfw_obj->mwb_mbfw_plug_load_template( $mbfw_tab_content_path );
+			}
 			/**
 			 * Filter is for returning something.
 			 *

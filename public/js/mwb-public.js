@@ -4,11 +4,12 @@ jQuery(document).ready(function($){
         jQuery(this).toggleClass('booking-toggler-reverse');
         jQuery(this).siblings('.mwb-mbfw-user-booking-meta-data-listing').slideToggle('slow');
     })
+   
 
     if( mwb_mbfw_public_obj.daily_start_time != '' && mwb_mbfw_public_obj.daily_end_time != '' ) {
         
         $('.mwb_mbfw_time_date_picker_frontend').datetimepicker({
-            format  : 'd-m-Y H:i',
+            format  : 'd-m-Y H:00',
             minTime: mwb_mbfw_public_obj.daily_start_time,
             maxTime : mwb_mbfw_public_obj.daily_end_time + 1,
             // minTime : mwb_mbfw_common_obj.minTime
@@ -40,6 +41,7 @@ jQuery(document).ready(function($){
 
     var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday;
     var is_pro_active = mwb_mbfw_public_obj.is_pro_active
+    var available_dates = mwb_mbfw_public_obj.single_available_dates;
     if( is_pro_active != 'yes' ) {
 
         if( upcoming_holiday.length > 0 ){
@@ -72,20 +74,33 @@ jQuery(document).ready(function($){
     var wps_available_slots = mwb_mbfw_public_obj.wps_available_slots;
     var booking_unit = mwb_mbfw_public_obj.booking_unit;
     var booking_unavailable = mwb_mbfw_public_obj.booking_unavailable;
+    if (mwb_mbfw_public_obj.single_unavailable_dates==''){
+        mwb_mbfw_public_obj.single_unavailable_dates.push("1970-01-01");
+    }
     if (booking_unit === 'hour') {
         $('#wps_booking_single_calendar_form').datetimepicker({
 			format     : 'd-m-Y',
 			timepicker : false,
-			minDate: new Date(),
+            minDate: new Date(),
+            beforeShowDay: function (date) {
+                var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                return [available_dates.indexOf(formattedDate) > -1];
+            }
 			
 		});
+
+
+        
+
+       
         
         if (wps_available_slots != '') {
             
             
             jQuery("#wps_booking_single_calendar_form").datetimepicker({
-                
+             
                 onSelectDate: function (ct,$i) {
+                  
                     var selected_date = moment(ct).format('D-M-Y');
                     var date_array = selected_date.split("-");
                     
@@ -120,7 +135,7 @@ jQuery(document).ready(function($){
         
                      
                     
-                    jQuery('.wps_cal_timeslot button').on('click', function (e) {
+                    jQuery('.wps_cal_timeslot button').on('click touchstart', function (e) {
                         e.preventDefault();
                     
                         jQuery(this).trigger('close.xdsoft');
@@ -134,17 +149,44 @@ jQuery(document).ready(function($){
             
         }
     } else {
-        var available_dates = mwb_mbfw_public_obj.single_available_dates;
-        console.log(available_dates);
-        $('#wps_booking_single_calendar_form').multiDatesPicker({
-            dateFormat: "yy-mm-dd",
-            minDate: new Date(),
-            addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
-            beforeShowDay: function (date) {
-                var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                return [available_dates.indexOf(formattedDate) > -1];
-            }
-        });
+   
+       
+   $('#wps_booking_single_calendar_form').multiDatesPicker({
+    dateFormat: "yy-mm-dd",
+    minDate: new Date(),
+    
+});
+      
+            jQuery('#wps_booking_single_calendar_form').multiDatesPicker({
+                dateFormat: "yy-mm-dd",
+                minDate: new Date(),
+                
+                addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
+                beforeShowDay: function (date) {
+                    var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);    
+                    var price = mwb_mbfw_public_obj.single_unavailable_prices[formattedDate];
+                    if ( price != undefined ){
+                        
+                        return [available_dates.indexOf(formattedDate) > -1, 'wps-available-day', price];
+                    } else{
+
+                        if ($.inArray(formattedDate, available_dates) != -1) {
+                            // Date is available
+                            return [available_dates.indexOf(formattedDate) > -1,'wps-available-day'];
+                          } else {
+                            // Date is unavailable
+                            return [available_dates.indexOf(formattedDate) > -1,'wps-unavailable-day'];
+                          }
+                       
+                       
+                    }
+                    
+                }
+            });
+
+
+
+
     }
     
 });

@@ -76,7 +76,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->version = MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.1.0';
+			$this->version = '3.1.6';
 		}
 
 		$this->plugin_name = 'bookings-for-woocommerce';
@@ -239,13 +239,15 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter( 'manage_edit-mwb_booking_service_columns', $mbfw_plugin_admin, 'mbfw_adding_custom_column_booking_services_taxonomy_table' );
 			$this->loader->add_filter( 'manage_mwb_booking_service_custom_column', $mbfw_plugin_admin, 'mbfw_adding_custom_column_data_booking_services_taxonomy_table', 10, 3 );
 			// customisation on order listing page.
+			$this->loader->add_action( 'manage_woocommerce_page_wc-orders_custom_column', $mbfw_plugin_admin, 'mbfw_add_label_for_booking_type_temp', 20, 2 );
 			$this->loader->add_action( 'manage_shop_order_posts_custom_column', $mbfw_plugin_admin, 'mbfw_add_label_for_booking_type', 20, 2 );
+
 			$this->loader->add_action( 'restrict_manage_posts', $mbfw_plugin_admin, 'mbfw_add_filter_on_order_listing_page' );
 			$this->loader->add_action( 'pre_get_posts', $mbfw_plugin_admin, 'mbfw_vary_query_to_list_only_booking_types' );
 			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data' );
 			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $mbfw_plugin_admin, 'mbfw_change_line_item_meta_key_order_edit_page', 10, 3 );
-			$this->loader->add_action('woocommerce_before_calculate_totals', $mbfw_plugin_admin, 'wps_mbfw_change_cart_item_quantities', 20, 1 );
-			
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_admin, 'wps_mbfw_change_cart_item_quantities', 20, 1 );
+
 		}
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );
 	}
@@ -275,9 +277,9 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_common, 'mwb_mbfw_show_extra_charges_in_total' );
 			$this->loader->add_action( 'woocommerce_new_order', $mbfw_plugin_common, 'mwb_bfwp_set_order_as_mwb_booking', 10, 2 );
 			$this->loader->add_action( 'woocommerce_thankyou', $mbfw_plugin_common, 'mwb_bfwp_change_order_status' );
-			$this->loader->add_filter( 'woocommerce_valid_order_statuses_for_cancel', $mbfw_plugin_common, 'mwb_mbfw_set_cancel_order_link_order_statuses', 10, 2 );
 			$this->loader->add_action( 'woocommerce_order_item_meta_end', $mbfw_plugin_common, 'mbfw_show_booking_details_on_my_account_page_user', 10, 3 );
 			$this->loader->add_filter( 'woocommerce_valid_order_statuses_for_order_again', $mbfw_plugin_common, 'mwb_mbfw_hide_reorder_button_my_account_orders' );
+			$this->loader->add_action( 'wp_ajax_bfw_cancelled_booked_order', $mbfw_plugin_common, 'wps_bfw_cancelled_booked_order' );
 		}
 	}
 
@@ -303,14 +305,16 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $mbfw_plugin_public, 'mwb_mbfw_add_custom_order_item_meta_data', 10, 4 );
 			$this->loader->add_action( 'mwb_mbfw_add_calender_or_time_selector_for_booking', $mbfw_plugin_public, 'mwb_mbfw_show_date_time_selector_on_single_product_page', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_quantity_input_args', $mbfw_plugin_public, 'mwb_mbfw_set_max_quantity_to_be_booked_by_individual', 10, 2 );
-			$this->loader->add_action('mwb_booking_before_add_to_cart_button', $mbfw_plugin_public, 'mwb_mbfw_show_location_on_map', 10, 1 );
+			$this->loader->add_action( 'mwb_booking_before_add_to_cart_button', $mbfw_plugin_public, 'mwb_mbfw_show_location_on_map', 10, 1 );
 			$this->loader->add_action( 'init', $mbfw_plugin_public, 'wps_my_bookings_register_endpoint' );
 			// Add query variable.
 			$this->loader->add_action( 'query_vars', $mbfw_plugin_public, 'wps_mybookings_endpoint_query_var', 0 );
 			// Inserting custom My Event tab.
-			$this->loader->add_action( 'woocommerce_account_menu_items', $mbfw_plugin_public, 'wps_bookings_add_mybookings_tab',1,1 );
+			$this->loader->add_action( 'woocommerce_account_menu_items', $mbfw_plugin_public, 'wps_bookings_add_mybookings_tab', 1, 1 );
 			// Populate mmbership details tab.
 			$this->loader->add_action( 'woocommerce_account_wps-mybookings-tab_endpoint', $mbfw_plugin_public, 'wps_mybookings_populate_tab' );
+			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_before', $mbfw_plugin_public, 'wps_mybookings_block_cart_page' );
+			$this->loader->add_filter( 'woocommerce_store_api_product_quantity_limit', $mbfw_plugin_public, 'mwb_mbfw_add_limit_to_cart_page_for_booking_product', 10, 2 );
 		}
 	}
 
@@ -417,11 +421,11 @@ class Mwb_Bookings_For_Woocommerce {
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-overview.php',
 		);
 
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
-			'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
-			'name'      => 'mwb-bookings-for-woocommerce-developer',
-			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php',
-		);
+		// $mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
+		// 'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
+		// 'name'      => 'mwb-bookings-for-woocommerce-developer',
+		// 'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php',
+		// );
 		return $mbfw_default_tabs;
 	}
 	/**
@@ -463,7 +467,7 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @param array  $params parameters to pass to the file for access.
 	 */
 	public function mwb_mbfw_plug_load_template( $path, $params = array() ) {
-		if ( file_exists( $path ) ) {
+		if ( null !== $path && file_exists( $path ) ) {
 			include $path;
 		} else {
 			/* translators: %s: file path */

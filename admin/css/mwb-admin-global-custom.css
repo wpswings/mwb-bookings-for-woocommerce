@@ -16,6 +16,10 @@ th#taxonomy-mwb_booking_service, th#taxonomy-mwb_booking_cost {
   font-family: WooCommerce;
   content: '\e02c';
 }
+#woocommerce-product-data ul.wc-tabs li.set_unit_cost_for_year_tab.show_if_mwb_booking a:before {
+  font-family: WooCommerce;
+  content: '\e02c';
+}
 
 #woocommerce-product-data ul.wc-tabs li.services_tab.show_if_mwb_booking a:before {
   font-family: WooCommerce;

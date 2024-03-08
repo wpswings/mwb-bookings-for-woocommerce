@@ -169,7 +169,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		if ( $this->mwb_mbfw_valid_page_screen_check() || $is_valid ) {
 			// comment the line of code Only when your plugin doesn't uses the Select2.
 			wp_enqueue_style( 'mwb-mbfw-onboarding-select2-style', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all' );
-			
+
 			wp_enqueue_style( 'mwb-mbfw-meterial-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-mbfw-meterial-css2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-mbfw-meterial-lite', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
@@ -215,13 +215,13 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 					'mbfw_auth_nonce'    => wp_create_nonce( 'mwb_mbfw_onboarding_nonce' ),
 					'mbfw_current_screen'    => $pagenow,
-					'mbfw_current_supported_slug'    => 
+					'mbfw_current_supported_slug'    =>
 					/**
 					 * Desc - filter for trial.
 					 *
 					 * @since 1.0.0
 					 */
-					apply_filters('mwb_mbfw_deactivation_supported_slug', array( $mbfw_current_slug ) ),
+					apply_filters( 'mwb_mbfw_deactivation_supported_slug', array( $mbfw_current_slug ) ),
 				)
 			);
 		}
@@ -258,7 +258,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function mwb_mbfw_skip_onboarding_popup() {
 
-	 $get_skipped_timstamp = update_option( 'mwb_mbfw_onboarding_data_skipped', time() );
+		$get_skipped_timstamp = update_option( 'mwb_mbfw_onboarding_data_skipped', time() );
 		echo wp_json_encode( 'true' );
 		wp_die();
 	}
@@ -676,7 +676,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 * @since       2.0.0
 	 */
 	protected function mwb_mbfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
-		
+
 		if ( 'onboarding' === $action_type ) {
 			$form_id = self::$mwb_mbfw_onboarding_form_id;
 		} else {
@@ -686,7 +686,6 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		$url = 'submissions/v3/integration/submit/' . self::$mwb_mbfw_portal_id . '/' . $form_id;
 
 		$headers = 'Content-Type: application/json';
-
 
 		$form_data = wp_json_encode(
 			array(
@@ -698,7 +697,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 				),
 			)
 		);
-	
+
 		$response = $this->mwb_mbfw_hic_post( $url, $form_data, $headers );
 
 		if ( 200 == $response['status_code'] ) { // phpcs:ignore

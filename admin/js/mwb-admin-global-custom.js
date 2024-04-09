@@ -1,4 +1,13 @@
 jQuery(function ($) {
+
+    
+    
+    jQuery('.inventory_tab').on('click', function (e) {
+        jQuery('.stock_fields').show();
+        jQuery('._manage_stock_field').show();
+        
+    });
+
     jQuery('p.submit #submit').on('click', function (e) {
         var value = jQuery('#mwb_mbfw_booking_cost').val();
         if (value < 0) {

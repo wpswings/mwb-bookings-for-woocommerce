@@ -776,6 +776,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			return;
 		}
 		$order = wc_get_order( $order_id );
+
 		if ( 'on-hold' === $order->get_status() ) {
 			return;
 		}
@@ -852,6 +853,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 		if ( 'mwb_booking' === $item->get_product()->get_type() ) {
 			?>
+			
 			<span class="mwb-mbfw-ser-booking-toggler"></span>
 			<table class="mwb-mbfw-user-booking-meta-data-listing">
 				<?php

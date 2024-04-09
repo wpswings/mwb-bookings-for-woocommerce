@@ -236,7 +236,7 @@ div.wps_cal_timeslot span {
   margin: 4px 4px;
 }
 
-input#wps_booking_single_calendar_form {
+input#wps_booking_single_calendar_form_ {
   width: 300px;
 }
 
@@ -258,3 +258,32 @@ input#wps_booking_single_calendar_form {
   text-align: center;
 }
 
+
+
+
+
+
+.wps_booking_tooltip {
+  position: absolute;
+  z-index: 1;
+  visibility: hidden;
+  background-color: #555;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 12px;
+}
+
+/* Show tooltip on hover */
+.flatpickr-days .flatpickr-day:hover .wps_booking_tooltip {
+  visibility: visible;
+}
+
+
+.price {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  margin-top: 2px;
+}

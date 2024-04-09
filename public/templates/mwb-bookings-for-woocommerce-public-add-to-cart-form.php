@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $product;
 $product_id = get_the_id();
+
 if ( empty( $product->get_type() ) || 'mwb_booking' !== $product->get_type() ) {
 	exit;
 }

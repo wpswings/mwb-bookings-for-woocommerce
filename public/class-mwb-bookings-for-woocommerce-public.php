@@ -60,7 +60,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	public function mbfw_public_enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/datepicker.css', array(), $this->version, 'all' );
-
+	
+		wp_enqueue_style( 'flatpickercss', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.css', array(), $this->version, 'all' );	
 	}
 
 	/**
@@ -70,6 +71,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mbfw_public_enqueue_scripts() {
 
+		wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), time(), true );
 		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
 		$daily_start_time = '';
 		$daily_end_time = '';
@@ -153,10 +155,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							if ( $is_pro_active ) {
 								
 								$price = get_post_meta( $product_id, $key, true );
-								$date_price = gmdate( 'Y-m-d', strtotime( $values ) );
-								$date_price = str_replace( ',', '', $date_price );
-								$currency_symbol = get_woocommerce_currency_symbol();
-								$single_unavailable_prices[ $date_price ] = $currency_symbol . $price;
+								if ( ! empty( $price ) ) {
+									$date_price = gmdate( 'Y-m-d', strtotime( $values ) );
+									$date_price = str_replace( ',', '', $date_price );
+									$currency_symbol = get_woocommerce_currency();
+									$single_unavailable_prices[ $date_price ] = $currency_symbol.' '. $price;
+
+								}
+								
 							}
 						}
 					}
@@ -236,6 +242,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 										$single_unavailable_dates[] = $k;
 										if ( $is_pro_active ) {
+											
 											$price = get_post_meta( $product_id, $key, true );
 
 											$single_unavailable_prices[ $k ] = $price;
@@ -254,8 +261,26 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			if ( '1970-01-01' == $single_available_dates[0] ) {
 
 				$single_available_dates = $date_array;
+				foreach ( $single_available_dates as $key => $values ) {
+					$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
+					$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $values ) );
+
+					if ( $is_pro_active ) {
+						
+						$price = get_post_meta( $product_id, $key, true );
+						if (! empty( $price ) ) {
+							$date_price = gmdate( 'n/d/Y', strtotime( $values ) );
+							$date_price = str_replace( ',', '', $date_price );
+							$currency_symbol = get_woocommerce_currency();
+							$single_unavailable_prices[ $date_price ] = $currency_symbol . ' ' . $price;
+
+						}
+						
+					}
+				}
 			}
 		}
+		//print_r($single_unavailable_prices);
 
 		wp_localize_script(
 			$this->plugin_name . 'public',
@@ -289,6 +314,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mbfw_add_custom_fields_before_add_to_cart_button() {
 		global $product;
+
 		if ( is_object( $product ) && 'mwb_booking' === $product->get_type() ) {
 			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/mwb-bookings-for-woocommerce-public-add-to-cart-form.php';
 		}
@@ -442,6 +468,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$class = false;
 		$class2 = '';
 		$accepted_pattern = '';
+		$attr = '';
+		wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true );
 		if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 			$label1 = __( 'From', 'mwb-bookings-for-woocommerce' );
 			$label2 = __( 'To', 'mwb-bookings-for-woocommerce' );
@@ -453,15 +481,18 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$label1 = __( 'Check in', 'mwb-bookings-for-woocommerce' );
 			$label2 = __( 'Check out', 'mwb-bookings-for-woocommerce' );
 			$class            = 'mwb_mbfw_date_picker_frontend';
+			$attr = 'data-id="multiple"';
 			$accepted_pattern = '(\d{2})-(\d{2})-(\d{4})$';
+			
 			if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_show_date_with_time', true ) ) {
+
 				$label1 = __( 'From', 'mwb-bookings-for-woocommerce' );
 				$label2 = __( 'To', 'mwb-bookings-for-woocommerce' );
 				$class            = 'mwb_mbfw_time_date_picker_frontend';
 				$accepted_pattern = '(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2})$';
 			}
 		}
-
+	
 		if ( $class ) {
 			do_action( 'wps_mbfw_add_html_before_calender' );
 			$wps_cal_type = wps_booking_get_meta_data( $product_id, 'wps_mbfw_booking_type', true );
@@ -474,14 +505,31 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					?>
 					<div class="mbfw-date-picker-section">
 						<label for="wps_booking_single_calendar_form"><?php esc_html_e( 'Choose Booking date', 'mwb-bookings-for-woocommerce' ); ?></label>
-						<input type="text" name="wps_booking_single_calendar_form" id="wps_booking_single_calendar_form" class="<?php echo esc_attr( $class2 ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>"  required />
+						<!-- -->
+						<?php
+						if ( ! empty( $attr ) ) {
+							?>
+							<input id="wps_booking_single_calendar_form_" name="wps_booking_single_calendar_form" <?php echo esc_attr( $attr ); ?>  class="flatpickr flatpickr-input active"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">
+							<?php
+						} else{
+							?>
+							 <input type="text" name="wps_booking_single_calendar_form" id="wps_booking_single_calendar_form" class="<?php echo esc_attr( $class2 ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>"  required />
+							<?php
+						}
+
+						?>
+						
+						
+					
 					</div>
 
 				<?php } else { ?>
 					<div class="mbfw-date-picker-section">
 					<label for="mwb-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 					<input type="text" name="mwb_mbfw_booking_from_time" id="mwb-mbfw-booking-from-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( $label1 ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
-					</div>
+					<input id="mwb-mbfw-booking-from-time" name="mwb-mbfw-booking-from-time"   class="flatpickr flatpickr-input active"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">
+								
+				</div>
 					<div class="mbfw-date-picker-section">
 						<label for="mwb-mbfw-booking-to-time"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
 						<input type="text" name="mwb_mbfw_booking_to_time" id="mwb-mbfw-booking-to-time" class="<?php echo esc_attr( $class ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( $label2 ); ?>" pattern="<?php echo esc_attr( $accepted_pattern ); ?>" required />
@@ -744,6 +792,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			if ( 'yes' === wps_booking_get_meta_data( $custom_values['product_id'], 'mwb_mbfw_admin_confirmation', true ) ) {
 				update_option( 'check_order_status_mwb', $order->get_status() );
 			}
+
 		}
 	}
 
@@ -911,4 +960,25 @@ class Mwb_Bookings_For_Woocommerce_Public {
 }
 
 
+add_action( 'woocommerce_checkout_create_order', 'custom_reduce_stock_programmatically', 10, 2 );
 
+function custom_reduce_stock_programmatically( $order, $data ) {
+    // Get the order ID
+    $order_id = $order->get_id();
+
+    // Iterate through each item in the order
+    foreach ( $order->get_items() as $item_id => $item ) {
+        // Get the product object
+        $product = $item->get_product();
+
+        // Check if the product is managed stock
+        if ( $product->managing_stock() ) {
+            // Get the quantity of the product ordered
+            $quantity = $item->get_quantity();
+
+            // Reduce the stock
+            $product->set_stock_quantity( $product->get_stock_quantity() - $quantity );
+            $product->save();
+        }
+    }
+}

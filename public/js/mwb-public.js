@@ -15,6 +15,7 @@ jQuery(document).ready(function($){
             // minTime : mwb_mbfw_common_obj.minTime
         });
     }
+    
 
     var booking_product = mwb_mbfw_public_obj.booking_product;
     if (booking_product == 'yes') {
@@ -142,37 +143,64 @@ jQuery(document).ready(function($){
                
                 },
             });
+
+
             
         }
     } else {
    
        
-   $('#wps_booking_single_calendar_form').multiDatesPicker({
-    dateFormat: "yy-mm-dd",
-    minDate: new Date(),
+//    $('#wps_booking_single_calendar_form').multiDatesPicker({
+//     dateFormat: "yy-mm-dd",
+//     minDate: new Date(),
     
-});
-      
-            jQuery('#wps_booking_single_calendar_form').multiDatesPicker({
-                dateFormat: "yy-mm-dd",
-                minDate: new Date(),
-                
-                addDisabledDates: mwb_mbfw_public_obj.single_unavailable_dates,
-                beforeShowDay: function (date) {
-                    var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
-                   
-                    var price = mwb_mbfw_public_obj.single_unavailable_prices[formattedDate];
-                    if ( price != undefined ){
-                        
-                        return [available_dates.indexOf(formattedDate) > -1, 'wps-available-day', price];
-                    } else{
-                       
-                        return [available_dates.indexOf(formattedDate) > -1,'wps-unavailable-day'];
-                    }
-                    
-                }
-            });
+// });
 
+
+    debugger;
+    flatpickr('#wps_booking_single_calendar_form_', {  
+        mode: "multiple",
+    dateFormat: "Y-m-d",
+    
+    enable: available_dates ,
+
+
+    onDayCreate: function(dObj, dStr, fp, dayElem) {
+        dObj = dayElem.dateObj;
+        // Convert the date string to match the format of availableDates and unavailableDates
+      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+      
+      // Check if the date is available or unavailable
+      if (available_dates.includes(dateString)) {
+        dayElem.classList.add("wps-available-day");
+      } else {
+        dayElem.classList.add("wps-unavailable-day");
+      }
+
+      var date_val =dayElem.dateObj.toLocaleDateString()
+      var datas= date_val.split('/');
+      month = datas[0];
+      if ( month < 10 ) {
+          month = 0+''+month;
+      }
+      current_date = datas[1];
+      if ( current_date < 10 ) {
+          current_date = 0+''+current_date;
+      }
+      date_selected =  current_date = datas[2]+'-'+month+'-'+current_date;
+      var price = mwb_mbfw_public_obj.single_unavailable_prices[date_selected];
+      debugger;
+      if (price) {
+        var tooltip = document.createElement('div');
+        tooltip.className = 'wps_booking_tooltip';
+        tooltip.textContent = 'Price: ' + price + '$';
+        dayElem.appendChild(tooltip);                  
+      }   
+
+
+    },
+      
+    });
 
     }
     

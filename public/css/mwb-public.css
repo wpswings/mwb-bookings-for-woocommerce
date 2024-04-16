@@ -287,3 +287,10 @@ input#wps_booking_single_calendar_form_ {
   color: #999;
   margin-top: 2px;
 }
+
+
+.disabled-date {
+  pointer-events: none; /* Disable click events */
+  opacity: 0.5; /* Apply visual indication of disabled state */
+}
+

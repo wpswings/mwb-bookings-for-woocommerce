@@ -803,7 +803,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'type'              => 'number',
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
-					'custom_attributes' => array( 'min' => 0 ),
+					'custom_attributes' => array(
+						'step'  => '0.01', // Set the step attribute to allow decimals
+						'min'   => '0',    // Set the minimum value
+						'style' => 'width:100%;', // Adjust the style if needed
+					)
 				)
 			);
 			woocommerce_wp_checkbox(
@@ -824,7 +828,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'type'              => 'number',
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
-					'custom_attributes' => array( 'min' => 0 ),
+					'custom_attributes' => array(
+						'step'  => '0.01', // Set the step attribute to allow decimals
+						'min'   => '0',    // Set the minimum value
+						'style' => 'width:100%;', // Adjust the style if needed
+					)
 				)
 			);
 			woocommerce_wp_checkbox(
@@ -876,9 +884,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
 					'custom_attributes' => array(
-						'min' => 0,
+						'step'  => '0.01',
+						'min'   => '0',    
+						'style' => 'width:100%;', 
 						'class' => 'hide_if_bfwp_active',
-					),
+					)
 
 				)
 			);

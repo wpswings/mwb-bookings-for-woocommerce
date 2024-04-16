@@ -409,6 +409,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( ! $product_id ) {
 			wp_die();
 		}
+		
 		$services_checked = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
 		$service_quantity = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array();
 		$people_number    = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : 1;
@@ -536,7 +537,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			),
 			'general_cost'      => array(
 				'title' => __( 'General Cost', 'mwb-bookings-for-woocommerce' ),
-				'value' => $product_price,
+				'value' => $wps_general_price,
 			),
 		);
 
@@ -755,11 +756,39 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 */
 	public function mwb_bfwp_set_order_as_mwb_booking( $order_id, $order ) {
 		$order_items = $order->get_items();
+		
+		$midnight_next_day = strtotime('tomorrow');
+		$current_time = date("H:i:s");
+		$midnight_n_day = strtotime($current_time);
+		$data=$midnight_next_day - $midnight_n_day ;
 		foreach ( $order_items as $item ) {
 			$product = $item->get_product();
 			if ( 'mwb_booking' === $product->get_type() ) {
 				$order->update_meta_data( 'mwb_order_type', 'booking' );
 				$order->save();
+				$quantity                          = isset( $item['quantity'] ) ? $item['quantity'] : '';
+				$mwb_mbfw_booking_max_limit =  get_post_meta($product->get_id(),'mwb_mbfw_booking_max_limit',true);
+			$mwb_mbfw_booking_max_limit_person =  get_post_meta($product->get_id(),'mwb_mbfw_booking_max_limit_person',true);
+			$get_mwb_mbfw_booking_max_limit = get_transient( 'mwb_mbfw_booking_max_limit_' .$product->get_id());
+			$get_mwb_mbfw_booking_max_limit_person = get_transient( 'mwb_mbfw_booking_max_limit_person_' . $product->get_id().'_'.$order->get_user_id() );
+			
+			
+	 
+			if ( $get_mwb_mbfw_booking_max_limit >= $mwb_mbfw_booking_max_limit ) {
+                return;
+            }
+			if ( $get_mwb_mbfw_booking_max_limit_person >= $mwb_mbfw_booking_max_limit_person ) {
+                return;
+            }
+			$get_mwb_mbfw_booking_max_limit = intval( $get_mwb_mbfw_booking_max_limit )+ intval( $quantity );
+			$get_mwb_mbfw_booking_max_limit_person = intval( $get_mwb_mbfw_booking_max_limit_person ) + intval( $quantity );
+            if ( ! headers_sent() && did_action( 'wp_loaded' ) ) {
+                set_transient( 'mwb_mbfw_booking_max_limit_' . $product->get_id(), $get_mwb_mbfw_booking_max_limit , $data );
+				set_transient( 'mwb_mbfw_booking_max_limit_person_' . $product->get_id().'_'.$order->get_user_id(), $get_mwb_mbfw_booking_max_limit_person , $data );
+            
+			}
+
+
 				break;
 			}
 		}

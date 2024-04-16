@@ -89,7 +89,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 							<td><?php echo esc_html( $value ); ?></td>
 							<td><?php echo esc_html( $single_cal_dates ); ?></td>
 							<td><?php echo esc_html( $_order->get_status() ); ?></td>
-							<td><?php echo esc_html( $_order->get_total() ); ?></td>
+							<td><?php echo wc_price( $_order->get_total() ); ?></td>
 							<td>
 								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
 								<a class="button" href="
@@ -129,7 +129,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 							?>
 							</td>
 							<td><?php echo esc_html( $_order->get_status() ); ?></td>
-							<td><?php echo esc_html( $_order->get_total() ); ?></td>
+							<td><?php echo wc_price( $_order->get_total() ); ?></td>
 							<td>
 								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
 								<a class="button" href="
@@ -171,7 +171,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								?>
 								</td>
 							<td><?php echo esc_html( $_order->get_status() ); ?></td>
-							<td><?php echo esc_html( $_order->get_total() ); ?></td>
+							<td><?php echo wc_price( $_order->get_total() ); ?></td>
 							<td>
 								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
 								<a class="button" href="

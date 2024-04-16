@@ -134,6 +134,11 @@ function retrieve_booking_total_ajax( form_data ) {
 			processData : false,
 			contentType : false,
 			success     : function( msg ) {
+				var str1 = msg;
+				var str2 = "rror establishing a database connectio";
+				if(str1.indexOf(str2) != -1){
+					msg = '';
+				}
 				if( 'fail' == msg ) {
 					alert( 'It looks like some dates are not available in between the dates choosen by you! , please select available dates!' );
 					$('#mwb-mbfw-booking-from-time').val('');

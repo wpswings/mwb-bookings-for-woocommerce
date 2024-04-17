@@ -256,7 +256,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 											
 											// Trim whitespace from each date
 											$dates = array_map('trim', $dates);
-											print_r($dates);
+										
 											
 											
 										} else {
@@ -283,7 +283,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
-// print_r($single_unavailable_dates);
+
 		if ( ! empty( $single_available_dates ) ) {
 
 			if ( '1970-01-01' == $single_available_dates[0] ) {

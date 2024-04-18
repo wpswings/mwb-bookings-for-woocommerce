@@ -428,6 +428,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$booking_dates = array_key_exists( 'wps_booking_single_calendar_form', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_booking_single_calendar_form'] ) ) : '';
 		$unit = 1;
 		$product_price = wps_booking_get_meta_data( $product_id, '_price', true );
+		$wps_general_price ='';
+
 		if ( 'single_cal' === $booking_type ) {
 
 			if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
@@ -537,8 +539,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			),
 			'general_cost'      => array(
 				'title' => __( 'General Cost', 'mwb-bookings-for-woocommerce' ),
-				'value' => $wps_general_price,
+				'value' => $product_price,
 			),
+			
 		);
 
 		// check additional cost.
@@ -592,29 +595,24 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							<?php
 							if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 
-								// for unit cost for the year.
-								if ( ! empty( $price ) ) {
-
-									echo wp_kses_post( wc_price( $price ) );
-									esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
-								} else {
-									// for general unit cost.
-									echo wp_kses_post( wc_price( $general_price ) );
-									esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
-								}
+								
+								// for general unit cost.
+								echo wp_kses_post( wc_price( $general_price ) );
+								esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
+							
 							} else if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 
-								// for unit cost for the year.
-								if ( ! empty( $price ) ) {
+								// // for unit cost for the year.
+								// if ( ! empty( $price ) ) {
 
-									echo wp_kses_post( wc_price( $price ) );
-									esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
-								} else {
+								// 	echo wp_kses_post( wc_price( $price ) );
+								// 	esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
+								// } else {
 
 									// for general unit cost.
 									echo wp_kses_post( wc_price( $general_price ) );
 									esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
-								}
+								//}
 							}
 							?>
 							)</strong>

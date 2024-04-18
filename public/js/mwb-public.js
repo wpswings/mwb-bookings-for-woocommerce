@@ -44,7 +44,7 @@ jQuery(document).ready(function($){
     var is_pro_active = mwb_mbfw_public_obj.is_pro_active
     var available_dates = mwb_mbfw_public_obj.single_available_dates;
     if( is_pro_active != 'yes' ) {
-debugger;
+
         if( upcoming_holiday.length > 0 ){
 
             if ( jQuery('.wps_single_cal_hourly').length > 0 ) {
@@ -246,14 +246,10 @@ debugger;
     } else {
    
        
-//    $('#wps_booking_single_calendar_form').multiDatesPicker({
-//     dateFormat: "yy-mm-dd",
-//     minDate: new Date(),
-    
-// });
 
 
-    debugger;
+
+   
     flatpickr('#wps_booking_single_calendar_form_', {  
         mode: "multiple",
     dateFormat: "Y-m-d",
@@ -265,7 +261,7 @@ debugger;
         dObj = dayElem.dateObj;
         // Convert the date string to match the format of availableDates and unavailableDates
       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
-      debugger;
+     
       // Check if the date is available or unavailable
       if (available_dates.includes(dateString)) {
         if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
@@ -290,7 +286,6 @@ debugger;
       }
       date_selected =  current_date = datas[2]+'-'+month+'-'+current_date;
       var price = mwb_mbfw_public_obj.single_unavailable_prices[date_selected];
-      debugger;
       if (price) {
         var tooltip = document.createElement('div');
         tooltip.className = 'wps_booking_tooltip';

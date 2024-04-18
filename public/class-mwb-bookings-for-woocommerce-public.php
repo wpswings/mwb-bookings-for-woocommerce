@@ -200,27 +200,29 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								}
 							} else {
 
-								foreach ( $_orders as $order ) {
-									$items = $order->get_items();
-									foreach ( $items as $item ) {
-										if ( $product_id == $item['product_id'] ) {
-											$wps_single_bookings_dates = explode( ',', $item->get_meta( '_wps_single_cal_booking_dates', true ) );
 
-											if ( ! empty( $wps_single_bookings_dates ) && is_array( $wps_single_bookings_dates ) ) {
-												foreach ( $wps_single_bookings_dates as $key => $values ) {
+								$wps_single_dates_temp =	$this->mbfw_get_all_dtes_booking_occurence();
+								// foreach ( $_orders as $order ) {
+								// 	$items = $order->get_items();
+								// 	foreach ( $items as $item ) {
+								// 		if ( $product_id == $item['product_id'] ) {
+								// 			$wps_single_bookings_dates = explode( ',', $item->get_meta( '_wps_single_cal_booking_dates', true ) );
 
-													if ( key_exists( $values, $wps_single_dates_temp ) ) {
-														$quantity = $item['quantity'];
-														$wps_single_dates_temp[ trim( $values ) ] += $quantity;
-													} else {
-														$quantity = $item['quantity'];
-														$wps_single_dates_temp[ trim( $values ) ] = $quantity;
-													}
-												}
-											}
-										}
-									}
-								}
+								// 			if ( ! empty( $wps_single_bookings_dates ) && is_array( $wps_single_bookings_dates ) ) {
+								// 				foreach ( $wps_single_bookings_dates as $key => $values ) {
+
+								// 					if ( key_exists( $values, $wps_single_dates_temp ) ) {
+								// 						$quantity = $item['quantity'];
+								// 						$wps_single_dates_temp[ trim( $values ) ] += $quantity;
+								// 					} else {
+								// 						$quantity = $item['quantity'];
+								// 						$wps_single_dates_temp[ trim( $values ) ] = $quantity;
+								// 					}
+								// 				}
+								// 			}
+								// 		}
+								// 	}
+								// }
 							}
 						
 							$max_limit = '';
@@ -247,24 +249,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							if ( ! empty( $max_limit_days ) && ! empty( $wps_single_dates_temp ) ) {
 								foreach ( $wps_single_dates_temp as $k => $v ) {
 									
-								//	if ( $v >= $max_limit_days ) {
-									
-										if (strpos($k, '|') !== false) {
-											// Vertical bar exists in the date string
-											
-											$dates = explode("|", $k);
-											
-											// Trim whitespace from each date
-											$dates = array_map('trim', $dates);
+									if ( $v >= $max_limit_days ) {
 										
-											
-											
-										} else {
-											// Vertical bar does not exist in the date string
-											$k = gmdate( 'Y-m-d', strtotime( $k ) );
-										}
-										
-										
+										$k = gmdate( 'Y-m-d', strtotime( $k ) );
 
 										$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $k ) );
 
@@ -275,7 +262,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 											$single_unavailable_prices[ $k ] = $price;
 										}
-									//}
+									}
 								}
 							}
 						}
@@ -283,6 +270,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
+
 
 		if ( ! empty( $single_available_dates ) ) {
 
@@ -332,6 +320,44 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'single_unavailable_prices' => $single_unavailable_prices,
 			)
 		);
+
+	}
+
+
+	public Function mbfw_get_all_dtes_booking_occurence(){
+		global $wpdb;
+		$query = $wpdb->prepare("
+			SELECT
+				meta_value
+			FROM
+				{$wpdb->prefix}woocommerce_order_itemmeta
+			WHERE (`meta_key` = '_wps_single_cal_booking_dates' OR `meta_value` = '_wps_single_cal_booking_dates')
+				");
+
+			// Execute the query
+			$results = $wpdb->get_results($query);
+
+			foreach ($results as $item) {
+				// Split the meta_value by the vertical bar (|) to get individual dates
+				$dates = explode('|', $item->meta_value);
+
+				// Loop through each date occurrence
+				foreach ($dates as $date) {
+					// Trim whitespace from the date
+					$date = trim($date);
+
+					// Skip empty dates
+					if (!empty($date)) {
+						// Increment the count for this date in the associative array
+						$date_counts[$date] = isset($date_counts[$date]) ? $date_counts[$date] + 1 : 1;
+					}
+				}
+			}
+
+			
+			return $date_counts;
+
+
 
 	}
 

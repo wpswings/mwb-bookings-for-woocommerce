@@ -53,7 +53,7 @@ setTimeout(() => {
     var all_booking_product = booking_block_public_param.quantity__check;
 
    
-    debugger;
+  
    var booking_minus = jQuery('.wc-block-components-quantity-selector__button--minus');
 
 
@@ -69,7 +69,7 @@ setTimeout(() => {
                 var minus_product = 'Reduce quantity of '+all_booking_product[index_booking];
                 var minus_product_selector = jQuery(jQuery('.wc-block-components-quantity-selector__button--minus')[index]).attr('aria-label');
                 if (minus_product == minus_product_selector ) {
-                    debugger;
+            
                     // jQuery(jQuery('.wc-block-components-quantity-selector__button--minus')[index]).attr('disabled','disabled');
                 }   
             }

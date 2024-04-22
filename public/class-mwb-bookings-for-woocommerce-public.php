@@ -86,11 +86,13 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$single_available_dates = array();
 		$single_unavailable_dates = array();
 		$single_unavailable_prices = array();
-
+		$wps_single_dates_temp = array();
+		$wps_single_dates_temp_dual = array();
 		$current_year = gmdate( 'Y' );
 		$currentday = gmdate( 'd' );
 		$current_month = gmdate( 'm' );
 		$date_array = array();
+		$mwb_mbfw_show_date_with_time = '';
 		// Get the number of days in the current month.
 		$num_days = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
 
@@ -123,6 +125,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			global $post;
 			$product_id = $post->ID;
 			$temp_product = wc_get_product( $product_id );
+			$mwb_mbfw_show_date_with_time = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_show_date_with_time', true );
+	
 			if ( ! empty( $temp_product ) ) {
 
 				if ( 'mwb_booking' == $temp_product->get_type() ) {
@@ -179,7 +183,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 									'meta_val' => 'booking',
 								)
 							);
-							$wps_single_dates_temp = array();
+						
 							if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 								foreach ( $_orders as $order ) {
 									$items = $order->get_items();
@@ -201,7 +205,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							} else {
 
 
-								$wps_single_dates_temp =	$this->mbfw_get_all_dtes_booking_occurence();
+								$wps_single_dates_temp =	$this->mbfw_get_all_dtes_booking_occurence( $product_id );
 								// foreach ( $_orders as $order ) {
 								// 	$items = $order->get_items();
 								// 	foreach ( $items as $item ) {
@@ -224,7 +228,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								// 	}
 								// }
 							}
-						
+					
 							$max_limit = '';
 							if ( ! empty(  get_post_meta(  $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
 								$max_limit = get_post_meta(  $product_id, 'mwb_mbfw_booking_max_limit_person', true );
@@ -266,6 +270,34 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								}
 							}
 						}
+					}  elseif( 'dual_cal'  === $booking_type ){
+						$wps_single_dates_temp_dual =	$this->mbfw_get_all_dtes_booking_occurence_dual( $product_id );
+						$max_limit_days = '';
+						if ( ! empty(  get_post_meta(  $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
+							$max_limit_days = get_post_meta(  $product_id, 'mwb_mbfw_booking_max_limit_person', true );
+						} else{
+							$max_limit_days = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit', true );
+						}
+							
+						if ( ! empty( $max_limit_days ) && ! empty( $wps_single_dates_temp_dual ) ) {
+							foreach ( $wps_single_dates_temp_dual as $k => $v ) {
+								
+								if ( $v >= $max_limit_days ) {
+								
+									$k = gmdate( 'Y-m-d', strtotime( $k ) );
+
+									$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $k ) );
+
+									$single_unavailable_dates[] = $k;
+									if ( $is_pro_active ) {
+										
+										$price = get_post_meta( $product_id, $key, true );
+
+										$single_unavailable_prices[ $k ] = $price;
+									}
+								}
+							}
+						}	
 					}
 				}
 			}
@@ -296,7 +328,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
-	
 
 		wp_localize_script(
 			$this->plugin_name . 'public',
@@ -318,29 +349,171 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'single_unavailable_dates' => $single_unavailable_dates,
 				'date_format'   => get_option( 'date_format' ),
 				'single_unavailable_prices' => $single_unavailable_prices,
+				'wps_single_dates_temp' => $wps_single_dates_temp,
+				'wps_single_dates_temp_dual' => $wps_single_dates_temp_dual,
+				'mwb_mbfw_show_date_with_time' => $mwb_mbfw_show_date_with_time,
 			)
 		);
+	}
+
+	
+	public Function mbfw_get_all_dtes_booking_occurence_dual( $product_id ) {
+		global $wpdb;
+		$date_counts =array();
+		$data_dates = get_post_meta($product_id,'mwb_mbfw_booking_max_limit_dates' , true );
+		
+		$product = wc_get_product( $product_id );
+
+			$query = $wpdb->prepare("
+			SELECT meta_key, meta_value, order_item_id
+			FROM {$wpdb->prefix}woocommerce_order_itemmeta
+			WHERE order_item_id IN ($data_dates)
+			AND (meta_key = '_mwb_bfwp_date_time_to' OR meta_key = '_mwb_bfwp_date_time_from' OR meta_key = '_qty')
+		");
+
+		$results = $wpdb->get_results($query);
+
+		$date_to = '';
+		//$results = $wpdb->get_results($query);
+			// Prepare SQL query to retrieve meta values for the given order item ID
+			$dates_between = array();
+			if ($results) {
+				$combined_data = array(); // Initialize an array to store combined data
+				foreach ($results as $result) {
+					$order_item_id = $result->order_item_id;
+					$meta_key = $result->meta_key;
+					$meta_value = $result->meta_value;
+			
+					// Add data to the combined array using order_item_id as key
+					$combined_data[$order_item_id][$meta_key] = $meta_value;
+				}
+				//echo '<pre>';
+				
+				// Output the combined data
+				foreach ($combined_data as $order_item_id => $meta_data) {
+					$dates_between = array();
+					//foreach ($meta_data as $key => $value) {
+						if ( ! empty(  $meta_data ) ) {
+
+					
+							$date_from =   $meta_data['_mwb_bfwp_date_time_from'];
+						
+						
+							$date_to =$meta_data['_mwb_bfwp_date_time_to'] ;
+						
+
+						$start_date = new DateTime($date_from);
+						$end_date = new DateTime($date_to);
+					// Initialize an empty array to store the dates between the start and end dates
+						
+						
+						$current_date = clone $start_date;
+						
+						// Loop through dates and store them in the array
+						while ($current_date <= $end_date) {
+						
+							$dates_between[] = $current_date->format('Y-m-d'); // Change the format if needed
+							$current_date->modify('+1 day'); // Move to the next day
+						}
+
+						foreach ($dates_between as $date) {
+							// Trim whitespace from the date
+							$date = trim($date);
+		
+							// Skip empty dates
+							if (!empty($date)) {
+							
+								// Increment the count for this date in the associative array
+								if ( ! empty( $date_counts[$date] ) ) {
+									$date_counts[$date] = isset($meta_data['_qty']) ? $date_counts[$date] + $meta_data['_qty'] : 1;
+								
+								}else{
+									$date_counts[$date] = isset($meta_data['_qty']) ?  $meta_data['_qty'] : 1;
+								
+								}
+								
+								
+								
+							}
+						}
+
+					}
+				}
+			}
+
+
+			// Output the dates between the start and end dates
+
+				
+					
+			// if ( ! empty( $dates_between ) ) {
+
+			// 	foreach ($dates_between as $date) {
+			// 		// Trim whitespace from the date
+			// 		$date = trim($date);
+
+			// 		// Skip empty dates
+			// 		if (!empty($date)) {
+			// 			// Increment the count for this date in the associative array
+			// 			$date_counts[$date] = isset($date_counts[$date]) ? $date_counts[$date] + 1 : 1;
+			// 		}
+			// 	}
+
+			// }
+						
+			
+			
+
+
+		
+			return $date_counts;
+
+
 
 	}
 
-
-	public Function mbfw_get_all_dtes_booking_occurence(){
+	public Function mbfw_get_all_dtes_booking_occurence( $product_id ) {
 		global $wpdb;
-		$query = $wpdb->prepare("
-			SELECT
-				meta_value
-			FROM
-				{$wpdb->prefix}woocommerce_order_itemmeta
-			WHERE (`meta_key` = '_wps_single_cal_booking_dates' OR `meta_value` = '_wps_single_cal_booking_dates')
-				");
+		$date_counts =array();
+		$data_dates = get_post_meta($product_id,'mwb_mbfw_booking_max_limit_dates' , true );
+
+		$product = wc_get_product( $product_id );
+
+				$query = "
+				SELECT
+					
+					meta_value
+				FROM
+					{$wpdb->prefix}woocommerce_order_itemmeta
+				WHERE (`meta_key` = '_wps_single_cal_booking_dates' AND `meta_key` = '_qty'  AND `order_item_id` IN ($data_dates) ) 
+					
+			";
+
+			$query = $wpdb->prepare("
+			SELECT meta_key, meta_value, order_item_id
+			FROM {$wpdb->prefix}woocommerce_order_itemmeta
+			WHERE order_item_id IN ($data_dates)
+			AND (meta_key = '_wps_single_cal_booking_dates' OR meta_key = '_qty')
+		");
 
 			// Execute the query
 			$results = $wpdb->get_results($query);
-
-			foreach ($results as $item) {
+			$combined_data = array(); // Initialize an array to store combined data
+			foreach ($results as $result) {
+				$order_item_id = $result->order_item_id;
+				$meta_key = $result->meta_key;
+				$meta_value = $result->meta_value;
+		
+				// Add data to the combined array using order_item_id as key
+				$combined_data[$order_item_id][$meta_key] = $meta_value;
+			}
+			// Execute the query
+			//$results = $wpdb->get_results($query);
+	
+			foreach ($combined_data as $item) {
 				// Split the meta_value by the vertical bar (|) to get individual dates
-				$dates = explode('|', $item->meta_value);
-
+				$dates = explode('|', $item['_wps_single_cal_booking_dates']);
+				
 				// Loop through each date occurrence
 				foreach ($dates as $date) {
 					// Trim whitespace from the date
@@ -348,17 +521,23 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 					// Skip empty dates
 					if (!empty($date)) {
+					
 						// Increment the count for this date in the associative array
-						$date_counts[$date] = isset($date_counts[$date]) ? $date_counts[$date] + 1 : 1;
+						if ( ! empty( $date_counts[$date] ) ) {
+							$date_counts[$date] = isset($item['_qty']) ? $date_counts[$date] + $item['_qty'] : 1;
+						
+						}else{
+							$date_counts[$date] = isset($item['_qty']) ?  $item['_qty'] : 1;
+						
+						}
+						
+						
+						
 					}
 				}
 			}
 
-			
 			return $date_counts;
-
-
-
 	}
 
 	/**
@@ -912,7 +1091,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function wps_bookings_add_mybookings_tab( $items ) {
 		// Placing the custom tab just above logout tab.
-		$items['wps-mybookings-tab'] = esc_html__( 'my bookings', 'membership-for-woocommerce' );
+		$items['wps-mybookings-tab'] = esc_html__( 'Bookings', 'membership-for-woocommerce' );
 
 		/**
 		 * Filter for my event tab.
@@ -1061,7 +1240,31 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
+	
 		return $limit;
+	}
+
+	
+
+	public function mwb_mbfw_woocommerce_store_api_product_quantity_maximum( $value, $product, $cart_item ) {
+		$active_plugins = get_option( 'active_plugins' );
+		if ( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
+			
+
+
+			$max_quantity = 0;
+			if ( 'fixed_unit' === get_post_meta( $product->get_id(), 'mwb_mbfw_booking_criteria', true ) ) {
+				$booking_count_fixed_quantity     = get_post_meta( $product->get_id(), 'mwb_mbfw_booking_count', true );
+				
+			} 
+			if ( ! empty( $booking_count_fixed_quantity ) ) {
+				$max_quantity = $booking_count_fixed_quantity;
+			}
+	
+	
+	
+		  return $max_quantity;
+		}
 	}
 }
 

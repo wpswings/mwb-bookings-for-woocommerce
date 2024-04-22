@@ -764,29 +764,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			if ( 'mwb_booking' === $product->get_type() ) {
 				$order->update_meta_data( 'mwb_order_type', 'booking' );
 				$order->save();
-				$quantity                          = isset( $item['quantity'] ) ? $item['quantity'] : '';
-				$mwb_mbfw_booking_max_limit =  get_post_meta($product->get_id(),'mwb_mbfw_booking_max_limit',true);
-			$mwb_mbfw_booking_max_limit_person =  get_post_meta($product->get_id(),'mwb_mbfw_booking_max_limit_person',true);
-			$get_mwb_mbfw_booking_max_limit = get_transient( 'mwb_mbfw_booking_max_limit_' .$product->get_id());
-			$get_mwb_mbfw_booking_max_limit_person = get_transient( 'mwb_mbfw_booking_max_limit_person_' . $product->get_id().'_'.$order->get_user_id() );
-			
-			
-	 
-			if ( $get_mwb_mbfw_booking_max_limit >= $mwb_mbfw_booking_max_limit ) {
-                return;
-            }
-			if ( $get_mwb_mbfw_booking_max_limit_person >= $mwb_mbfw_booking_max_limit_person ) {
-                return;
-            }
-			$get_mwb_mbfw_booking_max_limit = intval( $get_mwb_mbfw_booking_max_limit )+ intval( $quantity );
-			$get_mwb_mbfw_booking_max_limit_person = intval( $get_mwb_mbfw_booking_max_limit_person ) + intval( $quantity );
-            if ( ! headers_sent() && did_action( 'wp_loaded' ) ) {
-                set_transient( 'mwb_mbfw_booking_max_limit_' . $product->get_id(), $get_mwb_mbfw_booking_max_limit , $data );
-				set_transient( 'mwb_mbfw_booking_max_limit_person_' . $product->get_id().'_'.$order->get_user_id(), $get_mwb_mbfw_booking_max_limit_person , $data );
-            
-			}
-
-
 				break;
 			}
 		}

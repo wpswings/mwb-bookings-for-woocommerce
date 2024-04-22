@@ -285,7 +285,7 @@ msgid "Daily booking start time on calendar"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:760
-msgid "Set daily booking start time on frond end"
+msgid "Set daily booking start time on frontend"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:768
@@ -293,7 +293,7 @@ msgid "Daily booking end time on calendar"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:772
-msgid "Set daily booking end time on frond end"
+msgid "Set daily booking end time on frontend"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:793

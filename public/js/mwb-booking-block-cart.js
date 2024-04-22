@@ -29,7 +29,7 @@ jQuery(document).ready( function() {
                 myArray_data['product_name_'+product_id] = product_name;
                
                 myArray.push(product_id);
-                console.log(myArray);
+                
             }
            
         }
@@ -47,43 +47,43 @@ jQuery(document).ready( function() {
 
 }
 
-setTimeout(() => {
+// setTimeout(() => {
     
-    var all_booking_product_length = booking_block_public_param.quantity__check.length;
-    var all_booking_product = booking_block_public_param.quantity__check;
+//     var all_booking_product_length = booking_block_public_param.quantity__check.length;
+//     var all_booking_product = booking_block_public_param.quantity__check;
 
    
   
-   var booking_minus = jQuery('.wc-block-components-quantity-selector__button--minus');
+//    var booking_minus = jQuery('.wc-block-components-quantity-selector__button--minus');
 
 
-   if ( booking_block_public_param.not_fixed_value != "not" ){
+//    if ( booking_block_public_param.not_fixed_value != "not" ){
 
    
-   if ( booking_minus.length > 0 ) {
+//    if ( booking_minus.length > 0 ) {
 
-    for (let index = 0; index < booking_minus.length; index++) {
-        if (  all_booking_product_length > 0 ) {
+//     for (let index = 0; index < booking_minus.length; index++) {
+//         if (  all_booking_product_length > 0 ) {
 
-            for (let index_booking = 0; index_booking < all_booking_product_length; index_booking++) {
-                var minus_product = 'Reduce quantity of '+all_booking_product[index_booking];
-                var minus_product_selector = jQuery(jQuery('.wc-block-components-quantity-selector__button--minus')[index]).attr('aria-label');
-                if (minus_product == minus_product_selector ) {
+//             for (let index_booking = 0; index_booking < all_booking_product_length; index_booking++) {
+//                 var minus_product = 'Reduce quantity of '+all_booking_product[index_booking];
+//                 var minus_product_selector = jQuery(jQuery('.wc-block-components-quantity-selector__button--minus')[index]).attr('aria-label');
+//                 if (minus_product == minus_product_selector ) {
             
-                    // jQuery(jQuery('.wc-block-components-quantity-selector__button--minus')[index]).attr('disabled','disabled');
-                }   
-            }
+//                     // jQuery(jQuery('.wc-block-components-quantity-selector__button--minus')[index]).attr('disabled','disabled');
+//                 }   
+//             }
         
 
-        }
+//         }
        
     
-    }
+//     }
 
-   }
-}
+//    }
+// }
    
-  }, "1000");
+//   }, "1000");
 
 
 });

@@ -314,6 +314,9 @@ class Mwb_Bookings_For_Woocommerce {
 			// Populate mmbership details tab.
 			$this->loader->add_action( 'woocommerce_account_wps-mybookings-tab_endpoint', $mbfw_plugin_public, 'wps_mybookings_populate_tab' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_before', $mbfw_plugin_public, 'wps_mybookings_block_cart_page' );
+			$this->loader->add_action( 'woocommerce_store_api_product_quantity_maximum', $mbfw_plugin_public, 'mwb_mbfw_woocommerce_store_api_product_quantity_maximum', 10, 3 );
+			
+			
 		}
 	}
 

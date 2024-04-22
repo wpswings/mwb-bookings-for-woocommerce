@@ -754,8 +754,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				array(
 					'id'          => 'mwb_mbfw_show_date_with_time',
 					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_show_date_with_time', true ),
-					'label'       => __( 'Enable to show time with date on calender', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'This option would enable to show time with dates on calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
+					'label'       => __( 'Enable to show check-in and check-out time with date on calender', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'This option would enable to show check-in and check-out time with dates on calendar on the site ( a calendar will be shown while booking ).', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);
@@ -765,7 +765,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'                => 'mwb_mbfw_daily_calendar_start_time',
 					'value'             => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_daily_calendar_start_time', true ),
 					'type'              => 'text',
-					'description'       => __( 'Set daily booking start time on frond end', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Set daily booking start time on frontend', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
 
@@ -777,7 +777,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'id'                => 'mwb_mbfw_daily_calendar_end_time',
 					'value'             => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_daily_calendar_end_time', true ),
 					'type'              => 'text',
-					'description'       => __( 'Set daily booking end time on frond end', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Set daily booking end time on frontend', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
 
@@ -884,7 +884,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'          => true,
 					'style'             => 'width:10em;',
 					'custom_attributes' => array(
-						'step'  => '0.01',
 						'min'   => '0',    
 						'style' => 'width:100%;', 
 						'class' => 'hide_if_bfwp_active',

@@ -322,9 +322,10 @@ jQuery(document).ready(function($){
             jQuery('#mwb_mbfw_minimum_people_per_booking').attr('max', max);
         }
     });
-   
+    
+  
     $('#mwb_mbfw_availability_settings_save').on('click', function (e) {
-        
+       
         var start = $('#mwb_mbfw_daily_start_time').val();
         var end = $('#mwb_mbfw_daily_end_time').val();
         if( start != '' && end != '') {
@@ -332,10 +333,26 @@ jQuery(document).ready(function($){
             if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
                 
                 alert('Start time should be less than end time');
+                
                 e.preventDefault();
                 
             }
         }
+
+            start__ = parseInt( start.substr(0,2) );
+            end__ = parseInt( end.substr(0,2) );
+            if( start != '' && end != '') {
+                
+                if ( moment( start__, 'DD-MM-YYYY HH:mm' ) >= moment( end__, 'DD-MM-YYYY HH:mm' ) ) {
+                    
+                    alert('Start time should be less than end time');
+                    $('#mwb_mbfw_daily_start_time').val('');
+                    e.preventDefault();
+                }
+        }
+
+
+
         let day_array = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         for (let i = 0; i < day_array.length; i++){
             let morning = jQuery('#mbfw_' + day_array[i] + '_morning').val();

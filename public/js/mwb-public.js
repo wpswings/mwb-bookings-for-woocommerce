@@ -66,6 +66,9 @@ jQuery(document).ready(function($){
                       if (upcoming_holiday.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
                     },
                 }); 
         
@@ -85,6 +88,9 @@ jQuery(document).ready(function($){
                       if (upcoming_holiday.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
                     },
                 }); 
             } else{
@@ -100,6 +106,9 @@ jQuery(document).ready(function($){
                       
                       // Check if the date is available or unavailable
                       if (upcoming_holiday.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
                     },
@@ -118,6 +127,9 @@ jQuery(document).ready(function($){
                       
                       // Check if the date is available or unavailable
                       if (upcoming_holiday.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
                     },
@@ -135,6 +147,18 @@ jQuery(document).ready(function($){
                     time_24hr: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
+                    onDayCreate: function(dObj, dStr, fp, dayElem){
+                        
+                        dObj = dayElem.dateObj;
+                        // Convert the date string to match the format of availableDates and unavailableDates
+                      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+                      
+                      // Check if the date is available or unavailable
+                    
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                    },
                     
                 }); 
         
@@ -144,12 +168,35 @@ jQuery(document).ready(function($){
                     time_24hr: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
+                    onDayCreate: function(dObj, dStr, fp, dayElem){
+                        
+                        dObj = dayElem.dateObj;
+                        // Convert the date string to match the format of availableDates and unavailableDates
+                      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+                      
+                      // Check if the date is available or unavailable
+                    
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                    },
                 }); 
             } else{
                 flatpickr('#mwb-mbfw-booking-from-time', {  
                
                     dateFormat: "d-m-Y",
-                   
+                    onDayCreate: function(dObj, dStr, fp, dayElem){
+                        
+                        dObj = dayElem.dateObj;
+                        // Convert the date string to match the format of availableDates and unavailableDates
+                      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+                      
+                      // Check if the date is available or unavailable
+                    
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                    },
                    
                 }); 
         
@@ -157,7 +204,18 @@ jQuery(document).ready(function($){
                        
                     dateFormat: "d-m-Y",
                   
-                   
+                    onDayCreate: function(dObj, dStr, fp, dayElem){
+                        
+                        dObj = dayElem.dateObj;
+                        // Convert the date string to match the format of availableDates and unavailableDates
+                      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+                      
+                      // Check if the date is available or unavailable
+                    
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                    },
                     
                 }); 
             }

@@ -324,12 +324,14 @@ jQuery(document).ready(function($){
       if (available_dates.includes(dateString)) {
         if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
             dayElem.classList.add("wps-unavailable-day");
+            dayElem.classList.add("disabled-date");
         } else{
             dayElem.classList.add("wps-available-day");
         }
        
       } else {
         dayElem.classList.add("wps-unavailable-day");
+        dayElem.classList.add("disabled-date");
       }
 
       var date_val =dayElem.dateObj.toLocaleDateString()

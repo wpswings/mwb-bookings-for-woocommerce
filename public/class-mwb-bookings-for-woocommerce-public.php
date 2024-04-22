@@ -364,32 +364,39 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		
 		$product = wc_get_product( $product_id );
 
-			$query = $wpdb->prepare("
+		$values = explode(',', $data_dates);
+
+		$placeholders = implode(', ', array_fill(0, count($values), '%s'));
+		$sql = $wpdb->prepare("
 			SELECT meta_key, meta_value, order_item_id
 			FROM {$wpdb->prefix}woocommerce_order_itemmeta
-			WHERE order_item_id IN ($data_dates)
+			WHERE order_item_id IN ({$placeholders})
 			AND (meta_key = '_mwb_bfwp_date_time_to' OR meta_key = '_mwb_bfwp_date_time_from' OR meta_key = '_qty')
-		");
+		", $values);
 
-		$results = $wpdb->get_results($query);
+
+   
+		$results = $wpdb->get_results($sql);
+
+
+
 
 		$date_to = '';
-		//$results = $wpdb->get_results($query);
-			// Prepare SQL query to retrieve meta values for the given order item ID
+
 			$dates_between = array();
 			if ($results) {
-				$combined_data = array(); // Initialize an array to store combined data
+				$combined_data = array(); 
 				foreach ($results as $result) {
 					$order_item_id = $result->order_item_id;
 					$meta_key = $result->meta_key;
 					$meta_value = $result->meta_value;
 			
-					// Add data to the combined array using order_item_id as key
+					
 					$combined_data[$order_item_id][$meta_key] = $meta_value;
 				}
-				//echo '<pre>';
 				
-				// Output the combined data
+				
+				
 				foreach ($combined_data as $order_item_id => $meta_data) {
 					$dates_between = array();
 					//foreach ($meta_data as $key => $value) {
@@ -477,46 +484,41 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$date_counts =array();
 		$data_dates = get_post_meta($product_id,'mwb_mbfw_booking_max_limit_dates' , true );
 
-		$product = wc_get_product( $product_id );
+	
 
-				$query = "
-				SELECT
-					
-					meta_value
-				FROM
-					{$wpdb->prefix}woocommerce_order_itemmeta
-				WHERE (`meta_key` = '_wps_single_cal_booking_dates' AND `meta_key` = '_qty'  AND `order_item_id` IN ($data_dates) ) 
-					
-			";
+		$values = explode(',', $data_dates);
 
-			$query = $wpdb->prepare("
+		$placeholders = implode(', ', array_fill(0, count($values), '%s'));
+		$sql = $wpdb->prepare("
 			SELECT meta_key, meta_value, order_item_id
 			FROM {$wpdb->prefix}woocommerce_order_itemmeta
-			WHERE order_item_id IN ($data_dates)
+			WHERE order_item_id IN ({$placeholders})
 			AND (meta_key = '_wps_single_cal_booking_dates' OR meta_key = '_qty')
-		");
+		", $values);
 
-			// Execute the query
-			$results = $wpdb->get_results($query);
-			$combined_data = array(); // Initialize an array to store combined data
+
+   
+		$results = $wpdb->get_results($sql);
+
+
+			$combined_data = array(); 
 			foreach ($results as $result) {
 				$order_item_id = $result->order_item_id;
 				$meta_key = $result->meta_key;
 				$meta_value = $result->meta_value;
 		
-				// Add data to the combined array using order_item_id as key
+				
 				$combined_data[$order_item_id][$meta_key] = $meta_value;
 			}
-			// Execute the query
-			//$results = $wpdb->get_results($query);
+
 	
 			foreach ($combined_data as $item) {
-				// Split the meta_value by the vertical bar (|) to get individual dates
+
 				$dates = explode('|', $item['_wps_single_cal_booking_dates']);
 				
-				// Loop through each date occurrence
+
 				foreach ($dates as $date) {
-					// Trim whitespace from the date
+
 					$date = trim($date);
 
 					// Skip empty dates
@@ -1248,6 +1250,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 	public function mwb_mbfw_woocommerce_store_api_product_quantity_maximum( $value, $product, $cart_item ) {
 		$active_plugins = get_option( 'active_plugins' );
+
 		if ( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 			
 
@@ -1265,6 +1268,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	
 		  return $max_quantity;
 		}
+		return $value;
 	}
 }
 

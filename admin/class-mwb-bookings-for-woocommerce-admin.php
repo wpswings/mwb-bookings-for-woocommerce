@@ -1122,7 +1122,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'label'       => __( 'Booking Cost', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add Booking cost here.', 'mwb-bookings-for-woocommerce' ),
 				'style'       => 'width:10em;',
-
+				'min'   => 0,
+				'step' =>'0.01',
 			),
 			array(
 				'label'       => __( 'Multiply by No. of People', 'mwb-bookings-for-woocommerce' ),
@@ -1160,6 +1161,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					style="<?php echo esc_attr( isset( $field['style'] ) ? $field['style'] : '' ); ?>"
 					name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $field['id'] ); ?>"
 					id="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>"
+					<?php echo ( isset( $field['min'] ) ? 'min="'.esc_attr( $field['min'] ).'"' : '' ); ?>
+					<?php echo ( isset( $field['step'] ) ? 'step="'.esc_attr( $field['step'] ).'"' : '' ); ?>						
 					placeholder=""
 					<?php
 					if ( isset( $field['custom_attribute'] ) && is_array( $field['custom_attribute'] ) ) {
@@ -1234,6 +1237,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'term_id'     => $term->term_id,
 				'description' => __( 'Please Add booking cost here.', 'mwb-bookings-for-woocommerce' ),
 				'style'       => 'width:10em;',
+				'min'   => 0,
+				'step' =>'0.01',
 
 			),
 			array(
@@ -1336,6 +1341,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'label'       => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
 				'description' => __( 'Please Add service cost here.', 'mwb-bookings-for-woocommerce' ),
 				'style'       => 'width:10em;',
+				'min'   => 0,
+				'step' =>'0.01',
 			),
 			array(
 				'label'       => __( 'Multiply by Number of People', 'mwb-bookings-for-woocommerce' ),
@@ -1412,6 +1419,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'term_id'     => $term->term_id,
 				'description' => __( 'Please Add service cost here.', 'mwb-bookings-for-woocommerce' ),
 				'style'       => 'width:10em;',
+				'min'   => 0,
+				'step' =>'0.01',
 			),
 			array(
 				'id'          => 'mwb_mbfw_is_service_cost_multiply_people',

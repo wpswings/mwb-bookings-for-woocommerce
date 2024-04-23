@@ -93,7 +93,52 @@ jQuery(document).ready(function($){
                       }
                     },
                 }); 
-            } else{
+            }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
+
+                flatpickr('#mwb-mbfw-booking-from-time', {  
+                    enableTime: true,
+                    dateFormat: "d-m-Y H:i",
+                    time_24hr: true,
+                    minTime: mwb_mbfw_public_obj.daily_start_time, 
+                    maxTime: mwb_mbfw_public_obj.daily_end_time, 
+                    onDayCreate: function(dObj, dStr, fp, dayElem){
+                        
+                        dObj = dayElem.dateObj;
+                        // Convert the date string to match the format of availableDates and unavailableDates
+                      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+                      
+                      // Check if the date is available or unavailable
+                    
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                    },
+                    
+                }); 
+        
+                flatpickr('#mwb-mbfw-booking-to-time', {  
+                    enableTime: true,
+                    dateFormat: "d-m-Y H:i",
+                    time_24hr: true,
+                    minTime: mwb_mbfw_public_obj.daily_start_time, 
+                    maxTime: mwb_mbfw_public_obj.daily_end_time, 
+                    onDayCreate: function(dObj, dStr, fp, dayElem){
+                        
+                        dObj = dayElem.dateObj;
+                        // Convert the date string to match the format of availableDates and unavailableDates
+                      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+                      
+                      // Check if the date is available or unavailable
+                    
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                    },
+                }); 
+
+
+            }
+             else{
                 flatpickr('#mwb-mbfw-booking-from-time', {  
                
                     dateFormat: "d-m-Y",
@@ -181,7 +226,52 @@ jQuery(document).ready(function($){
                       }
                     },
                 }); 
-            } else{
+            }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
+
+                flatpickr('#mwb-mbfw-booking-from-time', {  
+                    enableTime: true,
+                    dateFormat: "d-m-Y H:i",
+                    time_24hr: true,
+                    minTime: mwb_mbfw_public_obj.daily_start_time, 
+                    maxTime: mwb_mbfw_public_obj.daily_end_time, 
+                    onDayCreate: function(dObj, dStr, fp, dayElem){
+                        
+                        dObj = dayElem.dateObj;
+                        // Convert the date string to match the format of availableDates and unavailableDates
+                      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+                      
+                      // Check if the date is available or unavailable
+                    
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                    },
+                    
+                }); 
+        
+                flatpickr('#mwb-mbfw-booking-to-time', {  
+                    enableTime: true,
+                    dateFormat: "d-m-Y H:i",
+                    time_24hr: true,
+                    minTime: mwb_mbfw_public_obj.daily_start_time, 
+                    maxTime: mwb_mbfw_public_obj.daily_end_time, 
+                    onDayCreate: function(dObj, dStr, fp, dayElem){
+                        
+                        dObj = dayElem.dateObj;
+                        // Convert the date string to match the format of availableDates and unavailableDates
+                      var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+                      
+                      // Check if the date is available or unavailable
+                    
+                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                        dayElem.classList.add("disabled-date");
+                      }
+                    },
+                }); 
+
+
+            }
+            else{
                 flatpickr('#mwb-mbfw-booking-from-time', {  
                
                     dateFormat: "d-m-Y",

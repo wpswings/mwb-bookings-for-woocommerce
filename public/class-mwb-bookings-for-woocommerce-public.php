@@ -972,15 +972,23 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	public function mwb_mbfw_add_custom_order_item_meta_data( $item, $cart_item_key, $values, $order ) {
 
 		$custom_values = $item->legacy_values;
-		if ( 'mwb_booking' === $custom_values['data']->product_type && isset( $custom_values['mwb_mbfw_booking_values'] ) ) {
+
+		// Get the product object
+		$product = $item->get_product();
+	
+		// Get the product type
+		$product_type = $product->get_type();
+	
+
+		$product_type = $product->get_type();
+		if ( 'mwb_booking' === $product_type && isset( $custom_values['mwb_mbfw_booking_values'] ) ) {
 			$custom_booking_values                     = $custom_values['mwb_mbfw_booking_values'];
 			$line_item_meta                            = array();
 			$line_item_meta['_mwb_mbfw_people_number'] = isset( $custom_booking_values['people_number'] ) ? $custom_booking_values['people_number'] : 1;
 			$terms                                     = get_the_terms( $custom_values['product_id'], 'mwb_booking_service' );
 			$service_quantity                          = isset( $custom_booking_values['service_quantity'] ) ? $custom_booking_values['service_quantity'] : array();
 			$service_id_and_quant                      = array();
-		
-
+	
 			
 
 			if ( is_array( $terms ) ) {

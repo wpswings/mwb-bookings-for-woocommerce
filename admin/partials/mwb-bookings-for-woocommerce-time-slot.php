@@ -51,7 +51,6 @@ if ( empty( $wps_mbfw_field_data ) ) {
 									<input type="text" class="wps_mbfw_field_to" style="" name="mbfw_fields[0][_to]" id="to_fields_0" value="10:00">
 								</td>
 								<td class="wps_mbfw_remove_row">
-									<!-- <input type="button" name="wps_mbfw_remove_fields_button" class="wps_mbfw_remove_row_btn" value="Remove"> -->
 								</td>
 							</tr>
 							<?php

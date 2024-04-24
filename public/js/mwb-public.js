@@ -59,16 +59,30 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+                      
                       if (upcoming_holiday.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                 }); 
         
@@ -81,16 +95,30 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+                      
                       if (upcoming_holiday.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                 }); 
             }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
@@ -104,14 +132,31 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
-                      
-                      // Check if the date is available or unavailable
-                    
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (upcoming_holiday.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
+                      
+                    
+                    
                     },
                     
                 }); 
@@ -125,14 +170,28 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
-                      
-                      // Check if the date is available or unavailable
-                    
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (upcoming_holiday.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
+                    if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                 }); 
 
@@ -146,16 +205,31 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+                      
                       if (upcoming_holiday.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                     
+                    if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                      if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                        }else{
+                            dayElem.classList.add("wps-unavailable-day");
+                                dayElem.classList.add("disabled-date");
+                        }
                     },
                 }); 
         
@@ -167,16 +241,30 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+                      
                       if (upcoming_holiday.includes(dateString)) {
                         dayElem.classList.add("disabled-date");
                       }
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                 }); 
             }
@@ -195,14 +283,28 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+                      
                     
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                     
                 }); 
@@ -216,14 +318,28 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+
                     
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                 }); 
             }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
@@ -237,14 +353,27 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
-                    
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                     
                 }); 
@@ -258,14 +387,28 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+                      
                     
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                 }); 
 
@@ -278,14 +421,28 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+                      
                     
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                    
                 }); 
@@ -297,14 +454,28 @@ jQuery(document).ready(function($){
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        // Convert the date string to match the format of availableDates and unavailableDates
+
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
-                      // Check if the date is available or unavailable
+                      
                     
-                      if (! mwb_mbfw_public_obj.single_available_dates.includes(dateString)) {
+                      if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)){
+                        dayElem.classList.add("wps-unavailable-day");
                         dayElem.classList.add("disabled-date");
-                      }
+                        
+                    }
+                      
+                      var date1 = new Date( mwb_mbfw_public_obj.today_date_check);
+                      var date2 = new Date(dateString);
+                      
+                    
+                    if (date1 <= date2) {
+                    
+                        dayElem.classList.add("wps-available-day");			
+                    }else{
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.add("disabled-date");
+                    }
                     },
                     
                 }); 
@@ -410,7 +581,7 @@ jQuery(document).ready(function($){
         // Convert the date string to match the format of availableDates and unavailableDates
       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
      
-      // Check if the date is available or unavailable
+      
       if (available_dates.includes(dateString)) {
         if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
             dayElem.classList.add("wps-unavailable-day");

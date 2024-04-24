@@ -203,8 +203,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 									}
 								}
 							} else {
-
-								$wps_single_dates_temp = $this->mbfw_get_all_dtes_booking_occurence( $product_id );
+								if ( $is_pro_active ) {
+									$wps_single_dates_temp = $this->mbfw_get_all_dtes_booking_occurence( $product_id );
+								}
 							}
 
 							$max_limit = '';
@@ -344,6 +345,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		global $wpdb;
 		$date_counts = array();
 		$data_dates = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_dates', true );
+
 		$values = explode( ',', $data_dates );
 		$placeholders = implode( ', ', array_fill( 0, count( $values ), '%s' ) );
 		$sql = $wpdb->prepare(
@@ -412,16 +414,19 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$data_dates = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_dates', true );
 		$values = explode( ',', $data_dates );
 		$placeholders = implode( ', ', array_fill( 0, count( $values ), '%s' ) );
-		$sql = $wpdb->prepare(
-			"
+		$sql =
+		$results = $wpdb->get_results(
+			$wpdb->prepare(
+				"
 			SELECT meta_key, meta_value, order_item_id
 			FROM {$wpdb->prefix}woocommerce_order_itemmeta
 			WHERE order_item_id IN ({$placeholders})
 			AND (meta_key = '_wps_single_cal_booking_dates' OR meta_key = '_qty')
 		",
-			$values
+				$values
+			)
 		);
-		$results = $wpdb->get_results( $sql );
+
 		$combined_data = array();
 		foreach ( $results as $result ) {
 			$order_item_id = $result->order_item_id;

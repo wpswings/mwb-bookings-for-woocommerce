@@ -409,7 +409,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( ! $product_id ) {
 			wp_die();
 		}
-		
+
 		$services_checked = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
 		$service_quantity = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array();
 		$people_number    = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : 1;
@@ -428,7 +428,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$booking_dates = array_key_exists( 'wps_booking_single_calendar_form', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_booking_single_calendar_form'] ) ) : '';
 		$unit = 1;
 		$product_price = wps_booking_get_meta_data( $product_id, '_price', true );
-		$wps_general_price ='';
+		$wps_general_price = '';
 
 		if ( 'single_cal' === $booking_type ) {
 
@@ -541,7 +541,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'title' => __( 'General Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $product_price,
 			),
-			
+
 		);
 
 		// check additional cost.
@@ -595,24 +595,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							<?php
 							if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 
-								
 								// for general unit cost.
 								echo wp_kses_post( wc_price( $general_price ) );
 								esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
-							
+
 							} else if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
-
-								// // for unit cost for the year.
-								// if ( ! empty( $price ) ) {
-
-								// 	echo wp_kses_post( wc_price( $price ) );
-								// 	esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
-								// } else {
-
-									// for general unit cost.
-									echo wp_kses_post( wc_price( $general_price ) );
-									esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
-								//}
+								echo wp_kses_post( wc_price( $general_price ) );
+								esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
 							}
 							?>
 							)</strong>
@@ -634,7 +623,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 						<?php
 						if ( 'General Cost' == $title ) {
-							echo wp_kses_post( wc_price( $price ) ) . 'x' . $quantity; // phpcs:ignore WordPress
+							echo wp_kses_post( wc_price( $price ) ) . ' x ' . wp_kses_post( $quantity ); // phpcs:ignore WordPress
 
 						} else {
 							echo wp_kses_post( wc_price( $price ) );
@@ -754,11 +743,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 */
 	public function mwb_bfwp_set_order_as_mwb_booking( $order_id, $order ) {
 		$order_items = $order->get_items();
-		
-		$midnight_next_day = strtotime('tomorrow');
-		$current_time = date("H:i:s");
-		$midnight_n_day = strtotime($current_time);
-		$data=$midnight_next_day - $midnight_n_day ;
+
+		$midnight_next_day = strtotime( 'tomorrow' );
+		$current_time = gmdate( 'H:i:s' );
+		$midnight_n_day = strtotime( $current_time );
+		$data = $midnight_next_day - $midnight_n_day;
 		foreach ( $order_items as $item ) {
 			$product = $item->get_product();
 			if ( 'mwb_booking' === $product->get_type() ) {

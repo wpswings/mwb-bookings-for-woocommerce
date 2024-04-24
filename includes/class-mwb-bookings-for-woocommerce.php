@@ -316,8 +316,8 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_before', $mbfw_plugin_public, 'wps_mybookings_block_cart_page' );
 			$this->loader->add_action( 'woocommerce_store_api_product_quantity_maximum', $mbfw_plugin_public, 'mwb_mbfw_woocommerce_store_api_product_quantity_maximum', 10, 3 );
 			$this->loader->add_action( 'woocommerce_store_api_product_quantity_minimum', $mbfw_plugin_public, 'mwb_mbfw_woocommerce_store_api_product_quantity_maximum', 10, 3 );
-			
-			
+			$this->loader->add_action( 'woocommerce_checkout_create_order', $mbfw_plugin_public, 'mwb_mbfw_custom_reduce_stock_of_booking', 10, 3 );
+
 		}
 	}
 

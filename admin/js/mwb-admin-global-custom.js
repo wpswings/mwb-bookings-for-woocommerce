@@ -3,7 +3,7 @@ jQuery(function ($) {
     
     
     jQuery('.inventory_tab').on('click', function (e) {
-        jQuery('.stock_fields').show();
+        //jQuery('.stock_fields').show();
         jQuery('._manage_stock_field').show();
         
     });

@@ -81,7 +81,8 @@ if ( empty( $wps_mbfw_field_data ) ) {
 										?>
 									</td>
 								</tr>
-							<?php endforeach; 
+								<?php
+							endforeach;
 							?>
 						<?php endif; ?>				
 					</tbody>

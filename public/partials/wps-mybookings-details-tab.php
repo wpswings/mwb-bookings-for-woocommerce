@@ -73,22 +73,22 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 				$pro_short_desc = get_post_meta( $product->get_id(), '_short_description', true );
 
 				$data = array();
-				$status = '';
-				$data =	get_post_meta( $item->get_product_id(), 'mwb_bfwp_order_statuses_to_cancel', true );
-				
-				if ( 'processing' == $_order->get_status() ){
-					$status = 'wc-processing';
-				}elseif( 'pending' == $_order->get_status() ) {
-					$status = 'wc-processing';
-				}elseif( 'on-hold' == $_order->get_status() ) {
-					$status = 'wc-on-hold';
-				}elseif( 'checkout-draft' == $_order->get_status() ) {
-					$status = 'wc-checkout-draft';
-				} else{
-					$status = $_order->get_status();
+				$status_booking = '';
+				$data = get_post_meta( $item->get_product_id(), 'mwb_bfwp_order_statuses_to_cancel', true );
+
+				if ( 'processing' == $_order->get_status() ) {
+					$status_booking = 'wc-processing';
+				} elseif ( 'pending' == $_order->get_status() ) {
+					$status_booking = 'wc-processing';
+				} elseif ( 'on-hold' == $_order->get_status() ) {
+					$status_booking = 'wc-on-hold';
+				} elseif ( 'checkout-draft' == $_order->get_status() ) {
+					$status_booking = 'wc-checkout-draft';
+				} else {
+					$status_booking = $_order->get_status();
 				}
 
-				
+
 				if ( $product instanceof WC_Product && $product->is_type( 'mwb_booking' ) ) {
 
 					$booking_name     = $product->get_name();
@@ -102,13 +102,13 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 						$end_timestamp      = strtotime( gmdate( 'Y-m-d 23:59', strtotime( $single_cal_dates ) ) );
 						$gmt_offset_seconds = wps_mbfw_get_gmt_offset_seconds( $start_timestamp );
 						$calendar_url       = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
-						
+
 						?>
 						<tr>
 							<td><?php echo esc_html( $value ); ?></td>
 							<td><?php echo esc_html( $single_cal_dates ); ?></td>
 							<td><?php echo esc_html( $_order->get_status() ); ?></td>
-							<td><?php echo wc_price( $_order->get_total() ); ?></td>
+							<td><?php echo wp_kses_post( wc_price( $_order->get_total() ) ); ?></td>
 							<td>
 								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
 								<a class="button" href="
@@ -123,12 +123,12 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 							if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
 								if ( 'cancelled' !== $_order->get_status() ) {
 									if ( ! empty( $data ) ) {
-										if ( in_array( $status, $data ) ) {
+										if ( in_array( $status_booking, $data ) ) {
 											?>
 											<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 											<?php
-											}
-									} else{
+										}
+									} else {
 										?>
 										<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 										<?php
@@ -157,7 +157,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 							?>
 							</td>
 							<td><?php echo esc_html( $_order->get_status() ); ?></td>
-							<td><?php echo wc_price( $_order->get_total() ); ?></td>
+							<td><?php echo wp_kses_post( wc_price( $_order->get_total() ) ); ?></td>
 							<td>
 								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
 								<a class="button" href="
@@ -170,16 +170,16 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								</a>
 								<?php
 								if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
-									
+
 									if ( 'cancelled' !== $_order->get_status() ) {
 
 										if ( ! empty( $data ) ) {
-											if ( in_array( $status, $data ) ) {
+											if ( in_array( $status_booking, $data ) ) {
 												?>
 												<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 												<?php
-												}
-										} else{
+											}
+										} else {
 											?>
 											<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 											<?php
@@ -210,7 +210,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								?>
 								</td>
 							<td><?php echo esc_html( $_order->get_status() ); ?></td>
-							<td><?php echo wc_price( $_order->get_total() ); ?></td>
+							<td><?php echo wp_kses_post( wc_price( $_order->get_total() ) ); ?></td>
 							<td>
 								<a href="<?php echo esc_attr( $calendar_url ); ?>" class="button" style="margin-bottom:5px;" target="_blank"><?php esc_html_e( '+ Add to Google Calendar', 'mwb-bookings-for-woocommerce' ); ?></a>
 								<a class="button" href="
@@ -226,17 +226,17 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 
 									if ( 'cancelled' !== $_order->get_status() ) {
 										if ( ! empty( $data ) ) {
-											if ( in_array( $status, $data ) ) {
+											if ( in_array( $status_booking, $data ) ) {
 												?>
 												<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 												<?php
-												}
-										} else{
+											}
+										} else {
 											?>
 											<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
 											<?php
 
-										}											
+										}
 									}
 								}
 								?>

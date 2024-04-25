@@ -251,9 +251,10 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							}
 						}
 					} elseif ( 'dual_cal' === $booking_type ) {
-						$bfwp_plugin_public = new Bookings_For_Woocommerce_Pro_Public( '', '' );
-						$wps_single_dates_temp_dual = $bfwp_plugin_public->mbfw_get_all_dtes_booking_occurence_dual( $product_id );
-						
+						if ( $is_pro_active ) {
+							$bfwp_plugin_public = new Bookings_For_Woocommerce_Pro_Public( '', '' );
+							$wps_single_dates_temp_dual = $bfwp_plugin_public->mbfw_get_all_dtes_booking_occurence_dual( $product_id );
+						}
 						$max_limit_days = '';
 						if ( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
 							$max_limit_days = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true );

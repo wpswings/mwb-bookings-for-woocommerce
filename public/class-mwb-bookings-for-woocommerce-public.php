@@ -204,7 +204,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								}
 							} else {
 								if ( $is_pro_active ) {
-									$wps_single_dates_temp = $this->mbfw_get_all_dtes_booking_occurence( $product_id );
+									$bfwp_plugin_public = new Bookings_For_Woocommerce_Pro_Public( '', '' );
+									$wps_single_dates_temp = $bfwp_plugin_public->mbfw_get_all_dtes_booking_occurence( $product_id );
 								}
 							}
 
@@ -250,7 +251,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							}
 						}
 					} elseif ( 'dual_cal' === $booking_type ) {
-						$wps_single_dates_temp_dual = $this->mbfw_get_all_dtes_booking_occurence_dual( $product_id );
+						$bfwp_plugin_public = new Bookings_For_Woocommerce_Pro_Public( '', '' );
+						$wps_single_dates_temp_dual = $bfwp_plugin_public->mbfw_get_all_dtes_booking_occurence_dual( $product_id );
+						
 						$max_limit_days = '';
 						if ( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
 							$max_limit_days = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true );
@@ -334,122 +337,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		);
 	}
 
-
-	/**
-	 * Function to get all booking dates of single calender.
-	 *
-	 * @param [type] $product_id is the current product id.
-	 * @return array
-	 */
-	public function mbfw_get_all_dtes_booking_occurence_dual( $product_id ) {
-		global $wpdb;
-		$date_counts = array();
-		$data_dates = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_dates', true );
-
-		$values = explode( ',', $data_dates );
-		$placeholders = implode( ', ', array_fill( 0, count( $values ), '%s' ) );
-		$sql = $wpdb->prepare(
-			"
-			SELECT meta_key, meta_value, order_item_id
-			FROM {$wpdb->prefix}woocommerce_order_itemmeta
-			WHERE order_item_id IN ({$placeholders})
-			AND (meta_key = '_mwb_bfwp_date_time_to' OR meta_key = '_mwb_bfwp_date_time_from' OR meta_key = '_qty')
-		",
-			$values
-		);
-		$results = $wpdb->get_results( $sql );
-		$date_to = '';
-		$dates_between = array();
-		if ( $results ) {
-			$combined_data = array();
-			foreach ( $results as $result ) {
-				$order_item_id = $result->order_item_id;
-				$meta_key = $result->meta_key;
-				$meta_value = $result->meta_value;
-				$combined_data[ $order_item_id ][ $meta_key ] = $meta_value;
-			}
-			foreach ( $combined_data as $order_item_id => $meta_data ) {
-				$dates_between = array();
-				if ( ! empty( $meta_data ) ) {
-
-					$date_from = $meta_data['_mwb_bfwp_date_time_from'];
-
-					$date_to = $meta_data['_mwb_bfwp_date_time_to'];
-
-					$start_date = new DateTime( $date_from );
-					$end_date = new DateTime( $date_to );
-					$current_date = clone $start_date;
-					while ( $current_date <= $end_date ) {
-
-						$dates_between[] = $current_date->format( 'Y-m-d' );
-						$current_date->modify( '+1 day' );
-					}
-
-					foreach ( $dates_between as $date ) {
-						$date = trim( $date );
-						if ( ! empty( $date ) ) {
-							if ( ! empty( $date_counts[ $date ] ) ) {
-								$date_counts[ $date ] = isset( $meta_data['_qty'] ) ? $date_counts[ $date ] + $meta_data['_qty'] : 1;
-							} else {
-								$date_counts[ $date ] = isset( $meta_data['_qty'] ) ? $meta_data['_qty'] : 1;
-							}
-						}
-					}
-				}
-			}
-		}
-		return $date_counts;
-
-	}
-
-	/**
-	 * Function to get all booking dates of dual calender.
-	 *
-	 * @param [type] $product_id is the current product id.
-	 * @return array
-	 */
-	public function mbfw_get_all_dtes_booking_occurence( $product_id ) {
-		global $wpdb;
-		$date_counts = array();
-		$data_dates = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_dates', true );
-		$values = explode( ',', $data_dates );
-		$placeholders = implode( ', ', array_fill( 0, count( $values ), '%s' ) );
-		$sql =
-		$results = $wpdb->get_results(
-			$wpdb->prepare(
-				"
-			SELECT meta_key, meta_value, order_item_id
-			FROM {$wpdb->prefix}woocommerce_order_itemmeta
-			WHERE order_item_id IN ({$placeholders})
-			AND (meta_key = '_wps_single_cal_booking_dates' OR meta_key = '_qty')
-		",
-				$values
-			)
-		);
-
-		$combined_data = array();
-		foreach ( $results as $result ) {
-			$order_item_id = $result->order_item_id;
-			$meta_key = $result->meta_key;
-			$meta_value = $result->meta_value;
-			$combined_data[ $order_item_id ][ $meta_key ] = $meta_value;
-		}
-		foreach ( $combined_data as $item ) {
-			$dates = explode( '|', $item['_wps_single_cal_booking_dates'] );
-			foreach ( $dates as $date ) {
-
-				$date = trim( $date );
-				if ( ! empty( $date ) ) {
-					if ( ! empty( $date_counts[ $date ] ) ) {
-						$date_counts[ $date ] = isset( $item['_qty'] ) ? $date_counts[ $date ] + $item['_qty'] : 1;
-					} else {
-						$date_counts[ $date ] = isset( $item['_qty'] ) ? $item['_qty'] : 1;
-					}
-				}
-			}
-		}
-		return $date_counts;
-	}
 
 	/**
 	 * Adding custom fields before add to cart button.

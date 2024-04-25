@@ -1153,7 +1153,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$active_plugins = get_option( 'active_plugins' );
 		$max_quantity = 0;
 		if ( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
-		
+
 			if ( 'fixed_unit' === get_post_meta( $product->get_id(), 'mwb_mbfw_booking_criteria', true ) ) {
 				$booking_count_fixed_quantity     = get_post_meta( $product->get_id(), 'mwb_mbfw_booking_count', true );
 			}
@@ -1161,7 +1161,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$max_quantity = $booking_count_fixed_quantity;
 				return $max_quantity;
 			}
-			
 		}
 		return $value;
 	}

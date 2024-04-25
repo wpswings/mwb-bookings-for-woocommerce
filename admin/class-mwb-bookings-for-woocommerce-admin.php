@@ -1047,8 +1047,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				return;
 			}
 
-			
-
 			$product_meta_data = array(
 				'mwb_mbfw_booking_criteria'                => array_key_exists( 'mwb_mbfw_booking_criteria', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_criteria'] ) ) : '',
 				'wps_mbfw_booking_type'                    => array_key_exists( 'wps_mbfw_booking_type', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_booking_type'] ) ) : '',
@@ -1084,8 +1082,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'_sku'                  => array_key_exists( '_sku', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_sku'] ) ) : '',
 				'_manage_stock'                     => array_key_exists( '_manage_stock', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_manage_stock'] ) ) : '',
 			);
-			
-
 
 			$product_meta_data =
 			/**
@@ -1095,16 +1091,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			 */
 			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data, $id );
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
-				if (strpos($meta_key, 'wps_mbfw_unit_') !== false) {
+				if ( strpos( $meta_key, 'wps_mbfw_unit_' ) !== false ) {
 					if ( ! empty( $meta_value ) ) {
 						wps_booking_update_meta_data( $id, $meta_key, $meta_value );
 					}
-				}else{
+				} else {
 					wps_booking_update_meta_data( $id, $meta_key, $meta_value );
 				}
-								
 			}
-			
+
 			wp_set_object_terms( $id, array( 'booking' ), 'product_cat', true );
 			wp_remove_object_terms( $id, 'uncategorized', 'product_cat' );
 			/**

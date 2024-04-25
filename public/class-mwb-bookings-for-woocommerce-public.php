@@ -1151,15 +1151,17 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_mbfw_woocommerce_store_api_product_quantity_maximum( $value, $product, $cart_item ) {
 		$active_plugins = get_option( 'active_plugins' );
+		$max_quantity = 0;
 		if ( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
-			$max_quantity = 0;
+		
 			if ( 'fixed_unit' === get_post_meta( $product->get_id(), 'mwb_mbfw_booking_criteria', true ) ) {
 				$booking_count_fixed_quantity     = get_post_meta( $product->get_id(), 'mwb_mbfw_booking_count', true );
 			}
 			if ( ! empty( $booking_count_fixed_quantity ) ) {
 				$max_quantity = $booking_count_fixed_quantity;
+				return $max_quantity;
 			}
-			return $max_quantity;
+			
 		}
 		return $value;
 	}

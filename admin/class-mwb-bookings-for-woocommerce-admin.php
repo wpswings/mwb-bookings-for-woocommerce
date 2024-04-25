@@ -1083,6 +1083,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'_manage_stock'                     => array_key_exists( '_manage_stock', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_manage_stock'] ) ) : '',
 			);
 
+
+
+
 			$product_meta_data =
 			/**
 			 * Filter is for returning something.
@@ -1090,6 +1093,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			 * @since 1.0.0
 			 */
 			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data, $id );
+
+			
+		
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 				if ( strpos( $meta_key, 'wps_mbfw_unit_' ) !== false ) {
 					if ( ! empty( $meta_value ) ) {

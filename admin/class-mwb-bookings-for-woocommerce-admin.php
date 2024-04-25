@@ -1095,14 +1095,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			 */
 			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data, $id );
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
-
-				if ( ! empty( $meta_value ) ) {
+				if (strpos($meta_key, 'wps_mbfw_unit_') !== false) {
+					if ( ! empty( $meta_value ) ) {
+						wps_booking_update_meta_data( $id, $meta_key, $meta_value );
+					}
+				}else{
 					wps_booking_update_meta_data( $id, $meta_key, $meta_value );
 				}
-				if( $meta_key == 'wps_bfwp_weekly_off_day'){
-					wps_booking_update_meta_data( $id, $meta_key, $meta_value );
-				}
-				
+								
 			}
 			
 			wp_set_object_terms( $id, array( 'booking' ), 'product_cat', true );

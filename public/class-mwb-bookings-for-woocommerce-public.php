@@ -155,7 +155,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					if ( ! empty( $single_available_date_array ) && is_array( $single_available_date_array ) ) {
 						foreach ( $single_available_date_array as $key => $values ) {
 							$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
-							$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $values ) );
+							$key = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $values ) );
 
 							if ( $is_pro_active ) {
 
@@ -236,7 +236,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 										$k = gmdate( 'Y-m-d', strtotime( $k ) );
 
-										$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $k ) );
+										$key = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $k ) );
 
 										$single_unavailable_dates[] = $k;
 										if ( $is_pro_active ) {
@@ -265,7 +265,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 									$k = gmdate( 'Y-m-d', strtotime( $k ) );
 
-									$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $k ) );
+									$key = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $k ) );
 
 									$single_unavailable_dates[] = $k;
 									if ( $is_pro_active ) {
@@ -289,7 +289,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$single_available_dates = $date_array;
 				foreach ( $single_available_dates as $key => $values ) {
 					$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
-					$key = 'wps_mbfw_' . gmdate( 'd-M-Y', strtotime( $values ) );
+					$key = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $values ) );
 
 					if ( $is_pro_active ) {
 

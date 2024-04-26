@@ -437,9 +437,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$unit = count( $booking_dates );
 				$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_day_single', $product_price, $product_id, $booking_dates, $unit );
 			} else {
-				$booking_dates = explode( ' ', $booking_dates );
-				$date_time_from = $booking_dates[0] . ' ' . $booking_dates[1];
-				$date_time_to   = $booking_dates[0] . ' ' . $booking_dates[3];
+				if ( ! empty( $booking_dates ) ) {
+					$booking_dates = explode( ' ', $booking_dates );
+					$date_time_from = $booking_dates[0] . ' ' . $booking_dates[1];
+					$date_time_to   = $booking_dates[0] . ' ' . $booking_dates[3];
+				}				
 				$from_timestamp = strtotime( $date_time_from );
 				$to_timestamp = strtotime( $date_time_to );
 				$unit_timestamp = $to_timestamp - $from_timestamp;

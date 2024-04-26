@@ -205,7 +205,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							} else {
 								if ( $is_pro_active ) {
 									$bfwp_plugin_public = new Bookings_For_Woocommerce_Pro_Public( '', '' );
-									$wps_single_dates_temp = $bfwp_plugin_public->mbfw_get_all_dtes_booking_occurence( $product_id );
+									$wps_single_dates_temp = $bfwp_plugin_public->mbfw_get_all_dtes_booking_occurence__( $product_id );
 								}
 							}
 

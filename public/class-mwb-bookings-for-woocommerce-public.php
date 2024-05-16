@@ -84,6 +84,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$booking_slot_array = array();
 		$booking_unavailable = array();
 		$single_available_dates = array();
+		$single_availables_till = array();
 		$single_unavailable_dates = array();
 		$single_unavailable_prices = array();
 		$wps_single_dates_temp = array();
@@ -284,32 +285,40 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					}
 				}
 			}
+			$single_availables_till = wps_booking_get_meta_data( $product_id, 'wps_mbfw_set_availability_upto', true );
 		}
+		
+		
 
-		if ( ! empty( $single_available_dates ) ) {
+		if ( ! empty( $single_availables_till ) ) {
+			
+		} else{
+			if ( ! empty( $single_available_dates ) ) {
 
-			if ( '1970-01-01' == $single_available_dates[0] ) {
-
-				$single_available_dates = $date_array;
-				foreach ( $single_available_dates as $key => $values ) {
-					$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
-					$key = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $values ) );
-
-					if ( $is_pro_active ) {
-
-						$price = get_post_meta( $product_id, $key, true );
-						if ( ! empty( $price ) ) {
-							$date_price = gmdate( 'n/d/Y', strtotime( $values ) );
-							$date_price = str_replace( ',', '', $date_price );
-							$currency_symbol = get_woocommerce_currency();
-							$single_unavailable_prices[ $date_price ] = $currency_symbol . ' ' . $price;
-
+				if ( '1970-01-01' == $single_available_dates[0] ) {
+	
+					$single_available_dates = $date_array;
+					foreach ( $single_available_dates as $key => $values ) {
+						$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
+						$key = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $values ) );
+	
+						if ( $is_pro_active ) {
+	
+							$price = get_post_meta( $product_id, $key, true );
+							if ( ! empty( $price ) ) {
+								$date_price = gmdate( 'n/d/Y', strtotime( $values ) );
+								$date_price = str_replace( ',', '', $date_price );
+								$currency_symbol = get_woocommerce_currency();
+								$single_unavailable_prices[ $date_price ] = $currency_symbol . ' ' . $price;
+	
+							}
 						}
 					}
 				}
 			}
 		}
-
+		
+	
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
@@ -327,6 +336,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'booking_unit'  => $booking_unit,
 				'booking_unavailable' => $booking_unavailable,
 				'single_available_dates' => $single_available_dates,
+				'single_available_dates_till'=>$single_availables_till,
 				'today_date_check' => $today_date_check,
 				'single_unavailable_dates' => $single_unavailable_dates,
 				'date_format'   => get_option( 'date_format' ),
@@ -590,6 +600,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_booking_frontend' ) ) {
 				return;
 			}
+			
 			$product_id = array_key_exists( 'mwb_mbfw_booking_product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_product_id'] ) ) : '';
 			$booking_type = wps_booking_get_meta_data( $product_id, 'wps_mbfw_booking_type', true );
 			$single_cal_booking_dates = '';
@@ -1079,3 +1090,19 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 
 
+
+//add_action('init', 'zdfsxdfsd');
+
+function zdfsxdfsd(){
+	$product_id = 25; // ID of the product you want to add to the cart
+$quantity = 1; // Quantity of the product to add
+$redirect_url = 'http://localhost:10099/cart'; // URL to redirect after adding the product
+
+$add_to_cart_url = add_query_arg( array(
+    'add-to-cart' => $product_id,
+    'quantity' => $quantity
+), $redirect_url );
+
+header('Location: ' . $add_to_cart_url);
+
+}

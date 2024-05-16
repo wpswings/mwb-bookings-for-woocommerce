@@ -212,6 +212,8 @@ jQuery(document).ready(function($){
         $(document).find('.wps_bfwp_weekly_off_day_field').show();
         $(document).find('.mwb_mbfw_choose_holiday_field').show();
         $(document).find('.wps_mbfw_set_availability_field').hide();
+        $(document).find('.wps_mbfw_set_availability_upto').hide();
+        
         $(document).find('.mbfw_notice').hide();
         $(document).find('#wps_mbfw_add_fields_wrapper').hide();
         $(document).find('.mwb_mbfw_rescheduling_allowed_field').show();
@@ -256,6 +258,11 @@ jQuery(document).ready(function($){
     $('#wps_mbfw_set_availability').multiDatesPicker({
         dateFormat: "dd-mm-yy",
         minDate: new Date(),
+    });
+    $('#wps_mbfw_set_availability_upto').datepicker({
+        dateFormat: "dd-mm-yy",
+        minDate: new Date(),
+        
     });
 
     $.datepicker._selectDateOverload = $.datepicker._selectDate;

@@ -342,6 +342,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $new_price, $cart['product_id'], $date_time_from, $date_time_to, $unit );
 					}
 				}
+				
 				if ( $wps_general_price ) {
 
 					if ( $wps_general_price === $new_price ) {
@@ -358,6 +359,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					}
 				}
 
+				$regular_price__ = $unit_price;
 				/**
 				 * Filter is for returning something.
 				 *
@@ -393,7 +395,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				 */
 				apply_filters( 'mbfw_set_price_individually_during_adding_in_cart', $new_price, $custom_cart_data, $cart_object );
 				// setting the new price.
+				$additionalu_price = intval( $new_price) - intval($regular_price__ );
+				$cart['data']->set_regular_price( $additionalu_price );
 				$cart['data']->set_price( $new_price );
+			
+				
 			}
 		}
 	}
@@ -556,6 +562,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( $extra_charges > 0 ) {
 			$charges = array_merge( $charges, $mfw_additional_cost_check );
 		}
+		
 
 		$charges =
 		/**
@@ -566,6 +573,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		apply_filters( 'mbfw_ajax_load_total_booking_charge_individually', $charges, $product_id );
 		$this->mbfw_booking_total_listing_single_page( $charges, $quantity, $product_id );
 		wp_die();
+		
 	}
 
 	/**
@@ -585,6 +593,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			foreach ( $charges as $types ) {
 				$price  = $types['value'];
 				$title  = $types['title'];
+				
+				
 				$total += (float) $price * (int) $quantity;
 				?>
 				<div class="mbfw-total-listing-single-page__wrapper">

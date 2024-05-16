@@ -249,6 +249,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_admin, 'wps_mbfw_change_cart_item_quantities', 20, 1 );
 
 		}
+		$this->loader->add_action( 'init', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date_post_event' );
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );
 	}
 

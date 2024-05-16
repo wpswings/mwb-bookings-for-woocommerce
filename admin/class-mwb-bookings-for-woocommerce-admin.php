@@ -979,6 +979,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'custom_attributes' => array( 'autocomplete' => 'off' ),
 				)
 			);
+			woocommerce_wp_text_input(
+				array(
+					'label'             => __( 'Set days availability upto', 'mwb-bookings-for-woocommerce' ),
+					'id'                => 'wps_mbfw_set_availability_upto',
+					'value'             => wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_set_availability_upto', true ),
+					'description'       => __( 'Bookings will be available till the day selected these days.', 'mwb-bookings-for-woocommerce' ),
+					'type'              => 'text',
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'autocomplete' => 'off' ),
+				)
+			);
 			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . '/admin/partials/mwb-bookings-for-woocommerce-time-slot.php';
 			?>
 		</div>
@@ -1073,6 +1085,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_daily_calendar_end_time'         => array_key_exists( 'mwb_mbfw_daily_calendar_end_time', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_daily_calendar_end_time'] ) ) : '',
 				'mwb_mbfw_choose_holiday'                  => array_key_exists( 'mwb_mbfw_choose_holiday', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_choose_holiday'] ) ) : '',
 				'wps_mbfw_set_availability'                => array_key_exists( 'wps_mbfw_set_availability', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_set_availability'] ) ) : '',
+				'wps_mbfw_set_availability_upto'                => array_key_exists( 'wps_mbfw_set_availability_upto', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_set_availability_upto'] ) ) : '',				
 				'wps_mbfw_time_slots'        => array_key_exists( 'mbfw_fields', $_POST ) ? ( is_array( $_POST['mbfw_fields'] ) ? map_deep( wp_unslash( $_POST['mbfw_fields'] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST['mbfw_fields'] ) ) ) : array(),
 				'_stock'                    => array_key_exists( '_stock', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_stock'] ) ) : '',
 				'_original_stock'                   => array_key_exists( '_original_stock', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_original_stock'] ) ) : '',
@@ -1731,6 +1744,22 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		return $display_key;
 	}
+	
+	/**
+	 * Get all booking dates filter by calender.
+	 *
+	 * @return void
+	 */
+	public function mwb_mbfw_get_all_events_date_post_event() {
+		
+		if ( ! isset( $_POST['wps_mbfw_filter_calender'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_calender_nonce'] ) ), 'admin_calender_data' ) ) {
+			
+			return;
+		}else{
+			
+		}
+
+	}
 
 	/**
 	 * Get all booking dates.
@@ -1740,14 +1769,29 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mwb_mbfw_get_all_events_date() {
 
 		check_ajax_referer( 'mwb_mbfw_admin_nonce', 'nonce' );
-		$orders     = wc_get_orders(
-			array(
-				'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending', 'wc-completed' ),
-				'limit'    => -1,
-				'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress_wps_single_cal_booking_dates.
-				'meta_val' => 'booking',
-			)
-		);
+		
+		$status = ! empty( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '';
+		$orders = '';
+		if ( ! empty( $status ) ) {
+			$orders     = wc_get_orders(
+				array(
+					'status'   => $status,
+					'limit'    => -1,
+					'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress_wps_single_cal_booking_dates.
+					'meta_val' => 'booking',
+				)
+			);
+		} else{
+			$orders     = wc_get_orders(
+				array(
+					'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending', 'wc-completed' ),
+					'limit'    => -1,
+					'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress_wps_single_cal_booking_dates.
+					'meta_val' => 'booking',
+				)
+			);
+		}
+		
 
 		$all_events = array();
 		foreach ( $orders as $order ) {

@@ -6,7 +6,7 @@ Requires at least: 5.5.0
 Tested up to: 6.5.2
 WC requires at least: 6.5.0
 WC tested up to: 8.8.2
-Stable tag: 3.1.7
+Stable tag: 3.1.8
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -228,7 +228,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
-= 3.1.7 - Released on 26 April 2024 =
+= 3.1.8 - Released on 26 April 2024 =
 * New: Changed calendar for multiple Booking
 * New: Changed calendar for Dual Booking supporting Hours and days
 * New: Added order links in calendar Booking Section
@@ -345,7 +345,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.7 - Released on 26 April 2024 =
+= 3.1.8 - Released on 26 April 2024 =
 * New: Changed calendar for multiple Booking
 * New: Changed calendar for Dual Booking supporting Hours and days
 * New: Added order links in calendar Booking Section

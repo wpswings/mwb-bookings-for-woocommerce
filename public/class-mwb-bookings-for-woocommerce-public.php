@@ -345,7 +345,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
-		
+
 	
 		wp_localize_script(
 			$this->plugin_name . 'public',

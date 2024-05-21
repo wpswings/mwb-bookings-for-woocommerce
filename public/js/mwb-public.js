@@ -558,6 +558,41 @@ jQuery(document).ready(function($){
                     }
                 }
                   }
+
+                  debugger;
+                  var selected_date = moment(date).format('D-M-Y');
+                  var date_array = selected_date.split("-");
+                  
+                  var date = date_array[0];
+                  var month = date_array[1];
+                  var year = date_array[2];
+             
+                
+                  
+                  if (month.length === 1) {
+                      month = '0' + month;
+                  }
+                  var temp_date = date + '-' + month + '-' + year + ' ';
+                 
+                  var int_all_slots = 0;
+                  for(let i=0; i< wps_available_slots.length; i++ ) { 
+                      var temp =  wps_available_slots[i]._from + ' - ' + wps_available_slots[i]._to;
+                      var temp_check = temp_date + temp;
+                      if (booking_unavailable.length > 0) {
+                          
+                          if (booking_unavailable.includes(temp_check)) {
+                           
+                            int_all_slots++;                             
+                              
+                          }
+                      }
+                  }
+
+                  if (int_all_slots ==  wps_available_slots.length ){
+                    return [false];
+                  }
+
+
                 return [available_dates.indexOf(formattedDate) > -1];
             }
 			
@@ -577,7 +612,7 @@ jQuery(document).ready(function($){
                     var date = date_array[0];
                     var month = date_array[1];
                     var year = date_array[2];
-                 
+                 debugger;
                   
                     
                     if (month.length === 1) {

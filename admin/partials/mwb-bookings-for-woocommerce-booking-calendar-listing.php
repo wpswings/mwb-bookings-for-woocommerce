@@ -30,7 +30,7 @@ $order_status = array(
 			
 		
 		<div class="wps_sub_main_wrapper">
-			<select name="wps_order_status" id="wps_order_status">
+			<select name="wps_order_status" id="wps_order_status" class="wps_order_status_">
 				<?php foreach ( $order_status as $value => $label ) : ?>
 					<option value="<?php echo esc_attr( $value ); ?>" <?php echo ( $value == 'select' ) ? 'selected' : ''; ?>>
 					<?php echo esc_attr( $label ); ?>
@@ -39,8 +39,8 @@ $order_status = array(
 		
 			
 		</div>		
-		<input type="button" name="wps_mbfw_filter_calender" id="wps_mbfw_filter_calender" value="<?php esc_html_e( 'Filter', 'mwb-bookings-for-woocommerce' ); ?>">
-		<input type="button" name="wps_mbfw_clear_calender" id="wps_mbfw_clear_calender" value="<?php esc_html_e( 'Clear', 'mwb-bookings-for-woocommerce' ); ?>">
+		<input type="button" class="button" name="wps_mbfw_filter_calender" id="wps_mbfw_filter_calender" value="<?php esc_html_e( 'Filter', 'mwb-bookings-for-woocommerce' ); ?>">
+		<input type="button" class="button" name="wps_mbfw_clear_calender" id="wps_mbfw_clear_calender" value="<?php esc_html_e( 'Clear', 'mwb-bookings-for-woocommerce' ); ?>">
 		<?php 	wp_nonce_field( 'admin_calender_data', 'mwb_calender_nonce' ); ?>
 		
 	</div>

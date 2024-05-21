@@ -176,22 +176,45 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 						if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 
-							$_orders     = wc_get_orders(
+							// $_orders     = wc_get_orders(
+							// 	array(
+							// 		'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
+							// 		'limit'    => -1,
+							// 		'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress
+							// 		'meta_val' => 'booking',
+							// 	)
+							// );
+							$one_hour_ago = gmdate('Y-m-d H:i:s', strtotime('-1 hour'));
+
+							$_orders = wc_get_orders(
 								array(
-									'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
+									'status'   => array('wc-processing', 'wc-on-hold', 'wc-pending'),
 									'limit'    => -1,
-									'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress
-									'meta_val' => 'booking',
+									'meta_key' => 'mwb_order_type',
+									'meta_value' => 'booking',
+									'date_query' => array(
+										array(
+											'column' => 'date_created_gmt',
+											'after'  => $one_hour_ago,
+											'inclusive' => true,
+										),
+									),
 								)
 							);
 
 							if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
+						
 								foreach ( $_orders as $order ) {
+
+								
 									$items = $order->get_items();
+
+									
 									foreach ( $items as $item ) {
 										if ( $product_id == $item['product_id'] ) {
 											$quantity = $item['quantity'];
 											$wps_booking_slot = $item->get_meta( '_wps_booking_slot', true );
+											
 											if ( ! empty( $wps_booking_slot ) ) {
 
 												if ( key_exists( $wps_booking_slot, $booking_slot_array ) ) {
@@ -203,20 +226,25 @@ class Mwb_Bookings_For_Woocommerce_Public {
 										}
 									}
 								}
+								
 							} else {
 								if ( $is_pro_active ) {
 									$bfwp_plugin_public = new Bookings_For_Woocommerce_Pro_Public( '', '' );
 									$wps_single_dates_temp = $bfwp_plugin_public->mbfw_get_all_dtes_booking_occurence__( $product_id );
 								}
 							}
-
+							
 							$max_limit = '';
 							if ( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
+								
 								$max_limit = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true );
-							} else {
+							} elseif( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
 								$max_limit = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit', true );
+								
+							} else{
+								$max_limit = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true );
 							}
-
+							
 							if ( ! empty( $max_limit ) && ! empty( $booking_slot_array ) ) {
 								foreach ( $booking_slot_array as $key => $values ) {
 									if ( $values >= $max_limit ) {

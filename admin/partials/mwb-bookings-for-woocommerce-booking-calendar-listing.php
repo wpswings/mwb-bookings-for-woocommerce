@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 $order_status = array(
-	'select' => '--Select order status--',
+	'' => '--Select order status--',
 	'wc-on-hold' => 'On Hold',
 	'wc-pending' => 'Pending',
 	'wc-processing' => 'Processing',
@@ -39,7 +39,8 @@ $order_status = array(
 		
 			
 		</div>		
-		<input type="button" name="wps_mbfw_filter_calender" id="wps_mbfw_filter_calender" value="Filter">
+		<input type="button" name="wps_mbfw_filter_calender" id="wps_mbfw_filter_calender" value="<?php esc_html_e( 'Filter', 'mwb-bookings-for-woocommerce' ); ?>">
+		<input type="button" name="wps_mbfw_clear_calender" id="wps_mbfw_clear_calender" value="<?php esc_html_e( 'Clear', 'mwb-bookings-for-woocommerce' ); ?>">
 		<?php 	wp_nonce_field( 'admin_calender_data', 'mwb_calender_nonce' ); ?>
 		
 	</div>

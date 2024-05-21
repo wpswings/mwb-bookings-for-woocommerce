@@ -1744,22 +1744,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		return $display_key;
 	}
-	
-	/**
-	 * Get all booking dates filter by calender.
-	 *
-	 * @return void
-	 */
-	public function mwb_mbfw_get_all_events_date_post_event() {
-		
-		if ( ! isset( $_POST['wps_mbfw_filter_calender'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_calender_nonce'] ) ), 'admin_calender_data' ) ) {
-			
-			return;
-		}else{
-			
-		}
-
-	}
 
 	/**
 	 * Get all booking dates.
@@ -1795,7 +1779,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		$all_events = array();
 		foreach ( $orders as $order ) {
-
+			$status=$order->get_status();
 			$items = $order->get_items();
 			foreach ( $items as $item ) {
 
@@ -1819,6 +1803,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 								'start' => gmdate( 'Y-m-d', strtotime( $value ) ),
 								'end'   => gmdate( 'Y-m-d', strtotime( $date_array_to[ $key ] ) ),
 								'url'   => admin_url( 'admin.php?page=wc-orders&action=edit&id=' . $order->get_id() ),
+								'class' => $status,
 							);
 						}
 					} else {
@@ -1827,6 +1812,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 							'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
 							'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
 							'url'   => admin_url( 'admin.php?page=wc-orders&action=edit&id=' . $order->get_id() ),
+							'class' => $status,
 						);
 					}
 				}
@@ -1844,6 +1830,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 						'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
 						'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
 						'url'   => admin_url( 'admin.php?page=wc-orders&action=edit&id=' . $order->get_id() ),
+						'class' => $status,
 					);
 				}
 			}

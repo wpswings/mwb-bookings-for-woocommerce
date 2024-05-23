@@ -873,6 +873,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			);
 			woocommerce_wp_text_input(
 				array(
+					'id'                => 'mwb_mbfw_minimum_no_days_booking',
+					'type'              => 'number',
+					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_minimum_no_days_booking', true ),
+					'label'             => __( 'Set Minimum no of Booking', 'mwb-bookings-for-woocommerce' ),
+					'description'       => __( 'Minimum no days of booking Customer can book', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'          => true,
+					'style'             => 'width:10em;',
+					'custom_attributes' => array( 'min' => 1 ),
+				)
+			);
+			woocommerce_wp_text_input(
+				array(
 					'id'                => 'mwb_mbfw_minimum_people_per_booking',
 					'type'              => 'number',
 					'value'             => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_minimum_people_per_booking', true ),
@@ -1077,6 +1089,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_is_booking_base_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_base_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_base_cost_per_people'] ) ) : '',
 				'mwb_mbfw_is_people_option'                => array_key_exists( 'mwb_mbfw_is_people_option', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_people_option'] ) ) : '',
 				'mwb_mbfw_minimum_people_per_booking'      => array_key_exists( 'mwb_mbfw_minimum_people_per_booking', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_minimum_people_per_booking'] ) ) : '',
+				'mwb_mbfw_minimum_no_days_booking'=> array_key_exists( 'mwb_mbfw_minimum_no_days_booking', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_minimum_no_days_booking'] ) ) : '',
 				'mwb_mbfw_maximum_people_per_booking'      => array_key_exists( 'mwb_mbfw_maximum_people_per_booking', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_maximum_people_per_booking'] ) ) : '',
 				'mwb_mbfw_is_add_extra_services'           => array_key_exists( 'mwb_mbfw_is_add_extra_services', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_add_extra_services'] ) ) : '',
 				'mwb_mbfw_maximum_booking_per_unit'        => array_key_exists( 'mwb_mbfw_maximum_booking_per_unit', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_maximum_booking_per_unit'] ) ) : '',

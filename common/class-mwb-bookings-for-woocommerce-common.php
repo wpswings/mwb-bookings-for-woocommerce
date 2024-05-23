@@ -481,6 +481,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			}
 		}
+		$min_no_of_book = get_post_meta( $product_id, 'mwb_mbfw_minimum_no_days_booking', true );
+		if( ! empty( $min_no_of_book ) && 0 < $min_no_of_book && ! empty( $date_time_to ) ) {
+			if( $unit < $min_no_of_book ) {
+				echo 'failed';
+				wp_die();
+			}
+		}
 
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit );
 		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number, $unit );

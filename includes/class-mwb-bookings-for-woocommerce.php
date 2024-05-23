@@ -418,12 +418,18 @@ class Mwb_Bookings_For_Woocommerce {
 			'name'      => 'mwb-bookings-for-woocommerce-booking-calendar-listing',
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-calendar-listing.php',
 		);
-
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
+			'title'     => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-booking-availability-settings',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php',
+		);
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-overview'] = array(
 			'title'     => esc_html__( 'Overview', 'mwb-bookings-for-woocommerce' ),
 			'name'      => 'mwb-bookings-for-woocommerce-overview',
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-overview.php',
 		);
+
+		
 
 		// $mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
 		// 'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
@@ -446,11 +452,11 @@ class Mwb_Bookings_For_Woocommerce {
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-form-settings.php',
 		);
 
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
-			'title'     => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
-			'name'      => 'mwb-bookings-for-woocommerce-booking-availability-settings',
-			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php',
-		);
+		// $mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
+		// 	'title'     => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
+		// 	'name'      => 'mwb-bookings-for-woocommerce-booking-availability-settings',
+		// 	'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php',
+		// );
 
 		$mbfw_default_tabs =
 		/**
@@ -637,7 +643,8 @@ class Mwb_Bookings_For_Woocommerce {
 									<div class="mwb-form-select">
 										<select id="<?php echo esc_attr( $mbfw_component['id'] ); ?>" name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?><?php echo ( 'multiselect' === $mbfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mdl-textfield__input <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>" <?php echo 'multiselect' === $mbfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
 											<?php
-											foreach ( $mbfw_component['options'] as $mbfw_key => $mbfw_val ) {
+											
+											foreach ( $mbfw_component['options'] as $mbfw_key => $mbfw_val ) {																								
 												?>
 												<option value="<?php echo esc_attr( $mbfw_key ); ?>"
 													<?php

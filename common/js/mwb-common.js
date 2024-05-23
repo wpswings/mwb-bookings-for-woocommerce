@@ -176,10 +176,20 @@ function retrieve_booking_total_ajax( form_data ) {
 				if(str1.indexOf(str2) != -1){
 					msg = '';
 				}
+				if( msg == 'failed' ) {
+					debugger;
+					if ( $('#mwb-mbfw-booking-to-time').val() != ''){
+						alert( mwb_mbfw_public_obj.wrong_min_book )
+						$('#mwb-mbfw-booking-to-time').val('');
+						$('#mwb-mbfw-booking-from-time').focus();
+						jQuery('.flatpickr-day ').removeClass('selected');
+					}
+					
+				}
 				if( 'fail' == msg ) {
 					alert( 'It looks like some dates are not available in between the dates choosen by you! , please select available dates!' );
 					$('#mwb-mbfw-booking-from-time').val('');
-					$('#mwb-mbfw-booking-to-time').val('');
+					
 				} else {
 
 					$('.mwb-mbfw-total-area').html(msg);

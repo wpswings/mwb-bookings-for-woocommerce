@@ -95,6 +95,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$date_array = array();
 		$mwb_mbfw_show_date_with_time = '';
 		$today_date_check = '';
+		$min_no_of_book = '';
 		// Get the number of days in the current month.
 		$num_days = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
 		$today_date_check  = sprintf( '%04d-%02d-%02d', $current_year, $current_month, $currentday );
@@ -128,7 +129,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$product_id = $post->ID;
 			$temp_product = wc_get_product( $product_id );
 			$mwb_mbfw_show_date_with_time = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_show_date_with_time', true );
-
+			$min_no_of_book = get_post_meta( $product_id, 'mwb_mbfw_minimum_no_days_booking', true );
 			if ( ! empty( $temp_product ) ) {
 
 				if ( 'mwb_booking' == $temp_product->get_type() ) {
@@ -176,14 +177,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 						if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 
-							// $_orders     = wc_get_orders(
-							// 	array(
-							// 		'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
-							// 		'limit'    => -1,
-							// 		'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress
-							// 		'meta_val' => 'booking',
-							// 	)
-							// );
+							
 							$one_hour_ago = gmdate('Y-m-d H:i:s', strtotime('-1 hour'));
 
 							$_orders = wc_get_orders(
@@ -372,6 +366,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'wps_single_dates_temp' => $wps_single_dates_temp,
 				'wps_single_dates_temp_dual' => $wps_single_dates_temp_dual,
 				'mwb_mbfw_show_date_with_time' => $mwb_mbfw_show_date_with_time,
+				'min_book' => $min_no_of_book,
+				'wrong_min_book' => __( 'Please book minimum ' . $min_no_of_book . ' days !' , 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 	}

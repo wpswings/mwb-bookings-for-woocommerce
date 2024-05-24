@@ -231,6 +231,7 @@ debugger;
             $(document).find('.mwb_mbfw_rescheduling_allowed_field').hide();
             $(document).find('.mwb_mbfw_choose_holiday_field').hide();
             $(document).find('.mwb_bfwp_order_statuses_to_reschedule_field').hide();
+            $(document).find('.wps_mbfw_set_availability_upto_field').show();
             $(document).find('.wps_mbfw_set_availability_field').show();
             $(document).find('#wps_mbfw_add_fields_wrapper').show();
             $(document).find('.mbfw_notice').show();

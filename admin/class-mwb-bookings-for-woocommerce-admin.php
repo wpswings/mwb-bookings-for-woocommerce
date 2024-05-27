@@ -871,18 +871,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			);
-			woocommerce_wp_text_input(
-				array(
-					'id'                => 'mwb_mbfw_minimum_no_days_booking',
-					'type'              => 'number',
-					'value'             => get_post_meta( get_the_ID(), 'mwb_mbfw_minimum_no_days_booking', true ),
-					'label'             => __( 'Set Minimum no of Booking', 'mwb-bookings-for-woocommerce' ),
-					'description'       => __( 'Minimum no days of booking Customer can book', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'          => true,
-					'style'             => 'width:10em;',
-					'custom_attributes' => array( 'min' => 1 ),
-				)
-			);
+			
 			woocommerce_wp_text_input(
 				array(
 					'id'                => 'mwb_mbfw_minimum_people_per_booking',

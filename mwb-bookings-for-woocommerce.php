@@ -21,10 +21,11 @@
  * Text Domain:       mwb-bookings-for-woocommerce
  * Domain Path:       /languages
  *
+ * Requires Plugins: woocommerce
  * Requires at least:    5.5.0
- * Tested up to:         6.5.2
+ * Tested up to:         6.5.3
  * WC requires at least: 6.5.0
- * WC tested up to:      8.8.2
+ * WC tested up to:      8.9.1
  * Requires PHP:         7.2
  * Stable tag:           3.1.8
  *

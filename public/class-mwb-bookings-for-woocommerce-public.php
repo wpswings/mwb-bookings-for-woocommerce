@@ -95,7 +95,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$date_array = array();
 		$mwb_mbfw_show_date_with_time = '';
 		$today_date_check = '';
-		$min_no_of_book = '';
 		// Get the number of days in the current month.
 		$num_days = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
 		$today_date_check  = sprintf( '%04d-%02d-%02d', $current_year, $current_month, $currentday );
@@ -129,7 +128,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$product_id = $post->ID;
 			$temp_product = wc_get_product( $product_id );
 			$mwb_mbfw_show_date_with_time = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_show_date_with_time', true );
-			$min_no_of_book = get_post_meta( $product_id, 'mwb_mbfw_minimum_no_days_booking', true );
 			if ( ! empty( $temp_product ) ) {
 
 				if ( 'mwb_booking' == $temp_product->get_type() ) {
@@ -306,9 +304,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$single_availables_till = wps_booking_get_meta_data( $product_id, 'wps_mbfw_set_availability_upto', true );
 		}
 
-		if ( ! empty( $single_availables_till ) ) {
+		if ( empty( $single_availables_till ) ) {
 
-		} else {
 			if ( ! empty( $single_available_dates ) ) {
 
 				if ( '1970-01-01' == $single_available_dates[0] ) {
@@ -359,8 +356,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'wps_single_dates_temp' => $wps_single_dates_temp,
 				'wps_single_dates_temp_dual' => $wps_single_dates_temp_dual,
 				'mwb_mbfw_show_date_with_time' => $mwb_mbfw_show_date_with_time,
-				'min_book' => $min_no_of_book,
-				'wrong_min_book' => __( 'Please book minimum ' . $min_no_of_book . ' days !', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 	}
@@ -1102,27 +1097,4 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			}
 		}
 	}
-}
-
-
-
-
-
-// add_action('init', 'zdfsxdfsd');
-
-function zdfsxdfsd() {
-	$product_id = 25; // ID of the product you want to add to the cart
-	$quantity = 1; // Quantity of the product to add
-	$redirect_url = 'http://localhost:10099/cart'; // URL to redirect after adding the product
-
-	$add_to_cart_url = add_query_arg(
-		array(
-			'add-to-cart' => $product_id,
-			'quantity' => $quantity,
-		),
-		$redirect_url
-	);
-
-	header( 'Location: ' . $add_to_cart_url );
-
 }

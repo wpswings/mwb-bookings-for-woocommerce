@@ -32,7 +32,7 @@ $order_status = array(
 		<div class="wps_sub_main_wrapper">
 			<select name="wps_order_status" id="wps_order_status" class="wps_order_status_">
 				<?php foreach ( $order_status as $value => $label ) : ?>
-					<option value="<?php echo esc_attr( $value ); ?>" <?php echo ( $value == 'select' ) ? 'selected' : ''; ?>>
+					<option value="<?php echo esc_attr( $value ); ?>" <?php echo ( 'select'  == $value) ? 'selected' : ''; ?>>
 					<?php echo esc_attr( $label ); ?>
 					<?php endforeach; ?>
 			</select>

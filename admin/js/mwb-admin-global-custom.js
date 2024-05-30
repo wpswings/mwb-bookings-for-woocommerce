@@ -266,6 +266,19 @@ debugger;
         minDate: new Date(),
         
     });
+    $(document).on('click', '#wps_mbfw_set_availability_upto', function(){
+      
+        const dateInput = document.getElementById("wps_mbfw_set_availability_upto");
+        const clearButton = document.getElementById("clearDateButton");
+        if ( jQuery('#availability_clear').val() == undefined){
+            jQuery('.wps_mbfw_set_availability_upto_field ').append('<input type="button" value="Clear" id="availability_clear"> ');
+        
+        }
+    });
+    $(document).on('click', '#availability_clear', function(){
+      
+        jQuery('#wps_mbfw_set_availability_upto').val('');
+     });
 
     $.datepicker._selectDateOverload = $.datepicker._selectDate;
     $.datepicker._selectDate = function (id, dateStr) {

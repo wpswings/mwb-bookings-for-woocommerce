@@ -41,7 +41,7 @@ $order_status = array(
 		</div>		
 		<input type="button" class="button" name="wps_mbfw_filter_calender" id="wps_mbfw_filter_calender" value="<?php esc_html_e( 'Filter', 'mwb-bookings-for-woocommerce' ); ?>">
 		<input type="button" class="button" name="wps_mbfw_clear_calender" id="wps_mbfw_clear_calender" value="<?php esc_html_e( 'Clear', 'mwb-bookings-for-woocommerce' ); ?>">
-		<?php 	wp_nonce_field( 'admin_calender_data', 'mwb_calender_nonce' ); ?>
+		<?php wp_nonce_field( 'admin_calender_data', 'mwb_calender_nonce' ); ?>
 		
 	</div>
 	<div id="mwb-mbfw-booking-calendar"></div>

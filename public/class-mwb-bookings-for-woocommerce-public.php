@@ -177,12 +177,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 						if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 
-							
-							$one_hour_ago = gmdate('Y-m-d H:i:s', strtotime('-1 hour'));
+							$one_hour_ago = gmdate( 'Y-m-d H:i:s', strtotime( '-1 hour' ) );
 
 							$_orders = wc_get_orders(
 								array(
-									'status'   => array('wc-processing', 'wc-on-hold', 'wc-pending'),
+									'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
 									'limit'    => -1,
 									'meta_key' => 'mwb_order_type',
 									'meta_value' => 'booking',
@@ -197,18 +196,16 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							);
 
 							if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
-						
+
 								foreach ( $_orders as $order ) {
 
-								
 									$items = $order->get_items();
 
-									
 									foreach ( $items as $item ) {
 										if ( $product_id == $item['product_id'] ) {
 											$quantity = $item['quantity'];
 											$wps_booking_slot = $item->get_meta( '_wps_booking_slot', true );
-											
+
 											if ( ! empty( $wps_booking_slot ) ) {
 
 												if ( key_exists( $wps_booking_slot, $booking_slot_array ) ) {
@@ -220,25 +217,24 @@ class Mwb_Bookings_For_Woocommerce_Public {
 										}
 									}
 								}
-								
 							} else {
 								if ( $is_pro_active ) {
 									$bfwp_plugin_public = new Bookings_For_Woocommerce_Pro_Public( '', '' );
 									$wps_single_dates_temp = $bfwp_plugin_public->mbfw_get_all_dtes_booking_occurence__( $product_id );
 								}
 							}
-							
+
 							$max_limit = '';
 							if ( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
-								
+
 								$max_limit = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true );
-							} elseif( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
+							} elseif ( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
 								$max_limit = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit', true );
-								
-							} else{
+
+							} else {
 								$max_limit = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true );
 							}
-							
+
 							if ( ! empty( $max_limit ) && ! empty( $booking_slot_array ) ) {
 								foreach ( $booking_slot_array as $key => $values ) {
 									if ( $values >= $max_limit ) {
@@ -309,30 +305,28 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			}
 			$single_availables_till = wps_booking_get_meta_data( $product_id, 'wps_mbfw_set_availability_upto', true );
 		}
-		
-		
 
 		if ( ! empty( $single_availables_till ) ) {
-			
-		} else{
+
+		} else {
 			if ( ! empty( $single_available_dates ) ) {
 
 				if ( '1970-01-01' == $single_available_dates[0] ) {
-	
+
 					$single_available_dates = $date_array;
 					foreach ( $single_available_dates as $key => $values ) {
 						$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
 						$key = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $values ) );
-	
+
 						if ( $is_pro_active ) {
-	
+
 							$price = get_post_meta( $product_id, $key, true );
 							if ( ! empty( $price ) ) {
 								$date_price = gmdate( 'n/d/Y', strtotime( $values ) );
 								$date_price = str_replace( ',', '', $date_price );
 								$currency_symbol = get_woocommerce_currency();
 								$single_unavailable_prices[ $date_price ] = $currency_symbol . ' ' . $price;
-	
+
 							}
 						}
 					}
@@ -340,7 +334,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			}
 		}
 
-	
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
@@ -358,7 +351,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'booking_unit'  => $booking_unit,
 				'booking_unavailable' => $booking_unavailable,
 				'single_available_dates' => $single_available_dates,
-				'single_available_dates_till'=>$single_availables_till,
+				'single_available_dates_till' => $single_availables_till,
 				'today_date_check' => $today_date_check,
 				'single_unavailable_dates' => $single_unavailable_dates,
 				'date_format'   => get_option( 'date_format' ),
@@ -367,7 +360,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'wps_single_dates_temp_dual' => $wps_single_dates_temp_dual,
 				'mwb_mbfw_show_date_with_time' => $mwb_mbfw_show_date_with_time,
 				'min_book' => $min_no_of_book,
-				'wrong_min_book' => __( 'Please book minimum ' . $min_no_of_book . ' days !' , 'mwb-bookings-for-woocommerce' ),
+				'wrong_min_book' => __( 'Please book minimum ' . $min_no_of_book . ' days !', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 	}
@@ -624,7 +617,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_booking_frontend' ) ) {
 				return;
 			}
-			
+
 			$product_id = array_key_exists( 'mwb_mbfw_booking_product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_product_id'] ) ) : '';
 			$booking_type = wps_booking_get_meta_data( $product_id, 'wps_mbfw_booking_type', true );
 			$single_cal_booking_dates = '';
@@ -1115,18 +1108,21 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 
 
-//add_action('init', 'zdfsxdfsd');
+// add_action('init', 'zdfsxdfsd');
 
-function zdfsxdfsd(){
+function zdfsxdfsd() {
 	$product_id = 25; // ID of the product you want to add to the cart
-$quantity = 1; // Quantity of the product to add
-$redirect_url = 'http://localhost:10099/cart'; // URL to redirect after adding the product
+	$quantity = 1; // Quantity of the product to add
+	$redirect_url = 'http://localhost:10099/cart'; // URL to redirect after adding the product
 
-$add_to_cart_url = add_query_arg( array(
-    'add-to-cart' => $product_id,
-    'quantity' => $quantity
-), $redirect_url );
+	$add_to_cart_url = add_query_arg(
+		array(
+			'add-to-cart' => $product_id,
+			'quantity' => $quantity,
+		),
+		$redirect_url
+	);
 
-header('Location: ' . $add_to_cart_url);
+	header( 'Location: ' . $add_to_cart_url );
 
 }

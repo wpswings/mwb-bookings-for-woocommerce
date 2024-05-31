@@ -195,7 +195,11 @@ function retrieve_booking_total_ajax( form_data ) {
 					msg = '';
 				}
 				if (msg == 'fail'){
-
+					if ( $('#alert_msg_client').val() == undefined){
+						jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		
+						$('#mwb-mbfw-booking-to-time').val('');
+						return;
+					}
 				} else{
 					setTimeout(function(){ 
 						$('#alert_msg_client').remove();

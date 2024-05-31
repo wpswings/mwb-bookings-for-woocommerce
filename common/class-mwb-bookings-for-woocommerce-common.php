@@ -96,9 +96,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'date_format'          => get_option( 'date_format' ),
 				'is_single_cal'        => $is_single_cal,
 				'cancel_booking_order' => __( 'Are you sure to cancel Booking order?', 'mwb-bookings-for-woocommerce' ),
-			)
+				'holiday_alert'		   => __( 'It looks like some dates are not available in between the dates choosen by you! , please select available dates!', 'mwb-bookings-for-woocommerce' ),
+				)
 		);
-
+		
 		if ( is_admin() ) {
 
 			$screen                     = get_current_screen();
@@ -480,13 +481,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			}
 		}
-		$min_no_of_book = get_post_meta( $product_id, 'mwb_mbfw_minimum_no_days_booking', true );
-		if ( ! empty( $min_no_of_book ) && 0 < $min_no_of_book && ! empty( $date_time_to ) ) {
-			if ( $unit < $min_no_of_book ) {
-				echo 'failed';
-				wp_die();
-			}
-		}
+		
 
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit );
 		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number, $unit );
@@ -541,12 +536,22 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
 			$base_cost = (float) $base_cost * (int) $people_number;
 		}
+		
+		$charges__  = array();
+		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_add_extra_services', true ) ){
+			$charges__ = array(
+				'service_cost'      => array(
+					'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
+					'value' => $services_cost,
+				),
+				
+	
+			);
+			
+		}
 
-		$charges = array(
-			'service_cost'      => array(
-				'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
-				'value' => $services_cost,
-			),
+		$charges_other = array(
+			
 			'base_cost'         => array(
 				'title' => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $base_cost,
@@ -557,6 +562,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			),
 
 		);
+		$charges = array_merge( $charges__,$charges_other);
 
 		// check additional cost.
 		$mfw_additional_cost_check = array(

@@ -161,7 +161,23 @@
 
 function retrieve_booking_total_ajax( form_data ) {
 	
-	if ( $('.mwb-mbfw-total-area').length > 0 ) {
+	var condition = true;
+	data_from = jQuery('#mwb-mbfw-booking-from-time').val();
+	data_to =jQuery('#mwb-mbfw-booking-to-time').val();
+	if ( data_from != undefined && data_to != undefined ){	
+		var datesBetween = getDatesBetween(data_from, data_to);
+		for (let index = 0; index < datesBetween.length; index++) {
+			var originalDate = datesBetween[index];
+			var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday[0];
+			var formattedDate = convertDateFormat(originalDate);
+			
+			if (upcoming_holiday.includes(formattedDate)) {
+				condition = false;
+			}
+		}
+	}
+	if ( $('.mwb-mbfw-total-area').length > 0 && condition == true ) {
+
 		form_data.append('action', 'mbfw_retrieve_booking_total_single_page');
 		form_data.append('nonce', mwb_mbfw_common_obj.nonce);
 		jQuery.ajax({
@@ -171,30 +187,67 @@ function retrieve_booking_total_ajax( form_data ) {
 			processData : false,
 			contentType : false,
 			success     : function( msg ) {
+			
 				var str1 = msg;
+			
 				var str2 = "rror establishing a database connectio";
 				if(str1.indexOf(str2) != -1){
 					msg = '';
 				}
-				if( msg == 'failed' ) {
-					debugger;
-					if ( $('#mwb-mbfw-booking-to-time').val() != ''){
-						alert( mwb_mbfw_public_obj.wrong_min_book )
-						$('#mwb-mbfw-booking-to-time').val('');
-						$('#mwb-mbfw-booking-from-time').focus();
-						jQuery('.flatpickr-day ').removeClass('selected');
-					}
-					
-				}
-				if( 'fail' == msg ) {
-					alert( 'It looks like some dates are not available in between the dates choosen by you! , please select available dates!' );
-					$('#mwb-mbfw-booking-from-time').val('');
-					
-				} else {
+				if (msg == 'fail'){
 
-					$('.mwb-mbfw-total-area').html(msg);
+				} else{
+					setTimeout(function(){ 
+						$('#alert_msg_client').remove();
+					 }, 8000);
+					
 				}
+				$('.mwb-mbfw-total-area').html(msg);
+
 			}
 		});
+	} else{
+		debugger;
+		if ( condition == false ){
+			if ( $('#alert_msg_client').val() == undefined){
+				jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		
+				$('#mwb-mbfw-booking-to-time').val('');
+			}
+		}
 	}
+}
+
+
+function getDatesBetween(startDate, endDate) {
+    var dates = [];
+    var currentDate = parseDate(startDate);
+    endDate = parseDate(endDate);
+    
+    while (currentDate <= endDate) {
+        dates.push(formatDate(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    return dates;
+}
+
+function parseDate(dateString) {
+    var parts = dateString.split("-");
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+}
+
+function formatDate(date) {
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    return pad(day) + "-" + pad(month) + "-" + year;
+}
+
+function pad(number) {
+    return number < 10 ? "0" + number : number;
+}
+
+function convertDateFormat(dateString) {
+    var parts = dateString.split("-");
+    return parts[2] + "-" + parts[1] + "-" + parts[0];
 }

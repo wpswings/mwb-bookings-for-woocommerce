@@ -684,10 +684,9 @@ jQuery(document).ready(function($){
         dObj = dayElem.dateObj;
         // Convert the date string to match the format of availableDates and unavailableDates
       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
-      var date_val =dayElem.dateObj.toLocaleDateString()
-      var datas= date_val.split('/');
-      month_current = datas[0];
-      year_current = datas[2];
+
+      year_current = (dayElem.dateObj.getFullYear()).toString();
+      month_current =dayElem.dateObj.getMonth()+1;
       var dateString__ = ("0" + dObj.getDate()).slice(-2)+ '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + dObj.getFullYear() ;
      
 
@@ -700,7 +699,7 @@ jQuery(document).ready(function($){
         var datas_till= mwb_mbfw_public_obj.single_available_dates_till.split('-');
         month_till = datas_till[1];
         year_till = datas_till[2];
-   
+
 
         if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
                  
@@ -745,14 +744,12 @@ jQuery(document).ready(function($){
           }
       }
       
-      
 
-      var date_val =dayElem.dateObj.toLocaleDateString()
-      var datas= date_val.split('/');
-      month = datas[0];
-      debugger;
+    
+      month =dayElem.dateObj.getMonth()+1;
+     
       if ( mwb_mbfw_public_obj.is_pro_active != ''){
-        if (bfwp_public_param.global_unaviable_month.includes(month)){
+        if (bfwp_public_param.global_unaviable_month.includes(month.toString())){
             if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
          
             if ( bfwp_public_param.global_unaviable_day.includes( dObj.getDay().toString() ) ){
@@ -769,11 +766,11 @@ jQuery(document).ready(function($){
       if ( month < 10 ) {
           month = 0+''+month;
       }
-      current_date = datas[1];
+      current_date = dayElem.dateObj.getDate();
       if ( current_date < 10 ) {
           current_date = 0+''+current_date;
       }
-      date_selected =  current_date = datas[2]+'-'+month+'-'+current_date;
+      date_selected = year_current+'-'+month+'-'+current_date;
       var price = mwb_mbfw_public_obj.single_unavailable_prices[date_selected];
       if (price) {
         var tooltip = document.createElement('div');

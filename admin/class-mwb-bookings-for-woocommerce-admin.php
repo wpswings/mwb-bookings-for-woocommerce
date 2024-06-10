@@ -780,6 +780,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 				)
 			);
+			
 
 			/**
 			 * Filter is for returning something.

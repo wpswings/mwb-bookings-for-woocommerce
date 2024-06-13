@@ -235,7 +235,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
-= 3.1.8 - Released on 31 May 2024 =
+= 3.1.9 - Released on 31 May 2024 =
 * Fix: language issue fixed by client
 * New: Booking Calendar filter added
 * New: Booking Calendar filter added
@@ -359,7 +359,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.8 - Released on 31 May 2024 =
+= 3.1.9 - Released on 31 May 2024 =
 * Fix: language issue fixed by client
 * New: Booking Calendar filter added
 * New: Booking Calendar filter added

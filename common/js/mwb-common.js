@@ -39,8 +39,7 @@
 			}
 		});
 		
-	// database error connection issue fixed.
-	//if (mwb_mbfw_common_obj.is_single_cal == 'yes') {
+
 		$(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
 			
 			
@@ -49,7 +48,7 @@
 				retrieve_booking_total_ajax( form_data );
 			}
 		});
-	//}
+
 		$('#mwb-mbfw-booking-from-time, #mwb-mbfw-booking-to-time').on('keydown paste focus mousedown',function(e){
 			
 			e.preventDefault();
@@ -59,7 +58,6 @@
 		$('.mwb_mbfw_time_date_picker_frontend').datetimepicker({
 			format  : 'd-m-Y H:00',
 			minDate : mwb_mbfw_common_obj.minDate,
-			// minTime : mwb_mbfw_common_obj.minTime
 		});
 		$('.mwb_mbfw_date_picker_frontend').datetimepicker({
 			format     : 'd-m-Y',
@@ -211,7 +209,7 @@ function retrieve_booking_total_ajax( form_data ) {
 			}
 		});
 	} else{
-		debugger;
+		
 		if ( condition == false ){
 			if ( $('#alert_msg_client').val() == undefined){
 				jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		

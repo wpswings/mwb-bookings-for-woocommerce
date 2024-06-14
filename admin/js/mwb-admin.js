@@ -27,6 +27,7 @@ jQuery(document).ready(function($) {
     
     $(document).on('click', '#wps_mbfw_clear_calender', function(){
         var calendarEl = document.getElementById('mwb-mbfw-booking-calendar');
+        jQuery('#wps_order_status').val('');
    
         if ( calendarEl ) {
             var calendar = new FullCalendar.Calendar( calendarEl, {

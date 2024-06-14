@@ -343,7 +343,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $new_price, $cart['product_id'], $date_time_from, $date_time_to, $unit );
 					}
 				}
-
+				$unit_price = 0;
 				if ( $wps_general_price ) {
 
 					if ( $wps_general_price === $new_price ) {

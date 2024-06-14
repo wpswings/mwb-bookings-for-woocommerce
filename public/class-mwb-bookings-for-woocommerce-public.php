@@ -624,8 +624,13 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$single_cal_booking_dates = array_key_exists( 'wps_booking_single_calendar_form', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_booking_single_calendar_form'] ) ) : '';
 				if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 					$booking_dates = explode( ' ', $single_cal_booking_dates );
-					$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1];
-					$date_time_to   = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[3];
+					
+					if ( !empty( $booking_dates[0] ) ) {
+
+					
+						$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1];
+						$date_time_to   = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[3];
+					}
 					$booking_slot = $single_cal_booking_dates;
 					$single_cal_booking_dates = '';
 

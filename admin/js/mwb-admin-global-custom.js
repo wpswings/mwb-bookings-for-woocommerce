@@ -187,7 +187,7 @@ jQuery(document).ready(function($){
             return false;
         }
     });
-debugger;
+
     if ($('#wps_mbfw_booking_type').val() == 'single_cal') {
         $(document).find('.mwb_mbfw_show_date_with_time_field').hide();
         $(document).find('.mwb_mbfw_daily_calendar_start_time_field').hide();

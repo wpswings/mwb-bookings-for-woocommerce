@@ -4,6 +4,13 @@ jQuery(document).ready(function($){
         jQuery(this).toggleClass('booking-toggler-reverse');
         jQuery(this).siblings('.mwb-mbfw-user-booking-meta-data-listing').slideToggle('slow');
     })
+
+    // $('.single_add_to_cart_button').on('click', function(event) {
+    //   debugger;
+    //     if (jQuery('#wps_booking_single_calendar_form').val() == '' ) {
+    //         event.preventDefault();
+    //     }
+    // });
    
 
     if( mwb_mbfw_public_obj.daily_start_time != '' && mwb_mbfw_public_obj.daily_end_time != '' ) {
@@ -32,6 +39,12 @@ jQuery(document).ready(function($){
         $(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
           
             if (jQuery('#wps_booking_single_calendar_form').val() == '') {
+                
+                jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+            } else {
+                jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+            }
+            if (jQuery('#mwb-mbfw-booking-from-time').val() == '' || jQuery('#mwb-mbfw-booking-to-time').val() == '') {
                 
                 jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
             } else {
@@ -525,7 +538,7 @@ jQuery(document).ready(function($){
                     month = '0' + month;
                 }
                 var temp_date = date5 + '-' + month + '-' + year + ' ';
-                debugger;
+                
                 var int_all_slots = 0;
                 for(let i=0; i< wps_available_slots.length; i++ ) { 
                     var temp =  wps_available_slots[i]._from + ' - ' + wps_available_slots[i]._to;
@@ -620,7 +633,7 @@ jQuery(document).ready(function($){
                     var date = date_array[0];
                     var month = date_array[1];
                     var year = date_array[2];
-                 debugger;
+                 
                   
                     
                     if (month.length === 1) {
@@ -694,7 +707,7 @@ jQuery(document).ready(function($){
     
 
 
-      debugger;
+      
       if (mwb_mbfw_public_obj.single_available_dates_till != '' ) {
         var datas_till= mwb_mbfw_public_obj.single_available_dates_till.split('-');
         month_till = datas_till[1];

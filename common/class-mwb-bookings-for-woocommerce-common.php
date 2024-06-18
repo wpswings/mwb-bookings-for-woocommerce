@@ -893,7 +893,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			
 				$services_and_count = $item->get_meta( '_mwb_mbfw_service_and_count', true );
 				$product_id = $item->get_product_id();			
-				print_r($services_and_count);
+				
 				if ( ! empty( $services_and_count ) && is_array( $services_and_count ) ) {
 					?>
 					<tr>

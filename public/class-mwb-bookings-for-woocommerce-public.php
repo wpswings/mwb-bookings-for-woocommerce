@@ -831,36 +831,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					}
 				}
 			}
-
 			
-			// LOAD THE WC LOGGER
-			$logger = wc_get_logger();
-    
-			// LOG THE FAILED ORDER TO CUSTOM "failed-orders" LOG
-			$logger->info( wc_print_r( $selected_services, true ), array( 'source' => 'aaaqqqqfailed-orders' ) );
-	   
-				 // LOAD THE WC LOGGER
-				 $logger = wc_get_logger();
-    
-				 // LOG THE FAILED ORDER TO CUSTOM "failed-orders" LOG
-				 $logger->info( wc_print_r( '------', true ), array( 'source' => 'aaaqqqqfailed-orders' ) );
-			
-				 // LOAD THE WC LOGGER
-				 $logger = wc_get_logger();
-    
-				 // LOG THE FAILED ORDER TO CUSTOM "failed-orders" LOG
-				 $logger->info( wc_print_r( $custom_booking_values, true ), array( 'source' => 'aaaqqqqfailed-orders' ) );
-			
-			
-				 // LOAD THE WC LOGGER
-				 $logger = wc_get_logger();
-    
-				 // LOG THE FAILED ORDER TO CUSTOM "failed-orders" LOG
-				 $logger->info( wc_print_r( $service_id_and_quant, true ), array( 'source' => 'aaaqqqqfailed-orders' ) );
-			
-
-			
-				 $date_format = get_option( 'date_format' );
+			$date_format = get_option( 'date_format' );
 			$line_item_meta['_mwb_mbfw_service_and_count'] = $service_id_and_quant;
 			$line_item_meta['_mwb_bfwp_date_time_from']    = isset( $custom_booking_values['date_time_from'] ) ? $custom_booking_values['date_time_from'] : '';
 			$line_item_meta['_mwb_bfwp_date_time_to']      = isset( $custom_booking_values['date_time_to'] ) ? $custom_booking_values['date_time_to'] : '';

@@ -907,7 +907,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						?>
 						<tr>
 							<td>
-								<?php echo esc_html( isset( $term->name ) ? $term->name . '( ' . $count . ' )' : '' ); ?>
+								<?php echo esc_html( isset( $term->name ) ? $term->name : '' ); ?>
 							</td>
 						</tr>
 						<?php

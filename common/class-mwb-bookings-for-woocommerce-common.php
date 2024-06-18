@@ -893,9 +893,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			
 				$services_and_count = $item->get_meta( '_mwb_mbfw_service_and_count', true );
 				$product_id = $item->get_product_id();			
-				$terms = get_the_terms ( $product_id, 'mwb_booking_service' );
-				
-				
+				print_r($services_and_count);
 				if ( ! empty( $services_and_count ) && is_array( $services_and_count ) ) {
 					?>
 					<tr>
@@ -904,13 +902,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						</th>
 					</tr>
 					<?php
-					  foreach ( $terms as $term ) {
-						$term = get_term( $term->term_id, 'mwb_booking_service' );
-						
+					 foreach ( $services_and_count as $term_id => $count ) {
+						$term = get_term( $term_id, 'mwb_booking_service' );
 						?>
 						<tr>
 							<td>
-								<?php echo esc_html( isset( $term->name ) ? $term->name . '( ' . $term->count . ' )' : '' ); ?>
+								<?php echo esc_html( isset( $term->name ) ? $term->name . '( ' . $count . ' )' : '' ); ?>
 							</td>
 						</tr>
 						<?php

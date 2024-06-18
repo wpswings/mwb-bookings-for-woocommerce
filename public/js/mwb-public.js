@@ -37,19 +37,35 @@ jQuery(document).ready(function($){
             }
         });
         $(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
+          debugger;
           
-            if (jQuery('#wps_booking_single_calendar_form').val() == '') {
+            if ( jQuery('#wps_booking_single_calendar_form').val() != undefined ) {
+                if (jQuery('#wps_booking_single_calendar_form').val() == '') {
                 
-                jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
-            } else {
-                jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+                    jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+                } else {
+                    jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+                }
             }
-            if (jQuery('#mwb-mbfw-booking-from-time').val() == '' || jQuery('#mwb-mbfw-booking-to-time').val() == '') {
+
+            if ( jQuery('#wps_booking_single_calendar_form_').val() != undefined ) {
+                if (jQuery('#wps_booking_single_calendar_form_').val() == '') {
                 
-                jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
-            } else {
-                jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+                    jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+                } else {
+                    jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+                }
             }
+        
+            if ( jQuery('#mwb-mbfw-booking-from-time').val() != undefined ) {
+                if (jQuery('#mwb-mbfw-booking-from-time').val() == '' || jQuery('#mwb-mbfw-booking-to-time').val() == '') {
+                
+                    jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+                } else {
+                    jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+                }
+            }
+           
         });
     }
 

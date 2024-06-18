@@ -627,10 +627,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					
 					if ( ! empty( $booking_dates[0] ) ) {
 
+
+					if ( isset( $booking_dates[1] ) ) {
+
 					
 						$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1];
 						$date_time_to   = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[3];
-					}
+					
+					}}
 					$booking_slot = $single_cal_booking_dates;
 					$single_cal_booking_dates = '';
 
@@ -675,6 +679,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			 */
 			apply_filters( 'mbfw_add_extra_custom_details_in_cart', $custom_data );
 			$cart_item_data['mwb_mbfw_booking_values'] = $custom_data;
+		
 		}
 		return $cart_item_data;
 	}
@@ -814,17 +819,48 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					}
 				}
 			}
+			
 			if ( isset( $custom_booking_values['service_option'] ) ) {
 				$selected_services = $custom_booking_values['service_option'];
 				if ( is_array( $selected_services ) ) {
 					foreach ( $selected_services as $term_id => $is_selected ) {
-						$term                             = get_term( $term_id );
-						$service_count                    = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
-						$service_id_and_quant[ $term_id ] = $service_count;
+						$term                             = get_term( $is_selected );
+						$service_count                    = array_key_exists( $is_selected, $service_quantity ) ? $service_quantity[ $is_selected ] : 1;
+						$service_id_and_quant[ $is_selected ] = $service_count;
+			
 					}
 				}
 			}
-			$date_format = get_option( 'date_format' );
+
+			
+			// LOAD THE WC LOGGER
+			$logger = wc_get_logger();
+    
+			// LOG THE FAILED ORDER TO CUSTOM "failed-orders" LOG
+			$logger->info( wc_print_r( $selected_services, true ), array( 'source' => 'aaaqqqqfailed-orders' ) );
+	   
+				 // LOAD THE WC LOGGER
+				 $logger = wc_get_logger();
+    
+				 // LOG THE FAILED ORDER TO CUSTOM "failed-orders" LOG
+				 $logger->info( wc_print_r( '------', true ), array( 'source' => 'aaaqqqqfailed-orders' ) );
+			
+				 // LOAD THE WC LOGGER
+				 $logger = wc_get_logger();
+    
+				 // LOG THE FAILED ORDER TO CUSTOM "failed-orders" LOG
+				 $logger->info( wc_print_r( $custom_booking_values, true ), array( 'source' => 'aaaqqqqfailed-orders' ) );
+			
+			
+				 // LOAD THE WC LOGGER
+				 $logger = wc_get_logger();
+    
+				 // LOG THE FAILED ORDER TO CUSTOM "failed-orders" LOG
+				 $logger->info( wc_print_r( $service_id_and_quant, true ), array( 'source' => 'aaaqqqqfailed-orders' ) );
+			
+
+			
+				 $date_format = get_option( 'date_format' );
 			$line_item_meta['_mwb_mbfw_service_and_count'] = $service_id_and_quant;
 			$line_item_meta['_mwb_bfwp_date_time_from']    = isset( $custom_booking_values['date_time_from'] ) ? $custom_booking_values['date_time_from'] : '';
 			$line_item_meta['_mwb_bfwp_date_time_to']      = isset( $custom_booking_values['date_time_to'] ) ? $custom_booking_values['date_time_to'] : '';

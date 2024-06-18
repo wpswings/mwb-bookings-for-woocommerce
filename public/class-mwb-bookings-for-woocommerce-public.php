@@ -625,7 +625,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 					$booking_dates = explode( ' ', $single_cal_booking_dates );
 					
-					if ( !empty( $booking_dates[0] ) ) {
+					if ( ! empty( $booking_dates[0] ) ) {
 
 					
 						$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1];

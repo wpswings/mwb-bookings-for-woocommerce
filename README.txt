@@ -1,12 +1,12 @@
-=== Bookings for WooCommerce  - Booking, Manage Bookings, Show Availability, Calendar Listings ===
+=== Bookings for WooCommerce  - Booking, Bookings, Manage Bookings, Booking Calendar, Booking Appointments ===
 Contributors: wpswings
 Donate link:  https://wpswings.com/
-Tags: booking, calendar, appointments, booking calendar, scheduling
+Tags: Booking, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
-Tested up to: 6.5.3
+Tested up to: 6.5.4
 WC requires at least: 6.5.0
-WC tested up to: 8.9.1
-Stable tag: 3.1.7
+WC tested up to: 9.0.0
+Stable tag: 3.1.9
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -101,15 +101,20 @@ Prior to a day, admin managers can easily determine the maximum amount of WooCom
 
 * [**WooCommerce Bookings Backend Demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=backend-demo)
 
+**Demo For Live Preview**
+
+* [Booking Demo : Different Pricing On Different Dates](https://demo.wpswings.com/bookings-for-woocommerce-pro/product/different-pricing/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo)
+* [Booking Demo : Configurable Booking Start and End Times](https://demo.wpswings.com/bookings-for-woocommerce-pro/product/spa-services/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo)
+* [Booking Demo : Booking Calendar](https://demo.wpswings.com/bookings-for-woocommerce-pro/product/booking-calander/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo)
 
 **WITH THE WOOCOMMERCE BOOKING PLUGIN ON YOUR STORE YOU CAN:**
 
 
-*  With WooCommerce Booking you can Easily define additional booking costs and services from the backend.
+* With WooCommerce Booking you can Easily define additional booking costs and services from the backend.
 * Unit, base(days/hours), and additional cost-based WooCommerce bookable products can be defined.
 * With WooCommerce Appointment Plugin you can easily define the maximum number of bookings per day with the HMS unit.
 * Provide an easy upcoming Woo booking list as well as set daily start/end times using the WooCommerce Bookings Calendar.
-*  Can define WooCommerce bookings availability Start and End time for the day with ease with a free online booking system.
+* Can define WooCommerce bookings availability Start and End time for the day with ease with a free online booking system.
 
 
 == WORDPRESS BOOKINGS PLUGIN COMPATIBILITIES ==
@@ -146,6 +151,10 @@ The Online Reservation Plugin i.e. Bookings for WooCommerce turns your ordinary 
 
 * [**WooCommerce Bookings Pro Documentation**](https://docs.wpswings.com/bookings-for-woocommerce-pro/?utm_source=bookings-pro-docs&utm_medium=bookings-org-page&utm_campaign=bookings-pro)
 
+**Additional Useful Content**
+
+* [**Appointment Bookings Video**](https://youtu.be/h0uP_DKhHE0?si=5InymD9bvFCNt88z)
+* [**Create Online Booking System**](https://wpswings.com/blog/woocommerce-online-booking-system/)
 
 == WOOCOMMERCE BOOKINGS SUPPORT ==
 
@@ -235,9 +244,14 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
-= 3.1.9 - Released on 31 May 2024 =
+= 3.1.9 - Released on 19 June 2024 =
+* Fix: To prevent the keyboard from opening on mobile view when clicking on single calendar.
+* Fix: List of services in order issue fixed.
+* Fix: Disable book now button on empty form issue fixed.
+* New: Latest WC[9.0.0] and WP[6.5.4].
+
+= 3.1.8 - Released on 03 June 2024 =
 * Fix: language issue fixed by client
-* New: Booking Calendar filter added
 * New: Booking Calendar filter added
 * New: Set available upto date for single calender
 * New: Latest WP[6.5.3] and WC[8.9.1]
@@ -274,7 +288,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 = 3.1.2 - Released on 18 August 2023 =
 * Fix: Translation issue fix
 * Fix: Single calendar issue fix
-* New: Compatible with latest wp(6.3.0) wc(8.0.2)
+* New: Compatible with latest wp[6.3.0] wc[8.0.2]
 
 = 3.1.0 - Released on 22 June 2023 =
 * New: Providing one more type of booking calendar.
@@ -283,11 +297,11 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 = 3.0.8 - Released on 27 April 2023 =
  * New: Disable the book now button on the empty form
- * New: Compatible with the latest WP(6.1.1) and WC(7.6.0)
+ * New: Compatible with the latest WP[6.1.1] and WC[7.6.0]
 
 = 3.0.7 - Released on 13 March 2023 =
  * Fix: Issue in updating another post
- * New: Compatible with the latest WP(6.1.1) and WC(7.4.1)
+ * New: Compatible with the latest WP[6.1.1] and WC[7.4.1]
  
 = 3.0.6 - Released on 17 February 2023 =
  * New: Choose Single Upcoming Days
@@ -359,9 +373,8 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.9 - Released on 31 May 2024 =
-* Fix: language issue fixed by client
-* New: Booking Calendar filter added
-* New: Booking Calendar filter added
-* New: Set available upto date for single calender
-* New: Latest WP[6.5.3] and WC[8.9.1]
+= 3.1.9 - Released on 19 June 2024 =
+* Fix: To prevent the keyboard from opening on mobile view when clicking on single calendar.
+* Fix: List of services in order issue fixed.
+* Fix: Disable book now button on empty form issue fixed.
+* New: Latest WC[9.0.0] and WP[6.5.4].

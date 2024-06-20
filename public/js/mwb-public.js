@@ -37,7 +37,7 @@ jQuery(document).ready(function($){
             }
         });
         $(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
-          debugger;
+
           
             if ( jQuery('#wps_booking_single_calendar_form').val() != undefined ) {
                 if (jQuery('#wps_booking_single_calendar_form').val() == '') {

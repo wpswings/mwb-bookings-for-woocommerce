@@ -14,8 +14,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
-$wps_mbfw_field_data = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_slots', true );
 
+
+$wps_mbfw_field_data = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_slots', true );
+if ( empty( $wps_mbfw_field_data ) ) {
+	$wps_mbfw_field_data = array();
+}
 ?>
 <div id="wps_mbfw_add_fields_wrapper">
 	<div class="wps_mbfw_add_fields_title">
@@ -47,7 +51,6 @@ $wps_mbfw_field_data = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_s
 									<input type="text" class="wps_mbfw_field_to" style="" name="mbfw_fields[0][_to]" id="to_fields_0" value="10:00">
 								</td>
 								<td class="wps_mbfw_remove_row">
-									<!-- <input type="button" name="wps_mbfw_remove_fields_button" class="wps_mbfw_remove_row_btn" value="Remove"> -->
 								</td>
 							</tr>
 							<?php
@@ -77,7 +80,9 @@ $wps_mbfw_field_data = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_s
 										?>
 									</td>
 								</tr>
-							<?php endforeach; ?>
+								<?php
+							endforeach;
+							?>
 						<?php endif; ?>				
 					</tbody>
 					<tfoot>
@@ -91,5 +96,4 @@ $wps_mbfw_field_data = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_s
 			</div>
 		</div>
 	</div>
-</div>
 <?php

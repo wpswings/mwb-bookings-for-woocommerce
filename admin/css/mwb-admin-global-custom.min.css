@@ -1,1 +1,8 @@
 th#taxonomy-mwb_booking_cost,th#taxonomy-mwb_booking_service{width:10%}#woocommerce-product-data ul.wc-tabs li.general_settings_tab.show_if_mwb_booking a:before{font-family:WooCommerce;content:"\e028"}#woocommerce-product-data ul.wc-tabs li.people_tab.show_if_mwb_booking a:before{font-family:WooCommerce;content:"\e03a"}#woocommerce-product-data ul.wc-tabs li.availability_tab.show_if_mwb_booking a:before{font-family:WooCommerce;content:"\e02c"}#woocommerce-product-data ul.wc-tabs li.services_tab.show_if_mwb_booking a:before{font-family:WooCommerce;content:"\e02b"}#woocommerce-product-data ul.wc-tabs li.cost_tab.show_if_mwb_booking a:before{font-family:Dashicons;content:"\f111"}.mbfw-booking-calender-notice{font-size:20px;text-align:center;text-transform:capitalize}span.mwb-mbfw-booking-product-order-listing{background-color:#2196f3;color:#fff;font-weight:600;padding:4px 6px;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24)}li#wp-admin-bar-mwb-mbfw-custom-admin-menu-bookings .mwb-mbfw-booking-count{font-weight:700!important;background:#d63638;display:inline-block;border-radius:50%;padding:4px 7px;margin-left:4px;line-height:normal}#mbfw-go-pro-link{background:#05d5d8;color:#fff;padding:2px 5px;border-radius:5px;font-weight:600;border:1px solid #05d5d8}
+.wps_main_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0;
+    padding: 10px;
+  }

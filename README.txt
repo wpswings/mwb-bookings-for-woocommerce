@@ -1,12 +1,12 @@
-=== Bookings for WooCommerce  - Schedule Appointments, Manage Bookings, Show Availability, Calendar Listings ===
+=== Bookings for WooCommerce  - Booking, Bookings, Manage Bookings, Booking Calendar, Booking Appointments ===
 Contributors: wpswings
 Donate link:  https://wpswings.com/
-Tags: booking, calendar, appointments, booking calendar, scheduling
+Tags: Booking, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
-Tested up to: 6.4.3
+Tested up to: 6.5.4
 WC requires at least: 6.5.0
-WC tested up to: 8.6.1
-Stable tag: 3.1.6
+WC tested up to: 9.0.0
+Stable tag: 3.1.9
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -27,11 +27,19 @@ You can now simply book time slots utilizing the WordPress booking plugin, confi
 
 == SALIENT FEATURES OF THE BOOKING APPOINTMENT WORDPRESS FREE VERSION: ==
 
-**1) Prompt Pop-Up For Cancellation**
-Customers will be notified during the cancellation of a booking request if they still want to cancel the booking. 
+**1) Projected Availability Timeline**
+The admins can mention the availability window or set the day availability up to a particular date by using this feature.
 
+**2) Advanced Booking Filter**
+Admins can utilize the filter to filter out the bookings by choosing them as per their preference, these being On-hold, pending, processing, or completed. This further helps streamline the booking management process convenient for the websites.
 
-**2) Toggle between Single Calendar & Dual Calendar**
+**3) Easily Access Booking Links**
+WordPress booking plugin now enables the admins to easily access the booking links from the calendar itself. All these links are clickable and it redirects the admins to the Order ID for that particular booking. 
+
+**4) Prompt Pop-Up For Cancellation**
+Customers will be notified during the cancellation of a booking request if they still want to cancel the booking by utilizing the feature of the WooCommerce bookings plugin.
+
+**5) Toggle between Single Calendar & Dual Calendar**
 With WooCommerce calendar booking, the merchant gets a chance to toggle between Single or Dual Calendar based on the requirements of your organization. 
 
 If a merchant decides to go ahead with the Dual Calendar, he will be in a position to mention the dates of booking which are unavailable and the days which are unavailable on a weekly basis (weekly off). The users can choose “to” and “from” dates for WP booking.
@@ -40,48 +48,48 @@ But if a merchant decides to go ahead with the Single Calendar, he will be in a 
 
 **NOTE:** If you have more unavailable dates, then you can go for the dual calendar, but if you have more available, you can go for the single calendar. 
 
-**3) Enable WordPress Bookings**
+**6) Enable WordPress Bookings**
 Using the WordPress Bookings plugin General Settings tab toggle button functionality, admin managers can simply enable/disable the plugin as well as the plugin's Woo bookings feature.
 
-**4) Flexible WooCommerce Bookings**
+**7) Flexible WooCommerce Bookings**
 With the booking and appointment plugin for WooCommerce, customers can tailor their WP booking criteria to their specific booking unit (hour, day), budget, event, and requirements. You can make reservations without bothering to place a call, thus you can do so from the comfort of your home following easy booking management.
 
-**5) WordPress Bookings Confirmations & Cancellation Offered**
+**8) WordPress Bookings Confirmations & Cancellation Offered**
 With the WooCommerce appointments plugin, Admin managers can easily offer confirmations for booking requests made by customers, as well as easy booking cancellations, by utilizing the plugin’s capabilities.
 
-**6) Booking Listing and Sorting by Tag**
+**9) Booking Listing and Sorting by Tag**
 All requested WooCommerce booking plugin-based orders made by the customers are to be listed in the WooCommerce Order Listing table. Admin managers can conveniently sort the booking out of the orders using the Bookings tag available there.
 
-**7) Disable the Book Now Button**
+**10) Disable the Book Now Button**
 The booking & appointment plugin for WooCommerce comes equipped with a useful feature that allows you to disable the “Book Now” button in the event that the form is empty. Additionally, this feature can also be configured to disable the “Book Now” button until dates have been selected on the WooCommerce calendar.
 
 By utilizing this feature, you can ensure that your customers are only able to submit complete and accurate booking requests, leading to a more efficient and streamlined booking process.
 
-**8) Add your Bookings to Google Calendar**
+**11) Add your Bookings to Google Calendar**
 With the click of a button, you can now instantly add your WP Booking requests utilizing our plugin-based setting option to your Google Calendar.
 Isn’t this a WOW feature? It goes without saying that this enables you to take pleasure in your reservations while also keeping you informed of their status and serving as a virtual reminder of them.
 
-**9) Ease of Structuring WooCommerce Calendar Booking**
-The WooCommerce calendar booking view allows merchants to build and analyze how their day or month is progressing. They can also make changes to current bookings or availability according to that.
+**12) Ease of Structuring WooCommerce Calendar Booking**
+The WooCommerce bookings plugin, allows merchants to build and analyze how their day or month is progressing. They can also make changes to current bookings or availability according to that.
 
-**10) Offered Services & Additional Costs**
+**13) Offered Services & Additional Costs**
 With the WooCommerce appointments plugin, admin managers can easily create WooCommerce booking services and additional costs using the backend settings, and also can easily display them over the checkout page as well as over the individual bookable resource page.
 
-**11) Responsive Interface**
+**14) Responsive Interface**
 WordPress Online Booking provides an online mobile-friendly WooCommerce easy free online booking system, i.e. a responsive UI that works on a variety of devices. In short, they offer ease of access for their customers for online appointment booking products.
 
-**12) Easy Uptime Schedule Outlining**
+**15) Easy Uptime Schedule Outlining**
 With the help of the WooCommerceBooking Calendar, retailers can easily create and monitor their monthly bookings. Customers can also use such information to find out the start and end times of your service and easily start booking an appointment for them. Yes, retailers may now quickly specify the start and end times of the service for each day on the WP booking calendar. Moreover, let your clients have timetables that are simple to learn.
 
-**13) Offer Bookings Availability Settings**
+**16) Offer Bookings Availability Settings**
 Admin managers may easily specify booking and scheduling for WooCommerce-based availability for the day, as well as the exact deadline for booking an appointment with WooCommerce appointments. They only need to modify the Start and End times in the WooCommerce booking Availability tab of the plugin settings area to do so.
 
 You can also mark your bookings unavailability for a day or for an upcoming event or a holiday in advance using our exclusive one-day unavailability settings.
 
-**14) Dedicated My Bookings Tab**
+**17) Dedicated My Bookings Tab**
 Yes, our plugin has a special My Bookings Tab for managing your booking requests easily. Your website's My Account section contains a link to this tab. You can easily visit there and check the information for all of your upcoming reservations.
 
-**15) Avoid Unwanted Bookings**
+**18) Avoid Unwanted Bookings**
 Prior to a day, admin managers can easily determine the maximum amount of WooCommerce appointments that can be made. So that they may provide easy booking management for their items, avoid unnecessary bookings, and easily indicate unavailability with the WordPress booking plugin.
 
 == WOOCOMMERCE BOOKINGS AND APPOINTMENTS PLUGIN MEETS YOUR REQUIREMENT, SO ==
@@ -93,15 +101,20 @@ Prior to a day, admin managers can easily determine the maximum amount of WooCom
 
 * [**WooCommerce Bookings Backend Demo**](https://demo.wpswings.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=backend-demo)
 
+**Demo For Live Preview**
+
+* [Booking Demo : Different Pricing On Different Dates](https://demo.wpswings.com/bookings-for-woocommerce-pro/product/different-pricing/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo)
+* [Booking Demo : Configurable Booking Start and End Times](https://demo.wpswings.com/bookings-for-woocommerce-pro/product/spa-services/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo)
+* [Booking Demo : Booking Calendar](https://demo.wpswings.com/bookings-for-woocommerce-pro/product/booking-calander/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo)
 
 **WITH THE WOOCOMMERCE BOOKING PLUGIN ON YOUR STORE YOU CAN:**
 
 
-*  With WooCommerce Booking you can Easily define additional booking costs and services from the backend.
+* With WooCommerce Booking you can Easily define additional booking costs and services from the backend.
 * Unit, base(days/hours), and additional cost-based WooCommerce bookable products can be defined.
 * With WooCommerce Appointment Plugin you can easily define the maximum number of bookings per day with the HMS unit.
 * Provide an easy upcoming Woo booking list as well as set daily start/end times using the WooCommerce Bookings Calendar.
-*  Can define WooCommerce bookings availability Start and End time for the day with ease with a free online booking system.
+* Can define WooCommerce bookings availability Start and End time for the day with ease with a free online booking system.
 
 
 == WORDPRESS BOOKINGS PLUGIN COMPATIBILITIES ==
@@ -138,6 +151,10 @@ The Online Reservation Plugin i.e. Bookings for WooCommerce turns your ordinary 
 
 * [**WooCommerce Bookings Pro Documentation**](https://docs.wpswings.com/bookings-for-woocommerce-pro/?utm_source=bookings-pro-docs&utm_medium=bookings-org-page&utm_campaign=bookings-pro)
 
+**Additional Useful Content**
+
+* [**Appointment Bookings Video**](https://youtu.be/h0uP_DKhHE0?si=5InymD9bvFCNt88z)
+* [**Create Online Booking System**](https://wpswings.com/blog/woocommerce-online-booking-system/)
 
 == WOOCOMMERCE BOOKINGS SUPPORT ==
 
@@ -177,6 +194,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 11. Product Data (Availability  settings tab) 
 12. My Booking Tab (My Account Section)
 13. Add Booking to Google Calendar (My Account Tab)
+14. Multi Calendar Booking (general settings tab) 
 
 
 == Frequently Asked Questions ==
@@ -226,6 +244,29 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.1.9 - Released on 19 June 2024 =
+* Fix: To prevent the keyboard from opening on mobile view when clicking on single calendar.
+* Fix: List of services in order issue fixed.
+* Fix: Disable book now button on empty form issue fixed.
+* New: Latest WC[9.0.0] and WP[6.5.4].
+
+= 3.1.8 - Released on 03 June 2024 =
+* Fix: language issue fixed by client
+* New: Booking Calendar filter added
+* New: Set available upto date for single calender
+* New: Latest WP[6.5.3] and WC[8.9.1]
+
+= 3.1.7 - Released on 26 April 2024 =
+* New: Changed calendar for multiple Booking
+* New: Changed calendar for Dual Booking supporting Hours and days
+* New: Added order links in calendar Booking Section
+* New: Allowed Decimal value for Booking Product
+* New: Compatibility with RMA
+* Fix: Fixed the Database Error 
+* Fix: Booking Cancle issue fixed
+* New: Compatibility with Germanized Plugin
+* New: Compatibility with latest WP[6.5.2] & WC[8.8.2]
+
 = 3.1.6 - Released on 06 March 2024 =
 * New: Add a Prompt Popup for the cancellation option
 * New: Product total will show according to the quantity
@@ -247,7 +288,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 = 3.1.2 - Released on 18 August 2023 =
 * Fix: Translation issue fix
 * Fix: Single calendar issue fix
-* New: Compatible with latest wp(6.3.0) wc(8.0.2)
+* New: Compatible with latest wp[6.3.0] wc[8.0.2]
 
 = 3.1.0 - Released on 22 June 2023 =
 * New: Providing one more type of booking calendar.
@@ -256,11 +297,11 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 = 3.0.8 - Released on 27 April 2023 =
  * New: Disable the book now button on the empty form
- * New: Compatible with the latest WP(6.1.1) and WC(7.6.0)
+ * New: Compatible with the latest WP[6.1.1] and WC[7.6.0]
 
 = 3.0.7 - Released on 13 March 2023 =
  * Fix: Issue in updating another post
- * New: Compatible with the latest WP(6.1.1) and WC(7.4.1)
+ * New: Compatible with the latest WP[6.1.1] and WC[7.4.1]
  
 = 3.0.6 - Released on 17 February 2023 =
  * New: Choose Single Upcoming Days
@@ -332,9 +373,8 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.6 - Released on 06 March 2024 =
-* New: Add a Prompt Popup for the cancellation option
-* New: Product total will show according to the quantity
-* New: WP[6.4.3] and WC[8.6.1] Update
-* Fix: When the user selects multiple slots for booking it will be visible on the booking calendar
-* Fix: Compatibility with Block Cart for quantity restriction
+= 3.1.9 - Released on 19 June 2024 =
+* Fix: To prevent the keyboard from opening on mobile view when clicking on single calendar.
+* Fix: List of services in order issue fixed.
+* Fix: Disable book now button on empty form issue fixed.
+* New: Latest WC[9.0.0] and WP[6.5.4].

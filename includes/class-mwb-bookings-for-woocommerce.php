@@ -76,7 +76,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->version = MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.1.6';
+			$this->version = '3.1.9';
 		}
 
 		$this->plugin_name = 'bookings-for-woocommerce';
@@ -249,6 +249,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_admin, 'wps_mbfw_change_cart_item_quantities', 20, 1 );
 
 		}
+
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );
 	}
 
@@ -314,7 +315,10 @@ class Mwb_Bookings_For_Woocommerce {
 			// Populate mmbership details tab.
 			$this->loader->add_action( 'woocommerce_account_wps-mybookings-tab_endpoint', $mbfw_plugin_public, 'wps_mybookings_populate_tab' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_before', $mbfw_plugin_public, 'wps_mybookings_block_cart_page' );
-			$this->loader->add_filter( 'woocommerce_store_api_product_quantity_limit', $mbfw_plugin_public, 'mwb_mbfw_add_limit_to_cart_page_for_booking_product', 10, 2 );
+			$this->loader->add_action( 'woocommerce_store_api_product_quantity_maximum', $mbfw_plugin_public, 'mwb_mbfw_woocommerce_store_api_product_quantity_maximum', 10, 3 );
+			$this->loader->add_action( 'woocommerce_store_api_product_quantity_minimum', $mbfw_plugin_public, 'mwb_mbfw_woocommerce_store_api_product_quantity_maximum', 10, 3 );
+			$this->loader->add_action( 'woocommerce_checkout_create_order', $mbfw_plugin_public, 'mwb_mbfw_custom_reduce_stock_of_booking', 10, 3 );
+
 		}
 	}
 
@@ -414,18 +418,16 @@ class Mwb_Bookings_For_Woocommerce {
 			'name'      => 'mwb-bookings-for-woocommerce-booking-calendar-listing',
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-calendar-listing.php',
 		);
-
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
+			'title'     => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-booking-availability-settings',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php',
+		);
 		$mbfw_default_tabs['mwb-bookings-for-woocommerce-overview'] = array(
 			'title'     => esc_html__( 'Overview', 'mwb-bookings-for-woocommerce' ),
 			'name'      => 'mwb-bookings-for-woocommerce-overview',
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-overview.php',
 		);
-
-		// $mbfw_default_tabs['mwb-bookings-for-woocommerce-developer'] = array(
-		// 'title'     => esc_html__( 'Developer', 'mwb-bookings-for-woocommerce' ),
-		// 'name'      => 'mwb-bookings-for-woocommerce-developer',
-		// 'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-developer.php',
-		// );
 		return $mbfw_default_tabs;
 	}
 	/**
@@ -440,12 +442,6 @@ class Mwb_Bookings_For_Woocommerce {
 			'title'     => esc_html__( 'Booking Form Settings', 'mwb-bookings-for-woocommerce' ),
 			'name'      => 'mwb-bookings-for-woocommerce-booking-form-settings',
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-form-settings.php',
-		);
-
-		$mbfw_default_tabs['mwb-bookings-for-woocommerce-booking-availability-settings'] = array(
-			'title'     => esc_html__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
-			'name'      => 'mwb-bookings-for-woocommerce-booking-availability-settings',
-			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-booking-availability-settings.php',
 		);
 
 		$mbfw_default_tabs =
@@ -633,6 +629,7 @@ class Mwb_Bookings_For_Woocommerce {
 									<div class="mwb-form-select">
 										<select id="<?php echo esc_attr( $mbfw_component['id'] ); ?>" name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?><?php echo ( 'multiselect' === $mbfw_component['type'] ) ? '[]' : ''; ?>" id="<?php echo esc_attr( $mbfw_component['id'] ); ?>" class="mdl-textfield__input <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>" <?php echo 'multiselect' === $mbfw_component['type'] ? 'multiple="multiple"' : ''; ?> >
 											<?php
+
 											foreach ( $mbfw_component['options'] as $mbfw_key => $mbfw_val ) {
 												?>
 												<option value="<?php echo esc_attr( $mbfw_key ); ?>"

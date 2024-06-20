@@ -1,4 +1,13 @@
 jQuery(function ($) {
+
+    
+    
+    jQuery('.inventory_tab').on('click', function (e) {
+        //jQuery('.stock_fields').show();
+        jQuery('._manage_stock_field').show();
+        
+    });
+
     jQuery('p.submit #submit').on('click', function (e) {
         var value = jQuery('#mwb_mbfw_booking_cost').val();
         if (value < 0) {
@@ -203,6 +212,8 @@ jQuery(document).ready(function($){
         $(document).find('.wps_bfwp_weekly_off_day_field').show();
         $(document).find('.mwb_mbfw_choose_holiday_field').show();
         $(document).find('.wps_mbfw_set_availability_field').hide();
+        $(document).find('.wps_mbfw_set_availability_upto_field').hide();
+        
         $(document).find('.mbfw_notice').hide();
         $(document).find('#wps_mbfw_add_fields_wrapper').hide();
         $(document).find('.mwb_mbfw_rescheduling_allowed_field').show();
@@ -220,6 +231,7 @@ jQuery(document).ready(function($){
             $(document).find('.mwb_mbfw_rescheduling_allowed_field').hide();
             $(document).find('.mwb_mbfw_choose_holiday_field').hide();
             $(document).find('.mwb_bfwp_order_statuses_to_reschedule_field').hide();
+            $(document).find('.wps_mbfw_set_availability_upto_field').show();
             $(document).find('.wps_mbfw_set_availability_field').show();
             $(document).find('#wps_mbfw_add_fields_wrapper').show();
             $(document).find('.mbfw_notice').show();
@@ -239,6 +251,7 @@ jQuery(document).ready(function($){
             $(document).find('.mwb_mbfw_rescheduling_allowed_field').show();
             $(document).find('.mwb_bfwp_order_statuses_to_reschedule_field').show();
             $(document).find('.mbfw_notice').hide();
+            $(document).find('.wps_mbfw_set_availability_upto_field').hide();
         }
     });
     
@@ -248,6 +261,24 @@ jQuery(document).ready(function($){
         dateFormat: "dd-mm-yy",
         minDate: new Date(),
     });
+    $('#wps_mbfw_set_availability_upto').datepicker({
+        dateFormat: "dd-mm-yy",
+        minDate: new Date(),
+        
+    });
+    $(document).on('click', '#wps_mbfw_set_availability_upto', function(){
+      
+        const dateInput = document.getElementById("wps_mbfw_set_availability_upto");
+        const clearButton = document.getElementById("clearDateButton");
+        if ( jQuery('#availability_clear').val() == undefined){
+            jQuery('.wps_mbfw_set_availability_upto_field ').append('<input type="button" value="Clear" id="availability_clear"> ');
+        
+        }
+    });
+    $(document).on('click', '#availability_clear', function(){
+      
+        jQuery('#wps_mbfw_set_availability_upto').val('');
+     });
 
     $.datepicker._selectDateOverload = $.datepicker._selectDate;
     $.datepicker._selectDate = function (id, dateStr) {
@@ -313,9 +344,10 @@ jQuery(document).ready(function($){
             jQuery('#mwb_mbfw_minimum_people_per_booking').attr('max', max);
         }
     });
-   
+    
+  
     $('#mwb_mbfw_availability_settings_save').on('click', function (e) {
-        
+       
         var start = $('#mwb_mbfw_daily_start_time').val();
         var end = $('#mwb_mbfw_daily_end_time').val();
         if( start != '' && end != '') {
@@ -323,10 +355,26 @@ jQuery(document).ready(function($){
             if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
                 
                 alert('Start time should be less than end time');
+                
                 e.preventDefault();
                 
             }
         }
+
+            start__ = parseInt( start.substr(0,2) );
+            end__ = parseInt( end.substr(0,2) );
+            if( start != '' && end != '') {
+                
+                if ( moment( start__, 'DD-MM-YYYY HH:mm' ) >= moment( end__, 'DD-MM-YYYY HH:mm' ) ) {
+                    
+                    alert('Start time should be less than end time');
+                    $('#mwb_mbfw_daily_start_time').val('');
+                    e.preventDefault();
+                }
+        }
+
+
+
         let day_array = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         for (let i = 0; i < day_array.length; i++){
             let morning = jQuery('#mbfw_' + day_array[i] + '_morning').val();

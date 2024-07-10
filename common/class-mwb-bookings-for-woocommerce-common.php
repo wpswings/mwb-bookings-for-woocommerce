@@ -285,17 +285,22 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		foreach ( $cart_data as $cart ) {
 			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
 				$new_price        = (float) $cart['data']->get_price();
-
+				$base_price       = 0;
 				$product_id = $cart['data']->get_id();
 				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
 				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
-				$base_price       = wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
-									/**
-									 * Filter is for returning something.
-									 *
-									 * @since 1.0.0
-									 */
-				$base_price       = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
+				$hide_base_cost = wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_booking_base_cost_hide', true );
+				if ('yes' != $hide_base_cost ) {
+
+				
+					$base_price       = wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
+										/**
+										 * Filter is for returning something.
+										 *
+										 * @since 1.0.0
+										 */
+					$base_price       = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
+				}
 				$booking_type = wps_booking_get_meta_data( $product_id, 'wps_mbfw_booking_type', true );
 				$booking_dates = array_key_exists( 'single_cal_booking_dates', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['single_cal_booking_dates'] ) ) : '';
 				$wps_general_price = '';
@@ -376,10 +381,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					$new_price = (float) $unit_price;
 				}
 
+
 				// adding base cost.
 				if ( 'yes' === wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
 					$new_price = $new_price + (float) $base_price * (int) $people_number;
 				} else {
+
 					$new_price = $new_price + (float) $base_price;
 				}
 
@@ -597,14 +604,22 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 */
 	public function mbfw_booking_total_listing_single_page( $charges, $quantity, $product_id ) {
 		$general_price = wps_booking_get_meta_data( $product_id, '_price', true );
+		$mwb_mbfw_booking_base_cost_hide = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_base_cost_hide', true );
+		
 		?>
 		<div class="mbfw-total-listing-single-page__wrapper-parent">
 			<?php
 			$total = 0;
 			foreach ( $charges as $types ) {
+
+			
 				$price  = $types['value'];
 				$title  = $types['title'];
-
+				if ( 'Base Cost' == $title ) {
+					if ( 'yes' == $mwb_mbfw_booking_base_cost_hide ) {
+						continue;
+					}
+				}
 				$total += (float) $price * (int) $quantity;
 				?>
 				<div class="mbfw-total-listing-single-page__wrapper">

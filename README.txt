@@ -6,7 +6,7 @@ Requires at least: 5.5.0
 Tested up to: 6.5.4
 WC requires at least: 6.5.0
 WC tested up to: 9.0.0
-Stable tag: 3.1.9
+Stable tag: 3.1.10
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -244,7 +244,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
-= 3.1.9 - Released on 19 June 2024 =
+= 3.1.10 - Released on 19 June 2024 =
 * Fix: To prevent the keyboard from opening on mobile view when clicking on single calendar.
 * Fix: List of services in order issue fixed.
 * Fix: Disable book now button on empty form issue fixed.
@@ -373,7 +373,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.9 - Released on 19 June 2024 =
+= 3.1.10 - Released on 19 June 2024 =
 * Fix: To prevent the keyboard from opening on mobile view when clicking on single calendar.
 * Fix: List of services in order issue fixed.
 * Fix: Disable book now button on empty form issue fixed.

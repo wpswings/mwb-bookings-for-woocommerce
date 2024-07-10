@@ -174,24 +174,42 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					if ( 'single_cal' === $booking_type ) {
 
 						if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
+							$_orders = '';
 
-							$one_hour_ago = gmdate( 'Y-m-d H:i:s', strtotime( '-1 hour' ) );
+							$is_hour_disabled =	wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_max_limit_for_hour_check_box', true );
 
-							$_orders = wc_get_orders(
-								array(
-									'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
-									'limit'    => -1,
-									'meta_key' => 'mwb_order_type',
-									'meta_value' => 'booking',
-									'date_query' => array(
-										array(
-											'column' => 'date_created_gmt',
-											'after'  => $one_hour_ago,
-											'inclusive' => true,
+							if ($is_hour_disabled == 'yes' ) {
+								
+								$_orders = wc_get_orders(
+									array(
+										'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
+										'limit'    => -1,
+										'meta_key' => 'mwb_order_type',
+										'meta_value' => 'booking',
+									)
+								);
+							} else{
+
+								$one_hour_ago = gmdate( 'Y-m-d H:i:s', strtotime( '-1 hour' ) );
+
+								$_orders = wc_get_orders(
+									array(
+										'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
+										'limit'    => -1,
+										'meta_key' => 'mwb_order_type',
+										'meta_value' => 'booking',
+										'date_query' => array(
+											array(
+												'column' => 'date_created_gmt',
+												'after'  => $one_hour_ago,
+												'inclusive' => true,
+											),
 										),
-									),
-								)
-							);
+									)
+								);
+
+							}
+							
 
 							if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 

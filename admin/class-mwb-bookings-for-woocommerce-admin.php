@@ -817,6 +817,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			);
+			woocommerce_wp_checkbox(
+				array(
+					'id'          => 'mwb_mbfw_booking_base_cost_hide',
+					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_base_cost_hide', true ),
+					'label'       => __( 'Hide Base Cost from Product Page', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable to hide Base cost from Product Page.', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
+				)
+			);
 			woocommerce_wp_text_input(
 				array(
 					'id'                => 'mwb_mbfw_booking_base_cost',
@@ -1076,6 +1085,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'_price'                                   => array_key_exists( 'mwb_mbfw_booking_unit_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_unit_cost'] ) ) : '',
 				'mwb_mbfw_is_booking_unit_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_unit_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_unit_cost_per_people'] ) ) : '',
 				'mwb_mbfw_booking_base_cost'               => array_key_exists( 'mwb_mbfw_booking_base_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_base_cost'] ) ) : '',
+				'mwb_mbfw_booking_base_cost_hide'               => array_key_exists( 'mwb_mbfw_booking_base_cost_hide', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_base_cost_hide'] ) ) : '',
 				'mwb_mbfw_is_booking_base_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_base_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_base_cost_per_people'] ) ) : '',
 				'mwb_mbfw_is_people_option'                => array_key_exists( 'mwb_mbfw_is_people_option', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_people_option'] ) ) : '',
 				'mwb_mbfw_minimum_people_per_booking'      => array_key_exists( 'mwb_mbfw_minimum_people_per_booking', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_minimum_people_per_booking'] ) ) : '',

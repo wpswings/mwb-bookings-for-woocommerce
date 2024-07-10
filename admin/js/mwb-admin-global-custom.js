@@ -305,11 +305,13 @@ jQuery(document).ready(function($){
         $(document).find('.wps_mbfw_field_body').append(field_html);
         $('.wps_mbfw_field_from').datetimepicker({
             format     : 'H:i',
+            step       :  30,
             datepicker : false,
             
         });
         $('.wps_mbfw_field_to').datetimepicker({
             format     : 'H:i',
+            step       :  30,
             datepicker : false,
             
         });
@@ -322,11 +324,13 @@ jQuery(document).ready(function($){
     });
     $('.wps_mbfw_field_from').datetimepicker({
         format     : 'H:i',
+        step       :  30,
         datepicker : false,
 		
     });
     $('.wps_mbfw_field_to').datetimepicker({
         format     : 'H:i',
+        step       :  30,
         datepicker : false,
 		
     });
@@ -448,8 +452,6 @@ jQuery(document).ready(function($){
         $('.wps_mbfw_field_to').change(function () {
             var start = $('#from_fields_' + $(this).attr('id').substr(-1)).val();
             var end = $(this).val();
-            start = parseInt( start.substr(0,2) );
-            end = parseInt( end.substr(0,2) );
             if( start != '' && end != '') {
                 
                 if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {

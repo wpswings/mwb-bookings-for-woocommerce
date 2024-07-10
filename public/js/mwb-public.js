@@ -5,12 +5,7 @@ jQuery(document).ready(function($){
         jQuery(this).siblings('.mwb-mbfw-user-booking-meta-data-listing').slideToggle('slow');
     })
 
-    // $('.single_add_to_cart_button').on('click', function(event) {
-    //   debugger;
-    //     if (jQuery('#wps_booking_single_calendar_form').val() == '' ) {
-    //         event.preventDefault();
-    //     }
-    // });
+
    
 
     if( mwb_mbfw_public_obj.daily_start_time != '' && mwb_mbfw_public_obj.daily_end_time != '' ) {

@@ -281,6 +281,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) {
 			return;
 		}
+		$unit = 0;
 		$cart_data = $cart_object->get_cart();
 		foreach ( $cart_data as $cart ) {
 			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
@@ -452,8 +453,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			} else {
 				if ( ! empty( $booking_dates ) ) {
 					$booking_dates = explode( ' ', $booking_dates );
-					$date_time_from = $booking_dates[0] . ' ' . $booking_dates[1];
-					$date_time_to   = $booking_dates[0] . ' ' . $booking_dates[3];
+					if ( isset( $booking_dates[1] ) ) {
+						$date_time_from = $booking_dates[0] . ' ' . $booking_dates[1];
+						$date_time_to   = $booking_dates[0] . ' ' . $booking_dates[3];
+					}
+					
 				}
 				$from_timestamp = strtotime( $date_time_from );
 				$to_timestamp = strtotime( $date_time_to );

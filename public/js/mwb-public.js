@@ -17,7 +17,18 @@ jQuery(document).ready(function($){
             // minTime : mwb_mbfw_common_obj.minTime
         });
     }
-    
+    jQuery('#wps_booking_single_calendar_form').on('blur',function(){
+        debugger;
+        dataaa =  jQuery('#wps_booking_single_calendar_form').val();
+        if ( dataaa != '' ) {
+            
+            if ( mwb_mbfw_public_obj.booking_slot_array_max_limit[dataaa] != undefined ) {
+                length_limit = mwb_mbfw_public_obj.booking_slot_array_max_limit[dataaa];
+                jQuery('.qty').attr('max',length_limit);
+            }
+        }
+    })
+
 
     var booking_product = mwb_mbfw_public_obj.booking_product;
     if (booking_product == 'yes') {
@@ -31,6 +42,13 @@ jQuery(document).ready(function($){
                 jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
             }
         });
+
+       
+        
+
+
+
+
         $(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
 
           

@@ -95,6 +95,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$date_array = array();
 		$mwb_mbfw_show_date_with_time = '';
 		$today_date_check = '';
+		$booking_slot_array_max_limit =array();
 		// Get the number of days in the current month.
 		$num_days = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
 		$today_date_check  = sprintf( '%04d-%02d-%02d', $current_year, $current_month, $currentday );
@@ -241,6 +242,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							}
 
 							$max_limit = '';
+							
 							if ( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
 
 								$max_limit = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true );
@@ -255,9 +257,16 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								foreach ( $booking_slot_array as $key => $values ) {
 									if ( $values >= $max_limit ) {
 										$booking_unavailable[] = $key;
+
+										
+										
+									} else{
+										$limit =   $max_limit - $values;
+										$booking_slot_array_max_limit[ $key ] = $values;
 									}
 								}
 							}
+							
 							$max_limit_days = '';
 							if ( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
 								$max_limit_days = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true );
@@ -374,6 +383,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'wps_single_dates_temp' => $wps_single_dates_temp,
 				'wps_single_dates_temp_dual' => $wps_single_dates_temp_dual,
 				'mwb_mbfw_show_date_with_time' => $mwb_mbfw_show_date_with_time,
+				'booking_slot_array_max_limit' => $booking_slot_array_max_limit,
 			)
 		);
 	}

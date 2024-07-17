@@ -365,11 +365,14 @@ jQuery(document).ready(function($){
             }
         }
 
-            start__ = parseInt( start.substr(0,2) );
-            end__ = parseInt( end.substr(0,2) );
+
+        start__ = start.replace(':','.');
+        end__ = end.replace(':','.');
+            // start__ = parseInt( start.substr(0,2) );
+            // end__ = parseInt( end.substr(0,2) );
+            
             if( start != '' && end != '') {
-                
-                if ( moment( start__, 'DD-MM-YYYY HH:mm' ) >= moment( end__, 'DD-MM-YYYY HH:mm' ) ) {
+                if ( start >= end ) {
                     
                     alert('Start time should be less than end time');
                     $('#mwb_mbfw_daily_start_time').val('');
@@ -434,13 +437,7 @@ jQuery(document).ready(function($){
             start = start.replace(':','.');
             end = end.replace(':','.');
             if( start != '' && end != '') {
-           // if( start != '' && end != '') {
-    
-                // start = parseInt( start.substr(0,2) );
-                // end = parseInt( end.substr(0,2) );
-                   
-                
-               // if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+          
                 if ( start >= end ) {   
                     alert('Start time should be less than end time');
                     $(this).val('');

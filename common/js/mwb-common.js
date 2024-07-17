@@ -94,20 +94,23 @@
 			}
 		});
 		$('#mwb-mbfw-booking-to-time').on('change', function(){
+			debugger;
 			var from_time = $('#mwb-mbfw-booking-from-time').val();
 			var to_time   = $(this).val();
 			if ( from_time && to_time ) {
 				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
 					$('#mwb-mbfw-booking-to-time').val('');
-					
+					console.log('dsssd');
 					if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
 						if (jQuery(jQuery('.flatpickr-calendar')[1]).hasClass('open')){
 							jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
 							jQuery(jQuery('.flatpickr-calendar')[1]).addClass('close');
 							$(this).val('');
+							console.log('ds----ssd');
+							alert( mwb_mbfw_public_obj.wrong_order_date_1 );
 						}
 					}
-					alert( mwb_mbfw_public_obj.wrong_order_date_1 );
+					
 					
 				}
 			}

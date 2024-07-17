@@ -262,11 +262,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 										
 									} else{
 										$limit =   $max_limit - $values;
-										$booking_slot_array_max_limit[ $key ] = $values;
+										$booking_slot_array_max_limit[ $key ] = $limit;
 									}
 								}
 							}
-							
+
 							$max_limit_days = '';
 							if ( ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true ) ) ) {
 								$max_limit_days = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_person', true );
@@ -384,6 +384,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'wps_single_dates_temp_dual' => $wps_single_dates_temp_dual,
 				'mwb_mbfw_show_date_with_time' => $mwb_mbfw_show_date_with_time,
 				'booking_slot_array_max_limit' => $booking_slot_array_max_limit,
+				'validation_message' => __( 'Please select valid date!', 'mwb-bookings-for-woocommerce' ),
 			)
 		);
 	}

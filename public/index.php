@@ -12,3 +12,6 @@
  */
 
 esc_html_e( 'oops looks like nothing is here', 'mwb-bookings-for-woocommerce' );
+
+
+

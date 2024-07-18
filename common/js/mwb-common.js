@@ -88,9 +88,10 @@
 							jQuery(jQuery('.flatpickr-calendar')[0]).removeClass('open');
 							jQuery(jQuery('.flatpickr-calendar')[0]).addClass('close');
 							$(this).val('');
+							alert( mwb_mbfw_public_obj.wrong_order_date_2 );
 						}
 					}
-					alert( mwb_mbfw_public_obj.wrong_order_date_2 );
+					
 				}
 			}
 		});
@@ -107,7 +108,7 @@
 							jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
 							jQuery(jQuery('.flatpickr-calendar')[1]).addClass('close');
 							$(this).val('');
-							console.log('ds----ssd');
+						
 							alert( mwb_mbfw_public_obj.wrong_order_date_1 );
 						}
 					}

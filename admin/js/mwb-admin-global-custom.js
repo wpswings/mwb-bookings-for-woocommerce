@@ -449,7 +449,7 @@ jQuery(document).ready(function($){
     
 
         $('.wps_mbfw_field_to').change(function () {
-            debugger;
+            ;
             var start = $('#from_fields_' + $(this).attr('id').substr(-1)).val();
             var end = $(this).val();
             start = start.replace(':','.');

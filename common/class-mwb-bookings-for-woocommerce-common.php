@@ -96,10 +96,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'date_format'          => get_option( 'date_format' ),
 				'is_single_cal'        => $is_single_cal,
 				'cancel_booking_order' => __( 'Are you sure to cancel Booking order?', 'mwb-bookings-for-woocommerce' ),
-				'holiday_alert'		   => __( 'It looks like some dates are not available in between the dates choosen by you! , please select available dates!', 'mwb-bookings-for-woocommerce' ),
-				)
+				'holiday_alert'        => __( 'It looks like some dates are not available in between the dates choosen by you! , please select available dates!', 'mwb-bookings-for-woocommerce' ),
+			)
 		);
-		
+
 		if ( is_admin() ) {
 
 			$screen                     = get_current_screen();
@@ -291,9 +291,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$custom_cart_data = $cart['mwb_mbfw_booking_values'];
 				$people_number    = isset( $custom_cart_data['people_number'] ) && ( $custom_cart_data['people_number'] > 0 ) ? (int) $custom_cart_data['people_number'] : 1;
 				$hide_base_cost = wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_booking_base_cost_hide', true );
-				if ('yes' != $hide_base_cost ) {
+				if ( 'yes' != $hide_base_cost ) {
 
-				
 					$base_price       = wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
 										/**
 										 * Filter is for returning something.
@@ -382,7 +381,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					$new_price = (float) $unit_price;
 				}
 
-
 				// adding base cost.
 				if ( 'yes' === wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
 					$new_price = $new_price + (float) $base_price * (int) $people_number;
@@ -457,7 +455,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$date_time_from = $booking_dates[0] . ' ' . $booking_dates[1];
 						$date_time_to   = $booking_dates[0] . ' ' . $booking_dates[3];
 					}
-					
 				}
 				$from_timestamp = strtotime( $date_time_from );
 				$to_timestamp = strtotime( $date_time_to );
@@ -492,7 +489,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			}
 		}
-		
 
 		$services_cost = $this->mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit );
 		$extra_charges = $this->mbfw_extra_charges_calculation( $product_id, $people_number, $unit );
@@ -547,22 +543,21 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_booking_base_cost_per_people', true ) ) {
 			$base_cost = (float) $base_cost * (int) $people_number;
 		}
-		
+
 		$charges__  = array();
-		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_add_extra_services', true ) ){
+		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_add_extra_services', true ) ) {
 			$charges__ = array(
 				'service_cost'      => array(
 					'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
 					'value' => $services_cost,
 				),
-				
-	
+
 			);
-			
+
 		}
 
 		$charges_other = array(
-			
+
 			'base_cost'         => array(
 				'title' => __( 'Base Cost', 'mwb-bookings-for-woocommerce' ),
 				'value' => $base_cost,
@@ -573,7 +568,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			),
 
 		);
-		$charges = array_merge( $charges__,$charges_other);
+		$charges = array_merge( $charges__, $charges_other );
 
 		// check additional cost.
 		$mfw_additional_cost_check = array(
@@ -609,14 +604,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	public function mbfw_booking_total_listing_single_page( $charges, $quantity, $product_id ) {
 		$general_price = wps_booking_get_meta_data( $product_id, '_price', true );
 		$mwb_mbfw_booking_base_cost_hide = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_base_cost_hide', true );
-		
+
 		?>
 		<div class="mbfw-total-listing-single-page__wrapper-parent">
 			<?php
 			$total = 0;
 			foreach ( $charges as $types ) {
 
-			
 				$price  = $types['value'];
 				$title  = $types['title'];
 				if ( 'Base Cost' == $title ) {
@@ -909,10 +903,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					 */
 					do_action( 'mwb_mbfw_people_user_booking_my_account', $item_id, $item, $order );
 				}
-			
+
 				$services_and_count = $item->get_meta( '_mwb_mbfw_service_and_count', true );
-				$product_id = $item->get_product_id();			
-				
+				$product_id = $item->get_product_id();
+
 				if ( ! empty( $services_and_count ) && is_array( $services_and_count ) ) {
 					?>
 					<tr>
@@ -921,12 +915,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						</th>
 					</tr>
 					<?php
-					 foreach ( $services_and_count as $term_id => $count ) {
+					foreach ( $services_and_count as $term_id => $count ) {
 						$term = get_term( $term_id, 'mwb_booking_service' );
 						?>
 						<tr>
 							<td>
-								<?php echo esc_html( isset( $term->name ) ? $term->name : '' ); ?>
+							   <?php echo esc_html( isset( $term->name ) ? $term->name : '' ); ?>
 							</td>
 						</tr>
 						<?php

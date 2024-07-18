@@ -36,7 +36,7 @@ jQuery(document).ready(function($){
         });
     }
     jQuery('#wps_booking_single_calendar_form').on('blur',function(){
-        debugger;
+        ;
         dataaa =  jQuery('#wps_booking_single_calendar_form').val();
         if ( dataaa != '' ) {
             

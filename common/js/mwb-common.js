@@ -76,7 +76,7 @@
 			datepicker : false,
 		});
 		$('#mwb-mbfw-booking-from-time').on('change', function(){
-			debugger;
+			;
 			var from_time = $(this).val();
 			var to_time   = $('#mwb-mbfw-booking-to-time').val();	
 			if ( from_time && to_time ) {
@@ -96,7 +96,7 @@
 			}
 		});
 		$('#mwb-mbfw-booking-to-time').on('change', function(){
-			debugger;
+			;
 			var from_time = $('#mwb-mbfw-booking-from-time').val();
 			var to_time   = $(this).val();
 			if ( from_time && to_time ) {
@@ -108,7 +108,6 @@
 							jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
 							jQuery(jQuery('.flatpickr-calendar')[1]).addClass('close');
 							$(this).val('');
-						
 							alert( mwb_mbfw_public_obj.wrong_order_date_1 );
 						}
 					}
@@ -126,7 +125,7 @@
 			}
 		});
 		$('#mwb-mbfw-booking-from-time').on('click', function(){
-			debugger;
+			;
 			if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
 				if (jQuery(jQuery('.flatpickr-calendar')[0]).hasClass('close')){
 					jQuery(jQuery('.flatpickr-calendar')[0]).removeClass('close');

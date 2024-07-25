@@ -24,7 +24,7 @@ if ( empty( $wps_mbfw_field_data ) ) {
 <div id="wps_mbfw_add_fields_wrapper">
 	<div class="wps_mbfw_add_fields_title">
 		<h2>
-			<strong class="attribute_name"><?php esc_html_e( 'Set Daily time slots', 'mwb-bookings-for-woocommerce' ); ?></strong></h2>
+			<strong class="attribute_name"><?php esc_html_e( 'Set Daily time slots ( Cost will be calculated according to per hour. )', 'mwb-bookings-for-woocommerce' ); ?></strong></h2>
 		</div>
 		<div class="wps_mbfw_add_fields_data">
 			<div class="wps_mbfw_fields_panel">

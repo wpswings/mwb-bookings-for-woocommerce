@@ -305,11 +305,13 @@ jQuery(document).ready(function($){
         $(document).find('.wps_mbfw_field_body').append(field_html);
         $('.wps_mbfw_field_from').datetimepicker({
             format     : 'H:i',
+            step       :  30,
             datepicker : false,
             
         });
         $('.wps_mbfw_field_to').datetimepicker({
             format     : 'H:i',
+            step       :  30,
             datepicker : false,
             
         });
@@ -322,11 +324,13 @@ jQuery(document).ready(function($){
     });
     $('.wps_mbfw_field_from').datetimepicker({
         format     : 'H:i',
+        step       :  30,
         datepicker : false,
 		
     });
     $('.wps_mbfw_field_to').datetimepicker({
         format     : 'H:i',
+        step       :  30,
         datepicker : false,
 		
     });
@@ -361,11 +365,14 @@ jQuery(document).ready(function($){
             }
         }
 
-            start__ = parseInt( start.substr(0,2) );
-            end__ = parseInt( end.substr(0,2) );
+
+        start__ = start.replace(':','.');
+        end__ = end.replace(':','.');
+            // start__ = parseInt( start.substr(0,2) );
+            // end__ = parseInt( end.substr(0,2) );
+            
             if( start != '' && end != '') {
-                
-                if ( moment( start__, 'DD-MM-YYYY HH:mm' ) >= moment( end__, 'DD-MM-YYYY HH:mm' ) ) {
+                if ( start >= end ) {
                     
                     alert('Start time should be less than end time');
                     $('#mwb_mbfw_daily_start_time').val('');
@@ -427,15 +434,11 @@ jQuery(document).ready(function($){
         $('.wps_mbfw_field_from').change(function () {
             var start = $(this).val();
             var end   = $('#to_fields_' + $(this).attr('id').substr(-1)).val();
-            
+            start = start.replace(':','.');
+            end = end.replace(':','.');
             if( start != '' && end != '') {
-    
-                start = parseInt( start.substr(0,2) );
-                end = parseInt( end.substr(0,2) );
-                   
-                
-                if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
-                    
+          
+                if ( start >= end ) {   
                     alert('Start time should be less than end time');
                     $(this).val('');
                    
@@ -444,15 +447,16 @@ jQuery(document).ready(function($){
             }
         });
     
-        // console.log(jQuery('.wps_mbfw_field_to'));
+
         $('.wps_mbfw_field_to').change(function () {
+            ;
             var start = $('#from_fields_' + $(this).attr('id').substr(-1)).val();
             var end = $(this).val();
-            start = parseInt( start.substr(0,2) );
-            end = parseInt( end.substr(0,2) );
+            start = start.replace(':','.');
+            end = end.replace(':','.');
             if( start != '' && end != '') {
                 
-                if ( moment( start, 'DD-MM-YYYY HH:mm' ) >= moment( end, 'DD-MM-YYYY HH:mm' ) ) {
+                if ( start >= end ) {
                     
                     alert('Start time should be less than end time');
                     $(this).val('');

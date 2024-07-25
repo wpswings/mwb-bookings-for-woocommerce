@@ -3,19 +3,19 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: Booking, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
-Tested up to: 6.5.4
+Tested up to: 6.6.0
 WC requires at least: 6.5.0
-WC tested up to: 9.0.0
-Stable tag: 3.1.9
+WC tested up to: 9.1.2
+Stable tag: 3.1.10
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Bookings for WooCommerce offer easy booking management, confirm/reject bookings, enable booking cancellations, restrict durations, etc
+Bookings for WooCommerce offers an easy booking management, confirm/reject bookings, enable booking cancellations, restrict durations, etc
 
 == Description ==
 
-**GET WOOCOMMERCE BOOKINGS FOR WOOCOMMERCE AND START SCHEDULING APPOINTMENTS FOR YOUR CUSTOMERS. MANAGE YOUR BOOKINGS BY UTILIZING THE LISTING CALENDAR AND REGULATING THE BOOKING DURATIONS WITH EASE.**
+**GET BOOKINGS FOR WOOCOMMERCE AND START SCHEDULING APPOINTMENTS FOR YOUR CUSTOMERS. MANAGE YOUR BOOKINGS BY UTILIZING THE LISTING CALENDAR AND REGULATING THE BOOKING DURATIONS WITH EASE.**
 
 WooCommerce Booking & Appointments plugin is a powerful plugin that enables store owners to create an online appointment booking system that allows them to turn their products into online WooCommerce booking solutions and make them available to customers for a set period of time.
 
@@ -26,6 +26,9 @@ You can now simply book time slots utilizing the WordPress booking plugin, confi
 [youtube https://www.youtube.com/watch?v=QTIiZDAtWKA?rel=0]
 
 == SALIENT FEATURES OF THE BOOKING APPOINTMENT WORDPRESS FREE VERSION: ==
+
+**1) Cost Concealment**
+The admins can utilize this feature to hide the base cost of the booking product from the customers.
 
 **1) Projected Availability Timeline**
 The admins can mention the availability window or set the day availability up to a particular date by using this feature.
@@ -52,7 +55,7 @@ But if a merchant decides to go ahead with the Single Calendar, he will be in a 
 Using the WordPress Bookings plugin General Settings tab toggle button functionality, admin managers can simply enable/disable the plugin as well as the plugin's Woo bookings feature.
 
 **7) Flexible WooCommerce Bookings**
-With the booking and appointment plugin for WooCommerce, customers can tailor their WP booking criteria to their specific booking unit (hour, day), budget, event, and requirements. You can make reservations without bothering to place a call, thus you can do so from the comfort of your home following easy booking management.
+With the booking and appointment plugin for WooCommerce, customers can tailor their WP booking criteria to their specific booking unit (hour, day, and minutes), budget, event, and requirements. You can make reservations without bothering to place a call, thus you can do so from the comfort of your home following easy booking management.
 
 **8) WordPress Bookings Confirmations & Cancellation Offered**
 With the WooCommerce appointments plugin, Admin managers can easily offer confirmations for booking requests made by customers, as well as easy booking cancellations, by utilizing the plugin’s capabilities.
@@ -244,6 +247,11 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.1.10 - Released on 18 July 2024 =
+* New: Slot Hours into minutes also.
+* New: Hide base cost.
+* New: Latest WC[9.1.2] and WP[6.6.0].
+
 = 3.1.9 - Released on 19 June 2024 =
 * Fix: To prevent the keyboard from opening on mobile view when clicking on single calendar.
 * Fix: List of services in order issue fixed.
@@ -373,8 +381,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.9 - Released on 19 June 2024 =
-* Fix: To prevent the keyboard from opening on mobile view when clicking on single calendar.
-* Fix: List of services in order issue fixed.
-* Fix: Disable book now button on empty form issue fixed.
-* New: Latest WC[9.0.0] and WP[6.5.4].
+= 3.1.10 - Released on 18 July 2024 =
+* New: Slot Hours into minutes also.
+* New: Hide base cost.
+* New: Latest WC[9.1.2] and WP[6.6.0].

@@ -294,3 +294,6 @@ input#wps_booking_single_calendar_form_ {
   opacity: 0.5; /* Apply visual indication of disabled state */
 }
 
+.flatpickr-mobile {
+  display: none !important;
+}

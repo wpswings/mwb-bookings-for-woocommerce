@@ -6,7 +6,7 @@ Requires at least: 5.5.0
 Tested up to: 6.6.0
 WC requires at least: 6.5.0
 WC tested up to: 9.1.2
-Stable tag: 3.1.10
+Stable tag: 3.1.11
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -247,7 +247,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
-= 3.1.10 - Released on 18 July 2024 =
+= 3.1.11 - Released on 18 July 2024 =
 * New: Slot Hours into minutes also.
 * New: Hide base cost.
 * New: Latest WC[9.1.2] and WP[6.6.0].
@@ -381,7 +381,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.1.10 - Released on 18 July 2024 =
+= 3.1.11 - Released on 18 July 2024 =
 * New: Slot Hours into minutes also.
 * New: Hide base cost.
 * New: Latest WC[9.1.2] and WP[6.6.0].

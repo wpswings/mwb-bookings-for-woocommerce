@@ -124,6 +124,7 @@ jQuery(document).ready(function($){
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
                     disableMobile: true,
+                            
                     time_24hr: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -155,13 +156,14 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                 }); 
         
                 flatpickr('#mwb-mbfw-booking-to-time', {  
+                    
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
@@ -196,14 +198,15 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                 }); 
             }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
 
                 flatpickr('#'+from_time, {  
+                    
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
@@ -240,15 +243,16 @@ jQuery(document).ready(function($){
                     
                     },
 
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                     
                 }); 
         
                 flatpickr('#mwb-mbfw-booking-to-time', {  
                     enableTime: true,
+                    
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
                     disableMobile: true,
@@ -280,10 +284,10 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                 }); 
 
 
@@ -322,19 +326,20 @@ jQuery(document).ready(function($){
                                 dayElem.classList.add("disabled-date");
                         }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                 }); 
         
-                flatpickr('#'+from_time, {  
+                flatpickr('#'+to_time, {  
                     disableMobile: true,
                     dateFormat: "d-m-Y",
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    },
+                    
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // },
                    
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
@@ -374,6 +379,7 @@ jQuery(document).ready(function($){
 
                 flatpickr('#'+from_time, {  
                     enableTime: true,
+                    
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
                     disableMobile: true,
@@ -405,14 +411,15 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                     
                 });
         
                 flatpickr('#'+to_time, {  
+                    
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
                     disableMobile: true,
@@ -445,14 +452,15 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                 }); 
             }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
 
                 flatpickr('#'+from_time, {  
+                    
                     enableTime: true,
                     disableMobile: true,
                     dateFormat: "d-m-Y H:i",
@@ -484,15 +492,16 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                     
                 }); 
         
                 flatpickr('#'+to_time, {  
                     enableTime: true,
+                    
                     disableMobile: true,
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
@@ -524,16 +533,17 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                 }); 
 
 
             }
             else{
                 flatpickr('#'+from_time, {  
+                    
                     disableMobile: true,
                     dateFormat: "d-m-Y",
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -562,10 +572,10 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                    
                 }); 
         
@@ -599,10 +609,10 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Update the hidden input field with the selected date
-                        document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    }
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                     
                 }); 
             }
@@ -624,6 +634,7 @@ jQuery(document).ready(function($){
 			format     : 'd-m-Y',
 			timepicker : false,
             minDate: new Date(),
+            
           
             beforeShowDay: function (date) {
                 var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);

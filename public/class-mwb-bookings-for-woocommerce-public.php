@@ -67,9 +67,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	/**
 	 * Function to check that the current device is a mobile device or not.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
-	public function mwb_isMobileDevice(){
+	public function mwb_is_mobile_device(){
 		if(!empty($_SERVER['HTTP_USER_AGENT'])){
 		   $user_ag = $_SERVER['HTTP_USER_AGENT'];
 		   if(preg_match('/(Mobile|Android|Tablet|GoBrowser|[0-9]x[0-9]*|uZardWeb\/|Mini|Doris\/|Skyfire\/|iPhone|Fennec\/|Maemo|Iris\/|CLDC\-|Mobi\/)/uis',$user_ag)){
@@ -85,9 +85,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mbfw_public_enqueue_scripts() {
 
-
-		// Check if the device is mobile
-		if ($this->mwb_isMobileDevice()) {
+		// Check if the device is mobile.
+		if ($this->mwb_is_mobile_device()) {
 			$is_mobile_site = 'mobile';
 		}else{
 			$is_mobile_site = 'desktop';
@@ -633,8 +632,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 				<?php 
 
-				// Check if the device is mobile
-				if ($this->mwb_isMobileDevice()) {
+				// Check if the device is mobile.
+				if ($this->mwb_is_mobile_device()) {
 					?>
 						<div class="mbfw-date-picker-section">
 							<label for="mwb-mbfw-booking-from-time-visible">From</label>
@@ -747,7 +746,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'service_quantity' => array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array(),
 				'date_time_from'   => array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? gmdate( $date_format, strtotime( sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) ) ) : $date_time_from,
 				'date_time_to'     => array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? gmdate( $date_format, strtotime( sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) ) ) : $date_time_to,
-				'single_cal_booking_dates' => $single_cal_booking_dates,
+				'single_cal_booking_dates'  => $single_cal_booking_dates,
 				'single_cal_date_time_from' => $date_time_from,
 				'single_cal_date_time_to'   => $date_time_to,
 				'wps_booking_slot' => $booking_slot,

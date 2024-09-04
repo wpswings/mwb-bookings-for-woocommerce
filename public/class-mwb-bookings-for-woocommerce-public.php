@@ -65,11 +65,32 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Function to check that the current device is a mobile device or not.
+	 *
+	 * @return mixed
+	 */
+	public function mwb_is_mobile_device(){
+		if(!empty($_SERVER['HTTP_USER_AGENT'])){
+		   $user_ag = $_SERVER['HTTP_USER_AGENT'];
+		   if(preg_match('/(Mobile|Android|Tablet|GoBrowser|[0-9]x[0-9]*|uZardWeb\/|Mini|Doris\/|Skyfire\/|iPhone|Fennec\/|Maemo|Iris\/|CLDC\-|Mobi\/)/uis',$user_ag)){
+			  return true;
+		   };
+		};
+		return false;
+	}
+	/**
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
 	 * @since 2.0.0
 	 */
 	public function mbfw_public_enqueue_scripts() {
+
+		// Check if the device is mobile.
+		if ($this->mwb_is_mobile_device()) {
+			$is_mobile_site = 'mobile';
+		}else{
+			$is_mobile_site = 'desktop';
+		}
 
 		wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), time(), true );
 		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
@@ -382,6 +403,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'mwb_mbfw_show_date_with_time' => $mwb_mbfw_show_date_with_time,
 				'booking_slot_array_max_limit' => $booking_slot_array_max_limit,
 				'validation_message' => __( 'Please select valid date!', 'mwb-bookings-for-woocommerce' ),
+ 				'is_mobile_device'   => $is_mobile_site
 			)
 		);
 	}
@@ -605,14 +627,48 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					</div>
 
 				<?php } else { ?>
-					<div class="mbfw-date-picker-section">
-					<label for="mwb-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input id="mwb-mbfw-booking-from-time" name="mwb_mbfw_booking_from_time"   class="flatpickr flatpickr-input active <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">			
-				</div>
-					<div class="mbfw-date-picker-section">
-						<label for="mwb-mbfw-booking-to-time"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
-						<input id="mwb-mbfw-booking-to-time" name="mwb_mbfw_booking_to_time"   class="flatpickr flatpickr-input active  <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">
-					</div>
+					
+
+
+				<?php 
+
+				// Check if the device is mobile.
+				if ($this->mwb_is_mobile_device()) {
+					?>
+						<div class="mbfw-date-picker-section">
+							<label for="mwb-mbfw-booking-from-time-visible">From</label>
+							<!-- Visible input for flatpickr -->
+							<input id="mwb-mbfw-booking-from-time-visible" class="flatpickr flatpickr-input" type="text" placeholder="Choose date">
+							<!-- Hidden input for form submission -->
+							<input id="mwb-mbfw-booking-from-time" name="mwb_mbfw_booking_from_time" type="hidden">
+						</div>
+						<div class="mbfw-date-picker-section">
+							<label for="mwb-mbfw-booking-to-time-visible">To</label>
+							<!-- Visible input for flatpickr -->
+							<input id="mwb-mbfw-booking-to-time-visible" class="flatpickr flatpickr-input" type="text" placeholder="Choose date">
+							<!-- Hidden input for form submission -->
+							<input id="mwb-mbfw-booking-to-time" name="mwb_mbfw_booking_to_time" type="hidden">
+						</div>
+					
+					<?php
+					
+				} else {
+					?> 
+					
+						<div class="mbfw-date-picker-section">
+							<label for="mwb-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
+							<input id="mwb-mbfw-booking-from-time" name="mwb_mbfw_booking_from_time"   class="flatpickr flatpickr-input active <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">			
+						</div>
+						<div class="mbfw-date-picker-section">
+							<label for="mwb-mbfw-booking-to-time"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
+							<input id="mwb-mbfw-booking-to-time" name="mwb_mbfw_booking_to_time"   class="flatpickr flatpickr-input active  <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">
+						</div>
+					
+					<?php
+					
+				}
+	
+				?>
 					<?php
 				}
 				?>
@@ -690,7 +746,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'service_quantity' => array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array(),
 				'date_time_from'   => array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? gmdate( $date_format, strtotime( sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) ) ) : $date_time_from,
 				'date_time_to'     => array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? gmdate( $date_format, strtotime( sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) ) ) : $date_time_to,
-				'single_cal_booking_dates' => $single_cal_booking_dates,
+				'single_cal_booking_dates'  => $single_cal_booking_dates,
 				'single_cal_date_time_from' => $date_time_from,
 				'single_cal_date_time_to'   => $date_time_to,
 				'wps_booking_slot' => $booking_slot,

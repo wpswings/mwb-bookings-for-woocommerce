@@ -36,7 +36,7 @@ jQuery(document).ready(function($){
         });
     }
     jQuery('#wps_booking_single_calendar_form').on('blur',function(){
-        ;
+        
         dataaa =  jQuery('#wps_booking_single_calendar_form').val();
         if ( dataaa != '' ) {
             
@@ -103,6 +103,16 @@ jQuery(document).ready(function($){
     var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday[0];
     var is_pro_active = mwb_mbfw_public_obj.is_pro_active
     var available_dates = mwb_mbfw_public_obj.single_available_dates;
+    var from_time = '';
+    var to_time = '';
+    if ( mwb_mbfw_public_obj.is_mobile_device == 'mobile'){
+         from_time =  'mwb-mbfw-booking-from-time-visible';
+         to_time =  'mwb-mbfw-booking-to-time-visible';
+    } else{
+         from_time =  'mwb-mbfw-booking-from-time';
+         to_time =  'mwb-mbfw-booking-to-time';
+    }
+
     if( is_pro_active != 'yes' ) {
 
         if( upcoming_holiday.length > 0 ){
@@ -113,6 +123,8 @@ jQuery(document).ready(function($){
                 flatpickr('#mwb-mbfw-booking-from-time', {  
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
+                    disableMobile: true,
+                            
                     time_24hr: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -144,12 +156,18 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                 }); 
         
                 flatpickr('#mwb-mbfw-booking-to-time', {  
+                    
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
+                    disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -180,13 +198,19 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                 }); 
             }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
 
-                flatpickr('#mwb-mbfw-booking-from-time', {  
+                flatpickr('#'+from_time, {  
+                    
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
+                    disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -218,13 +242,20 @@ jQuery(document).ready(function($){
                     
                     
                     },
+
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                     
                 }); 
         
                 flatpickr('#mwb-mbfw-booking-to-time', {  
                     enableTime: true,
+                    
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
+                    disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -253,13 +284,17 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                 }); 
 
 
             }
              else{
-                flatpickr('#mwb-mbfw-booking-from-time', {  
-               
+                flatpickr('#'+from_time, {  
+                    disableMobile: true,
                     dateFormat: "d-m-Y",
                   
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -291,12 +326,20 @@ jQuery(document).ready(function($){
                                 dayElem.classList.add("disabled-date");
                         }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                 }); 
         
-                flatpickr('#mwb-mbfw-booking-to-time', {  
-                       
+                flatpickr('#'+to_time, {  
+                    disableMobile: true,
                     dateFormat: "d-m-Y",
-                  
+                    
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // },
                    
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
@@ -334,10 +377,12 @@ jQuery(document).ready(function($){
             if ( jQuery('.wps_single_cal_hourly').length > 0 ) {
                 
 
-                flatpickr('#mwb-mbfw-booking-from-time', {  
+                flatpickr('#'+from_time, {  
                     enableTime: true,
+                    
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
+                    disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -366,12 +411,18 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                     
-                }); 
+                });
         
-                flatpickr('#mwb-mbfw-booking-to-time', {  
+                flatpickr('#'+to_time, {  
+                    
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
+                    disableMobile: true,
                     time_24hr: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -401,11 +452,17 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                 }); 
             }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
 
-                flatpickr('#mwb-mbfw-booking-from-time', {  
+                flatpickr('#'+from_time, {  
+                    
                     enableTime: true,
+                    disableMobile: true,
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
@@ -435,11 +492,17 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                     
                 }); 
         
-                flatpickr('#mwb-mbfw-booking-to-time', {  
+                flatpickr('#'+to_time, {  
                     enableTime: true,
+                    
+                    disableMobile: true,
                     dateFormat: "d-m-Y H:i",
                     time_24hr: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
@@ -470,13 +533,18 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                 }); 
 
 
             }
             else{
-                flatpickr('#mwb-mbfw-booking-from-time', {  
-               
+                flatpickr('#'+from_time, {  
+                    
+                    disableMobile: true,
                     dateFormat: "d-m-Y",
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
@@ -504,11 +572,15 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
+                    // }
                    
                 }); 
         
-                flatpickr('#mwb-mbfw-booking-to-time', {  
-                       
+                flatpickr('#'+to_time, {  
+                    disableMobile: true,
                     dateFormat: "d-m-Y",
                   
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -537,6 +609,10 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
+                    // onChange: function(selectedDates, dateStr, instance) {
+                    //     // Update the hidden input field with the selected date
+                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
+                    // }
                     
                 }); 
             }
@@ -558,6 +634,7 @@ jQuery(document).ready(function($){
 			format     : 'd-m-Y',
 			timepicker : false,
             minDate: new Date(),
+            
           
             beforeShowDay: function (date) {
                 var formattedDate = jQuery.datepicker.formatDate('yy-mm-dd', date);
@@ -736,6 +813,7 @@ jQuery(document).ready(function($){
     flatpickr('#wps_booking_single_calendar_form_', {  
         mode: "multiple",
     dateFormat: "Y-m-d",
+    disableMobile: true,
     
     enable: available_dates ,
 

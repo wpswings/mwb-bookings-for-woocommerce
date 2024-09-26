@@ -1838,6 +1838,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					$all_events[]   = array(
 						'title' => '#Order Id: ' . $order->get_id() . ' ' . $item['name'],
 						'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
+						// 'start' =>DateTime::createFromFormat('d \d\e F \d\e Y H:i', $date_time_from)->format('Y-m-d\TH:i:sP'),
 						'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
 						'url'   => admin_url( 'admin.php?page=wc-orders&action=edit&id=' . $order->get_id() ),
 						'class' => $status,

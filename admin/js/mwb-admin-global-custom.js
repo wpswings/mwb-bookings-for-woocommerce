@@ -432,6 +432,10 @@ jQuery(document).ready(function($){
     check_time_slot();
     function check_time_slot() {
         $('.wps_mbfw_field_from').change(function () {
+            if($('#wps_mbfw_night_slots_enabled').val()){
+                return;
+            }
+
             var start = $(this).val();
             var end   = $('#to_fields_' + $(this).attr('id').split('_').pop()).val();
             start = start.replace(':','.');
@@ -449,6 +453,9 @@ jQuery(document).ready(function($){
     
 
         $('.wps_mbfw_field_to').change(function () {
+            if($('#wps_mbfw_night_slots_enabled').val()){
+                return;
+            }
 
             var start = $('#from_fields_' + $(this).attr('id').split('_').pop()).val();
             var end = $(this).val();

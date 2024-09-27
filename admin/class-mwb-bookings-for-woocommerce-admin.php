@@ -1001,6 +1001,16 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'custom_attributes' => array( 'autocomplete' => 'off' ),
 				)
 			);
+
+				woocommerce_wp_checkbox(
+					array(
+						'id'          => 'wps_mbfw_night_slots_enabled',
+						'value'       => wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_night_slots_enabled', true ),
+						'label'       => __( 'Enable if create slots for night hours', 'mwb-bookings-for-woocommerce' ),
+						'description' => __( 'Bookings can be done from 23:00 - 01:00.', 'mwb-bookings-for-woocommerce' ),
+						'desc_tip'    => true,
+					)
+				);
 			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . '/admin/partials/mwb-bookings-for-woocommerce-time-slot.php';
 			?>
 		</div>
@@ -1106,6 +1116,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'_stock_status'                     => array_key_exists( '_stock_status', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_stock_status'] ) ) : '',
 				'_sku'                  => array_key_exists( '_sku', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_sku'] ) ) : '',
 				'_manage_stock'                     => array_key_exists( '_manage_stock', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_manage_stock'] ) ) : '',
+				'wps_mbfw_night_slots_enabled' => array_key_exists( 'wps_mbfw_night_slots_enabled', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_night_slots_enabled'] ) ) : '',
+
 			);
 
 			$product_meta_data =

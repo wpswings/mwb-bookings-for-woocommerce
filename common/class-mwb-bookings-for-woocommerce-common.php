@@ -345,7 +345,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp = strtotime( $date_time_to );
 						if ( $to_timestamp < $from_timestamp ) {
-							$to_time =$to_timestamp + 86400; // Add 24 hours (86400 seconds)
+							$to_time = $to_timestamp + 86400; // Add 24 hours (86400 seconds)
 						} else {
 									$to_time =$to_timestamp; 
 						}
@@ -460,7 +460,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					if ( isset( $booking_dates[1] ) ) {
 						$date_time_from = $booking_dates[0] . ' ' . $booking_dates[1];
 						$date_time_to   = $booking_dates[0] . ' ' . $booking_dates[3];
-					}
+					}	
 				}
 				$from_timestamp = strtotime( $date_time_from );
 				$to_timestamp = strtotime( $date_time_to );
@@ -470,7 +470,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					$to_time =$to_timestamp; 
 				 }
 				$unit_timestamp = $to_time - $from_timestamp;
-				$unit = abs($unit_timestamp) / 3600;
+				$unit = $unit_timestamp / 3600;
 				$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			}
 		} else {

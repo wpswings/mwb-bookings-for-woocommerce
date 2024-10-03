@@ -432,7 +432,8 @@ jQuery(document).ready(function($){
     check_time_slot();
     function check_time_slot() {
         $('.wps_mbfw_field_from').change(function () {
-            if($('#wps_mbfw_night_slots_enabled').val()){
+
+            if($('#wps_mbfw_night_slots_enabled').is(":checked")){
                 return;
             }
 
@@ -453,7 +454,7 @@ jQuery(document).ready(function($){
     
 
         $('.wps_mbfw_field_to').change(function () {
-            if($('#wps_mbfw_night_slots_enabled').val()){
+            if($('#wps_mbfw_night_slots_enabled').is(":checked")){
                 return;
             }
 

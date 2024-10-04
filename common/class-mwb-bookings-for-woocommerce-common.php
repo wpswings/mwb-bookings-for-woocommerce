@@ -149,7 +149,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'description'       => __( 'This setting tab allows you to create different types of additional booking costs for your booking products i.e. the part of your booking product’s additional resources or addons.', 'mwb-bookings-for-woocommerce' ),
 			'public'            => true,
 			'show_ui'           => true,
-			'show_admin_column' => true,
 			'query_var'         => true,
 			'show_in_menu'      => false,
 			'show_in_nav_menus' => false,
@@ -178,7 +177,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'labels'            => $labels,
 			'public'            => true,
 			'show_ui'           => true,
-			'show_admin_column' => true,
 			'show_in_menu'      => false,
 			'show_in_nav_menus' => false,
 			'show_admin_column' => false,
@@ -320,7 +318,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp = strtotime( $date_time_to );
 						if ( $to_timestamp < $from_timestamp ) {
-							$to_time = $to_timestamp + 86400; // Add 24 hours (86400 seconds)
+							$to_time = $to_timestamp + 86400; // Add 24 hours (86400 seconds).
 						} else {
 									$to_time =$to_timestamp; 
 						}
@@ -349,7 +347,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp = strtotime( $date_time_to );
 						if ( $to_timestamp < $from_timestamp ) {
-							$to_time = $to_timestamp + 86400; // Add 24 hours (86400 seconds)
+							$to_time = $to_timestamp + 86400; // Add 24 hours (86400 seconds).
 						} else {
 									$to_time =$to_timestamp; 
 						}
@@ -469,7 +467,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$from_timestamp = strtotime( $date_time_from );
 				$to_timestamp = strtotime( $date_time_to );
 				if ( $to_timestamp < $from_timestamp ) {
-					$to_time =$to_timestamp + 86400; // Add 24 hours (86400 seconds)
+					$to_time =$to_timestamp + 86400; // Add 24 hours (86400 seconds).
 				} else {
 					$to_time =$to_timestamp; 
 				 }
@@ -1055,47 +1053,4 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		return array();
 	}
 
-	public function mwb_mbfw_get_cart_items(){
-		check_ajax_referer( 'mbfw_common_nonce', 'nonce' );
-		$product_id = array_key_exists( 'product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
-		$slot_selected = array_key_exists( 'slot_selected', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['slot_selected'] ) ) : '';
-		$slot_left = array_key_exists( 'slot_left', $_POST ) ? $this->sanitize_text_associative_array($_POST['slot_left']): array();
-		$cart = WC()->cart->get_cart();
-		$max = '';
-		$max = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true );
-
-		if ( !empty ($cart) ) {
-			foreach ($cart as $cart_item) {
-				if ( ( $cart_item['product_id'] == $product_id ) && ( $cart_item['mwb_mbfw_booking_values']['wps_booking_slot'] == $slot_selected ) ) {
-					if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
-
-						$max_limit = $slot_left[$slot_selected]-$cart_item['quantity']; 
-					} else {
-						$max_limit = $max-$cart_item['quantity'];
-					}
-				} else {
-					if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
-
-						$max_limit = $slot_left[$slot_selected];
-					} else {
-						$max_limit = $max;
-					}
-
-				}
-
-			}
-
-		} else {
-			if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
-
-				$max_limit = $slot_left[$slot_selected];
-			} else {
-				$max_limit = $max;
-			}
-		}
-		echo $max_limit;
-	
-		wp_die();
-
-	}
 }

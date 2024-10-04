@@ -319,8 +319,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$date_time_to   = array_key_exists( 'single_cal_date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['single_cal_date_time_to'] ) ) : '';
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp = strtotime( $date_time_to );
-						$unit_timestamp = $to_timestamp - $from_timestamp;
-						$unit = $unit_timestamp / 3600;
+						if ( $to_timestamp < $from_timestamp ) {
+							$to_time = $to_timestamp + 86400; // Add 24 hours (86400 seconds)
+						} else {
+									$to_time =$to_timestamp; 
+						}
+						$unit_timestamp = $to_time - $from_timestamp;						$unit = $unit_timestamp / 3600;
 						$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $new_price, $cart['product_id'], $date_time_from, $date_time_to, $unit );
 					}
 				} else {

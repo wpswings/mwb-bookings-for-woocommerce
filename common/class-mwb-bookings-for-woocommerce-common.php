@@ -149,7 +149,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'description'       => __( 'This setting tab allows you to create different types of additional booking costs for your booking products i.e. the part of your booking product’s additional resources or addons.', 'mwb-bookings-for-woocommerce' ),
 			'public'            => true,
 			'show_ui'           => true,
-			'show_admin_column' => true,
 			'query_var'         => true,
 			'show_in_menu'      => false,
 			'show_in_nav_menus' => false,
@@ -178,7 +177,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'labels'            => $labels,
 			'public'            => true,
 			'show_ui'           => true,
-			'show_admin_column' => true,
 			'show_in_menu'      => false,
 			'show_in_nav_menus' => false,
 			'show_admin_column' => false,
@@ -319,8 +317,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$date_time_to   = array_key_exists( 'single_cal_date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['single_cal_date_time_to'] ) ) : '';
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp = strtotime( $date_time_to );
-						$unit_timestamp = $to_timestamp - $from_timestamp;
-						$unit = $unit_timestamp / 3600;
+						if ( $to_timestamp < $from_timestamp ) {
+							$to_time = $to_timestamp + 86400; // Add 24 hours (86400 seconds).
+						} else {
+									$to_time =$to_timestamp; 
+						}
+						$unit_timestamp = $to_time - $from_timestamp;						$unit = $unit_timestamp / 3600;
 						$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $new_price, $cart['product_id'], $date_time_from, $date_time_to, $unit );
 					}
 				} else {
@@ -344,8 +346,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						;
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp = strtotime( $date_time_to );
-						$unit_timestamp = $to_timestamp - $from_timestamp;
-						$unit = $unit_timestamp / 3600;
+						if ( $to_timestamp < $from_timestamp ) {
+							$to_time = $to_timestamp + 86400; // Add 24 hours (86400 seconds).
+						} else {
+									$to_time =$to_timestamp; 
+						}
+						$unit_timestamp = $to_time - $from_timestamp;
+						$unit = abs($unit_timestamp) / 3600;
 						$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $new_price, $cart['product_id'], $date_time_from, $date_time_to, $unit );
 					}
 				}
@@ -455,11 +462,16 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					if ( isset( $booking_dates[1] ) ) {
 						$date_time_from = $booking_dates[0] . ' ' . $booking_dates[1];
 						$date_time_to   = $booking_dates[0] . ' ' . $booking_dates[3];
-					}
+					}	
 				}
 				$from_timestamp = strtotime( $date_time_from );
 				$to_timestamp = strtotime( $date_time_to );
-				$unit_timestamp = $to_timestamp - $from_timestamp;
+				if ( $to_timestamp < $from_timestamp ) {
+					$to_time =$to_timestamp + 86400; // Add 24 hours (86400 seconds).
+				} else {
+					$to_time =$to_timestamp; 
+				 }
+				$unit_timestamp = $to_time - $from_timestamp;
 				$unit = $unit_timestamp / 3600;
 				$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			}
@@ -1040,4 +1052,5 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	public function mwb_mbfw_hide_reorder_button_my_account_orders( $order_statuses ) {
 		return array();
 	}
+
 }

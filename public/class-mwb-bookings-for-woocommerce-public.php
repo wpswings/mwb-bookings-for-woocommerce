@@ -71,7 +71,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_is_mobile_device(){
 		if(!empty($_SERVER['HTTP_USER_AGENT'])){
-		   $user_ag = $_SERVER['HTTP_USER_AGENT'];
+		   $user_ag = $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])) : '';
 		   if(preg_match('/(Mobile|Android|Tablet|GoBrowser|[0-9]x[0-9]*|uZardWeb\/|Mini|Doris\/|Skyfire\/|iPhone|Fennec\/|Maemo|Iris\/|CLDC\-|Mobi\/)/uis',$user_ag)){
 			  return true;
 		   };
@@ -628,33 +628,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 				<?php } else { ?>
 					
-
-
-				<?php 
-
-				// Check if the device is mobile.
-				if ($this->mwb_is_mobile_device()) {
-					?>
-						<div class="mbfw-date-picker-section">
-							<label for="mwb-mbfw-booking-from-time-visible">From</label>
-							<!-- Visible input for flatpickr -->
-							<input id="mwb-mbfw-booking-from-time-visible" class="flatpickr flatpickr-input" type="text" placeholder="Choose date">
-							<!-- Hidden input for form submission -->
-							<input id="mwb-mbfw-booking-from-time" name="mwb_mbfw_booking_from_time" type="hidden">
-						</div>
-						<div class="mbfw-date-picker-section">
-							<label for="mwb-mbfw-booking-to-time-visible">To</label>
-							<!-- Visible input for flatpickr -->
-							<input id="mwb-mbfw-booking-to-time-visible" class="flatpickr flatpickr-input" type="text" placeholder="Choose date">
-							<!-- Hidden input for form submission -->
-							<input id="mwb-mbfw-booking-to-time" name="mwb_mbfw_booking_to_time" type="hidden">
-						</div>
-					
-					<?php
-					
-				} else {
-					?> 
-					
 						<div class="mbfw-date-picker-section">
 							<label for="mwb-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
 							<input id="mwb-mbfw-booking-from-time" name="mwb_mbfw_booking_from_time"   class="flatpickr flatpickr-input active <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">			
@@ -664,11 +637,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 							<input id="mwb-mbfw-booking-to-time" name="mwb_mbfw_booking_to_time"   class="flatpickr flatpickr-input active  <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">
 						</div>
 					
-					<?php
-					
-				}
-	
-				?>
 					<?php
 				}
 				?>

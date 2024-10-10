@@ -105,13 +105,8 @@ jQuery(document).ready(function($){
     var available_dates = mwb_mbfw_public_obj.single_available_dates;
     var from_time = '';
     var to_time = '';
-    if ( mwb_mbfw_public_obj.is_mobile_device == 'mobile'){
-         from_time =  'mwb-mbfw-booking-from-time-visible';
-         to_time =  'mwb-mbfw-booking-to-time-visible';
-    } else{
          from_time =  'mwb-mbfw-booking-from-time';
          to_time =  'mwb-mbfw-booking-to-time';
-    }
 
     if( is_pro_active != 'yes' ) {
 

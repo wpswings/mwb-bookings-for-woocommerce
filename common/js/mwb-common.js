@@ -160,6 +160,53 @@
 
 		
 	});
+
+	jQuery('#wps_booking_single_calendar_form').on('blur',function(){
+		var calendar_dataa =  jQuery('#wps_booking_single_calendar_form').val();
+
+		var bodyClasses = $('body').attr('class');
+
+		// Use a regular expression to find the product ID in the body class
+		var productIDMatch = bodyClasses.match(/postid-(\d+)/);
+	
+		if (productIDMatch && productIDMatch[1]) {
+			var productId = productIDMatch[1];
+			// console.log('Product ID:', productId,mwb_mbfw_public_obj.booking_slot_array_max_limit);
+	
+			// You can use productId here for further processing
+		} else {
+			console.log('Product ID not found.');
+		}
+
+
+		jQuery.ajax({
+			method: 'POST',
+			// dataType: 'json',
+			url: mwb_mbfw_common_obj.ajax_url,
+			data: {
+				nonce: mwb_mbfw_common_obj.nonce,
+				action: 'mbfw_get_cart_data',
+				product_id: productId,
+				slot_selected : calendar_dataa,
+				slot_left:mwb_mbfw_public_obj.booking_slot_array_max_limit
+			},
+			success: function(msg) {
+				if ('undefined'!= msg){
+
+					if(msg <= 0){
+						jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+					} else{
+						
+						jQuery('.qty').attr('max',msg);
+					}
+				}
+						
+					
+				
+			},
+		});
+	});
+
 })( jQuery );
 
 function retrieve_booking_total_ajax( form_data ) {

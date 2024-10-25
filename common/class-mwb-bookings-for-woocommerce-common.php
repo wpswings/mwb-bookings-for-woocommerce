@@ -107,7 +107,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			if ( isset( $screen->id ) && 'toplevel_page_theme-general-settings' !== $screen->id && 'page' !== $screen->id ) {
 
 				wp_enqueue_script( 'jquery-ui-datepicker' );
-				wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+				if ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' ==  $screen->id ) {
+					wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
+				}
 				wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
 				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'moment-js' ), $this->version, true );
 				wp_enqueue_script( 'jquery-ui-core' );

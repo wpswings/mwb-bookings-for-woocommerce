@@ -1127,7 +1127,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'_sku'                                     => array_key_exists( '_sku', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_sku'] ) ) : '',
 				'_manage_stock'                            => array_key_exists( '_manage_stock', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_manage_stock'] ) ) : '',
 				'wps_mbfw_night_slots_enabled'             => array_key_exists( 'wps_mbfw_night_slots_enabled', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_night_slots_enabled'] ) ) : '',
-				'wps_mbfw_night_slots_enabled'             => array_key_exists( 'wps_mbfw_day_and_days_upto_togather_enabled', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_day_and_days_upto_togather_enabled'] ) ) : '',
+				'wps_mbfw_day_and_days_upto_togather_enabled'             => array_key_exists( 'wps_mbfw_day_and_days_upto_togather_enabled', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_day_and_days_upto_togather_enabled'] ) ) : '',
 			);
 
 			$product_meta_data =
@@ -1142,7 +1142,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 				if ( strpos( $meta_key, 'wps_mbfw_unit_' ) !== false ) {
 
-					if ( ! empty( $meta_value ) ) {
+					if ( ! empty( $meta_value ) || ! empty( wps_booking_get_meta_data( $id, $meta_key, true ) ) ) {
 
 						 wps_booking_update_meta_data( $id, $meta_key, $meta_value );
 					}

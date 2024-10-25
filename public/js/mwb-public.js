@@ -645,9 +645,8 @@ jQuery(document).ready(function($){
                   year_current = (dayElem.dateObj.getFullYear()).toString();
                   month_current =dayElem.dateObj.getMonth()+1;
                   var dateString__ = ("0" + dObj.getDate()).slice(-2)+ '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + dObj.getFullYear() ;
-            
                   
-                  if (mwb_mbfw_public_obj.single_available_dates_till != '' ) {
+                if (mwb_mbfw_public_obj.single_available_dates_till != '' ) {
                     var datas_till= mwb_mbfw_public_obj.single_available_dates_till.split('-');
                     month_till = datas_till[1];
                     year_till = datas_till[2];
@@ -661,6 +660,7 @@ jQuery(document).ready(function($){
             
                                     if ( moment( mwb_mbfw_public_obj.single_available_dates_till, 'DD-MM-YYYY' ) >= moment( dateString__, 'DD-MM-YYYY' ) ) {
                                         if(mwb_mbfw_public_obj.wps_mbfw_day_and_days_upto_togather_enabled){
+                                            if (available_dates.includes(dateString)) {
                                             if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
                                                 dayElem.classList.add("wps-unavailable-day");
                                                 dayElem.classList.add("disabled-date");
@@ -668,9 +668,9 @@ jQuery(document).ready(function($){
                                                 dayElem.classList.add("wps-available-day");
                                                 dayElem.classList.remove("flatpickr-disabled");
                                             }
+                                        }
             
                                         } else {
-                                            if (available_dates.includes(dateString)) {
                                                 if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
                                                     dayElem.classList.add("wps-unavailable-day");
                                                     dayElem.classList.add("disabled-date");
@@ -678,7 +678,6 @@ jQuery(document).ready(function($){
                                                     dayElem.classList.add("wps-available-day");
                                                     dayElem.classList.remove("flatpickr-disabled");
                                                 }
-                                            }
                                         }
             
                                     }
@@ -717,9 +716,8 @@ jQuery(document).ready(function($){
                   month =dayElem.dateObj.getMonth()+1;
 
                   if ( mwb_mbfw_public_obj.is_pro_active != ''){
-                    if (bfwp_public_param.global_unaviable_month.includes(month.toString())){
+                    if ( bfwp_public_param.global_unaviable_month.includes(month.toString())){
                         if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
-                        
                             if ( bfwp_public_param.global_unaviable_day.includes( dObj.getDay().toString() ) || bfwp_public_param.upcoming_holiday.includes( dateString ) ){
                                 dayElem.classList.add("wps-unavailable-day");
                                 dayElem.classList.remove("wps-available-day");
@@ -727,6 +725,10 @@ jQuery(document).ready(function($){
                             }
                         }
                         
+                    } else if(bfwp_public_param.upcoming_holiday.includes( dateString )){
+                        dayElem.classList.add("wps-unavailable-day");
+                        dayElem.classList.remove("wps-available-day");
+                        dayElem.classList.add("flatpickr-disabled");
                     }
                   }
             
@@ -812,37 +814,27 @@ jQuery(document).ready(function($){
         onDayCreate: function(dObj, dStr, fp, dayElem) {
             dObj = dayElem.dateObj;
             // Convert the date string to match the format of availableDates and unavailableDates
-          var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
-    
-          year_current = (dayElem.dateObj.getFullYear()).toString();
-          month_current =dayElem.dateObj.getMonth()+1;
-          var dateString__ = ("0" + dObj.getDate()).slice(-2)+ '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + dObj.getFullYear() ;
-    
-          
-          if (mwb_mbfw_public_obj.single_available_dates_till != '' ) {
-            var datas_till= mwb_mbfw_public_obj.single_available_dates_till.split('-');
-            month_till = datas_till[1];
-            year_till = datas_till[2];
-    
-    
-            if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
-                     
-                if ( parseInt( month_till ) >= parseInt( month_current ) ) {
-                    if(parseInt( year_till ) >= parseInt( year_current )){
-                        if ( parseInt( month_till ) == parseInt( month_current )  ) {
-    
-                            if ( moment( mwb_mbfw_public_obj.single_available_dates_till, 'DD-MM-YYYY' ) >= moment( dateString__, 'DD-MM-YYYY' ) ) {
-                                if(mwb_mbfw_public_obj.wps_mbfw_day_and_days_upto_togather_enabled){
-                                    if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
-                                        dayElem.classList.add("wps-unavailable-day");
-                                        dayElem.classList.add("disabled-date");
-                                    } else{
-                                        dayElem.classList.add("wps-available-day");
-                                        dayElem.classList.remove("flatpickr-disabled");
-                                    }
-    
-                                } else {
-                                    if (available_dates.includes(dateString)) {
+            var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
+        
+            year_current = (dayElem.dateObj.getFullYear()).toString();
+            month_current =dayElem.dateObj.getMonth()+1;
+            var dateString__ = ("0" + dObj.getDate()).slice(-2)+ '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + dObj.getFullYear() ;
+        
+            if (mwb_mbfw_public_obj.single_available_dates_till != '' ) {
+                var datas_till= mwb_mbfw_public_obj.single_available_dates_till.split('-');
+                month_till = datas_till[1];
+                year_till = datas_till[2];
+        
+        
+                if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
+                        
+                    if ( parseInt( month_till ) >= parseInt( month_current ) ) {
+                        if(parseInt( year_till ) >= parseInt( year_current )){
+                            if ( parseInt( month_till ) == parseInt( month_current )  ) {
+        
+                                if ( moment( mwb_mbfw_public_obj.single_available_dates_till, 'DD-MM-YYYY' ) >= moment( dateString__, 'DD-MM-YYYY' ) ) {
+                                    if(mwb_mbfw_public_obj.wps_mbfw_day_and_days_upto_togather_enabled){
+                                        if (available_dates.includes(dateString)) {
                                         if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
                                             dayElem.classList.add("wps-unavailable-day");
                                             dayElem.classList.add("disabled-date");
@@ -851,45 +843,54 @@ jQuery(document).ready(function($){
                                             dayElem.classList.remove("flatpickr-disabled");
                                         }
                                     }
+        
+                                    } else {
+                                            if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
+                                                dayElem.classList.add("wps-unavailable-day");
+                                                dayElem.classList.add("disabled-date");
+                                            } else{
+                                                dayElem.classList.add("wps-available-day");
+                                                dayElem.classList.remove("flatpickr-disabled");
+                                            }
+                                    }
+        
                                 }
-    
+                            
+        
+                            }else{
+                                if (available_dates.includes(dateString)) {
+                                    if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
+                                        dayElem.classList.add("wps-unavailable-day");
+                                        dayElem.classList.add("disabled-date");
+                                    } else{
+                                        dayElem.classList.add("wps-available-day");
+                                        dayElem.classList.remove("flatpickr-disabled");
+                                    }
+                                }
                             }
                         
-    
-                        }else{
-                            if (available_dates.includes(dateString)) {
-                                if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
-                                    dayElem.classList.add("wps-unavailable-day");
-                                    dayElem.classList.add("disabled-date");
-                                } else{
-                                    dayElem.classList.add("wps-available-day");
-                                    dayElem.classList.remove("flatpickr-disabled");
-                                }
-                            }
                         }
-                    
                     }
                 }
-            }
-        } else{
-            if (available_dates.includes(dateString)) {
-                if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
-                    dayElem.classList.add("wps-unavailable-day");
-                 
-                    dayElem.classList.add("flatpickr-disabled");
-                } else{
-                    dayElem.classList.add("wps-available-day");
+            } else{
+                if (available_dates.includes(dateString)) {
+                    if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
+                        dayElem.classList.add("wps-unavailable-day");
+                    
+                        dayElem.classList.add("flatpickr-disabled");
+                    } else{
+                        dayElem.classList.add("wps-available-day");
+                    }
+                
                 }
-               
             }
-        }
           
     
         
           month =dayElem.dateObj.getMonth()+1;
          
           if ( mwb_mbfw_public_obj.is_pro_active != ''){
-            if (bfwp_public_param.global_unaviable_month.includes(month.toString())){
+            if (bfwp_public_param.global_unaviable_month,includes(month.toString())){
                 if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
                 
                     if ( bfwp_public_param.global_unaviable_day.includes( dObj.getDay().toString() ) || bfwp_public_param.upcoming_holiday.includes( dateString ) ){
@@ -899,6 +900,10 @@ jQuery(document).ready(function($){
                     }
                 }
                 
+            } else if(bfwp_public_param.upcoming_holiday.includes( dateString )){
+                dayElem.classList.add("wps-unavailable-day");
+                dayElem.classList.remove("wps-available-day");
+                dayElem.classList.add("flatpickr-disabled");
             }
           }
     
@@ -962,6 +967,8 @@ jQuery(document).ready(function($){
 
                         if ( moment( mwb_mbfw_public_obj.single_available_dates_till, 'DD-MM-YYYY' ) >= moment( dateString__, 'DD-MM-YYYY' ) ) {
                             if(mwb_mbfw_public_obj.wps_mbfw_day_and_days_upto_togather_enabled){
+                                if (available_dates.includes(dateString)) {
+
                                 if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
                                     dayElem.classList.add("wps-unavailable-day");
                                     dayElem.classList.add("disabled-date");
@@ -969,16 +976,17 @@ jQuery(document).ready(function($){
                                     dayElem.classList.add("wps-available-day");
                                     dayElem.classList.remove("flatpickr-disabled");
                                 }
+                            }
 
                             } else {
-                                if (available_dates.includes(dateString)) {
-                                    if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
+
+                                if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
                                         dayElem.classList.add("wps-unavailable-day");
                                         dayElem.classList.add("disabled-date");
                                     } else{
                                         dayElem.classList.add("wps-available-day");
                                         dayElem.classList.remove("flatpickr-disabled");
-                                    }
+
                                 }
                             }
 
@@ -1030,6 +1038,10 @@ jQuery(document).ready(function($){
                 }
             }
             
+        } else if(bfwp_public_param.upcoming_holiday.includes( dateString )){
+            dayElem.classList.add("wps-unavailable-day");
+            dayElem.classList.remove("wps-available-day");
+            dayElem.classList.add("flatpickr-disabled");
         }
       }
 

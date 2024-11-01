@@ -483,12 +483,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				echo 'fail';
 				wp_die();
 			}
-			// $wps_bfwp_msg = apply_filters( 'wps_mbfw_check_availablity', $product_id, $date_time_from, $date_time_to );
 
-			// if ( 'fail' === $wps_bfwp_msg ) {
-			// 	echo 'fail';
-			// 	wp_die();
-			// }
 			if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
 				$from_timestamp = strtotime( $date_from );
 				$to_timestamp = strtotime( $date_to );
@@ -1114,6 +1109,27 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	
 		wp_die();
 
+	}
+
+	/**
+	 * Function to sanitize associative array.
+	 *
+	 * @param array $array Array to sort the data.
+	 * @return void
+	 */
+	function sanitize_text_associative_array( $array ) {
+		$sanitized_array = array();
+		if (empty($array)){
+			return $sanitized_array;
+		}
+	
+		foreach ($array as $key => $value) {
+
+			// Sanitize text fields
+			$sanitized_array[$key] = sanitize_text_field($value);
+		}
+	
+		return $sanitized_array;
 	}
 
 }

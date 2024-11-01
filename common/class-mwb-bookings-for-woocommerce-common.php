@@ -1115,7 +1115,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * Function to sanitize associative array.
 	 *
 	 * @param array $array Array to sort the data.
-	 * @return void
+	 * @return array
 	 */
 	function sanitize_text_associative_array( $array ) {
 		$sanitized_array = array();

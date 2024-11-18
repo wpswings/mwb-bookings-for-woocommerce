@@ -251,10 +251,13 @@ function retrieve_booking_total_ajax( form_data ) {
 						return;
 					}
 				} else{
-					setTimeout(function(){ 
-						$('#alert_msg_client').remove();
-					 }, 8000);
+					if ( $('#alert_msg_client').val() != undefined){
+
+						setTimeout(function(){ 
+							$('#alert_msg_client').remove();
+						}, 8000);
 					
+					}
 				}
 				$('.mwb-mbfw-total-area').html(msg);
 

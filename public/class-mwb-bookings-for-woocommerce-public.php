@@ -615,11 +615,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						<?php
 						if ( ! empty( $attr ) ) {
 							?>
-							<input id="wps_booking_single_calendar_form_" name="wps_booking_single_calendar_form" <?php echo esc_attr( $attr ); ?>  class="flatpickr flatpickr-input active"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly" >
+							<input id="wps_booking_single_calendar_form_" name="wps_booking_single_calendar_form" <?php echo esc_attr( $attr ); ?>  class="flatpickr flatpickr-input active"  type="text" placeholder="<?php echo esc_attr__( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly" >
 							<?php
 						} else {
 							?>
-							 <input type="text" name="wps_booking_single_calendar_form" id="wps_booking_single_calendar_form" class="<?php echo esc_attr( $class2 ); ?>" autocomplete="off" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>"  required  readonly="readonly" />
+							 <input type="text" name="wps_booking_single_calendar_form" id="wps_booking_single_calendar_form" class="<?php echo esc_attr( $class2 ); ?>" autocomplete="off" placeholder="<?php echo esc_attr__( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>"  required  readonly="readonly" />
 							<?php
 						}
 
@@ -633,11 +633,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					
 						<div class="mbfw-date-picker-section">
 							<label for="mwb-mbfw-booking-from-time"><?php esc_html_e( 'From', 'mwb-bookings-for-woocommerce' ); ?></label>
-							<input id="mwb-mbfw-booking-from-time" name="mwb_mbfw_booking_from_time"   class="flatpickr flatpickr-input active <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">			
+							<input id="mwb-mbfw-booking-from-time" name="mwb_mbfw_booking_from_time"   class="flatpickr flatpickr-input active <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr__( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">			
 						</div>
 						<div class="mbfw-date-picker-section">
 							<label for="mwb-mbfw-booking-to-time"><?php esc_html_e( 'To', 'mwb-bookings-for-woocommerce' ); ?></label>
-							<input id="mwb-mbfw-booking-to-time" name="mwb_mbfw_booking_to_time"   class="flatpickr flatpickr-input active  <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">
+							<input id="mwb-mbfw-booking-to-time" name="mwb_mbfw_booking_to_time"   class="flatpickr flatpickr-input active  <?php echo esc_attr( $class2 ); ?>"  type="text" placeholder="<?php echo esc_attr__( 'Choose date', 'mwb-bookings-for-woocommerce' ); ?>" readonly="readonly">
 						</div>
 					
 					<?php

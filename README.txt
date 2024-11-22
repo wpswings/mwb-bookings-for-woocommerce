@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: Booking, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
-Tested up to: 6.6.2
+Tested up to: 6.7
 WC requires at least: 6.5.0
-WC tested up to: 9.3.3
-Stable tag: 3.2.1
+WC tested up to: 9.4.1
+Stable tag: 3.2.2
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -251,6 +251,10 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.2.2 - Released on 22 November 2024 = 
+* Fix: Choose Date Translation issue on calenda
+* New: Compatibility with latest WP[6.7] and WC[9.4.1]
+
 = 3.2.1 - Released on 01 November 2024 =
 * New: Added setting to Enable Days availabilty and days availability upto Togather
 * New: Implemented new calendar for single calendar days
@@ -402,9 +406,6 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.2.1 - Released on 01 November 2024 =
-* New: Added setting to Enable Days availabilty and days availability upto Togather
-* New: Implemented new calendar for single calendar days
-* New: Additional settings hover setting issue is working
-* New: Compatibility with latest WP[6.6.2] and WC[9.3.3]
-* Fix: Fixed issue with ACF plugin
+= 3.2.2 - Released on 22 November 2024 = 
+* Fix: Choose Date Translation issue on calenda
+* New: Compatibility with latest WP[6.7] and WC[9.4.1]

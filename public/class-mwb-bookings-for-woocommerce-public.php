@@ -70,6 +70,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @return mixed
 	 */
 	public function mwb_is_mobile_device(){
+		$user_ag = '';
 		if(!empty($_SERVER['HTTP_USER_AGENT'])){
 		   $user_ag = $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])) : '';
 		   if(preg_match('/(Mobile|Android|Tablet|GoBrowser|[0-9]x[0-9]*|uZardWeb\/|Mini|Doris\/|Skyfire\/|iPhone|Fennec\/|Maemo|Iris\/|CLDC\-|Mobi\/)/uis',$user_ag)){

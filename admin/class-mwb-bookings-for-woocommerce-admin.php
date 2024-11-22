@@ -1157,7 +1157,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 
 				$wps_wgm_categ_enable = get_option( 'wps_bfwp_general_setting_categ_enable',true );
-				// print_r($wps_wgm_categ_enable);die;
 				if ( '' === $wps_wgm_categ_enable || 'no' === $wps_wgm_categ_enable ) {
 					$term       =  'booking';
 					$taxonomy   = 'product_cat';

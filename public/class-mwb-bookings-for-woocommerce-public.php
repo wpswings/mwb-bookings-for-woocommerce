@@ -118,7 +118,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$today_date_check = '';
 		$booking_slot_array_max_limit = array();
 		// Get the number of days in the current month.
-		$num_days = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
+		$num_days = date("t", strtotime("$current_year-$current_month-01"));
 		$today_date_check  = sprintf( '%04d-%02d-%02d', $current_year, $current_month, $currentday );
 		// Loop through the days of the current month and add them to the array.
 		for ( $day = $currentday; $day <= $num_days; $day++ ) {
@@ -134,7 +134,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			++$current_month;
 
 		}
-		$num_days_next_month = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
+		$num_days_next_month = date("t", strtotime("$current_year-$current_month-01 +1 month"));
 
 		// Initialize an empty array to store the dates.
 

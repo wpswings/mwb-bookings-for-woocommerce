@@ -146,10 +146,35 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			// Add the date to the array.
 			$date_array[] = $date;
 		}
-
 		if ( is_single() ) {
 			global $post;
-			$product_id = $post->ID;
+			$product_id = '';
+			if ( is_page() && has_shortcode($post->post_content, 'product_page')) {
+				// Scan the content for product shortcodes to extract the product ID
+				$pattern = get_shortcode_regex();
+				if (preg_match_all('/' . $pattern . '/s', $post->post_content, $matches, PREG_SET_ORDER)) {
+					foreach ($matches as $shortcode) {
+						// Look for [product] or [product_page] shortcodes
+						if (in_array($shortcode[2], [ 'product_page'])) {
+							$attrs = shortcode_parse_atts($shortcode[3]);
+		
+							if (isset($attrs['id'])) {
+								$product = wc_get_product($attrs['id']);
+		
+								// Check if the product type matches
+								if ($product && $product->get_type() === 'mwb_booking') { // Replace 'specific_type' with the desired type
+									// Enqueue the script if the product type matches
+									$product_id = $product->get_id();
+									break;
+								 // Stop further processing once the script is enqueued
+								}
+							}
+						}
+					}
+				}
+			} else {
+				$product_id = $post->ID;
+			}
 			$temp_product = wc_get_product( $product_id );
 			$mwb_mbfw_show_date_with_time = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_show_date_with_time', true );
 			if ( ! empty( $temp_product ) ) {

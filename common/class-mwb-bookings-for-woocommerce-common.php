@@ -1067,42 +1067,46 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$slot_left = array_key_exists( 'slot_left', $_POST ) ? $this->sanitize_text_associative_array($_POST['slot_left']): array();
 		$cart = WC()->cart->get_cart();
 		$max = '';
-		$max = get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true );
+		$max = ! empty (get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true ))?get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true ):'';
 
-		if ( !empty ($cart) ) {
-			foreach ($cart as $cart_item) {
-				if ( ( $cart_item['product_id'] == $product_id ) && ( $cart_item['mwb_mbfw_booking_values']['wps_booking_slot'] == $slot_selected ) ) {
-					if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
-						$max_limit = $slot_left[$slot_selected]-$cart_item['quantity']; 
-						break;
-					} elseif($cart_item['mwb_mbfw_booking_values']['wps_booking_slot'] ==  $slot_selected ){
-						
-						$max_limit = $max-$cart_item['quantity'];
-						break;
+		if ( !empty ($max) ) {
+			if ( !empty ($cart) ) {
+				foreach ($cart as $cart_item) {
+					if ( ( $cart_item['product_id'] == $product_id ) && ( $cart_item['mwb_mbfw_booking_values']['wps_booking_slot'] == $slot_selected ) ) {
+						if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
+							$max_limit = $slot_left[$slot_selected]-$cart_item['quantity']; 
+							break;
+						} elseif($cart_item['mwb_mbfw_booking_values']['wps_booking_slot'] ==  $slot_selected ){
+							
+							$max_limit = $max-$cart_item['quantity'];
+							break;
+						} else {
+							$max_limit = $max-$cart_item['quantity'];
+							break;
+						}
 					} else {
-						$max_limit = $max-$cart_item['quantity'];
-						break;
-					}
-				} else {
-					if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
+						if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
 
-						$max_limit = $slot_left[$slot_selected];
+							$max_limit = $slot_left[$slot_selected];
 
-					} else {
-						$max_limit = $max;
+						} else {
+							$max_limit = $max;
+						}
+
 					}
 
 				}
+			} else {
+				if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
 
+					$max_limit = $slot_left[$slot_selected];
+				} else {
+					$max_limit = $max;
+					
+				}
 			}
 		} else {
-			if ( !empty( $slot_left ) && array_key_exists( $slot_selected, $slot_left ) ) {
-
-				$max_limit = $slot_left[$slot_selected];
-			} else {
-				$max_limit = $max;
-				
-			}
+			$max_limit = $max;
 		}
 
 		echo $max_limit;

@@ -146,7 +146,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			// Add the date to the array.
 			$date_array[] = $date;
 		}
-		if ( is_single() ) {
+		if ( is_single() || is_page() ) {
 			global $post;
 			$product_id = '';
 			if ( is_page() && has_shortcode($post->post_content, 'product_page')) {

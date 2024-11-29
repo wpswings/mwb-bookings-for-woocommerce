@@ -167,10 +167,10 @@
 		var bodyClasses = $('body').attr('class');
 
 		// Use a regular expression to find the product ID in the body class
-		// var productIDMatch = bodyClasses.match(/postid-(\d+)/);
-		var prod_id = jQuery('.mwb_mbfw_booking_product_id').val();
-		if (prod_id) {
-			var productId = prod_id;
+		var productIDMatch = bodyClasses.match(/postid-(\d+)/);
+	
+		if (productIDMatch && productIDMatch[1]) {
+			var productId = productIDMatch[1];
 			// console.log('Product ID:', productId,mwb_mbfw_public_obj.booking_slot_array_max_limit);
 	
 			// You can use productId here for further processing

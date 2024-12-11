@@ -625,7 +625,6 @@ jQuery(document).ready(function($){
     }
     if (booking_unit === 'hour') {
 
-        
         if (wps_available_slots != '') {
             
   
@@ -762,10 +761,24 @@ jQuery(document).ready(function($){
                         month = '0' + month;
                     }
                     var temp_date = date + '-' + month + '-' + year + ' ';
+                    var temp_date1 = date + '-' + month + '-' + year ;
+
                     var html = '<div class="wps_cal_timeslot">\n\ ';
-                        
-                    for(let i=0; i< wps_available_slots.length; i++ ) { 
-                        var temp =  wps_available_slots[i]._from + ' - ' + wps_available_slots[i]._to;
+                    var daywise_slot = [];
+
+                    if (temp_date1 in bfwp_public_param.wps_daywise_slot_available) {
+                        daywise_slot =(bfwp_public_param.wps_daywise_slot_available[temp_date1]);
+
+                    }
+                    
+                    if( daywise_slot.length > 0  ) { 
+                       var date_slots = daywise_slot;
+                    } else {
+                        var date_slots = wps_available_slots;
+
+                    }
+                    for(let i=0; i< date_slots.length; i++ ) { 
+                        var temp =  date_slots[i]._from + ' - ' + date_slots[i]._to;
                         var temp_check = temp_date + temp;
                         if (booking_unavailable.length > 0) {
                             

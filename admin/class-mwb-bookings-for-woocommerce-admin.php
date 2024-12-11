@@ -1146,6 +1146,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 						 wps_booking_update_meta_data( $id, $meta_key, $meta_value );
 					}
+				} elseif ( strpos( $meta_key, 'wps_bfwp_daywise_slot_field_' ) !== false ) {
+
+					if ( ! empty( $meta_value ) || ! empty( wps_booking_get_meta_data( $id, $meta_key, true ) ) ) {
+						
+
+						 wps_booking_update_meta_data( $id, $meta_key, $meta_value,true );
+					}
 				} else {
 
 					wps_booking_update_meta_data( $id, $meta_key, $meta_value );

@@ -1106,7 +1106,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				}
 			}
 		} else {
-			$max_limit = $max;
+			$max_limit = 'no';
 		}
 
 		echo $max_limit;

@@ -193,11 +193,15 @@
 			success: function(msg) {
 				if ('undefined'!= msg){
 
-					if(msg <= 0){
+					if('no'==msg){
+						jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+					} else if (msg <= 0) {
 						jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
 					} else{
 						
 						jQuery('.qty').attr('max',msg);
+						jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
+
 					}
 				}
 						

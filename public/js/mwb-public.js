@@ -764,19 +764,22 @@ jQuery(document).ready(function($){
                     var temp_date1 = date + '-' + month + '-' + year ;
 
                     var html = '<div class="wps_cal_timeslot">\n\ ';
-                    var daywise_slot = [];
 
+                if ( mwb_mbfw_public_obj.is_pro_active != ''){
+                    var daywise_slot = [];
                     if (temp_date1 in bfwp_public_param.wps_daywise_slot_available) {
                         daywise_slot =(bfwp_public_param.wps_daywise_slot_available[temp_date1]);
-
                     }
                     
-                    if( daywise_slot.length > 0  ) { 
-                       var date_slots = daywise_slot;
+                    if( Object.keys(daywise_slot).length > 0  ) { 
+                        var date_slots =Object.values(daywise_slot);
                     } else {
                         var date_slots = wps_available_slots;
 
                     }
+                } else {
+                    var date_slots = wps_available_slots;
+                }
                     for(let i=0; i< date_slots.length; i++ ) { 
                         var temp =  date_slots[i]._from + ' - ' + date_slots[i]._to;
                         var temp_check = temp_date + temp;

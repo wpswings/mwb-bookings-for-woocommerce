@@ -14,6 +14,16 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$active_plugins = get_option( 'active_plugins' );
+
+if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
+	$is_pro_active = 'yes';
+} else{
+	$is_pro_active = 'no';
+}
+ if( 'yes' == $is_pro_active && 'yes' == get_option( 'wps_bfwp_enable_google_cal_booking' ) && !empty(get_option( 'wps_bfwp_google_cal_iframe' )) ) { ?>
+	<div><? echo get_option( 'wps_bfwp_google_cal_iframe' );?> </div>
+<?php } else { 
 $order_status = array(
 	'' => '--Select order status--',
 	'wc-on-hold' => 'On Hold',
@@ -46,3 +56,4 @@ $order_status = array(
 	</div>
 	<div id="mwb-mbfw-booking-calendar"></div>
 </div>
+<?php } ?>

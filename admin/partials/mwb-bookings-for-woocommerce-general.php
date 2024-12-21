@@ -24,7 +24,7 @@ $mbfw_genaral_settings =
 apply_filters( 'mbfw_general_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
-<form action="" method="POST" class="mwb-mbfw-gen-section-form">
+<form action="" method="POST" class="mwb-mbfw-gen-section-form" enctype="multipart/form-data">
 	<div class="mbfw-secion-wrap">
 		<?php
 		$mbfw_mwb_mbfw_obj->mwb_mbfw_plug_generate_html( $mbfw_genaral_settings );

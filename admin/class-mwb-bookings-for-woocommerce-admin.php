@@ -566,7 +566,24 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				if ( is_array( $mbfw_genaral_settings ) && ! empty( $mbfw_genaral_settings ) ) {
 					foreach ( $mbfw_genaral_settings as $mbfw_genaral_setting ) {
 						if ( isset( $mbfw_genaral_setting['id'] ) && '' !== $mbfw_genaral_setting['id'] ) {
-							if ( 'availability_select' === $mbfw_genaral_setting['type'] ) {
+							if('wps_bfwp_google_cal_iframe'==$mbfw_genaral_setting['id']) {
+								if (isset($_POST['wps_bfwp_google_cal_iframe'])) {
+									$allowed_html = array(
+										'iframe' => array(
+											'src'             => array(),
+											'width'           => array(),
+											'height'          => array(),
+											'frameborder'     => array(),
+											'scrolling'       => array(),
+											'style'           => array(),
+											'allowfullscreen' => array(),
+										),
+									);
+									$iframe_content = wp_kses($_POST['wps_bfwp_google_cal_iframe'],$allowed_html); // Sanitize HTML
+
+									update_option('wps_bfwp_google_cal_iframe', $iframe_content);
+								}
+							} elseif ( 'availability_select' === $mbfw_genaral_setting['type'] ) {
 								$sub_tabs = $mbfw_genaral_setting['sub_tabs'];
 								foreach ( $sub_tabs as $mbfw_sub_components ) {
 									foreach ( $mbfw_sub_components as $sub_components ) {

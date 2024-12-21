@@ -244,7 +244,7 @@ class Mwb_Bookings_For_Woocommerce {
 
 			$this->loader->add_action( 'restrict_manage_posts', $mbfw_plugin_admin, 'mbfw_add_filter_on_order_listing_page' );
 			$this->loader->add_action( 'pre_get_posts', $mbfw_plugin_admin, 'mbfw_vary_query_to_list_only_booking_types' );
-			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data' );
+			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data',10,2 );
 			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $mbfw_plugin_admin, 'mbfw_change_line_item_meta_key_order_edit_page', 10, 3 );
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_admin, 'wps_mbfw_change_cart_item_quantities', 20, 1 );
 

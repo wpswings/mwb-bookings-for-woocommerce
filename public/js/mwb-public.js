@@ -197,7 +197,7 @@ jQuery(document).ready(function($){
                     //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
                     // }
                 }); 
-            }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
+            } else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
 
                 flatpickr('#'+from_time, {  
                     
@@ -285,8 +285,7 @@ jQuery(document).ready(function($){
                 }); 
 
 
-            }
-             else{
+            } else {
                 flatpickr('#'+from_time, {  
                     disableMobile: true,
                     dateFormat: "d-m-Y",

@@ -615,7 +615,6 @@ jQuery(document).ready(function($){
    
     }
 
-
     var wps_available_slots = mwb_mbfw_public_obj.wps_available_slots;
     var booking_unit = mwb_mbfw_public_obj.booking_unit;
     var booking_unavailable = mwb_mbfw_public_obj.booking_unavailable;
@@ -640,68 +639,122 @@ jQuery(document).ready(function($){
                     // Convert the date string to match the format of availableDates and unavailableDates
                   var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
             
+                  var selected_date = moment(dateString).format('D-M-Y');
+                  var date_array = selected_date.split("-");
+                  
+                  var date = date_array[0];
+                  var month = date_array[1];
+                  var year = date_array[2];
+                  
+                  
+                  
+                  if (month.length === 1) {
+                      month = '0' + month;
+                  }
+                  var temp_date = date + '-' + month + '-' + year + ' ';
+                  var temp_date1 = date + '-' + month + '-' + year ;
+
+              if ( mwb_mbfw_public_obj.is_pro_active != ''){
+                  var daywise_slot = [];
+                  if (temp_date1 in bfwp_public_param.wps_daywise_slot_available) {
+                      daywise_slot =(bfwp_public_param.wps_daywise_slot_available[temp_date1]);
+                  }
+                  
+                  if( Object.keys(daywise_slot).length > 0  ) { 
+                      var date_slots =Object.values(daywise_slot);
+                  } else {
+                      var date_slots = wps_available_slots;
+
+                  }
+              } else {
+                  var date_slots = wps_available_slots;
+              }
+              var count =0;
+            for(let i=0; i< date_slots.length; i++ ) { 
+                var temp =  date_slots[i]._from + ' - ' + date_slots[i]._to;
+                var temp_check = temp_date + temp;
+                if (booking_unavailable.length > 0) {
+                    
+                    if (!booking_unavailable.includes(temp_check)) {
+                        count ++;
+                            
+                        
+                    }
+                } else {
+                    count ++;
+                }
+            }
+
+
+
+
                   year_current = (dayElem.dateObj.getFullYear()).toString();
                   month_current =dayElem.dateObj.getMonth()+1;
                   var dateString__ = ("0" + dObj.getDate()).slice(-2)+ '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + dObj.getFullYear() ;
-                  
-                if (mwb_mbfw_public_obj.single_available_dates_till != '' ) {
-                    var datas_till= mwb_mbfw_public_obj.single_available_dates_till.split('-');
-                    month_till = datas_till[1];
-                    year_till = datas_till[2];
-            
-                    if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
+                if (count > 0 ){
+                    if (mwb_mbfw_public_obj.single_available_dates_till != '' ) {
+                        var datas_till= mwb_mbfw_public_obj.single_available_dates_till.split('-');
+                        month_till = datas_till[1];
+                        year_till = datas_till[2];
+                
+                        if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
 
-                        if ( moment( mwb_mbfw_public_obj.single_available_dates_till, 'DD-MM-YYYY' ) >= moment( dateString__, 'DD-MM-YYYY' ) ) {
-                            if(mwb_mbfw_public_obj.wps_mbfw_day_and_days_upto_togather_enabled){
-                                if ( '1970-01-01' != available_dates[0] ) {
-                                    if (available_dates.includes(dateString)) {
-            
+                            if ( moment( mwb_mbfw_public_obj.single_available_dates_till, 'DD-MM-YYYY' ) >= moment( dateString__, 'DD-MM-YYYY' ) ) {
+                                if(mwb_mbfw_public_obj.wps_mbfw_day_and_days_upto_togather_enabled){
+                                    if ( '1970-01-01' != available_dates[0] ) {
+                                        if (available_dates.includes(dateString)) {
+                
+                                            if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
+                                                dayElem.classList.add("wps-unavailable-day");
+                                                dayElem.classList.add("disabled-date");
+                                            } else {
+                                                dayElem.classList.add("wps-available-day");
+                                                dayElem.classList.remove("flatpickr-disabled");
+                                            }
+                                        }
+                                    } else {
                                         if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
                                             dayElem.classList.add("wps-unavailable-day");
                                             dayElem.classList.add("disabled-date");
-                                        } else {
+                                        } else{
                                             dayElem.classList.add("wps-available-day");
                                             dayElem.classList.remove("flatpickr-disabled");
-                                        }
+                                        }  
                                     }
+                
                                 } else {
+                
                                     if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
-                                        dayElem.classList.add("wps-unavailable-day");
-                                        dayElem.classList.add("disabled-date");
-                                    } else{
-                                        dayElem.classList.add("wps-available-day");
-                                        dayElem.classList.remove("flatpickr-disabled");
-                                    }  
+                                            dayElem.classList.add("wps-unavailable-day");
+                                            dayElem.classList.add("disabled-date");
+                                        } else{
+                                            dayElem.classList.add("wps-available-day");
+                                            dayElem.classList.remove("flatpickr-disabled");
+                
+                                    }
                                 }
-            
+                
+                
                             } else {
-            
-                                if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
-                                        dayElem.classList.add("wps-unavailable-day");
-                                        dayElem.classList.add("disabled-date");
-                                    } else{
-                                        dayElem.classList.add("wps-available-day");
-                                        dayElem.classList.remove("flatpickr-disabled");
-            
-                                }
+                                    dayElem.classList.add("flatpickr-disabled");
                             }
-            
-            
-                        } else {
+                        }
+                    } else{
+                        if (available_dates.includes(dateString)) {
+                            if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
+                                dayElem.classList.add("wps-unavailable-day");
+                            
                                 dayElem.classList.add("flatpickr-disabled");
+                            } else{
+                                dayElem.classList.add("wps-available-day");
+                            }
+                        
                         }
                     }
                 } else{
-                    if (available_dates.includes(dateString)) {
-                        if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
-                            dayElem.classList.add("wps-unavailable-day");
-                         
-                            dayElem.classList.add("flatpickr-disabled");
-                        } else{
-                            dayElem.classList.add("wps-available-day");
-                        }
-                       
-                    }
+                    dayElem.classList.add("wps-unavailable-day");
+                        
+                    dayElem.classList.add("flatpickr-disabled");
                 }
                   
             
@@ -745,7 +798,15 @@ jQuery(document).ready(function($){
             
                 },
                 onChange: function(selectedDates, dateStr, instance) {
-                    var $calendarContainer = $(instance.calendarContainer);
+
+                    document.querySelectorAll(".flatpickr-day").forEach(day => {
+                        if (day.classList.contains("custom-selected")) {
+                        day.classList.remove("custom-selected");
+                        day.classList.add("wps-available-day");
+                        }
+                      });
+                
+                     var $calendarContainer = $(instance.calendarContainer);
                     $calendarContainer.find('.custom-content').remove();
                     var selected_date = moment(dateStr).format('D-M-Y');
                     var date_array = selected_date.split("-");
@@ -800,6 +861,22 @@ jQuery(document).ready(function($){
                     // Append the custom HTML to the Flatpickr calendar container
                     $calendarContainer.append(html);
                     instance.open();
+                    if (selectedDates.length > 0) {
+                        const date = selectedDates[0]; // Get the first selected date
+                        const formattedDateStr = instance.formatDate(date,  "F j, Y"); // Format the date
+
+                        const dateStr = instance.formatDate(date,  "F j, Y");
+                            const dayElement = instance.calendarContainer.querySelector(
+                              `.flatpickr-day[aria-label="${dateStr}"]`
+                            );
+                            if (null != dayElement) {
+                                dayElement.classList.remove("wps-available-day");
+
+                              dayElement.classList.add("custom-selected");
+                            }
+                      } else {
+                        console.log("No dates selected.");
+                      }
                     jQuery('.wps_cal_timeslot button').on('click touchstart', function (e) {
                         e.preventDefault();
                     

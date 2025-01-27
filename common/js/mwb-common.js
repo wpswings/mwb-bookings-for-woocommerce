@@ -42,7 +42,6 @@
 
 		$(document).on('focusout blur keydown paste focus mousedown mouseover mouseout', '.mwb-mbfw-cart-page-data', function () {
 			
-			
 			var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );
@@ -259,7 +258,7 @@ function retrieve_booking_total_ajax( form_data ) {
 
 						setTimeout(function(){ 
 							$('#alert_msg_client').remove();
-						}, 8000);
+						}, 4000);
 					
 					}
 				}

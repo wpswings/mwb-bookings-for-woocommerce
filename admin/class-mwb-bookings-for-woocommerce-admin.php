@@ -2031,4 +2031,48 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 	}
 
+	/**
+	 * To display Additional services on order edit page.
+	 * 
+	 * @param object $item_id is item id.
+	 * @param object $item is item object.
+	 * @param object $product is product.
+	 * @return void
+	 */
+	public function bfwp_show_booking_services_on_order_edit_page( $item_id, $item, $product ) {
+		$screen = get_current_screen();
+
+		global $pagenow;
+		if ( ('post.php' !== $pagenow && 'woocommerce_page_wc-orders' !== $screen->id) || ! is_object( $product )  ) {
+			return;
+		}		
+
+		$class      = false;
+		$product_id = $product->get_id();
+		if ( 'mwb_booking' === $product->get_type() ) {
+			if ( ! empty( $item->get_meta( '_mwb_mbfw_service_and_count', true ) ) ) {
+				$services_and_count = $item->get_meta( '_mwb_mbfw_service_and_count', true );
+				$product_id         = $item->get_product_id();
+				
+
+				if ( ! empty( $services_and_count ) && is_array( $services_and_count ) ) {
+					?>
+					<div class="mwb_service_row" >
+						
+							<span class="mwb_service_row_span" ><?php esc_html_e( 'Service(s)', 'mwb-bookings-for-woocommerce' );  echo ':';?></span>
+						
+					
+					<?php
+					foreach ( $services_and_count as $term_id => $count ) {
+						$term = get_term( $term_id, 'mwb_booking_service' );
+						?>
+							<?php echo '<br>'.esc_html( isset( $term->name ) ? $term->name : '' ).' ('.$count.')'; ?>
+						<?php
+					}
+					?></div><?php
+				}
+			}
+			wp_nonce_field( 'mwb_mbfw_line_order_edit', 'mbfw_nonce_field' );
+		}
+	}
 }

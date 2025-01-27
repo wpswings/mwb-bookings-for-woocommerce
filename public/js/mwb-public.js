@@ -879,9 +879,13 @@ jQuery(document).ready(function($){
                       }
                     jQuery('.wps_cal_timeslot button').on('click touchstart', function (e) {
                         e.preventDefault();
-                    
-                        instance.close();
-                        jQuery("#wps_booking_single_calendar_form").val(temp_date + jQuery(this).html()); 
+
+                        jQuery(".wps_cal_timeslot button.wps_timeslot_button").removeClass("wps_timeslot_button");
+						jQuery(this).addClass('wps_timeslot_button');
+                        jQuery("#wps_booking_single_calendar_form").val(temp_date + jQuery(this).html());
+						setTimeout(function(){ 
+							instance.close();
+						}, 1000);
                         
                         
                     });

@@ -311,3 +311,8 @@ span.flatpickr-day.selected.wps-available-day {
   color: white !important;             /* Text color */
   border-radius: 50%;       /* Make it circular */
 }
+button.wps_timeslot_button {
+  background-color: #45c0e4 !important;
+  color: white !important;             /* Text color */
+  border: #ddd;
+}

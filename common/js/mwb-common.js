@@ -32,7 +32,8 @@
 		if ( $('.mbfw_time_picker').length > 0 ) {
 			$('.mbfw_time_picker').timepicker();
 		}
-        $(document).on('change', 'form.cart :input', function(){
+		
+		$(document).on('change', 'form.cart  :input', function(){
             var form_data = new FormData( $('form.cart')[0] );
 			if ( $('.mwb_mbfw_booking_product_id').val() ) {
 				retrieve_booking_total_ajax( form_data );

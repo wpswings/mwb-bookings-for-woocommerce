@@ -303,9 +303,7 @@ input#wps_booking_single_calendar_form_ {
   color: white !important;             /* Text color */
   border-radius: 50%;       /* Make it circular */
 }
-span.flatpickr-day.selected.wps-available-day {
-  border: 1px solid #22c4ff !important;
-}
+
 .custom-selected {
   background-color: #22c4ff !important; /* Change the highlight color */
   color: white !important;             /* Text color */

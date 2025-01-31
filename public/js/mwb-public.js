@@ -1139,10 +1139,26 @@ jQuery(document).ready(function($){
         tooltip.textContent = 'Price: ' + price + '$';
         dayElem.appendChild(tooltip);                  
       }   
-
+      if (fp.selectedDates.some(date => fp.formatDate(date, "Y-m-d") === dateString)) {
+        dayElem.classList.add("selected");
+    } else {
+        dayElem.classList.remove("selected");
+    }
 
     },
-      
+    onChange: function(selectedDates, dateStr, instance) {
+        console.log(selectedDates, dateStr, instance);
+
+        // Reapply "selected" class for multiple mode
+        document.querySelectorAll(".flatpickr-day").forEach(dayElem => {
+            let currentDay = dayElem.getAttribute('aria-label');
+            if (selectedDates.some(date => instance.formatDate(date, "F j, Y") === currentDay)) {
+                dayElem.classList.add("selected");
+            } else {
+                dayElem.classList.remove("selected");
+            }
+        });
+    }
     });
 
     }

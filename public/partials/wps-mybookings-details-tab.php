@@ -249,7 +249,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 		}
 	} else { ?>
 		<tr>
-		<td colspan="5"><?php esc_html_e( 'No Bookings has been purchased yet.', 'mwb-bookings-for-woocommerce' ); ?></td></tr>
+		<td colspan="5"><?php esc_html_e( 'No Bookings have been purchased yet.', 'mwb-bookings-for-woocommerce' ); ?></td></tr>
 		<?php
 	}
 	?>

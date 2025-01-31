@@ -29,7 +29,7 @@ $mfw_tab_key = '';
 	do_action( 'mwb_mbfw_settings_saved_notice' );
 	?>
 	<div class="wps-header-container wps-bg-white wps-r-8">
-		<h1 class="wps-header-title"><?php echo esc_attr( __( 'WP Swings' ) ); ?></h1>
+		<h1 class="wps-header-title"><?php echo esc_attr( __( 'WP Swings', 'mwb-bookings-for-woocommerce' ) ); ?></h1>
 	</div>
 </header>
 <main class="wps-main wps-bg-white wps-r-8">

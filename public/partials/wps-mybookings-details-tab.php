@@ -13,11 +13,11 @@
 
 use Automattic\WooCommerce\Utilities\OrderUtil;
 $table_headers = array(
-	'order-id'        => esc_html__( 'Order ID', 'membership-for-woocommerce' ),
-	'booking-date'    => esc_html__( 'Booking Date', 'membership-for-woocommerce' ),
-	'booking-status'  => esc_html__( 'Booking Status', 'membership-for-woocommerce' ),
-	'booking-total'   => esc_html__( 'Total', 'membership-for-woocommerce' ),
-	'booking-actions' => esc_html__( 'Actions', 'membership-for-woocommerce' ),
+	'order-id'        => esc_html__( 'Order ID', 'mwb-bookings-for-woocommerce' ),
+	'booking-date'    => esc_html__( 'Booking Date', 'mwb-bookings-for-woocommerce' ),
+	'booking-status'  => esc_html__( 'Booking Status', 'mwb-bookings-for-woocommerce' ),
+	'booking-total'   => esc_html__( 'Total', 'mwb-bookings-for-woocommerce' ),
+	'booking-actions' => esc_html__( 'Actions', 'mwb-bookings-for-woocommerce' ),
 );
 
 
@@ -114,7 +114,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								<a class="button" href="
 									<?php
 									echo esc_attr( get_site_url() );
-									esc_html_e( '/my-account/view-order/' );
+									esc_html( '/my-account/view-order/' );
 									echo esc_attr( $value );
 									?>
 								"><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?>
@@ -163,7 +163,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								<a class="button" href="
 								<?php
 								echo esc_attr( get_site_url() );
-								esc_html_e( '/my-account/view-order/' );
+								esc_html( '/my-account/view-order/' );
 								echo esc_attr( $value );
 								?>
 								"><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?>
@@ -216,7 +216,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 								<a class="button" href="
 									<?php
 									echo esc_attr( get_site_url() );
-									esc_html_e( '/my-account/view-order/' );
+									esc_html( '/my-account/view-order/' );
 									echo esc_attr( $value );
 									?>
 									"><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?>

@@ -1006,7 +1006,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function wps_bookings_add_mybookings_tab( $items ) {
 		// Placing the custom tab just above logout tab.
-		$items['wps-mybookings-tab'] = esc_html__( 'Bookings', 'membership-for-woocommerce' );
+		$items['wps-mybookings-tab'] = esc_html__( 'Bookings', 'mwb-bookings-for-woocommerce' );
 
 		/**
 		 * Filter for my event tab.

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Bookings For WooCommerce 3.3.0\n"
-"POT-Creation-Date: 2025-01-10 18:59+0530\n"
-"PO-Revision-Date: 2025-01-10 18:59+0530\n"
+"Project-Id-Version: Bookings For WooCommerce 3.3.1\n"
+"POT-Creation-Date: 2025-01-31 17:46+0530\n"
+"PO-Revision-Date: 2025-01-31 17:47+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -640,6 +640,11 @@ msgstr ""
 msgid "Booking Dates"
 msgstr ""
 
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2062
+#: common/class-mwb-bookings-for-woocommerce-common.php:926
+msgid "Service(s)"
+msgstr ""
+
 #: admin/partials/mwb-bookings-for-woocommerce-admin-dashboard.php:70
 #: mwb-bookings-for-woocommerce.php:239
 msgid "Documentation"
@@ -1033,10 +1038,6 @@ msgstr ""
 msgid "confirmation required from admin."
 msgstr ""
 
-#: common/class-mwb-bookings-for-woocommerce-common.php:926
-msgid "Service(s)"
-msgstr ""
-
 #: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:305
 msgid "What is your monthly revenue?"
 msgstr ""
@@ -1256,8 +1257,8 @@ msgstr ""
 msgid " To "
 msgstr ""
 
-#: public/partials/wps-mybookings-details-tab.php:251
-msgid "No Bookings has been purchased yet."
+#: public/partials/wps-mybookings-details-tab.php:252
+msgid "No bookings have been purchased yet."
 msgstr ""
 
 #: public/templates/mwb-bookings-for-woocommerce-public-add-to-cart-form.php:68

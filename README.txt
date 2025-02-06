@@ -6,7 +6,7 @@ Requires at least: 5.5.0
 Tested up to: 6.7.1
 WC requires at least: 6.5.0
 WC tested up to: 9.6.0
-Stable tag: 3.3.0
+Stable tag: 3.3.2
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -14,7 +14,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Bookings for WooCommerce offers an easy booking management, confirm/reject bookings, enable booking cancellations, restrict durations, etc
 
 == Description ==
-**GET THE ULTIMATE SOLUTION FOR BUSINESSES LOOKING TO STREAMLINE THEIR BOOKING PROCESS. START SCHEDULING APPOINTMENTS FOR YOUR CUSTOMERS EFFORTLESSLY WITH WORDPRESS BOOKING PLUGIN. SET BOOKINGS PEOPLE TYPE [ADULTS, KIDS AND OLDIES], MANAGE YOUR BOOKINGS WITH EASE BY UTILIZING THE LISTING CALENDAR AND REGULATING THE BOOKING DURATIONS.**
+**WORDPRESS BOOKING PLUGIN IS THE ULTIMATE SOLUTION FOR BUSINESSES LOOKING TO STREAMLINE THEIR BOOKING PROCESS. START SCHEDULING APPOINTMENTS FOR YOUR CUSTOMERS EFFORTLESSLY. SET BOOKINGS PEOPLE TYPE [ADULTS, KIDS AND OLDIES], MANAGE YOUR BOOKINGS WITH EASE BY UTILIZING THE LISTING CALENDAR AND REGULATING THE BOOKING DURATIONS.**
 
 [**WooCommerce Bookings**](https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=bookings-pro)  plugin is a powerful plugin that enables store owners to create an online appointment booking system that allows them to turn their products into online WooCommerce booking solutions and make them available to customers for a set period of time.
 
@@ -261,6 +261,10 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.3.2 - Released on 06 February 2025 =
+
+* Fix: JS enqueue issue fix.
+
 = 3.3.1 - Released on 31 January 2025 =
 
 * New: Cost calculation for slot select on product page issue fixed.
@@ -426,9 +430,5 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.3.1 - Released on 31 January 2025 =
-
-* New: Cost calculation for slot select on product page issue fixed.
-* New: Highlight selected date on calendar.
-* New: Highlighted selected slot on the calendar. 
-* New: Compatibility with latest WP[6.7.1] and WC[9.6.0].
+= 3.3.2 - Released on 06 February 2025 =
+* Fix: JS enqueue issue fix.

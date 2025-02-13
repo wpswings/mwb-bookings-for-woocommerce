@@ -809,6 +809,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		</div>
 		<div id="mwb_booking_cost_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<?php
+			woocommerce_wp_checkbox(
+				array(
+					'id'          => 'mwb_mbfw_booking_general_cost_hide',
+					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_general_cost_hide', true ),
+					'label'       => __( 'Hide General Cost from Product Page', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable to hide General cost from Product Page.', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
+				)
+			);
 			woocommerce_wp_text_input(
 				array(
 					'id'                => 'mwb_mbfw_booking_unit_cost',
@@ -865,16 +874,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_is_booking_base_cost_per_people', true ),
 					'label'       => __( 'Base Cost Per People', 'mwb-bookings-for-woocommerce' ),
 					'description' => __( 'Enabling this would determine your booking base cost multiplied by number of people.', 'mwb-bookings-for-woocommerce' ),
-					'desc_tip'    => true,
-				)
-			);
-
-			woocommerce_wp_checkbox(
-				array(
-					'id'          => 'mwb_mbfw_booking_general_cost_hide',
-					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_general_cost_hide', true ),
-					'label'       => __( 'Hide General Cost from Product Page', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable to hide General cost from Product Page.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);

@@ -1140,4 +1140,58 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		return $sanitized_array;
 	}
 
+
+	/**
+	 * Rewnel order for subscription.
+	 *
+	 * @param [type] $target_order_id is the order type.
+	 * @return void
+	 */
+	public function wps_sfw_compatible_with_subscription( $target_order_id){
+
+
+		$source_order_id =  wps_booking_get_meta_data( $target_order_id, 'wps_sfw_parent_order_id', true);		
+		$source_order = wc_get_order( $source_order_id );
+		if ( ! $source_order ) {
+			return false;
+		}
+	
+		// Get the target order
+		$target_order = wc_get_order( $target_order_id );
+		if ( ! $target_order ) {
+			return false;
+		}
+	
+		// Loop through source order items
+		foreach ( $source_order->get_items() as $item_id => $item ) {
+			// Get item meta
+			$line_item_meta = [
+				'_mwb_mbfw_service_and_count'    => wc_get_order_item_meta( $item_id, '_mwb_mbfw_service_and_count', true ),
+				'_mwb_bfwp_date_time_from'       => wc_get_order_item_meta( $item_id, '_mwb_bfwp_date_time_from', true ),
+				'_mwb_bfwp_date_time_to'         => wc_get_order_item_meta( $item_id, '_mwb_bfwp_date_time_to', true ),
+				'_wps_single_cal_date_time_from' => wc_get_order_item_meta( $item_id, '_wps_single_cal_date_time_from', true ),
+				'_wps_single_cal_date_time_to'   => wc_get_order_item_meta( $item_id, '_wps_single_cal_date_time_to', true ),
+				'_wps_single_cal_booking_dates'  => wc_get_order_item_meta( $item_id, '_wps_single_cal_booking_dates', true ),
+				'_wps_booking_slot'              => wc_get_order_item_meta( $item_id, '_wps_booking_slot', true ),
+			];
+	
+			// Find matching product in the target order
+			foreach ( $target_order->get_items() as $target_item_id => $target_item ) {
+				if ( $target_item->get_product_id() === $item->get_product_id() ) {
+					// Copy meta to the existing target item
+					foreach ( $line_item_meta as $meta_key => $meta_value ) {
+						if ( ! empty( $meta_value ) ) {
+							wc_update_order_item_meta( $target_item_id, $meta_key, $meta_value );
+						}
+					}
+				}
+			}
+		}
+
+
+		
+		wps_booking_update_meta_data( $target_order_id, 'mwb_order_type', 'booking');
+
+	}
+
 }

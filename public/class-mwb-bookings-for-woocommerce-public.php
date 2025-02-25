@@ -709,8 +709,20 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 						if ( isset( $booking_dates[1] ) ) {
 							if ( 'twelve_hour' == wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_time_fromat', true )) {
-								$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1].$booking_dates[2];
-								$date_time_to   = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[4].$booking_dates[5];			
+								$date = $booking_dates[0];
+								$start_time = $booking_dates[1] . $booking_dates[2]; // 11:30 PM
+								$end_time = $booking_dates[4] . $booking_dates[5];   // 12:30 AM
+
+								// Convert start and end times to 24-hour format for comparison
+								$start_24 = date('H:i', strtotime($start_time));
+								$end_24 = date('H:i', strtotime($end_time));
+
+								// If end time is smaller, it means it's past midnight, so move to the next day
+								$end_date = ($end_24 < $start_24) ? date('Y-m-d', strtotime($date . ' +1 day')) : $date;
+
+								// Format final date-time values
+								$date_time_from = gmdate($date_format, strtotime($date)) . ' ' . $start_time;
+								$date_time_to = gmdate($date_format, strtotime($end_date)) . ' ' . $end_time;
 							} else {
 
 								$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1];

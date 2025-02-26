@@ -232,8 +232,7 @@
 })( jQuery );
 function convertTimeFormat(input) {
     // Extract date and time using regex
-    let match = input.match(/^(\d{2}-\d{2}-\d{4}) (\d{1,2}:\d{2} [APM]{2}) - (\d{1,2}:\d{2} [APM]{2})$/);
-
+    let match = input.match(/^(\d{1,2}-\d{2}-\d{4}) (\d{1,2}:\d{2} [APM]{2}) - (\d{1,2}:\d{2} [APM]{2})$/);
     if (!match) return input;
 
     let date = match[1]; // Extract the date

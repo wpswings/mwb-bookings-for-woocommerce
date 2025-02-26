@@ -285,6 +285,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_mbfw_get_cart_data', $mbfw_plugin_common, 'mwb_mbfw_get_cart_items' );
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_get_cart_data', $mbfw_plugin_common, 'mwb_mbfw_get_cart_items' );
 			$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $mbfw_plugin_common, 'wps_sfw_compatible_with_subscription' );
+			$this->loader->add_action( 'wps_sfw_after_renewal_payment', $mbfw_plugin_common, 'wps_bfw_after_renewal_payment',10,3 );
 			
 			
 		}

@@ -1187,11 +1187,43 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				}
 			}
 		}
-
-
 		
-		wps_booking_update_meta_data( $target_order_id, 'mwb_order_type', 'booking');
+		$order_type= wps_booking_get_meta_data( $source_order_id, 'mwb_order_type', true );
+		if ( ! empty( $order_type ) ) {
+			wps_booking_update_meta_data( $target_order_id, 'mwb_order_type', 'booking');
+		}
+		
 
 	}
 
+	/**
+	 * Booking confirmation in case of subscription.
+	 *
+	 * @param [type] $wps_new_order new recurring order.
+	 * @param [type] $subscription_id subscription id.
+	 * @param [type] $payment_method payment method used.
+	 * @return void
+	 */
+	public function wps_bfw_after_renewal_payment( $wps_new_order, $subscription_id, $payment_method ){
+
+
+		if ( ! $wps_new_order ) {
+			return;
+		}
+		
+
+		if ( 'on-hold' === $wps_new_order->get_status() ) {
+			return;
+		}
+		$is_confirmation_allowed = 'false';
+		$items = $wps_new_order->get_items();
+		foreach ( $items as $item ) {
+			if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_admin_confirmation', true ) ) {
+				$wps_new_order->update_status( 'on-hold', __( 'confirmation required from admin.', 'mwb-bookings-for-woocommerce' ) );
+				$is_confirmation_allowed = 'true';
+				break;
+			}
+		}
+	}
+	
 }

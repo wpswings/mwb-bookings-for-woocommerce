@@ -22,7 +22,7 @@ if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', 
 	$is_pro_active = 'no';
 }
 if ( 'yes' == $is_pro_active && 'yes' == get_option( 'wps_bfwp_enable_google_cal_booking' ) && ! empty( get_option( 'wps_bfwp_google_cal_iframe' ) ) ) { ?>
-	<div><? echo get_option( 'wps_bfwp_google_cal_iframe' );?> </div>
+	<div><?php echo get_option( 'wps_bfwp_google_cal_iframe' ); ?> </div>
 	<?php
 } else {
 	$order_status = array(

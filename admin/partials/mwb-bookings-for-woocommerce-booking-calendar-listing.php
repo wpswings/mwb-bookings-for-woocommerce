@@ -18,22 +18,23 @@ $active_plugins = get_option( 'active_plugins' );
 
 if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 	$is_pro_active = 'yes';
-} else{
+} else {
 	$is_pro_active = 'no';
 }
- if( 'yes' == $is_pro_active && 'yes' == get_option( 'wps_bfwp_enable_google_cal_booking' ) && !empty(get_option( 'wps_bfwp_google_cal_iframe' )) ) { ?>
+if ( 'yes' == $is_pro_active && 'yes' == get_option( 'wps_bfwp_enable_google_cal_booking' ) && ! empty( get_option( 'wps_bfwp_google_cal_iframe' ) ) ) { ?>
 	<div><? echo get_option( 'wps_bfwp_google_cal_iframe' );?> </div>
-<?php } else { 
-$order_status = array(
-	'' => '--Select order status--',
-	'wc-on-hold' => 'On Hold',
-	'wc-pending' => 'Pending',
-	'wc-processing' => 'Processing',
-	'wc-completed' => 'Completed',
+	<?php
+} else {
+	$order_status = array(
+		'' => '--Select order status--',
+		'wc-on-hold' => 'On Hold',
+		'wc-pending' => 'Pending',
+		'wc-processing' => 'Processing',
+		'wc-completed' => 'Completed',
 
-);
+	);
 
-?>
+	?>
 <div class="mbfw-secion-wrap">
 	<div class="mbfw-booking-calender-notice"><?php esc_html_e( 'List of all upcoming Bookings', 'mwb-bookings-for-woocommerce' ); ?></div>
 	<div class="wps_main_wrapper">

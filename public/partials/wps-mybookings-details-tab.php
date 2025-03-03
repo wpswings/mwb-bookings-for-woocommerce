@@ -247,7 +247,8 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 				}
 			}
 		}
-	} else { ?>
+	} else {
+		?>
 		<tr>
 		<td colspan="5"><?php esc_html_e( 'No bookings have been purchased yet.', 'mwb-bookings-for-woocommerce' ); ?></td></tr>
 		<?php

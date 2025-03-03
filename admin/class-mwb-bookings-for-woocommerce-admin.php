@@ -69,7 +69,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
 
-		if ( ( isset( $screen->id ) && ('wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
+		if ( ( isset( $screen->id ) && ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
 
 			wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all' );
 
@@ -1039,7 +1039,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			);
-			
+
 			woocommerce_wp_select(
 				array(
 					'label'       => __( 'Booking Slot format', 'mwb-bookings-for-woocommerce' ),
@@ -2061,7 +2061,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 	/**
 	 * To display Additional services on order edit page.
-	 * 
+	 *
 	 * @param object $item_id is item id.
 	 * @param object $item is item object.
 	 * @param object $product is product.
@@ -2071,9 +2071,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		$screen = get_current_screen();
 
 		global $pagenow;
-		if ( ('post.php' !== $pagenow && 'woocommerce_page_wc-orders' !== $screen->id) || ! is_object( $product )  ) {
+		if ( ( 'post.php' !== $pagenow && 'woocommerce_page_wc-orders' !== $screen->id ) || ! is_object( $product ) ) {
 			return;
-		}		
+		}
 
 		$class      = false;
 		$product_id = $product->get_id();
@@ -2081,23 +2081,29 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			if ( ! empty( $item->get_meta( '_mwb_mbfw_service_and_count', true ) ) ) {
 				$services_and_count = $item->get_meta( '_mwb_mbfw_service_and_count', true );
 				$product_id         = $item->get_product_id();
-				
 
 				if ( ! empty( $services_and_count ) && is_array( $services_and_count ) ) {
 					?>
 					<div class="mwb_service_row" >
 						
-							<span class="mwb_service_row_span" ><?php esc_html_e( 'Service(s)', 'mwb-bookings-for-woocommerce' );  echo ':';?></span>
+							<span class="mwb_service_row_span" >
+							<?php
+							esc_html_e( 'Service(s)', 'mwb-bookings-for-woocommerce' );
+							echo ':';
+							?>
+							</span>
 						
 					
 					<?php
 					foreach ( $services_and_count as $term_id => $count ) {
 						$term = get_term( $term_id, 'mwb_booking_service' );
 						?>
-							<?php echo '<br>'.esc_html( isset( $term->name ) ? $term->name : '' ).' ('.esc_html( $count ).')'; ?>
+							<?php echo '<br>' . esc_html( isset( $term->name ) ? $term->name : '' ) . ' (' . esc_html( $count ) . ')'; ?>
 						<?php
 					}
-					?></div><?php
+					?>
+					</div>
+					<?php
 				}
 			}
 			wp_nonce_field( 'mwb_mbfw_line_order_edit', 'mbfw_nonce_field' );

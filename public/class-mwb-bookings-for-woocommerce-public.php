@@ -433,7 +433,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'validation_message'           => __( 'Please select valid date!', 'mwb-bookings-for-woocommerce' ),
 				'is_mobile_device'             => $is_mobile_site,
 				'wps_mbfw_day_and_days_upto_togather_enabled' => $wps_mbfw_day_and_days_upto_togather_enabled,
-				'wps_diaplay_time_format'=> wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_time_fromat', true ),
+				'wps_diaplay_time_format' => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_time_fromat', true ),
 
 			)
 		);
@@ -708,27 +708,26 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					if ( ! empty( $booking_dates[0] ) ) {
 
 						if ( isset( $booking_dates[1] ) ) {
-							if ( 'twelve_hour' == wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_time_fromat', true )) {
+							if ( 'twelve_hour' == wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_time_fromat', true ) ) {
 								$date = $booking_dates[0];
-								$start_time = $booking_dates[1] . $booking_dates[2]; // 11:30 PM
-								$end_time = $booking_dates[4] . $booking_dates[5];   // 12:30 AM
+								$start_time = $booking_dates[1] . $booking_dates[2]; // 11:30 PM.
+								$end_time = $booking_dates[4] . $booking_dates[5];   // 12:30 AM.
 
-								// Convert start and end times to 24-hour format for comparison
-								$start_24 = date('H:i', strtotime($start_time));
-								$end_24 = date('H:i', strtotime($end_time));
+								// Convert start and end times to 24-hour format for comparison.
+								$start_24 = gmdate( 'H:i', strtotime( $start_time ) );
+								$end_24 = gmdate( 'H:i', strtotime( $end_time ) );
 
-								// If end time is smaller, it means it's past midnight, so move to the next day
-								$end_date = ($end_24 < $start_24) ? date('Y-m-d', strtotime($date . ' +1 day')) : $date;
+								// If end time is smaller, it means it's past midnight, so move to the next day.
+								$end_date = ( $end_24 < $start_24 ) ? gmdate( 'Y-m-d', strtotime( $date . ' +1 day' ) ) : $date;
 
-								// Format final date-time values
-								$date_time_from = gmdate($date_format, strtotime($date)) . ' ' . $start_time;
-								$date_time_to = gmdate($date_format, strtotime($end_date)) . ' ' . $end_time;
+								// Format final date-time values.
+								$date_time_from = gmdate( $date_format, strtotime( $date ) ) . ' ' . $start_time;
+								$date_time_to = gmdate( $date_format, strtotime( $end_date ) ) . ' ' . $end_time;
 							} else {
 
 								$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1];
 								$date_time_to   = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[3];
 							}
-
 						}
 					}
 					$booking_slot             = $single_cal_booking_dates;
@@ -788,7 +787,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function mwb_mbfw_show_additional_data_on_cart_and_checkout_page( $other_data, $cart_item ) {
-		// echo '<pre>';print_r($cart_item);
 		if ( isset( $cart_item['mwb_mbfw_booking_values'] ) ) {
 			$custom_cart_data = $cart_item['mwb_mbfw_booking_values'];
 			if ( ! empty( $custom_cart_data['people_number'] ) ) {

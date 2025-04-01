@@ -58,6 +58,9 @@ class Mwb_Bookings_For_Woocommerce_Activator {
 			update_option( 'mwb_mbfw_is_show_totals', 'yes' );
 			update_option( 'mwb_mbfw_daily_start_time', '05:24' );
 			update_option( 'mwb_mbfw_daily_end_time', '23:26' );
+			update_option( 'select_language_for_calendar', 'default' );
+			update_option( 'select_first_day_of_week', 0 );
+
 		}
 		if ( ! get_option( 'mwb_mbfw_plugin_setting_migrated' ) ) {
 			( new self() )->mwb_migrate_old_plugin_settings();

@@ -92,9 +92,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		} else {
 			$is_mobile_site = 'desktop';
 		}
+		$wps_lang = get_option( 'mwb_mbfw_select_language_for_calendar', 'default' );
 
 		wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), time(), true );
-		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
+
+		wp_enqueue_script('wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL. 'package/lib/flatpickr/dist/l10n/'.$wps_lang.'.js', array('flatpicker_js'), null, true);
+
+
+		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array('jquery','flatpicker_js', 'wps-flatpickr-locale'), time(), true );
 		$daily_start_time                            = '';
 		$daily_end_time                              = '';
 		$upcoming_holiday                            = '';
@@ -203,6 +208,10 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						$single_available_date_array = explode( ' ', $single_availables );
 					if ( ! empty( $single_available_date_array ) && is_array( $single_available_date_array ) ) {
 						foreach ( $single_available_date_array as $key => $values ) {
+
+							if(!empty($values)&&(strtotime($values)<strtotime(current_time( 'Y-m-d' ))) ){
+								continue;
+							}
 							$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
 							$key                      = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $values ) );
 
@@ -403,7 +412,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
-
+// print_r(		$single_available_dates         );die;
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
@@ -434,6 +443,22 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'is_mobile_device'             => $is_mobile_site,
 				'wps_mbfw_day_and_days_upto_togather_enabled' => $wps_mbfw_day_and_days_upto_togather_enabled,
 				'wps_diaplay_time_format' => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_time_fromat', true ),
+				'firstDayOf_Week' => get_option( 'mwb_mbfw_select_first_day_of_week' ),
+				'lang' => $wps_lang,
+			)
+		);
+
+
+		$wps_lang = get_option( 'mwb_mbfw_select_language_for_calendar', 'default' );
+		wp_enqueue_script('wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL. 'package/lib/flatpickr/dist/l10n/'.$wps_lang.'.js', array('flatpicker_js'), null, true);
+		wp_enqueue_script('wps-custom-flatpickr-init', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/wps-flatpickr-init.js', array('jquery','flatpicker_js', 'wps-flatpickr-locale'), null, true);
+
+		wp_localize_script(
+			'wps-custom-flatpickr-init',
+			'mwb_mbfw_flatpickr_custom_obj',
+			array(
+				'lang' => $wps_lang,
+				'firstDayOf_Week' => get_option( 'mwb_mbfw_select_first_day_of_week' ),
 
 			)
 		);

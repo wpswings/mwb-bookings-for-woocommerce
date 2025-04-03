@@ -1058,7 +1058,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				array(
 					'id'          => 'wps_mbfw_day_and_days_upto_togather_enabled',
 					'value'       => wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_day_and_days_upto_togather_enabled', true ),
-					'label'       => __( 'Enable Days availabilty and days availability upto Togather', 'mwb-bookings-for-woocommerce' ),
+					'label'       => __( 'Enable to use Days availabilty and days availability upto Togather', 'mwb-bookings-for-woocommerce' ),
 					'description' => __( 'Enable if you want days availabilty and days availability upto worked togather.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
@@ -2144,7 +2144,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			''       => __( 'Select', 'bookings-for-woocommerce-pro' ),
 			'default'=> __( 'Default (English)', 'bookings-for-woocommerce-pro' ),
 			'ar'     => __( 'Arabic', 'bookings-for-woocommerce-pro' ),
-			'ar-dz'  => __( 'AlgerianArabic', 'bookings-for-woocommerce-pro' ),
 			'at'     => __( 'Austria', 'bookings-for-woocommerce-pro' ),
 			'az'     => __( 'Azerbaijani', 'bookings-for-woocommerce-pro' ),
 			'be'     => __( 'Belarusian', 'bookings-for-woocommerce-pro' ),
@@ -2179,7 +2178,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'lv'     => __( 'Latvian', 'bookings-for-woocommerce-pro' ),
 			'mk'     => __( 'Macedonian', 'bookings-for-woocommerce-pro' ),
 			'mn'     => __( 'Mongolian', 'bookings-for-woocommerce-pro' ),
-			'ms'     => __( 'Malay', 'bookings-for-woocommerce-pro' ),
 			'my'     => __( 'Burmese', 'bookings-for-woocommerce-pro' ),
 			'nl'     => __( 'Dutch', 'bookings-for-woocommerce-pro' ),
 			'no'     => __( 'Norwegian', 'bookings-for-woocommerce-pro' ),
@@ -2200,7 +2198,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'uz'     => __( 'Uzbek', 'bookings-for-woocommerce-pro' ),
 			'vn'     => __( 'Vietnamese', 'bookings-for-woocommerce-pro' ),
 			'zh'     => __( 'Chinese (Simplified)', 'bookings-for-woocommerce-pro' ),
-			'zh_tw'  => __( 'Chinese (Traditional)', 'bookings-for-woocommerce-pro' ),
 		);
 	}
 }

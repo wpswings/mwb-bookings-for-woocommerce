@@ -1215,14 +1215,19 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 			session_start();
 
-			$month_name = date('M', mktime(0, 0, 0, $_SESSION['slot_month'], 1));		
+			$month_name = date('M', mktime(0, 0, 0, $_SESSION['slot_month'], 1));	
+			$month_name_cost = date('M', mktime(0, 0, 0, $_SESSION['month'], 1));		
+	
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 
 				if ( strpos( $meta_key, 'wps_mbfw_unit_' ) !== false ) {
+					if (strpos($meta_key,  $month_name_cost) !== false) {
+						// var_dump($meta_key,  $month_name_cost);
+						$currentdate = $meta_key;
+					}
+					if ( ! empty( $meta_value ) || ! empty( $currentdate ) ) {
 
-					if ( ! empty( $meta_value ) || ! empty( wps_booking_get_meta_data( $id, $meta_key, true ) ) ) {
-
-						 wps_booking_update_meta_data( $id, $meta_key, $meta_value );
+						wps_booking_update_meta_data( $id, $currentdate, $meta_value );
 					}
 				} elseif ( strpos( $meta_key, 'wps_bfwp_daywise_slot_field_' ) !== false ) {
 

@@ -448,20 +448,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			)
 		);
 
-
-		// $wps_lang = get_option( 'mwb_mbfw_select_language_for_calendar', 'default' );
-		// wp_enqueue_script('wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL. 'package/lib/flatpickr/dist/l10n/'.$wps_lang.'.js', array('flatpicker_js'), null, true);
-		// wp_enqueue_script('wps-custom-flatpickr-init', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/wps-flatpickr-init.js', array('jquery','flatpicker_js', 'wps-flatpickr-locale'), null, true);
-
-		// wp_localize_script(
-		// 	'wps-custom-flatpickr-init',
-		// 	'mwb_mbfw_flatpickr_custom_obj',
-		// 	array(
-		// 		'lang' => $wps_lang,
-		// 		'firstDayOf_Week' => get_option( 'mwb_mbfw_select_first_day_of_week' ),
-
-		// 	)
-		// );
 	}
 
 

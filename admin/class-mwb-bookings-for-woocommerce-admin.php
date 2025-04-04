@@ -448,6 +448,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'' => __( 'Select', 'bookings-for-woocommerce-pro' ),
 					0  => __( 'Sunday', 'bookings-for-woocommerce-pro' ),
 					1  => __( 'Monday', 'bookings-for-woocommerce-pro' ),
+					2  => __( 'Tuesday', 'bookings-for-woocommerce-pro' ),
+					3  => __( 'Wednesday', 'bookings-for-woocommerce-pro' ),
+					4  => __( 'Thrusday', 'bookings-for-woocommerce-pro' ),
+					5  => __( 'Friday', 'bookings-for-woocommerce-pro' ),
+					6  => __( 'Saturday', 'bookings-for-woocommerce-pro' ),
 				),
 			),
 		);
@@ -1058,8 +1063,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				array(
 					'id'          => 'wps_mbfw_day_and_days_upto_togather_enabled',
 					'value'       => wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_day_and_days_upto_togather_enabled', true ),
-					'label'       => __( 'Enable to use Days availabilty and days availability upto Togather', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable if you want days availabilty and days availability upto worked togather.', 'mwb-bookings-for-woocommerce' ),
+					'label'       => __( 'Enable to use Days availabilty and days availability upto Together', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable if you want days availabilty and days availability upto worked together.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
 				)
 			);

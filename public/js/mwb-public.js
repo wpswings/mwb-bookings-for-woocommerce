@@ -862,6 +862,9 @@ dateFormat: "Y-m-d",
                     if (month.length === 1) {
                         month = '0' + month;
                     }
+                    if (date.length === 1) {
+                        date = '0' + date;
+                    }
                     var temp_date = date + '-' + month + '-' + year + ' ';
                     var temp_date1 = date + '-' + month + '-' + year ;
 

@@ -735,9 +735,19 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								$date_time_from = gmdate( $date_format, strtotime( $date ) ) . ' ' . $start_time;
 								$date_time_to = gmdate( $date_format, strtotime( $end_date ) ) . ' ' . $end_time;
 							} else {
+								$date = $booking_dates[0];
+								$start_time = $booking_dates[1]; // 11:30 
+								$end_time = $booking_dates[3];   // 12:30
 
-								$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1];
-								$date_time_to   = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[3];
+								// Convert start and end times to 24-hour format for comparison.
+								$start_24 = gmdate( 'H:i', strtotime( $start_time ) );
+								$end_24 = gmdate( 'H:i', strtotime( $end_time ) );
+
+								// If end time is smaller, it means it's past midnight, so move to the next day.
+								$end_date = ( $end_24 < $start_24 ) ? gmdate( 'Y-m-d', strtotime( $date . ' +1 day' ) ) : $date;
+
+								$date_time_from = gmdate( $date_format, strtotime( $date ) ) . ' ' . $start_time;
+								$date_time_to   = gmdate( $date_format, strtotime( $end_date ) ) . ' ' . $end_time;
 							}
 						}
 					}

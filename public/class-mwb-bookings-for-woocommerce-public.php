@@ -809,7 +809,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_mbfw_show_additional_data_on_cart_and_checkout_page( $other_data, $cart_item ) {
 		if ( isset( $cart_item['mwb_mbfw_booking_values'] ) ) {
-			$custom_cart_data = $cart_item['mwb_mbfw_booking_values'];
+				$custom_cart_data = $cart_item['mwb_mbfw_booking_values'];
 			if ( ! empty( $custom_cart_data['people_number'] ) ) {
 				$other_data[] = array(
 					'name'    => _n( 'People', 'Peoples', $custom_cart_data['people_number'], 'mwb-bookings-for-woocommerce' ),

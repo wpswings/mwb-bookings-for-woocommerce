@@ -1117,6 +1117,9 @@ dateFormat: "Y-m-d",
                                 dayElem.classList.add("wps-available-day");
                                 dayElem.classList.remove("flatpickr-disabled");
                             }
+                        } else {
+                            dayElem.classList.add("wps-unavailable-day");
+                            dayElem.classList.add("disabled-date");
                         }
                     } else {
                         if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {

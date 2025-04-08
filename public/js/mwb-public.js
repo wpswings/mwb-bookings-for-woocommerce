@@ -126,7 +126,6 @@ dateFormat: "d-m-Y H:i",
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(5);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -171,7 +170,6 @@ dateFormat: "d-m-Y H:i",
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(4);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -217,7 +215,6 @@ dateFormat: "d-m-Y H:i",
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(3);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -265,7 +262,6 @@ dateFormat: "d-m-Y H:i",
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(2);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -306,7 +302,6 @@ dateFormat: "d-m-Y H:i",
                     dateFormat: "d-m-Y",
                   
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(11111111);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -353,7 +348,6 @@ dateFormat: "d-m-Y",
                     // },
                    
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(1111111);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -402,7 +396,6 @@ dateFormat: "d-m-Y H:i",
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         
                         dObj = dayElem.dateObj;
-                        console.log(111111);
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
                       
                       
@@ -444,7 +437,6 @@ dateFormat: "d-m-Y H:i",
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(11111);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -488,7 +480,7 @@ dateFormat: "d-m-Y H:i",
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(1111);
+
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -531,7 +523,6 @@ dateFormat: "d-m-Y H:i",
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(111);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -573,7 +564,6 @@ dateFormat: "d-m-Y H:i",
                         }, 
 dateFormat: "d-m-Y",
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(11);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -613,7 +603,6 @@ dateFormat: "d-m-Y",
 dateFormat: "d-m-Y",
                   
                     onDayCreate: function(dObj, dStr, fp, dayElem){
-                        console.log(1);
                         dObj = dayElem.dateObj;
 
                       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -1087,7 +1076,7 @@ dateFormat: "Y-m-d",
     enable: available_dates ,
 
 
-    onDayCreate: function(dObj, dStr, fp, dayElem) {debugger;
+    onDayCreate: function(dObj, dStr, fp, dayElem) {
         dObj = dayElem.dateObj;
         // Convert the date string to match the format of availableDates and unavailableDates
       var dateString = dObj.getFullYear() + '-' + ("0" + (dObj.getMonth() + 1)).slice(-2) + '-' + ("0" + dObj.getDate()).slice(-2);
@@ -1106,9 +1095,9 @@ dateFormat: "Y-m-d",
         if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
 
             if ( moment( mwb_mbfw_public_obj.single_available_dates_till, 'DD-MM-YYYY' ) >= moment( dateString__, 'DD-MM-YYYY' ) ) {
-                if(mwb_mbfw_public_obj.wps_mbfw_day_and_days_upto_togather_enabled){console.log(2);
-                    if ( '1970-01-01' != available_dates[0] ) {console.log(3);
-                        if (available_dates.includes(dateString)) {console.log(4);
+                if(mwb_mbfw_public_obj.wps_mbfw_day_and_days_upto_togather_enabled){
+                    if ( '1970-01-01' != available_dates[0] ) {
+                        if (available_dates.includes(dateString)) {
 
                             if (mwb_mbfw_public_obj.single_unavailable_dates.includes(dateString)) {
                                 dayElem.classList.add("wps-unavailable-day");

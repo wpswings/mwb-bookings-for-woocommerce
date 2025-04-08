@@ -388,7 +388,7 @@ dateFormat: "d-m-Y",
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y H:i",
+                    dateFormat: "d-m-Y H:i",
                     time_24hr: true,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 

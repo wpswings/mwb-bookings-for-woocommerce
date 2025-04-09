@@ -93,13 +93,12 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$is_mobile_site = 'desktop';
 		}
 		$wps_lang = get_option( 'mwb_mbfw_select_language_for_calendar', 'default' );
-// print_r($wps_lang);die;
+
 		wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), time(), true );
 
-		wp_enqueue_script('wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL. 'package/lib/flatpickr/dist/l10n/'.$wps_lang.'.js', array('flatpicker_js'), null, true);
+		wp_enqueue_script( 'wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/l10n/' . $wps_lang . '.js', array( 'flatpicker_js' ), time(), true );
 
-
-		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array('jquery','flatpicker_js', 'wps-flatpickr-locale'), time(), true );
+		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery', 'flatpicker_js', 'wps-flatpickr-locale' ), time(), true );
 		$daily_start_time                            = '';
 		$daily_end_time                              = '';
 		$upcoming_holiday                            = '';
@@ -209,7 +208,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					if ( ! empty( $single_available_date_array ) && is_array( $single_available_date_array ) ) {
 						foreach ( $single_available_date_array as $key => $values ) {
 
-							if(!empty($values)&&(strtotime($values)<strtotime(current_time( 'Y-m-d' ))) ){
+							if ( ! empty( $values ) && ( strtotime( $values ) < strtotime( current_time( 'Y-m-d' ) ) ) ) {
 								continue;
 							}
 							$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
@@ -412,7 +411,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
-// print_r(		$single_available_dates         );die;
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
@@ -736,7 +734,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								$date_time_to = gmdate( $date_format, strtotime( $end_date ) ) . ' ' . $end_time;
 							} else {
 								$date = $booking_dates[0];
-								$start_time = $booking_dates[1]; // 11:30 
+								$start_time = $booking_dates[1]; // 11:30
 								$end_time = $booking_dates[3];   // 12:30
 
 								// Convert start and end times to 24-hour format for comparison.

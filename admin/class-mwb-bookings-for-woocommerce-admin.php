@@ -1215,14 +1215,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 			session_start();
 
-			$month_name = date('M', mktime(0, 0, 0, $_SESSION['slot_month'], 1));	
-			$month_name_cost = date('M', mktime(0, 0, 0, $_SESSION['month'], 1));		
-	
+			$month_name = gmdate( 'M', mktime( 0, 0, 0, $_SESSION['slot_month'], 1 ) );
+			$month_name_cost = gmdate( 'M', mktime( 0, 0, 0, $_SESSION['month'], 1 ) );
+
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 
 				if ( strpos( $meta_key, 'wps_mbfw_unit_' ) !== false ) {
-					if (strpos($meta_key,  $month_name_cost) !== false) {
-						// var_dump($meta_key,  $month_name_cost);
+					if ( strpos( $meta_key, $month_name_cost ) !== false ) {
 						$currentdate = $meta_key;
 					}
 					if ( ! empty( $meta_value ) || ! empty( $currentdate ) ) {
@@ -1231,7 +1230,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					}
 				} elseif ( strpos( $meta_key, 'wps_bfwp_daywise_slot_field_' ) !== false ) {
 
-					if (strpos($meta_key,  $month_name) !== false) {
+					if ( strpos( $meta_key, $month_name ) !== false ) {
 						$currentdate = $meta_key;
 					}
 					if ( ! empty( $meta_value ) && ! empty( $currentdate ) ) {
@@ -2148,10 +2147,16 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			wp_nonce_field( 'mwb_mbfw_line_order_edit', 'mbfw_nonce_field' );
 		}
 	}
-	public function wps_fetch_calendar_languages(){
+
+	/**
+	 * To fetch language of calendar.
+	 *
+	 * @return array
+	 */
+	public function wps_fetch_calendar_languages() {
 		return array(
 			''       => __( 'Select', 'bookings-for-woocommerce-pro' ),
-			'default'=> __( 'Default (English)', 'bookings-for-woocommerce-pro' ),
+			'default' => __( 'Default (English)', 'bookings-for-woocommerce-pro' ),
 			'ar'     => __( 'Arabic', 'bookings-for-woocommerce-pro' ),
 			'at'     => __( 'Austria', 'bookings-for-woocommerce-pro' ),
 			'az'     => __( 'Azerbaijani', 'bookings-for-woocommerce-pro' ),

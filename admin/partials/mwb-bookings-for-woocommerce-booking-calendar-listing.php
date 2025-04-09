@@ -21,8 +21,23 @@ if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', 
 } else {
 	$is_pro_active = 'no';
 }
+
+    // Whitelist iframe and some safe attributes
+    $allowed_tags = array(
+        'iframe' => array(
+            'src'             => true,
+            'width'           => true,
+            'height'          => true,
+            'frameborder'     => true,
+            'allowfullscreen' => true,
+            'loading'         => true,
+            'style'           => true,
+			'scrolling'       => true,
+        )
+    );
+
 if ( 'yes' == $is_pro_active && 'yes' == get_option( 'wps_bfwp_enable_google_cal_booking' ) && ! empty( get_option( 'wps_bfwp_google_cal_iframe' ) ) ) { ?>
-	<div><?php echo get_option( 'wps_bfwp_google_cal_iframe' ); ?> </div>
+	<div><?php echo wp_kses( get_option( 'wps_bfwp_google_cal_iframe' ), $allowed_tags); ?> </div>
 	<?php
 } else {
 	$order_status = array(

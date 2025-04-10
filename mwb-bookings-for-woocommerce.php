@@ -25,7 +25,7 @@
  * Requires at least:    5.5.0
  * Tested up to:         6.7.2
  * WC requires at least: 6.5.0
- * WC tested up to:      9.7.0
+ * WC tested up to:      9.7.1
  * Requires PHP:         7.2
  * Stable tag:           3.4.0
  *

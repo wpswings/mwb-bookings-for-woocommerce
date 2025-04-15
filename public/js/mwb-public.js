@@ -106,6 +106,7 @@ jQuery(document).ready(function($){
     var to_time = '';
          from_time =  'mwb-mbfw-booking-from-time';
          to_time =  'mwb-mbfw-booking-to-time';
+    const time_format =('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format )? false:true;
 
     if( is_pro_active != 'yes' ) {
 
@@ -119,10 +120,10 @@ jQuery(document).ready(function($){
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y H:i",
+                    dateFormat: "d-m-Y H:i",
                     disableMobile: true,
                             
-                    time_24hr: true,
+                    time_24hr: time_format,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -164,8 +165,8 @@ dateFormat: "d-m-Y H:i",
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y H:i",
-                    time_24hr: true,
+                    dateFormat: "d-m-Y H:i",
+                    time_24hr: time_format,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -209,8 +210,8 @@ dateFormat: "d-m-Y H:i",
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y H:i",
-                    time_24hr: true,
+                    dateFormat: "d-m-Y H:i",
+                    time_24hr: time_format,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -257,7 +258,7 @@ dateFormat: "d-m-Y H:i",
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
                     dateFormat: "d-m-Y H:i",
-                    time_24hr: true,
+                    time_24hr: time_format,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -340,7 +341,7 @@ dateFormat: "d-m-Y H:i",
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y",
+                    dateFormat: "d-m-Y",
                     
                     // onChange: function(selectedDates, dateStr, instance) {
                     //     // Update the hidden input field with the selected date
@@ -389,7 +390,7 @@ dateFormat: "d-m-Y",
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
                     dateFormat: "d-m-Y H:i",
-                    time_24hr: true,
+                    time_24hr: time_format,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -433,7 +434,7 @@ dateFormat: "d-m-Y",
                         }, 
 dateFormat: "d-m-Y H:i",
                     disableMobile: true,
-                    time_24hr: true,
+                    time_24hr: time_format,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -476,7 +477,7 @@ dateFormat: "d-m-Y H:i",
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
 dateFormat: "d-m-Y H:i",
-                    time_24hr: true,
+                    time_24hr: time_format,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){
@@ -519,7 +520,7 @@ dateFormat: "d-m-Y H:i",
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
 dateFormat: "d-m-Y H:i",
-                    time_24hr: true,
+                    time_24hr: time_format,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
                     onDayCreate: function(dObj, dStr, fp, dayElem){

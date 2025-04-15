@@ -210,6 +210,10 @@ jQuery(document).ready(function($){
 
             $(document).find('.mwb_mbfw_show_date_with_time_field').show();
         }
+        if ('hour' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
+            $(document).find('.mwb_mbfw_booking_time_fromat_field').show();
+
+        }
         $(document).find('.mwb_mbfw_daily_calendar_start_time_field').show();
         $(document).find('.mwb_mbfw_daily_calendar_end_time_field').show();
         $(document).find('.mwb_bfwp_choose_multiple_holiday_field').show();
@@ -223,7 +227,6 @@ jQuery(document).ready(function($){
         $(document).find('.mwb_mbfw_rescheduling_allowed_field').show();
         $(document).find('.mwb_bfwp_order_statuses_to_reschedule_field').show();
         $(document).find('.wps_mbfw_night_slots_enabled_field').hide();
-        $(document).find('.mwb_mbfw_booking_time_fromat_field').hide();
         $(document).find('.wps_mbfw_day_and_days_upto_togather_enabled_field').hide();
         $(document).find('.Slots_tab').hide();
 
@@ -253,6 +256,10 @@ jQuery(document).ready(function($){
             if ('day' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
 
                 $(document).find('.mwb_mbfw_show_date_with_time_field').show();
+            }
+            if ('hour' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
+                $(document).find('.mwb_mbfw_booking_time_fromat_field').show();
+    
             }
            
             $(document).find('.mwb_mbfw_daily_calendar_start_time_field').show();

@@ -31,7 +31,6 @@ jQuery(document).ready(function($){
             format  : 'd-m-Y H:00',
             minTime: mwb_mbfw_public_obj.daily_start_time,
             maxTime : mwb_mbfw_public_obj.daily_end_time + 1,
-            // minTime : mwb_mbfw_common_obj.minTime
         });
     }
     jQuery('#wps_booking_single_calendar_form').on('blur',function(){
@@ -107,6 +106,7 @@ jQuery(document).ready(function($){
          from_time =  'mwb-mbfw-booking-from-time';
          to_time =  'mwb-mbfw-booking-to-time';
     const time_format =('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format )? false:true;
+	const date_time_format = ( 'twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) ? "d-m-Y h:i K" : "d-m-Y H:i";
 
     if( is_pro_active != 'yes' ) {
 
@@ -120,7 +120,7 @@ jQuery(document).ready(function($){
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-                    dateFormat: "d-m-Y H:i",
+                    dateFormat: date_time_format,
                     disableMobile: true,
                             
                     time_24hr: time_format,
@@ -153,10 +153,7 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    // }
+                    
                 }); 
         
                 flatpickr('#mwb-mbfw-booking-to-time', {  
@@ -165,7 +162,7 @@ jQuery(document).ready(function($){
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-                    dateFormat: "d-m-Y H:i",
+                    dateFormat: date_time_format,
                     time_24hr: time_format,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
@@ -197,10 +194,6 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    // }
                 }); 
             } else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
 
@@ -210,7 +203,7 @@ jQuery(document).ready(function($){
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-                    dateFormat: "d-m-Y H:i",
+                    dateFormat: date_time_format,
                     time_24hr: time_format,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
@@ -244,10 +237,7 @@ jQuery(document).ready(function($){
                     
                     },
 
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    // }
+                    
                     
                 }); 
         
@@ -257,7 +247,7 @@ jQuery(document).ready(function($){
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-                    dateFormat: "d-m-Y H:i",
+                    dateFormat: date_time_format,
                     time_24hr: time_format,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
@@ -287,10 +277,6 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    // }
                 }); 
 
 
@@ -330,10 +316,7 @@ jQuery(document).ready(function($){
                                 dayElem.classList.add("disabled-date");
                         }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    // }
+                    
                 }); 
         
                 flatpickr('#'+to_time, {  
@@ -343,10 +326,6 @@ jQuery(document).ready(function($){
                         }, 
                     dateFormat: "d-m-Y",
                     
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    // },
                    
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         dObj = dayElem.dateObj;
@@ -389,7 +368,7 @@ jQuery(document).ready(function($){
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-                    dateFormat: "d-m-Y H:i",
+                    dateFormat: date_time_format,
                     time_24hr: time_format,
                     disableMobile: true,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
@@ -419,10 +398,7 @@ jQuery(document).ready(function($){
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    // }
+                    
                     
                 });
         
@@ -432,7 +408,7 @@ jQuery(document).ready(function($){
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y H:i",
+                        dateFormat: date_time_format,
                     disableMobile: true,
                     time_24hr: time_format,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
@@ -462,10 +438,6 @@ dateFormat: "d-m-Y H:i",
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    // }
                 }); 
             }else if ( mwb_mbfw_public_obj.mwb_mbfw_show_date_with_time == 'yes'){
 
@@ -476,7 +448,7 @@ dateFormat: "d-m-Y H:i",
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y H:i",
+                        dateFormat: date_time_format,
                     time_24hr: time_format,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -505,10 +477,7 @@ dateFormat: "d-m-Y H:i",
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    // }
+                    
                     
                 }); 
         
@@ -519,7 +488,7 @@ dateFormat: "d-m-Y H:i",
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y H:i",
+                        dateFormat: date_time_format,
                     time_24hr: time_format,
                     minTime: mwb_mbfw_public_obj.daily_start_time, 
                     maxTime: mwb_mbfw_public_obj.daily_end_time, 
@@ -548,10 +517,6 @@ dateFormat: "d-m-Y H:i",
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    // }
                 }); 
 
 
@@ -563,7 +528,7 @@ dateFormat: "d-m-Y H:i",
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y",
+                        dateFormat: "d-m-Y",
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         dObj = dayElem.dateObj;
 
@@ -589,10 +554,7 @@ dateFormat: "d-m-Y",
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-from-time').value = dateStr;
-                    // }
+                    
                    
                 }); 
         
@@ -601,7 +563,7 @@ dateFormat: "d-m-Y",
                     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "d-m-Y",
+                        dateFormat: "d-m-Y",
                   
                     onDayCreate: function(dObj, dStr, fp, dayElem){
                         dObj = dayElem.dateObj;
@@ -628,10 +590,6 @@ dateFormat: "d-m-Y",
                         dayElem.classList.add("disabled-date");
                     }
                     },
-                    // onChange: function(selectedDates, dateStr, instance) {
-                    //     // Update the hidden input field with the selected date
-                    //     document.getElementById('mwb-mbfw-booking-to-time').value = dateStr;
-                    // }
                     
                 }); 
             }
@@ -657,7 +615,7 @@ dateFormat: "d-m-Y",
                 locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "Y-m-d",
+                dateFormat: "Y-m-d",
                 disableMobile: true,
                 
                 enable: available_dates ,
@@ -941,7 +899,7 @@ dateFormat: "Y-m-d",
         locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
                             firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
                         }, 
-dateFormat: "Y-m-d",
+        dateFormat: "Y-m-d",
         disableMobile: true,
         
         enable: available_dates ,
@@ -1071,7 +1029,7 @@ dateFormat: "Y-m-d",
     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
         firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
     }, 
-dateFormat: "Y-m-d",
+    dateFormat: "Y-m-d",
     disableMobile: true,
     
     enable: available_dates ,

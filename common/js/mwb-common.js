@@ -36,11 +36,17 @@
 		$(document).on('change', 'form.cart  :input', function(e){
             var form_data = new FormData( $('form.cart')[0] );
 			if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
-				
 				for (let [key, value] of form_data.entries()) {
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
+					} else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
+					
+					form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
+					} else if (key === 'mwb_mbfw_booking_from_time' && key != null ) {
+					
+						form_data.set('mwb_mbfw_booking_from_time', convertTimeFormatDual(value));
 					}
+
 				}
 			}
 
@@ -58,6 +64,12 @@
 				for (let [key, value] of form_data.entries()) {
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
+					}  else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
+					
+						form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
+					} else if (key === 'mwb_mbfw_booking_from_time' && key != null ) {
+						
+						form_data.set('mwb_mbfw_booking_from_time', convertTimeFormatDual(value));
 					}
 				}
 			}
@@ -94,9 +106,47 @@
 			datepicker : false,
 		});
 		$('#mwb-mbfw-booking-from-time').on('change', function(){
-			;
+
 			var from_time = $(this).val();
 			var to_time   = $('#mwb-mbfw-booking-to-time').val();	
+
+			if ( from_time == '' ) {
+				return;
+			}
+			var date_array = from_time.split(" ");
+			var date = date_array[0]; var flag = 0;
+			if ( isToday(date) ) {
+				if ( mwb_mbfw_public_obj.is_pro_active != ''){
+					var upcoming_holiday = bfwp_public_param.upcoming_holiday;
+					if( upcoming_holiday.length > 0 ) {
+						if(isDateInArray(date, upcoming_holiday)) {
+							if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+									jQuery(jQuery('.flatpickr-calendar')[0]).removeClass('open');
+									jQuery(jQuery('.flatpickr-calendar')[0]).addClass('close');
+									$('#mwb-mbfw-booking-from-time').val('');
+									return;
+							}
+						} else {
+							if ( from_time && to_time ) {
+								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+									$(this).val('');
+								
+									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+										if (jQuery(jQuery('.flatpickr-calendar')[0]).hasClass('open')){
+											jQuery(jQuery('.flatpickr-calendar')[0]).removeClass('open');
+											jQuery(jQuery('.flatpickr-calendar')[0]).addClass('close');
+											$(this).val('');
+											alert( mwb_mbfw_public_obj.wrong_order_date_2 );
+										}
+									}
+									
+								}
+							}
+						}
+					}
+				}
+			} else {
+			
 			if ( from_time && to_time ) {
 				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
 					$(this).val('');
@@ -111,26 +161,63 @@
 					}
 					
 				}
-			}
+			}}
 		});
 		$('#mwb-mbfw-booking-to-time').on('change', function(){
-			;
+			debugger;
 			var from_time = $('#mwb-mbfw-booking-from-time').val();
 			var to_time   = $(this).val();
-			if ( from_time && to_time ) {
-				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
-					$('#mwb-mbfw-booking-to-time').val('');
-					console.log('dsssd');
-					if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
-						if (jQuery(jQuery('.flatpickr-calendar')[1]).hasClass('open')){
-							jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
-							jQuery(jQuery('.flatpickr-calendar')[1]).addClass('close');
-							$(this).val('');
-							alert( mwb_mbfw_public_obj.wrong_order_date_1 );
+
+			var date_array = to_time.split(" ");
+			var date = date_array[0];
+			if ( isToday(date) ) {
+				if ( mwb_mbfw_public_obj.is_pro_active != ''){
+
+					var upcoming_holiday = bfwp_public_param.upcoming_holiday;
+					if( upcoming_holiday.length > 0 ) {
+						if(isDateInArray(date, upcoming_holiday)) {
+							if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+									jQuery(jQuery('.flatpickr-calendar')[0]).removeClass('open');
+									jQuery(jQuery('.flatpickr-calendar')[0]).addClass('close');
+									$('#mwb-mbfw-booking-to-time').val('');
+							}
+						} else {
+							if ( from_time && to_time ) {
+								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+									$('#mwb-mbfw-booking-to-time').val('');
+									console.log('dsssd');
+									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+										if (jQuery(jQuery('.flatpickr-calendar')[1]).hasClass('open')){
+											jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
+											jQuery(jQuery('.flatpickr-calendar')[1]).addClass('close');
+											$(this).val('');
+											alert( mwb_mbfw_public_obj.wrong_order_date_1 );
+										}
+									}
+									
+									
+								}
+							}
 						}
 					}
-					
-					
+				}
+			}else {
+
+				if ( from_time && to_time ) {
+					if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+						$('#mwb-mbfw-booking-to-time').val('');
+						console.log('dsssd');
+						if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+							if (jQuery(jQuery('.flatpickr-calendar')[1]).hasClass('open')){
+								jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
+								jQuery(jQuery('.flatpickr-calendar')[1]).addClass('close');
+								$(this).val('');
+								alert( mwb_mbfw_public_obj.wrong_order_date_1 );
+							}
+						}
+						
+						
+					}
 				}
 			}
 		});
@@ -199,7 +286,6 @@
 
 		jQuery.ajax({
 			method: 'POST',
-			// dataType: 'json',
 			url: mwb_mbfw_common_obj.ajax_url,
 			data: {
 				nonce: mwb_mbfw_common_obj.nonce,
@@ -241,6 +327,33 @@ function convertTimeFormat(input) {
 
     return `${date} ${startTime} - ${endTime}`;
 }
+
+function convertTimeFormatDual(input) {
+    // Extract date and time using regex
+    let match = input.match(/^(\d{1,2}-\d{2}-\d{4}) (\d{1,2}:\d{2} [APM]{2})$/);
+    if (!match) return input;
+
+    let date = match[1]; // Extract the date
+    let startTime = moment(match[2], "h:mm A").format("HH:mm"); // Convert start time to 24-hour format
+
+    return `${date} ${startTime}`;
+}
+
+function isToday(dateTimeStr) {
+    // Parse the input using the known format
+    const inputDate = moment(dateTimeStr, "DD-MM-YYYY");
+
+    // Compare only the date (ignores time)
+    return inputDate.isSame(moment(), 'day');
+}
+
+function isDateInArray(dateStr, dateArray) {
+    // Convert input date to the array's format: YYYY-MM-DD
+    const formatted = moment(dateStr, "DD-MM-YYYY").format("YYYY-MM-DD");
+
+    return dateArray.includes(formatted);
+}
+
 function retrieve_booking_total_ajax( form_data ) {
 	
 	var condition = true;

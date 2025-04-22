@@ -789,6 +789,10 @@ jQuery(document).ready(function($){
                 },
                 onChange: function(selectedDates, dateStr, instance) {
 
+                    const selected = moment(selectedDates[0]);
+                    const today = moment();
+                    const today_date = today.format('HH:mm');
+
                     document.querySelectorAll(".flatpickr-day").forEach(day => {
                         if (day.classList.contains("custom-selected")) {
                         day.classList.remove("custom-selected");
@@ -836,6 +840,12 @@ jQuery(document).ready(function($){
                     for(let i=0; i< date_slots.length; i++ ) { 
                         var start_time = date_slots[i]._from;
                         var end_time = date_slots[i]._to;
+                        if ((selected.isSame(today, 'day')) &&
+                            ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                continue;
+                            }
+                        
+
                         if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
                             start_time = moment(date_slots[i]._from, "HH:mm").format("h:mm A");
                             end_time = moment(date_slots[i]._to, "HH:mm").format("h:mm A");

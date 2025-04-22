@@ -547,26 +547,36 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'cost_type'     => 'base_cost',
 			)
 		);
-
+		
 		if ( $product_price === $wps_general_price ) {
 
 			$product_price = (float) $product_price * (float) $unit;
 		} else {
 			$product_price = (float) $wps_general_price;
 		}
-		$product_price = apply_filters(
-			'mwb_mbfw_change_price_ajax_global_rule',
-			( ! empty( $product_price ) ? (float) $product_price : 0 ),
-			array(
-				'date_from'     => $date_from,
-				'date_to'       => $date_to,
-				'time_from'     => $time_from,
-				'time_to'       => $time_to,
-				'quantity'      => $quantity,
-				'people_number' => $people_number,
-				'cost_type'     => 'unit_cost',
-			)
-		);
+
+
+		if (! empty($product_price) ){
+			$global_product_price = apply_filters(
+				'mwb_mbfw_change_price_ajax_global_rule',
+				( ! empty( $product_price ) ? (float) $product_price : 0 ),
+				array(
+					'date_from'     => $date_from,
+					'date_to'       => $date_to,
+					'time_from'     => $time_from,
+					'time_to'       => $time_to,
+					'quantity'      => $quantity,
+					'people_number' => $people_number,
+					'cost_type'     => 'unit_cost',
+				)
+			);
+
+			if ($global_product_price !== $product_price) {
+				$product_price = (float) $global_product_price * (float) $unit;
+
+			}
+		}
+		
 
 		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 			$product_price = (float) $product_price * (int) $people_number;

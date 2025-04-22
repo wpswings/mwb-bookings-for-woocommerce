@@ -128,6 +128,11 @@
 							}
 						} else {
 							if ( from_time && to_time ) {
+								if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
+									from_time = convertTimeFormatDual(from_time);
+									to_time = convertTimeFormatDual(to_time);
+								}
+
 								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
 									$(this).val('');
 								
@@ -148,6 +153,10 @@
 			} else {
 			
 			if ( from_time && to_time ) {
+				if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
+					from_time = convertTimeFormatDual(from_time);
+					to_time = convertTimeFormatDual(to_time);
+				}
 				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
 					$(this).val('');
 				
@@ -164,7 +173,7 @@
 			}}
 		});
 		$('#mwb-mbfw-booking-to-time').on('change', function(){
-			debugger;
+
 			var from_time = $('#mwb-mbfw-booking-from-time').val();
 			var to_time   = $(this).val();
 
@@ -183,9 +192,13 @@
 							}
 						} else {
 							if ( from_time && to_time ) {
+								if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
+									from_time = convertTimeFormatDual(from_time);
+									to_time = convertTimeFormatDual(to_time);
+								}
 								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
 									$('#mwb-mbfw-booking-to-time').val('');
-									console.log('dsssd');
+
 									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
 										if (jQuery(jQuery('.flatpickr-calendar')[1]).hasClass('open')){
 											jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
@@ -204,9 +217,13 @@
 			}else {
 
 				if ( from_time && to_time ) {
+					if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
+						from_time = convertTimeFormatDual(from_time);
+						to_time = convertTimeFormatDual(to_time);
+					}
 					if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
 						$('#mwb-mbfw-booking-to-time').val('');
-						console.log('dsssd');
+						
 						if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
 							if (jQuery(jQuery('.flatpickr-calendar')[1]).hasClass('open')){
 								jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
@@ -276,7 +293,6 @@
 		var prod_id = jQuery('.mwb_mbfw_booking_product_id').val();
 		if (prod_id) {
 			var productId = prod_id;
-			// console.log('Product ID:', productId,mwb_mbfw_public_obj.booking_slot_array_max_limit);
 	
 			// You can use productId here for further processing
 		} else {

@@ -556,7 +556,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		}
 
 
-		if (! empty($product_price) ){
 			$global_product_price = apply_filters(
 				'mwb_mbfw_change_price_ajax_global_rule',
 				( ! empty( $product_price ) ? (float) $product_price : 0 ),
@@ -570,6 +569,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					'cost_type'     => 'unit_cost',
 				)
 			);
+
+		if ( ! empty($date_time_to) && ! empty($date_time_from) ){
 
 			if ($global_product_price !== $product_price) {
 				$product_price = (float) $global_product_price * (float) $unit;

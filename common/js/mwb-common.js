@@ -40,8 +40,13 @@
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
 					} else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
-					
-					form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
+						// console.log(value)
+						if( ( '' != value ) ){
+
+							form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
+						} else{
+							form_data.set('mwb_mbfw_booking_to_time', '');
+						}
 					} else if (key === 'mwb_mbfw_booking_from_time' && key != null ) {
 					
 						form_data.set('mwb_mbfw_booking_from_time', convertTimeFormatDual(value));
@@ -65,8 +70,13 @@
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
 					}  else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
+						// console.log(value)
+						// if( ( null != value ) ){
 					
 						form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
+					// }else{
+					// 	form_data.set('mwb_mbfw_booking_to_time', '');
+					// }
 					} else if (key === 'mwb_mbfw_booking_from_time' && key != null ) {
 						
 						form_data.set('mwb_mbfw_booking_from_time', convertTimeFormatDual(value));
@@ -149,6 +159,39 @@
 							}
 						}
 					}
+				} else {
+					var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday;
+					if( upcoming_holiday.length > 0 ) {
+						if(isDateInArray(date, upcoming_holiday)) {
+							if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+									jQuery(jQuery('.flatpickr-calendar')[0]).removeClass('open');
+									jQuery(jQuery('.flatpickr-calendar')[0]).addClass('close');
+									$('#mwb-mbfw-booking-from-time').val('');
+									return;
+							}
+						} else {
+							if ( from_time && to_time ) {
+								if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
+									from_time = convertTimeFormatDual(from_time);
+									to_time = convertTimeFormatDual(to_time);
+								}
+
+								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+									$(this).val('');
+								
+									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+										if (jQuery(jQuery('.flatpickr-calendar')[0]).hasClass('open')){
+											jQuery(jQuery('.flatpickr-calendar')[0]).removeClass('open');
+											jQuery(jQuery('.flatpickr-calendar')[0]).addClass('close');
+											$(this).val('');
+											alert( mwb_mbfw_public_obj.wrong_order_date_2 );
+										}
+									}
+									
+								}
+							}
+						}
+					}
 				}
 			} else {
 			
@@ -183,6 +226,38 @@
 				if ( mwb_mbfw_public_obj.is_pro_active != ''){
 
 					var upcoming_holiday = bfwp_public_param.upcoming_holiday;
+					if( upcoming_holiday.length > 0 ) {
+						if(isDateInArray(date, upcoming_holiday)) {
+							if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+									jQuery(jQuery('.flatpickr-calendar')[0]).removeClass('open');
+									jQuery(jQuery('.flatpickr-calendar')[0]).addClass('close');
+									$('#mwb-mbfw-booking-to-time').val('');
+							}
+						} else {
+							if ( from_time && to_time ) {
+								if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
+									from_time = convertTimeFormatDual(from_time);
+									to_time = convertTimeFormatDual(to_time);
+								}
+								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+									$('#mwb-mbfw-booking-to-time').val('');
+
+									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
+										if (jQuery(jQuery('.flatpickr-calendar')[1]).hasClass('open')){
+											jQuery(jQuery('.flatpickr-calendar')[1]).removeClass('open');
+											jQuery(jQuery('.flatpickr-calendar')[1]).addClass('close');
+											$(this).val('');
+											alert( mwb_mbfw_public_obj.wrong_order_date_1 );
+										}
+									}
+									
+									
+								}
+							}
+						}
+					}
+				} else{
+				var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday;
 					if( upcoming_holiday.length > 0 ) {
 						if(isDateInArray(date, upcoming_holiday)) {
 							if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
@@ -345,12 +420,26 @@ function convertTimeFormat(input) {
 }
 
 function convertTimeFormatDual(input) {
+	input_val = input;
+	// if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
+
+		currentLang = mwb_mbfw_public_obj.lang;
+
+
+		// Replace localized AM/PM markers with standard AM/PM
+		var map = timeChangeLanguage(currentLang) || timeChangeLanguage('default'); // Use default map if lang not found
+		input = input.replace(new RegExp(Object.keys(map).join("|"), "g"), function(match) {
+			return map[match];
+		});
+
+	// }
     // Extract date and time using regex
     let match = input.match(/^(\d{1,2}-\d{2}-\d{4}) (\d{1,2}:\d{2} [APM]{2})$/);
     if (!match) return input;
 
-    let date = match[1]; // Extract the date
-    let startTime = moment(match[2], "h:mm A").format("HH:mm"); // Convert start time to 24-hour format
+	let date = match[1]; // Extract the date
+
+	let startTime = moment(match[2], "hh:mm A").format("HH:mm"); // Convert start time to 24-hour format
 
     return `${date} ${startTime}`;
 }
@@ -375,6 +464,12 @@ function retrieve_booking_total_ajax( form_data ) {
 	var condition = true;
 	data_from = jQuery('#mwb-mbfw-booking-from-time').val();
 	data_to =jQuery('#mwb-mbfw-booking-to-time').val();
+	
+	if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
+		data_from = convertTimeFormatDual( data_from );
+		data_to = convertTimeFormatDual( data_to );
+	}
+
 	if ( data_from != undefined && data_to != undefined ){	
 		var datesBetween = getDatesBetween(data_from, data_to);
 		for (let index = 0; index < datesBetween.length; index++) {
@@ -468,4 +563,67 @@ function pad(number) {
 function convertDateFormat(dateString) {
     var parts = dateString.split("-");
     return parts[2] + "-" + parts[1] + "-" + parts[0];
+}
+
+function timeChangeLanguage( lang ){
+	const amPmMap = {
+		'default': { 'AM': 'AM', 'PM': 'PM' },
+		'ar': { 'ص': 'AM', 'م': 'PM' }, // Arabic
+		'at': { 'AM': 'AM', 'PM': 'PM' }, // Austria (uses similar to English)
+		'az': { 'AM': 'AM', 'PM': 'PM' }, // Azerbaijani
+		'be': { 'AM': 'AM', 'PM': 'PM' }, // Belarusian
+		'bg': { 'AM': 'AM', 'PM': 'PM' }, // Bulgarian
+		'bn': { 'AM': 'AM', 'PM': 'PM' }, // Bengali
+		'bs': { 'AM': 'AM', 'PM': 'PM' }, // Bosnian
+		'cat': { 'AM': 'AM', 'PM': 'PM' }, // Catalan
+		'cs': { 'AM': 'AM', 'PM': 'PM' }, // Czech
+		'cy': { 'AM': 'AM', 'PM': 'PM' }, // Welsh
+		'da': { 'AM': 'AM', 'PM': 'PM' }, // Danish
+		'de': { 'AM': 'AM', 'PM': 'PM' }, // German
+		'eo': { 'AM': 'AM', 'PM': 'PM' }, // Esperanto
+		'es': { 'AM': 'AM', 'PM': 'PM' }, // Spanish
+		'et': { 'AM': 'AM', 'PM': 'PM' }, // Estonian
+		'fa': { 'AM': 'AM', 'PM': 'PM' }, // Persian
+		'fi': { 'AM': 'AM', 'PM': 'PM' }, // Finnish
+		'fr': { 'AM': 'AM', 'PM': 'PM' }, // French
+		'gr': { 'AM': 'AM', 'PM': 'PM' }, // Greek
+		'he': { 'AM': 'AM', 'PM': 'PM' }, // Hebrew
+		'hi': { 'पूर्वाह्न': 'AM', 'अपराह्न': 'PM' }, // Hindi
+		'hr': { 'AM': 'AM', 'PM': 'PM' }, // Croatian
+		'hu': { 'AM': 'AM', 'PM': 'PM' }, // Hungarian
+		'id': { 'AM': 'AM', 'PM': 'PM' }, // Indonesian
+		'is': { 'AM': 'AM', 'PM': 'PM' }, // Icelandic
+		'it': { 'AM': 'AM', 'PM': 'PM' }, // Italian
+		'ja': { '午前': 'AM', '午後': 'PM' }, // Japanese
+		'ka': { 'AM': 'AM', 'PM': 'PM' }, // Georgian
+		'km': { 'AM': 'AM', 'PM': 'PM' }, // Khmer
+		'ko': { 'AM': 'AM', 'PM': 'PM' }, // Korean
+		'kz': { 'AM': 'AM', 'PM': 'PM' }, // Kazakh
+		'lt': { 'AM': 'AM', 'PM': 'PM' }, // Lithuanian
+		'lv': { 'AM': 'AM', 'PM': 'PM' }, // Latvian
+		'mk': { 'AM': 'AM', 'PM': 'PM' }, // Macedonian
+		'mn': { 'AM': 'AM', 'PM': 'PM' }, // Mongolian
+		'my': { 'AM': 'AM', 'PM': 'PM' }, // Burmese
+		'nl': { 'AM': 'AM', 'PM': 'PM' }, // Dutch
+		'no': { 'AM': 'AM', 'PM': 'PM' }, // Norwegian
+		'pa': { 'AM': 'AM', 'PM': 'PM' }, // Punjabi
+		'pl': { 'AM': 'AM', 'PM': 'PM' }, // Polish
+		'pt': { 'AM': 'AM', 'PM': 'PM' }, // Portuguese
+		'ro': { 'AM': 'AM', 'PM': 'PM' }, // Romanian
+		'ru': { 'AM': 'AM', 'PM': 'PM' }, // Russian
+		'si': { 'AM': 'AM', 'PM': 'PM' }, // Sinhala
+		'sk': { 'AM': 'AM', 'PM': 'PM' }, // Slovak
+		'sl': { 'AM': 'AM', 'PM': 'PM' }, // Slovenian
+		'sq': { 'AM': 'AM', 'PM': 'PM' }, // Albanian
+		'sr': { 'AM': 'AM', 'PM': 'PM' }, // Serbian
+		'sv': { 'AM': 'AM', 'PM': 'PM' }, // Swedish
+		'th': { 'AM': 'AM', 'PM': 'PM' }, // Thai
+		'tr': { 'AM': 'AM', 'PM': 'PM' }, // Turkish
+		'uk': { 'AM': 'AM', 'PM': 'PM' }, // Ukrainian
+		'uz': { 'AM': 'AM', 'PM': 'PM' }, // Uzbek
+		'vn': { 'AM': 'AM', 'PM': 'PM' }, // Vietnamese
+		'zh': { 'AM': 'AM', 'PM': 'PM' }, // Chinese (Simplified)
+	};
+	 return amPmMap[lang];
+	
 }

@@ -451,7 +451,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if('Invalid date' == $date_time_to ){
 			$date_time_to = '';
 		}
-// print_r($_POST);die;
+
 		$date_from = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_from ) ? $date_time_from : current_time( 'd-m-Y H:i' ) ) );
 
 		$date_to           = gmdate( 'd-m-Y', strtotime( ! empty( $date_time_to ) ? $date_time_to : current_time( 'd-m-Y H:i' ) ) );
@@ -577,8 +577,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					'cost_type'     => 'unit_cost',
 				)
 			);
-// var_dump($global_product_price,$date_time_to,$date_time_from);
-		if ( ! empty($date_time_to) && ! empty($date_time_from) ){
+
+			if ( ! empty($date_time_to) && ! empty($date_time_from) ){
 
 			if ($global_product_price !== $product_price) {
 				$product_price = (float) $global_product_price * (float) $unit;

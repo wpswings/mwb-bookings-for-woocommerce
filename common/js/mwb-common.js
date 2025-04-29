@@ -466,8 +466,8 @@ function retrieve_booking_total_ajax( form_data ) {
 	data_to =jQuery('#mwb-mbfw-booking-to-time').val();
 	
 	if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
-		data_from = convertTimeFormatDual( data_from );
-		data_to = convertTimeFormatDual( data_to );
+		data_from = (undefined == data_from ) ? undefined : convertTimeFormatDual( data_from );
+		data_to = (undefined == data_to ) ? undefined :convertTimeFormatDual( data_to );
 	}
 
 	if ( data_from != undefined && data_to != undefined ){	

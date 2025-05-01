@@ -69,7 +69,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
 
-		if ( ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id || 'wp-swings_page_home' === $screen->id ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
+		if ( ( isset( $screen->id ) && ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
 
 			wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all' );
 
@@ -98,7 +98,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		$screen                 = get_current_screen();
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
-		if ( ( isset( $screen->id ) && 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id || 'wp-swings_page_home' === $screen->id ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
+		if ( ( isset( $screen->id ) && ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) {
 			wp_enqueue_script( 'mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 
 			wp_enqueue_script( 'mwb-mbfw-metarial-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
@@ -425,6 +425,35 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'value'       => get_option( 'mwb_mbfw_is_show_totals' ),
 				'class'       => 'mwb_mbfw_is_show_totals',
 				'name'        => 'mwb_mbfw_is_show_totals',
+			),
+			array(
+				'title'             => esc_html__( 'Please Select the language for calendar', 'mwb-bookings-for-woocommerce' ),
+				'type'              => 'select',
+				'id'                => 'mwb_mbfw_select_language_for_calendar',
+				'description'       => esc_html__( 'Specify the language for the days and months of the calendar.', 'mwb-bookings-for-woocommerce' ),
+				'value'             => get_option( 'mwb_mbfw_select_language_for_calendar', 'default' ),
+				'class'             => 'pefw-multiselect-class mwb-defaut-multiselect',
+				'placeholder'       => 'Unaviable days',
+				'options'           => $this->wps_fetch_calendar_languages(),
+			),
+			array(
+				'title'             => esc_html__( 'Please Select start day of the week', 'mwb-bookings-for-woocommerce' ),
+				'type'              => 'select',
+				'id'                => 'mwb_mbfw_select_first_day_of_week',
+				'description'       => esc_html__( 'Specify the first day of the week.', 'mwb-bookings-for-woocommerce' ),
+				'value'             => get_option( 'mwb_mbfw_select_first_day_of_week', 0 ),
+				'class'             => 'pefw-multiselect-class mwb-defaut-multiselect',
+				'placeholder'       => 'Unaviable days',
+				'options'           => array(
+					'' => __( 'Select', 'mwb-bookings-for-woocommerce' ),
+					0  => __( 'Sunday', 'mwb-bookings-for-woocommerce' ),
+					1  => __( 'Monday', 'mwb-bookings-for-woocommerce' ),
+					2  => __( 'Tuesday', 'mwb-bookings-for-woocommerce' ),
+					3  => __( 'Wednesday', 'mwb-bookings-for-woocommerce' ),
+					4  => __( 'Thrusday', 'mwb-bookings-for-woocommerce' ),
+					5  => __( 'Friday', 'mwb-bookings-for-woocommerce' ),
+					6  => __( 'Saturday', 'mwb-bookings-for-woocommerce' ),
+				),
 			),
 		);
 		$mbfw_booking_form_array =
@@ -809,6 +838,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		</div>
 		<div id="mwb_booking_cost_data" class="panel woocommerce_options_panel show_if_mwb_booking">
 			<?php
+			woocommerce_wp_checkbox(
+				array(
+					'id'          => 'mwb_mbfw_booking_general_cost_hide',
+					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_general_cost_hide', true ),
+					'label'       => __( 'Hide General Cost from Product Page', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable to hide General cost from Product Page.', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
+				)
+			);
 			woocommerce_wp_text_input(
 				array(
 					'id'                => 'mwb_mbfw_booking_unit_cost',
@@ -868,6 +906,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			);
+
 			?>
 			<p class="mwb-mbfw-additional-notice">
 				<?php
@@ -1024,9 +1063,25 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				array(
 					'id'          => 'wps_mbfw_day_and_days_upto_togather_enabled',
 					'value'       => wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_day_and_days_upto_togather_enabled', true ),
-					'label'       => __( 'Enable Days availabilty and days availability upto Togather', 'mwb-bookings-for-woocommerce' ),
-					'description' => __( 'Enable if you want days availabilty and days availability upto worked togather.', 'mwb-bookings-for-woocommerce' ),
+					'label'       => __( 'Enable to use Days availabilty and days availability upto Together', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable if you want days availabilty and days availability upto worked together.', 'mwb-bookings-for-woocommerce' ),
 					'desc_tip'    => true,
+				)
+			);
+
+			woocommerce_wp_select(
+				array(
+					'label'       => __( 'Booking Slot format', 'mwb-bookings-for-woocommerce' ),
+					'id'          => 'mwb_mbfw_booking_time_fromat',
+					'name'        => 'mwb_mbfw_booking_time_fromat',
+					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_time_fromat', true ),
+					'desc_tip'    => true,
+					'description' => __( 'Please select date format to display in fornt end while booking.', 'mwb-bookings-for-woocommerce' ),
+					'options'     => array(
+						'tewentyfour_hour'  => __( '24 hour', 'mwb-bookings-for-woocommerce' ),
+						'twelve_hour' => __( 'AM/PM', 'mwb-bookings-for-woocommerce' ),
+					),
+					'style'       => 'width:10em',
 				)
 			);
 
@@ -1123,6 +1178,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_is_booking_unit_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_unit_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_unit_cost_per_people'] ) ) : '',
 				'mwb_mbfw_booking_base_cost'               => array_key_exists( 'mwb_mbfw_booking_base_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_base_cost'] ) ) : '',
 				'mwb_mbfw_booking_base_cost_hide'          => array_key_exists( 'mwb_mbfw_booking_base_cost_hide', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_base_cost_hide'] ) ) : '',
+				'mwb_mbfw_booking_general_cost_hide'          => array_key_exists( 'mwb_mbfw_booking_general_cost_hide', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_general_cost_hide'] ) ) : '',
 				'mwb_mbfw_is_booking_base_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_base_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_base_cost_per_people'] ) ) : '',
 				'mwb_mbfw_is_people_option'                => array_key_exists( 'mwb_mbfw_is_people_option', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_people_option'] ) ) : '',
 				'mwb_mbfw_minimum_people_per_booking'      => array_key_exists( 'mwb_mbfw_minimum_people_per_booking', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_minimum_people_per_booking'] ) ) : '',
@@ -1145,6 +1201,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'_sku'                                     => array_key_exists( '_sku', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_sku'] ) ) : '',
 				'_manage_stock'                            => array_key_exists( '_manage_stock', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['_manage_stock'] ) ) : '',
 				'wps_mbfw_night_slots_enabled'             => array_key_exists( 'wps_mbfw_night_slots_enabled', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_night_slots_enabled'] ) ) : '',
+				'mwb_mbfw_booking_time_fromat'             => array_key_exists( 'mwb_mbfw_booking_time_fromat', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_time_fromat'] ) ) : '',
 				'wps_mbfw_day_and_days_upto_togather_enabled' => array_key_exists( 'wps_mbfw_day_and_days_upto_togather_enabled', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_mbfw_day_and_days_upto_togather_enabled'] ) ) : '',
 			);
 
@@ -1155,20 +1212,34 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			 * @since 1.0.0
 			 */
 			apply_filters( 'mwb_mbfw_save_product_meta_data', $product_meta_data, $id );
+			$month_name = '';
+			$month_name_cost = '';
+			session_start();
+			if ( isset(  $_SESSION['slot_month'] ) || isset( $_SESSION['month'] ) ) {
+				$month_name = gmdate( 'M', mktime( 0, 0, 0, $_SESSION['slot_month'], 1 ) );
+				$month_name_cost = gmdate( 'M', mktime( 0, 0, 0, $_SESSION['month'], 1 ) );
+	
+			}
 
+			
 			foreach ( $product_meta_data as $meta_key => $meta_value ) {
 
 				if ( strpos( $meta_key, 'wps_mbfw_unit_' ) !== false ) {
+					if ( strpos( $meta_key, $month_name_cost ) !== false ) {
+						$currentdate = $meta_key;
+					}
+					if ( ! empty( $meta_value ) || ! empty( $currentdate ) ) {
 
-					if ( ! empty( $meta_value ) || ! empty( wps_booking_get_meta_data( $id, $meta_key, true ) ) ) {
-
-						 wps_booking_update_meta_data( $id, $meta_key, $meta_value );
+						wps_booking_update_meta_data( $id, $currentdate, $meta_value );
 					}
 				} elseif ( strpos( $meta_key, 'wps_bfwp_daywise_slot_field_' ) !== false ) {
 
-					if ( ! empty( $meta_value ) || ! empty( wps_booking_get_meta_data( $id, $meta_key, true ) ) ) {
+					if ( strpos( $meta_key, $month_name ) !== false ) {
+						$currentdate = $meta_key;
+					}
+					if ( ! empty( $meta_value ) && ! empty( $currentdate ) ) {
 
-						 wps_booking_update_meta_data( $id, $meta_key, $meta_value, true );
+						wps_booking_update_meta_data( $id, $meta_key, $meta_value, true );
 					}
 				} else {
 
@@ -1896,7 +1967,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					$all_events[]   = array(
 						'title' => '#Order Id: ' . $order->get_id() . ' ' . $item['name'],
 						'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
-						// 'start' =>DateTime::createFromFormat('d \d\e F \d\e Y H:i', $date_time_from)->format('Y-m-d\TH:i:sP'),
 						'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
 						'url'   => admin_url( 'admin.php?page=wc-orders&action=edit&id=' . $order->get_id() ),
 						'class' => $status,
@@ -2031,4 +2101,121 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 	}
 
+	/**
+	 * To display Additional services on order edit page.
+	 *
+	 * @param object $item_id is item id.
+	 * @param object $item is item object.
+	 * @param object $product is product.
+	 * @return void
+	 */
+	public function bfwp_show_booking_services_on_order_edit_page( $item_id, $item, $product ) {
+		$screen = get_current_screen();
+
+		global $pagenow;
+		if ( ( 'post.php' !== $pagenow && 'woocommerce_page_wc-orders' !== $screen->id ) || ! is_object( $product ) ) {
+			return;
+		}
+
+		$class      = false;
+		$product_id = $product->get_id();
+		if ( 'mwb_booking' === $product->get_type() ) {
+			if ( ! empty( $item->get_meta( '_mwb_mbfw_service_and_count', true ) ) ) {
+				$services_and_count = $item->get_meta( '_mwb_mbfw_service_and_count', true );
+				$product_id         = $item->get_product_id();
+
+				if ( ! empty( $services_and_count ) && is_array( $services_and_count ) ) {
+					?>
+					<div class="mwb_service_row" >
+						
+							<span class="mwb_service_row_span" >
+							<?php
+							esc_html_e( 'Service(s)', 'mwb-bookings-for-woocommerce' );
+							echo ':';
+							?>
+							</span>
+						
+					
+					<?php
+					foreach ( $services_and_count as $term_id => $count ) {
+						$term = get_term( $term_id, 'mwb_booking_service' );
+						?>
+							<?php echo '<br>' . esc_html( isset( $term->name ) ? $term->name : '' ) . ' (' . esc_html( $count ) . ')'; ?>
+						<?php
+					}
+					?>
+					</div>
+					<?php
+				}
+			}
+			wp_nonce_field( 'mwb_mbfw_line_order_edit', 'mbfw_nonce_field' );
+		}
+	}
+
+	/**
+	 * To fetch language of calendar.
+	 *
+	 * @return array
+	 */
+	public function wps_fetch_calendar_languages() {
+		return array(
+			''       => __( 'Select', 'mwb-bookings-for-woocommerce' ),
+			'default' => __( 'Default (English)', 'mwb-bookings-for-woocommerce' ),
+			'ar'     => __( 'Arabic', 'mwb-bookings-for-woocommerce' ),
+			'at'     => __( 'Austria', 'mwb-bookings-for-woocommerce' ),
+			'az'     => __( 'Azerbaijani', 'mwb-bookings-for-woocommerce' ),
+			'be'     => __( 'Belarusian', 'mwb-bookings-for-woocommerce' ),
+			'bg'     => __( 'Bulgarian', 'mwb-bookings-for-woocommerce' ),
+			'bn'     => __( 'Bengali', 'mwb-bookings-for-woocommerce' ),
+			'bs'     => __( 'Bosnian', 'mwb-bookings-for-woocommerce' ),
+			'cat'     => __( 'Catalan', 'mwb-bookings-for-woocommerce' ),
+			'cs'     => __( 'Czech', 'mwb-bookings-for-woocommerce' ),
+			'cy'     => __( 'Welsh', 'mwb-bookings-for-woocommerce' ),
+			'da'     => __( 'Danish', 'mwb-bookings-for-woocommerce' ),
+			'de'     => __( 'German', 'mwb-bookings-for-woocommerce' ),
+			'eo'     => __( 'Esperanto', 'mwb-bookings-for-woocommerce' ),
+			'es'     => __( 'Spanish', 'mwb-bookings-for-woocommerce' ),
+			'et'     => __( 'Estonian', 'mwb-bookings-for-woocommerce' ),
+			'fa'     => __( 'Persian', 'mwb-bookings-for-woocommerce' ),
+			'fi'     => __( 'Finnish', 'mwb-bookings-for-woocommerce' ),
+			'fr'     => __( 'French', 'mwb-bookings-for-woocommerce' ),
+			'gr'     => __( 'Greek', 'mwb-bookings-for-woocommerce' ),
+			'he'     => __( 'Hebrew', 'mwb-bookings-for-woocommerce' ),
+			'hi'     => __( 'Hindi', 'mwb-bookings-for-woocommerce' ),
+			'hr'     => __( 'Croatian', 'mwb-bookings-for-woocommerce' ),
+			'hu'     => __( 'Hungarian', 'mwb-bookings-for-woocommerce' ),
+			'id'     => __( 'Indonesian', 'mwb-bookings-for-woocommerce' ),
+			'is'     => __( 'Icelandic', 'mwb-bookings-for-woocommerce' ),
+			'it'     => __( 'Italian', 'mwb-bookings-for-woocommerce' ),
+			'ja'     => __( 'Japanese', 'mwb-bookings-for-woocommerce' ),
+			'ka'     => __( 'Georgian', 'mwb-bookings-for-woocommerce' ),
+			'km'     => __( 'Khmer', 'mwb-bookings-for-woocommerce' ),
+			'ko'     => __( 'Korean', 'mwb-bookings-for-woocommerce' ),
+			'kz'     => __( 'Kazakh', 'mwb-bookings-for-woocommerce' ),
+			'lt'     => __( 'Lithuanian', 'mwb-bookings-for-woocommerce' ),
+			'lv'     => __( 'Latvian', 'mwb-bookings-for-woocommerce' ),
+			'mk'     => __( 'Macedonian', 'mwb-bookings-for-woocommerce' ),
+			'mn'     => __( 'Mongolian', 'mwb-bookings-for-woocommerce' ),
+			'my'     => __( 'Burmese', 'mwb-bookings-for-woocommerce' ),
+			'nl'     => __( 'Dutch', 'mwb-bookings-for-woocommerce' ),
+			'no'     => __( 'Norwegian', 'mwb-bookings-for-woocommerce' ),
+			'pa'     => __( 'Punjabi', 'mwb-bookings-for-woocommerce' ),
+			'pl'     => __( 'Polish', 'mwb-bookings-for-woocommerce' ),
+			'pt'     => __( 'Portuguese', 'mwb-bookings-for-woocommerce' ),
+			'ro'     => __( 'Romanian', 'mwb-bookings-for-woocommerce' ),
+			'ru'     => __( 'Russian', 'mwb-bookings-for-woocommerce' ),
+			'si'     => __( 'Sinhala', 'mwb-bookings-for-woocommerce' ),
+			'sk'     => __( 'Slovak', 'mwb-bookings-for-woocommerce' ),
+			'sl'     => __( 'Slovenian', 'mwb-bookings-for-woocommerce' ),
+			'sq'     => __( 'Albanian', 'mwb-bookings-for-woocommerce' ),
+			'sr'     => __( 'Serbian', 'mwb-bookings-for-woocommerce' ),
+			'sv'     => __( 'Swedish', 'mwb-bookings-for-woocommerce' ),
+			'th'     => __( 'Thai', 'mwb-bookings-for-woocommerce' ),
+			'tr'     => __( 'Turkish', 'mwb-bookings-for-woocommerce' ),
+			'uk'     => __( 'Ukrainian', 'mwb-bookings-for-woocommerce' ),
+			'uz'     => __( 'Uzbek', 'mwb-bookings-for-woocommerce' ),
+			'vn'     => __( 'Vietnamese', 'mwb-bookings-for-woocommerce' ),
+			'zh'     => __( 'Chinese (Simplified)', 'mwb-bookings-for-woocommerce' ),
+		);
+	}
 }

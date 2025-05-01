@@ -215,6 +215,7 @@
 .mbfw-date-picker-section__wrapper {
   display: flex;
   gap: 18px;
+  flex-wrap: wrap;
 }
 
 td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-actions a {
@@ -226,7 +227,7 @@ td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-actions a
     gap: 5px;
   }
   .mbfw-date-picker-section {
-    max-width: 130px;
+    max-width: 300px;
   }
 }
 
@@ -296,4 +297,21 @@ input#wps_booking_single_calendar_form_ {
 
 .flatpickr-mobile {
   display: none !important;
+}
+
+.flatpickr-day.selected {
+  background-color: #22c4ff !important; /* Change the highlight color */
+  color: white !important;             /* Text color */
+  border-radius: 50%;       /* Make it circular */
+}
+
+.custom-selected {
+  background-color: #22c4ff !important; /* Change the highlight color */
+  color: white !important;             /* Text color */
+  border-radius: 50%;       /* Make it circular */
+}
+button.wps_timeslot_button {
+  background-color: #45c0e4 !important;
+  color: white !important;             /* Text color */
+  border: #ddd;
 }

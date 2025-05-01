@@ -6,3 +6,10 @@ th#taxonomy-mwb_booking_cost,th#taxonomy-mwb_booking_service{width:10%}#woocomme
     margin: 10px 0;
     padding: 10px;
   }
+  .mwb_service_row {
+    color: #888 !important;
+    font-size: .92em !important;
+  }
+  .mwb_service_row_span {
+    font-weight: bold !important;
+  }

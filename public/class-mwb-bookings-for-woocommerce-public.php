@@ -92,9 +92,13 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		} else {
 			$is_mobile_site = 'desktop';
 		}
+		$wps_lang = get_option( 'mwb_mbfw_select_language_for_calendar', 'default' );
 
 		wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), time(), true );
-		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery' ), time(), true );
+
+		wp_enqueue_script( 'wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/l10n/' . $wps_lang . '.js', array( 'flatpicker_js' ), time(), true );
+
+		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery', 'flatpicker_js', 'wps-flatpickr-locale' ), time(), true );
 		$daily_start_time                            = '';
 		$daily_end_time                              = '';
 		$upcoming_holiday                            = '';
@@ -121,6 +125,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$booking_slot_array_max_limit                = array();
 		// Get the number of days in the current month.
 		$num_days         = cal_days_in_month( CAL_GREGORIAN, $current_month, $current_year );
+		// $num_days2        = (int) (new DateTime("$current_year-$current_month-01"))->format('t'); 
+		// var_dump($current_month, $current_year,$num_days,$num_days2);die;
+
 		$today_date_check = sprintf( '%04d-%02d-%02d', $current_year, $current_month, $currentday );
 		// Loop through the days of the current month and add them to the array.
 		for ( $day = $currentday; $day <= $num_days; $day++ ) {
@@ -203,6 +210,10 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						$single_available_date_array = explode( ' ', $single_availables );
 					if ( ! empty( $single_available_date_array ) && is_array( $single_available_date_array ) ) {
 						foreach ( $single_available_date_array as $key => $values ) {
+
+							if ( ! empty( $values ) && ( strtotime( $values ) < strtotime( current_time( 'Y-m-d' ) ) ) ) {
+								continue;
+							}
 							$single_available_dates[] = gmdate( 'Y-m-d', strtotime( $values ) );
 							$key                      = 'wps_mbfw_unit_' . gmdate( 'd-M-Y', strtotime( $values ) );
 
@@ -403,7 +414,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
-
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',
@@ -433,8 +443,12 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'validation_message'           => __( 'Please select valid date!', 'mwb-bookings-for-woocommerce' ),
 				'is_mobile_device'             => $is_mobile_site,
 				'wps_mbfw_day_and_days_upto_togather_enabled' => $wps_mbfw_day_and_days_upto_togather_enabled,
+				'wps_diaplay_time_format' => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_time_fromat', true ),
+				'firstDayOf_Week' => get_option( 'mwb_mbfw_select_first_day_of_week' ),
+				'lang' => $wps_lang,
 			)
 		);
+
 	}
 
 
@@ -703,14 +717,39 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$single_cal_booking_dates = array_key_exists( 'wps_booking_single_calendar_form', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['wps_booking_single_calendar_form'] ) ) : '';
 				if ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 					$booking_dates = explode( ' ', $single_cal_booking_dates );
-
 					if ( ! empty( $booking_dates[0] ) ) {
 
 						if ( isset( $booking_dates[1] ) ) {
+							if ( 'twelve_hour' == wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_time_fromat', true ) ) {
+								$date = $booking_dates[0];
+								$start_time = $booking_dates[1] . $booking_dates[2]; // 11:30 PM.
+								$end_time = $booking_dates[4] . $booking_dates[5];   // 12:30 AM.
 
-							$date_time_from = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[1];
-							$date_time_to   = gmdate( $date_format, strtotime( $booking_dates[0] ) ) . ' ' . $booking_dates[3];
+								// Convert start and end times to 24-hour format for comparison.
+								$start_24 = gmdate( 'H:i', strtotime( $start_time ) );
+								$end_24 = gmdate( 'H:i', strtotime( $end_time ) );
 
+								// If end time is smaller, it means it's past midnight, so move to the next day.
+								$end_date = ( $end_24 < $start_24 ) ? gmdate( 'Y-m-d', strtotime( $date . ' +1 day' ) ) : $date;
+
+								// Format final date-time values.
+								$date_time_from = gmdate( $date_format, strtotime( $date ) ) . ' ' . $start_time;
+								$date_time_to = gmdate( $date_format, strtotime( $end_date ) ) . ' ' . $end_time;
+							} else {
+								$date = $booking_dates[0];
+								$start_time = $booking_dates[1]; // 11:30
+								$end_time = $booking_dates[3];   // 12:30
+
+								// Convert start and end times to 24-hour format for comparison.
+								$start_24 = gmdate( 'H:i', strtotime( $start_time ) );
+								$end_24 = gmdate( 'H:i', strtotime( $end_time ) );
+
+								// If end time is smaller, it means it's past midnight, so move to the next day.
+								$end_date = ( $end_24 < $start_24 ) ? gmdate( 'Y-m-d', strtotime( $date . ' +1 day' ) ) : $date;
+
+								$date_time_from = gmdate( $date_format, strtotime( $date ) ) . ' ' . $start_time;
+								$date_time_to   = gmdate( $date_format, strtotime( $end_date ) ) . ' ' . $end_time;
+							}
 						}
 					}
 					$booking_slot             = $single_cal_booking_dates;
@@ -771,7 +810,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_mbfw_show_additional_data_on_cart_and_checkout_page( $other_data, $cart_item ) {
 		if ( isset( $cart_item['mwb_mbfw_booking_values'] ) ) {
-			$custom_cart_data = $cart_item['mwb_mbfw_booking_values'];
+				$custom_cart_data = $cart_item['mwb_mbfw_booking_values'];
 			if ( ! empty( $custom_cart_data['people_number'] ) ) {
 				$other_data[] = array(
 					'name'    => _n( 'People', 'Peoples', $custom_cart_data['people_number'], 'mwb-bookings-for-woocommerce' ),
@@ -1006,7 +1045,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function wps_bookings_add_mybookings_tab( $items ) {
 		// Placing the custom tab just above logout tab.
-		$items['wps-mybookings-tab'] = esc_html__( 'Bookings', 'membership-for-woocommerce' );
+		$items['wps-mybookings-tab'] = esc_html__( 'Bookings', 'mwb-bookings-for-woocommerce' );
 
 		/**
 		 * Filter for my event tab.

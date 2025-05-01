@@ -4,7 +4,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['ar-dz'] = {}));
 }(this, (function (exports) { 'use strict';
 
-  var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+    var fp = typeof window !== "undefined" && window.flatpickr !== undefined
       ? window.flatpickr
       : {
           l10ns: {},

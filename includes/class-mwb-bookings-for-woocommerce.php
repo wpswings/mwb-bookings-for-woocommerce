@@ -76,7 +76,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->version = MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.2.2';
+			$this->version = '3.4.0';
 		}
 
 		$this->plugin_name = 'bookings-for-woocommerce';
@@ -244,10 +244,10 @@ class Mwb_Bookings_For_Woocommerce {
 
 			$this->loader->add_action( 'restrict_manage_posts', $mbfw_plugin_admin, 'mbfw_add_filter_on_order_listing_page' );
 			$this->loader->add_action( 'pre_get_posts', $mbfw_plugin_admin, 'mbfw_vary_query_to_list_only_booking_types' );
-			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data',10,2 );
+			$this->loader->add_action( 'woocommerce_hidden_order_itemmeta', $mbfw_plugin_admin, 'mbfw_hide_order_item_meta_data', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $mbfw_plugin_admin, 'mbfw_change_line_item_meta_key_order_edit_page', 10, 3 );
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_admin, 'wps_mbfw_change_cart_item_quantities', 20, 1 );
-
+			$this->loader->add_action( 'woocommerce_after_order_itemmeta', $mbfw_plugin_admin, 'bfwp_show_booking_services_on_order_edit_page', 10, 3 );
 		}
 
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );
@@ -284,6 +284,9 @@ class Mwb_Bookings_For_Woocommerce {
 
 			$this->loader->add_action( 'wp_ajax_mbfw_get_cart_data', $mbfw_plugin_common, 'mwb_mbfw_get_cart_items' );
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_get_cart_data', $mbfw_plugin_common, 'mwb_mbfw_get_cart_items' );
+			$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $mbfw_plugin_common, 'wps_sfw_compatible_with_subscription' );
+			$this->loader->add_action( 'wps_sfw_after_renewal_payment', $mbfw_plugin_common, 'wps_bfw_after_renewal_payment', 10, 3 );
+
 		}
 	}
 

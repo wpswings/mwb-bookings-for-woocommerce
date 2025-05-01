@@ -18,22 +18,38 @@ $active_plugins = get_option( 'active_plugins' );
 
 if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 	$is_pro_active = 'yes';
-} else{
+} else {
 	$is_pro_active = 'no';
 }
- if( 'yes' == $is_pro_active && 'yes' == get_option( 'wps_bfwp_enable_google_cal_booking' ) && !empty(get_option( 'wps_bfwp_google_cal_iframe' )) ) { ?>
-	<div><? echo get_option( 'wps_bfwp_google_cal_iframe' );?> </div>
-<?php } else { 
-$order_status = array(
-	'' => '--Select order status--',
-	'wc-on-hold' => 'On Hold',
-	'wc-pending' => 'Pending',
-	'wc-processing' => 'Processing',
-	'wc-completed' => 'Completed',
 
-);
+	// Whitelist iframe and some safe attributes.
+	$allowed_tags = array(
+		'iframe' => array(
+			'src'             => true,
+			'width'           => true,
+			'height'          => true,
+			'frameborder'     => true,
+			'allowfullscreen' => true,
+			'loading'         => true,
+			'style'           => true,
+			'scrolling'       => true,
+		),
+	);
 
-?>
+	if ( 'yes' == $is_pro_active && 'yes' == get_option( 'wps_bfwp_enable_google_cal_booking' ) && ! empty( get_option( 'wps_bfwp_google_cal_iframe' ) ) ) { ?>
+	<div><?php echo wp_kses( get_option( 'wps_bfwp_google_cal_iframe' ), $allowed_tags ); ?> </div>
+		<?php
+	} else {
+		$order_status = array(
+			'' => '--Select order status--',
+			'wc-on-hold' => 'On Hold',
+			'wc-pending' => 'Pending',
+			'wc-processing' => 'Processing',
+			'wc-completed' => 'Completed',
+
+		);
+
+		?>
 <div class="mbfw-secion-wrap">
 	<div class="mbfw-booking-calender-notice"><?php esc_html_e( 'List of all upcoming Bookings', 'mwb-bookings-for-woocommerce' ); ?></div>
 	<div class="wps_main_wrapper">
@@ -56,4 +72,4 @@ $order_status = array(
 	</div>
 	<div id="mwb-mbfw-booking-calendar"></div>
 </div>
-<?php } ?>
+	<?php } ?>

@@ -132,7 +132,14 @@ jQuery(document).ready(function($){
     $(document).on('change', '.woocommerce_options_panel #mwb_mbfw_booking_unit', function () {
         if ($('#wps_mbfw_booking_type').val() == 'single_cal') { 
             $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();
+            if( 'hour' == $(this).val() ) {
+                $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').show();
+            }
+            if( 'day' == $(this).val() ) {
+                $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').hide();
+            }
         } else {
+            $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').hide();
 
             if( 'hour' == $(this).val() ) {
                 $(this).parent().parent().find('.mwb_mbfw_show_date_with_time_field').hide();
@@ -204,7 +211,13 @@ jQuery(document).ready(function($){
         $(document).find('.mwb_mbfw_booking_time_fromat_field').show();
         $(document).find('.wps_mbfw_day_and_days_upto_togather_enabled_field').show();
         $(document).find('.Slots_tab').show();
+        $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').show();
+        if ('hour' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
+            $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').show();
 
+        } else{
+            $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').hide();
+        }
     } else {
         if ('day' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
 
@@ -229,6 +242,8 @@ jQuery(document).ready(function($){
         $(document).find('.wps_mbfw_night_slots_enabled_field').hide();
         $(document).find('.wps_mbfw_day_and_days_upto_togather_enabled_field').hide();
         $(document).find('.Slots_tab').hide();
+        $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').hide();
+
 
        
     }
@@ -251,7 +266,15 @@ jQuery(document).ready(function($){
             $(document).find('.mwb_mbfw_booking_time_fromat_field').show();
             $(document).find('.wps_mbfw_day_and_days_upto_togather_enabled_field').show();
             $(document).find('.Slots_tab').show();
+            // $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').show();
 
+            if ('hour' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
+                $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').show();
+    
+            } else {
+                $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').show();
+ 
+            }
         } else {
             if ('day' == $('.woocommerce_options_panel #mwb_mbfw_booking_unit').val()) { 
 
@@ -277,6 +300,8 @@ jQuery(document).ready(function($){
             $(document).find('.mwb_mbfw_booking_time_fromat_field').hide();
             $(document).find('.wps_mbfw_day_and_days_upto_togather_enabled_field').hide();
             $(document).find('.Slots_tab').hide();
+            $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').hide();
+
 
         }
     });

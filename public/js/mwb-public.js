@@ -840,27 +840,64 @@ jQuery(document).ready(function($){
                     for(let i=0; i< date_slots.length; i++ ) { 
                         var start_time = date_slots[i]._from;
                         var end_time = date_slots[i]._to;
-                        if ((selected.isSame(today, 'day')) &&
-                            ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
-                                continue;
-                            }
+
                         
 
                         if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
-                            start_time = moment(date_slots[i]._from, "HH:mm").format("h:mm A");
-                            end_time = moment(date_slots[i]._to, "HH:mm").format("h:mm A");
+                            start_time_disp = moment(date_slots[i]._from, "HH:mm").format("h:mm A");
+                            end_time_disp = moment(date_slots[i]._to, "HH:mm").format("h:mm A");
+                        } else {
+                            start_time_disp = start_time;
+                            end_time_disp = end_time;
                         }
-                        var temp =  start_time + ' - ' + end_time;
+                        var temp =  start_time_disp + ' - ' + end_time_disp;
                         var temp_check = temp_date + temp;
-                        if (booking_unavailable.length > 0) {
-                            
-                            if (!booking_unavailable.includes(temp_check)) {
-                                html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                        if ('disable_slot' == mwb_mbfw_public_obj.hide_or_disable_slot ) {
+
+                            if (booking_unavailable.length > 0) {
+                                // console.log(booking_unavailable);
+                                if (!booking_unavailable.includes(temp_check)) {
+                                    if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                        html += '\n\ <span><button disabled=disabled>' + temp + '</button>\n\ </span>';
+
+                                } else {
+                                    html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+
+                                }
+                                        
                                     
-                                
+                                } else {
+                                    html += '\n\ <span><button disabled=disabled>' + temp + '</button>\n\ </span>';
+
+                                }
+                            } else {
+                                if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                    html += '\n\ <span><button disabled=disabled>' + temp + '</button>\n\ </span>';
+
+                                    continue;
+                                    
+                                } else {
+                                    html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                                }
                             }
                         } else {
-                            html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                            if (booking_unavailable.length > 0) {
+
+                                if (!booking_unavailable.includes(temp_check)) {
+                                    if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                            continue;
+                                    } else {
+                                        html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                                    }
+                                }
+                            } else { debugger;
+                                if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                    continue;
+                                } else {
+                                    html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                                }
+                                
+                            }
                         }
                     }
                     html += '\n\  </div>'

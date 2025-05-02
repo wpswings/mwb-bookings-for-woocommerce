@@ -442,6 +442,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'wps_mbfw_day_and_days_upto_togather_enabled' => $wps_mbfw_day_and_days_upto_togather_enabled,
 				'wps_diaplay_time_format' => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_time_fromat', true ),
 				'firstDayOf_Week' => get_option( 'mwb_mbfw_select_first_day_of_week' ),
+				'hide_or_disable_slot'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_hide_or_diable_slot', 'hide_slot' ),
 				'lang' => $wps_lang,
 			)
 		);

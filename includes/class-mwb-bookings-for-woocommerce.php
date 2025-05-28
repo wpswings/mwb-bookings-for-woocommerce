@@ -221,9 +221,6 @@ class Mwb_Bookings_For_Woocommerce {
 		
 		//Global calendar hooks.
 		$this->loader->add_action( 'init', $mbfw_plugin_admin, 'register_global_booking_post_type');
-		$this->loader->add_action('add_meta_boxes', $mbfw_plugin_admin, 'add_global_booking_meta_boxes');
-		$this->loader->add_action('save_post', $mbfw_plugin_admin, 'save_global_booking_meta');
-
 
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_filter( 'product_type_selector', $mbfw_plugin_admin, 'mbfw_add_product_type_in_dropdown', 10, 1 );
@@ -254,6 +251,15 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $mbfw_plugin_admin, 'mbfw_change_line_item_meta_key_order_edit_page', 10, 3 );
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_admin, 'wps_mbfw_change_cart_item_quantities', 20, 1 );
 			$this->loader->add_action( 'woocommerce_after_order_itemmeta', $mbfw_plugin_admin, 'bfwp_show_booking_services_on_order_edit_page', 10, 3 );
+			//hooks for global booking post type.
+			$this->loader->add_action('add_meta_boxes', $mbfw_plugin_admin, 'add_global_booking_meta_boxes');
+			$this->loader->add_action('save_post', $mbfw_plugin_admin, 'save_global_booking_meta');
+			// Add a new column to the custom post type admin list
+			$this->loader->add_filter('manage_wps_global_booking_posts_columns', $mbfw_plugin_admin, 'add_shortcode_column_to_booking');
+			// Hook into the custom column content
+			$this->loader->add_filter('post_row_actions', $mbfw_plugin_admin , 'add_booking_id_below_title', 10, 2);
+			// Fill the new column with the shortcode
+			$this->loader->add_action('manage_wps_global_booking_posts_custom_column', $mbfw_plugin_admin, 'display_shortcode_column_for_booking', 10, 2);
 		}
 
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );

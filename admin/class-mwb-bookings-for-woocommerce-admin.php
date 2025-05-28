@@ -2416,5 +2416,40 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		return $ical;
 	}
+
+	public function add_shortcode_column_to_booking($columns) {
+       $new_columns = [];
+
+    foreach ($columns as $key => $value) {
+        if ($key === 'date') {
+            // Insert Shortcode column *before* the Date column
+            $new_columns['shortcode'] = __('Shortcode', 'mwb-bookings-for-woocommerce');
+        }
+
+        $new_columns[$key] = $value;
+    }
+
+    return $new_columns;
+}
+
+public function display_shortcode_column_for_booking($column, $post_id) {
+    if ($column === 'shortcode') {
+        $shortcode = '[bookable_booking_calendar id=' . esc_html($post_id) . ']';
+        echo '<div style="display:flex; align-items:center; gap:5px;">';
+        echo '<code id="shortcode-' . esc_attr($post_id) . '">' . esc_html($shortcode) . '</code>';
+        echo '<button type="button" class="button" onclick="navigator.clipboard.writeText(document.getElementById(\'shortcode-' . esc_attr($post_id) . '\').innerText)">Copy</button>';
+        echo '</div>';
+    }
+}
+
+public function add_booking_id_below_title($actions, $post) {
+    if ($post->post_type === 'wps_global_booking') {
+        $actions['booking_id'] = '<span style="display:block; font-size: 10px; color: #666;">ID: ' . esc_html($post->ID) . '</span>';
+    }
+    return $actions;
+}
 	// End of admin class.
 }
+
+
+

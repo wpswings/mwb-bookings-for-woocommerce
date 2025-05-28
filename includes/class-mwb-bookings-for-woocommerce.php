@@ -218,6 +218,12 @@ class Mwb_Bookings_For_Woocommerce {
 		$this->loader->add_action( 'admin_footer', $mbfw_plugin_admin, 'mwb_bfw_footer_custom_taxonomy_edit_page_callback' );
 		$this->loader->add_action( 'parent_file', $mbfw_plugin_admin, 'prefix_highlight_taxonomy_parent_menu' );
 		$this->loader->add_filter( 'submenu_file', $mbfw_plugin_admin, 'mwb_bfw_set_submenu_file_to_handle_menu_for_wp_pages', 10, 2 );
+		
+		//Global calendar hooks.
+		$this->loader->add_action( 'init', $mbfw_plugin_admin, 'register_global_booking_post_type');
+		$this->loader->add_action('add_meta_boxes', $mbfw_plugin_admin, 'add_global_booking_meta_boxes');
+		$this->loader->add_action('save_post', $mbfw_plugin_admin, 'save_global_booking_meta');
+
 
 		if ( 'yes' === get_option( 'mwb_mbfw_is_plugin_enable' ) ) {
 			$this->loader->add_filter( 'product_type_selector', $mbfw_plugin_admin, 'mbfw_add_product_type_in_dropdown', 10, 1 );
@@ -324,7 +330,9 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_store_api_product_quantity_maximum', $mbfw_plugin_public, 'mwb_mbfw_woocommerce_store_api_product_quantity_maximum', 10, 3 );
 			$this->loader->add_action( 'woocommerce_store_api_product_quantity_minimum', $mbfw_plugin_public, 'mwb_mbfw_woocommerce_store_api_product_quantity_maximum', 10, 3 );
 			$this->loader->add_action( 'woocommerce_checkout_create_order', $mbfw_plugin_public, 'mwb_mbfw_custom_reduce_stock_of_booking', 10, 3 );
-
+			$this->loader->add_action( 'plugins_loaded', $mbfw_plugin_public, 'mwb_mbfw_shortcode_search_page' );
+			$this->loader->add_action('template_redirect', $mbfw_plugin_public, 'mwb_handle_booking_add_to_cart');
+			$this->loader->add_action('woocommerce_add_order_item_meta',$mbfw_plugin_public, 'mwb_add_global_order_item_meta', 10, 3);
 		}
 	}
 

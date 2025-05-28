@@ -315,3 +315,19 @@ button.wps_timeslot_button {
   color: white !important;             /* Text color */
   border: #ddd;
 }
+.wps_global_calendar_class {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 14px;
+    transform: scale(0.95); /* optional scaling */
+}
+
+/* Adjust calendar day cell height */
+.fc .fc-daygrid-day-frame {
+    padding: 2px;
+}
+
+/* Optionally reduce toolbar button font size */
+.fc-toolbar-title {
+    font-size: 16px;
+}

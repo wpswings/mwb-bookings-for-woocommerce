@@ -86,6 +86,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 
 		wp_enqueue_style( 'mwb-mbfw-global-custom-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin-global-custom.min.css', array(), $this->version, 'all' );
+		global $post_type;
+		if ($post_type === 'wps_global_booking') {
+			wp_enqueue_style('flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
+		}
 	}
 
 	/**
@@ -146,7 +150,25 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			);
 
 			wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js' );
-
+		global $post_type;
+		if ($post_type === 'wps_global_booking') {
+			wp_enqueue_script('flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr', [], null, true);
+			wp_enqueue_style('flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
+			wp_enqueue_script( 'mwb-mbfw-admin-global-calendar-custom-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-calendar-custom.js', array( 'jquery', 'flatpickr' ), time(), true );
+			global $post;
+				$available_days = get_post_meta($post->ID, '_available_days', true) ?: [];
+		$non_available_days = get_post_meta($post->ID, '_non_available_days', true) ?: [];
+			wp_localize_script(
+				'mwb-mbfw-admin-global-calendar-custom-js',
+				'mbfw_global_calendar_booking_ajax',
+				array(
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'mwb_mbfw_admin_nonce' ),
+					'available_days' => $available_days,
+					'non_available_days' => $non_available_days,
+				)
+			);
+		}
 	}
 
 	/**
@@ -2236,4 +2258,163 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'zh'     => __( 'Chinese (Simplified)', 'mwb-bookings-for-woocommerce' ),
 		);
 	}
+
+	/**
+	 * Function to displa Global Bookings For WooCommerce admin menu page.
+	 *
+	 * @since 2.0.0
+	 */
+	public function mbfw_global_booking_menu_html() {
+		include_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-global-booking-dashboard.php';
+	}
+
+	/**
+	 * Function to register global booking post type.
+	 *
+	 * @since 2.0.0
+	 */
+
+	public function register_global_booking_post_type() {
+		register_post_type('wps_global_booking', [
+			'labels' => [
+				'name' => __( 'Global Bookings', 'mwb-bookings-for-woocommerce' ),
+				'singular_name' => __( 'Global Booking', 'mwb-bookings-for-woocommerce' ),
+				'add_new_item' => __( 'Add New Booking', 'mwb-bookings-for-woocommerce' ),
+				'edit_item' => __( 'Edit Booking', 'mwb-bookings-for-woocommerce' ),
+			],
+			'public' => true,
+			'menu_icon' => 'dashicons-calendar',
+			'supports' => ['title'],
+			'show_in_rest' => true,
+		]);
+	}
+
+	/**
+	 * Function to add global booking meta boxes.
+	 *
+	 * @since 2.0.0
+	 */
+	public function add_global_booking_meta_boxes() {
+		
+		add_meta_box('booking_settings', __( 'Booking Settings', 'mwb-bookings-for-woocommerce' ), array( $this, 'render_booking_settings_meta_box' ), 'wps_global_booking', 'normal', 'default');
+
+	}
+
+	/**
+	 * Render the booking settings meta box.
+	 *
+	 * @param WP_Post $post The post object.
+	 */
+	public function render_booking_settings_meta_box($post) {
+		$available_days = get_post_meta($post->ID, '_available_days', true) ?: [];
+		$non_available_days = get_post_meta($post->ID, '_non_available_days', true) ?: [];
+		$calendar_color = get_post_meta($post->ID, '_calendar_color', true) ?: '#00aaff';
+		$price = get_post_meta($post->ID, '_booking_default_price', true);
+		echo '<label for="booking_default_price">Cost:</label>';
+		echo '<input type="number" step="0.01" id="booking_default_price" name="booking_default_price" value="' . esc_attr($price) . '" style="width:100%;">';
+
+		echo '<label><strong>Available Days:</strong></label><br>';
+		echo '<input type="text" id="available_days_picker" name="available_days" style="width:100%" readonly value="' . esc_attr(implode(',', $available_days)) . '"><br><br>';
+
+		echo '<label><strong>Non-Available Days:</strong></label><br>';
+		echo '<input type="text" id="non_available_days_picker" name="non_available_days" style="width:100%" readonly value="' . esc_attr(implode(',', $non_available_days)) . '"><br><br>';
+
+		echo '<label><strong>Calendar Color:</strong></label><br>';
+		echo '<input type="color" name="calendar_color" value="' . esc_attr($calendar_color) . '"><br>';
+
+	}
+
+	/**
+	 * Save global booking meta data.
+	 *
+	 * @param int $post_id The post ID.
+	 */
+	public function save_global_booking_meta($post_id) {
+		// Only proceed for the correct post type
+		if (get_post_type($post_id) !== 'wps_global_booking') {
+			return;
+		}
+
+		// Prevent autosave overwrite
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+		// Check if current user has permission
+		if (!current_user_can('edit_post', $post_id)) return;
+
+		// Process available days
+		if (isset($_POST['available_days'])) {
+			$available_days_raw = sanitize_text_field($_POST['available_days']);
+			$available_days = array_filter(array_map('trim', explode(',', $available_days_raw)));
+			update_post_meta($post_id, '_available_days', $available_days);
+		}
+
+		// Process non-available days
+		if (isset($_POST['non_available_days'])) {
+			$non_available_days_raw = sanitize_text_field($_POST['non_available_days']);
+			$non_available_days = array_filter(array_map('trim', explode(',', $non_available_days_raw)));
+			update_post_meta($post_id, '_non_available_days', $non_available_days);
+		}
+		if (isset($_POST['booking_default_price'])) {
+				update_post_meta($post_id, '_booking_default_price', floatval($_POST['booking_default_price']));
+		}
+		// Save calendar color
+		if (isset($_POST['calendar_color'])) {
+			update_post_meta($post_id, '_calendar_color', sanitize_hex_color($_POST['calendar_color']));
+		}
+		if (isset($_POST['booking_default_price'])) {
+			update_post_meta($post_id, '_booking_default_price', floatval($_POST['booking_default_price']));
+		}
+		// Re-generate and save iCal
+		$available_days = get_post_meta($post_id, '_available_days', true) ?: [];
+		$non_available_days = get_post_meta($post_id, '_non_available_days', true) ?: [];
+		$ical_content = $this->generate_ical_content($available_days, $non_available_days);
+		update_post_meta($post_id, '_ical_data', $ical_content);
+	}
+
+	/**
+	 * Render the booking default price metabox.
+	 *
+	 * @param WP_Post $post The post object.
+	 */
+	public function render_booking_default_price_metabox($post) {
+		$price = get_post_meta($post->ID, '_booking_default_price', true);
+		echo '<label for="booking_default_price">Cost:</label>';
+		echo '<input type="number" step="0.01" id="booking_default_price" name="booking_default_price" value="' . esc_attr($price) . '" style="width:100%;">';
+
+
+	}
+
+	/**
+	 * Generate iCal content based on available and non-available days.
+	 *
+	 * @param array $available_days Array of available days in 'Y-m-d' format.
+	 * @param array $non_available_days Array of non-available days in 'Y-m-d' format.
+	 * @return string iCal formatted string.
+	 */
+	public function generate_ical_content($available_days, $non_available_days) {
+		$ical = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Your Company//Booking Calendar//EN\r\n";
+
+		foreach ($available_days as $date) {
+			$ical .= "BEGIN:VEVENT\r\n";
+			$ical .= "SUMMARY:Available\r\n";
+			$ical .= "DTSTART;VALUE=DATE:$date\r\n";
+			$ical .= "DTEND;VALUE=DATE:$date\r\n";
+			$ical .= "STATUS:CONFIRMED\r\n";
+			$ical .= "END:VEVENT\r\n";
+		}
+
+		foreach ($non_available_days as $date) {
+			$ical .= "BEGIN:VEVENT\r\n";
+			$ical .= "SUMMARY:Unavailable\r\n";
+			$ical .= "DTSTART;VALUE=DATE:$date\r\n";
+			$ical .= "DTEND;VALUE=DATE:$date\r\n";
+			$ical .= "STATUS:CANCELLED\r\n";
+			$ical .= "END:VEVENT\r\n";
+		}
+
+		$ical .= "END:VCALENDAR\r\n";
+
+		return $ical;
+	}
+	// End of admin class.
 }

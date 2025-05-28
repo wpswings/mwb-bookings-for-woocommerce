@@ -286,6 +286,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$unit      = 0;
 		$cart_data = $cart_object->get_cart();
 		foreach ( $cart_data as $cart ) {
+			 if (!empty($cart['booking_price'])) {
+            $cart['data']->set_price($cart['booking_price']);
+        }
 			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
 				$new_price        = (float) $cart['data']->get_price();
 				$base_price       = 0;
@@ -877,6 +880,30 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_admin_confirmation', true ) ) {
 				$order->update_status( 'on-hold', __( 'confirmation required from admin.', 'mwb-bookings-for-woocommerce' ) );
 				break;
+			}
+
+			// send email to customer and admin.
+			$booking_date = wc_get_order_item_meta($item->get_id(), 'Booking Date', true);
+			if ($booking_date) {
+				
+
+				$product_name = $item->get_name();
+				$customer_email = $order->get_billing_email();
+				$admin_email = get_option('admin_email');
+
+				// Email subject & body
+				$subject = "Booking Confirmed: {$product_name} on {$booking_date}";
+				$message = "Hi " . $order->get_billing_first_name() . ",\n\n";
+				$message .= "Your booking for *{$product_name}* has been confirmed on:\n";
+				$message .= "**Date:** {$booking_date}\n\n";
+				$message .= "Thank you for your purchase!\n\n";
+				$message .= get_bloginfo('name');
+
+				// Send email to customer
+				wp_mail($customer_email, $subject, $message);
+
+				// Optional: send notification to admin
+				wp_mail($admin_email, "[Booking Notification] {$product_name}", $message);
 			}
 		}
 	}

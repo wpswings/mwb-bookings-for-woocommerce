@@ -646,9 +646,11 @@ jQuery(document).ready(function($){
 
               if ( mwb_mbfw_public_obj.is_pro_active != ''){
                   var daywise_slot = [];
-                  if (temp_date1 in bfwp_public_param.wps_daywise_slot_available) {
-                      daywise_slot =(bfwp_public_param.wps_daywise_slot_available[temp_date1]);
-                  }
+                if ( undefined != bfwp_public_param.wps_daywise_slot_available ) {
+                    if (temp_date1 in bfwp_public_param.wps_daywise_slot_available) {
+                        daywise_slot =(bfwp_public_param.wps_daywise_slot_available[temp_date1]);
+                    }
+                }
                   
                   if( Object.keys(daywise_slot).length > 0  ) { 
                       var date_slots =Object.values(daywise_slot);

@@ -852,7 +852,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$data              = $midnight_next_day - $midnight_n_day;
 		foreach ( $order_items as $item ) {
 			$product = $item->get_product();
-			if ( 'mwb_booking' === $product->get_type() ) {
+			$global_product = get_post_meta($product->get_id(), '_is_calendar_booking_product', 'no');
+
+			if ( ('mwb_booking' === $product->get_type() || ( 'yes' == $global_product)) ) {
 				$order->update_meta_data( 'mwb_order_type', 'booking' );
 				$order->save();
 				break;

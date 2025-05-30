@@ -504,6 +504,7 @@ function retrieve_booking_total_ajax( form_data ) {
 					if ( $('#alert_msg_client').val() == undefined){
 						jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		
 						$('#mwb-mbfw-booking-to-time').val('');
+						jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
 						return;
 					}
 				} else{
@@ -514,8 +515,9 @@ function retrieve_booking_total_ajax( form_data ) {
 						}, 4000);
 					
 					}
+					$('.mwb-mbfw-total-area').html(msg);
+
 				}
-				$('.mwb-mbfw-total-area').html(msg);
 
 			}
 		});

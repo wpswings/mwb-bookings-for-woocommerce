@@ -2319,16 +2319,16 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		wp_nonce_field( 'mwb_booking_global_product_meta', '_mwb_nonce' );
 
-		echo '<label for="booking_default_price">Cost:</label>';
+		echo '<label for="booking_default_price">' . __( 'Cost', 'mwb-bookings-for-woocommerce') . ':</label>';
 		echo '<input type="number" min=0 id="booking_default_price" name="booking_default_price" value="' . esc_attr($price) . '" style="width:100%;">';
 
-		echo '<label><strong>Available Days:</strong></label><br>';
+		echo '<label><strong>'.__('Available Days', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
 		echo '<input type="text" id="available_days_picker" name="available_days" style="width:100%" readonly value="' . esc_attr(implode(',', $available_days)) . '"><br><br>';
 
-		echo '<label><strong>Non-Available Days:</strong></label><br>';
+		echo '<label><strong>'.__('Non-Available Days', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
 		echo '<input type="text" id="non_available_days_picker" name="non_available_days" style="width:100%" readonly value="' . esc_attr(implode(',', $non_available_days)) . '"><br><br>';
 
-		echo '<label><strong>Availibilty Color:</strong></label><br>';
+		echo '<label><strong>'.__('Availibilty Color', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
 		echo '<input type="color" name="calendar_availbilty_color" value="' . esc_attr($calendar_availbilty_color) . '"><br>';
 
 	}
@@ -2449,7 +2449,7 @@ public function display_shortcode_column_for_booking($column, $post_id) {
         $shortcode = '[bookable_booking_calendar id=' . esc_html($post_id) . ']';
         echo '<div style="display:flex; align-items:center; gap:5px;">';
         echo '<code id="shortcode-' . esc_attr($post_id) . '">' . esc_html($shortcode) . '</code>';
-        echo '<button type="button" class="button" onclick="navigator.clipboard.writeText(document.getElementById(\'shortcode-' . esc_attr($post_id) . '\').innerText)">Copy</button>';
+        echo '<button type="button" class="button" onclick="navigator.clipboard.writeText(document.getElementById(\'shortcode-' . esc_attr($post_id) . '\').innerText)">'.__('Copy', 'mwb-bookings-for-woocommerce') .'</button>';
         echo '</div>';
     }
 }

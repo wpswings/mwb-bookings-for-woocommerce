@@ -497,14 +497,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_hour', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
 			}
 		} else {
-			// $active_plugins = get_option( 'active_plugins' );
-			// if ( ! in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
-				$wps_unv_day = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_choose_holiday', true );
-				if ( strtotime( $date_time_from ) < strtotime( $wps_unv_day ) && strtotime( $date_time_to ) > strtotime( $wps_unv_day ) ) {
-					echo 'fail';
-					wp_die();
-				}
-			// }
+			$wps_unv_day = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_choose_holiday', true );
+			if ( strtotime( $date_time_from ) < strtotime( $wps_unv_day ) && strtotime( $date_time_to ) > strtotime( $wps_unv_day ) ) {
+				echo 'fail';
+				wp_die();
+			}
+
 
 			if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
 				$from_timestamp    = strtotime( $date_from );

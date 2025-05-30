@@ -271,7 +271,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	}
 
 	/**
-	 * Showing extra charges on cart listing total.
+	 * Showing extra charges on cart listing total(calculate total on cart page).
 	 *
 	 * @param object $cart_object cart object.
 	 * @return void
@@ -300,11 +300,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				if ( 'yes' != $hide_base_cost ) {
 
 					$base_price = wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_booking_base_cost', true );
-										/**
-										 * Filter is for returning something.
-										 *
-										 * @since 1.0.0
-										 */
+					/**
+					 * Filter is for base price global rule.
+					 *
+					 * @since 1.0.0
+					 */
 					$base_price = apply_filters( 'mwb_mbfw_vary_product_base_price', ( ! empty( $base_price ) ? (float) $base_price : 0 ), $custom_cart_data, $cart_object, $cart );
 				}
 				$booking_type      = wps_booking_get_meta_data( $product_id, 'wps_mbfw_booking_type', true );
@@ -385,12 +385,17 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 				$regular_price__ = $unit_price;
 				/**
-				 * Filter is for returning something.
+				 * Filter is for unit cost global cost.
 				 *
 				 * @since 1.0.0
 				 */
 
 				$unit_price = apply_filters( 'mwb_mbfw_vary_product_unit_price', ( ! empty( $unit_price ) ? (float) $unit_price : 0 ), $custom_cart_data, $cart_object, $cart );
+
+				if ($unit_price !== $new_price) {
+					$unit_price = (float) $unit_price * (float) $unit;
+
+				}
 
 				// adding unit cost.
 				if ( 'yes' === wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
@@ -893,7 +898,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$customer_email = $order->get_billing_email();
 				$admin_email = get_option('admin_email');
 
-				// Email subject & body
+				// Email subject & body.
 				$subject = "Booking Confirmed: {$product_name} on {$booking_date}";
 				$message = "Hi " . $order->get_billing_first_name() . ",\n\n";
 				$message .= "Your booking for *{$product_name}* has been confirmed on:\n";
@@ -901,10 +906,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$message .= "Thank you for your purchase!\n\n";
 				$message .= get_bloginfo('name');
 
-				// Send email to customer
+				// Send email to customer.
 				wp_mail($customer_email, $subject, $message);
 
-				// Optional: send notification to admin
+				// Optional: send notification to admin.
 				wp_mail($admin_email, "[Booking Notification] {$product_name}", $message);
 			}
 		}

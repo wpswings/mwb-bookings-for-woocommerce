@@ -254,11 +254,11 @@ class Mwb_Bookings_For_Woocommerce {
 			//hooks for global booking post type.
 			$this->loader->add_action('add_meta_boxes', $mbfw_plugin_admin, 'add_global_booking_meta_boxes');
 			$this->loader->add_action('save_post', $mbfw_plugin_admin, 'save_global_booking_meta');
-			// Add a new column to the custom post type admin list
+			// Add a new column to the custom post type admin list.
 			$this->loader->add_filter('manage_wps_global_booking_posts_columns', $mbfw_plugin_admin, 'add_shortcode_column_to_booking');
-			// Hook into the custom column content
+			// Hook into the custom column content.
 			$this->loader->add_filter('post_row_actions', $mbfw_plugin_admin , 'add_booking_id_below_title', 10, 2);
-			// Fill the new column with the shortcode
+			// Fill the new column with the shortcode.
 			$this->loader->add_action('manage_wps_global_booking_posts_custom_column', $mbfw_plugin_admin, 'display_shortcode_column_for_booking', 10, 2);
 		}
 

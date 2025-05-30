@@ -450,14 +450,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		if ( is_page() ) {
 			global $post;
 			if (has_shortcode($post->post_content, 'bookable_booking_calendar')) {
-				// Scan the content for all shortcodes
+				// Scan the content for all shortcodes.
 				$pattern = get_shortcode_regex();
 
 				if ( preg_match_all( '/' . $pattern . '/s', $post->post_content, $matches, PREG_SET_ORDER ) ) {
 					foreach ( $matches as $shortcode ) {
 						$shortcode_name = $shortcode[2];
 
-						// Check for your custom shortcode: [bookable_booking_calendar]
+						// Check for your custom shortcode: [bookable_booking_calendar].
 						if ( $shortcode_name === 'bookable_booking_calendar' ) {
 							$attrs = shortcode_parse_atts( $shortcode[3] );
 
@@ -469,25 +469,26 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						}
 					}
 				}
-				// FullCalendar CDN
+				// FullCalendar CDN.
 				wp_enqueue_script('fullcalendar-js', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js', [], null, true);
 				wp_enqueue_style('fullcalendar-css', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css');
 
-				// Your plugin JS
+				// Your plugin JS.
 				wp_enqueue_script('booking-calendar-js', plugin_dir_url(__FILE__) . 'js/mwb-global-booking-shortcode.js', ['fullcalendar-js'], null, true);
 				$container_id = 'booking-calendar-' . esc_attr($post_id);
-				$available_days   = get_post_meta($post_id, '_available_days', true) ?: [];
-				$unavailable_days = get_post_meta($post_id, '_non_available_days', true) ?: [];
-				$calendar_color   = get_post_meta($post_id, '_calendar_color', true) ?: '#00aaff';
+				$available_days = get_post_meta($post_id, '_available_days', true) ? get_post_meta($post_id, '_available_days', true) : [];
+				$unavailable_days = get_post_meta($post_id, '_non_available_days', true) ? get_post_meta($post_id, '_non_available_days', true) : [];
+				$calendar_availbilty_color = get_post_meta($post_id, '_calendar_availbilty_color', true) ? get_post_meta($post_id, '_calendar_availbilty_color', true) : '#00aaff';
+
 				$status_id    = 'booking-status-' . esc_attr($post_id);
 				$events = [];
 
-				// Available days (clickable)
+				// Available days (clickable).
 				foreach ($available_days as $date) {
 					$events[] = [
 						'title' => 'Available',
 						'start' => $date,
-						'color' => $calendar_color,
+						'color' => $calendar_availbilty_color,
 						'id'    => 'available_' . $date,
 					];
 				}
@@ -511,6 +512,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					'unavailableDates' => $unavailable_days,
 					'baseUrl'          => esc_url(site_url('/')),
 					'defaultPrice'     => $default_price,
+					'passed_dates_msg' => __('You cannot book past dates.', 'mwb-booking-for-woocommerce'),
+					'unavailable_msg' => __( 'This date is not available for booking.', 'mwb-booking-for-woocommerce'),
 				]);
 			}
 		}
@@ -1304,15 +1307,20 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			}
 		}
 	}
+	/**
+	 * function to add shortcode.
+	 */
 	public function mwb_mbfw_shortcode_search_page() {
 		add_shortcode('bookable_booking_calendar', array( $this,'render_bookable_booking_calendar_shortcode' ) );
 
 	}
 
+	/**
+	 * Function to rendar short code.
+	 */
 	public function render_bookable_booking_calendar_shortcode($atts) {
 		$atts = shortcode_atts([
-			'id' => 0, // Global Booking CPT ID
-		// 'product_id' => 184, // WooCommerce Product ID
+			'id' => 0, // Global Booking CPT ID.
 		], $atts);
 
 		$post_id = (int) $atts['id'];
@@ -1320,31 +1328,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			return '<p>Invalid Booking Calendar ID.</p>';
 		}
 
-		$available_days   = get_post_meta($post_id, '_available_days', true) ?: [];
-		$unavailable_days = get_post_meta($post_id, '_non_available_days', true) ?: [];
-		$calendar_color   = get_post_meta($post_id, '_calendar_color', true) ?: '#00aaff';
-
-		$events = [];
-
-		// Available days (clickable)
-		foreach ($available_days as $date) {
-			$events[] = [
-				'title' => 'Available',
-				'start' => $date,
-				'color' => $calendar_color,
-				'id'    => 'available_' . $date,
-			];
-		}
-
-		foreach ($unavailable_days as $date) {
-			$events[] = [
-				'title' => 'Unavailable',
-				'start' => $date,
-				'color' => '#ff4d4d',
-			];
-		}
-
-		$default_price = get_post_meta($post_id, '_booking_default_price', true) ?: 0;
 		ob_start();
 		?>
 		<div class='wps_global_calendar_class' id="booking-calendar-<?php echo esc_attr($post_id); ?>"></div>
@@ -1357,34 +1340,39 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	public function mwb_handle_booking_add_to_cart() {
 		if (isset($_GET['add-booking-to-cart']) && $_GET['add-booking-to-cart'] == '1') {
 			$product_id = $this->create_private_booking_product();
-			$booking_date = sanitize_text_field($_GET['booking_date']);
+			$booking_date = isset( $_GET['booking_date'] )? sanitize_text_field( wp_unslash( $_GET['booking_date'] ) ) : '';
 			$booking_price = floatval($_GET['booking_price'] ?? 0);
 		
 
 			if ($product_id && $booking_date) {
-				// Remove existing booking items (optional)
+				// Remove existing booking items (optional).
 				WC()->cart->empty_cart();
 
-				// Add to cart with booking date as custom data
+				// Add to cart with booking date as custom data.
 				WC()->cart->add_to_cart($product_id, 1, 0, [], [
 					'booking_date' => $booking_date,
 					'booking_price' => $booking_price,
 				]);
 
-				// Redirect to cart
+				// Redirect to cart.
 				wp_redirect(wc_get_cart_url());
 				exit;
 			}
 		}
 	}
 
-
+	/**
+	 * Function to add order items for global calendar booking.
+	 */
 	public function mwb_add_global_order_item_meta( $item_id, $values, $cart_item_key ) {
 		if ( isset( $values['booking_date'] ) ) {
 			wc_add_order_item_meta( $item_id, 'Booking Date', $values['booking_date'] );
 		}
 	}
 
+	/**
+	 * function to create booking product.
+	 */
 	public function create_private_booking_product() {
 		$existing = get_posts([
 			'post_type'      => 'product',
@@ -1409,12 +1397,12 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		if ($post_id && !is_wp_error($post_id)) {
 			update_post_meta($post_id, '_price', '0');
 			update_post_meta($post_id, '_regular_price', '0');
-			update_post_meta($post_id, '_visibility', 'hidden'); // for older WC
+			update_post_meta($post_id, '_visibility', 'hidden'); // for older WC.
 			update_post_meta($post_id, '_virtual', 'yes');
 			update_post_meta($post_id, '_sold_individually', 'yes');
 			update_post_meta($post_id, '_is_calendar_booking_product', 'yes');
 
-			// Modern method for visibility
+			// Modern method for visibility.
 			wp_set_object_terms($post_id, 'exclude-from-catalog', 'product_visibility', true);
 			wp_set_object_terms($post_id, 'exclude-from-search', 'product_visibility', true);
 

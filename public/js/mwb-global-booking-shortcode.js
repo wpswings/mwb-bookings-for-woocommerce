@@ -11,37 +11,55 @@ document.addEventListener('DOMContentLoaded', function () {
     function getBookingUrl(date) {
         return `${baseUrl}?add-booking-to-cart=1&booking_date=${date}&booking_price=${defaultPrice};`;
     }
+
+    today.setHours(0, 0, 0, 0); // Set to midnight to ensure date-only comparison
+
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         height: 'auto',
         events: bookingCalendarData.events,
         selectable: true,
+
         dayCellDidMount: function(arg) {
-    // arg.date is a JS Date for each cell at midnight
-    if (arg.date < today.setHours(0,0,0,0)) {
-        arg.el.style.filter = 'blur(2px)';
-        arg.el.style.pointerEvents = 'none';
-    }
-    },
+            const cellDate = new Date(arg.date);
+            cellDate.setHours(0, 0, 0, 0); // Normalize cell date
+
+            // Disable and blur past dates
+            if (cellDate < today) {
+                arg.el.style.filter = 'blur(2px)';
+                arg.el.style.pointerEvents = 'none';
+                arg.el.style.cursor = 'not-allowed';
+                arg.el.classList.add('fc-disabled-date');
+            }
+        },
+
         dateClick: function(info) {
-            const clickedDate = info.dateStr;
+            const clickedDate = new Date(info.date);
+            clickedDate.setHours(0, 0, 0, 0);
+
+            // Prevent past date clicks
+            if (clickedDate < today) {
+                alert(bookingCalendarData.passed_dates_msg);
+                return;
+            }
+
+            const clickedDateStr = info.dateStr;
             const unavailableDates = bookingCalendarData.unavailableDates;
             const availableDates = bookingCalendarData.availableDates;
 
-            if (unavailableDates.includes(clickedDate)) {
-                alert("This date is unavailable for booking.");
+            if (unavailableDates.includes(clickedDateStr)) {
+                alert(bookingCalendarData.unavailable_msg);
                 return;
             }
 
-            if (!availableDates.includes(clickedDate)) {
-                alert("This date is not available for booking.");
+            if (!availableDates.includes(clickedDateStr)) {
+               alert(bookingCalendarData.unavailable_msg);
                 return;
             }
 
-            const url = getBookingUrl(clickedDate);
+            const url = getBookingUrl(clickedDateStr);
             window.location.href = url;
         },
-        
 
         headerToolbar: {
             left: 'prev,next today',

@@ -286,6 +286,12 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.5.0 - Released on 30 May 2025 =
+* New: Global calendar booking option.
+* New: Compatibility with Points and Rewards.
+* New: Hide/Disable slots when unavailable.
+* New: Latest Compatibility with WP [6.8.5] and WC [9.8.5].
+ 
 = 3.4.1 - Released on 29 April 2025 =
 * New: Am/Pm slot for dual calendar date and time.
 * New: Compatibility with latest WP[6.8] and WC[9.8.2].

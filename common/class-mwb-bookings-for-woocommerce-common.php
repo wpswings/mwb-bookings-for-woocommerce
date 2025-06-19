@@ -392,11 +392,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 				$unit_price = apply_filters( 'mwb_mbfw_vary_product_unit_price', ( ! empty( $unit_price ) ? (float) $unit_price : 0 ), $custom_cart_data, $cart_object, $cart );
 
-				if ($unit_price !== $new_price) {
-					$unit_price = (float) $unit_price * (float) $unit;
-
-				}
-
 				// adding unit cost.
 				if ( 'yes' === wps_booking_get_meta_data( $cart['product_id'], 'mwb_mbfw_is_booking_unit_cost_per_people', true ) ) {
 					$new_price = (float) $unit_price * (int) $people_number;

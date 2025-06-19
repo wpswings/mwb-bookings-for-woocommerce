@@ -777,6 +777,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 			$product_id               = array_key_exists( 'mwb_mbfw_booking_product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_product_id'] ) ) : '';
 			$booking_type             = wps_booking_get_meta_data( $product_id, 'wps_mbfw_booking_type', true );
+			
 			$single_cal_booking_dates = '';
 			$date_time_from           = '';
 			$date_time_to             = '';
@@ -822,7 +823,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						}
 					}
 					$booking_slot             = $single_cal_booking_dates;
-					$single_cal_booking_dates = '';
 
 				} else {
 					$booking_dates = explode( ',', $single_cal_booking_dates );

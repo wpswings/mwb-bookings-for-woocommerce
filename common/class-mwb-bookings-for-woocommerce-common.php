@@ -287,8 +287,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$cart_data = $cart_object->get_cart();
 		foreach ( $cart_data as $cart ) {
 			 if (!empty($cart['booking_price'])) {
-            $cart['data']->set_price($cart['booking_price']);
-        }
+				$cart['data']->set_price($cart['booking_price']);
+			}
 			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
 				$new_price        = (float) $cart['data']->get_price();
 				$base_price       = 0;

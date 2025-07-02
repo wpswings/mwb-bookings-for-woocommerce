@@ -849,8 +849,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'people_number'             => array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : '',
 				'service_option'            => array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array(),
 				'service_quantity'          => array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array(),
-				'date_time_from'            => array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? gmdate( $date_format, strtotime( sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) ) ) : $date_time_from,
-				'date_time_to'              => array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? gmdate( $date_format, strtotime( sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) ) ) : $date_time_to,
+				'date_time_from'            => array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? gmdate( $date_format, strtotime( sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) ) ) : '',
+				'date_time_to'              => array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? gmdate( $date_format, strtotime( sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) ) ) : '',
 				'single_cal_booking_dates'  => $single_cal_booking_dates,
 				'single_cal_date_time_from' => $date_time_from,
 				'single_cal_date_time_to'   => $date_time_to,
@@ -877,7 +877,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @param array $cart_item array containing cart items.
 	 * @return array
 	 */
-	public function mwb_mbfw_show_additional_data_on_cart_and_checkout_page( $other_data, $cart_item ) {
+	public function c( $other_data, $cart_item ) {
 		if ( isset( $cart_item['mwb_mbfw_booking_values'] ) ) {
 				$custom_cart_data = $cart_item['mwb_mbfw_booking_values'];
 			if ( ! empty( $custom_cart_data['people_number'] ) ) {
@@ -920,7 +920,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				);
 				$other_data[] = array(
 					'name'    => __( 'To', 'mwb-bookings-for-woocommerce' ),
-					'display' => wp_kses_post( $custom_cart_data['date_time_to'] ),
+					'display' => wp_kses_post( $custom_cart_data[ 	'date_time_to'] ),
 				);
 			}
 			if ( ! empty( $custom_cart_data['single_cal_booking_dates'] ) ) {

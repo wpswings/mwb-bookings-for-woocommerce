@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
-Tested up to: 6.8.5
+Tested up to: 6.8.1
 WC requires at least: 6.5.0
-WC tested up to: 9.8.5
-Stable tag: 3.5.0
+WC tested up to: 9.9.5
+Stable tag: 3.5.1
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -224,7 +224,7 @@ The manual installation method involves downloading our Bookings for WooCommerce
 = Updating =
 Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
-== Screenshots ==
+==Screenshots==
 
 1. General Settings Tab
 2. Configuration settings Tab (Bookings Form Settings)
@@ -291,11 +291,16 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.5.1 - Released on 03 July 2025 =
+* Fix: Fix cost calculation issue
+* Fix: Fixed booking date display on cart page 
+* New: Latest Compatibility with WP [6.8.1] and WC [9.9.5].
+
 = 3.5.0 - Released on 30 May 2025 =
 * New: Global calendar booking option.
 * New: Compatibility with Points and Rewards.
 * New: Hide/Disable slots when unavailable.
-* New: Latest Compatibility with WP [6.8.5] and WC [9.8.5].
+* New: Latest Compatibility with WP [6.8] and WC [9.8.5].
 
 = 3.4.1 – Released on 30 April 2025 =
 * New: Am/Pm slot for dual calendar date and time.
@@ -484,8 +489,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.5.0 - Released on 30 May 2025 =
-* New: Global calendar booking option.
-* New: Compatibility with Points and Rewards.
-* New: Hide/Disable slots when unavailable.
-* New: Latest Compatibility with WP [6.8.5] and WC [9.8.5].
+= 3.5.1 - Released on 03 July 2025 =
+* Fix: Fix cost calculation issue.
+* Fix: Fixed booking date display on cart page. 
+* New: Latest Compatibility with WP [6.8.1] and WC [9.9.5].

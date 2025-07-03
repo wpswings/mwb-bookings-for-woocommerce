@@ -2319,16 +2319,16 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		wp_nonce_field( 'mwb_booking_global_product_meta', '_mwb_nonce' );
 
-		echo '<label for="booking_default_price">' . __( 'Cost', 'mwb-bookings-for-woocommerce') . ':</label>';
+		echo '<label for="booking_default_price">' . esc_html__( 'Cost', 'mwb-bookings-for-woocommerce') . ':</label>';
 		echo '<input type="number" min=0 id="booking_default_price" name="booking_default_price" value="' . esc_attr($price) . '" style="width:100%;">';
 
-		echo '<label><strong>'.__('Available Days', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
+		echo '<label><strong>'.esc_html__('Available Days', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
 		echo '<input type="text" id="available_days_picker" name="available_days" style="width:100%" readonly value="' . esc_attr(implode(',', $available_days)) . '"><br><br>';
 
-		echo '<label><strong>'.__('Non-Available Days', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
+		echo '<label><strong>'.esc_html__('Non-Available Days', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
 		echo '<input type="text" id="non_available_days_picker" name="non_available_days" style="width:100%" readonly value="' . esc_attr(implode(',', $non_available_days)) . '"><br><br>';
 
-		echo '<label><strong>'.__('Availibilty Color', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
+		echo '<label><strong>'.esc_html__('Availibilty Color', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
 		echo '<input type="color" name="calendar_availbilty_color" value="' . esc_attr($calendar_availbilty_color) . '"><br>';
 
 	}
@@ -2429,37 +2429,56 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		return $ical;
 	}
 
+	/**
+	 * Add shortcode column to booking list table.
+	 *
+	 * @param array $columns Current columns.
+	 * @return array Modified columns.
+	 */
 	public function add_shortcode_column_to_booking($columns) {
        $new_columns = [];
 
-    foreach ($columns as $key => $value) {
-        if ( 'date' === $key ) {
-            // Insert Shortcode column *before* the Date column.
-            $new_columns['shortcode'] = __('Shortcode', 'mwb-bookings-for-woocommerce');
-        }
+		foreach ($columns as $key => $value) {
+			if ( 'date' === $key ) {
+				// Insert Shortcode column *before* the Date column.
+				$new_columns['shortcode'] = __('Shortcode', 'mwb-bookings-for-woocommerce');
+			}
 
-        $new_columns[$key] = $value;
-    }
+			$new_columns[$key] = $value;
+		}
 
-    return $new_columns;
-}
+		return $new_columns;
+	}
 
-public function display_shortcode_column_for_booking($column, $post_id) {
-    if ($column === 'shortcode') {
-        $shortcode = '[bookable_booking_calendar id=' . esc_html($post_id) . ']';
-        echo '<div style="display:flex; align-items:center; gap:5px;">';
-        echo '<code id="shortcode-' . esc_attr($post_id) . '">' . esc_html($shortcode) . '</code>';
-        echo '<button type="button" class="button" onclick="navigator.clipboard.writeText(document.getElementById(\'shortcode-' . esc_attr($post_id) . '\').innerText)">'.__('Copy', 'mwb-bookings-for-woocommerce') .'</button>';
-        echo '</div>';
-    }
-}
+	/**
+	 * Display shortcode in the booking list table.
+	 *
+	 * @param string $column Current column name.
+	 * @param int    $post_id Current post ID.
+	 */
+	public function display_shortcode_column_for_booking($column, $post_id) {
+		if ('shortcode' === $column ) {
+			$shortcode = '[bookable_booking_calendar id=' . esc_html($post_id) . ']';
+			echo '<div style="display:flex; align-items:center; gap:5px;">';
+			echo '<code id="shortcode-' . esc_attr($post_id) . '">' . esc_html($shortcode) . '</code>';
+			echo '<button type="button" class="button" onclick="navigator.clipboard.writeText(document.getElementById(\'shortcode-' . esc_attr($post_id) . '\').innerText)">'.__('Copy', 'mwb-bookings-for-woocommerce') .'</button>';
+			echo '</div>';
+		}
+	}
 
-public function add_booking_id_below_title($actions, $post) {
-    if ($post->post_type === 'wps_global_booking') {
-        $actions['booking_id'] = '<span style="display:block; font-size: 10px; color: #666;">ID: ' . esc_html($post->ID) . '</span>';
-    }
-    return $actions;
-}
+	/**
+	 * Add booking ID below the title in the admin post list.
+	 *
+	 * @param array $actions Current actions.
+	 * @param WP_Post $post Current post object.
+	 * @return array Modified actions.
+	 */
+	public function add_booking_id_below_title($actions, $post) {
+		if ( 'wps_global_booking' == $post->post_type ) {
+			$actions['booking_id'] = '<span style="display:block; font-size: 10px; color: #666;">ID: ' . esc_html($post->ID) . '</span>';
+		}
+		return $actions;
+	}
 	// End of admin class.
 }
 

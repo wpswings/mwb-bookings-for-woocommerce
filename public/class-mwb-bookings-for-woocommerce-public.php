@@ -877,7 +877,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @param array $cart_item array containing cart items.
 	 * @return array
 	 */
-	public function c( $other_data, $cart_item ) {
+	public function mwb_mbfw_show_additional_data_on_cart_and_checkout_page( $other_data, $cart_item ) {
 		if ( isset( $cart_item['mwb_mbfw_booking_values'] ) ) {
 				$custom_cart_data = $cart_item['mwb_mbfw_booking_values'];
 			if ( ! empty( $custom_cart_data['people_number'] ) ) {

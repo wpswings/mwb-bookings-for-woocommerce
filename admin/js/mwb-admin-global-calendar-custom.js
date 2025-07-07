@@ -33,5 +33,16 @@ jQuery(function ($) {
             e.preventDefault();
         }
     });
+$('#copy-ical-btn').on('click', function() {
+    const link = $('#ical-export-link').attr('href'); // Get the URL from the anchor's href
+
+    navigator.clipboard.writeText(link).then(function() {
+        $('#ical-copy-msg').fadeIn(200).delay(1000).fadeOut(400);
+    }).catch(function(err) {
+        console.error('Clipboard copy failed:', err);
+        alert('Failed to copy. Please copy manually.');
+    });
+});
+
 });
 		

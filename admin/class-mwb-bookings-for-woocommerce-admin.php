@@ -2303,7 +2303,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function add_global_booking_meta_boxes() {
 		
 		add_meta_box('booking_settings', __( 'Booking Settings', 'mwb-bookings-for-woocommerce' ), array( $this, 'render_booking_settings_meta_box' ), 'wps_global_booking', 'normal', 'default');
-
+		add_meta_box(
+				'airbnb_ical_export_link',
+				__('Airbnb iCal Export Link', 'mwb-bookings-for-woocommerce' ),
+				array( $this, 'render_airbnb_ical_export_link_meta_box' ),
+				'wps_global_booking', // Your custom post type slug
+				'normal',
+				'low'
+			);
 	}
 
 	/**
@@ -2312,9 +2319,12 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @param WP_Post $post The post object.
 	 */
 	public function render_booking_settings_meta_box($post) {
+		
 		$available_days = get_post_meta($post->ID, '_available_days', true) ?get_post_meta($post->ID, '_available_days', true): [];
 		$non_available_days = get_post_meta($post->ID, '_non_available_days', true) ? get_post_meta($post->ID, '_non_available_days', true): [];
 		$calendar_availbilty_color = get_post_meta($post->ID, '_calendar_availbilty_color', true) ? get_post_meta($post->ID, '_calendar_availbilty_color', true): '#00aaff';
+		$airbnb_ical_link = get_post_meta($post->ID, '_airbnb_ical_link', true) ? get_post_meta($post->ID, '_airbnb_ical_link', true): '';
+
 		$price = get_post_meta($post->ID, '_booking_default_price', true);
 
 		wp_nonce_field( 'mwb_booking_global_product_meta', '_mwb_nonce' );
@@ -2331,8 +2341,24 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		echo '<label><strong>'.esc_html__('Availibilty Color', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
 		echo '<input type="color" name="calendar_availbilty_color" value="' . esc_attr($calendar_availbilty_color) . '"><br>';
 
+		echo '<label><strong>'.esc_html__('AirBNB ical link', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
+		echo '<input type="text" id="airbnb_ical_link" name="airbnb_ical_link" style="width:100%" value="' . esc_attr($airbnb_ical_link) . '"><br><br>';
+
 	}
 
+	/**
+	 * Render the Airbnb iCal export link meta box.
+	 *
+	 * @param WP_Post $post The post object.
+	 */
+	public function render_airbnb_ical_export_link_meta_box($post) {
+		$export_url = home_url("/wps_global_calendar/{$post->ID}.ics");
+
+		echo '<p><strong>Export Link:</strong><br>';
+		echo '<a href="' . esc_url($export_url) . '" target="_blank" id="ical-export-link" value="'. esc_url($export_url) .'" >' . esc_html($export_url) . '</a>     <button type="button" class="button" id="copy-ical-btn">Copy</button></p>';
+		echo '<span id="ical-copy-msg" style="display:none; color: green; margin-left: 10px;">Copied!</span>';
+
+	}
 	/**
 	 * Save global booking meta data.
 	 *
@@ -2376,11 +2402,19 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if (isset($_POST['calendar_availbilty_color'])) {
 			update_post_meta($post_id, '_calendar_availbilty_color', sanitize_hex_color(wp_unslash($_POST['calendar_availbilty_color'])));
 		}
+		// Save airbnb ical link.
+		if (isset($_POST['airbnb_ical_link'])) {
+			$airbnb_ical_link = sanitize_text_field( wp_unslash($_POST['airbnb_ical_link'] ) );
+			update_post_meta($post_id, '_airbnb_ical_link', $airbnb_ical_link);
+		}
 		// Re-generate and save iCal.
 		$available_days = get_post_meta($post_id, '_available_days', true) ?get_post_meta($post_id, '_available_days', true): [];
 		$non_available_days = get_post_meta($post_id, '_non_available_days', true) ? get_post_meta($post_id, '_non_available_days', true): [];
-		$ical_content = $this->generate_ical_content($available_days, $non_available_days);
-		update_post_meta($post_id, '_ical_data', $ical_content);
+		$ical_content = $this->generate_ical_content($available_days, 'available_days');
+		update_post_meta($post_id, '_ical_data_available_days', $ical_content);
+
+		$ical_content = $this->generate_ical_content( $non_available_days, 'unavailable_days');
+		update_post_meta($post_id, '_ical_data_unavailable_days', $ical_content);
 	}
 
 	/**
@@ -2404,24 +2438,25 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return string iCal formatted string.
 	 */
 	public function generate_ical_content($available_days, $non_available_days) {
-		$ical = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Your Company//Booking Calendar//EN\r\n";
-
-		foreach ($available_days as $date) {
-			$ical .= "BEGIN:VEVENT\r\n";
-			$ical .= "SUMMARY:Available\r\n";
-			$ical .= "DTSTART;VALUE=DATE:$date\r\n";
-			$ical .= "DTEND;VALUE=DATE:$date\r\n";
-			$ical .= "STATUS:CONFIRMED\r\n";
-			$ical .= "END:VEVENT\r\n";
-		}
-
-		foreach ($non_available_days as $date) {
-			$ical .= "BEGIN:VEVENT\r\n";
-			$ical .= "SUMMARY:Unavailable\r\n";
-			$ical .= "DTSTART;VALUE=DATE:$date\r\n";
-			$ical .= "DTEND;VALUE=DATE:$date\r\n";
-			$ical .= "STATUS:CANCELLED\r\n";
-			$ical .= "END:VEVENT\r\n";
+		$ical = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//WPSWings//Booking Calendar//EN\r\n";
+		if ( 'available_days' === $non_available_days ) {
+			foreach ($available_days as $date) {
+				$ical .= "BEGIN:VEVENT\r\n";
+				$ical .= "SUMMARY:Available\r\n";
+				$ical .= "DTSTART;VALUE=DATE:$date\r\n";
+				$ical .= "DTEND;VALUE=DATE:$date\r\n";
+				$ical .= "STATUS:CONFIRMED\r\n";
+				$ical .= "END:VEVENT\r\n";
+			}
+		} else {
+			foreach ($available_days as $date) {
+				$ical .= "BEGIN:VEVENT\r\n";
+				$ical .= "SUMMARY:Unavailable\r\n";
+				$ical .= "DTSTART;VALUE=DATE:$date\r\n";
+				$ical .= "DTEND;VALUE=DATE:$date\r\n";
+				// $ical .= "STATUS:CANCELLED\r\n";
+				$ical .= "END:VEVENT\r\n";
+			}
 		}
 
 		$ical .= "END:VCALENDAR\r\n";
@@ -2478,6 +2513,113 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			$actions['booking_id'] = '<span style="display:block; font-size: 10px; color: #666;">ID: ' . esc_html($post->ID) . '</span>';
 		}
 		return $actions;
+	}
+
+	/**
+	 * Schedule a cron event to fetch Airbnb calendar data.
+	 *
+	 * @return void
+	 */
+	public function wps_schedule_cron_to_fetch_airbnb_calendar($schedules) {
+		$schedules['fetch_airbnb_unavailble_dates'] = [
+			'interval' => 300, // 5 minutes
+			'display'  => __('Every 5 Minutes')
+		];
+		return $schedules;
+	}
+
+	/**
+	 * Schedule the background fetch event for Airbnb calendars.
+	 *
+	 * @return void
+	 */
+	public function wps_schedule_background_fetch_event() {
+		// Check if the cron is running.
+		if ( ! wp_next_scheduled( 'wps_sync_airbnb_calendars' ) ) {
+			wp_schedule_event( time(), 'fetch_airbnb_unavailble_dates', 'wps_sync_airbnb_calendars' );
+		}
+
+	}
+	
+	/**
+	 * Callback function to sync Airbnb calendars.
+	 *
+	 * This function fetches iCal data from Airbnb links stored in the custom post type 'wps_global_booking',
+	 * parses booked dates, and updates the post meta with unavailable dates.
+	 *
+	 * @return void
+	 */
+	public function wps_sync_airbnb_calendars_callback(){
+		$calendar_posts = get_posts([
+			'post_type'      => 'wps_global_booking', // 🔁 change to your plugin's post type
+			'posts_per_page' => -1,
+			'post_status'    => 'publish',
+			'fields'         => 'ids', // ✅ only return IDs
+			'meta_query'     => [
+				'relation' => 'AND',
+				[
+					'key'     => '_airbnb_ical_link',
+					'compare' => 'EXISTS',
+				],
+				[
+					'key'     => '_airbnb_ical_link',
+					'value'   => '',
+					'compare' => '!=',
+				]
+			]
+		]);
+		
+	if ( ! empty( $calendar_posts ) && is_array( $calendar_posts ) ) {
+			foreach ( $calendar_posts as $post_id ) {
+				$ical_link = get_post_meta( $post_id, '_airbnb_ical_link', true );
+				if ( ! empty( $ical_link ) ) {
+					 $ical_data = file_get_contents( $ical_link );
+
+					 if ( ! $ical_data ) {
+						echo 'Failed to fetch iCal data.';
+						return;
+					}
+					 // Parse booked dates
+					preg_match_all( '/BEGIN:VEVENT(.*?)END:VEVENT/s', $ical_data, $events );
+
+					if ( empty( $events[1] ) ) {
+						echo 'No events found.';
+						return;
+					}
+					$unavailable_dates = [];
+
+					foreach ( $events[1] as $event ) {
+						preg_match( '/DTSTART(;VALUE=DATE)?:(.*?)\s/', $event, $start_match );
+						preg_match( '/DTEND(;VALUE=DATE)?:(.*?)\s/', $event, $end_match );
+
+						$start_date = $start_match[2] ?? null;
+						$end_date   = $end_match[2] ?? null;
+
+						if ( $start_date && $end_date ) {
+							$start = DateTime::createFromFormat( 'Ymd', $start_date );
+							$end   = DateTime::createFromFormat( 'Ymd', $end_date );
+
+							if ( $start && $end ) {
+								$interval = new DateInterval( 'P1D' );
+								$period = new DatePeriod( $start, $interval, $end );
+
+								foreach ( $period as $date ) {
+									$unavailable_dates[] = $date->format( 'Y-m-d' );
+								}
+							}
+						}
+					}
+
+					// 🧼 Optional: remove duplicates
+					$unavailable_dates = array_values(array_unique($unavailable_dates));
+				
+					// 💾 Save to WooCommerce post
+					update_post_meta( $post_id, '_non_available_days', $unavailable_dates );
+
+				}
+
+			}
+		}
 	}
 	// End of admin class.
 }

@@ -2518,13 +2518,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	/**
 	 * Schedule a cron event to fetch Airbnb calendar data.
 	 *
-	 * @return void
+	 * @param array $schedules Existing schedules.
+	 * @return array
 	 */
 	public function wps_schedule_cron_to_fetch_airbnb_calendar($schedules) {
-		$schedules['fetch_airbnb_unavailble_dates'] = [
-			'interval' => 300, // 5 minutes
-			'display'  => __('Every 5 Minutes')
-		];
+		$schedules['fetch_airbnb_unavailble_dates'] = array(
+				'interval' => 5 * 60,
+				'display'  => __( 'Once every 5 minutes', 'mwb-bookings-for-woocommerce' ),
+			);
+
 		return $schedules;
 	}
 
@@ -2536,7 +2538,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function wps_schedule_background_fetch_event() {
 		// Check if the cron is running.
 		if ( ! wp_next_scheduled( 'wps_sync_airbnb_calendars' ) ) {
-			wp_schedule_event( time(), 'fetch_airbnb_unavailble_dates', 'wps_sync_airbnb_calendars' );
+			wp_schedule_event( time()+(60*5), 'fetch_airbnb_unavailble_dates', 'wps_sync_airbnb_calendars' );
 		}
 
 	}
@@ -2568,7 +2570,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				]
 			]
 		]);
-		
+
 	if ( ! empty( $calendar_posts ) && is_array( $calendar_posts ) ) {
 			foreach ( $calendar_posts as $post_id ) {
 				$ical_link = get_post_meta( $post_id, '_airbnb_ical_link', true );

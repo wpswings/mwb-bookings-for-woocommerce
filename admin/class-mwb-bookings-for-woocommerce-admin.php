@@ -2207,7 +2207,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		return array(
 			''       => __( 'Select', 'mwb-bookings-for-woocommerce' ),
 			'default' => __( 'Default (English)', 'mwb-bookings-for-woocommerce' ),
-			'ar'     => __( 'Arabic', 'mwb-bookings-for-woocommerce' ),
 			'at'     => __( 'Austria', 'mwb-bookings-for-woocommerce' ),
 			'az'     => __( 'Azerbaijani', 'mwb-bookings-for-woocommerce' ),
 			'be'     => __( 'Belarusian', 'mwb-bookings-for-woocommerce' ),

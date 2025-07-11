@@ -2236,7 +2236,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'ka'     => __( 'Georgian', 'mwb-bookings-for-woocommerce' ),
 			'km'     => __( 'Khmer', 'mwb-bookings-for-woocommerce' ),
 			'ko'     => __( 'Korean', 'mwb-bookings-for-woocommerce' ),
-			'kz'     => __( 'Kazakh', 'mwb-bookings-for-woocommerce' ),
 			'lt'     => __( 'Lithuanian', 'mwb-bookings-for-woocommerce' ),
 			'lv'     => __( 'Latvian', 'mwb-bookings-for-woocommerce' ),
 			'mk'     => __( 'Macedonian', 'mwb-bookings-for-woocommerce' ),

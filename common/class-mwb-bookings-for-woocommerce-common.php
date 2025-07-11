@@ -391,7 +391,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				 */
 
 				$unit_price = apply_filters( 'mwb_mbfw_vary_product_unit_price', ( ! empty( $unit_price ) ? (float) $unit_price : 0 ), $custom_cart_data, $cart_object, $cart );
-				// Price calculation logic
+				// Price calculation logic.
 				if ( 'yes' == $hide_general_cost ) {
 					$unit_price = '';
 				}	
@@ -1298,7 +1298,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		}
 	}
 
-	//EXPORT code
+	//EXPORT code.
 	/**
 	 * Export booking data as iCal.
 	 *
@@ -1315,7 +1315,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				exit('Invalid calendar ID');
 			}
 
-			// Set iCal headers
+			// Set iCal headers.
 			header('Content-Type: text/calendar; charset=utf-8');
 			header("Content-Disposition: inline; filename=calendar-$post_id.ics");
 
@@ -1323,7 +1323,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			echo "VERSION:2.0\r\n";
 			echo "PRODID:-//YourSite//WooCommerce Airbnb Export//EN\r\n";
 
-			// 🔄 Fetch unavailable dates for this specific post
+			// 🔄 Fetch unavailable dates for this specific post.
 			$unavailable_dates = get_post_meta($post_id, '_non_available_days', true);
 			if ( empty($unavailable_dates)) {
 				$unavailable_dates = '';

@@ -261,7 +261,7 @@ class Mwb_Bookings_For_Woocommerce {
 			// Fill the new column with the shortcode.
 			$this->loader->add_action('manage_wps_global_booking_posts_custom_column', $mbfw_plugin_admin, 'display_shortcode_column_for_booking', 10, 2);
 
-			// Airbnb crons
+			// Airbnb crons.
 			$this->loader->add_filter( 'init', $mbfw_plugin_admin, 'wps_schedule_background_fetch_event' );
 
 			$this->loader->add_filter('cron_schedules', $mbfw_plugin_admin, 'wps_schedule_cron_to_fetch_airbnb_calendar', 10, 1);

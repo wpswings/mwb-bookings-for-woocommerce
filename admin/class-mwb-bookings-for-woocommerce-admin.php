@@ -1937,9 +1937,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mwb_mbfw_get_all_events_date() {
-
+ 
 		check_ajax_referer( 'mwb_mbfw_admin_nonce', 'nonce' );
-
+ 
 		$status = ! empty( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '';
 		$orders = '';
 		if ( ! empty( $status ) ) {
@@ -1961,28 +1961,47 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				)
 			);
 		}
-
+ 
 		$all_events = array();
 		foreach ( $orders as $order ) {
 			$status = $order->get_status();
 			$items  = $order->get_items();
 			foreach ( $items as $item ) {
-
+ 
 				$booking_type = wps_booking_get_meta_data( $item['product_id'], 'wps_mbfw_booking_type', true );
+				$booking_unit = wps_booking_get_meta_data( $item['product_id'], 'mwb_mbfw_booking_unit', true );
 				// for single calender.
 				if ( ! empty( $item->get_meta( '_wps_single_cal_booking_dates', true ) ) ) {
 					$date_time_from = $item->get_meta( '_wps_single_cal_booking_dates', true );
 					$date_time_to   = $item->get_meta( '_wps_single_cal_booking_dates', true );
-
-					$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
-					$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
-
+ 
+					 $date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
+				 	$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
+ 
 					$date_array_from = explode( ' | ', $date_time_from );
 					$date_array_to   = explode( ' | ', $date_time_to );
-					if ( ! empty( $date_array_from ) && is_array( $date_array_from ) ) {
-
+				
+					if ($booking_type == 'single_cal'  && $booking_unit == 'hour' ){
+						
+						$time_range = $date_time_from;
+					
+						list($date_time_from, $date_time_to) = explode(' - ', $time_range);
+ 
+						// Assume this is used inside a loop and $order, $item, $status exist
+						$all_events[] = array(
+							'title' => '#Order Id: ' . $order->get_id() . ' ' . $item['name'],
+							'start' => gmdate('Y-m-d', strtotime($date_time_from)) . 'T' . gmdate('H:i', strtotime($date_time_from)),
+							'end'   => gmdate('Y-m-d', strtotime($date_time_to)) . 'T' . gmdate('H:i', strtotime($date_time_to)),
+							'url'   => admin_url('admin.php?page=wc-orders&action=edit&id=' . $order->get_id()),
+							'class' => $status,
+						);
+						
+					} else{
+						
+						if ( ! empty( $date_array_from ) && is_array( $date_array_from ) ) {
+ 
 						foreach ( $date_array_from as $key => $value ) {
-
+ 
 							$all_events[] = array(
 								'title' => '#Order Id: ' . $order->get_id() . ' ' . $item['name'],
 								'start' => gmdate( 'Y-m-d', strtotime( $value ) ),
@@ -1991,23 +2010,19 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 								'class' => $status,
 							);
 						}
-					} else {
-						$all_events[] = array(
-							'title' => '#Order Id: ' . $order->get_id() . ' ' . $item['name'],
-							'start' => gmdate( 'Y-m-d', strtotime( $date_time_from ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_from ) ),
-							'end'   => gmdate( 'Y-m-d', strtotime( $date_time_to ) ) . 'T' . gmdate( 'H:i', strtotime( $date_time_to ) ),
-							'url'   => admin_url( 'admin.php?page=wc-orders&action=edit&id=' . $order->get_id() ),
-							'class' => $status,
-						);
+					} 
+						
 					}
+					
+					
 				}
-
+ 
 				// for dual calender.
 				if ( ! empty( $item->get_meta( '_mwb_bfwp_date_time_from', true ) && ! empty( $item->get_meta( '_mwb_bfwp_date_time_to', true ) ) ) ) {
-
+ 
 					$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
 					$date_time_to   = $item->get_meta( '_mwb_bfwp_date_time_to', true );
-
+ 
 					$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 					$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 					$all_events[]   = array(
@@ -2020,7 +2035,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				}
 			}
 		}
-
+ 
 		echo wp_json_encode( $all_events );
 		wp_die();
 	}
@@ -2474,7 +2489,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		foreach ($columns as $key => $value) {
 			if ( 'date' === $key ) {
 				// Insert Shortcode column *before* the Date column.
-				$new_columns['shortcode'] = __('Shortcode', 'mwb-bookings-for-woocommerce');
+				$new_columns['shortcode'] = esc_html__( 'Shortcode', 'mwb-bookings-for-woocommerce');
 			}
 
 			$new_columns[$key] = $value;
@@ -2579,7 +2594,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 						echo 'Failed to fetch iCal data.';
 						return;
 					}
-					 // Parse booked dates
+					 // Parse booked dates.
 					preg_match_all( '/BEGIN:VEVENT(.*?)END:VEVENT/s', $ical_data, $events );
 
 					if ( empty( $events[1] ) ) {

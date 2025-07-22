@@ -2357,6 +2357,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		echo '<label><strong>'.esc_html__('AirBNB ical link', 'mwb-bookings-for-woocommerce') . ':</strong></label><br>';
 		echo '<input type="text" id="airbnb_ical_link" name="airbnb_ical_link" style="width:100%" value="' . esc_attr($airbnb_ical_link) . '"><br><br>';
 
+		do_action('wps_booking_global_calendar_setting_meta_box', $post);
+
 	}
 
 	/**
@@ -2420,6 +2422,12 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			$airbnb_ical_link = sanitize_text_field( wp_unslash($_POST['airbnb_ical_link'] ) );
 			update_post_meta($post_id, '_airbnb_ical_link', $airbnb_ical_link);
 		}
+
+		/**
+		 * This action is for saving global booking calendar settings.
+		 */
+		do_action('wps_booking_global_calendar_setting_meta_box_save', $post_id);
+
 		// Re-generate and save iCal.
 		$available_days = get_post_meta($post_id, '_available_days', true) ?get_post_meta($post_id, '_available_days', true): [];
 		$non_available_days = get_post_meta($post_id, '_non_available_days', true) ? get_post_meta($post_id, '_non_available_days', true): [];
@@ -2539,6 +2547,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'interval' => 5 * 60,
 				'display'  => __( 'Once every 5 minutes', 'mwb-bookings-for-woocommerce' ),
 			);
+		do_action( 'wps_sync_calendars_schedules', $schedules );
 
 		return $schedules;
 	}
@@ -2553,6 +2562,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( ! wp_next_scheduled( 'wps_sync_airbnb_calendars' ) ) {
 			wp_schedule_event( time()+(60*5), 'fetch_airbnb_unavailble_dates', 'wps_sync_airbnb_calendars' );
 		}
+
+		do_action( 'wps_sync_calendars_schedule_event' );
 
 	}
 	
@@ -2584,7 +2595,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			]
 		]);
 
-	if ( ! empty( $calendar_posts ) && is_array( $calendar_posts ) ) {
+		if ( ! empty( $calendar_posts ) && is_array( $calendar_posts ) ) {
 			foreach ( $calendar_posts as $post_id ) {
 				$ical_link = get_post_meta( $post_id, '_airbnb_ical_link', true );
 				if ( ! empty( $ical_link ) ) {

@@ -245,6 +245,92 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	add_filter( 'plugin_row_meta', 'mwb_bookings_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 	// Upgrade notice on plugin dashboard.
 
+	add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
+	if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
+
+		/**
+		 * Common Function To show banner image.
+		 *
+		 * @return void
+		 */
+		function wps_banner_notification_plugin_html() {
+
+			$screen = get_current_screen();
+			if ( ! $screen || empty( $screen->id ) ) {
+				return;
+			}
+
+			$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
+			$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+			// Check whether to show on specific pages or screens.
+			if ( 'wc-settings' === $page_param || in_array( $screen->id, $target_screens, true ) ) {
+
+				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+			
+				if ( ! empty( $banner_id ) ) {
+
+					$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+					$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
+					$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
+					if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
+						?>
+						<div class="wps-offer-notice notice notice-warning is-dismissible">
+							<div class="notice-container">
+								<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+							</div>
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						</div>
+						<?php
+					}
+				}
+			}
+		}
+	}
+
+	add_action( 'admin_notices', 'wps_mbfw_banner_notify_html' );
+	/**
+	 * Function to show banner image based on subscription.
+	 *
+	 * @return void
+	 */
+	function wps_mbfw_banner_notify_html() {
+
+		if ( isset( $_GET['page'] ) && 'mwb_bookings_for_woocommerce_menu' === $_GET['page'] ) {
+
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );//print_r($banner_id);die;
+			if ( ! empty( $banner_id ) ) {
+
+				$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+				$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
+				$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
+				if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
+
+					?>
+					<div class="wps-offer-notice notice notice-warning is-dismissible">
+						<div class="notice-container">
+							<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+						</div>
+						<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+					</div>
+					<?php
+				}
+			}
+		}
+		
+	}
+
+	register_deactivation_hook( __FILE__, 'wps_mbfw_remove_cron_for_banner_update' );
+	/**
+	 * This function is used to remove banner schedule cron.
+	 *
+	 * @return void
+	 */
+	function wps_mbfw_remove_cron_for_banner_update() {
+		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
+	}
+
+
 } else {
 	mwb_mbfw_dependency_checkup();
 }

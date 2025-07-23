@@ -345,6 +345,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$to_timestamp      = strtotime( $date_to );
 						$unit_timestamp    = $to_timestamp - $from_timestamp;
 						$unit              = $unit_timestamp / 86400;
+						$new_price = $this->mwb_mbfw_wps_mbfw_set_per_day_price_day( $new_price, $unit, $product_id );
+				
+						
 						$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_day', $new_price, $cart['product_id'], $date_from, $date_to, $unit );
 					} elseif ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 						$date_time_from = array_key_exists( 'date_time_from', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_from'] ) ) : '';
@@ -431,6 +434,35 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		}
 	}
 
+
+	public function mwb_mbfw_wps_mbfw_set_per_day_price_day(  $product_price, $days , $product_id) {
+		// Get pricing rules from the product meta
+		$pricing_rules = get_post_meta($product_id, '_wps_booking_pricing_rules', true);
+
+		if (empty($pricing_rules)) {
+			return 0; // No pricing rules defined
+		}
+		$days = intval($days);
+		
+
+		// Loop through the rules and find the matching rule based on the day range
+		foreach ($pricing_rules as $rule) {
+			if ($days >= $rule['min'] && $days <= $rule['max']) {
+				if ($rule['type'] === 'fixed') {
+					// Return the fixed price per day
+					return floatval($rule['value']);
+				} elseif ($rule['type'] === 'percent') {
+					// Calculate the percentage-based price per day
+					$percent = floatval($rule['value']);
+					return $product_price * (1 - ($percent / 100)); // Apply percentage discount to base price
+				}
+			}
+		}
+
+		// Default price (no matching rule found, use base price)
+		return $product_price;
+	}
+
 	/**
 	 * Retrieve total cost at single booking.
 	 *
@@ -507,7 +539,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$to_timestamp      = strtotime( $date_to );
 				$unit_timestamp    = $to_timestamp - $from_timestamp;
 				$unit              = $unit_timestamp / 86400;
+				$product_price = $this->mwb_mbfw_wps_mbfw_set_per_day_price_day( $product_price, $unit, $product_id );
+				
 				$wps_general_price = apply_filters( 'wps_mbfw_set_unit_cost_price_day', $product_price, $product_id, $date_time_from, $date_time_to, $unit );
+			
+			
 			} elseif ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) && ! empty( $date_time_to ) && ! empty( $date_time_from ) ) {
 
 				$from_timestamp    = strtotime( $date_time_from );

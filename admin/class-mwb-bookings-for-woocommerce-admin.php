@@ -935,7 +935,20 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				)
 			);
 
+			do_action( 'mwb_mbfw_booking_costs_meta_section_add_fields_before', get_the_ID() );
+			
+			woocommerce_wp_checkbox(
+				array(
+					'id'          => 'mwb_cost_date_range_notice',
+					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_cost_date_range_notice', true ),
+					'label'       => __( 'Show notice of cost range on product page', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enabling this Show notice of cost range on product page.', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
+				)
+			);
+	
 			?>
+
 			<p class="mwb-mbfw-additional-notice">
 				<?php
 				printf(
@@ -1224,6 +1237,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_booking_base_cost_hide'          => array_key_exists( 'mwb_mbfw_booking_base_cost_hide', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_base_cost_hide'] ) ) : '',
 				'mwb_mbfw_booking_general_cost_hide'          => array_key_exists( 'mwb_mbfw_booking_general_cost_hide', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_general_cost_hide'] ) ) : '',
 				'mwb_mbfw_is_booking_base_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_base_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_base_cost_per_people'] ) ) : '',
+				'mwb_cost_date_range_notice' => array_key_exists( 'mwb_cost_date_range_notice', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_cost_date_range_notice'] ) ) : '',
 				'mwb_mbfw_is_people_option'                => array_key_exists( 'mwb_mbfw_is_people_option', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_people_option'] ) ) : '',
 				'mwb_mbfw_minimum_people_per_booking'      => array_key_exists( 'mwb_mbfw_minimum_people_per_booking', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_minimum_people_per_booking'] ) ) : '',
 				'mwb_mbfw_minimum_no_days_booking'         => array_key_exists( 'mwb_mbfw_minimum_no_days_booking', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_minimum_no_days_booking'] ) ) : '',

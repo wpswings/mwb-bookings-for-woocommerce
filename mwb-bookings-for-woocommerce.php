@@ -160,6 +160,28 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'mwb_bookings_for_woocommerce_settings_link' );
 
+
+	function wps_mbfw_wpswings_register_booking_calendar_block() {
+    wp_register_script(
+			'wpswings-booking-calendar-block',
+			plugin_dir_url(__FILE__) . 'blocks/booking-calendar/block.js',
+			[ 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-block-editor' ],
+			filemtime(plugin_dir_path(__FILE__) . 'blocks/booking-calendar/block.js')
+		);
+
+		register_block_type('wpswings/booking-calendar', array(
+			'editor_script'   => 'wpswings-booking-calendar-block',
+			'render_callback' => 'wpswings_render_booking_calendar_block',
+			'attributes'      => array(
+				'id' => array(
+					'type'    => 'number',
+					'default' => 0,
+				),
+			),
+		));
+	}
+	add_action('init', 'wps_mbfw_wpswings_register_booking_calendar_block');
+
 	/**
 	 * Settings link.
 	 *
@@ -288,7 +310,22 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		}
 	}
 
+	add_action( 'elementor/widgets/widgets_registered', function() {
+	
+		if ( defined( 'ELEMENTOR_PATH' ) && class_exists( '\Elementor\Widget_Base' ) ) {
+			require_once plugin_dir_path( __FILE__ ) . 'widgets/class-elementor-booking-calendar-widget.php';
+			\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \Elementor_Booking_Calendar_Widget() );
+		}
+	} );
+
 	add_action( 'admin_notices', 'wps_mbfw_banner_notify_html' );
+
+
+	function render_bookable_booking_calendar_dynamic_block( $attributes ) {
+		$id = isset( $attributes['id'] ) ? (int) $attributes['id'] : 0;
+		return do_shortcode( '[bookable_booking_calendar id="' . esc_attr( $id ) . '"]' );
+	}
+
 	/**
 	 * Function to show banner image based on subscription.
 	 *
@@ -383,3 +420,6 @@ function mwb_mbfw_show_admin_notices() {
 			}
 		}
 	);
+
+
+

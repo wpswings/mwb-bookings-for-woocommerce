@@ -154,6 +154,14 @@ class Mwb_Bookings_For_Woocommerce {
 
 		$this->loader = new Mwb_Bookings_For_Woocommerce_Loader();
 
+		/**
+		 * The file responsible for Upsell Widgets added within every page builder.
+		 */
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'page-builders/class-wps-upsell-widget-loader.php';
+		// if ( class_exists( 'WPS_Booking_Widget_Loader' ) ) {
+		// 	WPS_Booking_Widget_Loader::get_instance();
+		// }
+
 	}
 
 	/**

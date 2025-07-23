@@ -435,6 +435,14 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	}
 
 
+	/**
+	 * Set per day price based on the number of days.
+	 * @since 1.0.0
+	 * @param float $product_price The base price	 of the product.
+	 * @param int $days The number of days for which the price is being calculated.
+	 * @param int $product_id The ID of the product.
+	 * @return float The calculated price per day based on the pricing rules.
+	 */
 	public function mwb_mbfw_wps_mbfw_set_per_day_price_day(  $product_price, $days , $product_id) {
 		// Get pricing rules from the product meta
 		$pricing_rules = get_post_meta($product_id, '_wps_booking_pricing_rules', true);

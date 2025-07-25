@@ -2561,7 +2561,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'interval' => 5 * 60,
 				'display'  => __( 'Once every 5 minutes', 'mwb-bookings-for-woocommerce' ),
 			);
-		do_action( 'wps_sync_calendars_schedules', $schedules );
+		$schedules = apply_filters( 'wps_sync_calendars_schedules', $schedules );
 
 		return $schedules;
 	}
@@ -2652,6 +2652,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 					// 🧼 Optional: remove duplicates
 					$unavailable_dates = array_values(array_unique($unavailable_dates));
+
+					$existing_unavailable_dates = get_post_meta( $post_id, '_non_available_days', true );
+
+					$unavailable_dates = array_values( array_unique( array_merge( (array) $existing_unavailable_dates, $unavailable_dates ) ) );
 				
 					// 💾 Save to WooCommerce post
 					update_post_meta( $post_id, '_non_available_days', $unavailable_dates );

@@ -333,7 +333,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	function wps_mbfw_banner_notify_html() {
 
-		if ( isset( $_GET['page'] ) && 'mwb_bookings_for_woocommerce_menu' === $_GET['page'] ) {
+		if ( ( isset( $_GET['page'] ) && 'mwb_bookings_for_woocommerce_menu' === $_GET['page'] ) || ( get_current_screen()->id == 'edit-wps_global_booking' ) ) {
 
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );//print_r($banner_id);die;
 			if ( ! empty( $banner_id ) ) {
@@ -420,6 +420,4 @@ function mwb_mbfw_show_admin_notices() {
 			}
 		}
 	);
-
-
 

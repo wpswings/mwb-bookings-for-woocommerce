@@ -192,7 +192,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 			return;
 		}
 
-		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu' );
+		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking' );
 		$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
 		// Check whether to show on specific pages or screens.
@@ -253,7 +253,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 			return;
 		}
 
-		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu' );
+		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking' );
 		$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
 		// Check whether to show on specific pages or screens.

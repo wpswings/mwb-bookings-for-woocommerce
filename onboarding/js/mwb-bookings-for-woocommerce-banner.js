@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
 				type : "POST",
 				data : data,
 				success: function(response) {
-                    debugger;
+                 
 
 					window.location.reload();
 				},
@@ -22,8 +22,7 @@ jQuery(document).ready(function($) {
                     console.error('Error:', error);
                     console.error('Status:', status);
                     console.error('Response:', xhr.responseText);
-                    debugger;
-
+                   
                 }
 
 			});

@@ -892,7 +892,7 @@ jQuery(document).ready(function($){
                                         html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
                                     }
                                 }
-                            } else { debugger;
+                            } else { 
                                 if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
                                     continue;
                                 } else {
@@ -1073,7 +1073,7 @@ jQuery(document).ready(function($){
        
 
 
-    flatpickr('#wps_booking_single_calendar_form_', {  
+   flatpickr('#wps_booking_single_calendar_form_', {  
         mode: "multiple",
     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
         firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
@@ -1152,11 +1152,32 @@ jQuery(document).ready(function($){
              
                 dayElem.classList.add("flatpickr-disabled");
             } else{
-                dayElem.classList.add("wps-available-day");
+				
+					let todayDateFormatted = moment(mwb_mbfw_public_obj.today_date_check, 'YYYY-MM-DD').format('YYYY-MM-DD');
+			let dateStringFormatted = moment(dateString__, 'DD-MM-YYYY').format('YYYY-MM-DD');
+
+			
+			
+           if (moment(todayDateFormatted).isAfter(moment(dateStringFormatted))) {
+
+            dayElem.classList.add("wps-unavailable-day");
+             
+            dayElem.classList.add("flatpickr-disabled");
+            } else{
+				 dayElem.classList.add("wps-available-day");
+			}
+				
+               
             }
            
         } else {
-            if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
+			
+			let todayDateFormatted = moment(mwb_mbfw_public_obj.today_date_check, 'YYYY-MM-DD').format('YYYY-MM-DD');
+			let dateStringFormatted = moment(dateString__, 'DD-MM-YYYY').format('YYYY-MM-DD');
+
+			
+			
+           if (moment(todayDateFormatted).isBefore(moment(dateStringFormatted))) {
 
             dayElem.classList.add("wps-unavailable-day");
              
@@ -1210,7 +1231,7 @@ jQuery(document).ready(function($){
 
     },
     onChange: function(selectedDates, dateStr, instance) {
-        console.log(selectedDates, dateStr, instance);
+       
 
         // Reapply "selected" class for multiple mode
         document.querySelectorAll(".flatpickr-day").forEach(dayElem => {

@@ -289,12 +289,12 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 			if ( 'wc-settings' === $page_param || in_array( $screen->id, $target_screens, true ) ) {
 
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-			
 				if ( ! empty( $banner_id ) ) {
 
 					$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
 					$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
 					$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
+
 					if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
 						?>
 						<div class="wps-offer-notice notice notice-warning is-dismissible">
@@ -333,7 +333,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 */
 	function wps_mbfw_banner_notify_html() {
 
-		if ( ( isset( $_GET['page'] ) && 'mwb_bookings_for_woocommerce_menu' === $_GET['page'] ) || ( get_current_screen()->id == 'edit-wps_global_booking' ) ) {
+		if ( ( isset( $_GET['page'] ) && 'mwb_bookings_for_woocommerce_menu' === $_GET['page'] ) || ( get_current_screen()->id == 'edit-wps_global_booking' ) || ( get_current_screen()->id == 'edit-mwb_booking_cost' ) || ( get_current_screen()->id == 'edit-mwb_booking_service' ) || ( get_current_screen()->id == 'edit-mwb_booking_people' ) ) {
 
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );//print_r($banner_id);die;
 			if ( ! empty( $banner_id ) ) {

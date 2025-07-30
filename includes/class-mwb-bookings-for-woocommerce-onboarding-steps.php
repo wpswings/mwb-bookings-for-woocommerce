@@ -167,7 +167,6 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function mwb_mbfw_onboarding_enqueue_styles() {
 		// 		// calling to create crone for banner image.
-		// $this->wps_wpr_set_cron_for_plugin_banner_notification();
 		global $pagenow;
 		$is_valid = false;
 		if ( ! $is_valid && 'plugins.php' == $pagenow ) { // phpcs:ignore
@@ -192,7 +191,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 			return;
 		}
 
-		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking' );
+		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking', 'edit-mwb_booking_service', 'edit-mwb_booking_cost', 'edit-mwb_booking_people' );
 		$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
 		// Check whether to show on specific pages or screens.
@@ -253,7 +252,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 			return;
 		}
 
-		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking' );
+		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking', 'edit-mwb_booking_service', 'edit-mwb_booking_cost', 'edit-mwb_booking_people' );
 		$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
 		// Check whether to show on specific pages or screens.
@@ -880,10 +879,10 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 * @return void
 	 */
 	public function wps_wpr_set_cron_for_plugin_banner_notification() {
-// die('ok');
+
 		$wps_wpr_offset = get_option( 'gmt_offset' );
 		$wps_wpr_time   = time() + $wps_wpr_offset * 60 * 60;
-		// print_r( $wps_wpr_time );die;
+
 		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
 
 			wp_schedule_event( $wps_wpr_time, 'daily', 'wps_wgm_check_for_notification_update' );
@@ -898,6 +897,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	public function wps_wpr_save_banner_notice_message() {
 
 		$wps_notification_data = $this->wps_wpr_get_update_banner_notification_data();
+		// print_r( $wps_notification_data );die;
 		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
 
 			$banner_id    = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';

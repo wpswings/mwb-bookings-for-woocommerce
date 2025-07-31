@@ -448,7 +448,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$pricing_rules = get_post_meta($product_id, '_wps_booking_pricing_rules', true);
 
 		if (empty($pricing_rules)) {
-			return 0; // No pricing rules defined
+			return $product_price; // No pricing rules defined
 		}
 		$days = intval($days);
 		

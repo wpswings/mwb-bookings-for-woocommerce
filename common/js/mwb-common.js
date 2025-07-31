@@ -40,7 +40,7 @@
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
 					} else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
-						// console.log(value)
+						console.log(value)
 						if( ( '' != value ) ){
 
 							form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
@@ -428,10 +428,12 @@ function convertTimeFormatDual(input) {
 
 		// Replace localized AM/PM markers with standard AM/PM
 		var map = timeChangeLanguage(currentLang) || timeChangeLanguage('default'); // Use default map if lang not found
-		input = input.replace(new RegExp(Object.keys(map).join("|"), "g"), function(match) {
+		if (currentLang == 'az') {
+			var map = { 'GƏ': 'AM', 'GS': 'PM' }
+		}
+		input = input.replace(new RegExp(Object.keys(map).join("|"), "gi"), function(match) {console.log(match,1);
 			return map[match];
 		});
-
 	// }
     // Extract date and time using regex
     let match = input.match(/^(\d{1,2}-\d{2}-\d{4}) (\d{1,2}:\d{2} [APM]{2})$/);

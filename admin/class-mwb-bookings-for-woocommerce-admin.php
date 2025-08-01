@@ -2233,11 +2233,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function wps_fetch_calendar_languages() {
+		$array = ['az'     => __( 'Azerbaijani', 'mwb-bookings-for-woocommerce' ),];
 		return array(
 			''       => __( 'Select', 'mwb-bookings-for-woocommerce' ),
 			'default' => __( 'Default (English)', 'mwb-bookings-for-woocommerce' ),
 			'at'     => __( 'Austria', 'mwb-bookings-for-woocommerce' ),
-			'az'     => __( 'Azerbaijani', 'mwb-bookings-for-woocommerce' ),
 			'be'     => __( 'Belarusian', 'mwb-bookings-for-woocommerce' ),
 			'bg'     => __( 'Bulgarian', 'mwb-bookings-for-woocommerce' ),
 			'bn'     => __( 'Bengali', 'mwb-bookings-for-woocommerce' ),

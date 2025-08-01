@@ -160,7 +160,12 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'mwb_bookings_for_woocommerce_settings_link' );
 
-
+	/**
+	 * Function to render booking calendar block.
+	 *
+	 * @param array $attributes Block attributes.
+	 * @return string
+	 */
 	function wps_mbfw_wpswings_register_booking_calendar_block() {
     wp_register_script(
 			'wpswings-booking-calendar-block',
@@ -320,7 +325,12 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 
 	add_action( 'admin_notices', 'wps_mbfw_banner_notify_html' );
 
-
+	/**
+	 * Function to render bookable booking calendar dynamic block.
+	 *
+	 * @param array $attributes Block attributes.
+	 * @return string
+	 */
 	function render_bookable_booking_calendar_dynamic_block( $attributes ) {
 		$id = isset( $attributes['id'] ) ? (int) $attributes['id'] : 0;
 		return do_shortcode( '[bookable_booking_calendar id="' . esc_attr( $id ) . '"]' );
@@ -335,7 +345,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 
 		if ( ( isset( $_GET['page'] ) && 'mwb_bookings_for_woocommerce_menu' === $_GET['page'] ) || ( get_current_screen()->id == 'edit-wps_global_booking' ) || ( get_current_screen()->id == 'edit-mwb_booking_cost' ) || ( get_current_screen()->id == 'edit-mwb_booking_service' ) || ( get_current_screen()->id == 'edit-mwb_booking_people' ) ) {
 
-			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );//print_r($banner_id);die;
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 			if ( ! empty( $banner_id ) ) {
 
 				$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );

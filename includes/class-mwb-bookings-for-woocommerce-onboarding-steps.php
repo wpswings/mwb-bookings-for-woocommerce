@@ -889,15 +889,13 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		}
 	}
 
-	/**
-	 * Undocumented function
+	/* * This function is used to get banner image.
 	 *
 	 * @return void
 	 */
 	public function wps_wpr_save_banner_notice_message() {
 
 		$wps_notification_data = $this->wps_wpr_get_update_banner_notification_data();
-		// print_r( $wps_notification_data );die;
 		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
 
 			$banner_id    = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';

@@ -1994,14 +1994,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
  
 					$date_array_from = explode( ' | ', $date_time_from );
 					$date_array_to   = explode( ' | ', $date_time_to );
-				
-					if ($booking_type == 'single_cal'  && $booking_unit == 'hour' ){
-						
+
+					if ( 'single_cal' == $booking_type && $booking_unit == 'hour' ){
+
 						$time_range = $date_time_from;
 					
 						list($date_time_from, $date_time_to) = explode(' - ', $time_range);
  
-						// Assume this is used inside a loop and $order, $item, $status exist
+						// Assume this is used inside a loop and $order, $item, $status exist.
 						$all_events[] = array(
 							'title' => '#Order Id: ' . $order->get_id() . ' ' . $item['name'],
 							'start' => gmdate('Y-m-d', strtotime($date_time_from)) . 'T' . gmdate('H:i', strtotime($date_time_from)),
@@ -2334,7 +2334,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'airbnb_ical_export_link',
 				__('Airbnb iCal Export Link', 'mwb-bookings-for-woocommerce' ),
 				array( $this, 'render_airbnb_ical_export_link_meta_box' ),
-				'wps_global_booking', // Your custom post type slug
+				'wps_global_booking', // Your custom post type slug.
 				'normal',
 				'low'
 			);
@@ -2531,7 +2531,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			$shortcode = '[bookable_booking_calendar id=' . esc_html($post_id) . ']';
 			echo '<div style="display:flex; align-items:center; gap:5px;">';
 			echo '<code id="shortcode-' . esc_attr($post_id) . '">' . esc_html($shortcode) . '</code>';
-			echo '<button type="button" class="button" onclick="navigator.clipboard.writeText(document.getElementById(\'shortcode-' . esc_attr($post_id) . '\').innerText)">'.__('Copy', 'mwb-bookings-for-woocommerce') .'</button>';
+			echo '<button type="button" class="button" onclick="navigator.clipboard.writeText(document.getElementById(\'shortcode-' . esc_attr($post_id) . '\').innerText)">'.esc_html__('Copy', 'mwb-bookings-for-woocommerce') .'</button>';
 			echo '</div>';
 		}
 	}

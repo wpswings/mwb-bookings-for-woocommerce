@@ -244,7 +244,7 @@ jQuery(document).ready(function($){
         $(document).find('.wps_mbfw_day_and_days_upto_togather_enabled_field').hide();
         $(document).find('.Slots_tab').hide();
         $(document).find('.mwb_mbfw_booking_hide_or_diable_slot_field').hide();
-
+        $(document).find('.wps_day_based_pricing_wrapper').show();
 
        
     }

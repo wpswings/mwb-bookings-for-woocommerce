@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
-Tested up to: 6.8.1
-WC requires at least: 6.5.0
-WC tested up to: 9.9.5
-Stable tag: 3.6.0
+Tested up to: 6.8.2
+WC requires at least: 6.8.1
+WC tested up to: 10.0.4
+Stable tag: 3.7.0
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -163,12 +163,17 @@ Prior to a day, admin managers can easily determine the maximum amount of WooCom
 
 == WORDPRESS BOOKINGS PLUGIN COMPATIBILITIES ==
 * The Bookings plugin is compatible with [**Points and Rewards for WooCommerce**](https://wordpress.org/plugins/points-and-rewards-for-woocommerce/) and [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-bookings-org&utm_medium=referral&utm_campaign=Points-and-rewards-pro). This allows merchants to offer points and rewards on bookable products. 
+* Compatibility with Gutenberg Block allows merchants to seamlessly add the global calendar, just by entering the calendar ID to incorporate the calendar into different pages. This eliminates the need to copy and paste the unique global calendar shortcodes.
+* [Elementor Page Builder](https://wordpress.org/plugins/elementor/) is compatible with WooCommerce bookings plugin. This compatibility lets you use Elementor’s capabilities to add the “global calendar” to different pages without copying shortcodes. 
 * WooCommerce bookings plugin is compatible with [**Upsell Funnel Builder**](https://wordpress.org/plugins/upsell-order-bump-offer-for-woocommerce/). This allows admins to upsell booking-related items or whatever best suits the requirements of their online booking business.
 * WooCommerce Bookings plugin is compatible with [**Return Refund and Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/) and [**WooCommerce RMA For Return Refund & Exchange**](https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-page&utm_campaign=rma-pro-plugin). This will help the customers in receiving the overdue reimbursement or refunds easily using the WooCommerce bookings plugin.
 
 * The Bookings for WooCommerce is compatible with WordPress Multilingual i.e. WPML plugin and Multisite.
 
 * Our Bookings plugin is compatible with [**Subscriptions for WooCommerce**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**Subscriptions For WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=booking-org-page&utm_medium=referral&utm_campaign=subscriptions-pro). This allows merchants to list subscription-based booking products on their websites. They can charge sign-up fees and make it a recurring booking product. 
+* Bookings for WooCommerce plugin is compatible with our [Wallet System for WooCommerce](https://wordpress.org/plugins/wallet-system-for-woocommerce/). This allows customers to make bookings through the wallet frontend panel and recharge their wallets to use the balance for future purchases.
+* WooCommerce Bookings is compatible with [Ultimate Gift Cards for WooCommerce](https://wordpress.org/plugins/woo-gift-cards-lite/) and [Gift Cards for WooCommerce Pro](https://wpswings.com/product/gift-cards-for-woocommerce-pro/). This enables merchants to run offers wherein they can offer gift cards for salons, spas, etc, along with their booking products. 
+
 
 
 == WHAT PREMIUM VERSION OF BOOKINGS FOR WOOCOMMERCE PRO OFFERS ==
@@ -297,6 +302,14 @@ In our plugin, there are two types of booking units-
 Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/bookings-for-woocommerce/?utm_source=wpswings-bookings-kb&utm_medium=bookings-org-page&utm_campaign=bookings-kb)
 
 == Changelog ==
+
+= 3.7.0 - Released on 4 August 2025 =
+* New: Compatibility with gift cards.
+* New: Compatibility with subscription.
+* New: Compatibility with Wallet.
+* New: Latest compatibility With WP[6.8.2] and WC[10.0.4].
+* New: sale banner image added.
+* New: Elementor / Gutenberg Blocks compatibility. 
 
 = 3.6.0 - Released on 14 July 2025 =
 * New: Import an export data from Airbnb.
@@ -503,6 +516,10 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.6.0 - Released on 14 July 2025 =
-* New: Import an export data from Airbnb.
-* New: Latest Compatibility with WP [6.8.1] and WC [9.9.5].
+= 3.7.0 - Released on 4 August 2025 =
+* New: Compatibility with gift cards.
+* New: Compatibility with subscription.
+* New: Compatibility with Wallet.
+* New: Latest compatibility With WP[6.8.2] and WC[10.0.4].
+* New: sale banner image added.
+* New: Elementor / Gutenberg Blocks compatibility.

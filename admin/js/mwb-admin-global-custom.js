@@ -198,6 +198,7 @@ jQuery(document).ready(function($){
     if ($('#wps_mbfw_booking_type').val() == 'single_cal') {
         $(document).find('.mwb_mbfw_show_date_with_time_field').hide();
         $(document).find('.mwb_mbfw_daily_calendar_start_time_field').hide();
+        $(document).find('.wps_day_based_pricing_wrapper').hide();
         $(document).find('.mwb_mbfw_daily_calendar_end_time_field').hide();
         $(document).find('.mwb_bfwp_choose_multiple_holiday_field').show();
         $(document).find('.wps_bfwp_weekly_off_day_field').hide();
@@ -250,6 +251,8 @@ jQuery(document).ready(function($){
 
     $(document).on('change', '#wps_mbfw_booking_type', function () {
         if ($(this).val() == 'single_cal') {
+            $(document).find('.wps_day_based_pricing_wrapper').hide();
+
             $(document).find('.mwb_mbfw_show_date_with_time_field').hide();
             $(document).find('.mwb_mbfw_daily_calendar_start_time_field').hide();
             $(document).find('.mwb_mbfw_daily_calendar_end_time_field').hide();
@@ -284,7 +287,8 @@ jQuery(document).ready(function($){
                 $(document).find('.mwb_mbfw_booking_time_fromat_field').show();
     
             }
-           
+            $(document).find('.wps_day_based_pricing_wrapper').show();
+
             $(document).find('.mwb_mbfw_daily_calendar_start_time_field').show();
             $(document).find('.mwb_mbfw_daily_calendar_end_time_field').show();
             $(document).find('.mwb_bfwp_choose_multiple_holiday_field').show();

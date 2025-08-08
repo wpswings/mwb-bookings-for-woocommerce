@@ -662,8 +662,14 @@ jQuery(document).ready(function($){
                   var date_slots = wps_available_slots;
               }
               var count =0;
-            for(let i=0; i< date_slots.length; i++ ) { 
-                var temp =  date_slots[i]._from + ' - ' + date_slots[i]._to;
+              //custom code
+            if ( 'object' == typeof(date_slots)) {
+                date_slots1 = Object.entries(date_slots);
+            } else {
+                date_slots1 = date_slots;
+            }
+            for(let i=0; i< date_slots1.length; i++ ) { 
+                var temp =  date_slots1[i]._from + ' - ' + date_slots1[i]._to;
                 var temp_check = temp_date + temp;
                 if (booking_unavailable.length > 0) {
                     
@@ -839,6 +845,10 @@ jQuery(document).ready(function($){
                 } else {
                     var date_slots = wps_available_slots;
                 }
+                //custom code.
+                    if ( 'object' == typeof(date_slots)) {
+ 						date_slots = Object.values(date_slots);
+					}
                     for(let i=0; i< date_slots.length; i++ ) { 
                         var start_time = date_slots[i]._from;
                         var end_time = date_slots[i]._to;

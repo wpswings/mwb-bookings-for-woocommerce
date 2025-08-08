@@ -76,7 +76,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->version = MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.7.0';
+			$this->version = '3.8.0';
 		}
 
 		$this->plugin_name = 'bookings-for-woocommerce';

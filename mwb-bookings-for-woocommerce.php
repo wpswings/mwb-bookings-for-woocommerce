@@ -434,21 +434,3 @@ function mwb_mbfw_show_admin_notices() {
 
 		}
 	);
-
-add_filter( 'woocommerce_blocks_product_editor_supported_product_types', function( $types ) {
-   $types[] = 'mwb_booking';
-   return $types;
-} );
-
-
-add_filter( 'product_type_selector', function( $types ) {
-   $types['mwb_booking'] = __( 'Booking Product																								', 'mwb-bookings-for-woocommerce' );
-   return $types;
-} );
-
-add_filter( 'woocommerce_product_class', function( $classname, $product_type ) {
-   if ( 'mwb_booking' === $product_type ) {
-       $classname = 'WC_Product_Mwb_Booking';
-   }
-   return $classname;
-}, 10, 2 );

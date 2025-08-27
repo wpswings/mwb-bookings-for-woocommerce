@@ -331,3 +331,131 @@ button.wps_timeslot_button {
 .fc-toolbar-title {
     font-size: 16px;
 }
+
+/* Global calender */
+
+.wps_global_calendar_class.fc {
+  max-width: 600px;
+}
+
+.wps_global_calendar_class .fc-header-toolbar {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.wps_global_calendar_class.fc .fc-header-toolbar button {
+  background: transparent;
+  color: #000;
+  box-shadow: none;
+}
+
+.wps_global_calendar_class.fc .fc-header-toolbar .fc-toolbar-title {
+  font-size: 18px !important;
+  font-weight: 600;
+  color: #000;
+}
+
+.wps_global_calendar_class.fc .fc-header-toolbar button.fc-button-active {
+  background: #000;
+  color: #fff;
+}
+
+.wps_global_calendar_class.fc .fc-header-toolbar button.fc-button-active:focus,
+.wps_global_calendar_class.fc .fc-header-toolbar button:focus {
+  box-shadow: none !important;
+}
+
+.wps_global_calendar_class.fc .fc-header-toolbar button.fc-today-button {
+  background: #000;
+  color: #fff;
+}
+
+.wps_global_calendar_class.fc table {
+  border: none;
+  width: 100% !important;
+  margin: 0;
+}
+
+.wps_global_calendar_class.fc table tr.fc-list-day th div {
+  background: #f9f9f9;
+  border-bottom: 1px solid #f2f2f2;
+  padding: 10px !important;
+
+}
+
+.wps_global_calendar_class.fc table th,
+.wps_global_calendar_class.fc table td {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding: 0 !important;
+}
+
+.wps_global_calendar_class.fc table td {
+  padding: 5px !important;
+}
+
+
+.wps_global_calendar_class.fc table.fc-list-table td {
+  text-align: left;
+  padding: 14px 10px !important;
+}
+
+.wps_global_calendar_class.fc table.fc-list-table td a{
+  text-decoration: none !important;
+}
+
+.wps_global_calendar_class.fc table.fc-col-header th {
+  background: transparent;
+  padding: 3px 5px 6px !important;
+}
+
+.wps_global_calendar_class.fc table th a {
+  color: #000;
+  text-decoration: none !important;
+}
+
+.wps_global_calendar_class.fc table th a.fc-list-day-side-text {
+  font-weight: 400;
+}
+
+.wps_global_calendar_class.fc table th a.fc-list-day-text {
+    font-weight: 600;
+}
+
+.wps_global_calendar_class.fc .fc-view {
+  padding: 10px;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+}
+
+.wps_global_calendar_class.fc table.fc-col-header {
+  margin: 0 0 15px;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.wps_global_calendar_class.fc table td.fc-day .fc-daygrid-day-top {
+  justify-content: center;
+}
+
+.wps_global_calendar_class.fc table .fc-daygrid-body {
+  width: 100% !important;
+}
+
+.wps_global_calendar_class.fc table td.fc-day a {
+  text-decoration: none !important;
+  color: #000;
+}
+
+.wps_global_calendar_class.fc table td.fc-day.fc-disabled-date {
+  filter: unset !important;
+  opacity: 0.3;
+}
+
+.wps_global_calendar_class.fc table td.fc-day a.fc-h-event {
+  padding: 0 3px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+}

@@ -431,6 +431,9 @@ function convertTimeFormatDual(input) {
 		if (currentLang == 'az') {
 			var map = { 'GƏ': 'AM', 'GS': 'PM' }
 		}
+		if (currentLang == 'be') {
+			var map = { 'ДП': 'AM', 'ПП': 'PM' }
+		}
 		input = input.replace(new RegExp(Object.keys(map).join("|"), "gi"), function(match) {console.log(match,1);
 			return map[match];
 		});
@@ -503,10 +506,11 @@ function retrieve_booking_total_ajax( form_data ) {
 					msg = '';
 				}
 				if (msg == 'fail'){
-					if ( $('#alert_msg_client').val() == undefined){
-						jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		
 						$('#mwb-mbfw-booking-to-time').val('');
 						jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
+					if ( $('#alert_msg_client').val() == undefined){
+						jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		
+
 						return;
 					}
 				} else{

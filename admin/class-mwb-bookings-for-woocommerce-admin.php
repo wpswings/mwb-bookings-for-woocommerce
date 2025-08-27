@@ -1998,7 +1998,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					if ( 'single_cal' == $booking_type && $booking_unit == 'hour' ){
 
 						$time_range = $date_time_from;
-					
+						if('d/m/Y' == wc_date_format()){
+
+							$date_time_from         = str_replace('/', '-', $date_time_from);// custom
+							$date_time_to           = str_replace('/', '-', $date_time_to);// custom
+						}
 						list($date_time_from, $date_time_to) = explode(' - ', $time_range);
  
 						// Assume this is used inside a loop and $order, $item, $status exist.
@@ -2013,9 +2017,12 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					} else{
 						
 						if ( ! empty( $date_array_from ) && is_array( $date_array_from ) ) {
- 
-						foreach ( $date_array_from as $key => $value ) {
- 
+							foreach ( $date_array_from as $key => $value ) {
+								if('d/m/Y' == wc_date_format()){
+
+									$value         = str_replace('/', '-', $value);// custom
+									$date_array_to[ $key ]           = str_replace('/', '-', $date_array_to[ $key ]);// custom
+								}
 							$all_events[] = array(
 								'title' => '#Order Id: ' . $order->get_id() . ' ' . $item['name'],
 								'start' => gmdate( 'Y-m-d', strtotime( $value ) ),
@@ -2036,7 +2043,12 @@ class Mwb_Bookings_For_Woocommerce_Admin {
  
 					$date_time_from = $item->get_meta( '_mwb_bfwp_date_time_from', true );
 					$date_time_to   = $item->get_meta( '_mwb_bfwp_date_time_to', true );
- 
+
+					if('d/m/Y' == wc_date_format()){
+
+						$date_time_from         = str_replace('/', '-', $date_time_from);// custom
+						$date_time_to           = str_replace('/', '-', $date_time_to);// custom
+					}
 					$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 					$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 					$all_events[]   = array(

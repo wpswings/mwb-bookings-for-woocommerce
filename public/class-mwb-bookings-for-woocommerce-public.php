@@ -99,8 +99,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		wp_enqueue_script( 'wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/l10n/' . $wps_lang . '.js', array( 'flatpicker_js' ), time(), true );
 		
 	
-		
-
 		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery', 'flatpicker_js', 'wps-flatpickr-locale' ), time(), true );
 		$daily_start_time                            = '';
 		$daily_end_time                              = '';
@@ -517,8 +515,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					'unavailableDates' => $unavailable_days,
 					'baseUrl'          => esc_url(site_url('/')),
 					'defaultPrice'     => $default_price,
-					'passed_dates_msg' => __('You cannot book past dates.', 'mwb-booking-for-woocommerce'),
-					'unavailable_msg' => __( 'This date is not available for booking.', 'mwb-booking-for-woocommerce'),
+					'passed_dates_msg' => __('You cannot book past dates.', 'mwb-bookings-for-woocommerce'),
+					'unavailable_msg' => __( 'This date is not available for booking.', 'mwb-bookings-for-woocommerce'),
 				]);
 			}
 		}

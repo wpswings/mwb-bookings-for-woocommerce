@@ -88,7 +88,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		wp_enqueue_style( 'mwb-mbfw-global-custom-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin-global-custom.min.css', array(), $this->version, 'all' );
 		global $post_type;
 		if ( 'wps_global_booking' === $post_type ) {
-			wp_enqueue_style('flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
+			wp_enqueue_style( 'flatpickercss', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.css', array(), $this->version, 'all' );
+
 		}
 	}
 
@@ -153,9 +154,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		global $post_type;
 		if ( 'wps_global_booking' === $post_type ) {
 
-			wp_enqueue_script('flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr', [], null, true);
-			wp_enqueue_style('flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
-			wp_enqueue_script( 'mwb-mbfw-admin-global-calendar-custom-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-calendar-custom.js', array( 'jquery', 'flatpickr' ), time(), true );
+
+			wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), time(), true );
+
+			wp_enqueue_script( 'mwb-mbfw-admin-global-calendar-custom-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-calendar-custom.js', array( 'jquery', 'flatpicker_js' ), time(), true );
 			global $post;
 			if (isset($post) && is_object($post)) {
 				$available_days = get_post_meta($post->ID, '_available_days', true) ? get_post_meta($post->ID, '_available_days', true): [];
@@ -1995,13 +1997,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					$date_array_from = explode( ' | ', $date_time_from );
 					$date_array_to   = explode( ' | ', $date_time_to );
 
-					if ( 'single_cal' == $booking_type && $booking_unit == 'hour' ){
+					if ( 'single_cal' == $booking_type && 'hour' == $booking_unit ) {
 
 						$time_range = $date_time_from;
 						if('d/m/Y' == wc_date_format()){
 
-							$date_time_from         = str_replace('/', '-', $date_time_from);// custom
-							$date_time_to           = str_replace('/', '-', $date_time_to);// custom
+							$date_time_from         = str_replace('/', '-', $date_time_from);// custom.
+							$date_time_to           = str_replace('/', '-', $date_time_to);// custom.
 						}
 						list($date_time_from, $date_time_to) = explode(' - ', $time_range);
  
@@ -2020,8 +2022,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 							foreach ( $date_array_from as $key => $value ) {
 								if('d/m/Y' == wc_date_format()){
 
-									$value         = str_replace('/', '-', $value);// custom
-									$date_array_to[ $key ]           = str_replace('/', '-', $date_array_to[ $key ]);// custom
+									$value         = str_replace('/', '-', $value);// custom.
+									$date_array_to[ $key ]           = str_replace('/', '-', $date_array_to[ $key ]);// custom.
 								}
 							$all_events[] = array(
 								'title' => '#Order Id: ' . $order->get_id() . ' ' . $item['name'],
@@ -2046,8 +2048,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 					if('d/m/Y' == wc_date_format()){
 
-						$date_time_from         = str_replace('/', '-', $date_time_from);// custom
-						$date_time_to           = str_replace('/', '-', $date_time_to);// custom
+						$date_time_from         = str_replace('/', '-', $date_time_from);// custom.
+						$date_time_to           = str_replace('/', '-', $date_time_to);// custom.
 					}
 					$date_time_from = ( ! empty( $date_time_from ) ? $date_time_from : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );
 					$date_time_to   = ( ! empty( $date_time_to ) ? $date_time_to : gmdate( 'd-m-Y H:i', $order->get_date_created()->getTimestamp() ) );

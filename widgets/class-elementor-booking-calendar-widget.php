@@ -37,7 +37,7 @@ class Elementor_Booking_Calendar_Widget extends \Elementor\Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Booking Calendar', 'your-plugin-textdomain' );
+		return __( 'Booking Calendar', 'mwb-bookings-for-woocommerce' );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Elementor_Booking_Calendar_Widget extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => __( 'Booking Calendar Settings', 'your-plugin-textdomain' ),
+				'label' => __( 'Booking Calendar Settings', 'mwb-bookings-for-woocommerce' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -75,7 +75,7 @@ class Elementor_Booking_Calendar_Widget extends \Elementor\Widget_Base {
 		$this->add_control(
 			'calendar_id',
 			[
-				'label'   => __( 'Booking Calendar ID', 'your-plugin-textdomain' ),
+				'label'   => __( 'Booking Calendar ID', 'mwb-bookings-for-woocommerce' ),
 				'type'    => \Elementor\Controls_Manager::NUMBER,
 				'default' => 0,
 			]

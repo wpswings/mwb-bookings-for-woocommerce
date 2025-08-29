@@ -889,7 +889,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		}
 	}
 
-	/* * This function is used to get banner image.
+	/** This function is used to get banner image.
 	 *
 	 * @return void
 	 */
@@ -936,7 +936,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
-			echo '<p><strong>' . esc_html__( 'Something went wrong: ', 'points-and-rewards-for-woocommerce' ) . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+			echo '<p><strong>' . esc_html__( 'Something went wrong: ', 'mwb-bookings-for-woocommerce' ) . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
 		} else {
 			$wps_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}

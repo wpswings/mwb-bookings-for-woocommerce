@@ -163,8 +163,6 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	/**
 	 * Function to render booking calendar block.
 	 *
-	 * @param array $attributes Block attributes.
-	 * @return string
 	 */
 	function wps_mbfw_wpswings_register_booking_calendar_block() {
     wp_register_script(

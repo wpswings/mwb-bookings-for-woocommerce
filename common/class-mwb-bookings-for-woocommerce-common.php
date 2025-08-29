@@ -325,8 +325,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$date_time_to   = array_key_exists( 'single_cal_date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['single_cal_date_time_to'] ) ) : '';
 						if('d/m/Y' == wc_date_format()){
 
-							$date_time_from         = str_replace('/', '-', $date_time_from);// custom
-							$date_time_to           = str_replace('/', '-', $date_time_to);// custom
+							$date_time_from         = str_replace('/', '-', $date_time_from);// custom.
+							$date_time_to           = str_replace('/', '-', $date_time_to);// custom.
 						}
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp   = strtotime( $date_time_to );
@@ -347,8 +347,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 						if('d/m/Y' == wc_date_format()){
 
-							$date_from         = str_replace('/', '-', $date_from);// custom
-							$date_to           = str_replace('/', '-', $date_to);// custom
+							$date_from         = str_replace('/', '-', $date_from);// custom.
+							$date_to           = str_replace('/', '-', $date_to);// custom.
 						}
 						$date_from         = gmdate( 'd-m-Y', strtotime( $date_from ) );
 						$date_to           = gmdate( 'd-m-Y', strtotime( $date_to ) );
@@ -365,8 +365,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$date_time_to   = array_key_exists( 'date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_to'] ) ) : '';
 						if('d/m/Y' == wc_date_format()){
 
-							$date_time_from         = str_replace('/', '-', $date_time_from);// custom
-							$date_time_to           = str_replace('/', '-', $date_time_to);// custom
+							$date_time_from         = str_replace('/', '-', $date_time_from);// custom.
+							$date_time_to           = str_replace('/', '-', $date_time_to);// custom.
 						}
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp   = strtotime( $date_time_to );
@@ -471,7 +471,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 		// Loop through the rules and find the matching rule based on the day range.
 		foreach ($pricing_rules as $rule) {
-			if ($days >= $rule['min'] && $days <= $rule['max']) {
+			if ( $rule['min'] <= $days && $rule['max'] >= $days ) {
 				if ($rule['type'] === 'fixed') {
 					// Return the fixed price per day.
 					return floatval($rule['value']);
@@ -1394,11 +1394,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$start = date('Ymd', strtotime($date));
 				$end   = date('Ymd', strtotime($date . ' +1 day'));
 
-				echo "BEGIN:VEVENT\r\n";
-				echo "SUMMARY:Booking Unavailable\r\n";
-				echo "DTSTART;VALUE=DATE:$start\r\n";
-				echo "DTEND;VALUE=DATE:$end\r\n";
-				echo "END:VEVENT\r\n";
+				echo "BEGIN:VEVENT\r\n";// phpcs:ignore
+				echo "SUMMARY:Booking Unavailable\r\n";// phpcs:ignore
+				echo "DTSTART;VALUE=DATE:$start\r\n";// phpcs:ignore
+				echo "DTEND;VALUE=DATE:$end\r\n";// phpcs:ignore
+				echo "END:VEVENT\r\n";// phpcs:ignore
 			}
 
 			echo "END:VCALENDAR\r\n";

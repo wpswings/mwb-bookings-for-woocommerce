@@ -5,8 +5,8 @@ Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
 Tested up to: 6.8.2
 WC requires at least: 6.8.1
-WC tested up to: 10.0.4
-Stable tag: 3.7.0
+WC tested up to: 10.1.1
+Stable tag: 3.8.0
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -303,6 +303,10 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.8.0 - Released on 29 August 2025 =
+* New: Optimize all Cost of different calendar with WooCommerce date format.
+* New: Latest compatibility With WP[6.8.2] and WC[10.1.1].
+
 = 3.7.0 - Released on 4 August 2025 =
 * New: Compatibility with gift cards.
 * New: Compatibility with subscription.
@@ -516,10 +520,6 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.7.0 - Released on 4 August 2025 =
-* New: Compatibility with gift cards.
-* New: Compatibility with subscription.
-* New: Compatibility with Wallet.
-* New: Latest compatibility With WP[6.8.2] and WC[10.0.4].
-* New: sale banner image added.
-* New: Elementor / Gutenberg Blocks compatibility.
+= 3.8.0 - Released on 29 August 2025 =
+* New: Optimize all Cost of different calendar with WooCommerce date format.
+* New: Latest compatibility With WP[6.8.2] and WC[10.1.1].

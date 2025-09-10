@@ -75,8 +75,7 @@ class Mwb_Bookings_For_Woocommerce {
 
 			$this->version = MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION;
 		} else {
-
-			$this->version = '3.8.0';
+			$this->version = '3.9.0';
 		}
 
 		$this->plugin_name = 'bookings-for-woocommerce';
@@ -254,6 +253,7 @@ class Mwb_Bookings_For_Woocommerce {
 			//hooks for global booking post type.
 			$this->loader->add_action('add_meta_boxes', $mbfw_plugin_admin, 'add_global_booking_meta_boxes');
 			$this->loader->add_action('save_post', $mbfw_plugin_admin, 'save_global_booking_meta');
+			$this->loader->add_action('save_post_wps_dynamic_form', $mbfw_plugin_admin, 'save_global_dynamic_form_meta');
 			// Add a new column to the custom post type admin list.
 			$this->loader->add_filter('manage_wps_global_booking_posts_columns', $mbfw_plugin_admin, 'add_shortcode_column_to_booking');
 			// Hook into the custom column content.
@@ -352,6 +352,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'plugins_loaded', $mbfw_plugin_public, 'mwb_mbfw_shortcode_search_page' );
 			$this->loader->add_action('template_redirect', $mbfw_plugin_public, 'mwb_handle_booking_add_to_cart');
 			$this->loader->add_action('woocommerce_add_order_item_meta',$mbfw_plugin_public, 'mwb_add_global_order_item_meta', 10, 3);
+			$this->loader->add_action( 'wps_before_global_booking_form ', $mbfw_plugin_public, 'wps_display_selected_form_before_booking', 10, 1);
 		}
 	}
 

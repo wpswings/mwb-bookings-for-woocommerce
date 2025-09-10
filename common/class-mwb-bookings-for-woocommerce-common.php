@@ -1184,6 +1184,23 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			</table>
 			<?php
 		}
+		if ( 'yes' === get_post_meta($item->get_product()->get_id(), '_is_calendar_booking_product', 'no')){
+			$form_data = $item->get_meta( 'Form Data', true );
+			?><ul class="wc-item-meta"><?php
+				foreach ( $form_data as $field) {
+					if (!empty($field['value'])) {
+						if ('add-to-cart' == $field['name'])continue;
+						// Make label human-readable (replace -/_ and capitalize)
+
+						$label = ucwords(str_replace(['-', '_', '[]'], ' ', $field['name']));?>
+						<li>
+								<?php echo ( '<strong>'.$label .':</strong> '. $field['value'] ); ?>
+					</li><?php
+
+					}
+				}?></ul><?php
+
+		}
 	}
 
 	/**

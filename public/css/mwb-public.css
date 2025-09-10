@@ -393,6 +393,7 @@ button.wps_timeslot_button {
 
 .wps_global_calendar_class.fc table td {
   padding: 5px !important;
+  cursor: default;
 }
 
 
@@ -458,4 +459,41 @@ button.wps_timeslot_button {
   display: flex;
   align-items: center;
   line-height: 1.5;
+}
+ /* .wps_global_multiselect {
+  width: 50% !important;  /* full width of container */
+  /* min-width: 300px;        or set a fixed min width */
+
+
+.error-msg {
+    color: red;
+    font-size: 12px;
+    margin-left: 6px;
+    display: inline-block;
+}
+
+.wps-global-form-field-wrapper {
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+}
+.wps-global-form-field-wrapper label {
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.wps-global-form-field-for-selected-date {
+    width: 100%;
+    padding: 10px;
+    min-height: 33px;
+}
+.wps-global-selected-field-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+.wps_global_calendar_add_cart_button {
+    padding: 8px 20px;
 }

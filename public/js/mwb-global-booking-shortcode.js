@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Please select at least one date.');
             return;
         }
-        var price= (selectedDates.length + 1) * defaultPrice;
+        var price= (selectedDates.length) * defaultPrice;
         // Build cart URL with multiple dates
         // e.g., pass them as comma-separated
         const url = `${baseUrl}?add-booking-to-cart=1&booking_date=${selectedDates.join(',')}&booking_price=${price}&global_booking_form=${JSON.stringify(entries)}`;

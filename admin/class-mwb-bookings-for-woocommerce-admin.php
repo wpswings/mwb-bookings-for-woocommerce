@@ -2533,21 +2533,7 @@ function wps_global_calendar_render_form_fields_metabox($post) {
                         value="<?php echo isset($field['options']) ? esc_attr($field['options']) : ''; ?>" 
                         style="display:<?php echo in_array($field['type'], ['select','multiselect','checkbox','radio']) ? 'inline-block' : 'none'; ?>;" />
 				</td>
-				<?php
-				$active_plugins = get_option( 'active_plugins' );
-					if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
-						
-					?>
-                <td>
-					
-						    <!-- Required checkbox -->
-						<label style="margin-left:10px;">
-							<input type="checkbox" name="wps_global_calendar_fields[<?php echo $index; ?>][required]" 
-								value="1" <?php checked(isset($field['required']) ? $field['required'] : 0, 1); ?> />
-							Required
-						</label>
-				</td>
-				<?php } ?>
+				<?php do_action('wps_global_calendar_after_field_options', $field);  ?>
 				 <td style="text-align:center;">
 					<button type="button" class="button wps-remove-field">Delete</button>
 				</td>

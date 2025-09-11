@@ -89,8 +89,11 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		global $post_type;
 		if ( 'wps_global_booking' === $post_type ) {
 			wp_enqueue_style( 'flatpickercss', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.css', array(), $this->version, 'all' );
-
 		}
+		if ( $post_type === 'wps_dynamic_form' ) {
+			wp_enqueue_style( 'wps_global_booking_form_design', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-global-booking-form-design.css', array(), $this->version, 'all' );
+		}
+
 	}
 
 	/**
@@ -194,6 +197,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
             true
         );
 		wp_localize_script( 'wps-global-calendar-form-admin', 'mwb_mbfw_global_form_obj', array( 'is_pro_active'=> $is_pro_active, ));
+
+		wp_enqueue_script( 'wps_global_booking_form_script', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-global-booking-form-script.js', array(), $this->version, 'all' );
+
     }
 	}
 

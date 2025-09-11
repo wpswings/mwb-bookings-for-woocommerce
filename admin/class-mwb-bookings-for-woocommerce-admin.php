@@ -2427,6 +2427,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'normal',
 			'default'
 		);
+		add_meta_box(
+			'wps_global_calendar_form_view',
+			'Form View',
+			array( $this, 'wps_global_calendar_render_dynamic_form_metabox'),
+			'wps_dynamic_form',
+			'side',
+			'default'
+		);
 		 add_meta_box(
         'wps_booking_form_selector',       // ID
         __('Select Form', 'textdomain'),   // Title
@@ -2897,6 +2905,12 @@ public function wps_global_booking_form_metabox($post) {
 
 			}
 		}
+	}
+
+	public function wps_global_calendar_render_dynamic_form_metabox(){
+				include_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-global-booking-form-display.php';
+
+		
 	}
 	// End of admin class.
 }

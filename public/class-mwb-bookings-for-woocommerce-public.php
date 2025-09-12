@@ -1495,6 +1495,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		<div class="wps_global-selected-date-cost" id="wps_global-selected-date-cost"> <?php echo $default_price;?> X 0 = 0</div>
 		</div>
 		</div>
+		<div class="wps-display-form-title">
+			<?php   $form_heading = get_post_meta($selected_form, '_wps_calendar_form_heading', true);
+			if (!empty($form_heading)) {
+				echo '<h2>'.esc_html($form_heading).'</h2>';
+			}
+			?>
+
+		</div>
     <!-- Hidden field that WooCommerce will actually use -->
     <input type="hidden" id="booking-dates-<?php echo esc_attr($atts); ?>" name="booking_dates" value="">
         <?php foreach ($fields as $field): 

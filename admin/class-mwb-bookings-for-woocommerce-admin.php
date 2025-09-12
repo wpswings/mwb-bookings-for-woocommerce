@@ -2505,8 +2505,15 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 	wp_nonce_field( 'mwb_booking_global_product_meta', '_mwb_nonce' );
 
     $fields = get_post_meta($post->ID, '_wps_global_calendar_form_fields', true);
+    $form_heading = get_post_meta($post->ID, '_wps_calendar_form_heading', true);
+
     ?>
     <div id="wps-global-calendar-form-fields-wrapper">
+		<div class="form-group">
+			<label for="wps_calendar_form_heading">Form Heading</label>
+			<input type="text" id="wps_calendar_form_heading" name="wps_calendar_form_heading" class="form-control"
+			value="<?php echo isset($form_heading) ? esc_attr($form_heading) : ''; ?>"  placeholder="Enter heading">
+		</div>
 		 <table class="widefat striped" id="wps-global-calendar-fields-table">
         <thead>
             <tr>
@@ -2620,6 +2627,7 @@ public function wps_global_booking_form_metabox($post) {
 
 		if (isset($_POST['wps_global_calendar_fields'])) {
 			update_post_meta($post_id, '_wps_global_calendar_form_fields', $_POST['wps_global_calendar_fields']);
+			update_post_meta($post_id, '_wps_calendar_form_heading', $_POST['wps_calendar_form_heading']);
 		}
 	}
 	/**

@@ -3,19 +3,58 @@ jQuery(function ($) {
 		var availableDates = mbfw_global_calendar_booking_ajax.available_days;
 		var nonAvailableDates = mbfw_global_calendar_booking_ajax.non_available_days;
 	
-		$('#available_days_picker').flatpickr({
-			mode: "multiple",
-			dateFormat: "Y-m-d",
-			allowInput: false,
-			defaultDate: availableDates
-		});
+		// $('#available_days_picker').flatpickr({
+		// 	mode: "multiple",
+		// 	dateFormat: "Y-m-d",
+		// 	allowInput: false,
+		// 	defaultDate: availableDates
+		// });
 	
-		$('#non_available_days_picker').flatpickr({
-			mode: "multiple",
-			dateFormat: "Y-m-d",
-			allowInput: false,
-			defaultDate: nonAvailableDates
-		});
+		// $('#non_available_days_picker').flatpickr({
+		// 	mode: "multiple",
+		// 	dateFormat: "Y-m-d",
+		// 	allowInput: false,
+		// 	defaultDate: nonAvailableDates
+		// });
+
+// let availableDates = [];
+// let nonAvailableDates = [];
+
+const availablePicker = $('#available_days_picker').flatpickr({
+    mode: "multiple",
+    dateFormat: "Y-m-d",
+    allowInput: false,
+    defaultDate: availableDates,
+        disable: nonAvailableDates,           // disable non-available dates
+
+    onChange: function(selectedDates, dateStr, instance) {
+        // Sync available dates
+        availableDates = selectedDates.map(d => instance.formatDate(d, "Y-m-d"));
+
+        // Remove from non-available if overlapping
+                nonAvailablePicker.set('disable', availableDates);
+
+    }
+});
+
+const nonAvailablePicker = $('#non_available_days_picker').flatpickr({
+    mode: "multiple",
+    dateFormat: "Y-m-d",
+    allowInput: false,
+    defaultDate: nonAvailableDates,
+        disable: availableDates,           // disable non-available dates
+
+    onChange: function(selectedDates, dateStr, instance) {
+        // Sync non-available dates
+        nonAvailableDates = selectedDates.map(d => instance.formatDate(d, "Y-m-d"));
+
+        // Remove from available if overlapping
+                availablePicker.set('disable', nonAvailableDates);
+
+    }
+});
+
+
 	});
 
 

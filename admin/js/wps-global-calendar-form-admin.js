@@ -29,6 +29,8 @@ jQuery(document).ready(function($) {
 
         let fieldHTML = `
         <tr class="wps-global-calendar-field-row">
+        		<td><img src="${mwb_mbfw_global_form_obj.wps_plugin_url}admin/image/drag.png" class="form-drag-icon" alt="drag-icon"></td>
+
                 <td><input type="text" name="wps_global_calendar_fields[${index}][label]" placeholder="Field Label" /></td>
                 <td><select name="wps_global_calendar_fields[${index}][type]" class="wps-global-calendar-field-type">
                     <option value="text">Text</option>
@@ -59,6 +61,6 @@ jQuery(document).ready(function($) {
         // Delete row
     $(document).on("click", ".wps-remove-field", function () {
         $(this).closest("tr").remove();
-        refreshRowIndexes();
+        // refreshRowIndexes();
     });
 });

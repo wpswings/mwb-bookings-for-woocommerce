@@ -188,7 +188,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 						$is_pro_active = 'yes';
 					}
-
+		global $post;
         wp_enqueue_script(
             'wps-global-calendar-form-admin',
             MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-global-calendar-form-admin.js',
@@ -196,7 +196,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
             '1.0',
             true
         );
-		wp_localize_script( 'wps-global-calendar-form-admin', 'mwb_mbfw_global_form_obj', array( 'is_pro_active'=> $is_pro_active, ));
+		wp_localize_script( 'wps-global-calendar-form-admin', 'mwb_mbfw_global_form_obj', array( 'is_pro_active'=> $is_pro_active, 'form_id'=>$post->ID, 'wps_plugin_url'=> MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL));
 
 		wp_enqueue_script( 'wps_global_booking_form_script', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-global-booking-form-script.js', array(), $this->version, 'all' );
 
@@ -2517,6 +2517,7 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 		 <table class="widefat striped" id="wps-global-calendar-fields-table">
         <thead>
             <tr>
+				<th></th>
                 <th>Field Label</th>
                 <th>Type</th>
                 <th>Options</th>
@@ -2539,6 +2540,8 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 			
 			}?>
 					<tr class="wps-global-calendar-field-row">
+						<td><img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/image/drag.png" class="form-drag-icon" alt="drag-icon"></td>
+
                         <td>
                     <input type="text" name="wps_global_calendar_fields[<?php echo $index; ?>][label]" placeholder="Field Label" value="<?php echo esc_attr($field['label']); ?>" />
 				</td>

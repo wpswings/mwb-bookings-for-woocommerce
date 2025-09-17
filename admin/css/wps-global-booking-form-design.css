@@ -1,5 +1,5 @@
 :root{
-    --wps-primary-color: #bb014e;
+    --wps-primary-color: #0183bb;
     }
 #wps-global-calendar-add-field {
     display: block;
@@ -105,4 +105,6 @@
     overflow: auto;
     margin: 10px 0 0;
 }
- 
+.form-group {
+    margin-bottom: 10px;
+}

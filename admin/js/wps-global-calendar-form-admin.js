@@ -111,4 +111,7 @@ jQuery(document).ready(function($) {
             return false;
         }
     });
+     $('#wps_calendar_form_color').on('input', function() {
+            root.css('--wps-primary-color', $(this).val() );
+        });
 });

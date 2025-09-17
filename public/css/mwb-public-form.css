@@ -1,3 +1,6 @@
+:root{
+    --wps-primary-color: #e3dee0;
+    }
 .wps-global-form-field-wrapper * {
     box-sizing: border-box;
 }
@@ -63,12 +66,13 @@
 }
 .wps-global-selected-field-wrapper .wps-global-form-field-wrapper {
     display: flex;
+    justify-content: space-between;
     gap: 20px;
 }
 
 #wps-attached-global-booking-form .wps-global-form-field-wrapper-group h2 {
     text-align: center;
-    background: linear-gradient(45deg, #01ACBB, #00B7AF);
+    background: var(--wps-primary-color);
     color: white;
     border-radius: 5px 5px 0 0;
     font-size: 24px;
@@ -116,12 +120,11 @@
 
 #wps-attached-global-booking-form .wps_global_calendar_add_cart_button {
 
-    background: #2196F3;
+    background: var(--wps-primary-color);
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
-    /* width: 100%; */
     cursor: pointer;
     margin: 15px 0 0;
     font-size: 16px;
@@ -131,6 +134,6 @@
 }
 
 .wps_global_calendar_add_cart_button:hover {
-    background: #2196F3;
+    background: var(--wps-primary-color);
     color: white;
 }

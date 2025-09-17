@@ -40,7 +40,6 @@
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
 					} else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
-						console.log(value)
 						if( ( '' != value ) ){
 
 							form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
@@ -70,13 +69,9 @@
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
 					}  else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
-						// console.log(value)
-						// if( ( null != value ) ){
 					
 						form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
-					// }else{
-					// 	form_data.set('mwb_mbfw_booking_to_time', '');
-					// }
+					
 					} else if (key === 'mwb_mbfw_booking_from_time' && key != null ) {
 						
 						form_data.set('mwb_mbfw_booking_from_time', convertTimeFormatDual(value));

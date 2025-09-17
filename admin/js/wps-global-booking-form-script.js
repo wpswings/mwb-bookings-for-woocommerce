@@ -93,7 +93,7 @@
     }
 
     function updateFormHeading() {
-      const title = $("#title").val().trim() || "Untitled Form";
+      const title = $("#wps_calendar_form_heading").val().trim() || "Untitled Form";
       $(".wps-form_view-heading").text(title);
       localStorage.setItem(headingKey, title);
     }
@@ -134,7 +134,7 @@
       rebuildFormPreview();
     });
 
-    $(document).on("keyup change", "#title", function () {
+    $(document).on("keyup change", "#wps_calendar_form_heading", function () {
       updateFormHeading();
     });
 

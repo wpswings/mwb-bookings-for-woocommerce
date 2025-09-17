@@ -867,7 +867,6 @@ jQuery(document).ready(function($){
                         if ('disable_slot' == mwb_mbfw_public_obj.hide_or_disable_slot ) {
 
                             if (booking_unavailable.length > 0) {
-                                // console.log(booking_unavailable);
                                 if (!booking_unavailable.includes(temp_check)) {
                                     if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
                                         html += '\n\ <span><button disabled=disabled>' + temp + '</button>\n\ </span>';

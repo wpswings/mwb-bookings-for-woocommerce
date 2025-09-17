@@ -1,3 +1,6 @@
+:root{
+    --wps-primary-color: #bb014e;
+    }
 #wps-global-calendar-add-field {
     display: block;
     width: 100%;
@@ -12,7 +15,7 @@
 .wps-form_view .wps-form_view-heading {
     text-align: center;
     margin: 10px 0 0 0!important;
-    background: linear-gradient(45deg, #01ACBB, #00B7AF);
+    background: var(--wps-primary-color);
     color: white;
     border-radius: 5px 5px 0 0;
     font-size: 24px;
@@ -76,7 +79,7 @@
     vertical-align: text-bottom;
 }
 .wps-form_view-btn button {
-    background: #2196F3;
+    background: var(--wps-primary-color);
     color: white;
     border: none;
     padding: 10px 15px;
@@ -97,5 +100,9 @@
     background: #f2f2f2;
     margin: 15px;
     height: 50px;
+}
+.wps-global-calendar-fields-table-wrapper {
+    overflow: auto;
+    margin: 10px 0 0;
 }
  

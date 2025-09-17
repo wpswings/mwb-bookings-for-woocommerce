@@ -509,6 +509,10 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 
 				$default_price = get_post_meta($post_id, '_booking_default_price', true) ? get_post_meta($post_id, '_booking_default_price', true): 0;
+				$selected_form = get_post_meta($post_id, '_wps_booking_form_id', true);
+
+				$form_heading_color = get_post_meta($selected_form, '_form_heading_color', true) ? get_post_meta($selected_form, '_form_heading_color', true): '#00aaff';
+
 				wp_localize_script(
 					'booking-calendar-js', 'bookingCalendarData', [
 					'postId'           => ($post_id),
@@ -519,6 +523,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					'unavailableDates' => $unavailable_days,
 					'baseUrl'          => esc_url(site_url('/')),
 					'defaultPrice'     => $default_price,
+					'form_color' 	  	=> $form_heading_color,
+					'required_msg'   => __('required', 'mwb-bookings-for-woocommerce'),
+					'date_select_msg'   => __('Please select at least one date to book.', 'mwb-bookings-for-woocommerce'),
 					'passed_dates_msg' => __('You cannot book past dates.', 'mwb-bookings-for-woocommerce'),
 					'unavailable_msg' => __( 'This date is not available for booking.', 'mwb-bookings-for-woocommerce'),
 				]);
@@ -1495,16 +1502,22 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		<div class="wps_global-selected-date-cost" id="wps_global-selected-date-cost"> <?php echo $default_price;?> X 0 = 0</div>
 		</div>
 		</div>
+		<div class="wps-global-form-field-wrapper-group">
+                
 		<div class="wps-display-form-title">
+
 			<?php   $form_heading = get_post_meta($selected_form, '_wps_calendar_form_heading', true);
+			
 			if (!empty($form_heading)) {
 				echo '<h2>'.esc_html($form_heading).'</h2>';
+
 			}
 			?>
 
 		</div>
     <!-- Hidden field that WooCommerce will actually use -->
     <input type="hidden" id="booking-dates-<?php echo esc_attr($atts); ?>" name="booking_dates" value="">
+	<div class="wps-global-form-field-wr-gr-content">
         <?php foreach ($fields as $field): 
 		    $name = sanitize_title($field['label']); 
 			$required = !empty($field['required']) ? 'required' : '';
@@ -1575,13 +1588,16 @@ class Mwb_Bookings_For_Woocommerce_Public {
                 ?>
             </div>
         <?php endforeach; ?>
-
    <!-- hidden add-to-cart field (important for WooCommerce) -->
     <input type="hidden" name="add-to-cart" value="<?php echo esc_attr($atts); ?>">
 		<!-- Submit button -->
 		<button type="submit" class="wps_global_calendar_add_cart_button" id="booking-submit-<?php echo esc_attr($atts); ?>">Add to Cart</button>
         <!-- <button type="submit">Book now</button> -->
-    </form>
+    
+	</div>
+		</div>
+</form>
+	
     <?php
     // return ob_get_clean();
 }

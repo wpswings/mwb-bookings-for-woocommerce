@@ -196,7 +196,17 @@ class Mwb_Bookings_For_Woocommerce_Admin {
             '1.0',
             true
         );
-		wp_localize_script( 'wps-global-calendar-form-admin', 'mwb_mbfw_global_form_obj', array( 'is_pro_active'=> $is_pro_active, 'form_id'=>$post->ID, 'wps_plugin_url'=> MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL));
+			$form_heading_color = get_post_meta($post->ID, '_form_heading_color', true) ? get_post_meta($post->ID, '_form_heading_color', true): '#00aaff';
+
+		wp_localize_script( 'wps-global-calendar-form-admin', 'mwb_mbfw_global_form_obj',
+		 array( 
+			'is_pro_active'=> $is_pro_active, 
+			'form_id'=>$post->ID,
+			'wps_plugin_url'=> MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL,
+			'form_color'=>$form_heading_color,
+			'field_empty_msg' => __( 'Please fill all field name before saving.', 'mwb-bookings-for-woocommerce' ),
+			'option_empty_msg' => __( 'Please fill all options before saving.', 'mwb-bookings-for-woocommerce' ),
+		));
 
 		wp_enqueue_script( 'wps_global_booking_form_script', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-global-booking-form-script.js', array(), $this->version, 'all' );
 
@@ -2506,6 +2516,7 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 
     $fields = get_post_meta($post->ID, '_wps_global_calendar_form_fields', true);
     $form_heading = get_post_meta($post->ID, '_wps_calendar_form_heading', true);
+	$form_heading_color = get_post_meta($post->ID, '_form_heading_color', true) ? get_post_meta($post->ID, '_form_heading_color', true): '#00aaff';
 
     ?>
     <div id="wps-global-calendar-form-fields-wrapper">
@@ -2514,6 +2525,12 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 			<input type="text" id="wps_calendar_form_heading" name="wps_calendar_form_heading" class="form-control"
 			value="<?php echo isset($form_heading) ? esc_attr($form_heading) : ''; ?>"  placeholder="Enter heading">
 		</div>
+		<div class="form-group">
+			<label for="wps_calendar_form_heading">Form color</label>
+			<input type="color" id="wps_calendar_form_color" name="wps_calendar_form_color" class="form-control"
+			value='<?php echo esc_attr($form_heading_color); ?>'>
+		</div>
+	<div class="wps-global-calendar-fields-table-wrapper">
 		 <table class="widefat striped" id="wps-global-calendar-fields-table">
         <thead>
             <tr>
@@ -2543,7 +2560,7 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 						<td><img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/image/drag.png" class="form-drag-icon" alt="drag-icon"></td>
 
                         <td>
-                    <input type="text" name="wps_global_calendar_fields[<?php echo $index; ?>][label]" placeholder="Field Label" value="<?php echo esc_attr($field['label']); ?>" />
+                    <input type="text" name="wps_global_calendar_fields[<?php echo $index; ?>][label]" class="wps_global_input_form_field_name" placeholder="Field Label" value="<?php echo esc_attr($field['label']); ?>" />
 				</td>
                 <td>
                     <select name="wps_global_calendar_fields[<?php echo $index; ?>][type]" class="wps-global-calendar-field-type">
@@ -2559,7 +2576,7 @@ function wps_global_calendar_render_form_fields_metabox($post) {
                     </select>
 				</td>
                 <td>
-
+					<span class="wps_global_calendar_description" style="display:<?php echo in_array($field['type'], ['select','multiselect','checkbox','radio']) ? 'none' : 'inline-block' ; ?>;">-</span>
                     <input type="text" 
                         name="wps_global_calendar_fields[<?php echo $index; ?>][options]" 
                         class="wps-global-calendar-options-input" 
@@ -2577,6 +2594,7 @@ function wps_global_calendar_render_form_fields_metabox($post) {
         <?php endif; ?>
 	</tbody>
     </table>
+	</div>
     </div>
     <button type="button" class="button" id="wps-global-calendar-add-field">+ Add Field</button>
     <?php
@@ -2629,8 +2647,15 @@ public function wps_global_booking_form_metabox($post) {
 		}
 
 		if (isset($_POST['wps_global_calendar_fields'])) {
+			if ( isset ($_POST['wps_global_calendar_fields'])) {
 			update_post_meta($post_id, '_wps_global_calendar_form_fields', $_POST['wps_global_calendar_fields']);
-			update_post_meta($post_id, '_wps_calendar_form_heading', $_POST['wps_calendar_form_heading']);
+			}
+			if (isset($_POST['wps_calendar_form_heading'])) {
+				update_post_meta($post_id, '_wps_calendar_form_heading', $_POST['wps_calendar_form_heading']);
+			}
+			if (isset($_POST['wps_calendar_form_color'])) {
+			update_post_meta($post_id, '_form_heading_color', sanitize_hex_color(wp_unslash($_POST['wps_calendar_form_color'])));
+		}
 		}
 	}
 	/**

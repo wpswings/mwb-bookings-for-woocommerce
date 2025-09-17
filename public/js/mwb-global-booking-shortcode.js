@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const today = new Date();
     const baseUrl = bookingCalendarData.baseUrl;
     const defaultPrice = bookingCalendarData.defaultPrice;
+    const required = bookingCalendarData.required_msg;
+    const dateSelectMsg = bookingCalendarData.date_select_msg;
 
     today.setHours(0, 0, 0, 0);
 
@@ -131,23 +133,54 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!label.querySelector(".error-msg")) {
                     label.insertAdjacentHTML(
                         "beforeend",
-                        '<span class="error-msg"> * required</span>'
+                        '<span class="error-msg"> * '+required+'</span>'
                     );
                 }
             }
-        } else {debugger;
+        } else {
             if (!input.value.trim() && label) {
                 isValid = false;
                 if (!label.querySelector(".error-msg")) {
                     label.insertAdjacentHTML(
                         "beforeend",
-                        '<span class="error-msg"> * required</span>'
+                        '<span class="error-msg"> * '+required+'</span>'
                     );
                 }
             }
         }
     });
+    form.querySelectorAll('input[type="email"]').forEach(function(input) {
+    let label = null;
 
+    // Case 1: <label for="id">
+    if (input.id) {
+        label = form.querySelector(`label[for="${input.id}"]`);
+    }
+
+    // Case 2: input wrapped inside <label>
+    if (!label && input.closest("label")) {
+        label = input.closest("label");
+    }
+
+    // Case 3: label is just the previous sibling
+    if (!label && input.previousElementSibling?.tagName === "LABEL") {
+        label = input.previousElementSibling;
+    }
+
+                // Email format validation
+        if (input.type === "email" && input.value.trim() !== "") {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(input.value.trim())) {
+                isValid = false;
+                if (label && !label.querySelector(".error-msg")) {
+                    label.insertAdjacentHTML(
+                        "beforeend",
+                        '<span class="error-msg"> * invalid email</span>'
+                    );
+                }
+            }
+        }
+    });
     if (!isValid) {
         return; // stop submission until fixed
     }
@@ -159,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         if (selectedDates.length === 0) {
-            alert('Please select at least one date.');
+            alert(dateSelectMsg);
             return;
         }
         var price= (selectedDates.length) * defaultPrice;
@@ -169,11 +202,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         window.location.href = url;
     });
+
+    
 });
 
 
 
         jQuery(document).ready(function($) {
+                    var root = $(':root');
+        root.css('--wps-primary-color', bookingCalendarData.form_color );
+
             $(".wps_global_multiselect").select2({
                 placeholder: "Select options",
                 allowClear: true

@@ -432,3 +432,4 @@ function mwb_mbfw_show_admin_notices() {
 
 		}
 	);
+

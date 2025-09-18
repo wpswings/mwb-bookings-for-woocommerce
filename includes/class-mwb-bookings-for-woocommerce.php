@@ -267,6 +267,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_filter('cron_schedules', $mbfw_plugin_admin, 'wps_schedule_cron_to_fetch_airbnb_calendar', 10, 1);
 			$this->loader->add_action( 'wps_sync_airbnb_calendars', $mbfw_plugin_admin, 'wps_sync_airbnb_calendars_callback' );
 
+			$this->loader->add_filter( 'default_title', $mbfw_plugin_admin , 'wps_dynamic_form_default_title', 10, 2 );
 		}
 
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );

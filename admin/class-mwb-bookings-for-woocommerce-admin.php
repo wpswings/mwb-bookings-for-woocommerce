@@ -2948,6 +2948,22 @@ public function wps_global_booking_form_metabox($post) {
 
 		
 	}
+
+	/**
+	 * Set default title for new dynamic form posts.
+	 *
+	 * @param string  $title The current title.
+	 * @param WP_Post $post  The post object.
+	 * @return string Modified title.
+	 */
+	public function wps_dynamic_form_default_title( $title, $post ) {
+
+		// Change 'your_cpt_slug' to your custom post type slug
+		if ( 'wps_dynamic_form' === $post->post_type && 'auto-draft' === $post->post_status ) {
+			$title = __( 'Form', 'mwb-bookings-for-woocommerce' ) . ' #' . $post->ID;
+		}
+		return $title;
+	}
 	// End of admin class.
 }
 

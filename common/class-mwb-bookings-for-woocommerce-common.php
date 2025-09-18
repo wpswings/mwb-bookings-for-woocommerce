@@ -1187,6 +1187,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( 'yes' === get_post_meta($item->get_product()->get_id(), '_is_calendar_booking_product', 'no')){
 			$form_data = $item->get_meta( 'Form Data', true );
 			?><ul class="wc-item-meta"><?php
+
+			if ( empty($form_data)||! is_array( $form_data )) {
+					return;
+			}
 				foreach ( $form_data as $field) {
 					if (!empty($field['value'])) {
 						if ('add-to-cart' == $field['name'])continue;

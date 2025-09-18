@@ -74,6 +74,22 @@ jQuery(document).ready(function($) {
     $('#post').on('submit', function(e) {
         var valid = true;
         var valid2 = true;
+        var title = $('#title').val().trim();
+        if (title === '') {
+            e.preventDefault();
+            alert('The Form title field cannot be empty.');
+            $('#title').focus();
+            return false;
+        }
+        
+        var heading = $('#wps_calendar_form_heading').val().trim();
+        if (heading === '') {
+            e.preventDefault();
+            alert('The heading field cannot be empty.');
+            $('#wps_calendar_form_heading').focus();
+            return false;
+        }
+
         $('.wps_global_input_form_field_name').each(function() {
             if ($.trim($(this).val()) === '') {
                 
@@ -112,6 +128,6 @@ jQuery(document).ready(function($) {
         }
     });
      $('#wps_calendar_form_color').on('input', function() {
-            root.css('--wps-primary-color', $(this).val() );
+        root.css('--wps-primary-color', $(this).val() );
         });
 });

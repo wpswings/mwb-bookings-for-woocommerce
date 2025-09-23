@@ -36,17 +36,17 @@ jQuery(document).ready(function($) {
         <tr class="wps-global-calendar-field-row">
         		<td><img src="${mwb_mbfw_global_form_obj.wps_plugin_url}admin/image/drag.png" class="form-drag-icon" alt="drag-icon"></td>
 
-                <td><input type="text" name="wps_global_calendar_fields[${index}][label]" class="wps_global_input_form_field_name" placeholder="Field Label" /></td>
+                <td><input type="text" name="wps_global_calendar_fields[${index}][label]" class="wps_global_input_form_field_name" placeholder="${mwb_mbfw_global_form_obj.Field_label}" /></td>
                 <td><select name="wps_global_calendar_fields[${index}][type]" class="wps-global-calendar-field-type">
-                    <option value="text">Text</option>
-                    <option value="email">Email</option>
-                    <option value="textarea">Textarea</option>
-                    <option value="number">Number</option>
-                    <option value="select">Select</option>
-                    <option value="multiselect">Multiselect</option>
-                    <option value="checkbox">Checkbox</option>
-                    <option value="radio">Radio</option>
-                    <option value="date">Date</option>
+                    <option value="text">${mwb_mbfw_global_form_obj.Text}</option>
+                    <option value="email">${mwb_mbfw_global_form_obj.Email}</option>
+                    <option value="textarea">${mwb_mbfw_global_form_obj.Textarea}</option>
+                    <option value="number">${mwb_mbfw_global_form_obj.Number}</option>
+                    <option value="select">${mwb_mbfw_global_form_obj.Select}</option>
+                    <option value="multiselect">${mwb_mbfw_global_form_obj.Multiselect}</option>
+                    <option value="checkbox">${mwb_mbfw_global_form_obj.Checkbox}</option>
+                    <option value="radio">${mwb_mbfw_global_form_obj.Radio}</option>
+                    <option value="date">${mwb_mbfw_global_form_obj.Date}</option>
                 </select></td>
                 
                 <td><span class="wps_global_calendar_description">-</span>
@@ -55,7 +55,7 @@ jQuery(document).ready(function($) {
                 if(mwb_mbfw_global_form_obj.is_pro_active === 'yes'){
                     if(bfwp_admin_pro_global.licence_valid || bfwp_admin_pro_global.day_count > 0 ) {
 
-                    fieldHTML += `<td><label style="margin-left:10px;"><input type="checkbox" name="wps_global_calendar_fields[${index}][required]" value="1" />Required</label></td>`;
+                    fieldHTML += `<td><label style="margin-left:10px;"><input type="checkbox" name="wps_global_calendar_fields[${index}][required]" value="1" />${mwb_mbfw_global_form_obj.Required}</label></td>`;
                 }}
                
                 fieldHTML += `<td style="text-align:center;">

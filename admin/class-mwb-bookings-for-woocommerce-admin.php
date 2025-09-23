@@ -213,6 +213,18 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'bfwp_org_pro_license_valid' => get_option( 'bfwp_org_pro_license_valid' ),
 			'field_empty_msg' => __( 'Please fill all field name before saving.', 'mwb-bookings-for-woocommerce' ),
 			'option_empty_msg' => __( 'Please fill all options before saving.', 'mwb-bookings-for-woocommerce' ),
+			'Text' => __( 'Text', 'mwb-bookings-for-woocommerce' ),
+			'Email' => 	__( 'Email', 'mwb-bookings-for-woocommerce' ),
+			'Textarea' => __( 'Textarea', 'mwb-bookings-for-woocommerce' ),
+			'Number' => __( 'Number', 'mwb-bookings-for-woocommerce' ),
+			'Select' => __( 'Select', 'mwb-bookings-for-woocommerce' ),
+			'Checkbox' => __( 'Checkbox', 'mwb-bookings-for-woocommerce' ),
+			'Radio' => __( 'Radio', 'mwb-bookings-for-woocommerce' ),
+			'Date' => __( 'Date', 'mwb-bookings-for-woocommerce' ),
+			'Multiselect' => __( 'Multiselect', 'mwb-bookings-for-woocommerce' ),
+			'Field_label' => __( 'Field Label', 'mwb-bookings-for-woocommerce' ),
+			'Required' => __( 'Required', 'mwb-bookings-for-woocommerce' ),
+
 		));
 
 		wp_enqueue_script( 'wps_global_booking_form_script', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-global-booking-form-script.js', array(), $this->version, 'all' );
@@ -2394,17 +2406,17 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'show_in_rest' => true,
 		]);
 		    $labels = array(
-        'name'               => 'Calendar Forms',
-        'singular_name'      => 'Calendar Form',
-        'menu_name'          => 'Calendar Forms',
-        'name_admin_bar'     => 'Calendar Form',
-        'add_new'            => 'Add New',
-        'add_new_item'       => 'Add New Form',
-        'new_item'           => 'New Form',
-        'edit_item'          => 'Edit Form',
-        'view_item'          => 'View Form',
-        'search_items'       => 'Search Forms',
-        'not_found'          => 'No forms found.',
+        'name'               => __('Calendar Forms', 'mwb-bookings-for-woocommerce'),
+        'singular_name'      => __('Calendar Form', 'mwb-bookings-for-woocommerce'),
+        'menu_name'          => __( 'Calendar Forms', 'mwb-bookings-for-woocommerce' ),
+        'name_admin_bar'     => __( 'Calendar Form', 'mwb-bookings-for-woocommerce' ),
+        'add_new'            => __( 'Add New', 'mwb-bookings-for-woocommerce' ),
+        'add_new_item'       => __( 'Add New Form', 'mwb-bookings-for-woocommerce' ),
+        'new_item'           => __( 'New Form', 'mwb-bookings-for-woocommerce' ),
+        'edit_item'          => __( 'Edit Form', 'mwb-bookings-for-woocommerce' ),
+        'view_item'          => __( 'View Form', 'mwb-bookings-for-woocommerce' ),
+        'search_items'       => __( 'Search Forms', 'mwb-bookings-for-woocommerce' ),
+        'not_found'          => __( 'No forms found.', 'mwb-bookings-for-woocommerce' ),
     );
 
     $args = array(

@@ -149,8 +149,10 @@
 
     // Restore per-post preview + heading
     (function restore() {
-      const savedPreview = localStorage.getItem(previewKey);
+      // const savedPreview = localStorage.getItem(previewKey);
       const savedHeading = localStorage.getItem(headingKey);
+      let $wrapper = $(".wps-form_view-wrap-in");
+      const savedPreview = $wrapper.html();
 
       const $rows = $("#wps-global-calendar-fields-table tbody tr");
 

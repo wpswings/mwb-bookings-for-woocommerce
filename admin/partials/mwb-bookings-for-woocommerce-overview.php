@@ -129,7 +129,7 @@ do_action( 'mwb_mbfw_overview_content_top' );
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
 					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Easy-Booking-Cancellation-&-Confirmations.png' ); ?>" alt="Variable product image">
+						<img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Easy-Booking-Cancellation-and-Confirmations.png' ); ?>" alt="Variable product image">
 					</div>
 					<div class="mwb-overview__keywords-text">
 						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( 'Easy Booking Cancellation', 'mwb-bookings-for-woocommerce' ); ?></h3>

@@ -81,7 +81,7 @@ class Mwb_Bookings_For_Woocommerce {
 		$this->plugin_name = 'bookings-for-woocommerce';
 
 		$this->mwb_bookings_for_woocommerce_dependencies();
-		$this->mwb_bookings_for_woocommerce_locale();
+
 		if ( is_admin() ) {
 			$this->mwb_bookings_for_woocommerce_admin_hooks();
 		} else {
@@ -117,11 +117,6 @@ class Mwb_Bookings_For_Woocommerce {
 		 */
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-bookings-for-woocommerce-loader.php';
 
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-bookings-for-woocommerce-i18n.php';
 
 		if ( is_admin() ) {
 
@@ -155,21 +150,6 @@ class Mwb_Bookings_For_Woocommerce {
 
 	}
 
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Mwb_Bookings_For_Woocommerce_I18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since 2.0.0
-	 */
-	private function mwb_bookings_for_woocommerce_locale() {
-
-		$plugin_i18n = new Mwb_Bookings_For_Woocommerce_I18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
-	}
 
 	/**
 	 * Define the name of the hook to save admin notices for this plugin.

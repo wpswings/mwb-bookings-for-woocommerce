@@ -475,8 +475,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					}
 				}
 				// FullCalendar CDN.
-				wp_enqueue_script('fullcalendar-js', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js', [], null, true);
-				wp_enqueue_style('fullcalendar-css', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css');
+				wp_enqueue_script('fullcalendar-js',MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar-6.1.19/dist/index.global.min.js', [], null, true);
 
 				wp_enqueue_script( 'mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 				// Your plugin JS.
@@ -962,7 +961,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		foreach ( $cart_item['form_data'] as $field) {
     if (!empty($field['value'])) {
 		if ('add-to-cart' == $field['name'])continue;
-        // Make label human-readable (replace -/_ and capitalize)
+        // Make label human-readable (replace -/_ and capitalize).
 
         $label = ucwords(str_replace(['-', '_', '[]'], ' ', $field['name']));
         
@@ -1386,8 +1385,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * Function to add to cart global.
 	 */
 	public function mwb_handle_booking_add_to_cart() {
-		if (isset($_GET['add-booking-to-cart']) && $_GET['add-booking-to-cart'] == '1') {
-			 $json = ($_GET['global_booking_form']);
+		if (isset($_GET['add-booking-to-cart']) && '1' == $_GET['add-booking-to-cart']) {
+			 $json = isset($_GET['global_booking_form'])? wp_unslash( $_GET['global_booking_form'] ) : '';
 
 			 if(! empty($json)){
 				$form_data = json_decode((stripslashes($json)), true);
@@ -1397,8 +1396,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 			$product_id = $this->create_private_booking_product();
 			$booking_date = isset( $_GET['booking_date'] )? sanitize_text_field( wp_unslash( $_GET['booking_date'] ) ) : '';
-			$booking_price = floatval($_GET['booking_price'] ?? 0);
-			$booking_date = ( $_GET['booking_date'] );
+			$booking_price = isset( $_GET['booking_price'] )? floatval( wp_unslash( $_GET['booking_price'] ) ) : 0;
+			$booking_date = isset( $_GET['booking_date'] )? sanitize_text_field( wp_unslash( $_GET['booking_date'] ) ) : ''; ;
 
 			if ($product_id && $booking_date) {
 				// Remove existing booking items (optional).
@@ -1431,10 +1430,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 			wc_add_order_item_meta( $item_id, 'Booking Date', $values['booking_date'] );
 			wc_add_order_item_meta( $item_id, 'Form Data', $values['form_data'] );
-
-								// echo '<pre>';
-								// print_r(wc_get_order_item_meta( $item_id, 'Form Data', true ));
-								// print_r($values['booking_date']);die;
 
 		}
 	}
@@ -1480,25 +1475,34 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 		return 0;
 	}
+
+	/**
+	 * Function to display form before booking calendar.
+	 * 
+	 * @param [type] $atts is the order placed.
+	 * @return void
+	 */
 	public function wps_display_selected_form_before_booking($atts) {
+		// print_r($atts);
         if (empty($atts)) return;
     $selected_form = get_post_meta($atts, '_wps_booking_form_id', true);
-    if (empty($selected_form)) return;
+    // if (empty($selected_form)) return;
 
     $fields = get_post_meta($selected_form, '_wps_global_calendar_form_fields', true);
-    if (empty($fields)) return;
+  	// if (empty($fields)) return;
+  
 	$default_price = get_post_meta($atts, '_booking_default_price', true) ? get_post_meta($atts, '_booking_default_price', true): 0;
 
-    //ob_start(); ?>
+    ?>
     <form method="post" class="wps-global-calendar-form">
 		<div id="booking-calendar-<?php echo esc_attr($atts); ?>"></div>
 
 		<div class="wps-global-selected-field-wrapper">
 			
-		<!-- Dynamic field for showing selected dates -->
+		<!-- Dynamic field for showing selected dates. -->
 		<input type="text" class="wps-global-form-field-for-selected-date" id="selected-dates-<?php echo esc_attr($atts); ?>" readonly placeholder="Selected dates will appear here"></input>
 		<div class="wps-global-form-field-wrapper">
-			<label>Cost </label>
+			<label> <? echo esc_html__('Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
 		<div class="wps_global-selected-date-cost" id="wps_global-selected-date-cost"> <?php echo $default_price;?> X 0 = 0</div>
 		</div>
 		</div>
@@ -1509,19 +1513,25 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			<?php   $form_heading = get_post_meta($selected_form, '_wps_calendar_form_heading', true);
 			
 			if (!empty($form_heading)) {
-				echo '<h2>'.esc_html($form_heading).'</h2>';
+				?> <h2><?php echo esc_html($form_heading); ?></h2> <?php
 
 			}
 			?>
 
 		</div>
-    <!-- Hidden field that WooCommerce will actually use -->
+    <!-- Hidden field that WooCommerce will actually use. -->
     <input type="hidden" id="booking-dates-<?php echo esc_attr($atts); ?>" name="booking_dates" value="">
-	<div class="wps-global-form-field-wr-gr-content">
-        <?php foreach ($fields as $field): 
+	 <?php if ( ! empty($selected_form) && is_array($fields)) {
+			?><div class="wps-global-form-field-wr-gr-content"><?php
+		} else {
+			?>	<div class="wps-global-form-field-wr-gr-content-empty"><?php
+		}
+         if ( ! empty($selected_form)) {
+			if ( ! empty($fields)&& is_array($fields)) {
+			 foreach ($fields as $field): 
 		    $name = sanitize_title($field['label']); 
 			$required = !empty($field['required']) ? 'required' : '';
-			$id = $name . '-' . uniqid(); // ensure unique id for label/input
+			$id = $name . '-' . uniqid(); // ensure unique id for label/input.
              ?>
             <div class="wps-global-form-field-wrapper">
                 <label for="<?php echo esc_attr($id); ?>"><?php echo esc_html($field['label']); ?></label>
@@ -1537,26 +1547,28 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						case 'email':
 						case 'date':
 						case 'text':
-							echo '<input id="'.$id.'" type="'.esc_attr($field['type']).'" name="'.$name.'" '.$required.' />';
+							?>
+							<input id="<?php echo esc_attr($id); ?>" type="<?php echo esc_attr($field['type']); ?>" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($required); ?> />
+							<?php
 							break;
 
 						case 'select':
 							if (!empty($field['options'])) {
-								echo '<select id="'.$id.'" name="'.$name.'" '.$required.'>';
+								?> <select id="<?php echo esc_attr($id); ?>" name="<?php echo esc_attr($name); ?>" <?php echo esc_attr($required); ?>> <?php
 								foreach (explode(',', $field['options']) as $option) {
-									echo '<option value="'.esc_attr(trim($option)).'">'.esc_html(trim($option)).'</option>';
+									?> <option value="<?php echo esc_attr(trim($option)); ?>"><?php echo esc_html(trim($option)); ?></option><?php
 								}
-								echo '</select>';
+								?></select><?php
 							}
 							break;
 
 						case 'multiselect':
 							if (!empty($field['options'])) {
-								echo '<select id="'.$id.'" class="wps_global_multiselect" name="'.$name.'[]" multiple '.$required.'>';
+								?> <select id="<?php echo esc_attr($id); ?>" class="wps_global_multiselect" name="<?php echo esc_attr($name); ?>[]" multiple <?php echo esc_attr($required); ?>> <?php
 								foreach (explode(',', $field['options']) as $option) {
-									echo '<option value="'.esc_attr(trim($option)).'">'.esc_html(trim($option)).'</option>';
+									?> <option value="<?php echo esc_attr(trim($option)); ?>"><?php echo esc_html(trim($option)); ?></option> <?php
 								}
-								echo '</select>';
+								?></select><?php
 							}
 							break;
 
@@ -1565,7 +1577,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								?><div class="wps_global_checkbox_group"><?php
 								foreach (explode(',', $field['options']) as $option) {
 									$opt = trim($option);
-									echo '<label><input id="'.$id.'" type="checkbox" name="'.$name.'[]" value="'.esc_attr($opt).'" '.$required.'> '.esc_html($opt).'</label>';
+									?> <label><input id="<?php echo esc_attr($id); ?>" type="checkbox" name="<?php echo esc_attr($name); ?>[]" value="<?php echo esc_attr($opt); ?>" <?php echo esc_attr($required); ?>> <?php echo esc_html($opt); ?></label> <?php
 								}
 								?></div><?php
 							}
@@ -1576,30 +1588,31 @@ class Mwb_Bookings_For_Woocommerce_Public {
 								?><div class="wps_global_radio_group"><?php
 								foreach (explode(',', $field['options']) as $option) {
 									$opt = trim($option);
-									echo '<label><input id="'.$id.'" type="radio" name="'.$name.'" value="'.esc_attr($opt).'" '.$required.'> '.esc_html($opt).'</label>';
+									?> <label><input id="<?php echo esc_attr($id); ?>" type="radio" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($opt); ?>" <?php echo esc_attr($required); ?>> <?php echo esc_html($opt); ?></label> <?php
 								}
 								?></div><?php
 							}
 							break;
 
                     default:
-                        echo '<input type="text" id="'.$id.'" name="'.$name.'" />';
+                        ?> <input type="text" id="<?php echo esc_attr($id); ?>" name="<?php echo esc_attr($name); ?>" /> <?php
                 }
                 ?>
             </div>
-        <?php endforeach; ?>
-   <!-- hidden add-to-cart field (important for WooCommerce) -->
+        <?php endforeach;
+		}
+	 } ?>
+   <!-- hidden add-to-cart field (important for WooCommerce). -->
     <input type="hidden" name="add-to-cart" value="<?php echo esc_attr($atts); ?>">
-		<!-- Submit button -->
+		<!-- Submit button. -->
 		<button type="submit" class="wps_global_calendar_add_cart_button" id="booking-submit-<?php echo esc_attr($atts); ?>">Add to Cart</button>
-        <!-- <button type="submit">Book now</button> -->
     
 	</div>
 		</div>
 </form>
 	
     <?php
-    // return ob_get_clean();
+
 }
 
 	//end of plugin class.

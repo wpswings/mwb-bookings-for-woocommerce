@@ -110,18 +110,18 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				if ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' == $screen->id ) {
 					wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
 				}
-				wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
-				wp_enqueue_script( 'moment-locale-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment-locale-js.js', array( 'jquery', 'moment-js' ), $this->version, true );
-				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'moment-js' ), $this->version, true );
+				// wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( 'moment-locale-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment-locale-js.js', array( 'jquery', 'wp-date' ), $this->version, true );
+				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'wp-date' ), $this->version, true );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'mwb-bfwp-multi-date-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/multiple-datepicker/jquery-ui.multidatespicker.js', array( 'jquery-ui-core', 'jquery', 'jquery-ui-datepicker' ), time(), true );
 			}
 		} else {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 				wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
-				wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
-				wp_enqueue_script( 'moment-locale-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment-locale-js.js', array( 'jquery', 'moment-js' ), $this->version, true );
-				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'moment-js' ), $this->version, true );
+				// wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
+				wp_enqueue_script( 'moment-locale-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment-locale-js.js', array( 'jquery', 'wp-date' ), $this->version, true );
+				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'wp-date' ), $this->version, true );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'mwb-bfwp-multi-date-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/multiple-datepicker/jquery-ui.multidatespicker.js', array( 'jquery-ui-core', 'jquery', 'jquery-ui-datepicker' ), time(), true );
 		}
@@ -472,10 +472,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		// Loop through the rules and find the matching rule based on the day range.
 		foreach ($pricing_rules as $rule) {
 			if ( $rule['min'] <= $days && $rule['max'] >= $days ) {
-				if ($rule['type'] === 'fixed') {
+				if ( 'fixed' === $rule['type'] ) {
 					// Return the fixed price per day.
 					return floatval($rule['value']);
-				} elseif ($rule['type'] === 'percent') {
+				} elseif ( 'percent' === $rule['type']) {
 					// Calculate the percentage-based price per day.
 					$percent = floatval($rule['value']);
 					return $product_price * (1 - ($percent / 100)); // Apply percentage discount to base price.
@@ -1194,11 +1194,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				foreach ( $form_data as $field) {
 					if (!empty($field['value'])) {
 						if ('add-to-cart' == $field['name'])continue;
-						// Make label human-readable (replace -/_ and capitalize)
+						// Make label human-readable (replace -/_ and capitalize).
 
 						$label = ucwords(str_replace(['-', '_', '[]'], ' ', $field['name']));?>
 						<li>
-								<?php echo ( '<strong>'.$label .':</strong> '. $field['value'] ); ?>
+								<strong><?php echo esc_html( $label );?> :</strong> <?php echo esc_html( $field['value'] ); ?>
 					</li><?php
 
 					}
@@ -1409,11 +1409,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			if ( empty($unavailable_dates)) {
 				$unavailable_dates = '';
 			}
-			// echo $unavailable_dates;
 
 			foreach ($unavailable_dates as $date) {
-				$start = date('Ymd', strtotime($date));
-				$end   = date('Ymd', strtotime($date . ' +1 day'));
+				$start = gmdate('Ymd', strtotime($date));
+				$end   = gmdate('Ymd', strtotime($date . ' +1 day'));
 
 				echo "BEGIN:VEVENT\r\n";// phpcs:ignore
 				echo "SUMMARY:Booking Unavailable\r\n";// phpcs:ignore

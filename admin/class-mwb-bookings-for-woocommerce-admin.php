@@ -90,7 +90,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( 'wps_global_booking' === $post_type ) {
 			wp_enqueue_style( 'flatpickercss', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.css', array(), $this->version, 'all' );
 		}
-		if ( $post_type === 'wps_dynamic_form' ) {
+		if ( 'wps_dynamic_form' === $post_type ) {
 			wp_enqueue_style( 'wps_global_booking_form_design', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-global-booking-form-design.css', array(), $this->version, 'all' );
 		}
 
@@ -182,8 +182,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			);
 		}
 
-    // Only load on dynamic_form edit or list pages
-    if ($post_type === 'wps_dynamic_form') {
+    // Only load on dynamic_form edit or list pages.
+    if ('wps_dynamic_form' === $post_type) {
 				$active_plugins = get_option( 'active_plugins' );
 					if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
 						$is_pro_active = 'yes';
@@ -192,18 +192,25 @@ class Mwb_Bookings_For_Woocommerce_Admin {
         wp_enqueue_script(
             'wps-global-calendar-form-admin',
             MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-global-calendar-form-admin.js',
-            array('jquery'), // jQuery dependency
+            array('jquery'), // jQuery dependency.
             '1.0',
             true
         );
+		if (!isset($post) || !is_object($post)) {
+			$form_heading_color = '';
+		} else {
+			
 			$form_heading_color = get_post_meta($post->ID, '_form_heading_color', true) ? get_post_meta($post->ID, '_form_heading_color', true): '#00aaff';
+
+		}
 
 		wp_localize_script( 'wps-global-calendar-form-admin', 'mwb_mbfw_global_form_obj',
 		 array( 
 			'is_pro_active'=> $is_pro_active, 
-			'form_id'=>$post->ID,
+			'form_id'=>!isset($post)?'':$post->ID,
 			'wps_plugin_url'=> MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL,
 			'form_color'=>$form_heading_color,
+			'bfwp_org_pro_license_valid' => get_option( 'bfwp_org_pro_license_valid' ),
 			'field_empty_msg' => __( 'Please fill all field name before saving.', 'mwb-bookings-for-woocommerce' ),
 			'option_empty_msg' => __( 'Please fill all options before saving.', 'mwb-bookings-for-woocommerce' ),
 		));
@@ -2396,7 +2403,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
         'new_item'           => 'New Form',
         'edit_item'          => 'Edit Form',
         'view_item'          => 'View Form',
-        // 'all_items'          => 'All Forms',
         'search_items'       => 'Search Forms',
         'not_found'          => 'No forms found.',
     );
@@ -2431,7 +2437,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			);
 		add_meta_box(
 			'wps_global_calendar_form_fields',
-			'Form Fields',
+			__('Form Fields', 'mwb-bookings-for-woocommerce' ),
 			array( $this, 'wps_global_calendar_render_form_fields_metabox'),
 			'wps_dynamic_form',
 			'normal',
@@ -2439,19 +2445,19 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		);
 		add_meta_box(
 			'wps_global_calendar_form_view',
-			'Form View',
+			__('Form View', 'mwb-bookings-for-woocommerce' ),
 			array( $this, 'wps_global_calendar_render_dynamic_form_metabox'),
 			'wps_dynamic_form',
 			'side',
 			'default'
 		);
 		 add_meta_box(
-        'wps_booking_form_selector',       // ID
-        __('Select Form', 'textdomain'),   // Title
-        array( $this, 'wps_global_booking_form_metabox'), // Callback
-        'wps_global_booking',              // CPT slug
-        'side',                            // Context (side, normal, advanced)
-        'default'                          // Priority
+        'wps_booking_form_selector',       // ID.
+        __('Select Form', 'mwb-bookings-for-woocommerce'),   // Title.
+        array( $this, 'wps_global_booking_form_metabox'), // Callback.
+        'wps_global_booking',              // CPT slug.
+        'side',                            // Context (side, normal, advanced).
+        'default'                          // Priority.
     );
 	}
 
@@ -2509,9 +2515,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 *
 	 * @param WP_Post $post The post object.
 	 */
-	public 
-// Render Fields Metabox
-function wps_global_calendar_render_form_fields_metabox($post) {
+	public function wps_global_calendar_render_form_fields_metabox($post) {
 	wp_nonce_field( 'mwb_booking_global_product_meta', '_mwb_nonce' );
 
     $fields = get_post_meta($post->ID, '_wps_global_calendar_form_fields', true);
@@ -2535,12 +2539,11 @@ function wps_global_calendar_render_form_fields_metabox($post) {
         <thead>
             <tr>
 				<th></th>
-                <th>Field Label</th>
-                <th>Type</th>
-                <th>Options</th>
-                <!-- <th>Required</th> -->
+                <th><?php esc_html_e('Field Label', 'mwb-bookings-for-woocommerce'); ?></th>
+                <th><?php esc_html_e('Type', 'mwb-bookings-for-woocommerce'); ?></th>
+                <th><?php esc_html_e('Options', 'mwb-bookings-for-woocommerce'); ?></th>
 				<?php do_action('wps_global_calendar_after_field_header'); ?>
-				<th>Actions</th>
+				<th><?php esc_html_e('Actions', 'mwb-bookings-for-woocommerce'); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -2552,7 +2555,7 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 			
 			}
 			if (!isset($field['label'])) {
-				$field['label'] = 'Label';
+				$field['label'] = esc_html__('Label','mwb-bookings-for-woocommerce');
 
 			
 			}?>
@@ -2560,25 +2563,25 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 						<td><img src="<?php echo esc_html( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/image/drag.png" class="form-drag-icon" alt="drag-icon"></td>
 
                         <td>
-                    <input type="text" name="wps_global_calendar_fields[<?php echo $index; ?>][label]" class="wps_global_input_form_field_name" placeholder="Field Label" value="<?php echo esc_attr($field['label']); ?>" />
+                    <input type="text" name="wps_global_calendar_fields[<?php echo esc_html($index); ?>][label]" class="wps_global_input_form_field_name" placeholder="Field Label" value="<?php echo esc_attr($field['label']); ?>" />
 				</td>
                 <td>
-                    <select name="wps_global_calendar_fields[<?php echo $index; ?>][type]" class="wps-global-calendar-field-type">
-                        <option value="text" <?php selected($field['type'], 'text'); ?>>Text</option>
-                        <option value="email" <?php selected($field['type'], 'email'); ?>>Email</option>
-                        <option value="textarea" <?php selected($field['type'], 'textarea'); ?>>Textarea</option>
-                        <option value="number" <?php selected($field['type'], 'number'); ?>>Number</option>
-                        <option value="select" <?php selected($field['type'], 'select'); ?>>Select</option>
-                        <option value="checkbox" <?php selected($field['type'], 'checkbox'); ?>>Checkbox</option>
-                        <option value="radio" <?php selected($field['type'], 'radio'); ?>>Radio</option>
-                        <option value="date" <?php selected($field['type'], 'date'); ?>>Date</option>
-                        <option value="multiselect" <?php selected($field['type'], 'multiselect'); ?>>Multiselect</option>
+                    <select name="wps_global_calendar_fields[<?php echo esc_html($index); ?>][type]" class="wps-global-calendar-field-type">
+                        <option value="text" <?php selected($field['type'], 'text'); ?>><?php esc_html_e('Text', 'mwb-bookings-for-woocommerce'); ?></option>
+                        <option value="email" <?php selected($field['type'], 'email'); ?>><?php esc_html_e('Email', 'mwb-bookings-for-woocommerce'); ?></option>
+                        <option value="textarea" <?php selected($field['type'], 'textarea'); ?>><?php esc_html_e('Textarea', 'mwb-bookings-for-woocommerce'); ?></option>
+                        <option value="number" <?php selected($field['type'], 'number'); ?>><?php esc_html_e('Number', 'mwb-bookings-for-woocommerce'); ?></option>
+                        <option value="select" <?php selected($field['type'], 'select'); ?>><?php esc_html_e('Select', 'mwb-bookings-for-woocommerce'); ?></option>
+                        <option value="checkbox" <?php selected($field['type'], 'checkbox'); ?>><?php esc_html_e('Checkbox', 'mwb-bookings-for-woocommerce'); ?></option>
+                        <option value="radio" <?php selected($field['type'], 'radio'); ?>><?php esc_html_e(' Radio', 'mwb-bookings-for-woocommerce'); ?></option>
+                        <option value="date" <?php selected($field['type'], 'date'); ?>><?php esc_html_e('Date', 'mwb-bookings-for-woocommerce'); ?></option>
+                        <option value="multiselect" <?php selected($field['type'], 'multiselect'); ?>><?php esc_html_e('Multiselect', 'mwb-bookings-for-woocommerce'); ?></option>
                     </select>
 				</td>
                 <td>
 					<span class="wps_global_calendar_description" style="display:<?php echo in_array($field['type'], ['select','multiselect','checkbox','radio']) ? 'none' : 'inline-block' ; ?>;">-</span>
                     <input type="text" 
-                        name="wps_global_calendar_fields[<?php echo $index; ?>][options]" 
+                        name="wps_global_calendar_fields[<?php echo esc_html($index); ?>][options]" 
                         class="wps-global-calendar-options-input" 
                         placeholder="Comma separated options"
                         value="<?php echo isset($field['options']) ? esc_attr($field['options']) : ''; ?>" 
@@ -2586,7 +2589,7 @@ function wps_global_calendar_render_form_fields_metabox($post) {
 				</td>
 				<?php do_action('wps_global_calendar_after_field_options', $index, $field);  ?>
 				 <td style="text-align:center;">
-					<button type="button" class="button wps-remove-field">Delete</button>
+					<button type="button" class="button wps-remove-field"><?php esc_html_e('Delete', 'mwb-bookings-for-woocommerce'); ?></button>
 				</td>
 					</tr>
                 
@@ -2596,17 +2599,22 @@ function wps_global_calendar_render_form_fields_metabox($post) {
     </table>
 	</div>
     </div>
-    <button type="button" class="button" id="wps-global-calendar-add-field">+ Add Field</button>
+    <button type="button" class="button" id="wps-global-calendar-add-field">+ <?php esc_html_e('Add Field', 'mwb-bookings-for-woocommerce'); ?></button>
     <?php
 }
 
+/**
+ * Render the dynamic form meta box.
+ *
+ * @param WP_Post $post The post object.
+ */
 public function wps_global_booking_form_metabox($post) {
-    // Retrieve saved value
+    // Retrieve saved value.
     $selected_form = get_post_meta($post->ID, '_wps_booking_form_id', true);
 
-    // Fetch all dynamic forms (replace with your form CPT slug, e.g., wps_global_calendar)
+    // Fetch all dynamic forms (replace with your form CPT slug, e.g., wps_global_calendar).
     $forms = get_posts(array(
-        'post_type'      => 'wps_dynamic_form', // <-- your dynamic form CPT
+        'post_type'      => 'wps_dynamic_form', // <-- your dynamic form CPT.
         'posts_per_page' => -1,
         'post_status'    => 'publish',
         'orderby'        => 'title',
@@ -2616,20 +2624,26 @@ public function wps_global_booking_form_metabox($post) {
     // Security nonce
     wp_nonce_field('wps_booking_form_nonce_action', 'wps_booking_form_nonce');
 
-    echo '<label for="wps_booking_form_field">'.__('Choose a form:', 'textdomain').'</label><br />';
-    echo '<select name="wps_booking_form_field" id="wps_booking_form_field" style="width:100%;">';
-    echo '<option value="">-- Select Form --</option>';
-
+    ?><label for="wps_booking_form_field"><?php echo esc_html__('Choose a form:', 'mwb-bookings-for-woocommerce'); ?></label><br />
+    <select name="wps_booking_form_field" id="wps_booking_form_field" style="width:100%;">
+    <option value="">-- Select Form --</option>
+<?php
     if ($forms) {
         foreach ($forms as $form) {
             $selected = selected($selected_form, $form->ID, false);
-            echo '<option value="'.esc_attr($form->ID).'" '.$selected.'>'.esc_html($form->post_title).'</option>';
+            ?> <option value="<?php echo esc_attr($form->ID); ?>" <?php echo esc_attr($selected); ?>><?php echo esc_html($form->post_title); ?></option>
+        <?php
         }
     }
 
-    echo '</select>';
+    ?> </select> <?php
 }
 
+	/**
+	 * Save global dynamic form meta data.
+	 *
+	 * @param int $post_id The post ID.
+	 */
 	public function save_global_dynamic_form_meta($post_id) {
 		// Only proceed for the correct post type.
 		if (get_post_type($post_id) !== 'wps_dynamic_form') {
@@ -2648,10 +2662,10 @@ public function wps_global_booking_form_metabox($post) {
 
 		if (isset($_POST['wps_global_calendar_fields'])) {
 			if ( isset ($_POST['wps_global_calendar_fields'])) {
-			update_post_meta($post_id, '_wps_global_calendar_form_fields', $_POST['wps_global_calendar_fields']);
+				update_post_meta($post_id, '_wps_global_calendar_form_fields', map_deep( wp_unslash($_POST['wps_global_calendar_fields']),'sanitize_text_field'));
 			}
 			if (isset($_POST['wps_calendar_form_heading'])) {
-				update_post_meta($post_id, '_wps_calendar_form_heading', $_POST['wps_calendar_form_heading']);
+				update_post_meta($post_id, '_wps_calendar_form_heading', sanitize_text_field(wp_unslash($_POST['wps_calendar_form_heading'])));
 			}
 			if (isset($_POST['wps_calendar_form_color'])) {
 			update_post_meta($post_id, '_form_heading_color', sanitize_hex_color(wp_unslash($_POST['wps_calendar_form_color'])));
@@ -2943,10 +2957,12 @@ public function wps_global_booking_form_metabox($post) {
 		}
 	}
 
+	/**
+	 * Render the dynamic form meta box.
+	 */
 	public function wps_global_calendar_render_dynamic_form_metabox(){
-				include_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-global-booking-form-display.php';
+		include_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-global-booking-form-display.php';
 
-		
 	}
 
 	/**
@@ -2958,7 +2974,7 @@ public function wps_global_booking_form_metabox($post) {
 	 */
 	public function wps_dynamic_form_default_title( $title, $post ) {
 
-		// Change 'your_cpt_slug' to your custom post type slug
+		// Change 'your_cpt_slug' to your custom post type slug.
 		if ( 'wps_dynamic_form' === $post->post_type && 'auto-draft' === $post->post_status ) {
 			$title = __( 'Form', 'mwb-bookings-for-woocommerce' ) . ' #' . $post->ID;
 		}

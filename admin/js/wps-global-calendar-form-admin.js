@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
                 <input type="text" name="wps_global_calendar_fields[${index}][options]" class="wps-global-calendar-options-input" placeholder="Comma separated options" style="display:none;" />
                 </td>`;
                 if(mwb_mbfw_global_form_obj.is_pro_active === 'yes'){
-                    if(bfwp_admin_pro_global.licence_valid && bfwp_admin_pro_global.day_count > 0 ) {
+                    if(bfwp_admin_pro_global.licence_valid || bfwp_admin_pro_global.day_count > 0 ) {
 
                     fieldHTML += `<td><label style="margin-left:10px;"><input type="checkbox" name="wps_global_calendar_fields[${index}][required]" value="1" />Required</label></td>`;
                 }}

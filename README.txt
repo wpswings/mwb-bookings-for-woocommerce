@@ -5,7 +5,7 @@ Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
 Tested up to: 6.8.2
 WC requires at least: 6.8.1
-WC tested up to: 10.1.1
+WC tested up to: 10.2.1
 Stable tag: 3.9.0
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
@@ -43,7 +43,9 @@ You can now simply book time slots utilizing the WordPress booking plugin, confi
 Merchants can sync their global booking calendar with their Airbnb listing calendar. If specific dates are set as unavailable on Airbnb, an automated cron job that runs every 5 minutes will update the bookings calendar( listed on your WooCommerce store) to block those same dates, and vice versa. Similarly, any changes made in your store’s global calendar will reflect on Airbnb’s calendar too, ensuring both stay perfectly in sync.
 
 ####2) Global Calendar Booking 
-By utilizing this feature of the bookings plugin, merchants can easily incorporate the global calendar to any page across their booking website. This eliminates the hassle of creating multiple calendars. 
+By utilizing this feature of the booking plugin, merchants can easily integrate the global calendar into any page on their booking website. This eliminates the hassle of creating multiple calendars. Merchants can also add unique forms to the global calendars; these forms are there to collect relevant information that will help you process the bookings more efficiently. Once a date is marked unavailable, the same date can not be marked available, and vice-versa.
+
+**NOTE:** Merchants can only add up to 5 fields while creating the form if you’re using the Free version of the plugin, and the “required” action is only accessible for users with the Premium Version.  
 
 ####3) Hide Unavailable Dates
 Merchants can utilize this WooCommerce booking functionality to hide unavailable dates, avoiding confusion for customers. 
@@ -255,6 +257,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 16. Compatibility With Points and Rewards – Allow customers to earn points.
 17. Global Calendar 
 18. Sync Global Calendar With AirBnb.
+19. Global Calendar Form: The admins can create forms for global calendars to collect relevant customer information.
 
 == Frequently Asked Questions ==
 
@@ -302,6 +305,12 @@ In our plugin, there are two types of booking units-
 Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/bookings-for-woocommerce/?utm_source=wpswings-bookings-kb&utm_medium=bookings-org-page&utm_campaign=bookings-kb)
 
 == Changelog ==
+
+= 3.9.0 - Released on 24 September 2025 =
+
+* New: Work availability with global calendar in calendar selecting availability and unavailability.
+* New : Create form and attach them to global calendars.
+* New: Latest compatibility With WP[6.8.2] and WC[10.2.1].
 
 = 3.8.0 - Released on 29 August 2025 =
 * New: Optimize all Cost of different calendar with WooCommerce date format.
@@ -520,6 +529,8 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.8.0 - Released on 29 August 2025 =
-* New: Optimize all Cost of different calendar with WooCommerce date format.
-* New: Latest compatibility With WP[6.8.2] and WC[10.1.1].
+= 3.9.0 - Released on 24 September 2025 =
+
+* New: Work availability with global calendar in calendar selecting availability and unavailability.
+* New : Create form and attach them to global calendars.
+* New: Latest compatibility With WP[6.8.2] and WC[10.2.1].

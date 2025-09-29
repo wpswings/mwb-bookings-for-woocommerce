@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Bookings For WooCommerce 3.8.0\n"
-"POT-Creation-Date: 2025-08-29 15:43+0530\n"
+"Project-Id-Version: Bookings For WooCommerce 3.9.0\n"
+"POT-Creation-Date: 2025-09-23 18:35+0530\n"
 "PO-Revision-Date: 2023-07-12 15:58+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -18,1007 +18,1100 @@ msgstr ""
 "translate_nooped_plural\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:125
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:131
 msgid "Today"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:126
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:132
 msgid "Month"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:127
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:133
 msgid "Week"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:128
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:134
 msgid "Day"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:129
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:135
 msgid "List"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:144
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:150
 msgid "Booking cost should not be less than 0  !"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:145
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:151
 msgid "End time should be greater than start time"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:146
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:152
 msgid "Start time should be less than end time"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:240
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:214
+msgid "Please fill all field name before saving."
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:215
+msgid "Please fill all options before saving."
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:284
 #: mwb-bookings-for-woocommerce.php:84 mwb-bookings-for-woocommerce.php:90
-#: mwb-bookings-for-woocommerce.php:413
+#: mwb-bookings-for-woocommerce.php:406
 msgid "Bookings For WooCommerce"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:374
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:418
 msgid "Enable Plugin"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:376
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:420
 msgid "Enable plugin."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:383
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:427
 msgid "Enable Bookings"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:385
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:429
 msgid ""
 "Enable to start the bookings for customers else customers can not do the "
 "bookings."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:392
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:436
 msgid "Disable book now button on empty form"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:394
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:438
 msgid "Disable book now button if dates are not choosen on calendar ."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:412
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:496
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:550
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:456
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:540
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:594
 msgid "Save Settings"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:428
-#: includes/class-mwb-bookings-for-woocommerce.php:472
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:472
+#: includes/class-mwb-bookings-for-woocommerce.php:457
 msgid "Booking Form Settings"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:430
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:474
 msgid "Booking Form Settings Heading"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:435
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:479
 msgid "Display Included Services"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:439
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:483
 #, php-format
 msgid "Enable this to show %s on the booking form."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:440
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:484
 msgid "booking services"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:448
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:492
 msgid "Display Totals"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:450
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:494
 msgid ""
 "Enable this to display the booking total for different services and "
 "quantities while booking."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:457
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:501
 msgid "Please Select the language for calendar"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:460
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:504
 msgid "Specify the language for the days and months of the calendar."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:467
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:511
 msgid "Please Select start day of the week"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:470
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:514
 msgid "Specify the first day of the week."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:475
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2240
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:519
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2311
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2574
 msgid "Select"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:476
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:520
 msgid "Sunday"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:477
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:521
 msgid "Monday"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:478
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:522
 msgid "Tuesday"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:479
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:523
 msgid "Wednesday"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:480
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:524
 msgid "Thrusday"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:481
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:525
 msgid "Friday"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:482
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:526
 msgid "Saturday"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:513
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:557
 msgid "Enable availability setting"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:518
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:562
 msgid ""
 "Enable this to apply availability setting for your product, Your Product "
 "will appear only in available time set up by you."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:522
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:566
 msgid "Daily Start Time"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:528
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:572
 msgid ""
 "Please choose daily start time, users will be able to book from this time."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:531
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:575
 msgid "Daily End Time"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:537
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:581
 msgid ""
 "Please choose daily end time, bookings will be closed for users after this "
 "time."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:665
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:711
 msgid "Id of some field is missing"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:668
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:714
 msgid "Settings saved Successfully"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:682
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:728
 msgid "Booking product"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:703
-#: includes/class-mwb-bookings-for-woocommerce.php:427
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:749
+#: includes/class-mwb-bookings-for-woocommerce.php:412
 msgid "General Settings"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:709
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:755
 msgid "Costs"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:715
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1518
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1749
-#: common/class-mwb-bookings-for-woocommerce-common.php:1038
-#: public/class-mwb-bookings-for-woocommerce-public.php:881
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:761
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1565
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1796
+#: common/class-mwb-bookings-for-woocommerce-common.php:1049
+#: public/class-mwb-bookings-for-woocommerce-public.php:898
 #: public/templates/mwb-bookings-for-woocommerce-public-show-people-option.php:21
 msgid "People"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:721
-#: mwb-bookings-for-woocommerce.php:271
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:767
+#: mwb-bookings-for-woocommerce.php:266
 msgid "Services"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:727
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:773
 msgid "Availability"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:750
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:796
 msgid "Booking type"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:752
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:798
 msgid "Dual Calendar"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:753
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:799
 msgid "Single Calendar"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:755
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:801
 msgid ""
 "Notice : Please go to availability setting and set available days and time "
 "slot !"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:758
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1753
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:804
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1800
 msgid "Quantity"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:760
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:806
 msgid "Customers can choose"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:761
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:807
 msgid "Fixed unit"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:764
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:810
 msgid ""
 "Select the booking criteria. If it is Set Daily time slots predetermined, "
 "enter the fixed number; otherwise, customer will opt for any number for "
 "booking."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:771
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:817
 msgid "Booking Confirmation"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:772
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:818
 msgid "Booking confirmation required by admin."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:780
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:826
 msgid "Cancellation Allowed"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:781
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:827
 msgid ""
 "When you enable this option, your users will be able to effortlessly cancel "
 "any booking requests they previously placed."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:794
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:840
 msgid "Order statuses"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:798
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:844
 msgid ""
 "Please select the desired order statuses at which the orders can be "
 "cancelled by users."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:808
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:854
 msgid "Booking Unit"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:813
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:859
 msgid "Please select booking unit to consider while booking."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:815
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:861
 msgid "Day(s)"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:816
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:862
 msgid "Hour(s)"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:826
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:872
 msgid "Enable to show check-in and check-out time with date on calender"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:827
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:873
 msgid ""
 "This option would enable to show check-in and check-out time with dates on "
 "calendar on the site ( a calendar will be shown while booking )."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:833
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:879
 msgid "Daily booking start time on calendar"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:837
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:883
 msgid "Set daily booking start time on frontend"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:845
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:891
 msgid "Daily booking end time on calendar"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:849
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:895
 msgid "Set daily booking end time on frontend"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:870
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:916
 msgid "Hide General Cost from Product Page"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:871
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:917
 msgid "Enable to hide General cost from Product Page."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:879
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:925
 msgid "Booking Unit Cost"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:880
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:926
 msgid ""
 "Enter unit cost i.e. the booking unit cost for the particular service that "
 "you’re opting to book for."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:895
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:941
 msgid "Booking Unit Cost Per People"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:896
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:942
 msgid ""
 "Enabling this would determine your booking unit cost multiplied by number of "
 "people."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:904
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:950
 msgid "Hide Base Cost from Product Page"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:905
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:951
 msgid "Enable to hide Base cost from Product Page."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:913
-#: common/class-mwb-bookings-for-woocommerce-common.php:670
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:959
+#: common/class-mwb-bookings-for-woocommerce-common.php:679
 msgid "Base Cost"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:914
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:960
 msgid ""
 "Enter base cost i.e. the base rental cost for the service that you’re opting "
 "to book for. "
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:929
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:975
 msgid "Base Cost Per People"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:930
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:976
 msgid ""
 "Enabling this would determine your booking base cost multiplied by number of "
 "people."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:941
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:987
 msgid "Show notice of cost range on product page"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:942
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:988
 msgid "Enabling this Show notice of cost range on product page."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:953
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:999
 #, php-format
 msgid ""
 "To Add Additional cost Please add Booking costs in the Booking costs "
 "taxonomy %s , and select Booking costs tags."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:971
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1017
 msgid "Enable People Option"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:974
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1020
 msgid "People Option will be Visible While Booking."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:984
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1030
 msgid "Minimum No. of People"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:985
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1031
 msgid "Minimum Number of People Per Booking"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1001
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1047
 msgid "Maximum No. of People"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1002
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1048
 msgid "Maximum Number of People Per Booking"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1020
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1066
 msgid "Add Extra Services"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1023
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1069
 msgid "Add Extra Services, will be chosen by Customer while Booking."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1032
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1078
 #, php-format
 msgid ""
 "To Add Additional Services Please add Booking Services in the Booking "
 "Services taxonomy %s and select Services taxonomy from tag."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1046
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1092
 msgid "Choose Upcoming Holiday to disable booking on that day"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1049
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1095
 msgid "Bookings will be unavailable on that day."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1069
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1115
 #, php-format
 msgid "To Choose daily start time and end time please %s."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1070
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1116
 msgid "visit here"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1077
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1123
 msgid "Set days availability"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1080
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1126
 msgid "Bookings will be available on these days."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1089
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1135
 msgid "Set days availability upto"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1092
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1138
 msgid "Bookings will be available till the day selected these days."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1104
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1150
 msgid "Enable to use Days availabilty and days availability upto Together"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1105
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1151
 msgid ""
 "Enable if you want days availabilty and days availability upto worked "
 "together."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1112
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1158
 msgid "Booking Slot format"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1117
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1163
 msgid "Please select date format to display in fornt end while booking."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1119
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1165
 msgid "24 hour"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1120
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1166
 msgid "AM/PM"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1128
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1174
 msgid "Hide/Disable Unavailable Slots "
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1133
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1179
 msgid ""
 "Please select the option to hide or disable slots when slot is unavailable."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1135
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1181
 msgid "Hide"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1136
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1182
 msgid "Disable"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1146
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1192
 msgid "Enable if create slots for night hours"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1147
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1193
 msgid "Bookings can be done from 23:00 - 01:00."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1341
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1454
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1388
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1501
 msgid "Booking Cost"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1342
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1389
 msgid "Please Add Booking cost here."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1348
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1466
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1647
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1395
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1513
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1694
 msgid "Multiply by No. of People"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1352
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1469
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1571
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1650
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1399
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1516
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1618
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1697
 msgid "Either to multiply by number of people."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1355
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1402
 msgid "Multiply by Duration"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1359
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1477
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1658
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1406
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1524
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1705
 msgid "Either to multiply by Duration of Booking."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1390
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1427
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1437
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1474
 msgid "="
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1457
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1504
 msgid "Please Add booking cost here."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1474
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1521
 msgid "Multiply by Duration of Booking"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1517
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1748
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2363
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1564
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1795
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2480
+#: public/class-mwb-bookings-for-woocommerce-public.php:1505
 msgid "Cost"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1519
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1750
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1566
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1797
 msgid "Duration"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1560
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1636
-#: common/class-mwb-bookings-for-woocommerce-common.php:659
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1607
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1683
+#: common/class-mwb-bookings-for-woocommerce-common.php:668
 msgid "Service Cost"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1561
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1639
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1608
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1686
 msgid "Please Add service cost here."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1567
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1614
 msgid "Multiply by Number of People"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1574
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1655
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1621
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1702
 msgid "Multiply by Booking Duration"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1578
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1625
 msgid "Either to multiply by Booking Duration."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1581
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1663
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1628
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1710
 msgid "If Optional"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1585
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1666
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1632
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1713
 msgid "Either the Service is Optional."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1588
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1671
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1635
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1718
 msgid "If Hidden"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1592
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1674
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1639
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1721
 msgid "Either the Service is Hidden."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1595
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1679
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1642
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1726
 msgid "If has Quantity"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1599
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1646
 msgid "Either the service has quantity."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1605
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1687
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1652
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1734
 msgid "Minimum Quantity"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1606
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1690
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1653
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1737
 msgid "Please Add Minimum Quantity of the Service Bookable."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1614
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1697
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1661
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1744
 msgid "Maximum Quantity"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1615
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1662
 msgid "Please Add Maximum Quantity of the Service Bookable."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1682
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1729
 msgid "Either the Service has Quantity."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1700
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1747
 msgid "Please Add Maximum Quantity."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1751
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1798
 msgid "Optional"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1752
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1799
 msgid "Hidden"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1799
-#: includes/class-mwb-bookings-for-woocommerce.php:775
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1846
+#: includes/class-mwb-bookings-for-woocommerce.php:760
 msgid "yes"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1801
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1848
 msgid "no"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1818
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1840
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1865
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1887
 msgid "This order contains Booking Service/Product."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1819
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1841
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1866
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1888
 msgid "Booking Order"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1863
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1910
 msgid "choose filter.."
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1866
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1913
 msgid "Filter by Booking"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1932
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1979
 #: admin/partials/mwb-bookings-for-woocommerce-time-slot.php:35
-#: common/class-mwb-bookings-for-woocommerce-common.php:1085
-#: common/class-mwb-bookings-for-woocommerce-common.php:1117
-#: public/class-mwb-bookings-for-woocommerce-public.php:690
-#: public/class-mwb-bookings-for-woocommerce-public.php:705
-#: public/class-mwb-bookings-for-woocommerce-public.php:745
-#: public/class-mwb-bookings-for-woocommerce-public.php:914
+#: common/class-mwb-bookings-for-woocommerce-common.php:1096
+#: common/class-mwb-bookings-for-woocommerce-common.php:1128
+#: public/class-mwb-bookings-for-woocommerce-public.php:702
+#: public/class-mwb-bookings-for-woocommerce-public.php:717
+#: public/class-mwb-bookings-for-woocommerce-public.php:757
+#: public/class-mwb-bookings-for-woocommerce-public.php:931
 msgid "From"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1934
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1981
 #: admin/partials/mwb-bookings-for-woocommerce-time-slot.php:36
-#: common/class-mwb-bookings-for-woocommerce-common.php:1088
-#: common/class-mwb-bookings-for-woocommerce-common.php:1120
-#: public/class-mwb-bookings-for-woocommerce-public.php:691
-#: public/class-mwb-bookings-for-woocommerce-public.php:706
-#: public/class-mwb-bookings-for-woocommerce-public.php:749
-#: public/class-mwb-bookings-for-woocommerce-public.php:918
+#: common/class-mwb-bookings-for-woocommerce-common.php:1099
+#: common/class-mwb-bookings-for-woocommerce-common.php:1131
+#: public/class-mwb-bookings-for-woocommerce-public.php:703
+#: public/class-mwb-bookings-for-woocommerce-public.php:718
+#: public/class-mwb-bookings-for-woocommerce-public.php:761
+#: public/class-mwb-bookings-for-woocommerce-public.php:935
 msgid "To"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:1936
-#: common/class-mwb-bookings-for-woocommerce-common.php:1149
-#: public/class-mwb-bookings-for-woocommerce-public.php:924
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:1983
+#: common/class-mwb-bookings-for-woocommerce-common.php:1160
+#: public/class-mwb-bookings-for-woocommerce-public.php:941
 msgid "Booking Dates"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2210
-#: common/class-mwb-bookings-for-woocommerce-common.php:1060
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2263
+#: common/class-mwb-bookings-for-woocommerce-common.php:1071
 msgid "Service(s)"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2238
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2309
 msgid "Azerbaijani"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2241
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2312
 msgid "Default (English)"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2242
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2313
 msgid "Austria"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2243
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2314
 msgid "Belarusian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2244
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2315
 msgid "Bulgarian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2245
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2316
 msgid "Bengali"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2246
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2317
 msgid "Bosnian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2247
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2318
 msgid "Catalan"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2248
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2319
 msgid "Czech"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2249
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2320
 msgid "Welsh"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2250
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2321
 msgid "Danish"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2251
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2322
 msgid "German"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2252
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2323
 msgid "Esperanto"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2253
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2324
 msgid "Spanish"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2254
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2325
 msgid "Estonian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2255
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2326
 msgid "Persian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2256
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2327
 msgid "Finnish"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2257
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2328
 msgid "French"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2258
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2329
 msgid "Greek"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2259
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2330
 msgid "Hebrew"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2260
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2331
 msgid "Hindi"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2261
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2332
 msgid "Croatian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2262
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2333
 msgid "Hungarian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2263
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2334
 msgid "Indonesian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2264
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2335
 msgid "Icelandic"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2265
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2336
 msgid "Italian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2266
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2337
 msgid "Japanese"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2267
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2338
 msgid "Georgian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2268
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2339
 msgid "Khmer"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2269
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2340
 msgid "Korean"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2270
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2341
 msgid "Lithuanian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2271
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2342
 msgid "Latvian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2272
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2343
 msgid "Macedonian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2273
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2344
 msgid "Mongolian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2274
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2345
 msgid "Burmese"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2275
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2346
 msgid "Dutch"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2276
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2347
 msgid "Norwegian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2277
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2348
 msgid "Punjabi"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2278
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2349
 msgid "Polish"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2279
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2350
 msgid "Portuguese"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2280
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2351
 msgid "Romanian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2281
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2352
 msgid "Russian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2282
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2353
 msgid "Sinhala"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2283
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2354
 msgid "Slovak"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2284
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2355
 msgid "Slovenian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2285
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2356
 msgid "Albanian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2286
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2357
 msgid "Serbian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2287
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2358
 msgid "Swedish"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2288
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2359
 msgid "Thai"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2289
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2360
 msgid "Turkish"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2290
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2361
 msgid "Ukrainian"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2291
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2362
 msgid "Uzbek"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2292
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2363
 msgid "Vietnamese"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2293
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2364
 msgid "Chinese (Simplified)"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2316
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2386
 msgid "Global Bookings"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2317
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2387
 msgid "Global Booking"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2318
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2388
 msgid "Add New Booking"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2319
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2389
 msgid "Edit Booking"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2336
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2429
 msgid "Booking Settings"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2339
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2432
 msgid "Airbnb iCal Export Link"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2366
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2440
+msgid "Form Fields"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2448
+msgid "Form View"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2456
+msgid "Select Form"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2483
 msgid "Available Days"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2369
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2486
 msgid "Non-Available Days"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2372
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2489
 msgid "Availibilty Color"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2375
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2492
 msgid "AirBNB ical link"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2518
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2542
+msgid "Field Label"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2543
+msgid "Type"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2544
+msgid "Options"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2546
+#: admin/partials/mwb-bookings-for-woocommerce-time-slot.php:37
+#: public/partials/wps-mybookings-details-tab.php:20
+msgid "Actions"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2558
+msgid "Label"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2570
+msgid "Text"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2571
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:418
+msgid "Email"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2572
+msgid "Textarea"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2573
+msgid "Number"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2575
+msgid "Checkbox"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2576
+msgid " Radio"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2577
+msgid "Date"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2578
+msgid "Multiselect"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2592
+msgid "Delete"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2602
+msgid "Add Field"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2627
+msgid "Choose a form:"
+msgstr ""
+
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2805
 msgid "Shortcode"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2538
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2825
 msgid "Copy"
 msgstr ""
 
-#: admin/class-mwb-bookings-for-woocommerce-admin.php:2566
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2853
 msgid "Once every 5 minutes"
 msgstr ""
 
+#: admin/class-mwb-bookings-for-woocommerce-admin.php:2979
+msgid "Form"
+msgstr ""
+
 #: admin/partials/mwb-bookings-for-woocommerce-admin-dashboard.php:70
-#: mwb-bookings-for-woocommerce.php:269
+#: mwb-bookings-for-woocommerce.php:264
 msgid "Documentation"
 msgstr ""
 
 #: admin/partials/mwb-bookings-for-woocommerce-admin-dashboard.php:84
-#: mwb-bookings-for-woocommerce.php:270
+#: mwb-bookings-for-woocommerce.php:265
 msgid "Support"
 msgstr ""
 
@@ -1070,6 +1163,14 @@ msgstr ""
 
 #: admin/partials/mwb-bookings-for-woocommerce-developer.php:76
 msgid "Public Hooks"
+msgstr ""
+
+#: admin/partials/mwb-bookings-for-woocommerce-global-booking-form-display.php:21
+msgid "Additional Information"
+msgstr ""
+
+#: admin/partials/mwb-bookings-for-woocommerce-global-booking-form-display.php:26
+msgid "Add to cart"
 msgstr ""
 
 #: admin/partials/mwb-bookings-for-woocommerce-overview.php:31
@@ -1204,7 +1305,7 @@ msgid ""
 msgstr ""
 
 #: admin/partials/mwb-bookings-for-woocommerce-overview.php:132
-msgid "admin/image/Easy-Booking-Cancellation-&-Confirmations.png"
+msgid "admin/image/Easy-Booking-Cancellation-and-Confirmations.png"
 msgstr ""
 
 #: admin/partials/mwb-bookings-for-woocommerce-overview.php:135
@@ -1223,11 +1324,6 @@ msgstr ""
 
 #: admin/partials/mwb-bookings-for-woocommerce-time-slot.php:27
 msgid "Set Daily time slots ( Cost will be calculated according to per hour. )"
-msgstr ""
-
-#: admin/partials/mwb-bookings-for-woocommerce-time-slot.php:37
-#: public/partials/wps-mybookings-details-tab.php:20
-msgid "Actions"
 msgstr ""
 
 #: admin/partials/mwb-bookings-for-woocommerce-time-slot.php:91
@@ -1271,7 +1367,7 @@ msgid ""
 msgstr ""
 
 #: common/class-mwb-bookings-for-woocommerce-common.php:137
-#: common/class-mwb-bookings-for-woocommerce-common.php:684
+#: common/class-mwb-bookings-for-woocommerce-common.php:693
 msgid "Additional Costs"
 msgstr ""
 
@@ -1384,66 +1480,62 @@ msgstr ""
 msgid "List All Bookings"
 msgstr ""
 
-#: common/class-mwb-bookings-for-woocommerce-common.php:674
+#: common/class-mwb-bookings-for-woocommerce-common.php:683
 msgid "General Cost"
 msgstr ""
 
-#: common/class-mwb-bookings-for-woocommerce-common.php:748
+#: common/class-mwb-bookings-for-woocommerce-common.php:758
 msgid "/day"
 msgstr ""
 
-#: common/class-mwb-bookings-for-woocommerce-common.php:752
+#: common/class-mwb-bookings-for-woocommerce-common.php:762
 msgid "/hour"
 msgstr ""
 
-#: common/class-mwb-bookings-for-woocommerce-common.php:788
+#: common/class-mwb-bookings-for-woocommerce-common.php:798
 #: public/partials/wps-mybookings-details-tab.php:19
 msgid "Total"
 msgstr ""
 
-#: common/class-mwb-bookings-for-woocommerce-common.php:937
-#: common/class-mwb-bookings-for-woocommerce-common.php:1336
+#: common/class-mwb-bookings-for-woocommerce-common.php:947
+#: common/class-mwb-bookings-for-woocommerce-common.php:1375
 msgid "confirmation required from admin."
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:357
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:358
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:376
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:377
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:382
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:383
 msgid "Industry Type"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:413
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:414
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:417
-msgid "Email"
-msgstr ""
-
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:425
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:426
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:430
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:431
 msgid "Contact Number"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:543
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:544
 #, php-format
 msgid "Let us know why you are deactivating %s so we can improve the plugin"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:549
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:550
 msgid "Reason"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:788
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:789
 msgid "Unexpected Error Occured"
 msgstr ""
 
@@ -1451,30 +1543,30 @@ msgstr ""
 msgid "Something went wrong: "
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:433
+#: includes/class-mwb-bookings-for-woocommerce.php:418
 msgid "Configuration Settings"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:447
+#: includes/class-mwb-bookings-for-woocommerce.php:432
 msgid "Bookings Calendar"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:452
+#: includes/class-mwb-bookings-for-woocommerce.php:437
 msgid "Availability Settings"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:457
+#: includes/class-mwb-bookings-for-woocommerce.php:442
 msgid "Overview"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:500
+#: includes/class-mwb-bookings-for-woocommerce.php:485
 #, php-format
 msgid ""
 "Unable to locate file at location \"%s\". Some features may not work "
 "properly in this plugin. Please contact us!"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:886
+#: includes/class-mwb-bookings-for-woocommerce.php:871
 msgid "Availability by Days"
 msgstr ""
 
@@ -1483,7 +1575,7 @@ msgid "Book Now"
 msgstr ""
 
 #: includes/class-wc-product-mwb-booking.php:108
-#: public/class-mwb-bookings-for-woocommerce-public.php:954
+#: public/class-mwb-bookings-for-woocommerce-public.php:987
 msgid "View Details"
 msgstr ""
 
@@ -1496,109 +1588,117 @@ msgstr ""
 msgid "oops looks like nothing is here"
 msgstr ""
 
-#: mwb-bookings-for-woocommerce.php:201
+#: mwb-bookings-for-woocommerce.php:196
 msgid "Settings"
 msgstr ""
 
-#: mwb-bookings-for-woocommerce.php:204
+#: mwb-bookings-for-woocommerce.php:199
 msgid "Go Pro"
 msgstr ""
 
-#: mwb-bookings-for-woocommerce.php:267
+#: mwb-bookings-for-woocommerce.php:262
 msgid "Demo"
 msgstr ""
 
-#: mwb-bookings-for-woocommerce.php:268
+#: mwb-bookings-for-woocommerce.php:263
 msgid "Video"
 msgstr ""
 
-#: mwb-bookings-for-woocommerce.php:414
+#: mwb-bookings-for-woocommerce.php:407
 msgid "WooCommerce"
 msgstr ""
 
-#: mwb-bookings-for-woocommerce.php:417
+#: mwb-bookings-for-woocommerce.php:410
 #, php-format
 msgid ""
 "%1$s requires %2$s to function correctly. Please activate %2$s before "
 "activating %1$s. For now, the plugin has been deactivated."
 msgstr ""
 
-#: onboarding/templates/mwb-bookings-for-woocommerce-deactivation-template.php:53
+#: onboarding/templates/mwb-bookings-for-woocommerce-deactivation-template.php:47
 msgid "May we have a little info about why you are deactivating?"
 msgstr ""
 
-#: onboarding/templates/mwb-bookings-for-woocommerce-deactivation-template.php:75
+#: onboarding/templates/mwb-bookings-for-woocommerce-deactivation-template.php:63
 msgid "Skip and Deactivate Now"
 msgstr ""
 
-#: onboarding/templates/mwb-bookings-for-woocommerce-onboarding-template.php:43
+#: onboarding/templates/mwb-bookings-for-woocommerce-onboarding-template.php:42
 msgid "Welcome to WP Swings"
 msgstr ""
 
-#: onboarding/templates/mwb-bookings-for-woocommerce-onboarding-template.php:44
+#: onboarding/templates/mwb-bookings-for-woocommerce-onboarding-template.php:43
 msgid ""
 "We love making new friends! Subscribe below and we promise to keep you up-to-"
 "date with our latest new plugins, updates, awesome deals and a few special "
 "offers."
 msgstr ""
 
-#: onboarding/templates/mwb-bookings-for-woocommerce-onboarding-template.php:56
+#: onboarding/templates/mwb-bookings-for-woocommerce-onboarding-template.php:55
 msgid "Skip For Now"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:418
+#: public/class-mwb-bookings-for-woocommerce-public.php:424
 msgid "To date can not be less than from date."
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:419
+#: public/class-mwb-bookings-for-woocommerce-public.php:425
 msgid "From date can not be greater than To date."
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:439
+#: public/class-mwb-bookings-for-woocommerce-public.php:445
 msgid "Please select valid date!"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:516
+#: public/class-mwb-bookings-for-woocommerce-public.php:526
+msgid "required"
+msgstr ""
+
+#: public/class-mwb-bookings-for-woocommerce-public.php:527
+msgid "Please select at least one date to book."
+msgstr ""
+
+#: public/class-mwb-bookings-for-woocommerce-public.php:528
 msgid "You cannot book past dates."
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:517
+#: public/class-mwb-bookings-for-woocommerce-public.php:529
 msgid "This date is not available for booking."
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:608
+#: public/class-mwb-bookings-for-woocommerce-public.php:620
 msgid "Additional services"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:697
+#: public/class-mwb-bookings-for-woocommerce-public.php:709
 msgid "Check in"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:698
+#: public/class-mwb-bookings-for-woocommerce-public.php:710
 msgid "Check out"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:723
+#: public/class-mwb-bookings-for-woocommerce-public.php:735
 msgid "Choose Booking date"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:728
-#: public/class-mwb-bookings-for-woocommerce-public.php:732
-#: public/class-mwb-bookings-for-woocommerce-public.php:746
-#: public/class-mwb-bookings-for-woocommerce-public.php:750
+#: public/class-mwb-bookings-for-woocommerce-public.php:740
+#: public/class-mwb-bookings-for-woocommerce-public.php:744
+#: public/class-mwb-bookings-for-woocommerce-public.php:758
+#: public/class-mwb-bookings-for-woocommerce-public.php:762
 msgid "Choose date"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:892
-#: public/class-mwb-bookings-for-woocommerce-public.php:902
+#: public/class-mwb-bookings-for-woocommerce-public.php:909
+#: public/class-mwb-bookings-for-woocommerce-public.php:919
 msgid "not found"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:908
+#: public/class-mwb-bookings-for-woocommerce-public.php:925
 msgid "Service"
 msgstr ""
 
-#: public/class-mwb-bookings-for-woocommerce-public.php:1118
+#: public/class-mwb-bookings-for-woocommerce-public.php:1152
 msgid "Bookings"
 msgstr ""
 
@@ -1623,12 +1723,14 @@ msgstr ""
 #: public/partials/wps-mybookings-details-tab.php:117
 #: public/partials/wps-mybookings-details-tab.php:166
 #: public/partials/wps-mybookings-details-tab.php:219
+#: public/partials/wps-mybookings-details-tab.php:262
 msgid "/my-account/view-order/"
 msgstr ""
 
 #: public/partials/wps-mybookings-details-tab.php:120
 #: public/partials/wps-mybookings-details-tab.php:169
 #: public/partials/wps-mybookings-details-tab.php:222
+#: public/partials/wps-mybookings-details-tab.php:265
 msgid "View"
 msgstr ""
 
@@ -1637,7 +1739,7 @@ msgstr ""
 msgid " To "
 msgstr ""
 
-#: public/partials/wps-mybookings-details-tab.php:253
+#: public/partials/wps-mybookings-details-tab.php:295
 msgid "No bookings have been purchased yet."
 msgstr ""
 

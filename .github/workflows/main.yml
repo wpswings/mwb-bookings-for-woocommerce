@@ -2,7 +2,7 @@ name: PHPCS & PHPCBF
 
 on:
   push:
-    branches: [ Version-4.0.0 ]
+    branches: [ v4.0.0 ]
   pull_request:
     branches: [ Version-1.0.0 ]
 

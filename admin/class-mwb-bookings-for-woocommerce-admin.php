@@ -1001,6 +1001,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'desc_tip'    => true,
 				)
 			);
+			
 	
 			?>
 
@@ -1014,6 +1015,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				?>
 			</p>
 			<?php
+			woocommerce_wp_checkbox(
+				array(
+					'id'          => 'mwb_mbfw_show_additional_cost_details',
+					'value'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_show_additional_cost_details', true ),
+					'label'       => __( 'Show Additional Cost on Product Page', 'mwb-bookings-for-woocommerce' ),
+					'description' => __( 'Enable to show all the Additional cost on Product Page.', 'mwb-bookings-for-woocommerce' ),
+					'desc_tip'    => true,
+				)
+			);
 			/**
 			 * Filter is for returning something.
 			 *
@@ -1290,6 +1300,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'mwb_mbfw_is_booking_unit_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_unit_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_unit_cost_per_people'] ) ) : '',
 				'mwb_mbfw_booking_base_cost'               => array_key_exists( 'mwb_mbfw_booking_base_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_base_cost'] ) ) : '',
 				'mwb_mbfw_booking_base_cost_hide'          => array_key_exists( 'mwb_mbfw_booking_base_cost_hide', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_base_cost_hide'] ) ) : '',
+				'mwb_mbfw_show_additional_cost_details'    => array_key_exists( 'mwb_mbfw_show_additional_cost_details', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_show_additional_cost_details'] ) ) : '',
 				'mwb_mbfw_booking_general_cost_hide'       => array_key_exists( 'mwb_mbfw_booking_general_cost_hide', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_general_cost_hide'] ) ) : '',
 				'mwb_mbfw_is_booking_base_cost_per_people' => array_key_exists( 'mwb_mbfw_is_booking_base_cost_per_people', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_is_booking_base_cost_per_people'] ) ) : '',
 				'mwb_cost_date_range_notice'               => array_key_exists( 'mwb_cost_date_range_notice', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_cost_date_range_notice'] ) ) : '',

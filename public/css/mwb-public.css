@@ -66,6 +66,10 @@
   align-items: center;
 }
 
+.mbfw-additionl-detail-listing-section-cost {
+  max-width: 50%;
+}
+
 .mbfw-additionl-detail-listing-section input[type=number] {
   width: 100px !important;
   max-width: 100% !important;

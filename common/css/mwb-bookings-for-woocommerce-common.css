@@ -2,3 +2,20 @@
  * All of the CSS for your common functionality should be
  * included in this file.
  */
+ .mwb_mbfw_detail-listing-wrap-costs {
+  align-items: center;
+  display:  flex;
+  flex-wrap: wrap;
+  /* margin-bottom: 10px; */
+  justify-content: space-between;
+}
+
+.mbfw-additionl-detail-listing-section__wrapper_costs {
+    margin-top: 10px;
+}
+
+
+.mbfw-total-listing-single-page:has(.mbfw-additionl-detail-listing-section__wrapper_costs) {
+    flex: 0 0 70%;
+}
+

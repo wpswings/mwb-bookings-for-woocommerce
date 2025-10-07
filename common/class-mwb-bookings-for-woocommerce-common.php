@@ -746,7 +746,18 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				<div class="mbfw-total-listing-single-page__wrapper">
 					<div class="mbfw-total-listing-single-page">
 						<?php
-						echo wp_kses_post( $title );
+						if ( 'Additional Costs' == $title ) {
+							if ( get_post_meta( $product_id, 'mwb_mbfw_show_additional_cost_details', true ) ){
+								
+
+							echo '<strong>'.wp_kses_post( $title ).'</strong>';
+							} else {
+								echo wp_kses_post( $title );
+							}
+						} else {
+							echo wp_kses_post( $title );
+						}
+							
 						if ( 'General Cost' == $title ) {
 							?>
 							<strong>( 
@@ -775,6 +786,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							)</strong>
 							<?php
 						}
+						if ( 'Additional Costs' == $title ) {
+							if ( get_post_meta( $product_id, 'mwb_mbfw_show_additional_cost_details', true ) ){
+								$this->mwb_mbfw_show_additional_booking_cost_details_on_form( $product_id );
+
+							}
+						}
+							
 						?>
 					</div>
 					<div class="mbfw-total-listing-single-page">
@@ -810,6 +828,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			do_action( 'mbfw_show_booking_policy' );
 			?>
 		</div>
+		
 		<?php
 	}
 
@@ -1409,15 +1428,21 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			if ( empty($unavailable_dates)) {
 				$unavailable_dates = '';
 			}
+			$i=0;
 
 			foreach ($unavailable_dates as $date) {
 				$start = gmdate('Ymd', strtotime($date));
 				$end   = gmdate('Ymd', strtotime($date . ' +1 day'));
+				$uid   = $start . '-' . ($i+1) . '@yourdomain.com'; // Unique ID per event
+				$dtstamp = gmdate('Ymd\THis\Z'); // Timestamp in UTC
 
 				echo "BEGIN:VEVENT\r\n";// phpcs:ignore
 				echo "SUMMARY:Booking Unavailable\r\n";// phpcs:ignore
 				echo "DTSTART;VALUE=DATE:$start\r\n";// phpcs:ignore
 				echo "DTEND;VALUE=DATE:$end\r\n";// phpcs:ignore
+				echo "DTSTAMP:$dtstamp\r\n";
+				echo "UID:$uid\r\n";
+
 				echo "END:VEVENT\r\n";// phpcs:ignore
 			}
 
@@ -1439,13 +1464,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'index.php?export_airbnb_ical=1&calendar_id=$matches[1]',
 			'bottom'
 		);
-		  // /ical/92
-    add_rewrite_rule(
-        '^export/ical/([0-9]+)/?$',
-        'index.php?export_airbnb_ical=1&calendar_id=$matches[1]',
-        'bottom'
-    );
-	flush_rewrite_rules();
+		// /ical/92
+		add_rewrite_rule(
+			'^export/ical/([0-9]+)/?$',
+			'index.php?export_airbnb_ical=1&calendar_id=$matches[1]',
+			'bottom'
+		);
+		flush_rewrite_rules();
 	}
 	/**
 	 * Add query vars for iCal data.
@@ -1473,6 +1498,42 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			unset($query_vars['attachment']);
 		}
 		return $query_vars;
+	}
+
+	/**
+	 * Show additional booking cost details on the form.
+	 *
+	 * @param int $product_id is the id of product.
+	 * @return void
+	 */
+	public function mwb_mbfw_show_additional_booking_cost_details_on_form( $product_id ) {
+			$mbfw_booking_service = get_the_terms( $product_id, 'mwb_booking_cost' );
+			
+			if ( $mbfw_booking_service && is_array( $mbfw_booking_service ) ) {
+				?>
+				<div class="mbfw-additionl-detail-listing-section__wrapper mbfw-additionl-detail-listing-section__wrapper_costs">
+					<?php
+					foreach ( $mbfw_booking_service as $custom_term ) {
+							?>
+							<div class="mwb_mbfw_detail-listing-wrap mwb_mbfw_detail-listing-wrap-costs">
+								<div class="mbfw-additionl-detail-listing-section-cost mbfw-additionl-detail-listing-section">
+									
+									
+										
+										<?php echo esc_html( $custom_term->name ); ?>
+									</span>
+								</div>
+								<div class="mbfw-additionl-detail-listing-section-cost mbfw-additionl-detail-listing-section">
+									<?php echo wp_kses_post( wc_price( get_term_meta( $custom_term->term_id, 'mwb_mbfw_booking_cost', true ) ) ); ?>
+								</div>
+								
+							</div>
+							<?php
+					}
+					?>
+				</div>
+				<?php
+			}
 	}
 
 }

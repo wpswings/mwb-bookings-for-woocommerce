@@ -66,7 +66,7 @@ jobs:
 
       - name: Generate POT file
         run: |
-          wp i18n make-pot . languages/mautic-integration-for-woocommerce.pot \
+          wp i18n make-pot . languages/mwb-bookings-for-woocommerce.pot \
             --exclude=node_modules,vendor,tests,public/js,admin/js,packages,build,dist
 
       - name: Install gettext
@@ -83,7 +83,7 @@ jobs:
       - name: Generate default PO file (en_US)
         run: |
           if [ ! -f languages/en_US.po ]; then
-            cp languages/mautic-integration-for-woocommerce.pot languages/mautic-integration-for-woocommerce-en_US.po
+            cp languages/mwb-bookings-for-woocommerce.pot languages/mwb-bookings-for-woocommerce-en_US.po
           fi
 
       - name: Upload PHPCS Reports

@@ -40,7 +40,6 @@
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
 					} else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
-						// console.log(value)
 						if( ( '' != value ) ){
 
 							form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
@@ -70,13 +69,9 @@
 					if (key === 'wps_booking_single_calendar_form' && key != null ) {
 					form_data.set('wps_booking_single_calendar_form', convertTimeFormat(value));
 					}  else if (key === 'mwb_mbfw_booking_to_time' && key != null ) {
-						// console.log(value)
-						// if( ( null != value ) ){
 					
 						form_data.set('mwb_mbfw_booking_to_time', convertTimeFormatDual(value));
-					// }else{
-					// 	form_data.set('mwb_mbfw_booking_to_time', '');
-					// }
+					
 					} else if (key === 'mwb_mbfw_booking_from_time' && key != null ) {
 						
 						form_data.set('mwb_mbfw_booking_from_time', convertTimeFormatDual(value));
@@ -428,10 +423,15 @@ function convertTimeFormatDual(input) {
 
 		// Replace localized AM/PM markers with standard AM/PM
 		var map = timeChangeLanguage(currentLang) || timeChangeLanguage('default'); // Use default map if lang not found
-		input = input.replace(new RegExp(Object.keys(map).join("|"), "g"), function(match) {
+		if (currentLang == 'az') {
+			var map = { 'GƏ': 'AM', 'GS': 'PM' }
+		}
+		if (currentLang == 'be') {
+			var map = { 'ДП': 'AM', 'ПП': 'PM' }
+		}
+		input = input.replace(new RegExp(Object.keys(map).join("|"), "gi"), function(match) {console.log(match,1);
 			return map[match];
 		});
-
 	// }
     // Extract date and time using regex
     let match = input.match(/^(\d{1,2}-\d{2}-\d{4}) (\d{1,2}:\d{2} [APM]{2})$/);
@@ -501,9 +501,11 @@ function retrieve_booking_total_ajax( form_data ) {
 					msg = '';
 				}
 				if (msg == 'fail'){
+						$('#mwb-mbfw-booking-to-time').val('');
+						jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
 					if ( $('#alert_msg_client').val() == undefined){
 						jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		
-						$('#mwb-mbfw-booking-to-time').val('');
+
 						return;
 					}
 				} else{
@@ -514,8 +516,9 @@ function retrieve_booking_total_ajax( form_data ) {
 						}, 4000);
 					
 					}
+					$('.mwb-mbfw-total-area').html(msg);
+
 				}
-				$('.mwb-mbfw-total-area').html(msg);
 
 			}
 		});

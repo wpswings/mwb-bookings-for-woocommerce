@@ -1,0 +1,28 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+
+.wps-offer-notice.notice.notice-warning {
+    padding: 0;
+    border: none;
+    margin-left: 2px;
+    margin-right: 10px;
+}
+
+.wps-offer-notice.notice.notice-warning a img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.mwb-taxonomy-section_wrap .wps-offer-notice {
+padding:0 !important;
+    
+}
+.mwb-taxonomy-section_wrap .wps-offer-notice img{
+    width: 100%;
+    height: auto;
+}

@@ -1,0 +1,139 @@
+:root{
+    --wps-primary-color: #e3dee0;
+    }
+.wps-global-form-field-wrapper * {
+    box-sizing: border-box;
+}
+
+.wps-global-form-field-wrapper input[type=text],
+.wps-global-form-field-wrapper input[type=text],
+.wps-global-form-field-wrapper input[type=number],
+.wps-global-form-field-wrapper input[type=email],
+.wps-global-form-field-wrapper input[type=date],
+.wps-global-form-field-wrapper textarea ,.wps-global-form-field-for-selected-date{
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125) !important;
+    border-radius: 5px;
+    background-color: #E8EDF4 !important;
+    border: none;
+    line-height: 1.25;
+    min-height: 39px;
+    padding: 10px;
+    height: auto;
+    width: 100%;
+}
+
+.wps-global-form-field-wrapper select,
+.wps-global-form-field-wrapper .select2 .select2-selection {
+    line-height: 1.25;
+    min-height: 39px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c7c7c7;
+    height: auto;
+    width: 100%;
+}
+
+.wps-global-form-field-wrapper .select2 .select2-selection {
+    padding: 5px;
+}
+
+.wps-global-form-field-wrapper .select2 .select2-selection ul {
+    padding: 0 !important;
+}
+
+.wps-global-form-field-wrapper .select2-search__field {
+    padding: 0 5px !important;
+    height: auto;
+    min-height: auto;
+}
+
+.wps-global-form-field-wrapper select {
+    background-position-y: center;
+}
+
+.wps-global-form-field-wrapper input[type=text]:focus,
+.wps-global-form-field-wrapper input[type=text]:focus,
+.wps-global-form-field-wrapper input[type=number]:focus,
+.wps-global-form-field-wrapper input[type=email]:focus,
+.wps-global-form-field-wrapper input[type=date]:focus,
+.wps-global-form-field-wrapper textarea:focus .wps_global_radio_group input:focus,
+.wps_global_checkbox_group input:focus,
+.wps-global-form-field-wrapper select:focus,
+.wps-global-form-field-for-selected-date:focus {
+    outline: none !important;
+    border-color: none !important;
+
+}
+.wps-global-selected-field-wrapper .wps-global-form-field-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+#wps-attached-global-booking-form .wps-global-form-field-wrapper-group h2 {
+    text-align: center;
+    background: var(--wps-primary-color);
+    color: white;
+    border-radius: 5px 5px 0 0;
+    font-size: 24px;
+    padding: 30px 10px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.wps-global-form-field-wrapper {
+    grid-template-columns: 1fr;
+    gap: unset;
+}
+
+.wps-global-form-field-wr-gr-content {
+    border: 1px solid #c7c7c7;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    padding: 15px;
+    background-color: white;
+}
+
+.wps-global-form-field-wrapper-group {
+    margin: 10px 0;
+}
+
+.wps-global-form-field-wrapper label {
+    color: #3c434a;
+    font-weight: bold;
+}
+
+.wps_global_radio_group label,
+.wps_global_checkbox_group label {
+    font-weight: 400;
+    margin-right: 20px;
+    margin-bottom: 0;
+
+}
+
+#wps-attached-global-booking-form .wps_global_radio_group input,
+#wps-attached-global-booking-form .wps_global_checkbox_group input {
+    margin-right: 5px;
+    vertical-align: text-bottom;
+    margin-bottom: 0;
+}
+
+#wps-attached-global-booking-form .wps_global_calendar_add_cart_button {
+
+    background: var(--wps-primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 15px 0 0;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.4px;
+
+}
+
+.wps_global_calendar_add_cart_button:hover {
+    background: var(--wps-primary-color);
+    color: white;
+}

@@ -128,6 +128,11 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		add_action( 'wp_ajax_mbfw_skip_onboarding_popup', array( $this, 'mwb_mbfw_skip_onboarding_popup' ) );
 		add_action( 'wp_ajax_nopriv_mbfw_skip_onboarding_popup', array( $this, 'mwb_mbfw_skip_onboarding_popup' ) );
 
+		// Ajax to remove banner.
+		add_action( 'wp_ajax_wps_wpr_ajax_banner_action', array( $this, 'wps_wpr_dismiss_notice__banner_callback' ) );
+		add_action( 'wp_ajax_nopriv_wps_wpr_ajax_banner_action', array( $this, 'wps_wpr_dismiss_notice__banner_callback' ) );
+		add_action( 'wps_wgm_check_for_notification_update', array( $this,  'wps_wpr_save_banner_notice_message' ) );
+		add_action( 'admin_init', array( $this, 'wps_wpr_set_cron_for_plugin_banner_notification'));
 	}
 
 	/**
@@ -161,6 +166,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 * class.
 	 */
 	public function mwb_mbfw_onboarding_enqueue_styles() {
+		// 		// calling to create crone for banner image.
 		global $pagenow;
 		$is_valid = false;
 		if ( ! $is_valid && 'plugins.php' == $pagenow ) { // phpcs:ignore
@@ -177,6 +183,21 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 
 			wp_enqueue_style( 'mwb-mbfw-onboarding-style', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/css/mwb-bookings-for-woocommerce-onboarding.css', array(), time(), 'all' );
 
+		}
+
+
+		$screen = get_current_screen();
+		if ( ! $screen || empty( $screen->id ) ) {
+			return;
+		}
+
+		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking', 'edit-mwb_booking_service', 'edit-mwb_booking_cost', 'edit-mwb_booking_people' );
+		$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+		// Check whether to show on specific pages or screens.
+		if ( 'wc-settings' === $page_param || in_array( $screen->id, $target_screens, true ) ) {
+			wp_enqueue_style( 'wps-mbfw-banner-style', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/css/mwb-bookings-for-woocommerce-banner.css', array(), time(), 'all' );
+	
 		}
 	}
 
@@ -224,6 +245,38 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 					apply_filters( 'mwb_mbfw_deactivation_supported_slug', array( $mbfw_current_slug ) ),
 				)
 			);
+		}
+
+		$screen = get_current_screen();
+		if ( ! $screen || empty( $screen->id ) ) {
+			return;
+		}
+
+		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking', 'edit-mwb_booking_service', 'edit-mwb_booking_cost', 'edit-mwb_booking_people' );
+		$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+		// Check whether to show on specific pages or screens.
+		if ( 'wc-settings' === $page_param || in_array( $screen->id, $target_screens, true ) ) {
+			$active_plugins = get_option( 'active_plugins' );
+			if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', $active_plugins ) ) {
+				$is_pro_active = 'yes';
+			} else {
+				$is_pro_active = 'no';
+			}
+			wp_enqueue_script( 'wps-banner-image-scripts', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/js/mwb-bookings-for-woocommerce-banner.js', array( 'jquery' ), time(), true );
+
+			wp_localize_script(
+				'wps-banner-image-scripts',
+				'mwb_mbfw_onboarding',
+				array(
+					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
+					'mbfw_auth_nonce'    => wp_create_nonce( 'mwb_mbfw_onboarding_nonce' ),
+					'mbfw_current_screen'    => $pagenow,
+					'banner_nonce'           => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+					'is_pro_plugin_active' => $is_pro_active,
+				)
+			);
+
 		}
 	}
 
@@ -796,7 +849,7 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	public function mwb_mbfw_show_onboarding_popup_check() {
 
 		$mwb_mbfw_is_already_sent = get_option( 'mwb_mbfw_onboarding_data_sent', false );
-
+		
 		// Already submitted the data.
 		if ( ! empty( $mwb_mbfw_is_already_sent ) && 'sent' == $mwb_mbfw_is_already_sent ) { // phpcs:ignore
 			return false;
@@ -817,5 +870,94 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		}
 		// By default Show.
 		return true;
+	}
+		/** +++++++++++ Plugin Banner Notification ++++++++++++++ */
+
+	/**
+	 * This function is used to create crone for banner image.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_set_cron_for_plugin_banner_notification() {
+
+		$wps_wpr_offset = get_option( 'gmt_offset' );
+		$wps_wpr_time   = time() + $wps_wpr_offset * 60 * 60;
+
+		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
+
+			wp_schedule_event( $wps_wpr_time, 'daily', 'wps_wgm_check_for_notification_update' );
+		}
+	}
+
+	/** This function is used to get banner image.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_save_banner_notice_message() {
+
+		$wps_notification_data = $this->wps_wpr_get_update_banner_notification_data();
+		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
+
+			$banner_id    = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';
+			$banner_image = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_image'] : '';
+			$banner_url   = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_url'] : '';
+			$banner_type  = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_type'] : '';
+
+			update_option( 'wps_wgm_notify_new_banner_id', $banner_id );
+			update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
+			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
+
+			if ( 'regular' == $banner_type ) {
+				update_option( 'wps_wgm_notify_hide_baneer_notification', 0 );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to get banner data from api.
+	 *
+	 * @return array
+	 */
+	public function wps_wpr_get_update_banner_notification_data() {
+		$wps_notification_data = array();
+		$url                   = 'https://demo.wpswings.com/client-notification/woo-gift-cards-lite/wps-client-notify.php';
+		$attr                  = array(
+			'action'         => 'wps_notification_fetch',
+			'plugin_version' => MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION,
+		);
+		$query                 = esc_url_raw( add_query_arg( $attr, $url ) );
+		$response              = wp_remote_get(
+			$query,
+			array(
+				'timeout'   => 20,
+				'sslverify' => false,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			$error_message = $response->get_error_message();
+			echo '<p><strong>' . esc_html__( 'Something went wrong: ', 'mwb-bookings-for-woocommerce' ) . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+		} else {
+			$wps_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
+		}
+		return $wps_notification_data;
+	}
+
+	/**
+	 * Calling ajax to save banner id.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_dismiss_notice__banner_callback() {
+		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wpr-verify-nonce' ) ) {
+
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );print_r( $banner_id );
+			if ( ! empty( $banner_id ) ) {
+
+				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
+			}
+			wp_send_json_success();
+		}
+		wp_die();
 	}
 }

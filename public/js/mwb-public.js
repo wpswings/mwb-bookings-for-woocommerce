@@ -646,9 +646,11 @@ jQuery(document).ready(function($){
 
               if ( mwb_mbfw_public_obj.is_pro_active != ''){
                   var daywise_slot = [];
-                  if (temp_date1 in bfwp_public_param.wps_daywise_slot_available) {
-                      daywise_slot =(bfwp_public_param.wps_daywise_slot_available[temp_date1]);
-                  }
+                if ( undefined != bfwp_public_param.wps_daywise_slot_available ) {
+                    if (temp_date1 in bfwp_public_param.wps_daywise_slot_available) {
+                        daywise_slot =(bfwp_public_param.wps_daywise_slot_available[temp_date1]);
+                    }
+                }
                   
                   if( Object.keys(daywise_slot).length > 0  ) { 
                       var date_slots =Object.values(daywise_slot);
@@ -660,8 +662,14 @@ jQuery(document).ready(function($){
                   var date_slots = wps_available_slots;
               }
               var count =0;
-            for(let i=0; i< date_slots.length; i++ ) { 
-                var temp =  date_slots[i]._from + ' - ' + date_slots[i]._to;
+              //custom code
+            if ( 'object' == typeof(date_slots)) {
+                date_slots1 = Object.entries(date_slots);
+            } else {
+                date_slots1 = date_slots;
+            }
+            for(let i=0; i< date_slots1.length; i++ ) { 
+                var temp =  date_slots1[i]._from + ' - ' + date_slots1[i]._to;
                 var temp_check = temp_date + temp;
                 if (booking_unavailable.length > 0) {
                     
@@ -788,7 +796,7 @@ jQuery(document).ready(function($){
             
                 },
                 onChange: function(selectedDates, dateStr, instance) {
-
+debugger;
                     const selected = moment(selectedDates[0]);
                     const today = moment();
                     const today_date = today.format('HH:mm');
@@ -837,32 +845,70 @@ jQuery(document).ready(function($){
                 } else {
                     var date_slots = wps_available_slots;
                 }
+                //custom code.
+                    if ( 'object' == typeof(date_slots)) {
+ 						date_slots = Object.values(date_slots);
+					}
                     for(let i=0; i< date_slots.length; i++ ) { 
                         var start_time = date_slots[i]._from;
                         var end_time = date_slots[i]._to;
-                        if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
-                                continue;
-                            }
+
                         
 
                         if ('twelve_hour' == mwb_mbfw_public_obj.wps_diaplay_time_format ) {
-                            start_time = moment(date_slots[i]._from, "HH:mm").format("h:mm A");
-                            end_time = moment(date_slots[i]._to, "HH:mm").format("h:mm A");
+                            start_time_disp = moment(date_slots[i]._from, "HH:mm").format("h:mm A");
+                            end_time_disp = moment(date_slots[i]._to, "HH:mm").format("h:mm A");
+                        } else {
+                            start_time_disp = start_time;
+                            end_time_disp = end_time;
                         }
-                        var temp =  start_time + ' - ' + end_time;
+                        var temp =  start_time_disp + ' - ' + end_time_disp;
                         var temp_check = temp_date + temp;
-                        if (booking_unavailable.length > 0) {
-                            console.log(booking_unavailable);
-                            if (!booking_unavailable.includes(temp_check)) {
-                                html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
-                                    
-                                
-                            } else {
-                                html += '\n\ <span><button disabled=disabled>' + temp + '</button>\n\ </span>';
+                        if ('disable_slot' == mwb_mbfw_public_obj.hide_or_disable_slot ) {
 
+                            if (booking_unavailable.length > 0) {
+                                if (!booking_unavailable.includes(temp_check)) {
+                                    if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                        html += '\n\ <span><button disabled=disabled>' + temp + '</button>\n\ </span>';
+
+                                } else {
+                                    html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+
+                                }
+                                        
+                                    
+                                } else {
+                                    html += '\n\ <span><button disabled=disabled>' + temp + '</button>\n\ </span>';
+
+                                }
+                            } else {
+                                if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                    html += '\n\ <span><button disabled=disabled>' + temp + '</button>\n\ </span>';
+
+                                    continue;
+                                    
+                                } else {
+                                    html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                                }
                             }
                         } else {
-                            html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                            if (booking_unavailable.length > 0) {
+
+                                if (!booking_unavailable.includes(temp_check)) {
+                                    if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                            continue;
+                                    } else {
+                                        html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                                    }
+                                }
+                            } else { 
+                                if ((selected.isSame(today, 'day')) && ! (moment(start_time,"HH:mm").isAfter(moment(today_date,"HH:mm")))){
+                                    continue;
+                                } else {
+                                    html += '\n\ <span><button>' + temp + '</button>\n\ </span>';
+                                }
+                                
+                            }
                         }
                     }
                     html += '\n\  </div>'
@@ -1036,7 +1082,7 @@ jQuery(document).ready(function($){
        
 
 
-    flatpickr('#wps_booking_single_calendar_form_', {  
+   flatpickr('#wps_booking_single_calendar_form_', {  
         mode: "multiple",
     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
         firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
@@ -1115,11 +1161,32 @@ jQuery(document).ready(function($){
              
                 dayElem.classList.add("flatpickr-disabled");
             } else{
-                dayElem.classList.add("wps-available-day");
+				
+					let todayDateFormatted = moment(mwb_mbfw_public_obj.today_date_check, 'YYYY-MM-DD').format('YYYY-MM-DD');
+			let dateStringFormatted = moment(dateString__, 'DD-MM-YYYY').format('YYYY-MM-DD');
+
+			
+			
+           if (moment(todayDateFormatted).isAfter(moment(dateStringFormatted))) {
+
+            dayElem.classList.add("wps-unavailable-day");
+             
+            dayElem.classList.add("flatpickr-disabled");
+            } else{
+				 dayElem.classList.add("wps-available-day");
+			}
+				
+               
             }
            
         } else {
-            if ( moment( mwb_mbfw_public_obj.today_date, 'DD-MM-YYYY' ) <= moment( dateString__, 'DD-MM-YYYY' ) ) {
+			
+			let todayDateFormatted = moment(mwb_mbfw_public_obj.today_date_check, 'YYYY-MM-DD').format('YYYY-MM-DD');
+			let dateStringFormatted = moment(dateString__, 'DD-MM-YYYY').format('YYYY-MM-DD');
+
+			
+			
+           if (moment(todayDateFormatted).isBefore(moment(dateStringFormatted))) {
 
             dayElem.classList.add("wps-unavailable-day");
              
@@ -1173,7 +1240,7 @@ jQuery(document).ready(function($){
 
     },
     onChange: function(selectedDates, dateStr, instance) {
-        console.log(selectedDates, dateStr, instance);
+       
 
         // Reapply "selected" class for multiple mode
         document.querySelectorAll(".flatpickr-day").forEach(dayElem => {

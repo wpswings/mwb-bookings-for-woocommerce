@@ -245,6 +245,48 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 						<?php
 					}
 				}
+				if ( 'yes' === get_post_meta($product->get_id(), '_is_calendar_booking_product', 'no')) { ?>
+				<tr>
+					<td><?php echo esc_html( $value ); ?></td>
+					<td>
+						<?php
+						echo esc_html( wc_get_order_item_meta($item->get_id(), 'Booking Date', true) );
+						?>
+						</td>
+					<td><?php echo esc_html( $_order->get_status() ); ?></td>
+					<td><?php echo wp_kses_post( wc_price( $_order->get_total() ) ); ?></td>
+					<td>
+						<a class="button" href="
+							<?php
+							echo esc_attr( get_site_url() );
+							echo esc_html( '/my-account/view-order/' );
+							echo esc_attr( $value );
+							?>
+							"><?php esc_html_e( 'View', 'mwb-bookings-for-woocommerce' ); ?>
+						</a>
+						<?php
+						if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_cancellation_allowed', true ) ) {
+
+							if ( 'cancelled' !== $_order->get_status() ) {
+								if ( ! empty( $data ) ) {
+									if ( in_array( $status_booking, $data ) ) {
+										?>
+										<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
+										<?php
+									}
+								} else {
+									?>
+									<button class="button" id="wps_bfw_cancel_order" data-product="<?php echo esc_html( $item->get_product_id() ); ?>" data-order="<?php echo esc_html( $_order->get_id() ); ?>">Cancel</button>
+									<?php
+
+								}
+							}
+						}
+						?>
+					</td>
+				</tr>
+				<?php 
+				}
 			}
 		}
 	} else {

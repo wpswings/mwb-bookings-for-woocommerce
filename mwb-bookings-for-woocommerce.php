@@ -15,7 +15,7 @@
  * Plugin Name:       Bookings For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/mwb-bookings-for-woocommerce/
  * Description:        <code><strong>Bookings for WooCommerce</strong></code> enable store owners to create an online booking system that allows them to turn their products into Booking Solutions.<a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-bookings&utm_medium=bookings-org-backend&utm_campaign=official" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>.
- * Version:           3.4.1
+ * Version:           3.9.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-bookings-official&utm_medium=bookings-org-page&utm_campaign=official
  * Text Domain:       mwb-bookings-for-woocommerce
@@ -23,11 +23,11 @@
  *
  * Requires Plugins: woocommerce
  * Requires at least:    5.5.0
- * Tested up to:         6.8.0
- * WC requires at least: 6.5.0
- * WC tested up to:      9.8.2
+ * Tested up to:         6.8
+ * WC requires at least: 6.8.1
+ * WC tested up to:      10.2.1
  * Requires PHP:         7.2
- * Stable tag:           3.4.1
+ * Stable tag:           3.9.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -47,7 +47,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	 * @since 2.0.0
 	 */
 	function define_mwb_bookings_for_woocommerce_constants() {
-		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '3.4.1' );
+		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_VERSION', '3.9.0' );
 		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		mwb_bookings_for_woocommerce_constants( 'MWB_BOOKINGS_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com' );
@@ -161,6 +161,31 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'mwb_bookings_for_woocommerce_settings_link' );
 
 	/**
+	 * Function to render booking calendar block.
+	 *
+	 */
+	function wps_mbfw_wpswings_register_booking_calendar_block() {
+    wp_register_script(
+			'wpswings-booking-calendar-block',
+			plugin_dir_url(__FILE__) . 'blocks/booking-calendar/block.js',
+			[ 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-block-editor' ],
+			filemtime(plugin_dir_path(__FILE__) . 'blocks/booking-calendar/block.js')
+		);
+
+		register_block_type('wpswings/booking-calendar', array(
+			'editor_script'   => 'wpswings-booking-calendar-block',
+			'render_callback' => 'wpswings_render_booking_calendar_block',
+			'attributes'      => array(
+				'id' => array(
+					'type'    => 'number',
+					'default' => 0,
+				),
+			),
+		));
+	}
+	add_action('init', 'wps_mbfw_wpswings_register_booking_calendar_block');
+
+	/**
 	 * Settings link.
 	 *
 	 * @since 2.0.0
@@ -245,6 +270,112 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 	add_filter( 'plugin_row_meta', 'mwb_bookings_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 	// Upgrade notice on plugin dashboard.
 
+	add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
+	if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
+
+		/**
+		 * Common Function To show banner image.
+		 *
+		 * @return void
+		 */
+		function wps_banner_notification_plugin_html() {
+
+			$screen = get_current_screen();
+			if ( ! $screen || empty( $screen->id ) ) {
+				return;
+			}
+
+			$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
+			$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+			// Check whether to show on specific pages or screens.
+			if ( 'wc-settings' === $page_param || in_array( $screen->id, $target_screens, true ) ) {
+
+				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+				if ( ! empty( $banner_id ) ) {
+
+					$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+					$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
+					$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
+
+					if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
+						?>
+						<div class="wps-offer-notice notice notice-warning is-dismissible">
+							<div class="notice-container">
+								<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+							</div>
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						</div>
+						<?php
+					}
+				}
+			}
+		}
+	}
+
+	add_action( 'elementor/widgets/widgets_registered', function() {
+	
+		if ( defined( 'ELEMENTOR_PATH' ) && class_exists( '\Elementor\Widget_Base' ) ) {
+			require_once plugin_dir_path( __FILE__ ) . 'widgets/class-elementor-booking-calendar-widget.php';
+			\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \Elementor_Booking_Calendar_Widget() );
+		}
+	} );
+
+	add_action( 'admin_notices', 'wps_mbfw_banner_notify_html' );
+
+	/**
+	 * Function to render bookable booking calendar dynamic block.
+	 *
+	 * @param array $attributes Block attributes.
+	 * @return string
+	 */
+	function render_bookable_booking_calendar_dynamic_block( $attributes ) {
+		$id = isset( $attributes['id'] ) ? (int) $attributes['id'] : 0;
+		return do_shortcode( '[bookable_booking_calendar id="' . esc_attr( $id ) . '"]' );
+	}
+
+	/**
+	 * Function to show banner image based on subscription.
+	 *
+	 * @return void
+	 */
+	function wps_mbfw_banner_notify_html() {
+
+		if ( ( isset( $_GET['page'] ) && 'mwb_bookings_for_woocommerce_menu' === $_GET['page'] ) || ( get_current_screen()->id == 'edit-wps_global_booking' ) || ( get_current_screen()->id == 'edit-mwb_booking_cost' ) || ( get_current_screen()->id == 'edit-mwb_booking_service' ) || ( get_current_screen()->id == 'edit-mwb_booking_people' ) ) {
+
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+			if ( ! empty( $banner_id ) ) {
+
+				$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+				$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
+				$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
+				if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
+
+					?>
+					<div class="wps-offer-notice notice notice-warning is-dismissible">
+						<div class="notice-container">
+							<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+						</div>
+						<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+					</div>
+					<?php
+				}
+			}
+		}
+		
+	}
+
+	register_deactivation_hook( __FILE__, 'wps_mbfw_remove_cron_for_banner_update' );
+	/**
+	 * This function is used to remove banner schedule cron.
+	 *
+	 * @return void
+	 */
+	function wps_mbfw_remove_cron_for_banner_update() {
+		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
+	}
+
+
 } else {
 	mwb_mbfw_dependency_checkup();
 }
@@ -295,5 +426,10 @@ function mwb_mbfw_show_admin_notices() {
 			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
 			}
+			if ( class_exists( FeaturesUtil::class ) ) {
+				FeaturesUtil::declare_compatibility( 'product_block_editor', plugin_basename( __FILE__ ), true );
+			}
+
 		}
 	);
+

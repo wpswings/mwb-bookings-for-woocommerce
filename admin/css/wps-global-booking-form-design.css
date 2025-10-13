@@ -1,0 +1,110 @@
+:root{
+    --wps-primary-color: #0183bb;
+    }
+#wps-global-calendar-add-field {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border-radius: 5px;
+    border: 1.5px dashed #e2e2e2;
+    margin: 15px 0 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0a4b78;
+}
+.wps-form_view .wps-form_view-heading {
+    text-align: center;
+    margin: 10px 0 0 0!important;
+    background: var(--wps-primary-color);
+    color: white;
+    border-radius: 5px 5px 0 0;
+    font-size: 24px;
+    padding: 20px 10px;
+    
+}
+.wps-form_view-wrap {
+    padding: 10px;
+    border: 1.5px solid #c7c7c7;
+    border-radius: 0 0 5px 5px;
+    border-top: none;
+}
+
+.wps-form_view-group {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wps-form_view-group label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.wps-form-field input[type="text"],
+.wps-form-field input[type="email"],
+.wps-form-field input[type="number"],
+.wps-form-field input[type="date"],
+.wps-form-field textarea {
+    padding: 4px;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #E8EDF4;
+}
+
+.wps-form-field select {
+    border: 1px solid #c7c7c7;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.wps-inline-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.wps-inline-options input[type="radio"],
+.wps-inline-options input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.wps-inline-options label {
+    margin-right: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+    vertical-align: text-bottom;
+}
+.wps-form_view-btn button {
+    background: var(--wps-primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    /* width: 100%; */
+    cursor: pointer;
+    margin: 15px 0 0;
+    font-size: 16px;
+}
+#wps-global-calendar-fields-table img.form-drag-icon {
+    max-width: 28px;
+    max-height: 28px;
+    cursor: move;
+}
+ 
+#wps-global-calendar-fields-table .ui-state-highlight {
+    box-shadow: 0 0 0 2px #dcdcdc inset;
+    background: #f2f2f2;
+    margin: 15px;
+    height: 50px;
+}
+.wps-global-calendar-fields-table-wrapper {
+    overflow: auto;
+    margin: 10px 0 0;
+}
+.form-group {
+    margin-bottom: 10px;
+}

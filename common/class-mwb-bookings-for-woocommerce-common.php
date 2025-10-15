@@ -795,9 +795,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							
 						?>
 					</div>
-					<div class="mbfw-total-listing-single-page">
+					<div class="mbfw-total-listing-single-page <? if ( 'Additional Costs' == $title ) {echo 'addditional_cost';};?>">
 
-						<?php
+						<?php 
 						if ( 'General Cost' == $title ) {
 							echo wp_kses_post( wc_price( $price ) ) . ' x ' . wp_kses_post( $quantity ); // phpcs:ignore WordPress
 
@@ -1530,6 +1530,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							</div>
 							<?php
 					}
+					echo esc_html__( 'Additional Cost Subtotal : ', 'mwb-bookings-for-woocommerce' );
 					?>
 				</div>
 				<?php

@@ -796,7 +796,7 @@ jQuery(document).ready(function($){
             
                 },
                 onChange: function(selectedDates, dateStr, instance) {
-debugger;
+
                     const selected = moment(selectedDates[0]);
                     const today = moment();
                     const today_date = today.format('HH:mm');

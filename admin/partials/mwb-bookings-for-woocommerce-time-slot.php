@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-$wps_mbfw_field_data = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_slots', true );
+$wps_mbfw_field_data = (array)wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_slots', true );
 if ( empty( $wps_mbfw_field_data ) ) {
 	$wps_mbfw_field_data = array();
 }

@@ -1433,7 +1433,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			foreach ($unavailable_dates as $date) {
 				$start = gmdate('Ymd', strtotime($date));
 				$end   = gmdate('Ymd', strtotime($date . ' +1 day'));
-				$uid   = $start . '-' . ($i+1) . '@yourdomain.com'; // Unique ID per event
+				$uid   = $start . '-' . ($i+1).'@' . $site_domain; // Unique ID per event
 				$dtstamp = gmdate('Ymd\THis\Z'); // Timestamp in UTC
 
 				echo "BEGIN:VEVENT\r\n";// phpcs:ignore

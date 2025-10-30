@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-$wps_mbfw_field_data = (array)wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_slots', true );
+$wps_mbfw_field_data = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_time_slots', true );
 if ( empty( $wps_mbfw_field_data ) ) {
 	$wps_mbfw_field_data = array();
 }
@@ -62,7 +62,7 @@ if ( empty( $wps_mbfw_field_data ) ) {
 									<td class="drag-icon">
 										<i class="dashicons dashicons-move"></i>
 									</td>
-									<td class="form-field wps_mbfw_from_fields">
+									<td class="form-field wps_mbfw_from_fields"><?print_r($row_value.'---');print_r($row_id);die;?>
 										<input type="text" class="wps_mbfw_field_from" style="" name="mbfw_fields[<?php echo esc_attr( $row_id ); ?>][_from]"  id="from_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( $row_value['_from'] ); ?>" placeholder="">
 									</td>
 									<td class="form-field wps_mbfw_to_fields">

@@ -208,7 +208,7 @@ if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins', arra
 		 * @param integer $id is order id.
 		 * @param string  $key is meta key.
 		 * @param string  $v is meta value.
-		 * @return string
+		 * @return mixed
 		 */
 	function wps_booking_get_meta_data( $id, $key, $v ) {
 		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {

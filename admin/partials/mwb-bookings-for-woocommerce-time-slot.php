@@ -62,7 +62,7 @@ if ( empty( $wps_mbfw_field_data ) ) {
 									<td class="drag-icon">
 										<i class="dashicons dashicons-move"></i>
 									</td>
-									<td class="form-field wps_mbfw_from_fields"><?print_r($row_value.'---');print_r($row_id);die;?>
+									<td class="form-field wps_mbfw_from_fields">
 										<input type="text" class="wps_mbfw_field_from" style="" name="mbfw_fields[<?php echo esc_attr( $row_id ); ?>][_from]"  id="from_fields_<?php echo esc_attr( $row_id ); ?>" value="<?php echo esc_attr( $row_value['_from'] ); ?>" placeholder="">
 									</td>
 									<td class="form-field wps_mbfw_to_fields">

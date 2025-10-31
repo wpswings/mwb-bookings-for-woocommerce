@@ -110,7 +110,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				if ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' == $screen->id ) {
 					wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
 				}
-				// wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
 				wp_enqueue_script( 'moment-locale-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment-locale-js.js', array( 'jquery', 'wp-date' ), $this->version, true );
 				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'wp-date' ), $this->version, true );
 				wp_enqueue_script( 'jquery-ui-core' );
@@ -119,7 +118,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		} else {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 				wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
-				// wp_enqueue_script( 'moment-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment.min.js', array( 'jquery' ), $this->version, true );
 				wp_enqueue_script( 'moment-locale-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment-locale-js.js', array( 'jquery', 'wp-date' ), $this->version, true );
 				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'wp-date' ), $this->version, true );
 				wp_enqueue_script( 'jquery-ui-core' );
@@ -795,7 +793,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							
 						?>
 					</div>
-					<div class="mbfw-total-listing-single-page <? if ( 'Additional Costs' == $title ) {echo 'addditional_cost';};?>">
+					<div class="mbfw-total-listing-single-page <?php if ( 'Additional Costs' == $title ) {echo 'addditional_cost';};?>">
 
 						<?php 
 						if ( 'General Cost' == $title ) {
@@ -1429,24 +1427,25 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$unavailable_dates = '';
 			}
 			$i=0;
+			$site_domain = parse_url( home_url(), PHP_URL_HOST );
 
 			foreach ($unavailable_dates as $date) {
 				$start = gmdate('Ymd', strtotime($date));
 				$end   = gmdate('Ymd', strtotime($date . ' +1 day'));
-				$uid   = $start . '-' . ($i+1).'@' . $site_domain; // Unique ID per event
-				$dtstamp = gmdate('Ymd\THis\Z'); // Timestamp in UTC
+				$uid   = $start . '-' . ($i+1).'@' . $site_domain; // Unique ID per event.
+				$dtstamp = gmdate('Ymd\THis\Z'); // Timestamp in UTC.
 
-				echo "BEGIN:VEVENT\r\n";// phpcs:ignore
-				echo "SUMMARY:Booking Unavailable\r\n";// phpcs:ignore
-				echo "DTSTART;VALUE=DATE:$start\r\n";// phpcs:ignore
-				echo "DTEND;VALUE=DATE:$end\r\n";// phpcs:ignore
-				echo "DTSTAMP:$dtstamp\r\n";
-				echo "UID:$uid\r\n";
+				echo esc_attr( "BEGIN:VEVENT\r\n" );// phpcs:ignore
+				echo esc_attr( "SUMMARY:Booking Unavailable\r\n" );// phpcs:ignore
+				echo esc_attr( "DTSTART;VALUE=DATE:$start\r\n" );// phpcs:ignore
+				echo esc_attr( "DTEND;VALUE=DATE:$end\r\n" );// phpcs:ignore
+				echo esc_attr( "DTSTAMP:$dtstamp\r\n" );// phpcs:ignore
+				echo esc_attr( "UID:$uid\r\n" );// phpcs:ignore
 
-				echo "END:VEVENT\r\n";// phpcs:ignore
+				echo esc_attr( "END:VEVENT\r\n" );// phpcs:ignore
 			}
 
-			echo "END:VCALENDAR\r\n";
+			echo esc_attr( "END:VCALENDAR\r\n" );
 			exit;
 		}
 	}

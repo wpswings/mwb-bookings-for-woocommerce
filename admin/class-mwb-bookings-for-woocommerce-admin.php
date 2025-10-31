@@ -2638,7 +2638,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			)
 		);
 
-		// Security nonce
+		// Security nonce.
 		wp_nonce_field( 'wps_booking_form_nonce_action', 'wps_booking_form_nonce' );
 
 		?>

@@ -1483,13 +1483,10 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_display_selected_form_before_booking($atts) {
-		// print_r($atts);
         if (empty($atts)) return;
     $selected_form = get_post_meta($atts, '_wps_booking_form_id', true);
-    // if (empty($selected_form)) return;
 
     $fields = get_post_meta($selected_form, '_wps_global_calendar_form_fields', true);
-  	// if (empty($fields)) return;
   
 	$default_price = get_post_meta($atts, '_booking_default_price', true) ? get_post_meta($atts, '_booking_default_price', true): 0;
 
@@ -1502,8 +1499,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		<!-- Dynamic field for showing selected dates. -->
 		<input type="text" class="wps-global-form-field-for-selected-date" id="selected-dates-<?php echo esc_attr($atts); ?>" readonly placeholder="Selected dates will appear here"></input>
 		<div class="wps-global-form-field-wrapper">
-			<label> <? echo esc_html__('Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
-		<div class="wps_global-selected-date-cost" id="wps_global-selected-date-cost"> <?php echo $default_price;?> X 0 = 0</div>
+			<label> <?php echo esc_html__('Cost', 'mwb-bookings-for-woocommerce' ); ?></label>
+		<div class="wps_global-selected-date-cost" id="wps_global-selected-date-cost"> <?php echo esc_attr( $default_price );?> X 0 = 0</div>
 		</div>
 		</div>
 		<div class="wps-global-form-field-wrapper-group">
@@ -1540,7 +1537,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 					switch ($field['type']) {
 						case 'textarea':
-							echo '<textarea id="'.$id.'" name="'.$name.'" '.$required.'></textarea>';
+							echo '<textarea id="'.esc_attr( $id ).'" name="'.esc_attr( $name ).'" '.esc_attr( $required ).'></textarea>';
 							break;
 
 						case 'number':

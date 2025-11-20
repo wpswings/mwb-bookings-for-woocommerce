@@ -3006,8 +3006,55 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 		return $title;
 	}
+
+	/**
+	 * Remove 'View' link from global booking post type.
+	 *
+	 * @param array   $actions Current actions.
+	 * @param WP_Post $post Current post object.
+	 * @return array Modified actions.
+	 */
+	public function wps_unset_view_on_global_booking ( $actions, $post ) {
+		if ( 'wps_global_booking' === $post->post_type ) {
+			unset( $actions['view'] );
+		}
+		return $actions;
+	}
+
+	/**
+	 * Hide the view URL and permalink box for global booking post type.
+	 */
+	public function wps_hide_view_url_global_booking() {
+		global $post;
+
+		// Check for your CPT (replace 'wps_global_booking' with your CPT slug).
+		if ( isset( $post ) && 'wps_global_booking' === $post->post_type ) {
+			// Hide permalink and 'View Post' using CSS.
+			echo '<style>
+				#edit-slug-box,
+				#view-post-btn,
+				.post-preview { display: none !important; }
+			</style>';
+		}
+	}
+
+	/**
+	 * Remove update messages with view links for global booking post type.
+	 *
+	 * @param array $messages Current messages.
+	 * @return array Modified messages.
+	 */
+	public function wps_remove_update_message( $messages ) {
+			global $post;
+
+			if ( isset( $post ) && 'wps_global_booking' === $post->post_type ) {
+				foreach ( $messages['post'] as $key => $message ) {
+					// Remove any "View post" or link from the message text.
+					$messages['post'][ $key ] = preg_replace( '/<a[^>]*>.*?<\/a>/', '', $message );
+				}
+			}
+		return $messages;
+	}
 	// End of admin class.
 }
-
-
 

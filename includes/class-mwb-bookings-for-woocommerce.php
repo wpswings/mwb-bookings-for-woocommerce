@@ -241,6 +241,11 @@ class Mwb_Bookings_For_Woocommerce {
 			// Fill the new column with the shortcode.
 			$this->loader->add_action('manage_wps_global_booking_posts_custom_column', $mbfw_plugin_admin, 'display_shortcode_column_for_booking', 10, 2);
 
+			$this->loader->add_filter('post_row_actions', $mbfw_plugin_admin, 'wps_unset_view_on_global_booking', 10, 2);
+			$this->loader->add_filter('post_updated_messages', $mbfw_plugin_admin, 'wps_remove_update_message', 10, 1);
+			$this->loader->add_action('admin_head', $mbfw_plugin_admin, 'wps_hide_view_url_global_booking', 10, 2);
+
+
 			// Airbnb crons.
 			$this->loader->add_filter( 'init', $mbfw_plugin_admin, 'wps_schedule_background_fetch_event' );
 

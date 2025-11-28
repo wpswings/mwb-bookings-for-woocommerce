@@ -5,8 +5,8 @@ Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 5.5.0
 Tested up to: 6.8.3
 WC requires at least: 6.8.1
-WC tested up to: 10.3.3
-Stable tag: 3.10.0
+WC tested up to: 10.3.5
+Stable tag: 3.10.1
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -244,17 +244,17 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 1. General Settings Tab
 2. Configuration settings Tab (Bookings Form Settings)
 3. Configuration settings Tab (Availability Settings)
-4. Configuration settings Tab (Additional Cost  Settings)
-5. Configuration settings Tab (Additional Service  Settings)
+4. Configuration settings Tab (Additional Cost  Settings)
+5. Configuration settings Tab (Additional Service  Settings)
 6. Booking Calendar Setting Tab
-7. Product Data (general settings tab) 
-8. Product Data (Cost settings tab) 
-9. Product Data (People Type  settings tab) 
-10. Product Data (Service  settings tab) 
-11. Product Data (Availability Settings Tab) – Single Calendar 
+7. Product Data (general settings tab) 
+8. Product Data (Cost settings tab) 
+9. Product Data (People Type  settings tab) 
+10. Product Data (Service  settings tab) 
+11. Product Data (Availability Settings Tab) – Single Calendar 
 12. My Booking Tab (My Account Section)
 13. Add Booking to Google Calendar (My Account Tab)
-14. Multi Calendar Booking (general settings tab) 
+14. Multi Calendar Booking (general settings tab) 
 15. Product Data (Availability Settings Tab) – Dual Calendar
 16. Compatibility With Points and Rewards – Allow customers to earn points.
 17. Global Calendar 
@@ -307,6 +307,11 @@ In our plugin, there are two types of booking units-
 Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/bookings-for-woocommerce/?utm_source=wpswings-bookings-kb&utm_medium=bookings-org-page&utm_campaign=bookings-kb)
 
 == Changelog ==
+
+= 3.10.1 - Released on 28 November 2025 =
+
+* New: Latest compatibility With WP[6.8.3] and WC[10.3.5].
+* New: Compatibility with WPML
 
 = 3.10.0 - Released on 3 November 2025 =
 
@@ -536,7 +541,8 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.10.0 - Released on 3 November 2025 =
+= 3.10.1 - Released on 28 November 2025 =
 
-* New: Show total additional costs separately on product page
-* New: Latest compatibility With WP[6.8.3] and WC[10.3.3].
+* New: Latest compatibility With WP[6.8.3] and WC[10.3.5].
+* New: Compatibility with WPML
+.

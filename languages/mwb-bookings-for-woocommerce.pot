@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Bookings For WooCommerce 3.10.0\n"
-"POT-Creation-Date: 2025-10-31 17:06+0530\n"
+"Project-Id-Version: Bookings For WooCommerce 3.10.1\n"
+"POT-Creation-Date: 2025-11-27 18:37+0530\n"
 "PO-Revision-Date: 2023-07-12 15:58+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -153,7 +153,7 @@ msgid "Save Settings"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:484
-#: includes/class-mwb-bookings-for-woocommerce.php:457
+#: includes/class-mwb-bookings-for-woocommerce.php:462
 msgid "Booking Form Settings"
 msgstr ""
 
@@ -270,7 +270,7 @@ msgid "Booking product"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:759
-#: includes/class-mwb-bookings-for-woocommerce.php:412
+#: includes/class-mwb-bookings-for-woocommerce.php:417
 msgid "General Settings"
 msgstr ""
 
@@ -753,7 +753,7 @@ msgid "Hidden"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:1865
-#: includes/class-mwb-bookings-for-woocommerce.php:760
+#: includes/class-mwb-bookings-for-woocommerce.php:765
 msgid "yes"
 msgstr ""
 
@@ -1610,30 +1610,30 @@ msgstr ""
 msgid "Something went wrong: "
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:418
+#: includes/class-mwb-bookings-for-woocommerce.php:423
 msgid "Configuration Settings"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:432
+#: includes/class-mwb-bookings-for-woocommerce.php:437
 msgid "Bookings Calendar"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:437
+#: includes/class-mwb-bookings-for-woocommerce.php:442
 msgid "Availability Settings"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:442
+#: includes/class-mwb-bookings-for-woocommerce.php:447
 msgid "Overview"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:485
+#: includes/class-mwb-bookings-for-woocommerce.php:490
 #, php-format
 msgid ""
 "Unable to locate file at location \"%s\". Some features may not work "
 "properly in this plugin. Please contact us!"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce.php:871
+#: includes/class-mwb-bookings-for-woocommerce.php:876
 msgid "Availability by Days"
 msgstr ""
 

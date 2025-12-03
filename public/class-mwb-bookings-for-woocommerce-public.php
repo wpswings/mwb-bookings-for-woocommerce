@@ -482,12 +482,65 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				wp_enqueue_script('booking-calendar-form-js', plugin_dir_url(__FILE__) . 'js/mwb-booking-public-form.js', ['jquery'], null, true);
 				wp_enqueue_script('booking-calendar-js', plugin_dir_url(__FILE__) . 'js/mwb-global-booking-shortcode.js', ['fullcalendar-js','mwb-mbfw-select2'], null, true);
 				$container_id = 'booking-calendar-' . esc_attr($post_id);
-				$available_days = get_post_meta($post_id, '_available_days', true) ? get_post_meta($post_id, '_available_days', true) : [];
-				$unavailable_days = get_post_meta($post_id, '_non_available_days', true) ? get_post_meta($post_id, '_non_available_days', true) : [];
+				$available_days = get_post_meta($post_id, '_available_days', true) ?: [];
+				$unavailable_days = get_post_meta($post_id, '_non_available_days', true) ?: [];
+
+				// ADD LIMIT-BASED UNAVAILABLE DATES
+
+				$limit_per_date = intval(get_post_meta($post_id, '_wps_booking_limit_per_date', true));
+
+				$date_counts = [];
+
+				// 1. Get all booking orders
+
+
+				$orders = wc_get_orders(
+					array(
+						'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending', 'wc-completed' ),
+						'limit'    => -1,
+						'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress_wps_single_cal_booking_dates.
+						'meta_val' => 'booking',
+					)
+				);
+				// echo "<pre>";
+
+				// 2. Extract dates from order items
+				foreach ( $orders as $order ) {
+					// print_r($order->get_id() );echo "<br/>";
+					foreach ( $order->get_items() as $item ) {
+						$dates_string = wc_get_order_item_meta( $item->get_id() , 'Booking Date', true ) ;
+						// print_r($dates_string);echo "<br/>";
+						if (empty($dates_string)) continue;
+
+						$dates = array_map('trim', explode(',', $dates_string));
+
+						foreach ($dates as $date) {
+							if (!isset($date_counts[$date])) {
+								$date_counts[$date] = 0;
+							}
+							$date_counts[$date]++;
+						}
+					}
+				}
+
+				// 3. Add fully booked dates into unavailable list
+				if ($limit_per_date > 0) {
+					foreach ($date_counts as $date => $count) {
+
+						if ($count >= $limit_per_date) {
+							if (!in_array($date, $unavailable_days)) {
+								$unavailable_days[] = $date;
+							}
+						}
+					}
+				}
+
 				$calendar_availbilty_color = get_post_meta($post_id, '_calendar_availbilty_color', true) ? get_post_meta($post_id, '_calendar_availbilty_color', true) : '#00aaff';
 
 				$status_id    = 'booking-status-' . esc_attr($post_id);
 				$events = [];
+
+				$available_days = array_diff($available_days, $unavailable_days);
 
 				// Available days (clickable).
 				foreach ($available_days as $date) {
@@ -1398,6 +1451,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			$booking_date = isset( $_GET['booking_date'] )? sanitize_text_field( wp_unslash( $_GET['booking_date'] ) ) : '';
 			$booking_price = isset( $_GET['booking_price'] )? floatval( wp_unslash( $_GET['booking_price'] ) ) : 0;
 			$booking_date = isset( $_GET['booking_date'] )? sanitize_text_field( wp_unslash( $_GET['booking_date'] ) ) : ''; ;
+			$calendar_id = isset( $_GET['global_calendar_id'] )? sanitize_text_field( wp_unslash( $_GET['global_calendar_id'] ) ) : ''; ;
 
 			if ($product_id && $booking_date) {
 				// Remove existing booking items (optional).
@@ -1408,6 +1462,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					'booking_date' => $booking_date,
 					'booking_price' => $booking_price,
 					'form_data' => $form_data,
+					'calendar_id' => $calendar_id,
 				]);
 
 				// Redirect to cart.

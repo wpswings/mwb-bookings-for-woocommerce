@@ -45,11 +45,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const clickedDateStr = info.dateStr;
+            const clickedDateStr = info.dateStr;debugger;
             const unavailableDates = bookingCalendarData.unavailableDates;
-            const availableDates = bookingCalendarData.availableDates;
+            let availableDates;
 
-            if (unavailableDates.includes(clickedDateStr) || !availableDates.includes(clickedDateStr)) {
+            if (typeof bookingCalendarData.availableDates === 'object' && bookingCalendarData.availableDates !== null) {
+                availableDates = Object.values(bookingCalendarData.availableDates);
+            } else {
+                availableDates = bookingCalendarData.availableDates;
+            }
+
+            if (unavailableDates.includes(clickedDateStr) || ! availableDates.includes(clickedDateStr)) {
                 alert(bookingCalendarData.unavailable_msg);
                 return;
             }
@@ -198,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var price= (selectedDates.length) * defaultPrice;
         // Build cart URL with multiple dates
         // e.g., pass them as comma-separated
-        const url = `${baseUrl}?add-booking-to-cart=1&booking_date=${selectedDates.join(',')}&booking_price=${price}&global_booking_form=${JSON.stringify(entries)}`;
+        const url = `${baseUrl}?add-booking-to-cart=1&booking_date=${selectedDates.join(',')}&booking_price=${price}&global_booking_form=${JSON.stringify(entries)}&global_calendar_id=${postId}`;
 
         window.location.href = url;
     });

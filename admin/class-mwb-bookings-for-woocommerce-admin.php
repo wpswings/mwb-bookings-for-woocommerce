@@ -2476,6 +2476,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			'side',                            // Context (side, normal, advanced).
 			'default'                          // Priority.
 		);
+		add_meta_box(
+			'wps_global_booking_availability',
+			__( 'Availability Settings', 'mwb-bookings-for-woocommerce' ),
+			array( $this,'wps_global_booking_availability_metabox_cb'),
+			'wps_global_booking',
+			'normal',
+			'high'
+		);
 	}
 
 	/**
@@ -2770,6 +2778,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		$ical_content = $this->generate_ical_content( $non_available_days, 'unavailable_days' );
 		update_post_meta( $post_id, '_ical_data_unavailable_days', $ical_content );
+		    
+		if ( isset( $_POST['wps_booking_limit_per_date'] ) ) {
+			update_post_meta(
+				$post_id,
+				'_wps_booking_limit_per_date',
+				intval( $_POST['wps_booking_limit_per_date'] )
+			);
+		}
 	}
 
 	/**
@@ -3054,6 +3070,32 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				}
 			}
 		return $messages;
+	}
+
+	/**
+	 * Render the availability settings metabox.
+	 *
+	 * @param WP_Post $post The post object.
+	 */
+	function wps_global_booking_availability_metabox_cb( $post ) {
+
+		wp_nonce_field( 'wps_global_booking_global_limit_nonce', 'wps_global_booking_global_limit_nonce_field' );
+
+		$limit = get_post_meta( $post->ID, '_wps_booking_limit_per_date', true );
+		?>
+
+		<label for="wps_booking_limit_per_date"><strong><?php _e( 'Maximum Bookings Per Date', 'textdomain' ); ?></strong></label>
+		<input 
+			type="number" 
+			id="wps_booking_limit_per_date"
+			name="wps_booking_limit_per_date"
+			value="<?php echo esc_attr( $limit ); ?>"
+			min="0"
+			style="width:100%; margin-top:8px;"
+		>
+		<p class="description">This limit will apply to every date.</p>
+
+		<?php
 	}
 	// End of admin class.
 }

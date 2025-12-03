@@ -17,44 +17,77 @@ jQuery(function ($) {
 		// 	defaultDate: nonAvailableDates
 		// });
 
-// let availableDates = [];
-// let nonAvailableDates = [];
-
-const availablePicker = $('#available_days_picker').flatpickr({
-    mode: "multiple",
-    dateFormat: "Y-m-d",
-    allowInput: false,
-    defaultDate: availableDates,
-        disable: nonAvailableDates,           // disable non-available dates
-
-    onChange: function(selectedDates, dateStr, instance) {
-        // Sync available dates
-        availableDates = selectedDates.map(d => instance.formatDate(d, "Y-m-d"));
-
-        // Remove from non-available if overlapping
-                nonAvailablePicker.set('disable', availableDates);
-
-    }
-});
-
-const nonAvailablePicker = $('#non_available_days_picker').flatpickr({
-    mode: "multiple",
-    dateFormat: "Y-m-d",
-    allowInput: false,
-    defaultDate: nonAvailableDates,
-        disable: availableDates,           // disable non-available dates
-
-    onChange: function(selectedDates, dateStr, instance) {
-        // Sync non-available dates
-        nonAvailableDates = selectedDates.map(d => instance.formatDate(d, "Y-m-d"));
-
-        // Remove from available if overlapping
-                availablePicker.set('disable', nonAvailableDates);
-
-    }
-});
 
 
+        const availablePicker = $('#available_days_picker').flatpickr({
+            mode: "multiple",
+            dateFormat: "Y-m-d",
+            allowInput: false,
+            defaultDate: availableDates,
+                disable: nonAvailableDates,           // disable non-available dates
+
+            onChange: function(selectedDates, dateStr, instance) {
+                // Sync available dates
+                availableDates = selectedDates.map(d => instance.formatDate(d, "Y-m-d"));
+
+                // Remove from non-available if overlapping
+                        nonAvailablePicker.set('disable', availableDates);
+
+            }
+        });
+
+        const nonAvailablePicker = $('#non_available_days_picker').flatpickr({
+            mode: "multiple",
+            dateFormat: "Y-m-d",
+            allowInput: false,
+            defaultDate: nonAvailableDates,
+                disable: availableDates,           // disable non-available dates
+
+            onChange: function(selectedDates, dateStr, instance) {
+                // Sync non-available dates
+                nonAvailableDates = selectedDates.map(d => instance.formatDate(d, "Y-m-d"));
+
+                // Remove from available if overlapping
+                        availablePicker.set('disable', nonAvailableDates);
+
+            }
+        });
+
+
+            const $field = $('#wps_booking_limit_per_date');
+
+            $field.on('input', function(){
+
+                let val = $(this).val();
+
+                // Remove non-numeric characters
+                val = val.replace(/[^0-9]/g, '');
+
+                // Remove leading zeros
+                val = val.replace(/^0+(?!$)/, '');
+
+                // Force value to be integer
+                if (val === '') {
+                    val = '';
+                } else {
+                    val = parseInt(val, 10);
+                }
+
+                $(this).val(val);
+            });
+
+            // Extra protection: prevent E/e and minus on keypress
+            $field.on('keypress', function(e){
+
+                // Block minus, plus, E/e (exponential), decimal
+                if (e.key === '-' || 
+                    e.key === '+' || 
+                    e.key === 'e' || 
+                    e.key === 'E' || 
+                    e.key === '.' ) {
+                    e.preventDefault();
+                }
+            });
 	});
 
 

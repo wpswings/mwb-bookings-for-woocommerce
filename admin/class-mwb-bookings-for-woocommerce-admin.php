@@ -3084,7 +3084,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		$limit = get_post_meta( $post->ID, '_wps_booking_limit_per_date', true );
 		?>
 
-		<label for="wps_booking_limit_per_date"><strong><?php _e( 'Maximum Bookings Per Date', 'textdomain' ); ?></strong></label>
+		<label for="wps_booking_limit_per_date"><strong><?php _e( 'Maximum Bookings Per Date', 'mwb-bookings-for-woocommerce' ); ?></strong></label>
 		<input 
 			type="number" 
 			id="wps_booking_limit_per_date"
@@ -3093,7 +3093,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			min="0"
 			style="width:100%; margin-top:8px;"
 		>
-		<p class="description">This limit will apply to every date.</p>
+		<p class="description"><?php echo __('This limit will apply to every date.','mwb-bookings-for-woocommerce'); ?></p>
 
 		<?php
 	}

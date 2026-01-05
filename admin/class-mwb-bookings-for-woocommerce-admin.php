@@ -2408,6 +2408,13 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'menu_icon'    => 'dashicons-calendar',
 				'supports'     => array( 'title' ),
 				'show_in_rest' => true,
+				'show_ui'             => true,
+				'show_in_menu'        => true,
+				'exclude_from_search' => true,
+				'publicly_queryable'  => false,   // IMPORTANT
+				'has_archive'         => false,   // IMPORTANT
+				'rewrite'             => false,   // IMPORTANT
+				'supports'            => array('title'),
 			)
 		);
 			$labels = array(

@@ -1,2 +1,126 @@
+<?xml version="1.0"?>
 <wpml-config>
+
+    <!-- ========================================================= -->
+    <!-- 1. Custom Product Type -->
+    <!-- ========================================================= -->
+    <custom-types>
+        <custom-type translate="1">mwb_booking</custom-type>
+        <custom-type translate="1">wps_global_booking</custom-type>
+    </custom-types>
+
+    <!-- ========================================================= -->
+    <!-- 2. Custom Taxonomies -->
+    <!-- ========================================================= -->
+    <taxonomies>
+        <taxonomy translate="1">mwb_booking_cost</taxonomy>
+        <taxonomy translate="1">mwb_booking_service</taxonomy>
+    </taxonomies>
+
+    <!-- ========================================================= -->
+    <!-- 3. Product Meta Keys (Booking Products) -->
+    <!-- ========================================================= -->
+    <custom-fields>
+
+        <!-- Booking Settings -->
+        <custom-field action="copy">mwb_mbfw_booking_criteria</custom-field>
+        <custom-field action="copy">wps_mbfw_booking_type</custom-field>
+        <custom-field action="copy">mwb_mbfw_booking_count</custom-field>
+        <custom-field action="copy">mwb_mbfw_booking_unit</custom-field>
+        <custom-field action="copy">mwb_mbfw_enable_calendar</custom-field>
+        <custom-field action="copy">mwb_mbfw_enable_time_picker</custom-field>
+        <custom-field action="copy">mwb_mbfw_max_bookings</custom-field>
+        <custom-field action="copy">mwb_mbfw_show_date_with_time</custom-field>
+        <custom-field action="copy">mwb_mbfw_admin_confirmation</custom-field>
+        <custom-field action="copy">mwb_mbfw_cancellation_allowed</custom-field>
+
+        <!-- Cost -->
+        <custom-field action="copy">mwb_mbfw_booking_unit_cost</custom-field>
+        <custom-field action="copy">mwb_mbfw_booking_base_cost</custom-field>
+        <custom-field action="copy">mwb_mbfw_booking_base_cost_hide</custom-field>
+        <custom-field action="copy">mwb_mbfw_general_cost_hide</custom-field>
+        <custom-field action="copy">mwb_mbfw_show_additional_cost_details</custom-field>
+        <custom-field action="copy">mwb_cost_date_range_notice</custom-field>
+
+        <!-- People / Persons -->
+        <custom-field action="copy">mwb_mbfw_is_people_option</custom-field>
+        <custom-field action="copy">mwb_mbfw_minimum_people_per_booking</custom-field>
+        <custom-field action="copy">mwb_mbfw_maximum_people_per_booking</custom-field>
+        <custom-field action="copy">mwb_mbfw_is_booking_unit_cost_per_people</custom-field>
+        <custom-field action="copy">mwb_mbfw_is_booking_base_cost_per_people</custom-field>
+
+        <!-- Booking Limits -->
+        <custom-field action="copy">mwb_mbfw_minimum_no_days_booking</custom-field>
+        <custom-field action="copy">mwb_mbfw_maximum_booking_per_unit</custom-field>
+
+        <!-- Services -->
+        <custom-field action="copy">mwb_mbfw_is_add_extra_services</custom-field>
+
+        <!-- Calendar Settings -->
+        <custom-field action="copy">mwb_mbfw_daily_calendar_start_time</custom-field>
+        <custom-field action="copy">mwb_mbfw_daily_calendar_end_time</custom-field>
+        <custom-field action="copy">mwb_mbfw_choose_holiday</custom-field>
+        <custom-field action="copy">mwb_mbfw_booking_time_fromat</custom-field>
+        <custom-field action="copy">wps_mbfw_day_and_days_upto_togather_enabled</custom-field>
+        <custom-field action="copy">wps_mbfw_night_slots_enabled</custom-field>
+        <custom-field action="copy">mwb_mbfw_booking_hide_or_diable_slot</custom-field>
+
+        <!-- Availability -->
+        <custom-field action="copy">wps_mbfw_set_availability</custom-field>
+        <custom-field action="copy">wps_mbfw_set_availability_upto</custom-field>
+        <custom-field action="copy">wps_mbfw_time_slots</custom-field>
+
+        <!-- Order Cancel Rules -->
+        <custom-field action="copy">mwb_bfwp_order_statuses_to_cancel</custom-field>
+
+        <!-- WooCommerce Core Compatibility -->
+        <custom-field action="copy">_price</custom-field>
+        <custom-field action="copy">_stock</custom-field>
+        <custom-field action="copy">_original_stock</custom-field>
+        <custom-field action="copy">_backorders</custom-field>
+        <custom-field action="copy">_low_stock_amount</custom-field>
+        <custom-field action="copy">_stock_status</custom-field>
+        <custom-field action="copy">_sku</custom-field>
+        <custom-field action="copy">_manage_stock</custom-field>
+
+        <!-- Additional -->
+        <custom-field action="copy">_available_days</custom-field>
+
+    </custom-fields>
+
+    <!-- ========================================================= -->
+    <!-- 4. Custom Post Type: wps_global_booking -->
+    <!-- ========================================================= -->
+    <custom-fields>
+        <custom-field action="copy">_available_days</custom-field>
+        <custom-field action="copy">_non_available_days</custom-field>
+        <custom-field action="copy">_booking_default_price</custom-field>
+        <custom-field action="copy">_calendar_availbilty_color</custom-field>
+        <custom-field action="copy">_airbnb_ical_link</custom-field>
+        <custom-field action="copy">_wps_booking_form_id</custom-field>
+        <custom-field action="copy">_ical_data_available_days</custom-field>
+        <custom-field action="copy">_ical_data_unavailable_days</custom-field>
+        <custom-field action="copy">_is_calendar_booking_product</custom-field>
+    </custom-fields>
+
+    <!-- ========================================================= -->
+    <!-- 5. Option Keys (wp_options) -->
+    <!-- ========================================================= -->
+    <admin-texts>
+        <key name="mbfw_enable_tracking" />
+        <key name="wps_bfwp_google_cal_iframe" />
+        <key name="mwb_mbfw_is_plugin_enable" />
+        <key name="mwb_mbfw_is_show_included_service" />
+        <key name="mwb_mbfw_is_show_totals" />
+        <key name="mwb_mbfw_daily_start_time" />
+        <key name="mwb_mbfw_daily_end_time" />
+        <key name="select_language_for_calendar" />
+        <key name="select_first_day_of_week" />
+        <key name="mwb_mbfw_disable_book_now" />
+        <key name="mwb_mbfw_select_language_for_calendar" />
+        <key name="mwb_mbfw_select_first_day_of_week" />
+        <key name="mwb_mbfw_enable_availibility_setting" />
+        <key name="wps_bfwp_general_setting_categ_enable" />
+    </admin-texts>
+
 </wpml-config>

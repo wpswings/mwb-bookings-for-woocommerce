@@ -5,6 +5,7 @@
 }
 .mbfw-total-listing-single-page{
     float: left;
+    align-items: end;
 }
 li#wp-admin-bar-mwb-mbfw-custom-admin-menu-bookings .mwb-mbfw-booking-count {
     font-weight: 700!important;

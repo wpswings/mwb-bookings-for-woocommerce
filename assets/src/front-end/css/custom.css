@@ -61,7 +61,7 @@
 }
 
 .mbfw-total-listing-single-page__wrapper {
-    align-items: center;
+    align-items: end;
     display: flex!important;
     justify-content: space-between;
     margin-bottom: 7px;

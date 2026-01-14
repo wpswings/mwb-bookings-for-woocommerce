@@ -11,15 +11,17 @@ jQuery(document).ready(function($){
     jQuery('.single_add_to_cart_button').on('click',function(e){
        
         dataaa =  jQuery('#wps_booking_single_calendar_form').val();
-        if ( dataaa != '' || dataaa != undefined ) {
-            $check_valid = dataaa.split(' ');
-            if ( $check_valid.length == 1 ) {
-                jQuery('#wps_booking_single_calendar_form').val('');
-                alert( mwb_mbfw_public_obj.validation_message );
-                e.preventDefault();
-            }
+        if ( dataaa != '' ) {
+            if ( dataaa != undefined ) {
 
-            
+                $check_valid = dataaa.split(' ');
+                if ( $check_valid.length == 1 ) {
+                    jQuery('#wps_booking_single_calendar_form').val('');
+                    alert( mwb_mbfw_public_obj.validation_message );
+                    e.preventDefault();
+                }
+
+            }
         }
     })
   
@@ -796,7 +798,7 @@ jQuery(document).ready(function($){
             
                 },
                 onChange: function(selectedDates, dateStr, instance) {
-debugger;
+
                     const selected = moment(selectedDates[0]);
                     const today = moment();
                     const today_date = today.format('HH:mm');

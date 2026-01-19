@@ -517,6 +517,7 @@ function retrieve_booking_total_ajax( form_data ) {
 					
 					}
 					$('.mwb-mbfw-total-area').html(msg);
+					jQuery('.cart .single_add_to_cart_button').prop('disabled', false);
 
 				}
 

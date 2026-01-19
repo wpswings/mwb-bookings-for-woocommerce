@@ -1220,7 +1220,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_mybookings_populate_tab() {
-		require plugin_dir_path( __FILE__ ) . 'partials/wps-mybookings-details-tab.php';
+    	echo '<div id="mwb-booking-root"></div>';
 	}
 
 	/**

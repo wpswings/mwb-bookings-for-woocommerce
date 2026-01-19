@@ -123,6 +123,36 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'mwb-bfwp-multi-date-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/multiple-datepicker/jquery-ui.multidatespicker.js', array( 'jquery-ui-core', 'jquery', 'jquery-ui-datepicker' ), time(), true );
 		}
+		$asset_file = include MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'build/index.asset.php';
+
+		wp_enqueue_script(
+			'mwb-bookings-build',
+			MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL.'build/index.js',
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true
+		);
+
+		// 🔹 Get WooCommerce order statuses
+		$order_statuses = wc_get_order_statuses();
+
+		// 🔹 Localize data for React
+		wp_localize_script(
+			'mwb-bookings-build', // MUST match enqueue handle
+			'wpsBfwData',         // JS global variable
+			[
+				'orderStatuses' => $order_statuses,
+			]
+		);
+
+		if ( file_exists( plugin_dir_path( __FILE__ ) . 'build/index.css' ) ) {
+			wp_enqueue_style(
+				'mwb-bookings-style',
+				MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL.'build/index.css',
+				[],
+				$asset_file['version']
+			);
+		}
 	}
 
 	/**

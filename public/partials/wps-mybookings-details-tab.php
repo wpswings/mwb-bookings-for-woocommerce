@@ -100,7 +100,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 
 						$start_timestamp    = strtotime( gmdate( 'Y-m-d 00:00', strtotime( $single_cal_dates ) ) );
 						$end_timestamp      = strtotime( gmdate( 'Y-m-d 23:59', strtotime( $single_cal_dates ) ) );
-						$gmt_offset_seconds = wps_mbfw_get_gmt_offset_seconds( $start_timestamp );
+						$gmt_offset_seconds = wwps_mbfw_get_gmt_offset_seconds( $start_timestamp );
 						$calendar_url       = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 
 						?>
@@ -144,7 +144,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 
 						$start_timestamp    = strtotime( $date_time_from );
 						$end_timestamp      = strtotime( $date_time_to );
-						$gmt_offset_seconds = wps_mbfw_get_gmt_offset_seconds( $start_timestamp );
+						$gmt_offset_seconds = wwps_mbfw_get_gmt_offset_seconds( $start_timestamp );
 						$calendar_url       = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 						?>
 						<tr>
@@ -197,7 +197,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
 						$date_time_to       = $item->get_meta( '_mwb_bfwp_date_time_to', true );
 						$start_timestamp    = strtotime( $date_time_from );
 						$end_timestamp      = strtotime( $date_time_to );
-						$gmt_offset_seconds = wps_mbfw_get_gmt_offset_seconds( $start_timestamp );
+						$gmt_offset_seconds = wwps_mbfw_get_gmt_offset_seconds( $start_timestamp );
 						$calendar_url       = 'https://calendar.google.com/calendar/r/eventedit?text=' . $booking_name . '&dates=' . gmdate( 'Ymd\\THi00\\Z', ( $start_timestamp - $gmt_offset_seconds ) ) . '/' . gmdate( 'Ymd\\THi00\\Z', ( $end_timestamp - $gmt_offset_seconds ) ) . '&details=' . $pro_short_desc . '&location=' . $event_venue;
 						?>
 						<tr>
@@ -306,7 +306,7 @@ if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
  * @param mixed $offset Time offset.
  * @return string.
  */
-function wps_mbfw_get_timezone_by_offset( $offset ) {
+function wwps_mbfw_get_timezone_by_offset( $offset ) {
 	$seconds = $offset * 3600;
 
 	$timezone = timezone_name_from_abbr( '', $seconds, 0 );
@@ -381,12 +381,12 @@ function wps_mbfw_get_timezone_by_offset( $offset ) {
 	 * @param mixed $event Event Date.
 	 * @return string.
 	 */
-function wps_mbfw_get_timezone( $event = null ) {
+function wwps_mbfw_get_timezone( $event = null ) {
 	$timezone_string = get_option( 'timezone_string' );
 	$gmt_offset = get_option( 'gmt_offset' );
 
 	if ( trim( $timezone_string ) == '' && trim( $gmt_offset ) ) {
-		$timezone_string = wps_mbfw_get_timezone_by_offset( $gmt_offset );
+		$timezone_string = wwps_mbfw_get_timezone_by_offset( $gmt_offset );
 	} elseif ( trim( $timezone_string ) == '' && trim( $gmt_offset ) == '0' ) {
 		$timezone_string = 'UTC';
 	}
@@ -399,11 +399,11 @@ function wps_mbfw_get_timezone( $event = null ) {
 	 * Get GMT offset based on seconds.
 	 *
 	 * @param string $date Event Start Date.
-	 * @return string.
+	 * @return string
 	 */
-function wps_mbfw_get_gmt_offset_seconds( $date = null ) {
+function wwps_mbfw_get_gmt_offset_seconds( $date = null ) {
 	if ( $date ) {
-		$timezone = new DateTimeZone( wps_mbfw_get_timezone() );
+		$timezone = new DateTimeZone( wwps_mbfw_get_timezone() );
 
 		// Convert to Date.
 		if ( is_numeric( $date ) ) {

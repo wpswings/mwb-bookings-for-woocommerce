@@ -142,6 +142,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'wpsBfwData',         // JS global variable
 			[
 				'orderStatuses' => $order_statuses,
+				'shopPageUrl'   => get_permalink( wc_get_page_id( 'shop' ) ),
+				'nobookingmsg'  => __( 'Looks Like you have no bookings yet.', 'mwb-bookings-for-woocommerce' ),
+				'dashboardMsgl1'     => __( 'Manage your bookings effortlessly.','mwb-bookings-for-woocommerce' ),
+				'dashboardMsgl2' => __('View, Cancel or Add your bookings to Google calendar with ease.', 'mwb-bookings-for-woocommerce' ),
+				'noBookingFilterMsg' => __( 'No order found with the following status.', 'mwb-bookings-for-woocommerce' ),
+				'addToCalendarText' => __( 'Add to Google Calendar', 'mwb-bookings-for-woocommerce' ),
 			]
 		);
 
@@ -1499,6 +1505,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			'index.php?export_airbnb_ical=1&calendar_id=$matches[1]',
 			'bottom'
 		);
+
+		add_rewrite_endpoint('wps-mybookings-tab', EP_ROOT | EP_PAGES);
+
 		flush_rewrite_rules();
 	}
 	/**
@@ -1564,6 +1573,53 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				</div>
 				<?php
 			}
+	}
+
+	public function mwb_check_service_max_qty_cb(){
+	check_ajax_referer( 'mbfw_common_nonce', 'nonce' );
+
+    $term_id = isset($_POST['term_id']) ? (int) $_POST['term_id'] : 0;
+    $qty     = isset($_POST['qty']) ? (int) $_POST['qty'] : 0;
+
+    if ( ! $term_id || $qty < 0 ) {
+        wp_send_json_error( array(
+            'message' => __( 'Invalid request.', 'text-domain' ),
+        ) );
+    }
+
+//     $max_qty = (int) get_term_meta( $term_id, 'mwb_mbfw_service_maximum_quantity', true );
+//     $min_qty = (int) get_term_meta( $term_id, 'mwb_mbfw_service_minimum_quantity', true );
+// var_dump($max_qty,$min_qty,$qty);
+//     if ( $qty > $max_qty || $qty < $min_qty ) {
+//         wp_send_json_error( array(
+//             'message' => sprintf(
+//                 __( 'Quantity must be between %d and %d.', 'text-domain' ),
+//                 $min_qty,
+//                 $max_qty
+//             ),
+//             'max_qty' => $max_qty,
+//         ) );
+//     }
+$min = get_term_meta( $term_id, 'mwb_mbfw_service_minimum_quantity', true );
+    $max = get_term_meta( $term_id, 'mwb_mbfw_service_maximum_quantity', true );
+
+    $min = ( $min === '' ) ? null : (int) $min;
+    $max = ( $max === '' || (int) $max === 0 ) ? null : (int) $max;
+
+    if ( $min !== null && $qty < $min ) {
+        wp_send_json_error( array(
+            'message' => sprintf( __( 'Minimum allowed quantity is %d.', 'text-domain' ), $min ),
+            'allowed' => array( 'min' => $min, 'max' => $max ),
+        ) );
+    }
+
+    if ( $max !== null && $qty > $max ) {
+        wp_send_json_error( array(
+            'message' => sprintf( __( 'Maximum allowed quantity is %d.', 'text-domain' ), $max ),
+            'allowed' => array( 'min' => $min, 'max' => $max ),
+        ) );
+    }
+    wp_send_json_success();
 	}
 
 }

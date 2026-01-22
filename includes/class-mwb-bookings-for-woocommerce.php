@@ -291,7 +291,8 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_get_cart_data', $mbfw_plugin_common, 'mwb_mbfw_get_cart_items' );
 			$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $mbfw_plugin_common, 'wps_sfw_compatible_with_subscription' );
 			$this->loader->add_action( 'wps_sfw_after_renewal_payment', $mbfw_plugin_common, 'wps_bfw_after_renewal_payment', 10, 3 );
-
+			$this->loader->add_action( 'wp_ajax_mwb_check_service_max_qty', $mbfw_plugin_common, 'mwb_check_service_max_qty_cb' );
+			$this->loader->add_action( 'wp_ajax_nopriv_mwb_check_service_max_qty', $mbfw_plugin_common, 'mwb_check_service_max_qty_cb' );
 			// air bnb calendar export.
 			$this->loader->add_action('template_redirect', $mbfw_plugin_common, 'wps_bfw_export_booking_data');
 			$this->loader->add_action('init', $mbfw_plugin_common, 'wps_rewite_rules_for_export_data');

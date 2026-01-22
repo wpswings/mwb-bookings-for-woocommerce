@@ -601,8 +601,29 @@ button.wps_timeslot_button {
 
     .wps-bfw_orders li a {
         text-decoration: underline;
+        font-size: 16px;
     }
-
+    .wps-bfw_od-view-cancel-buttons {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    .wps-bfw_orders ul li input.wps-bfw_od-cancel-button {
+        background: red;
+        border: 1.5px solid red;
+        color: white;
+        border-radius: 5px;
+        padding: 5px 15px;
+        font-weight: 400;
+        font-size: 14px;
+        transition: all 0.2s 
+        linear;
+        cursor: pointer;
+        margin: 0;
+        box-shadow: none;
+        line-height: 1.5;
+        
+    }
     .wps-bfw_orders li a:hover {
         text-decoration: none;
     }
@@ -709,7 +730,7 @@ button.wps_timeslot_button {
     .wps-bfw_orders ul li .wps-bfw_od-view-price {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
         gap: 10px;
     }
 
@@ -823,13 +844,42 @@ button.wps_timeslot_button {
         left: calc(100% - 14px);
     }
 
-    .wps-bfw_main #no-orders-msg {
-        font-size: 32px;
-        color: var(--bfw-grey-color);
-        font-weight: 600;
-        line-height: 1.5;
-        text-align: center;
-    }
+      .wps-bfw_main .wps-bfw-empty-state {
+          display: flex;
+          justify-content: space-between;
+          gap: 10px;
+          padding: 16px 20px;
+          flex-wrap: wrap;
+          background-color: #f4f8ff;
+          border: 1.5px solid #007cba;
+          border-radius: 10px;
+      }
+      .wps-bfw_main .wps-bfw-empty-state svg {
+          vertical-align: sub;
+      }
+      .wps-bfw_main .wps-bfw-empty-text {
+          font-weight: 600;
+          color: var(--bfw-grey-color);
+          flex: 1 0 60%;
+      }
+
+      .wps-bfw_main .wps-bfw-empty-action {
+          background: transparent;
+          /* border: none; */
+          padding: 0;
+
+          color: #6b7280; /* WC-style muted link */
+          font-weight: 500;
+          text-decoration: underline;
+      }
+
+      .wps-bfw_main .wps-bfw-empty-action:hover {
+          text-decoration: none;
+      }
+      .wps-bfw_main .wps-bfw-empty-action.button {
+          box-shadow: none;
+      }
+
 
     .wps-bfw_main #wps-load-more-btn {
         padding: 5px 15px;

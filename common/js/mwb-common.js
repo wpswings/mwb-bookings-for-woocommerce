@@ -329,6 +329,7 @@
 
 	// cancel order from my account page.
 	jQuery(document).on('click', '#wps_bfw_cancel_order', function(){
+
 		if (confirm(mwb_mbfw_common_obj.cancel_booking_order) == true) {
 			
 			var product_id = jQuery(this).attr('data-product');
@@ -352,6 +353,42 @@
 
 		
 	});
+	jQuery(document).on('change', '.mwb-mbfw-additional-service-quantity', function () {
+
+    var $input  = jQuery(this);
+    var termId  = $input.data('term-id');
+    var qty     = parseInt($input.val(), 10);
+
+    if (!termId || isNaN(qty)) {
+        return;
+    }
+
+    jQuery.ajax({
+        url: mwb_mbfw_common_obj.ajax_url,
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            action: 'mwb_check_service_max_qty',
+            term_id: termId,
+            qty: qty,
+            nonce: mwb_mbfw_common_obj.nonce
+        },
+        success: function (response) {
+            if (!response.success) {
+                alert(response.data.message);
+
+                // reset to allowed max
+				if (response.data.allowed.max !== null) {
+                        $input.val(response.data.allowed.max);
+                    } else if (response.data.allowed.min !== null) {
+                        $input.val(response.data.allowed.min);
+                    } else {
+                        $input.val(0);
+                    }
+            }
+        }
+    });
+});
 
 	jQuery('#wps_booking_single_calendar_form').on('blur',function(){
 		var calendar_dataa =  jQuery('#wps_booking_single_calendar_form').val();

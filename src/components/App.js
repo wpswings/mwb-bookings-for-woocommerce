@@ -9,7 +9,8 @@ import {
     SearchIcon,
     MapIcon,
     CalendarIcon,
-    ArrowIcon
+    ArrowIcon,
+    NoOrderIcon
 } from './icons';
 
 export default function App() {
@@ -96,7 +97,9 @@ useEffect(() => {
             <div className="wps-bfw_header" >
                 <h3 className="wps-bfw_h-title">Bookings Dashboard</h3>
                 <p className="wps-bfw_h-desc">
-                    View, manage, edit, delete, and transfer bookings seamlessly.
+                    {wpsBfwData.dashboardMsgl1}
+                <br></br>
+                    {wpsBfwData.dashboardMsgl2}
                 </p>
             </div>
 
@@ -106,26 +109,18 @@ useEffect(() => {
                 value={statusFilter}
                 onChange={setStatusFilter}
             />
-                {/* <OrderStatusSelect /> */}
-                {/* <select className="wps-bfw_f-order-status">
-                    <option value="">All orders</option>
-                </select> */}
+                
 
                 <div className="wps-bfw_f-search-box">
                     <SearchIcon />
-                    {/* <input
-                        type="text"
-                        placeholder="Showing all orders"
-                        className="wps-bfw_f-search-input"
-                    /> */}
+                    
                     <input
-    type="text"
-    // placeholder="Showing all orders"
-    placeholder={searchPlaceholder}
-    className="wps-bfw_f-search-input"
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-/>
+                        type="text"
+                        placeholder={searchPlaceholder}
+                        className="wps-bfw_f-search-input"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
 
                     <ViewToggle />
                 </div>
@@ -181,28 +176,9 @@ useEffect(() => {
                                         {item.payment_method}
                                     </span>
                                 </div>
+                                
 
-                                {item.can_cancel && item.cancel_allowed && (
-                                    <input
-                                        type="button"
-                                        value="Cancel Booking"
-                                        id="wps_bfw_cancel_order"
-                                        data-product ={item.product_id}
-                                        data-order ={item.order_id}
-                                        className="wps-bfw_od-d-can-input"
-                                        onClick={() => handleCancel(item)}
-                                    />
-                                )}
-                            </div>
-
-                            <div className="wps-bfw_od-view-price">
-                                <input
-                                    type="button"
-                                    value="View Order"
-                                    className="wps-bfw_od-view"
-                                    onClick={() => window.location.href = item.view_order_url}
-                                />
-
+                                
                                 {item.calendar_url && (
                                     <a
                                         href={item.calendar_url}
@@ -211,9 +187,32 @@ useEffect(() => {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        + Add to Google Calendar
+                                       + {wpsBfwData.addToCalendarText}
                                     </a>
                                 )}
+                            </div>
+
+                            <div className="wps-bfw_od-view-price">
+                                <div className="wps-bfw_od-view-cancel-buttons">
+                                <input
+                                    type="button"
+                                    value="View Order"
+                                    className="wps-bfw_od-view"
+                                    onClick={() => window.location.href = item.view_order_url}
+                                />
+
+                                {item.can_cancel && item.cancel_allowed && (
+                                    <input
+                                        type="button"
+                                        value="Cancel Booking"
+                                        id="wps_bfw_cancel_order"
+                                        data-product ={item.product_id}
+                                        data-order ={item.order_id}
+                                        className="wps-bfw_od-d-can-input wps-bfw_od-cancel-button"
+                                        // onClick={() => handleCancel(item)}
+                                    />
+                                )}
+                                </div>
 
                                 <div className="wps-bfw_od-price">
                                     {item.total}
@@ -225,11 +224,42 @@ useEffect(() => {
 
                 ))}
             </ul>
-            {filteredBookings.length === 0 && (
-    <div id="no-orders-msg" style={{ marginTop: '10px' }}>
-        No orders found
-    </div>
-)}
+            {bookings.length === 0 && (
+                <div id="no-orders-msg" class="woocommerce-Message woocommerce-Message--info wps-bfw-empty-state">
+                <span> 
+                    <NoOrderIcon />
+                </span>
+                <span class="wps-bfw-empty-text">
+                    {wpsBfwData.nobookingmsg}
+                </span>
+
+                <a
+                    class="woocommerce-Button button wps-bfw-empty-action"
+                    href={wpsBfwData.shopPageUrl}
+                >
+                    Book now
+                </a>
+            </div>
+
+            )}
+            {bookings.length !== 0 && filteredBookings.length === 0 && (
+                <div id="no-orders-msg" class="woocommerce-Message woocommerce-Message--info wps-bfw-empty-state">
+                    <span> 
+                        <NoOrderIcon />
+                    </span>
+                    <span class="wps-bfw-empty-text">
+                        {wpsBfwData.noBookingFilterMsg}
+                    </span>
+
+                    {/* <a
+                        class="woocommerce-Button button wps-bfw-empty-action"
+                        href={wpsBfwData.shopPageUrl}
+                    >
+                        Book now
+                    </a> */}
+                </div>
+
+            )}
 
             {visibleCount < filteredBookings.length && (
                 <button

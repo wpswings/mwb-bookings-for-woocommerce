@@ -18,7 +18,7 @@ const ViewToggle = () => {
                 checked={isCardView}
                 onChange={() => setIsCardView(v => !v)}
             />
-            <span>Card</span>
+            <span>Grid</span>
         </div>
     );
 };

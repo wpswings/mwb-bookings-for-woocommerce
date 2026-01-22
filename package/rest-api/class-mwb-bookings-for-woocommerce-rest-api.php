@@ -134,6 +134,7 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
         foreach ( $order->get_items() as $item ) {
 
             $product = $item->get_product();
+			
             if ( ! $product ) continue;
 
 			$wps_booking_details_ = "";

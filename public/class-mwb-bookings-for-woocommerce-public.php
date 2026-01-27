@@ -482,16 +482,16 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				wp_enqueue_script('booking-calendar-form-js', plugin_dir_url(__FILE__) . 'js/mwb-booking-public-form.js', ['jquery'], null, true);
 				wp_enqueue_script('booking-calendar-js', plugin_dir_url(__FILE__) . 'js/mwb-global-booking-shortcode.js', ['fullcalendar-js','mwb-mbfw-select2'], null, true);
 				$container_id = 'booking-calendar-' . esc_attr($post_id);
-				$available_days = get_post_meta($post_id, '_available_days', true) ?: [];
-				$unavailable_days = get_post_meta($post_id, '_non_available_days', true) ?: [];
+				$available_days = get_post_meta($post_id, '_available_days', true) ? get_post_meta($post_id, '_available_days', true) : [];
+				$unavailable_days = get_post_meta($post_id, '_non_available_days', true) ? get_post_meta($post_id, '_non_available_days', true) : [];
 
-				// ADD LIMIT-BASED UNAVAILABLE DATES
+				// ADD LIMIT-BASED UNAVAILABLE DATES.
 
 				$limit_per_date = intval(get_post_meta($post_id, '_wps_booking_limit_per_date', true));
 
 				$date_counts = [];
 
-				// 1. Get all booking orders
+				// 1. Get all booking orders.
 
 
 				$orders = wc_get_orders(
@@ -502,14 +502,13 @@ class Mwb_Bookings_For_Woocommerce_Public {
 						'meta_val' => 'booking',
 					)
 				);
-				// echo "<pre>";
 
-				// 2. Extract dates from order items
+				// 2. Extract dates from order items.
 				foreach ( $orders as $order ) {
-					// print_r($order->get_id() );echo "<br/>";
-					foreach ( $order->get_items() as $item ) {
+
+				foreach ( $order->get_items() as $item ) {
 						$dates_string = wc_get_order_item_meta( $item->get_id() , 'Booking Date', true ) ;
-						// print_r($dates_string);echo "<br/>";
+
 						if (empty($dates_string)) continue;
 
 						$dates = array_map('trim', explode(',', $dates_string));

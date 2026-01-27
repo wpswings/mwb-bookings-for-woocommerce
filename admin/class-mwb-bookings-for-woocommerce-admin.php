@@ -2411,10 +2411,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'show_ui'             => true,
 				'show_in_menu'        => true,
 				'exclude_from_search' => true,
-				'publicly_queryable'  => false,   // IMPORTANT
-				'has_archive'         => false,   // IMPORTANT
-				'rewrite'             => false,   // IMPORTANT
-				'supports'            => array('title'),
+				'publicly_queryable'  => false,   // IMPORTANT.
+				'has_archive'         => false,   // IMPORTANT.
+				'rewrite'             => false,   // IMPORTANT.
 			)
 		);
 			$labels = array(
@@ -3084,14 +3083,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 *
 	 * @param WP_Post $post The post object.
 	 */
-	function wps_global_booking_availability_metabox_cb( $post ) {
+	public function wps_global_booking_availability_metabox_cb( $post ) {
 
 		wp_nonce_field( 'wps_global_booking_global_limit_nonce', 'wps_global_booking_global_limit_nonce_field' );
 
 		$limit = get_post_meta( $post->ID, '_wps_booking_limit_per_date', true );
 		?>
 
-		<label for="wps_booking_limit_per_date"><strong><?php _e( 'Maximum Bookings Per Date', 'mwb-bookings-for-woocommerce' ); ?></strong></label>
+		<label for="wps_booking_limit_per_date"><strong><?php echo esc_html__( 'Maximum Bookings Per Date', 'mwb-bookings-for-woocommerce' ); ?></strong></label>
 		<input 
 			type="number" 
 			id="wps_booking_limit_per_date"
@@ -3100,7 +3099,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			min="0"
 			style="width:100%; margin-top:8px;"
 		>
-		<p class="description"><?php echo __('This limit will apply to every date.','mwb-bookings-for-woocommerce'); ?></p>
+		<p class="description"><?php echo esc_html__('This limit will apply to every date.','mwb-bookings-for-woocommerce'); ?></p>
 
 		<?php
 	}

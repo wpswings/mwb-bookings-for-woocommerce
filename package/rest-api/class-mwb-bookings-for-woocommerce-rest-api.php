@@ -130,6 +130,9 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
     $results = [];
 
     foreach ( $orders as $order ) {
+		if ( 'checkout-draft' == $order->get_status() ) {
+			continue;
+		}
 
         foreach ( $order->get_items() as $item ) {
 

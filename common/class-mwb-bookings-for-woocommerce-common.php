@@ -943,7 +943,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						$services_cost += $service_count * $service_price * $people_number;
 
 					} else {
-						$services_cost += $service_count * $service_price;
+						$services_cost += (float)$service_count * (float)$service_price;
 
 					}
 				}

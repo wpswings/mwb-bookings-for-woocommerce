@@ -150,7 +150,7 @@ useEffect(() => {
 
                             <div className="wps-bfw_od-loc-date">
                                 <a href="#" className="wps-bfw_od-locate">
-                                    Order ID: {item.order_id}
+                                    {wpsBfwData.orderIdText}: {item.order_id}
                                 </a>
 
                                 <div className="wps-bfw_od-locate wps-bfw_od-date">
@@ -161,7 +161,7 @@ useEffect(() => {
 
                             <div className="wps-bfw_od-loc-status">
                                 <a href="#" className="wps-bfw_od-locate">
-                                    Status: {item.status}
+                                    {wpsBfwData.statusText}: {item.status}
                                 </a>
                             </div>
 
@@ -171,7 +171,7 @@ useEffect(() => {
 
                             <div className="wps-bfw_od-pay-cancel">
                                 <div className="wps-bfw_od-pay">
-                                    Payment Method:
+                                    {wpsBfwData.paymentMethodText}:
                                     <span className="offline">
                                         {item.payment_method}
                                     </span>
@@ -196,7 +196,7 @@ useEffect(() => {
                                 <div className="wps-bfw_od-view-cancel-buttons">
                                 <input
                                     type="button"
-                                    value="View Order"
+                                    value={wpsBfwData.viewOrderText}
                                     className="wps-bfw_od-view"
                                     onClick={() => window.location.href = item.view_order_url}
                                 />
@@ -204,7 +204,7 @@ useEffect(() => {
                                 {item.can_cancel && item.cancel_allowed && (
                                     <input
                                         type="button"
-                                        value="Cancel Booking"
+                                        value={wpsBfwData.cancelBookingText}
                                         id="wps_bfw_cancel_order"
                                         data-product ={item.product_id}
                                         data-order ={item.order_id}
@@ -237,7 +237,7 @@ useEffect(() => {
                     class="woocommerce-Button button wps-bfw-empty-action"
                     href={wpsBfwData.shopPageUrl}
                 >
-                    Book now
+                    {wpsBfwData.bookNowText}
                 </a>
             </div>
 
@@ -267,7 +267,7 @@ useEffect(() => {
                     className="wps-load-more"
                     onClick={() => setVisibleCount(v => v + CHUNK)}
                 >
-                    Load more
+                    {wpsBfwData.loadMoreText}
                 </button>
             )}
 

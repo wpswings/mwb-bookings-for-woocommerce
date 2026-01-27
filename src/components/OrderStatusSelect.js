@@ -7,7 +7,7 @@ const OrderStatusSelect = ({ value, onChange }) => {
             value={value}
             onChange={(e) => onChange(e.target.value)}
         >
-            <option value="">All orders</option>
+            <option value="">{wpsBfwData.allOrdersText}</option>
 
             {Object.entries(statuses).map(([key, label]) => (
                 <option key={key} value={key}>

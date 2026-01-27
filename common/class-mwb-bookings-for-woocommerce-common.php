@@ -148,6 +148,17 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				'dashboardMsgl2' => __('View, Cancel or Add your bookings to Google calendar with ease.', 'mwb-bookings-for-woocommerce' ),
 				'noBookingFilterMsg' => __( 'No order found with the following status.', 'mwb-bookings-for-woocommerce' ),
 				'addToCalendarText' => __( 'Add to Google Calendar', 'mwb-bookings-for-woocommerce' ),
+				'viewOrderText' => __( 'View Order', 'mwb-bookings-for-woocommerce' ),
+				'cancelBookingText' => __( 'Cancel Booking', 'mwb-bookings-for-woocommerce' ),
+				'orderIdText' => __( 'Order ID', 'mwb-bookings-for-woocommerce' ),
+				'statusText' => __( 'Status', 'mwb-bookings-for-woocommerce' ),
+				'paymentMethodText' => __( 'Payment Method', 'mwb-bookings-for-woocommerce' ),
+				'bookNowText' => __( 'Book now', 'mwb-bookings-for-woocommerce' ),
+				'loadMoreText' => __( 'Load more', 'mwb-bookings-for-woocommerce' ),
+				'listText' => __( 'List', 'mwb-bookings-for-woocommerce' ),
+				'gridText' => __( 'Grid', 'mwb-bookings-for-woocommerce' ),
+				'allOrdersText' => __( 'All orders', 'mwb-bookings-for-woocommerce' ),
+				
 			]
 		);
 

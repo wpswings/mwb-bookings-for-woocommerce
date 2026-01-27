@@ -12,13 +12,13 @@ const ViewToggle = () => {
 
     return (
         <div className="wps-bfw_f-s-toggle">
-            <span>List</span>
+            <span>{wpsBfwData.listText}</span>
             <input
                 type="checkbox"
                 checked={isCardView}
                 onChange={() => setIsCardView(v => !v)}
             />
-            <span>Grid</span>
+            <span>{wpsBfwData.gridText}</span>
         </div>
     );
 };

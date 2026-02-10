@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Bookings For WooCommerce 3.11.0\n"
-"POT-Creation-Date: 2026-01-27 16:43+0530\n"
+"Project-Id-Version: Bookings For WooCommerce 3.11.1\n"
+"POT-Creation-Date: 2026-02-10 13:05+0530\n"
 "PO-Revision-Date: 2023-07-12 15:58+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"

@@ -2,11 +2,11 @@
 Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
-Requires at least: 5.5.0
-Tested up to: 6.9.0
-WC requires at least: 6.8.1
-WC tested up to: 10.4.3
-Stable tag: 3.11.0
+Requires at least: 6.7.0
+Tested up to: 6.9.1
+WC requires at least: 6.5.0
+WC tested up to: 10.5.0
+Stable tag: 3.11.1
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -312,6 +312,10 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.11.1 - Released on 10th February 2026 =
+
+* New: Latest compatibility With WP [6.9.1] and WC [10.5.0].
+
 = 3.11.0 - Released on 28th January 2026 =
 
 * New: Created a new React based layout for bookings in My account section.
@@ -550,7 +554,6 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.11.0 - Released on 28th January 2026 =
+= 3.11.1 - Released on 10th February 2026 =
 
-* New: Created a new React based layout for bookings in My account section.
-* New: Latest compatibility With WP[6.9.0] and WC[10.4.3].
+* New: Latest compatibility With WP [6.9.1] and WC [10.5.0].

@@ -126,6 +126,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		$today_date_check                            = '';
 		$wps_mbfw_day_and_days_upto_togather_enabled = '';
 		$booking_slot_array_max_limit                = array();
+		$single_cal_booking_single_date = 'multiple';
 		// Get the number of days in the current month.
 		$num_days        = (int) (new DateTime("$current_year-$current_month-01"))->format('t');
 
@@ -387,6 +388,11 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 			$single_availables_till = wps_booking_get_meta_data( $product_id, 'wps_mbfw_set_availability_upto', true );
+			if("yes" == get_post_meta( $product_id, 'mwb_brfwp_enable_for_single_date_booking_only', true )){
+				$single_cal_booking_single_date = 'single';
+			} else {
+				$single_cal_booking_single_date = 'multiple';
+			}
 		}
 		$wps_mbfw_day_and_days_upto_togather_enabled = wps_booking_get_meta_data( get_the_ID(), 'wps_mbfw_day_and_days_upto_togather_enabled', true );
 
@@ -449,6 +455,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'firstDayOf_Week' => get_option( 'mwb_mbfw_select_first_day_of_week' ),
 				'hide_or_disable_slot'       => wps_booking_get_meta_data( get_the_ID(), 'mwb_mbfw_booking_hide_or_diable_slot', 'hide_slot' ),
 				'lang' => $wps_lang,
+				'single_cal_booking_single_date' => $single_cal_booking_single_date,
 			)
 		);
 

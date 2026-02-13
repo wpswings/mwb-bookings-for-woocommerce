@@ -1085,7 +1085,7 @@ jQuery(document).ready(function($){
 
 
    flatpickr('#wps_booking_single_calendar_form_', {  
-        mode: "multiple",
+        mode: mwb_mbfw_public_obj.single_cal_booking_single_date,
     locale: {...flatpickr.l10ns[mwb_mbfw_public_obj.lang] , // Set language
         firstDayOfWeek: mwb_mbfw_public_obj.firstDayOf_Week,  // Set first day of the week
     }, 

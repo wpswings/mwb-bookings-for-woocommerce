@@ -209,7 +209,15 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
 						$image_url = wc_placeholder_img_src( 'woocommerce_thumbnail' );
 					}
 					if ( 'cancelled' !== $order->get_status() ) {
-						$can_cancel = true;
+						
+						$cancelled = wc_get_order_item_meta( $item->get_id(), '_item_cancelled', true );
+
+    
+						if ( $cancelled === 'yes' ) {
+							$can_cancel = false;
+						}else {
+							$can_cancel = true;
+						}
 					} else {
 						$can_cancel = false;
 					}
@@ -221,7 +229,7 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
 					'product_url' => get_permalink( $product->get_id() ),
 					'product_rating' => $product->get_average_rating(),
 					'status'     => 'wc-' . $order->get_status(),
-					'total'      =>  html_entity_decode(wp_strip_all_tags( wc_price( $order->get_total() ) )),
+					'total'      =>  html_entity_decode(wp_strip_all_tags( wc_price( $item->get_total() ) )),
 					'image'      => $image_url,
 					'booking' => $wps_booking_details_,
 					'can_cancel' => $can_cancel,

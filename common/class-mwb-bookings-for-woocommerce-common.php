@@ -1074,18 +1074,61 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	public function wps_bfw_cancelled_booked_order() {
 		check_ajax_referer( 'mbfw_common_nonce', 'nonce' );
 
-		$product_id = array_key_exists( 'product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
-		$order_id   = array_key_exists( 'order_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : '';
-		if ( ! empty( $product_id ) && ! empty( $order_id ) ) {
+		$product_id = isset($_POST['product_id']) ? absint($_POST['product_id']) : 0;
+		$order_id   = isset($_POST['order_id']) ? absint($_POST['order_id']) : 0;
+		$reason     = isset($_POST['reason']) ? sanitize_text_field($_POST['reason']) : 'Cancelled by customer';
 
-			$order          = wc_get_order( $order_id );
-			$order_statuses = wps_booking_get_meta_data( $product_id, 'mwb_bfwp_order_statuses_to_cancel', true );
-			$order_statuses = preg_replace( '/wc-/', '', $order_statuses );
-			if ( in_array( $order->get_status(), $order_statuses, true ) ) {
+		if ( ! $product_id || ! $order_id ) {
+			wp_die();
+		}
 
-				$order->update_status( 'wc-cancelled' );
-				$order->save();
+		$order = wc_get_order( $order_id );
+
+		if ( ! $order ) {
+			wp_die();
+		}
+
+		$order_statuses = wps_booking_get_meta_data( $product_id, 'mwb_bfwp_order_statuses_to_cancel', true );
+		$order_statuses = preg_replace( '/wc-/', '', $order_statuses );
+
+		if ( ! in_array( $order->get_status(), $order_statuses, true ) ) {
+			wp_die();
+		}
+
+		foreach ( $order->get_items() as $item_id => $item ) {
+
+			if ( $item->get_product_id() == $product_id ) {
+
+				// Prevent double cancellation
+				if ( wc_get_order_item_meta( $item_id, '_item_cancelled', true ) === 'yes' ) {
+					continue;
+				}
+
+				$refund_amount = $item->get_total() + $item->get_total_tax();
+
+				// Add cancellation meta
+				$item->add_meta_data( '_item_cancelled', 'yes', true );
+				$item->add_meta_data( '_cancel_reason', $reason, true );
+				// 🔹 Set totals to 0
+				$item->set_subtotal( 0 );
+				$item->set_total( 0 );
+
+				// 🔹 Reset taxes
+				$item->set_subtotal_tax( 0 );
+				$item->set_total_tax( 0 );
+				$item->set_taxes( array() );
+					
+					$item->save();
+
+
+				// break;
 			}
+			// 🔹 Now recalculate order totals
+			$order->calculate_totals(false);
+			$order->save();
+		}
+		if ( $order->get_total() <= 0 ) {
+			$order->update_status( 'wc-cancelled' );
 		}
 		wp_die();
 	}
@@ -1101,6 +1144,15 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	public function mbfw_show_booking_details_on_my_account_page_user( $item_id, $item, $order ) {
 
 		if ( 'mwb_booking' === $item->get_product()->get_type() ) {
+			$cancelled = wc_get_order_item_meta( $item_id, '_item_cancelled', true );
+
+			if ( $cancelled === 'yes' ) {
+
+				$reason = wc_get_order_item_meta( $item_id, '_cancel_reason', true );
+
+				echo '<p style="color:red;"><strong>Cancelled</strong><br>Reason: ' . esc_html($reason) . '</p>';
+					return;
+			}
 			?>
 			
 			<span class="mwb-mbfw-ser-booking-toggler"></span>

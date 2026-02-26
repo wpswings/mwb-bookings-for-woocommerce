@@ -666,11 +666,11 @@ jQuery(document).ready(function($){
               var count =0;
               //custom code
             if ( 'object' == typeof(date_slots)) {
-                date_slots1 = Object.entries(date_slots);
+                date_slots1 = Object.values(date_slots);
             } else {
                 date_slots1 = date_slots;
             }
-            for(let i=0; i< date_slots1.length; i++ ) { 
+            for(let i=0; i< date_slots1.length; i++ ) {
                 var temp =  date_slots1[i]._from + ' - ' + date_slots1[i]._to;
                 var temp_check = temp_date + temp;
                 if (booking_unavailable.length > 0) {
@@ -866,7 +866,7 @@ jQuery(document).ready(function($){
                         }
                         var temp =  start_time_disp + ' - ' + end_time_disp;
                         var temp_check = temp_date + temp;
-                        if ('disable_slot' == mwb_mbfw_public_obj.hide_or_disable_slot ) {
+                        if ("disable_slot" == mwb_mbfw_public_obj.hide_or_disable_slot ) {debugger;
 
                             if (booking_unavailable.length > 0) {
                                 if (!booking_unavailable.includes(temp_check)) {

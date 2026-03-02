@@ -664,6 +664,8 @@ jQuery(document).ready(function($){
                   var date_slots = wps_available_slots;
               }
               var count =0;
+              var is_today_date = moment(temp_date1, 'DD-MM-YYYY').isSame(moment(), 'day');
+              var current_time_hhmm = moment().format('HH:mm');
               //custom code
             if ( 'object' == typeof(date_slots)) {
                 date_slots1 = Object.values(date_slots);
@@ -671,14 +673,19 @@ jQuery(document).ready(function($){
                 date_slots1 = date_slots;
             }
             for(let i=0; i< date_slots1.length; i++ ) {
-                var temp =  date_slots1[i]._from + ' - ' + date_slots1[i]._to;
+                var slot_from = date_slots1[i]._from;
+                var temp =  slot_from + ' - ' + date_slots1[i]._to;
                 var temp_check = temp_date + temp;
+                // Exclude past slots on today from the available count
+                if (is_today_date && !moment(slot_from, "HH:mm").isAfter(moment(current_time_hhmm, "HH:mm"))) {
+                    continue;
+                }
                 if (booking_unavailable.length > 0) {
-                    
+
                     if (!booking_unavailable.includes(temp_check)) {
                         count ++;
-                            
-                        
+
+
                     }
                 } else {
                     count ++;

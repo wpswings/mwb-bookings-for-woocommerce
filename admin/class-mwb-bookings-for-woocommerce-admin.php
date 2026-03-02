@@ -2835,7 +2835,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				$ical .= "SUMMARY:Unavailable\r\n";
 				$ical .= "DTSTART;VALUE=DATE:$date\r\n";
 				$ical .= "DTEND;VALUE=DATE:$date\r\n";
-				// $ical .= "STATUS:CANCELLED\r\n";
 				$ical .= "END:VEVENT\r\n";
 			}
 		}

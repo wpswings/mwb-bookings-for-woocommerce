@@ -5,8 +5,8 @@ Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 6.7.0
 Tested up to: 6.9.1
 WC requires at least: 6.5.0
-WC tested up to: 10.5.0
-Stable tag: 3.11.1
+WC tested up to: 10.5.2
+Stable tag: 3.11.2
 Requires PHP: 7.2
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -185,25 +185,32 @@ Prior to a day, admin managers can easily determine the maximum amount of WooCom
 
 == WHAT PREMIUM VERSION OF BOOKINGS FOR WOOCOMMERCE PRO OFFERS ==
 
-####1. Color Codes to Display Availability:
+####1. Allow Single-Day Booking For Customers 
+
+Utilise this functionality of the WooCommerce bookings plugin if merchants want their customers to book for a single day/date, not multiple days. This feature is suitable if you have a booking product that you want to enable for a day/date. 
+
+**NOTE:** This functionality works for Single Calendar. 
+
+
+####2. Color Codes to Display Availability:
 
 As an admin, you can now allow your customers and visitors to view the availability and unavailability of given slots with the help of [color codes](https://docs.wpswings.com/bookings-for-woocommerce/#product-data-settings-2) in the date picker calendar with our WP booking plugin. 
 
-####2. Export Booking Order by Booking Name
+####3. Export Booking Order by Booking Name
 
 You can now effectively export your Woo bookings order data with ease just by referring to the name of that particular WooCommerce Appointment product.
 
-####3. Google Calendar Sync:
+####4. Google Calendar Sync:
 Admins can use this feature to sync the processed bookings to their [Google Calendar](https://docs.wpswings.com/integrate-bookings-with-google-calendar/#set-up-google-calendar-with-bookings-for-woocommerce-pro). 
 
-####4. Resource’s Daily Maximum Number of Bookings
+####5. Resource’s Daily Maximum Number of Bookings
 
 This option allows you to set the maximum booking limit for a single day. You can specify the number as per your ease here and easily avoid getting overburdened for a day.
 
-####5. Day-Wise Slot Management
+####6. Day-Wise Slot Management
 The admins can utilize this functionality to schedule different appointment slots every day.
 
-####6. Smart Pre-Booking Email/SMS Reminders
+####7. Smart Pre-Booking Email/SMS Reminders
 
 This reminder settings tab offers multiple setting options for setting up your booking email and SMS-based reminders.
 
@@ -311,6 +318,11 @@ In our plugin, there are two types of booking units-
 Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/bookings-for-woocommerce/?utm_source=wpswings-bookings-kb&utm_medium=bookings-org-page&utm_campaign=bookings-kb)
 
 == Changelog ==
+
+= 3.11.2 - Released on 02th March 2026 =
+
+* New: Add single date selection option in day wise single calendar.
+* New: Latest compatibility With WP [6.9.1] and WC [10.5.2].
 
 = 3.11.1 - Released on 10th February 2026 =
 
@@ -554,6 +566,6 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.11.1 - Released on 10th February 2026 =
+= 3.11.2 - Released on 02th March 2026 =
 
-* New: Latest compatibility With WP [6.9.1] and WC [10.5.0].
+* New: Latest compatibility With WP [6.9.1] and WC [10.5.2].

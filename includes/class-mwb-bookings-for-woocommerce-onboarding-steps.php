@@ -614,6 +614,9 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	public function mwb_mbfw_send_onboarding_data() {
 
 		check_ajax_referer( 'mwb_mbfw_onboarding_nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die();
+		}
 
 		$form_data      = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
 		$form_data      = is_array( $form_data ) ? map_deep( wp_unslash( $form_data ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $form_data ) );
@@ -950,8 +953,11 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function wps_wpr_dismiss_notice__banner_callback() {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wpr-verify-nonce' ) ) {
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				wp_die();
+			}
 
-			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );print_r( $banner_id );
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 			if ( ! empty( $banner_id ) ) {
 
 				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );

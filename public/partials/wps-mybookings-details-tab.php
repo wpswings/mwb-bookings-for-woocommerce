@@ -11,6 +11,11 @@
  * @subpackage Mwb_Bookings_For_Woocommerce/public/partials
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
+
 use Automattic\WooCommerce\Utilities\OrderUtil;
 $table_headers = array(
 	'order-id'        => esc_html__( 'Order ID', 'mwb-bookings-for-woocommerce' ),

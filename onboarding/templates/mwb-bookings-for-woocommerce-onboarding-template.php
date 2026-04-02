@@ -11,6 +11,10 @@
  * @subpackage Mwb_Bookings_For_Woocommerce/admin/onboarding
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
 global $mbfw_mwb_mbfw_obj;
 $mbfw_onboarding_form_fields = 
 /**

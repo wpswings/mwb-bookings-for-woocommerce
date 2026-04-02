@@ -11,4 +11,8 @@
  * @subpackage Mwb_Bookings_For_Woocommerce
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
 esc_html_e( 'oops looks like nothing is here', 'mwb-bookings-for-woocommerce' );

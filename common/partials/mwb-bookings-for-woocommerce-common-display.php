@@ -11,6 +11,10 @@
  * @subpackage Mwb_Bookings_For_Woocommerce/common/partials
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->

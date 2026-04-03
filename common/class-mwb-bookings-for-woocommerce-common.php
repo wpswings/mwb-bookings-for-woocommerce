@@ -110,16 +110,16 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				if ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' == $screen->id ) {
 					wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
 				}
-				wp_enqueue_script( 'moment-locale-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment-locale-js.js', array( 'jquery', 'wp-date' ), $this->version, true );
-				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'wp-date' ), $this->version, true );
+				wp_enqueue_script( 'moment' );
+				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'moment', 'wp-date' ), $this->version, true );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'mwb-bfwp-multi-date-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/multiple-datepicker/jquery-ui.multidatespicker.js', array( 'jquery-ui-core', 'jquery', 'jquery-ui-datepicker' ), time(), true );
 			}
 		} else {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 				wp_enqueue_script( 'mwb-mbfw-time-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/user-friendly-time-picker/dist/js/timepicker.min.js', array( 'jquery' ), $this->version, true );
-				wp_enqueue_script( 'moment-locale-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/moment-js/moment-locale-js.js', array( 'jquery', 'wp-date' ), $this->version, true );
-				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'wp-date' ), $this->version, true );
+				wp_enqueue_script( 'moment' );
+				wp_enqueue_script( 'datetime-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datetimepicker-master/build/jquery.datetimepicker.full.js', array( 'jquery', 'moment', 'wp-date' ), $this->version, true );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'mwb-bfwp-multi-date-picker-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/multiple-datepicker/jquery-ui.multidatespicker.js', array( 'jquery-ui-core', 'jquery', 'jquery-ui-datepicker' ), time(), true );
 		}
@@ -548,7 +548,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		}
 		$user_selected_dates =  (array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) && 
                      array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ))||array_key_exists( 'wps_booking_single_calendar_form', $_POST );
-// var_dump($user_selected_dates);
+
 		$services_checked = array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array();
 		$service_quantity = array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array();
 		$people_number    = array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : 1;
@@ -1539,7 +1539,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$unavailable_dates = '';
 			}
 			$i=0;
-			$site_domain = parse_url( home_url(), PHP_URL_HOST );
+			$site_domain = wp_parse_url( home_url(), PHP_URL_HOST );
 
 			foreach ($unavailable_dates as $date) {
 				$start = gmdate('Ymd', strtotime($date));
@@ -1677,6 +1677,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 		if ( $min !== null && $qty < $min ) {
 			wp_send_json_error( array(
+				/* translators: %d: minimum allowed quantity. */
 				'message' => sprintf( __( 'Minimum allowed quantity is %d.', 'mwb-bookings-for-woocommerce' ), $min ),
 				'allowed' => array( 'min' => $min, 'max' => $max ),
 			) );
@@ -1684,6 +1685,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 		if ( $max !== null && $qty > $max ) {
 			wp_send_json_error( array(
+				/* translators: %d: maximum allowed quantity. */
 				'message' => sprintf( __( 'Maximum allowed quantity is %d.', 'mwb-bookings-for-woocommerce' ), $max ),
 				'allowed' => array( 'min' => $min, 'max' => $max ),
 			) );

@@ -19,6 +19,11 @@
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/includes
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class Mwb_Bookings_For_Woocommerce_Loader {
 
 	/**

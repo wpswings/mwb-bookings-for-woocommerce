@@ -240,7 +240,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mbfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['wps-plugins'] ) ) {
-			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 65 );
 			add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
 			$mbfw_menus =
 			/**
@@ -623,6 +623,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			return;
 		}
 		if ( ! isset( $_POST['mwb_tabs_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_tabs_nonce'] ) ), 'admin_save_data' ) ) {
+			return;
+		}
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
 		}
 
@@ -1280,6 +1283,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_booking_product_meta' ) ) {
 				return;
 			}
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				return;
+			}
 
 			$product_meta_data = array(
 				'mwb_mbfw_booking_criteria'                => array_key_exists( 'mwb_mbfw_booking_criteria', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_criteria'] ) ) : '',
@@ -1556,6 +1562,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_edit_taxonomy_page' ) ) {
 			return;
 		}
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 		$b_cost = array_key_exists( 'mwb_mbfw_booking_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_cost'] ) ) : '';
 		if ( 0 > $b_cost ) {
 			return;
@@ -1778,7 +1787,10 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mbfw_saving_custom_fields_at_booking_service_taxonomy_page( $term_id ) {
-		if ( ! isset( $_POST['_mwb_nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_edit_taxonomy_page' ) ) {
+		if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_edit_taxonomy_page' ) ) {
+			return;
+		}
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
 		}
 		$b_service = array_key_exists( 'mwb_mbfw_service_cost', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_cost'] ) ) : '';
@@ -2015,6 +2027,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function mwb_mbfw_get_all_events_date() {
 
 		check_ajax_referer( 'mwb_mbfw_admin_nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die();
+		}
 
 		$status = ! empty( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '';
 		$orders = '';
@@ -2416,6 +2431,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'show_in_rest' => true,
 				'show_ui'             => true,
 				'show_in_menu'        => true,
+				'menu_position'       => 66,
 				'exclude_from_search' => true,
 				'publicly_queryable'  => false,   // IMPORTANT.
 				'has_archive'         => false,   // IMPORTANT.
@@ -2697,7 +2713,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 
 		// Check if current user has permission.
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
 		}
 
@@ -2734,7 +2750,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		}
 
 		// Check if current user has permission.
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
 		}
 
@@ -3110,4 +3126,3 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	}
 	// End of admin class.
 }
-

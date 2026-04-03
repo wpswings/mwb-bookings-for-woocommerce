@@ -1675,5 +1675,3 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 	//end of plugin class.
 }
-
-

@@ -25,6 +25,11 @@
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/includes
  */
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
 class Mwb_Bookings_For_Woocommerce {
 
 	/**

@@ -1089,7 +1089,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 		$product_id = isset($_POST['product_id']) ? absint($_POST['product_id']) : 0;
 		$order_id   = isset($_POST['order_id']) ? absint($_POST['order_id']) : 0;
-		$reason     = isset($_POST['reason']) ? sanitize_text_field($_POST['reason']) : 'Cancelled by customer';
+		$reason     = isset($_POST['reason']) ? sanitize_text_field( wp_unslash( $_POST['reason'] ) ) : 'Cancelled by customer';
 
 		if ( ! $product_id || ! $order_id ) {
 			wp_die();
@@ -1112,21 +1112,21 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 			if ( $item->get_product_id() == $product_id ) {
 
-				// Prevent double cancellation
+				// Prevent double cancellation.
 				if ( wc_get_order_item_meta( $item_id, '_item_cancelled', true ) === 'yes' ) {
 					continue;
 				}
 
 				$refund_amount = $item->get_total() + $item->get_total_tax();
 
-				// Add cancellation meta
+				// Add cancellation meta.
 				$item->add_meta_data( '_item_cancelled', 'yes', true );
 				$item->add_meta_data( '_cancel_reason', $reason, true );
-				// 🔹 Set totals to 0
+				// Set totals to 0.
 				$item->set_subtotal( 0 );
 				$item->set_total( 0 );
 
-				// 🔹 Reset taxes
+				// Reset taxes.
 				$item->set_subtotal_tax( 0 );
 				$item->set_total_tax( 0 );
 				$item->set_taxes( array() );
@@ -1159,7 +1159,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( 'mwb_booking' === $item->get_product()->get_type() ) {
 			$cancelled = wc_get_order_item_meta( $item_id, '_item_cancelled', true );
 
-			if ( $cancelled === 'yes' ) {
+			if ( 'yes' === $cancelled ) {
 
 				$reason = wc_get_order_item_meta( $item_id, '_cancel_reason', true );
 
@@ -1675,7 +1675,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$min = ( '' === $min ) ? null : (int) $min;
 		$max = ( '' === $max || 0 === (int) $max ) ? null : (int) $max;
 
-		if ( $min !== null && $qty < $min ) {
+		if ( null !== $min && $qty < $min ) {
 			wp_send_json_error( array(
 				/* translators: %d: minimum allowed quantity. */
 				'message' => sprintf( __( 'Minimum allowed quantity is %d.', 'mwb-bookings-for-woocommerce' ), $min ),
@@ -1683,7 +1683,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			) );
 		}
 
-		if ( $max !== null && $qty > $max ) {
+		if ( null !== $max && $qty > $max ) {
 			wp_send_json_error( array(
 				/* translators: %d: maximum allowed quantity. */
 				'message' => sprintf( __( 'Maximum allowed quantity is %d.', 'mwb-bookings-for-woocommerce' ), $max ),

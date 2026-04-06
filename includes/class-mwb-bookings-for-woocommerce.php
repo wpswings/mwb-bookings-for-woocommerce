@@ -30,6 +30,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
+/**
+ * The core plugin class.
+ *
+ * @package    Mwb_Bookings_For_Woocommerce
+ * @subpackage Mwb_Bookings_For_Woocommerce/includes
+ */
 class Mwb_Bookings_For_Woocommerce {
 
 	/**

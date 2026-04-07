@@ -2344,7 +2344,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	public function wps_fetch_calendar_languages() {
 		$array = array( 'az' => __( 'Azerbaijani', 'mwb-bookings-for-woocommerce' ) );
 		return array(
-			''        => __( 'Select', 'mwb-bookings-for-woocommerce' ),
 			'default' => __( 'Default (English)', 'mwb-bookings-for-woocommerce' ),
 			'at'      => __( 'Austria', 'mwb-bookings-for-woocommerce' ),
 			'be'      => __( 'Belarusian', 'mwb-bookings-for-woocommerce' ),

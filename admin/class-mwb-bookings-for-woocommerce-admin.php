@@ -68,7 +68,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
 
-		if ( ( isset( $screen->id ) && ( ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) ) {
+		if ( ( ( isset( $screen->id ) && ( ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) ) {
 
 			wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all' );
 
@@ -105,7 +105,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		$screen                 = get_current_screen();
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
 		$is_pro_active          = 'no';
-		if ( ( isset( $screen->id ) && ( ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) ) {
+		if ( ( ( isset( $screen->id ) && ( ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) ) ) {
 			wp_enqueue_script( 'mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 
 			wp_enqueue_script( 'mwb-mbfw-metarial-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
@@ -1345,8 +1345,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			$month_name_cost = '';
 			session_start();
 			if ( isset( $_SESSION['slot_month'] ) || isset( $_SESSION['month'] ) ) {
-				$month_name      = gmdate( 'M', mktime( 0, 0, 0, $_SESSION['slot_month'], 1 ) );
-				$month_name_cost = gmdate( 'M', mktime( 0, 0, 0, $_SESSION['month'], 1 ) );
+				$month_name      = gmdate( 'M', mktime( 0, 0, 0, absint( $_SESSION['slot_month'] ), 1 ) );
+				$month_name_cost = gmdate( 'M', mktime( 0, 0, 0, absint( $_SESSION['month'] ), 1 ) );
 
 			}
 
@@ -2281,7 +2281,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				    
 		$cancelled = wc_get_order_item_meta( $item_id, '_item_cancelled', true );
 
-		if ( $cancelled === 'yes' ) {
+		if ( 'yes' === $cancelled ) {
 			return;
 		}
 			if ( ! empty( $item->get_meta( '_mwb_mbfw_service_and_count', true ) ) ) {

@@ -213,7 +213,7 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
 						$cancelled = wc_get_order_item_meta( $item->get_id(), '_item_cancelled', true );
 
     
-						if ( $cancelled === 'yes' ) {
+						if ( 'yes' === $cancelled ) {
 							$can_cancel = false;
 						}else {
 							$can_cancel = true;

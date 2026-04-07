@@ -1445,7 +1445,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_handle_booking_add_to_cart() {
 		if (isset($_GET['add-booking-to-cart']) && '1' == $_GET['add-booking-to-cart']) {
-			 $json = isset($_GET['global_booking_form'])? wp_unslash( $_GET['global_booking_form'] ) : '';
+			 $json = isset($_GET['global_booking_form']) ? sanitize_text_field( wp_unslash( $_GET['global_booking_form'] ) ) : '';
 
 			 if(! empty($json)){
 				$form_data = json_decode((stripslashes($json)), true);

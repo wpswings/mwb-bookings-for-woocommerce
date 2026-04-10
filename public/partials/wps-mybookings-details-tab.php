@@ -28,30 +28,14 @@ $table_headers = array(
 
 $event_attendees_details = array();
 $customer               = wp_get_current_user(); // do this when user is logged in.
-if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
-	$customer_orders = wc_get_orders(
-		array(
-			'limit'       => -1,
-			'customer_id' => get_current_user_id(),
-			'status'      => array_keys( wc_get_order_statuses() ),
-			'return'      => 'ids',
-		)
-	);
-} else {
-
-	$customer_orders = get_posts(
-		array(
-			'numberposts' => -1,
-			'meta_key'    => '_customer_user',
-			'orderby'     => 'date',
-			'order'       => 'DESC',
-			'meta_value'  => get_current_user_id(),
-			'post_status' => array_keys( wc_get_order_statuses() ),
-			'post_type'   => 'shop_order',
-			'fields'      => 'ids',
-		)
-	);
-}
+$customer_orders         = wc_get_orders(
+	array(
+		'limit'       => -1,
+		'customer_id' => get_current_user_id(),
+		'status'      => array_keys( wc_get_order_statuses() ),
+		'return'      => 'ids',
+	)
+);
 ?>
 
 <table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">

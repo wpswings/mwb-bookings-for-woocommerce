@@ -2036,22 +2036,24 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( ! empty( $status ) ) {
 			$orders = wc_get_orders(
 				array(
-					'status'   => $status,
-					'limit'    => -1,
-					'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress_wps_single_cal_booking_dates.
-					'meta_val' => 'booking',
+					'status' => $status,
+					'limit'  => -1,
 				)
 			);
 		} else {
 			$orders = wc_get_orders(
 				array(
-					'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending', 'wc-completed' ),
-					'limit'    => -1,
-					'meta_key' => 'mwb_order_type', // phpcs:ignore WordPress_wps_single_cal_booking_dates.
-					'meta_val' => 'booking',
+					'status' => array( 'wc-processing', 'wc-on-hold', 'wc-pending', 'wc-completed' ),
+					'limit'  => -1,
 				)
 			);
 		}
+		$orders = array_filter(
+			$orders,
+			function( $order ) {
+				return 'booking' === $order->get_meta( 'mwb_order_type', true );
+			}
+		);
 
 		$all_events = array();
 		foreach ( $orders as $order ) {
@@ -2074,13 +2076,19 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 					if ( 'single_cal' == $booking_type && 'hour' == $booking_unit ) {
 
-						$time_range = $date_time_from;
+						$time_range = explode( ' ', $date_time_from )[1];
 						if ( 'd/m/Y' == wc_date_format() ) {
 
 							$date_time_from = str_replace( '/', '-', $date_time_from );// custom.
 							$date_time_to   = str_replace( '/', '-', $date_time_to );// custom.
 						}
+						if ( preg_match( '/^(\d{2}[\/-]\d{2}[\/-]\d{4})\s+(\d{1,2}:\d{2}\s*-\s*\d{1,2}:\d{2})$/', $date_time_from, $m ) ) {
+							$date = $m[1]; // 06-03-2026 or 06/03/2026
+							$time_range = $m[2]; // 9:00 - 10:00
+						}
 						list($date_time_from, $date_time_to) = explode( ' - ', $time_range );
+						$date_time_from = $date . ' ' . $date_time_from;
+						$date_time_to   = $date . ' ' . $date_time_to;
 
 						// Assume this is used inside a loop and $order, $item, $status exist.
 						$all_events[] = array(
@@ -2955,19 +2963,14 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'posts_per_page' => -1,
 				'post_status'    => 'publish',
 				'fields'         => 'ids', // ✅ only return IDs
-				'meta_query'     => array(
-					'relation' => 'AND',
-					array(
-						'key'     => '_airbnb_ical_link',
-						'compare' => 'EXISTS',
-					),
-					array(
-						'key'     => '_airbnb_ical_link',
-						'value'   => '',
-						'compare' => '!=',
-					),
-				),
 			)
+		);
+		$calendar_posts = array_filter(
+			$calendar_posts,
+			function( $post_id ) {
+				$ical_link = get_post_meta( $post_id, '_airbnb_ical_link', true );
+				return ! empty( $ical_link );
+			}
 		);
 
 		if ( ! empty( $calendar_posts ) && is_array( $calendar_posts ) ) {
@@ -3067,17 +3070,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 * Hide the view URL and permalink box for global booking post type.
 	 */
 	public function wps_hide_view_url_global_booking() {
-		global $post;
-
-		// Check for your CPT (replace 'wps_global_booking' with your CPT slug).
-		if ( isset( $post ) && 'wps_global_booking' === $post->post_type ) {
-			// Hide permalink and 'View Post' using CSS.
-			echo '<style>
-				#edit-slug-box,
-				#view-post-btn,
-				.post-preview { display: none !important; }
-			</style>';
-		}
+		// Styles moved to admin/js/mwb-admin-global-custom.js.
 	}
 
 	/**

@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 6.7.0
-Tested up to: 6.9.0
+Tested up to: 6.9
 WC requires at least: 6.5.0
-WC tested up to: 10.5.2
-Stable tag: 3.11.2
+WC tested up to: 10.6.2
+Stable tag: 3.11.3
 Requires PHP: 7.4
 License: GNU General Public License v3.0 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -187,109 +187,267 @@ The manual installation method involves downloading our Bookings for WooCommerce
 
 **WP Swings Support Service**
 Used to allow users to submit queries/support requests.
-
-Data sent: Name, Email and Message (user input)
-
-When:
-When the user submits a support query from the plugin dashboard
-
+Data sent: User-provided form data submitted on the support page (name, email, message).
+When: When the user clicks Support and submits the form.
 Service endpoint:
 https://wpswings.com/submit-query/
-
+https://wpswings.com/submit-query/?utm_source=wpswings-bookings-query&utm_medium=bookings-org-page&utm_campaign=query
+https://wpswings.com/submit-query/?utm_source=wpswings-bookings-support&utm_medium=bookings-org-backend&utm_campaign=support
 Terms of Service:
 https://wpswings.com/terms-and-conditions/
-
 Privacy Policy:
 https://wpswings.com/privacy-policy/
 
+**WP Swings Marketing / Product Pages**
+Used for product marketing, services, and related links in admin/README.
+Data sent: Standard web request data when links are opened (IP, user agent, referrer).
+When: When the user clicks marketing/product links.
+Service endpoints:
+https://wpswings.com
+https://wpswings.com/
+https://wpswings.com/?utm_source=wpswings-bookings-official&utm_medium=bookings-org-page&utm_campaign=official
+https://wpswings.com/?utm_source=wpswings-official&utm_medium=bookings-org-page&utm_campaign=official
+https://wpswings.com/blog/woocommerce-online-booking-system/
+https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=booikings-org-backend&utm_campaign=go-pro
+https://wpswings.com/product/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=bookings-pro
+https://wpswings.com/product/gift-cards-for-woocommerce-pro/
+https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-bookings-org&utm_medium=referral&utm_campaign=Points-and-rewards-pro
+https://wpswings.com/product/rma-return-refund-exchange-for-woocommerce-pro/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-page&utm_campaign=rma-pro-plugin
+https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=booking-org-page&utm_medium=referral&utm_campaign=subscriptions-pro
+https://wpswings.com/woocommerce-plugins/?utm_source=bookings-org-page&utm_medium=referral&utm_campaign=woocommerce-plugins
+https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-bookings&utm_medium=bookings-org-backend&utm_campaign=official
+https://wpswings.com/woocommerce-services/?utm_source=wpswings-bookings-services&utm_medium=bookings-org-backend&utm_campaign=woocommerce-services
+https://wpswings.com/woocommerce-services/?utm_source=wpswings-bookings-services&utm_medium=bookings-org-page&utm_campaign=woocommerce-services
+Terms of Service:
+https://wpswings.com/terms-and-conditions/
+Privacy Policy:
+https://wpswings.com/privacy-policy/
+
+**WP Swings Documentation**
+Used for documentation links in README/admin UI.
+Data sent: Standard web request data when links are opened.
+When: When the user clicks documentation links.
+Service endpoints:
+https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-backend&utm_campaign=documentation
+https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-doc&utm_medium=bookings-org-page&utm_campaign=bookings-doc
+https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-org&utm_medium=referral&utm_campaign=documentation#general-settings-36
+https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-org&utm_medium=referral&utm_campaign=documentation#product-data-settings-2
+https://docs.wpswings.com/bookings-for-woocommerce/#product-data-settings-2
+https://docs.wpswings.com/integrate-bookings-with-google-calendar/#set-up-google-calendar-with-bookings-for-woocommerce-pro
+https://docs.wpswings.com/sync-global-calendar-with-airbnb/#global-calendar
+https://docs.wpswings.com/sync-global-calendar-with-airbnb/#sync-global-calendar-with-airbnb
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
+
+**WP Swings Knowledge Base & Forums**
+Used for support resources.
+Data sent: Standard web request data when links are opened.
+When: When the user clicks knowledge base or forums links.
+Service endpoints:
+https://support.wpswings.com/wordpress-plugins-knowledge-base/category/bookings-for-woocommerce/?utm_source=wpswings-bookings-kb&utm_medium=bookings-org-page&utm_campaign=bookings-kb
+https://forums.wpswings.com/?utm_source=wpswings-forums&utm_medium=bookings-org-page&utm_campaign=forum
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
+
+**WP Swings Demos**
+Used to show product demos.
+Data sent: Standard web request data when demo links are opened.
+When: When the user clicks demo links.
+Service endpoints:
+https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-demo&utm_medium=booikngs-org-backend&utm_campaign=demo
+https://demo.wpswings.com/bookings-for-woocommerce-pro/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=frontend-demo
+https://demo.wpswings.com/bookings-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-bookings-pro&utm_medium=bookings-org-page&utm_campaign=backend-demo
+https://demo.wpswings.com/bookings-for-woocommerce-pro/product/booking-calander/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo
+https://demo.wpswings.com/bookings-for-woocommerce-pro/product/car-wash/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo
+https://demo.wpswings.com/bookings-for-woocommerce-pro/product/spa-services/?utm_source=booking-org&utm_medium=referral&utm_campaign=wpswings-bookings-demo
+https://demo.wpswings.com/bookings-for-woocommerce-pro/product/spa-services/?utm_source=wpswings-bookings-org&utm_medium=referral&utm_campaign=bookings-demo
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
+
+**WP Swings Client Notification**
+Used to fetch banner notifications.
+Data sent: Plugin slug and version number.
+When: When the admin visits the plugin dashboard.
+Service endpoint:
+https://demo.wpswings.com/client-notification/woo-gift-cards-lite/wps-client-notify.php
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
+
 **HubSpot Forms**
-Used for onboarding and deactivation feedback.
+Used for onboarding and deactivation feedback forms.
+Data sent: Form fields submitted by admin, plus currency, and context pageUri, pageName, and ipAddress.
+When: When onboarding/deactivation form is submitted from the plugin.
+Service endpoint:
+https://api.hsforms.com/
+Terms of Service:
+https://legal.hubspot.com/terms-of-service
+Privacy Policy:
+https://legal.hubspot.com/privacy-policy
 
-Data sent: Name, email, site URL, and feedback when forms are submitted.
-
-Endpoint: https://api.hsforms.com/
-(Onboarding & Deactivation forms)
-Terms: https://legal.hubspot.com/terms-of-service
-Privacy: https://legal.hubspot.com/privacy-policy
-
-**Google Calendar**
-Used to create/manage booking events.
-
-Data sent: Event title, date, time, description, and location when events are created/synced.
-
-Endpoints:
+**Google Calendar (Add-to-Calendar Link)**
+Used to create “Add to Google Calendar” links for bookings.
+Data sent: Booking name, dates, details, location in URL parameters.
+When: When user clicks the calendar link.
+Service endpoints:
 https://calendar.google.com/calendar/r/eventedit
+https://calendar.google.com/calendar/r/eventedit?text=
+Terms of Service:
+https://policies.google.com/terms
+Privacy Policy:
+https://policies.google.com/privacy
+
+**Google Calendar API (FullCalendar Integration)**
+Used if Google Calendar integration is enabled in FullCalendar.
+Data sent: Calendar ID, API key, and query parameters.
+When: When FullCalendar is configured to pull events from Google Calendar.
+Service endpoint:
 https://www.googleapis.com/calendar/v3/calendars
-Terms: https://policies.google.com/terms
-Privacy: https://policies.google.com/privacy
+Terms of Service:
+https://policies.google.com/terms
+Privacy Policy:
+https://policies.google.com/privacy
 
-**Google Maps (Embed)**
-Used to display locations.
+**Google Maps Embed**
+Used to embed maps for locations.
+Data sent: Location string in query parameter, standard request data.
+When: When map iframe is rendered.
+Service endpoints:
+https://maps.google.it/maps
+https://maps.google.it/maps?q=
+Terms of Service:
+https://policies.google.com/terms
+Privacy Policy:
+https://policies.google.com/privacy
 
-Data sent: User IP and location query when loaded.
+**Google Fonts (Static Assets)**
+Used to load font assets (if referenced by styles).
+Data sent: Standard web request data for font files.
+When: When fonts are loaded by the browser.
+Service endpoint:
+https://fonts.gstatic.com/
+Terms of Service:
+https://policies.google.com/terms
+Privacy Policy:
+https://policies.google.com/privacy
 
-Endpoint: https://maps.google.it/maps
-Terms: https://policies.google.com/terms
-Privacy: https://policies.google.com/privacy
+**YouTube (Videos / Tutorials)**
+Used to link to demo/tutorial videos.
+Data sent: Standard web request data when link is opened.
+When: When user clicks video links.
+Service endpoints:
+https://www.youtube.com/watch?v=QTIiZDAtWKA
+https://youtu.be/7FhO1j6egnY?si=9OmWZ1mrMu8nQkC8?rel=0
+https://youtu.be/h0uP_DKhHE0?si=5InymD9bvFCNt88z
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
 
-**Google Fonts / Material Icons**
-Used for fonts/icons.
-
-Data sent: IP address and browser details when loaded.
-
-Endpoint: https://fonts.gstatic.com/
-Terms: https://policies.google.com/terms
-Privacy: https://policies.google.com/privacy
-
-**FullCalendar, Flatpickr, DataTables, Material, Bootstrap Datepicker**
-Used for calendar, date selection, and UI.
-
-Data sent: None (bundled locally).
-
-Licenses:
-https://github.com/fullcalendar/fullcalendar/blob/main/LICENSE.txt
-https://github.com/flatpickr/flatpickr/blob/master/LICENSE.md
-https://datatables.net/license
-https://github.com/material-components/material-components-web/blob/master/LICENSE
-https://github.com/uxsolutions/bootstrap-datepicker/blob/master/LICENSE
-
-**WooCommerce / WordPress Resources**
-Used for docs and distribution.
-
-Data sent: None by the plugin.
-
-Links:
-https://woocommerce.com/document/template-structure/
+**WordPress.org Plugin Directory & Downloads**
+Used for plugin listing, downloads, and related plugin references.
+Data sent: Standard web request data when links are opened.
+When: When user clicks WordPress.org links.
+Service endpoints:
 https://wordpress.org/plugins/mwb-bookings-for-woocommerce/
 https://downloads.wordpress.org/plugin/mwb-bookings-for-woocommerce.zip
+https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation
+https://wordpress.org/plugins/elementor/
+https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
+https://wordpress.org/plugins/subscriptions-for-woocommerce/
+https://wordpress.org/plugins/upsell-order-bump-offer-for-woocommerce/
+https://wordpress.org/plugins/wallet-system-for-woocommerce/
+https://wordpress.org/plugins/woo-gift-cards-lite/
+https://wordpress.org/plugins/woo-refund-and-exchange-lite/
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
 
-**Name That Color Tool**
-Used in source comments only.
+**WooCommerce Documentation**
+Used for template structure reference.
+Data sent: Standard web request data when link is opened.
+When: When user clicks documentation link.
+Service endpoint:
+https://woocommerce.com/document/template-structure/
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
 
-Data sent: None.
-
-Link: https://chir.ag/projects/name-that-color/
-
-**CDN Resources (Demo/Test Only)**
-Used only in demo/test files (not runtime).
-
-Data sent: Not applicable.
-
-Representative URLs:
-https://maxcdn.bootstrapcdn.com/
-https://code.jquery.com/
+**Front-end Library References**
+Used for library references and licenses.
+Data sent: Standard web request data when links are opened.
+When: When users open docs/licenses links.
+Service endpoints:
 https://cdnjs.cloudflare.com/
+https://code.jquery.com/
+https://maxcdn.bootstrapcdn.com/
+https://datatables.net/license
+https://github.com/eternicode/bootstrap-datepicker
+https://github.com/uxsolutions/bootstrap-datepicker/blob/master/LICENSE
+https://github.com/flatpickr/flatpickr/blob/master/LICENSE.md
+https://github.com/fullcalendar/fullcalendar/blob/main/LICENSE.txt
+https://github.com/material-components/material-components-web/blob/master/LICENSE
+http://www.apache.org/licenses/LICENSE-2.0
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
 
-**Developer References (Non-runtime)**
-Used in code comments only.
-
-Data sent: None.
-
-Representative URLs:
+**Developer Reference Resources**
+Used for development references in README or comments.
+Data sent: Standard web request data when links are opened.
+When: When developers open reference links.
+Service endpoints:
 https://developer.mozilla.org/
 https://caniuse.com/
 https://stackoverflow.com/
 https://www.w3.org/
+https://chir.ag/projects/name-that-color/
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
+
+**Licenses (FSF/GNU)**
+Used for license references.
+Data sent: Standard web request data when links are opened.
+When: When users open license links.
+Service endpoints:
+https://fsf.org/
+http://www.gnu.org/licenses/gpl-3.0.html
+https://www.gnu.org/licenses/
+https://www.gnu.org/licenses/why-not-lgpl.html
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
+
+**Build/CI Tools**
+Used in GitHub workflows for Composer and WP-CLI.
+Data sent: Standard HTTP requests to download installer/phar when CI runs.
+When: During CI runs on GitHub Actions.
+Service endpoints:
+https://getcomposer.org/installer
+https://getcomposer.org/doc/articles/scripts.md
+https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
+
+**Miscellaneous References**
+Used for source/reference notes.
+Data sent: Standard web request data when link is opened.
+When: When developers open references.
+Service endpoint:
+https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
+
+**SVG Namespace (Non-service Link)**
+Used as XML namespace in SVG assets.
+Data sent: None.
+When: Not a network request.
+Service endpoint:
+http://www.w3.org/2000/svg
+Terms of Service: Not applicable.
+Privacy Policy: Not applicable.
+
+**Local Dev Proxy (Commented)**
+Used as a local proxy example in gulpfile.js (commented).
+Data sent: None by default.
+When: Only if a developer enables it locally.
+Service endpoint:
+http://pluginsetup.chandresh.php/
+Terms of Service: Not specified in repo.
+Privacy Policy: Not specified in repo.
 
 ==Screenshots==
 
@@ -360,6 +518,10 @@ In our plugin, there are two types of booking units-
 Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/bookings-for-woocommerce/?utm_source=wpswings-bookings-kb&utm_medium=bookings-org-page&utm_campaign=bookings-kb)
 
 == Changelog ==
+
+= 3.11.3 - Released on 08 April 2026 =
+
+* New: Latest compatibility With WP [6.9] and WC [10.6.2].
 
 = 3.11.2 - Released on 3rd March 2026 =
 
@@ -607,6 +769,6 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.11.2 - Released on 3rd March 2026 =
+= 3.11.3 - Released on 08 April 2026 =
 
-* New: Latest compatibility With WP [6.9.1] and WC [10.5.2].
+* New: Latest compatibility With WP [6.9] and WC [10.6.2].

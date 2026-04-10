@@ -3,6 +3,9 @@ node_modules/*
 vendor
 vendor/*
 .history
+docs/
+pull_requests/
+script/
 # ignore compiled files
 *.com
 *.class

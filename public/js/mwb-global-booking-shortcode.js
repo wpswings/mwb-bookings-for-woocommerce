@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var price= (selectedDates.length) * defaultPrice;
         // Build cart URL with multiple dates
         // e.g., pass them as comma-separated
-        const url = `${baseUrl}?add-booking-to-cart=1&booking_date=${selectedDates.join(',')}&booking_price=${price}&global_booking_form=${JSON.stringify(entries)}&global_calendar_id=${postId}`;
+        const url = `${baseUrl}?add-booking-to-cart=1&booking_date=${selectedDates.join(',')}&booking_price=${price}&global_booking_form=${JSON.stringify(entries)}&global_calendar_id=${postId}&mwb_booking_nonce=${encodeURIComponent(bookingCalendarData.addToCartNonce)}`;
 
         window.location.href = url;
     });

@@ -13,3 +13,6 @@ th#taxonomy-mwb_booking_cost,th#taxonomy-mwb_booking_service{width:10%}#woocomme
   .mwb_service_row_span {
     font-weight: bold !important;
   }
+  .wps-info-img .cls-1 {
+    fill: #1e1e1e;
+  }

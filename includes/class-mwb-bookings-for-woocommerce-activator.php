@@ -33,7 +33,11 @@ class Mwb_Bookings_For_Woocommerce_Activator {
 			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 				require_once ABSPATH . '/wp-admin/includes/plugin.php';
 			}
-			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			$blogids = get_sites(
+				array(
+					'fields' => 'ids',
+				)
+			);
 			foreach ( $blogids as $blog_id ) {
 				switch_to_blog( $blog_id );
 				( new self() )->mwb_bookings_for_woocommerce_update_default_value();

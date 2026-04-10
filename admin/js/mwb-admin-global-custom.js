@@ -1,5 +1,11 @@
 jQuery(function ($) {
 
+    if ( $('body').hasClass('post-type-wps_global_booking') ) {
+        $('<style>', {
+            text: '#edit-slug-box,#view-post-btn,.post-preview{display:none !important;}'
+        }).appendTo('head');
+    }
+
     
     
     jQuery('.inventory_tab').on('click', function (e) {

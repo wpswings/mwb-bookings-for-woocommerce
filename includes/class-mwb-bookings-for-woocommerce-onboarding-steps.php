@@ -192,7 +192,8 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		}
 
 		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking', 'edit-mwb_booking_service', 'edit-mwb_booking_cost', 'edit-mwb_booking_people' );
-		$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		$page_param = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$page_param = is_string( $page_param ) ? $page_param : '';
 
 		// Check whether to show on specific pages or screens.
 		if ( 'wc-settings' === $page_param || in_array( $screen->id, $target_screens, true ) ) {
@@ -253,7 +254,8 @@ class Mwb_Bookings_For_Woocommerce_Onboarding_Steps {
 		}
 
 		$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home','wp-swings_page_mwb_bookings_for_woocommerce_menu', 'edit-wps_global_booking', 'edit-mwb_booking_service', 'edit-mwb_booking_cost', 'edit-mwb_booking_people' );
-		$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		$page_param = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$page_param = is_string( $page_param ) ? $page_param : '';
 
 		// Check whether to show on specific pages or screens.
 		if ( 'wc-settings' === $page_param || in_array( $screen->id, $target_screens, true ) ) {

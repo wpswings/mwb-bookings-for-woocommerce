@@ -38,7 +38,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<h1 class="mwb-header-title">
 			<?php
-			$plugin_name = $mbfw_mwb_mbfw_obj->mbfw_get_plugin_name();
+			$plugin_name = "Wps Bookings For Woocommerce";
 			echo esc_attr(
 				strtoupper(
 					str_replace(

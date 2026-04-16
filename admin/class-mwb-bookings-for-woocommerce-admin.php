@@ -293,7 +293,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 	 */
 	public function mbfw_admin_submenu_page( $menus = array() ) {
 		$menus[] = array(
-			'name'      => __( 'Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
+			'name'      => __( 'Wps Bookings For WooCommerce', 'mwb-bookings-for-woocommerce' ),
 			'slug'      => 'mwb_bookings_for_woocommerce_menu',
 			'menu_link' => 'mwb_bookings_for_woocommerce_menu',
 			'instance'  => $this,

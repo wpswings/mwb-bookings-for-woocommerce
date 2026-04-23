@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Bookings For WooCommerce 3.11.2\n"
-"POT-Creation-Date: 2026-04-10 17:26+0530\n"
-"PO-Revision-Date: 2026-04-10 17:26+0530\n"
+"Project-Id-Version: Bookings For WooCommerce 3.11.4\n"
+"POT-Creation-Date: 2026-04-17 18:10+0530\n"
+"PO-Revision-Date: 2026-04-17 18:11+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -10,12 +10,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
-"esc_html;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;"
-"translate_nooped_plural\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;esc_html;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;translate_nooped_plural\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:129
@@ -66,7 +65,7 @@ msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:216
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:2629
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:420
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:369
 msgid "Email"
 msgstr ""
 
@@ -115,9 +114,7 @@ msgid "Required"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:296
-#: mwb-bookings-for-woocommerce.php:84 mwb-bookings-for-woocommerce.php:90
-#: mwb-bookings-for-woocommerce.php:410
-msgid "Bookings For WooCommerce"
+msgid "Wps Bookings For WooCommerce"
 msgstr ""
 
 #: admin/class-mwb-bookings-for-woocommerce-admin.php:430
@@ -1653,45 +1650,41 @@ msgstr ""
 msgid "Maximum allowed quantity is %d."
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:360
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:309
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:379
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:328
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:385
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:334
 msgid "Industry Type"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:416
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:365
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:428
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:377
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:433
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:382
 msgid "Contact Number"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:546
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:495
 #, php-format
 msgid "Let us know why you are deactivating %s so we can improve the plugin"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:552
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:501
 msgid "Reason"
 msgstr ""
 
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:794
+#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:743
 msgid "Unexpected Error Occured"
-msgstr ""
-
-#: includes/class-mwb-bookings-for-woocommerce-onboarding-steps.php:944
-msgid "Something went wrong: "
 msgstr ""
 
 #: includes/class-mwb-bookings-for-woocommerce.php:435
@@ -1735,6 +1728,11 @@ msgstr ""
 msgid "oops looks like nothing is here"
 msgstr ""
 
+#: mwb-bookings-for-woocommerce.php:84 mwb-bookings-for-woocommerce.php:90
+#: mwb-bookings-for-woocommerce.php:302
+msgid "Bookings For WooCommerce"
+msgstr ""
+
 #: mwb-bookings-for-woocommerce.php:197
 msgid "Settings"
 msgstr ""
@@ -1751,11 +1749,11 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
-#: mwb-bookings-for-woocommerce.php:411
+#: mwb-bookings-for-woocommerce.php:303
 msgid "WooCommerce"
 msgstr ""
 
-#: mwb-bookings-for-woocommerce.php:414
+#: mwb-bookings-for-woocommerce.php:306
 #, php-format
 msgid ""
 "%1$s requires %2$s to function correctly. Please activate %2$s before "

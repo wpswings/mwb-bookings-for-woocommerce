@@ -873,7 +873,7 @@ jQuery(document).ready(function($){
                         }
                         var temp =  start_time_disp + ' - ' + end_time_disp;
                         var temp_check = temp_date + temp;
-                        if ("disable_slot" == mwb_mbfw_public_obj.hide_or_disable_slot ) {debugger;
+                        if ("disable_slot" == mwb_mbfw_public_obj.hide_or_disable_slot ) {
 
                             if (booking_unavailable.length > 0) {
                                 if (!booking_unavailable.includes(temp_check)) {
@@ -948,10 +948,39 @@ jQuery(document).ready(function($){
 
                         jQuery(".wps_cal_timeslot button.wps_timeslot_button").removeClass("wps_timeslot_button");
 						jQuery(this).addClass('wps_timeslot_button');
-                        jQuery("#wps_booking_single_calendar_form").val(temp_date + jQuery(this).html());
+                        var selected_slot_val = temp_date + jQuery(this).text().trim();
+                        jQuery("#wps_booking_single_calendar_form").val(selected_slot_val);
                         jQuery("#wps_booking_single_calendar_form").trigger('change');
-						setTimeout(function(){ 
+
+                        var slot_max_to_set = null;
+                        if ( mwb_mbfw_public_obj.is_pro_active != '') {
+                            if ( typeof bfwp_public_param !== 'undefined' &&
+                                bfwp_public_param.max_limit_for_hour !== undefined &&
+                                bfwp_public_param.max_limit_per_slot_for_all_time !== undefined ) {
+                                var already_booked = bfwp_public_param.max_limit_per_slot_for_all_time[selected_slot_val];
+                                if ( already_booked !== undefined ) {
+                                    slot_max_to_set = parseInt( bfwp_public_param.max_limit_for_hour ) - parseInt( already_booked );
+                                }
+                            }
+                        }
+
+						setTimeout(function(){
 							instance.close();
+                            if ( mwb_mbfw_public_obj.is_pro_active != '') {
+
+                                if ( slot_max_to_set !== null ) {
+                                    var qtyInput = document.querySelector('input.qty');
+
+                                    if ( qtyInput ) {
+                                        var newMax = slot_max_to_set > 0 ? slot_max_to_set : 0;
+                                        qtyInput.setAttribute('max', newMax);
+                                        if ( parseInt( qtyInput.value ) > newMax ) {
+                                            qtyInput.value = newMax;
+                                            jQuery(qtyInput).trigger('change');
+                                        }
+                                    }
+                                }
+                            }
 						}, 1000);
                         
                         

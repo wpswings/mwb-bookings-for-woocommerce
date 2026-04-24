@@ -58,11 +58,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 * @since    2.0.0
 	 */
 	public function mbfw_public_enqueue_styles() {
+		if ( ! ( is_product() || is_page() || is_singular() ) ) {
+			return;
+		}
 		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/datepicker.css', array(), $this->version, 'all' );
 
 		wp_enqueue_style( 'flatpickercss', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), time(), 'all' );
+		wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name.'global_form', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public-form.css', array(), $this->version, 'all' );
 	}
 
@@ -96,12 +99,13 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		}
 		$wps_lang = get_option( 'mwb_mbfw_select_language_for_calendar', 'default' );
 
-		wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), time(), true );
+		if ( is_product() || is_page() || is_singular() ) {
+			wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), $this->version, true );
 
-		wp_enqueue_script( 'wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/l10n/' . $wps_lang . '.js', array( 'flatpicker_js' ), time(), true );
-		
-	
-		wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery', 'flatpicker_js', 'wps-flatpickr-locale' ), time(), true );
+			wp_enqueue_script( 'wps-flatpickr-locale', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/l10n/' . $wps_lang . '.js', array( 'flatpicker_js' ), $this->version, true );
+
+			wp_enqueue_script( $this->plugin_name . 'public', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.js', array( 'jquery', 'flatpicker_js', 'wps-flatpickr-locale' ), $this->version, true );
+		}
 		$daily_start_time                            = '';
 		$daily_end_time                              = '';
 		$upcoming_holiday                            = '';
@@ -492,7 +496,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				// FullCalendar.
 				wp_enqueue_script( 'fullcalendar-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/fullcalendar-6.1.19/dist/index.global.min.js', array(), $this->version, true );
 
-				wp_enqueue_script( 'mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
+				wp_enqueue_script( 'mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), $this->version, true );
 				// Your plugin JS.
 				wp_enqueue_script( 'booking-calendar-form-js', plugin_dir_url( __FILE__ ) . 'js/mwb-booking-public-form.js', array( 'jquery' ), $this->version, true );
 				wp_enqueue_script( 'booking-calendar-js', plugin_dir_url( __FILE__ ) . 'js/mwb-global-booking-shortcode.js', array( 'fullcalendar-js', 'mwb-mbfw-select2' ), $this->version, true );

@@ -8,4 +8,5 @@
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/build
  */
+
 return array('dependencies' => array('react', 'wp-api-fetch', 'wp-element'), 'version' => '2e7f698553fcc8cc50fe');

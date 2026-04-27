@@ -1,6 +1,6 @@
 === WPS Bookings for WooCommerce ===
 Contributors: wpswings
-Donate link:  https://wpswings.com/
+Donate link: https://wpswings.com/
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 6.2
 Tested up to: 6.9

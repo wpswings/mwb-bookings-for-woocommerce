@@ -1136,7 +1136,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 				// break;
 			}
-			// 🔹 Now recalculate order totals
+			// 🔹 Now recalculate order totals.
 			$order->calculate_totals(false);
 			$order->save();
 		}

@@ -154,6 +154,31 @@ select {
         justify-content: flex-start;
     }
 
+    .mwb-header-branding {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
+    .mwb-header-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 10px 28px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.16);
+        color: #ffffff;
+        font-family: "NunitoSans-ExtraBold";
+        font-size: 16px;
+        line-height: 1;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
     .mwb-header-title {
         font-family: "NunitoSans-ExtraBold";
         font-style: normal;
@@ -161,9 +186,9 @@ select {
         font-size: $fs-xmedium;
         line-height: 24px;
         letter-spacing: 0.3px;
-        color: $c-doger-blue;
-        flex: 0 0 100%;
-        max-width: calc(100% - 200px);
+        color: #ffffff;
+        flex: 0 0 auto;
+        max-width: 100%;
         @include media (mwb-phone) {
             max-width: 100%;
         }
@@ -243,9 +268,354 @@ select {
     }
 }
 
-.select2 {
-    &.select2-container {
-        max-width: 100%;
+.wps-field-inline {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.wps-select-wrap {
+    position: relative;
+    width: min(100%, 480px);
+    flex: 0 1 480px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        width: 10px;
+        height: 10px;
+        border-right: 2px solid #9a9a9a;
+        border-bottom: 2px solid #9a9a9a;
+        transform: translateY(-65%) rotate(45deg);
+        pointer-events: none;
+    }
+
+    &.wps-select-wrap--multiple::after {
+        display: none;
+    }
+}
+
+.wps-select {
+    width: 100%;
+    min-height: 54px;
+    border: 2px solid #e8cdfd;
+    border-radius: 999px;
+    padding: 12px 46px 12px 22px !important;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #32126d;
+    background-color: #ffffff;
+    font-family: "NunitoSans-Regular", sans-serif;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+    box-shadow: 0 0 0 5px rgba(232, 205, 253, 0.28);
+
+    &:focus {
+        border-color: #d7b5fb;
+        box-shadow: 0 0 0 6px rgba(215, 181, 251, 0.24);
+    }
+
+    &:hover {
+        border-color: #e0c1fb;
+    }
+
+    option {
+        color: #32126d;
+        font-family: "NunitoSans-Regular", sans-serif;
+    }
+
+    &.wps-select--multiple {
+        min-height: 140px;
+        padding: 14px 16px !important;
+    }
+}
+
+.wps-select-description {
+    flex: 1 1 260px;
+    color: #32126d !important;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.wps-time-row {
+    gap: 18px;
+}
+
+.wps-time-input {
+    min-height: 54px;
+    width: min(100%, 360px);
+    flex: 0 1 360px;
+    border: 2px solid #e8cdfd;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #32126d;
+    background: #ffffff;
+    font-family: "NunitoSans-Regular", sans-serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+    box-shadow: 0 0 0 5px rgba(232, 205, 253, 0.28);
+
+    &:focus {
+        border-color: #d7b5fb;
+        box-shadow: 0 0 0 6px rgba(215, 181, 251, 0.24);
+    }
+}
+
+.wps-time-description {
+    flex: 1 1 260px;
+    color: #32126d !important;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.wps-time-input.wps-daily-time-pill {
+    min-height: 54px;
+    width: min(100%, 360px);
+    flex: 0 1 360px;
+    border: 2px solid #e8cdfd;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #32126d;
+    background: #ffffff;
+    box-shadow: 0 0 0 5px rgba(232, 205, 253, 0.28);
+
+    &:focus {
+        border-color: #d7b5fb;
+        box-shadow: 0 0 0 6px rgba(215, 181, 251, 0.24);
+    }
+}
+
+.wps-text-input {
+    min-height: 54px;
+    width: min(100%, 360px);
+    flex: 0 1 360px;
+    border: 2px solid #e8cdfd;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #32126d;
+    background: #ffffff;
+    font-family: "NunitoSans-Regular", sans-serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+    box-shadow: 0 0 0 5px rgba(232, 205, 253, 0.28);
+
+    &:focus {
+        border-color: #d7b5fb;
+        box-shadow: 0 0 0 6px rgba(215, 181, 251, 0.24);
+    }
+
+    &::placeholder {
+        color: #32126d;
+    }
+}
+
+.wps-select-wrap .select2-container,
+.mwb-form-group__control > .select2-container {
+    width: min(100%, 480px) !important;
+    max-width: 100%;
+    flex: 0 1 480px;
+}
+
+.wps-select-wrap--multiple .select2-container,
+.mwb-defaut-multiselect + .select2-container,
+#mwb_bfwp_order_statuses_to_cancel + .select2-container {
+    width: min(100%, 480px) !important;
+}
+
+.select2-container--default {
+    .select2-selection--single,
+    .select2-selection--multiple {
+        min-height: 54px;
+        border: 2px solid #e8cdfd !important;
+        border-radius: 999px !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 0 5px rgba(232, 205, 253, 0.28) !important;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    &.select2-container--focus,
+    &.select2-container--open {
+        .select2-selection--single,
+        .select2-selection--multiple {
+            border-color: #d7b5fb !important;
+            box-shadow: 0 0 0 6px rgba(215, 181, 251, 0.24) !important;
+        }
+    }
+
+    .select2-selection--single {
+        &:hover {
+            border-color: #e0c1fb !important;
+        }
+
+        .select2-selection__rendered {
+            padding: 12px 46px 12px 22px;
+            color: #32126d !important;
+            font-family: "NunitoSans-Regular", sans-serif;
+            font-size: 18px;
+            line-height: 1.35;
+        }
+
+        .select2-selection__arrow {
+            height: 100%;
+            width: 42px;
+            right: 0;
+
+            b {
+                border: none;
+                width: 10px;
+                height: 10px;
+                margin: -7px 0 0 -5px;
+                border-right: 2px solid #9a9a9a;
+                border-bottom: 2px solid #9a9a9a;
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    .select2-selection--multiple {
+        padding: 8px 12px;
+
+        &:hover {
+            border-color: #e0c1fb !important;
+        }
+
+        .select2-selection__rendered {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0;
+            white-space: normal;
+        }
+
+        .select2-selection__choice {
+            margin: 0 !important;
+            padding: 6px 10px 6px 24px !important;
+            border: 1px solid #d8cff6 !important;
+            border-radius: 999px !important;
+            background: #f6f2ff !important;
+            color: #32126d !important;
+            font-size: 14px;
+        }
+
+        .select2-selection__choice__remove {
+            left: 8px !important;
+            right: auto !important;
+            top: 50%;
+            margin-top: -9px;
+            border: none !important;
+            color: #7b61c8 !important;
+            font-size: 16px;
+        }
+    }
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+    min-height: 32px;
+    margin-top: 0 !important;
+    font-size: 16px;
+    font-family: "NunitoSans-Regular", sans-serif;
+}
+
+.select2-dropdown {
+    border: 1px solid #d8cff6 !important;
+    border-radius: 10px !important;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(50, 18, 109, 0.12);
+}
+
+.select2-results__option {
+    padding: 10px 14px;
+    font-size: 15px;
+    color: #303030;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option--highlighted[data-selected] {
+    background: #f6f2ff !important;
+    color: #32126d !important;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true],
+.select2-container--default .select2-results__option[data-selected=true] {
+    background: #ede7ff !important;
+    color: #32126d !important;
+}
+
+.wps_order_status_.wps-calendar-filter-select {
+    min-height: 60px;
+    min-width: 420px;
+    border: 2px solid #e8cdfd !important;
+    border-radius: 999px !important;
+    padding: 10px 56px 10px 26px !important;
+    font-size: 22px !important;
+    line-height: 1.2;
+    color: #32126d !important;
+    background-color: #ffffff !important;
+    background-image: linear-gradient(45deg, transparent 50%, #9f9f9f 50%), linear-gradient(135deg, #9f9f9f 50%, transparent 50%) !important;
+    background-position: calc(100% - 28px) calc(50% - 4px), calc(100% - 18px) calc(50% - 4px) !important;
+    background-size: 10px 10px, 10px 10px !important;
+    background-repeat: no-repeat !important;
+    box-shadow: 0 0 0 7px rgba(232, 205, 253, 0.28);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:focus {
+        border-color: #d7b5fb !important;
+        box-shadow: 0 0 0 8px rgba(215, 181, 251, 0.24) !important;
+        outline: none !important;
+    }
+}
+
+.wps-calendar-action-btn.button {
+    min-width: 154px;
+    min-height: 60px;
+    padding: 10px 26px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    font-family: "NunitoSans-ExtraBold", sans-serif !important;
+    font-size: 20px !important;
+    line-height: 1.1;
+    letter-spacing: 0.6px;
+    text-shadow: none;
+}
+
+.wps-calendar-action-btn--primary.button {
+    background: #171a33 !important;
+    color: #ffffff !important;
+    box-shadow: 0 12px 24px rgba(23, 26, 51, 0.16);
+
+    &:hover,
+    &:focus {
+        background: #111429 !important;
+        color: #ffffff !important;
+    }
+}
+
+.wps-calendar-action-btn--secondary.button {
+    background: #ffffff !important;
+    color: #32126d !important;
+    border: 2px solid #e8cdfd !important;
+    box-shadow: 0 0 0 6px rgba(232, 205, 253, 0.22);
+
+    &:hover,
+    &:focus {
+        background: #faf5ff !important;
+        color: #32126d !important;
     }
 }
 

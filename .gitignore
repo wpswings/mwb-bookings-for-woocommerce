@@ -14,6 +14,7 @@ script/
 *.o
 *.so
 *.codex
+*.claude
 
 # ignore packaged files
 *.7z
@@ -24,3 +25,4 @@ script/
 *.rar
 *.tar
 *.zip
+*.md

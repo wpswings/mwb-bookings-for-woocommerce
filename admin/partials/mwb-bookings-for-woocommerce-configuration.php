@@ -44,7 +44,7 @@ global $mbfw_mwb_mbfw_obj;
 			foreach ( $mwb_bfw_taxonomies_array as $key => $taxonomy_slug ) {
 				$mwb_taxonomy       = get_taxonomy( $taxonomy_slug );
 				$mwb_name           = $mwb_taxonomy->label;
-				$mwb_active_sub_tab = $mwb_bfw_active_sub_tab === $taxonomy_slug ? 'nav-tab-active' : '';
+				$mwb_active_sub_tab = $active_sub_tab === $taxonomy_slug ? 'nav-tab-active' : '';
 				echo "<a href='admin.php?page=mwb_bookings_for_woocommerce_menu&mbfw_tab=mwb-bookings-for-woocommerce-configuration&bfw_sub_nav=" . esc_attr( $taxonomy_slug ) . "' class='nav-tab " . esc_attr( $mwb_active_sub_tab ) . " mwb-bfw-nav-tab'>" . esc_attr( $mwb_name ) . '</a>';
 			}
 
@@ -53,9 +53,12 @@ global $mbfw_mwb_mbfw_obj;
 
 			<?php
 			if ( in_array( $active_sub_tab, $mwb_bfw_taxonomies_array, true ) ) {
-				$url = admin_url( "edit-tags.php?taxonomy=$active_sub_tab" );
-				wp_safe_redirect( $url );
-				exit;
+				echo '<section class="mwb-section">';
+				echo '<div>';
+				$taxonomy = $active_sub_tab; // phpcs:ignore WordPress.WP.GlobalVariablesOverride
+				include MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-taxonomy-inline.php';
+				echo '</div></section>';
+				
 			} elseif ( array_key_exists( $active_sub_tab, $mwb_bfw_sub_tabs_array ) ) {
 				echo '<section class="mwb-section">';
 				echo '<div>';

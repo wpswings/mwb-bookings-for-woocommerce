@@ -657,6 +657,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		apply_filters( 'mwb_mbfw_is_booking_available_filter', $this->mwb_mbfw_is_enable_booking() );
+		if (  'yes' !== get_option( 'mwb_mbfw_is_booking_enable' ) ) {
+			$is_booking_available = false;
+		}
 		if ( $is_booking_available ) {
 			/**
 			 * Template for Booking Product Type.

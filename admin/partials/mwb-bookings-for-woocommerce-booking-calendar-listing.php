@@ -56,7 +56,7 @@ if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', 
 			
 		
 		<div class="wps_sub_main_wrapper">
-			<select name="wps_order_status" id="wps_order_status" class="wps_order_status_">
+			<select name="wps_order_status" id="wps_order_status" class="wps_order_status_ wps-calendar-filter-select">
 				<?php foreach ( $order_status as $value => $label ) : ?>
 					<option value="<?php echo esc_attr( $value ); ?>" <?php echo ( 'select' == $value ) ? 'selected' : ''; ?>>
 					<?php echo esc_attr( $label ); ?>
@@ -65,8 +65,8 @@ if ( in_array( 'bookings-for-woocommerce-pro/bookings-for-woocommerce-pro.php', 
 		
 			
 		</div>		
-		<input type="button" class="button" name="wps_mbfw_filter_calender" id="wps_mbfw_filter_calender" value="<?php esc_html_e( 'Filter', 'mwb-bookings-for-woocommerce' ); ?>">
-		<input type="button" class="button" name="wps_mbfw_clear_calender" id="wps_mbfw_clear_calender" value="<?php esc_html_e( 'Clear', 'mwb-bookings-for-woocommerce' ); ?>">
+		<input type="button" class="button wps-calendar-action-btn wps-calendar-action-btn--primary" name="wps_mbfw_filter_calender" id="wps_mbfw_filter_calender" value="<?php esc_html_e( 'Filter', 'mwb-bookings-for-woocommerce' ); ?>">
+		<input type="button" class="button wps-calendar-action-btn wps-calendar-action-btn--secondary" name="wps_mbfw_clear_calender" id="wps_mbfw_clear_calender" value="<?php esc_html_e( 'Clear', 'mwb-bookings-for-woocommerce' ); ?>">
 		<?php wp_nonce_field( 'admin_calender_data', 'mwb_calender_nonce' ); ?>
 		
 	</div>

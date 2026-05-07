@@ -156,16 +156,17 @@ select {
 
 .mwb-link.active {
   position: relative;
-  color: #2196f3 !important;
+  color: #111111 !important;
+  font-family: "NunitoSans-Bold";
 }
 
-.mwb-link:after {
+.mwb-link.active:after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  border-bottom: 3px solid #2196f3;
+  border-bottom: 3px solid #f5a623;
   border-radius: 2px;
 }
 
@@ -184,41 +185,94 @@ select {
 
 .mwb-section {
   padding: 28px 32px;
+  background-color: #f5f6fa;
+  border-radius: 0 0 8px 8px;
 }
 
 .mwb-header-container {
-  padding: 28px 32px;
+  padding: 10px 24px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   margin-top: 15px;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   margin-right: 15px;
+  background: #1e1245;
+  border-radius: 8px 8px 0 0;
+}
+
+.mwb-header-container .mwb-header-branding {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mwb-header-container .mwb-header-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 5px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+  font-family: "NunitoSans-Bold";
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 }
 
 .mwb-header-container .mwb-header-title {
-  font-family: "NunitoSans-ExtraBold";
+  font-family: "NunitoSans-SemiBold";
   font-style: normal;
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.3px;
-  color: #2196f3;
-  flex: 0 0 100%;
-  max-width: calc(100% - 200px);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  flex: 0 0 auto;
+  max-width: 100%;
+  text-transform: none;
+}
+
+.mwb-header-container .mwb-link {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+}
+
+.mwb-header-container .mwb-link:hover {
+  color: #ffffff !important;
+}
+
+.mwb-header-container span {
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 6px;
+}
+
+.mwb-bg-white.mwb-r-8 {
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .mwb-form-group {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -15px 35px;
+  align-items: center;
+  margin: 0 0 8px 0;
+  background: #ffffff;
+  border: 1px solid #e8e8f0;
+  border-radius: 8px;
+  padding: 16px 20px;
 }
 
 .mwb-form-group .mwb-form-group__label {
-  flex: 0 0 100%;
-  max-width: 200px;
-  padding: 0 15px;
+  flex: 0 0 220px;
+  max-width: 220px;
+  padding: 0;
 }
 
 .mwb-form-group .mwb-form-group__label .mwb-form-label {
@@ -229,9 +283,70 @@ select {
 }
 
 .mwb-form-group .mwb-form-group__control {
-  flex: 0 0 100%;
-  max-width: calc(100% - 200px);
-  padding: 0 15px;
+  flex: 1;
+  max-width: calc(100% - 220px);
+  padding: 0 0 0 16px;
+}
+
+/* Color input redesign */
+.mwb-color-input-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border: 1px solid #e0d5b8;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: #fdfbf5;
+  max-width: 520px;
+}
+
+.mwb-color-swatch-input {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: none;
+  padding: 2px;
+  background: transparent;
+}
+
+.mwb-color-input-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+}
+
+.mwb-color-input-top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mwb-color-badge {
+  background: #f2e8d0;
+  color: #8c7449;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  padding: 3px 11px;
+  border-radius: 20px;
+  border: 1px solid #ddd0b0;
+  text-transform: uppercase;
+}
+
+.mwb-color-hex-display {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111111;
+  font-family: "NunitoSans-Bold", monospace;
+}
+
+.mwb-color-input-description {
+  font-size: 13px;
+  color: #888888;
+  font-family: "NunitoSans-Regular", sans-serif;
 }
 
 .mwb-form-group .mwb-form-group__control .mwb-form-select:hover select {
@@ -250,9 +365,892 @@ select {
   padding-left: 16px;
 }
 
+/* =============================================
+   Inline field layout (control + description)
+   ============================================= */
+.wps-field-inline {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Checkbox inline description — dark purple */
+.wps-field-inline .wps-checkbox + .wps-helper-text {
+  color: #2d1b5e;
+  font-size: 14px;
+  font-family: "NunitoSans-Regular", sans-serif;
+}
+
+/* Compensate for halo padding so checkbox aligns with text */
+.wps-field-inline .wps-checkbox {
+  margin: -8px;
+}
+
+/* =============================================
+   Pure CSS Toggle — amber/orange style
+   ============================================= */
+.wps-toggle {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 30px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.wps-toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.wps-toggle__slider {
+  position: absolute;
+  inset: 0;
+  background-color: #e5e7eb;
+  border: 2px solid #d1d5db;
+  border-radius: 15px;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+}
+
+.wps-toggle__slider::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 2px;
+  top: 2px;
+  background-color: #9ca3af;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.wps-toggle__input:checked + .wps-toggle__slider {
+  background-color: #fef3c7;
+  border-color: #f5a623;
+}
+
+.wps-toggle__input:checked + .wps-toggle__slider::before {
+  background-color: #f5a623;
+  transform: translateX(24px);
+}
+
+/* =============================================
+   Pure CSS Checkbox — orange with blue halo
+   ============================================= */
+.wps-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+/* Blue halo when checked
+.wps-checkbox:has(.wps-checkbox__input:checked) {
+  background-color: #dbeafe;
+} */
+
+.wps-checkbox__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.wps-checkbox__box {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.wps-checkbox__input:checked + .wps-checkbox__box {
+  background-color: #f5a623;
+  border-color: #f5a623;
+}
+
+.wps-checkbox__input:checked + .wps-checkbox__box::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: 2px solid #ffffff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-2px);
+}
+
+/* =============================================
+   Plain text input
+   ============================================= */
+.wps-text-input {
+  min-height: 54px;
+  width: min(100%, 360px);
+  flex: 0 1 360px;
+  border: 2px solid #d1d5db;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 18px;
+  line-height: 1.35;
+  color: #32126d;
+  background: #ffffff;
+  font-family: "NunitoSans-Regular", sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  box-shadow: none;
+}
+
+.wps-text-input:focus {
+  border-color: #9ca3af;
+  box-shadow: none;
+}
+
+.wps-text-input::placeholder {
+  color: #32126d;
+}
+
+.wps-time-row {
+  gap: 18px;
+}
+
+.wps-time-input {
+  min-height: 54px;
+  width: min(100%, 360px);
+  flex: 0 1 360px;
+  border: 2px solid #d1d5db;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 18px;
+  line-height: 1.35;
+  color: #32126d;
+  background: #ffffff;
+  font-family: "NunitoSans-Regular", sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  box-shadow: none;
+}
+
+.wps-time-input:focus {
+  border-color: #9ca3af;
+  box-shadow: none;
+}
+
+.wps-time-description {
+  flex: 1 1 260px;
+  color: #32126d !important;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.wps-time-input.wps-daily-time-pill {
+  min-height: 54px;
+  width: min(100%, 360px);
+  flex: 0 1 360px;
+  border: 2px solid #d1d5db;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 18px;
+  line-height: 1.35;
+  color: #32126d;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.wps-time-input.wps-daily-time-pill:focus {
+  border-color: #9ca3af;
+  box-shadow: none;
+}
+
+/* =============================================
+   Availability Per-Day Time Pickers (Days grid)
+   ============================================= */
+
+.mbfw-avl-days-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  width: 100%;
+}
+
+.mbfw-avl-days {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mbfw-avl-days label.mwb-form-label {
+  flex: 0 0 80px;
+  font-family: "NunitoSans-SemiBold";
+  font-size: 14px;
+  color: #1f1f1f;
+}
+
+.mbfw-avl-days-time {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.mbfw-avl-days-time input.mbfw_time_picker,
+.mwb_bfw_config_tab .mbfw-avl-days-time input.mbfw_time_picker {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-height: 48px !important;
+  border: 2px solid #d1d5db !important;
+  border-radius: 999px !important;
+  padding: 10px 44px 10px 20px !important;
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+  color: #32126d !important;
+  background-color: #ffffff !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  background-size: 18px 18px !important;
+  font-family: "NunitoSans-Regular", sans-serif !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.mbfw-avl-days-time input.mbfw_time_picker:focus,
+.mwb_bfw_config_tab .mbfw-avl-days-time input.mbfw_time_picker:focus {
+  border-color: #9ca3af !important;
+  box-shadow: none !important;
+}
+
+/* Hide the external clock span — clock is now a background SVG on the input */
+.mbfw-avl-days-time .dashicons-clock {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .mbfw-avl-days-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =============================================
+   Select dropdown — bordered field with inline help text
+   ============================================= */
+.wps-select-wrap {
+  position: relative;
+  width: min(100%, 480px);
+  flex: 0 1 480px;
+}
+
+.wps-select-wrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #9a9a9a;
+  border-bottom: 2px solid #9a9a9a;
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+.wps-select-wrap--multiple::after {
+  display: none;
+}
+
+.wps-select {
+  width: 100%;
+  min-height: 54px;
+  border: 2px solid #d1d5db;
+  border-radius: 999px;
+  padding: 12px 46px 12px 22px !important;
+  font-size: 18px;
+  line-height: 1.35;
+  color: #32126d;
+  background-color: #ffffff;
+  font-family: "NunitoSans-Regular", sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  box-shadow: none;
+}
+
+.wps-select:focus {
+  border-color: #9ca3af;
+  box-shadow: none;
+}
+
+.wps-select:hover {
+  border-color: #9ca3af;
+}
+
+.wps-select option {
+  color: #32126d;
+  font-family: "NunitoSans-Regular", sans-serif;
+}
+
+.wps-select--multiple {
+  min-height: 140px;
+  padding: 14px 16px !important;
+}
+
+/* Select description text — purple, inline */
+.wps-select-description {
+  flex: 1 1 260px;
+  color: #32126d !important;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.wps-select-wrap .select2-container,
+.mwb-form-group__control > .select2-container {
+  width: min(100%, 480px) !important;
+  max-width: 100%;
+  flex: 0 1 480px;
+}
+
+.wps-select-wrap--multiple .select2-container,
+.mwb-defaut-multiselect + .select2-container,
+#mwb_bfwp_order_statuses_to_cancel + .select2-container {
+  width: min(100%, 480px) !important;
+}
+
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  min-height: 54px;
+  border: 2px solid #d1d5db !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--single,
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default.select2-container--open .select2-selection--single,
+.select2-container--default.select2-container--open .select2-selection--multiple {
+  border-color: #9ca3af !important;
+  box-shadow: none !important;
+}
+
+.select2-container--default .select2-selection--single:hover,
+.select2-container--default .select2-selection--multiple:hover {
+  border-color: #9ca3af !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  padding: 12px 46px 12px 22px;
+  color: #32126d !important;
+  font-family: "NunitoSans-Regular", sans-serif;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 100%;
+  width: 42px;
+  right: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border: none;
+  width: 10px;
+  height: 10px;
+  margin: -7px 0 0 -5px;
+  border-right: 2px solid #9a9a9a;
+  border-bottom: 2px solid #9a9a9a;
+  transform: rotate(45deg);
+}
+
+.select2-container--default .select2-selection--multiple {
+  padding: 8px 12px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  white-space: normal;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  margin: 0 !important;
+  padding: 6px 10px 6px 24px !important;
+  border: 1px solid #d8cff6 !important;
+  border-radius: 999px !important;
+  background: #f6f2ff !important;
+  color: #32126d !important;
+  font-size: 14px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  left: 8px !important;
+  right: auto !important;
+  top: 50%;
+  margin-top: -9px;
+  border: none !important;
+  color: #7b61c8 !important;
+  font-size: 16px;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+  min-height: 32px;
+  margin-top: 0 !important;
+  font-size: 16px;
+  font-family: "NunitoSans-Regular", sans-serif;
+}
+
+.select2-dropdown {
+  border: 1px solid #d8cff6 !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(50, 18, 109, 0.12);
+}
+
+.select2-results__option {
+  padding: 10px 14px;
+  font-size: 15px;
+  color: #303030;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option--highlighted[data-selected] {
+  background: #f6f2ff !important;
+  color: #32126d !important;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true],
+.select2-container--default .select2-results__option[data-selected=true] {
+  background: #ede7ff !important;
+  color: #32126d !important;
+}
+
+.wps_order_status_.wps-calendar-filter-select {
+  min-height: 40px;
+  /* min-width: 420px; */
+  border: 2px solid #d1d5db !important;
+  border-radius: 999px !important;
+  padding: 10px 56px 10px 26px !important;
+  font-size: 16px !important;
+  line-height: 1.2;
+  color: #32126d !important;
+  background-color: #ffffff !important;
+  background-image: linear-gradient(45deg, transparent 50%, #9f9f9f 50%), linear-gradient(135deg, #9f9f9f 50%, transparent 50%) !important;
+  background-position: calc(100% - 28px) calc(50% - 4px), calc(100% - 18px) calc(50% - 4px) !important;
+  background-size: 10px 10px, 10px 10px !important;
+  background-repeat: no-repeat !important;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.wps_order_status_.wps-calendar-filter-select:focus {
+  border-color: #9ca3af !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.wps-calendar-action-btn.button {
+  min-width: 154px;
+  min-height: 40px;
+  padding: 10px 26px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  font-family: "NunitoSans-ExtraBold", sans-serif !important;
+  font-size: 18px !important;
+  line-height: 1.1;
+  letter-spacing: 0.6px;
+  text-shadow: none;
+}
+
+.wps-calendar-action-btn--primary.button {
+  background: #171a33 !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 24px rgba(23, 26, 51, 0.16);
+}
+
+.wps-calendar-action-btn--primary.button:hover,
+.wps-calendar-action-btn--primary.button:focus {
+  background: #111429 !important;
+  color: #ffffff !important;
+}
+
+.wps-calendar-action-btn--secondary.button {
+  background: #ffffff !important;
+  color: #32126d !important;
+  border: 2px solid #e8cdfd !important;
+  box-shadow: 0 0 0 6px rgba(232, 205, 253, 0.22);
+}
+
+.wps-calendar-action-btn--secondary.button:hover,
+.wps-calendar-action-btn--secondary.button:focus {
+  background: #faf5ff !important;
+  color: #32126d !important;
+}
+
+/* =============================================
+   Tab Highlight Block
+   ============================================= */
+.wps-tab-highlight-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #f7f7f7;
+  border: 1px solid #e8cdfd;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+
+.wps-tab-highlight-block__left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.wps-tab-highlight-block__category {
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #f5a623;
+  text-transform: uppercase;
+}
+
+.wps-tab-highlight-block__title {
+  font-family: "NunitoSans-ExtraBold", sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #171a33;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.wps-tab-highlight-block__desc {
+  font-family: "NunitoSans-Regular", sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+.wps-tab-highlight-block__btn {
+  display: inline-block;
+  background: #171a33;
+  color: #ffffff !important;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 12px 24px;
+  text-decoration: none !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.wps-tab-highlight-block__btn:hover {
+  background: #2d3458;
+  color: #ffffff !important;
+}
+
+/* =============================================
+   Helper / description text
+   ============================================= */
+.wps-helper-text {
+  font-size: 13px;
+  color: #6b7280;
+  font-family: "NunitoSans-Regular", sans-serif;
+  line-height: 1.5;
+}
+
+/* Toggle-specific: stack control + description vertically */
+.wps-toggle-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.wps-toggle-wrap .wps-helper-text {
+  font-size: 14px;
+  color: #2d1b5e;
+  font-family: "NunitoSans-Regular", sans-serif;
+}
+
+/* Toggle wrapper alignment */
+.mwb-form-group .mwb-form-group__control > div:first-child:has(.mdc-switch) {
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+/* =============================================
+   iOS-style Toggle Switch Override
+   ============================================= */
+.mwb-form-group .mdc-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px !important;
+  height: 24px !important;
+  min-width: 44px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.mwb-form-group .mdc-switch .mdc-switch__track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px !important;
+  height: 24px !important;
+  border-radius: 12px !important;
+  background-color: #d1d5db !important;
+  opacity: 1 !important;
+  border: none !important;
+  transition: background-color 0.22s ease !important;
+}
+
+.mwb-form-group .mdc-switch--checked .mdc-switch__track,
+.mwb-form-group .mdc-switch:has(.mdc-switch__native-control:checked) .mdc-switch__track {
+  background-color: #3b82f6 !important;
+}
+
+.mwb-form-group .mdc-switch .mdc-switch__thumb-underlay {
+  position: absolute !important;
+  top: 2px !important;
+  left: 2px !important;
+  width: 20px !important;
+  height: 20px !important;
+  transform: translateX(0) !important;
+  transition: transform 0.22s ease !important;
+}
+
+.mwb-form-group .mdc-switch--checked .mdc-switch__thumb-underlay,
+.mwb-form-group .mdc-switch:has(.mdc-switch__native-control:checked) .mdc-switch__thumb-underlay {
+  transform: translateX(20px) !important;
+}
+
+.mwb-form-group .mdc-switch .mdc-switch__thumb {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !important;
+  border: none !important;
+}
+
+.mwb-form-group .mdc-switch .mdc-switch__thumb-underlay::before,
+.mwb-form-group .mdc-switch .mdc-switch__thumb-underlay::after {
+  display: none !important;
+}
+
 .mwb-form-group .mwb-form-group__control .mdc-switch__native-control {
-  width: 68px;
-  height: 48px;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 44px !important;
+  height: 24px !important;
+  opacity: 0 !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  z-index: 2;
+}
+
+/* =============================================
+   Clean Text / Number / Email Input Override
+   ============================================= */
+.mwb-form-group .mdc-text-field--outlined {
+  height: auto !important;
+  width: auto !important;
+  background: transparent !important;
+  padding: 0 !important;
+  display: block;
+}
+
+.mwb-form-group .mdc-text-field--outlined .mdc-notched-outline {
+  display: none !important;
+}
+
+.mwb-form-group .mdc-text-field--outlined .mdc-text-field__input {
+  height: 40px !important;
+  min-width: 280px;
+  border: 1px solid #bab7c1 !important;
+  border-radius: 12px !important;
+  padding: 8px 14px !important;
+  font-size: 14px !important;
+  color: #374151 !important;
+  background: #ffffff !important;
+  font-family: "NunitoSans-Regular", sans-serif !important;
+  transition: border-color 0.2s ease !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.mwb-form-group .mdc-text-field--outlined .mdc-text-field__input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.mwb-form-group .mdc-text-field--outlined .mdc-text-field__input::placeholder {
+  color: #9ca3af !important;
+}
+
+.mwb-form-group .mdc-text-field--outlined.mdc-text-field--textarea {
+  display: block;
+}
+
+.mwb-form-group .mdc-text-field--textarea .mdc-text-field__input {
+  height: auto !important;
+  min-height: 80px;
+}
+
+/* Helper / description text */
+.mwb-form-group .mdc-text-field-helper-line {
+  padding: 0 !important;
+  margin-top: 5px;
+}
+
+.mwb-form-group .mwb-helper-text {
+  font-size: 13px !important;
+  color: #6b7280 !important;
+  font-family: "NunitoSans-Regular", sans-serif !important;
+  padding: 0 !important;
+}
+
+/* =============================================
+   Clean Checkbox Override
+   ============================================= */
+.mwb-form-group .mdc-form-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mwb-form-group .mdc-checkbox {
+  width: 18px !important;
+  height: 18px !important;
+  flex-shrink: 0;
+  position: relative;
+  padding: 0 !important;
+}
+
+.mwb-form-group .mdc-checkbox .mdc-checkbox__background {
+  width: 18px !important;
+  height: 18px !important;
+  top: 0 !important;
+  left: 0 !important;
+  border-radius: 4px !important;
+  border: 2px solid #d1d5db !important;
+  background-color: #ffffff !important;
+  transition: border-color 0.2s, background-color 0.2s !important;
+}
+
+.mwb-form-group .mdc-checkbox .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,
+.mwb-form-group .mdc-checkbox .mdc-checkbox__background[data-mdc-animation-ready] {
+  border-color: #3b82f6 !important;
+  background-color: #3b82f6 !important;
+}
+
+.mwb-form-group .mdc-checkbox .mdc-checkbox__checkmark {
+  color: #ffffff !important;
+  width: 100% !important;
+}
+
+.mwb-form-group .mdc-checkbox .mdc-checkbox__checkmark-path {
+  stroke: #ffffff !important;
+  stroke-width: 3px !important;
+}
+
+.mwb-form-group .mdc-checkbox .mdc-checkbox__mixedmark {
+  border-color: #ffffff !important;
+}
+
+.mwb-form-group .mdc-checkbox .mdc-checkbox__ripple,
+.mwb-form-group .mdc-checkbox::before,
+.mwb-form-group .mdc-checkbox::after {
+  display: none !important;
+}
+
+.mwb-form-group .mdc-checkbox .mdc-checkbox__native-control {
+  width: 18px !important;
+  height: 18px !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  z-index: 1;
+}
+
+.mwb-form-group .mdc-form-field label {
+  font-size: 13px !important;
+  color: #6b7280 !important;
+  cursor: pointer;
+  font-family: "NunitoSans-Regular", sans-serif !important;
+  margin: 0 !important;
+}
+
+/* =============================================
+   Clean Select Override
+   ============================================= */
+.mwb-form-group .mwb-form-select select {
+  height: 40px !important;
+  min-width: 280px;
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+  padding: 8px 36px 8px 14px !important;
+  font-size: 14px !important;
+  color: #374151 !important;
+  background-color: #ffffff !important;
+  font-family: "NunitoSans-Regular", sans-serif !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  cursor: pointer;
+  transition: border-color 0.2s ease !important;
+}
+
+.mwb-form-group .mwb-form-select select:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+  outline: none !important;
+}
+
+.mwb-form-group .mwb-form-select .mdl-textfield__label {
+  display: none !important;
 }
 
 .mwb-form-group .mwb-password-hidden {
@@ -291,9 +1289,28 @@ select {
 }
 
 .mdc-button {
-  border-radius: 35px !important;
-  padding: 12px 24px !important;
-  height: 100%;
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 12px 28px !important;
+  height: auto !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s, box-shadow 0.2s !important;
+}
+
+.mdc-button:hover {
+  background-color: #1f2937 !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.mdc-button__ripple {
+  display: none !important;
 }
 
 .mdc-floating-label {
@@ -320,27 +1337,33 @@ select {
 
 /* Enter Button Global CSS Here */
 .mwb-btn {
-  border-radius: 30px;
-  border: 1px solid #2196f3;
+  background-color: #111827;
+  border: none;
+  border-radius: 999px;
   color: #ffffff;
   cursor: pointer;
   display: inline-block;
-  font-family: "NunitoSans-Regular";
+  font-family: "NunitoSans-Bold", sans-serif;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 700;
   min-width: 140px;
   outline: 0;
-  padding: 16px 32px;
+  padding: 12px 28px;
   text-align: center;
-  text-transform: capitalize;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 .mwb-btn:hover, .mwb-btn:active, .mwb-btn:focus {
+  background-color: #1f2937;
   color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
 .mwb-btn__filled {
-  background-color: #2196f3;
+  background-color: #111827;
 }
 
 /* Header CSS */
@@ -350,157 +1373,511 @@ select {
 /* About page css */
 /* Home Page CSS */
 /* Overview page css */
-.mwb-overview__wrapper {
-  width: calc(100% - 20px);
+/* =============================================
+   Overview Page — New Design
+   ============================================= */
+.wps-overview-wrap {
+  padding: 24px 0 40px;
 }
 
-.mwb-overview__wrapper .mwb-overview__banner {
-  background-color: #ffffff;
-  margin: 10px 0 25px;
-  overflow: hidden;
-  padding: 10px;
+/* Hero */
+.wps-overview-hero {
+  text-align: center;
+  padding: 32px 20px 28px;
+  background: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 24px;
 }
 
-.mwb-overview__wrapper .mwb-overview__banner img {
-  width: 100%;
+.wps-overview-hero__icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: #ede9fe;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__content-description {
-  background-color: #ffffff;
-  margin-bottom: 30px;
-  padding: 25px 0;
-  text-align: left;
+.wps-overview-hero__icon .material-icons {
+  font-size: 36px;
+  color: #6d28d9;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__content-description h2 {
-  color: #163062;
+.wps-overview-hero__label {
+  font-size: 12px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  color: #f5a623;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.wps-overview-hero__title {
   font-size: 30px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  line-height: 150%;
-  margin: 10px 0px;
-  text-align: left;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  color: #1a0f40;
+  margin: 0 0 12px;
+  line-height: 1.3;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__content-description p {
-  color: #565857;
+.wps-overview-hero__desc {
+  font-size: 14px;
+  color: #6b7280;
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Features Section */
+.wps-overview-features {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px 28px 8px;
+  margin-bottom: 24px;
+}
+
+.wps-overview-features__title {
   font-size: 16px;
-  letter-spacing: 0.5px;
-}
-
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__content-description h3 {
-  color: #163062;
-  font-size: 18px;
+  font-family: "NunitoSans-SemiBold", sans-serif;
   font-weight: 600;
-  letter-spacing: 0.3px;
-  margin-bottom: 15px;
-  margin-top: 25px;
+  color: #374151;
+  text-align: center;
+  margin: 0 0 24px;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__content-description .mwb-overview__features {
-  list-style: none;
-}
-
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__content-description .mwb-overview__features li {
-  color: #565857;
-  font-size: 16px;
-  letter-spacing: 0.5px;
-  line-height: 24px;
-}
-
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__content-description .mwb-overview__features li:before {
-  color: #1a3365;
-  content: "⚬";
-  font-size: 20px;
-  font-weight: 400;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-
-.mwb-overview__wrapper .mwb-overview__content h2 {
-  color: #163062;
-  font-size: 30px;
-  font-weight: 600;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  line-height: 150%;
-  margin: 10px 0px;
-  text-align: left;
-}
-
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -15px;
-}
-
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item {
-  display: flex;
-  flex-wrap: wrap;
-  flex: 0 0 33.33%;
+.wps-overview-features__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
   margin-bottom: 20px;
-  max-width: 33.33%;
-  padding: 0 15px;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item .mwb-overview__keywords-card {
-  background-color: #ffffff;
+.wps-overview-feature-card {
+  background: #ffffff;
+  border: 1px solid #e8e8f0;
   border-radius: 10px;
-  border: 1px solid #dddddd;
-  box-shadow: 0px 4px 10px #efefef;
-  color: #ffffff;
-  flex-grow: 1;
-  padding: 30px;
+  padding: 20px;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item .mwb-overview__keywords-card .mwb-overview__keywords-image {
-  overflow: hidden;
+.wps-overview-feature-card__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: #eff6ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item .mwb-overview__keywords-card .mwb-overview__keywords-image img {
-  max-width: 80px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  width: auto;
+.wps-overview-feature-card__icon .material-icons {
+  font-size: 20px;
+  color: #3b82f6;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item .mwb-overview__keywords-card .mwb-overview__keywords-text .mwb-overview__keywords-heading {
-  color: #163062;
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  line-height: 38px;
-  margin: 15px 0;
+.wps-overview-feature-card__title {
+  font-size: 14px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  color: #1a0f40;
+  margin: 0 0 8px;
+  line-height: 1.4;
 }
 
-.mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item .mwb-overview__keywords-card .mwb-overview__keywords-text .mwb-overview__keywords-description {
-  color: #565857;
-  font-size: 16px;
-  letter-spacing: 0.5px;
+.wps-overview-feature-card__desc {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Footer CTA */
+.wps-overview-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 20px 28px;
+  flex-wrap: wrap;
+}
+
+.wps-overview-cta__text {
+  text-align: center;
+}
+
+.wps-overview-cta__heading {
+  font-size: 15px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  color: #1a0f40;
+  margin: 0 0 4px;
+}
+
+.wps-overview-cta__sub {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.wps-overview-cta__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wps-overview-cta__btn {
+  display: inline-block;
+  background-color: #111827;
+  color: #ffffff !important;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+}
+
+.wps-overview-cta__btn:hover {
+  background-color: #1f2937;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  color: #ffffff !important;
 }
 
 /* overview page css ends */
+
+/* =============================================
+   Dashboard Two-Column Layout
+   ============================================= */
+.mwb-dashboard-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.mwb-dashboard-body .mwb-section {
+  flex: 1;
+  min-width: 0;
+}
+
+/* =============================================
+   Right Sidebar
+   ============================================= */
+.wps-dashboard-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  padding: 20px 16px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wps-sidebar-card {
+  background: #ffffff;
+  border: 1px solid #e8e8f0;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.wps-sidebar-card__title {
+  font-size: 14px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  color: #1a0f40;
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+
+.wps-sidebar-card__subtitle {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+/* Help links */
+.wps-sidebar-card__link {
+  display: block;
+  background: #f9fafb;
+  border: 1px solid #e8e8f0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-family: "NunitoSans-SemiBold", sans-serif;
+  font-weight: 600;
+  color: #374151 !important;
+  text-decoration: none !important;
+  margin-bottom: 8px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.wps-sidebar-card__link:last-of-type {
+  margin-bottom: 0;
+}
+
+.wps-sidebar-card__link:hover {
+  background: #f0f0f8;
+  border-color: #c4b5fd;
+  color: #1a0f40 !important;
+}
+
+/* Grow header */
+.wps-sidebar-card__grow-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.wps-sidebar-card__star {
+  color: #f5a623;
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+/* Service links — card style */
+.wps-sidebar-card__service-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 1px solid #e8e8f0;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+  text-decoration: none !important;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.wps-sidebar-card__service-link:last-of-type {
+  margin-bottom: 0;
+}
+
+.wps-sidebar-card__service-link:hover {
+  border-color: #c4b5fd;
+  background: #faf5ff;
+}
+
+.wps-sidebar-card__service-link:hover .wps-sidebar-card__service-name {
+  color: #2d1b5e;
+}
+
+.wps-sidebar-card__service-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wps-sidebar-card__service-icon .material-icons {
+  font-size: 16px;
+}
+
+.wps-sidebar-card__service-icon--search {
+  background-color: #fef9c3;
+}
+.wps-sidebar-card__service-icon--search .material-icons { color: #ca8a04; }
+
+.wps-sidebar-card__service-icon--ads {
+  background-color: #ede9fe;
+}
+.wps-sidebar-card__service-icon--ads .material-icons { color: #7c3aed; }
+
+.wps-sidebar-card__service-icon--speed {
+  background-color: #ede9fe;
+}
+.wps-sidebar-card__service-icon--speed .material-icons { color: #7c3aed; }
+
+.wps-sidebar-card__service-icon--dev {
+  background-color: #ede9fe;
+}
+
+/* WooCommerce "woo" badge icon */
+.wps-woo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #7c3aed;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  font-family: "NunitoSans-ExtraBold", sans-serif;
+  border-radius: 5px;
+  padding: 3px 6px;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+.wps-woo-icon::after {
+  content: "woo";
+}
+
+.wps-sidebar-card__service-name {
+  font-size: 12px;
+  font-family: "NunitoSans-SemiBold", sans-serif;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 2px;
+  line-height: 1.3;
+}
+
+.wps-sidebar-card__service-desc {
+  font-size: 11px;
+  color: #9ca3af;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.wps-sidebar-card__chevron {
+  font-size: 16px !important;
+  color: #9ca3af;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.wps-sidebar-card__expert-btn {
+  display: block;
+  text-align: center;
+  background-color: #111827;
+  color: #ffffff !important;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  text-decoration: none !important;
+  margin-top: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s;
+}
+
+.wps-sidebar-card__expert-btn:hover {
+  background-color: #1f2937;
+  color: #ffffff !important;
+}
+
+.wps-sidebar-card__services-by {
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: center;
+  margin: 8px 0 0;
+}
+
+/* Dark button (Contact Us) */
+.wps-sidebar-card__dark-btn {
+  display: block;
+  text-align: center;
+  background-color: #111827;
+  color: #ffffff !important;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s;
+}
+
+.wps-sidebar-card__dark-btn:hover {
+  background-color: #1f2937;
+  color: #ffffff !important;
+}
+
+/* Outline button (View More Plugins) */
+.wps-sidebar-card__outline-btn {
+  display: block;
+  text-align: center;
+  background-color: #ffffff;
+  color: #1a0f40 !important;
+  border: 1.5px solid #c4b5fd;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.wps-sidebar-card__outline-btn:hover {
+  background-color: #f5f3ff;
+  border-color: #7c3aed;
+  color: #1a0f40 !important;
+}
 /*====================================
 =            Tabs Section            =
 ====================================*/
 .mwb-navbar {
   padding: 0 32px;
-  border-bottom: 1px solid rgba(63, 71, 86, 0.25);
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e8;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mwb-navbar__version {
+  font-size: 13px;
+  font-family: "NunitoSans-SemiBold", sans-serif;
+  color: #9ca3af;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 16px 0;
 }
 
 .mwb-navbar .mwb-navbar__items {
   display: flex;
   flex-wrap: wrap;
+  gap: 0;
+  flex: 1;
 }
 
 .mwb-navbar .mwb-navbar__items li {
-  margin-right: 32px;
+  margin-right: 0;
   margin-bottom: 0;
 }
 
 .mwb-navbar .mwb-navbar__items li a {
-  padding: 18px 0;
-  color: #000000;
+  display: inline-block;
+  padding: 16px 20px;
+  color: #2d1b5e;
+  font-size: 13px;
+  font-family: "NunitoSans-SemiBold", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.mwb-navbar .mwb-navbar__items li a:hover {
+  color: #1a0f40 !important;
+  border-bottom-color: rgba(245, 166, 35, 0.4);
+}
+
+.mwb-navbar .mwb-navbar__items li a.active {
+  color: #1a0f40 !important;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  border-bottom-color: #f5a623;
+  position: static;
+}
+
+.mwb-navbar .mwb-navbar__items li a.active:after {
+  display: none;
 }
 
 /*=====   Tabs Section CSS Ends  ======*/
@@ -553,24 +1930,31 @@ select {
 }
 
 .mwb-mbfw-wrap .mwb_mbfw_license_text #mwb_mbfw_license_form button {
-  background-color: #163062;
-  text-transform: uppercase;
+  background-color: #111827;
+  color: #ffffff;
+  text-transform: none;
   width: 100%;
-  height: 40px;
-  letter-spacing: 1.5px;
-  border: 1px solid #163062;
-  transition: 0.5s ease;
-  font-weight: 600;
+  height: auto;
+  padding: 11px 28px;
+  letter-spacing: 0.3px;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .mwb-mbfw-wrap .mwb_mbfw_license_text #mwb_mbfw_license_form button:hover {
-  color: #163062;
-  background-color: #ffffff;
+  background-color: #1f2937;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
 .mwb-mbfw-wrap .mwb_mbfw_license_text #mwb_mbfw_license_form button:focus {
   outline: none;
-  box-shadow: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 /*=====  License Section CSS ends  ======*/
@@ -718,9 +2102,26 @@ select {
 }
 
 .mwb_bfw_config_tab .mwb-form-group .mwb-form-group__control input.bfwp_availability_page_calendar {
-  border-radius: 5px;
-  min-height: 32px;
-  padding: 8px 16px;
+  border-radius: 10px !important;
+  min-height: 48px !important;
+  padding: 10px 18px !important;
+  border: 2px solid #e8cdfd !important;
+  color: #32126d !important;
+  font-size: 16px !important;
+  font-family: "NunitoSans-Regular", sans-serif !important;
+  box-shadow: 0 0 0 4px rgba(232, 205, 253, 0.28) !important;
+  width: min(100%, 480px) !important;
+  flex: 0 1 480px !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  outline: none !important;
+  background: #ffffff !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+.mwb_bfw_config_tab .mwb-form-group .mwb-form-group__control input.bfwp_availability_page_calendar:focus {
+  border-color: #d7b5fb !important;
+  box-shadow: 0 0 0 6px rgba(215, 181, 251, 0.24) !important;
 }
 
 .mwb_bfw_config_tab .mwb-form-group .mwb-form-group__control label.mdl-textfield__label {
@@ -784,22 +2185,36 @@ select {
   padding: 15px;
 }
 
-.mwb-section #submit, .mwb-section .edit-tag-actions .button {
-  background-color: #2196f3;
-  border: none;
-  border-radius: 50px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-family: "NunitoSans-Regular";
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+.mwb-section #submit, .mwb-section .edit-tag-actions .button,
+.mwb-mbfw-wrap input[type="submit"],
+.mwb-mbfw-wrap button[type="submit"],
+.mwb-mbfw-wrap .button-primary {
+  background-color: #111827 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 11px 28px !important;
+  font-size: 14px !important;
+  font-family: "NunitoSans-Bold", sans-serif !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
   margin-top: 15px;
-  opacity: 0.9;
-  text-transform: uppercase;
-  transition: opacity 0.3s ease;
+  text-transform: none !important;
+  letter-spacing: 0.3px !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s, box-shadow 0.2s !important;
+  opacity: 1 !important;
+  line-height: 1.4 !important;
+  height: auto !important;
 }
 
-.mwb-section #submit:hover, .mwb-section .edit-tag-actions .button:hover {
-  opacity: 1;
+.mwb-section #submit:hover, .mwb-section .edit-tag-actions .button:hover,
+.mwb-mbfw-wrap input[type="submit"]:hover,
+.mwb-mbfw-wrap button[type="submit"]:hover,
+.mwb-mbfw-wrap .button-primary:hover {
+  background-color: #1f2937 !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+  color: #ffffff !important;
 }
 
 .mwb-section h1,
@@ -892,6 +2307,545 @@ select {
 .mwb-section .wps-bfw-form-field .wps-form-field-wrap span {
   padding-top: 5px;
   display: block;
+}
+
+/* =============================================
+   Inline Taxonomy UI (Additional Costs / Services)
+   ============================================= */
+
+.mwb-inline-taxonomy {
+  font-family: "NunitoSans-Regular", sans-serif;
+}
+
+.mwb-inline-tax-notice {
+  margin-bottom: 16px;
+}
+
+.mwb-inline-taxonomy__layout {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* Left: Add New Form */
+.mwb-inline-taxonomy__add-col {
+  flex: 0 0 320px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.mwb-inline-taxonomy__desc {
+  font-size: 13px;
+  color: #50575e;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.mwb-inline-taxonomy__form-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1d2327;
+  margin-bottom: 16px;
+}
+
+.mwb-tax-field {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mwb-tax-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d2327;
+}
+
+.mwb-tax-field__input input[type="text"],
+.mwb-tax-field__input input[type="number"],
+.mwb-tax-field__input textarea {
+  width: 100%;
+  border: 2px solid #bab7c1;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #6d28d9;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.mwb-tax-field__input input[type="text"]:focus,
+.mwb-tax-field__input input[type="number"]:focus,
+.mwb-tax-field__input textarea:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.25);
+}
+
+.mwb-tax-field__input textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.mwb-tax-field__input .description {
+  font-size: 11px;
+  color: #646970;
+  margin-top: 4px;
+}
+
+/* Toggle (checkbox) fields */
+.mwb-tax-field--toggle .mwb-tax-field__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mwb-tax-field--toggle .description {
+  margin-top: 0;
+}
+
+/* Visually hide the real checkbox — JS wraps it in .mwb-tax-switch label */
+.mwb-tax-toggle {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  pointer-events: none;
+}
+
+/* Switch wrapper label */
+.mwb-tax-switch {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Visual track */
+.mwb-tax-switch__track {
+  display: block;
+  width: 52px;
+  height: 28px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  border: 2px solid #d1d5db;
+  position: relative;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+
+/* Knob */
+.mwb-tax-switch__track::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.2s ease, background 0.2s;
+}
+
+/* Checked state — hidden input sibling targets the track span */
+.mwb-tax-toggle:checked + .mwb-tax-switch__track {
+  background: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.mwb-tax-toggle:checked + .mwb-tax-switch__track::before {
+  left: 24px;
+  background: #f59e0b;
+}
+
+.mwb-tax-field--submit {
+  margin-top: 20px;
+}
+
+.mwb-btn--primary {
+  display: inline-block;
+  background-color: #111827;
+  color: #ffffff !important;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 28px;
+  font-size: 13px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  text-decoration: none !important;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s;
+}
+
+.mwb-btn--primary:hover {
+  background-color: #1f2937;
+  color: #ffffff !important;
+}
+
+/* Edit form (full-width, matching term.php layout) */
+.mwb-inline-taxonomy__edit-wrap {
+  max-width: 700px;
+}
+
+.mwb-inline-taxonomy__edit-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.mwb-inline-taxonomy__edit-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1d2327;
+  margin: 0;
+}
+
+.mwb-tax-back-link {
+  font-size: 13px;
+  color: #646970;
+  text-decoration: none;
+}
+
+.mwb-tax-back-link:hover {
+  color: #2196f3;
+}
+
+.mwb-inline-taxonomy__edit-form {
+  background: #fff;
+  border: 1px solid #c3c4c7;
+  border-radius: 6px;
+  padding: 24px;
+}
+
+.mwb-edit-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mwb-edit-field:last-child {
+  border-bottom: none;
+}
+
+.mwb-edit-field > label {
+  flex: 0 0 160px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d2327;
+  padding-top: 6px;
+}
+
+.mwb-edit-field__control {
+  flex: 1;
+}
+.mwb-form-group__control textarea,
+.wps-field-inline input,
+.mwb-edit-field__control input{
+border: 2px solid #cbcacd;
+width: 100%;
+font-size: 13px;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 13px;
+
+}
+.mwb-edit-field__text {
+  width: 100%;
+  border: 2px solid #cbcacd;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #6d28d9;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.mwb-edit-field__text:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.25);
+}
+
+.mwb-edit-field__textarea {
+  width: 100%;
+  border: 2px solid #cbcacd;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #6d28d9;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.mwb-edit-field__textarea:focus {
+  border-color: #cbcacd;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.25);
+}
+
+.mwb-edit-field__control .description {
+  font-size: 11px;
+  color: #646970;
+  margin-top: 4px;
+}
+
+.mwb-edit-field--toggle .mwb-edit-field__control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.mwb-edit-field--toggle .description {
+  margin-top: 0;
+}
+
+.mwb-edit-field--actions {
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: none;
+}
+
+.mwb-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mwb-edit-delete-link {
+  font-size: 13px;
+  color: #d63638;
+  text-decoration: none;
+}
+
+.mwb-edit-delete-link:hover {
+  color: #a00;
+  text-decoration: underline;
+}
+
+/* Right: Terms Listing Table */
+.mwb-inline-taxonomy__table-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.mwb-inline-taxonomy__search-form {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.mwb-inline-taxonomy__search-input {
+  border: 2px solid #cbcacd !important;
+  border-radius: 999px !important;
+  padding: 9px 20px !important;
+  font-size: 13px !important;
+  color: #6d28d9 !important;
+  background: #fff !important;
+  outline: none !important;
+  width: 220px !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.mwb-inline-taxonomy__search-input:focus {
+  border-color: #cbcacd !important;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.25) !important;
+}
+
+/* Search submit button — navy pill */
+.mwb-inline-taxonomy__search-form button,
+.mwb-inline-taxonomy__search-form button.button {
+  display: inline-block !important;
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 9px 22px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s !important;
+}
+
+.mwb-inline-taxonomy__search-form button:hover {
+  background-color: #1f2937 !important;
+  color: #fff !important;
+}
+
+.mwb-inline-taxonomy__bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.mwb-inline-taxonomy__bulk-bar--bottom {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+/* Bulk actions select — purple pill (override global select rules) */
+.mwb-inline-taxonomy__bulk-bar select {
+  border: 2px solid #cbcacd !important;
+  border-radius: 999px !important;
+  padding: 9px 40px 9px 20px !important;
+  font-size: 13px !important;
+  color: #6d28d9 !important;
+  background-color: #fff !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236d28d9' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  cursor: pointer;
+  outline: none;
+  min-width: 160px;
+  box-shadow: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.mwb-inline-taxonomy__bulk-bar select:focus {
+  border-color: #7c3aed !important;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.25) !important;
+}
+
+/* Apply button — dark navy pill */
+.mwb-inline-taxonomy__apply-btn,
+.mwb-inline-taxonomy__apply-btn.button {
+  display: inline-block !important;
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 9px 24px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s !important;
+}
+
+.mwb-inline-taxonomy__apply-btn:hover,
+.mwb-inline-taxonomy__apply-btn.button:hover {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+}
+
+.mwb-inline-taxonomy__count {
+  margin-left: auto;
+  font-size: 13px;
+  color: #646970;
+}
+
+.mwb-inline-taxonomy__table {
+  border-collapse: collapse;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #c3c4c7;
+  border-radius: 4px;
+}
+
+.mwb-inline-taxonomy__table th,
+.mwb-inline-taxonomy__table td {
+  padding: 8px 12px;
+  font-size: 13px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mwb-inline-taxonomy__table thead th,
+.mwb-inline-taxonomy__table tfoot th {
+  background: #f6f7f7;
+  font-weight: 600;
+  color: #1d2327;
+}
+
+.mwb-inline-taxonomy__table .check-column {
+  width: 56px !important;
+  padding: 4px 10px !important;
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+
+/* Compact .wps-checkbox halo for table cells — keep inline-flex so text-align:center works */
+.mwb-tax-table-cb.wps-checkbox {
+  display: inline-flex !important;
+  width: 34px;
+  height: 34px;
+  vertical-align: middle;
+  justify-content: flex-start;
+}
+
+.mwb-tax-table-cb .wps-checkbox__box {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+
+.mwb-tax-table-cb .wps-checkbox__input:checked + .wps-checkbox__box::after {
+  width: 4px;
+  height: 8px;
+}
+
+.mwb-inline-taxonomy__row:hover td {
+  background: #f6f7f7;
+}
+
+.mwb-inline-taxonomy__row .row-actions {
+  visibility: hidden;
+  font-size: 11px;
+  color: #646970;
+  margin-top: 2px;
+}
+
+.mwb-inline-taxonomy__row:hover .row-actions {
+  visibility: visible;
+}
+
+.mwb-inline-taxonomy__no-items {
+  text-align: center;
+  color: #646970;
+  padding: 20px !important;
+}
+
+.mwb-tax-icon--yes {
+  color: #008a20;
+  font-weight: 700;
+}
+
+.mwb-tax-icon--no {
+  color: #d63638;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .mwb-inline-taxonomy__layout {
+    flex-direction: column;
+  }
+  .mwb-inline-taxonomy__add-col {
+    flex: 1 1 auto;
+    width: 100%;
+  }
 }
 
 .mwb-taxonomy-section_wrap {
@@ -998,11 +2952,22 @@ select {
 }
 
 @media (max-width: 768px){
+  .mwb-dashboard-body{
+    flex-direction: column;
+    gap: 25px;
+  }
+  .wps-tab-highlight-block {
+   
+    flex-direction: column;
+}
   .mwb-header-container {
     justify-content: flex-start;
+    padding: 8px 16px;
   }
+
   .mwb-header-container .mwb-header-title {
     max-width: 100%;
+    font-size: 13px;
   }
   .mwb-header-container .mwb-link {
     margin-top: 15px;
@@ -1010,9 +2975,8 @@ select {
   .mwb-header-container span {
     margin: 15px 5px 0;
   }
-  .mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item {
-    flex: 0 0 100%;
-    max-width: 100%;
+  .wps-overview-features__grid {
+    grid-template-columns: 1fr;
   }
   .mwb_bfw_config_tab h3.nav-tab-wrapper {
     border-bottom: 2px solid #c3c4c7;
@@ -1049,9 +3013,8 @@ select {
 }
 
 @media (max-width: 992px){
-  .mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item {
-    flex: 0 0 50%;
-    max-width: 50%;
+  .wps-overview-features__grid {
+    grid-template-columns: repeat(2, 1fr);
   }
   .mwb_bfw_config_tab .wps-bfwp__integration-wrap {
     display: block;
@@ -1072,11 +3035,347 @@ select {
   .mwb-section .wps-bfw-form-field .wps-form-field-wrap {
     padding-top: 10px;
   }
+  .mwb-form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .mwb-form-group .mwb-form-group__label {
+    max-width: 100%;
     margin-bottom: 12px;
   }
   .mwb-form-group .mwb-form-group__control {
     max-width: 100%;
+    padding: 0;
   }
 }
+.check-column label.wps-checkbox:hover {
+    background: none;
+}
 
+.mbfw-expert-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
+
+.mbfw-expert-modal[hidden] {
+  display: none !important;
+}
+
+.mbfw-expert-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.52);
+  backdrop-filter: blur(4px);
+}
+
+.mbfw-expert-modal__dialog {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(980px, 100%);
+  max-height: calc(100vh - 64px);
+  border: 1px solid #e5e7eb;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 28px 64px rgba(15, 23, 42, 0.24);
+  overflow: hidden;
+}
+
+.mbfw-expert-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 22px 18px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.mbfw-expert-modal__copy {
+  min-width: 0;
+}
+
+.mbfw-expert-modal__copy h2 {
+  margin: 0 0 6px;
+  color: #111827;
+  font-size: 24px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.mbfw-expert-modal__copy p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.mbfw-expert-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  color: #111827;
+  cursor: pointer;
+  box-shadow: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.mbfw-expert-modal__close:hover {
+  transform: translateY(-1px);
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.mbfw-expert-modal__close span {
+  display: block;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 400;
+  margin-top: -2px;
+}
+
+.mbfw-expert-modal__body {
+  padding: 22px;
+  background: #f8fafc;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.mbfw-expert-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mbfw-expert-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.mbfw-expert-form__field--full {
+  grid-column: 1 / -1;
+}
+
+.mbfw-expert-form__label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #111827;
+  font-size: 13px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+}
+
+.mbfw-expert-form__required {
+  color: #dc2626;
+}
+
+.mbfw-expert-form__control {
+  width: 100%;
+  max-width: none !important;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  background: #fff;
+  color: #111827;
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.mbfw-expert-form input.mbfw-expert-form__control,
+.mbfw-expert-form select.mbfw-expert-form__control,
+.mbfw-expert-form textarea.mbfw-expert-form__control {
+  max-width: none !important;
+}
+
+.mbfw-expert-form__control:hover {
+  border-color: #9ca3af;
+  background: #fff;
+}
+
+.mbfw-expert-form__control:focus {
+  outline: none;
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
+  background: #fff;
+}
+
+.mbfw-expert-form__control--textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.mbfw-expert-form__control--select {
+  padding-right: 42px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #6b7280 50%), linear-gradient(135deg, #6b7280 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+.mbfw-expert-form__checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mbfw-expert-form__checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  background: #fff;
+  color: #111827;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.mbfw-expert-form__checkbox {
+  margin: 2px 0 0;
+}
+
+.mbfw-expert-form__actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.mbfw-expert-form__submit {
+  border: 0;
+  cursor: pointer;
+  margin-top: 0;
+}
+
+.mbfw-expert-form__submit[disabled] {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+.mbfw-expert-form__status {
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.mbfw-expert-form__status.is-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.mbfw-expert-form__status.is-error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.mbfw-expert-thank-you {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.mbfw-thank-you-card {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.mbfw-thank-you-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.mbfw-thank-you-card__eyebrow,
+.mbfw-thank-you-card__meta,
+.mbfw-thank-you-card__message,
+.mbfw-thank-you-card__action {
+  margin: 0;
+}
+
+.mbfw-thank-you-card__eyebrow {
+  color: #6b7280;
+  font-size: 12px;
+  font-family: "NunitoSans-Bold", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.mbfw-thank-you-card__title {
+  margin: 10px 0 12px;
+  color: #111827;
+  font-size: 28px;
+  line-height: 1.15;
+}
+
+.mbfw-thank-you-card__message {
+  color: #111827;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.mbfw-thank-you-card__meta {
+  margin-top: 10px;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.mbfw-thank-you-card__action {
+  margin-top: 18px;
+}
+
+body.mbfw-expert-modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 782px) {
+  .mbfw-expert-modal {
+    padding: 20px 12px;
+  }
+
+  .mbfw-expert-modal__header,
+  .mbfw-expert-modal__body {
+    padding: 18px;
+  }
+
+  .mbfw-expert-form__grid,
+  .mbfw-expert-form__checkbox-group {
+    grid-template-columns: 1fr;
+  }
+}

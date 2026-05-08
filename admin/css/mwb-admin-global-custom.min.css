@@ -16,3 +16,7 @@ th#taxonomy-mwb_booking_cost,th#taxonomy-mwb_booking_service{width:10%}#woocomme
   .wps-info-img .cls-1 {
     fill: #1e1e1e;
   }
+
+p.form-field.mwb_bfwp_order_statuses_to_cancel_field .select2-container--default {
+    width: 50% !important;
+}

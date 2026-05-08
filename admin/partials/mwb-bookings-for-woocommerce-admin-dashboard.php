@@ -192,13 +192,13 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			<!-- Need help -->
 			<div class="wps-sidebar-card">
 				<h3 class="wps-sidebar-card__title"><?php esc_html_e( 'Need help with this plugin?', 'mwb-bookings-for-woocommerce' ); ?></h3>
-				<a href="https://www.youtube.com/channel/UCqCOG8Dk6EAeJlTWkjekifg" target="_blank" class="wps-sidebar-card__link">
+				<a href="https://youtu.be/LDwy4ioMI1I?si=BI7TanVdCER-ORQB" target="_blank" class="wps-sidebar-card__link">
 					<?php esc_html_e( 'Watch Video', 'mwb-bookings-for-woocommerce' ); ?>
 				</a>
-				<a href="https://docs.wpswings.com/bookings-for-woocommerce/" target="_blank" class="wps-sidebar-card__link">
+				<a href="https://docs.wpswings.com/bookings-for-woocommerce/?utm_source=wpswings-bookings-pro&utm_medium=organic&utm_campaign=documentation" target="_blank" class="wps-sidebar-card__link">
 					<?php esc_html_e( 'Documentation', 'mwb-bookings-for-woocommerce' ); ?>
 				</a>
-				<a href="https://wpswings.com/submit-query/" target="_blank" class="wps-sidebar-card__link">
+				<a href="https://wpswings.com/contact-us/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-backend&utm_campaign=contact-us" target="_blank" class="wps-sidebar-card__link">
 					<?php esc_html_e( 'Support', 'mwb-bookings-for-woocommerce' ); ?>
 				</a>
 			</div>
@@ -212,7 +212,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 					</div>
 					<span class="wps-sidebar-card__star">&#9733;</span>
 				</div>
-				<a href="https://wpswings.com/seo-services/" target="_blank" class="wps-sidebar-card__service-link">
+				<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-bookings-services&utm_medium=bookings-org-backend&utm_campaign=woocommerce-services" target="_blank" class="wps-sidebar-card__service-link">
 					<div class="wps-sidebar-card__service-icon wps-sidebar-card__service-icon--search">
 						<span class="material-icons">search</span>
 					</div>
@@ -222,7 +222,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 					</div>
 					<span class="material-icons wps-sidebar-card__chevron">chevron_right</span>
 				</a>
-				<a href="https://wpswings.com/google-ads/" target="_blank" class="wps-sidebar-card__service-link">
+				<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-bookings-services&utm_medium=bookings-org-backend&utm_campaign=woocommerce-services" target="_blank" class="wps-sidebar-card__service-link">
 					<div class="wps-sidebar-card__service-icon wps-sidebar-card__service-icon--ads">
 						<span class="material-icons">north_east</span>
 					</div>
@@ -232,7 +232,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 					</div>
 					<span class="material-icons wps-sidebar-card__chevron">chevron_right</span>
 				</a>
-				<a href="https://wpswings.com/speed-optimization/" target="_blank" class="wps-sidebar-card__service-link">
+				<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-bookings-services&utm_medium=bookings-org-backend&utm_campaign=woocommerce-services" target="_blank" class="wps-sidebar-card__service-link">
 					<div class="wps-sidebar-card__service-icon wps-sidebar-card__service-icon--speed">
 						<span class="material-icons">speed</span>
 					</div>
@@ -242,7 +242,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 					</div>
 					<span class="material-icons wps-sidebar-card__chevron">chevron_right</span>
 				</a>
-				<a href="https://wpswings.com/woocommerce-development/" target="_blank" class="wps-sidebar-card__service-link">
+				<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-bookings-services&utm_medium=bookings-org-backend&utm_campaign=woocommerce-services" target="_blank" class="wps-sidebar-card__service-link">
 					<div class="wps-sidebar-card__service-icon wps-sidebar-card__service-icon--dev">
 						<span class="wps-woo-icon"></span>
 					</div>
@@ -262,7 +262,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			<div class="wps-sidebar-card">
 				<h3 class="wps-sidebar-card__title"><?php esc_html_e( 'Still facing problems?', 'mwb-bookings-for-woocommerce' ); ?></h3>
 				<p class="wps-sidebar-card__subtitle"><?php esc_html_e( 'We are ready to resolve workflow, styling, and integration issues across your store setup.', 'mwb-bookings-for-woocommerce' ); ?></p>
-				<a href="https://wpswings.com/submit-query/" target="_blank" class="wps-sidebar-card__dark-btn">
+				<a href="https://wpswings.com/contact-us/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-backend&utm_campaign=contact-us" target="_blank" class="wps-sidebar-card__dark-btn">
 					<?php esc_html_e( 'Contact Us', 'mwb-bookings-for-woocommerce' ); ?>
 				</a>
 			</div>
@@ -271,7 +271,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 			<div class="wps-sidebar-card">
 				<h3 class="wps-sidebar-card__title"><?php esc_html_e( 'Explore more plugins', 'mwb-bookings-for-woocommerce' ); ?></h3>
 				<p class="wps-sidebar-card__subtitle"><?php esc_html_e( 'Discover additional commerce and automation plugins from the same product family.', 'mwb-bookings-for-woocommerce' ); ?></p>
-				<a href="https://wpswings.com/woocommerce-plugins/" target="_blank" class="wps-sidebar-card__outline-btn">
+				<a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-backend&utm_campaign=woocommerce-plugins" target="_blank" class="wps-sidebar-card__outline-btn">
 					<?php esc_html_e( 'View More Plugins', 'mwb-bookings-for-woocommerce' ); ?>
 				</a>
 			</div>

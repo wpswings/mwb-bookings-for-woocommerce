@@ -184,6 +184,8 @@ function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
 		update_term_meta( $term_id, 'mwb_mbfw_is_service_optional', isset( $_POST['mwb_mbfw_is_service_optional'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
 		update_term_meta( $term_id, 'mwb_mbfw_is_service_hidden', isset( $_POST['mwb_mbfw_is_service_hidden'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
 		update_term_meta( $term_id, 'mwb_mbfw_is_service_has_quantity', isset( $_POST['mwb_mbfw_is_service_has_quantity'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+		update_term_meta( $term_id, 'mwb_mbfw_service_minimum_quantity', isset( $_POST['mwb_mbfw_service_minimum_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_minimum_quantity'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+		update_term_meta( $term_id, 'mwb_mbfw_service_maximum_quantity', isset( $_POST['mwb_mbfw_service_maximum_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_maximum_quantity'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
 	} elseif ( 'mwb_booking_people' === $taxonomy ) {
 		update_term_meta( $term_id, 'mwb_bfwp_booking_people_unit_cost', isset( $_POST['mwb_bfwp_booking_people_unit_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_booking_people_unit_cost'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
 		update_term_meta( $term_id, 'mwb_bfwp_booking_people_base_cost', isset( $_POST['mwb_bfwp_booking_people_base_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_booking_people_base_cost'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
@@ -352,6 +354,28 @@ function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
 								name="mwb_mbfw_is_service_has_quantity" value="yes"
 								<?php checked( get_term_meta( $editing_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ), 'yes' ); ?> />
 							<p class="description"><?php esc_html_e( 'Either the service has quantity.', 'mwb-bookings-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+
+					<div class="mwb-edit-field" <?php echo ( 'yes' === get_term_meta( $editing_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) ? '' : 'style="display:none;"'; ?>>
+						<label for="mwb_mbfw_service_minimum_quantity"><?php esc_html_e( 'Minimum Quantity', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<div class="mwb-edit-field__control">
+							<input type="number" id="mwb_mbfw_service_minimum_quantity" name="mwb_mbfw_service_minimum_quantity"
+								value="<?php echo esc_attr( get_term_meta( $editing_term->term_id, 'mwb_mbfw_service_minimum_quantity', true ) ); ?>"
+								<?php disabled( get_term_meta( $editing_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ), '' ); ?>
+								style="width:10em;" />
+							<p class="description"><?php esc_html_e( 'Please Add Minimum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+
+					<div class="mwb-edit-field" <?php echo ( 'yes' === get_term_meta( $editing_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) ? '' : 'style="display:none;"'; ?>>
+						<label for="mwb_mbfw_service_maximum_quantity"><?php esc_html_e( 'Maximum Quantity', 'mwb-bookings-for-woocommerce' ); ?></label>
+						<div class="mwb-edit-field__control">
+							<input type="number" id="mwb_mbfw_service_maximum_quantity" name="mwb_mbfw_service_maximum_quantity"
+								value="<?php echo esc_attr( get_term_meta( $editing_term->term_id, 'mwb_mbfw_service_maximum_quantity', true ) ); ?>"
+								<?php disabled( get_term_meta( $editing_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ), '' ); ?>
+								style="width:10em;" />
+							<p class="description"><?php esc_html_e( 'Please Add Maximum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ); ?></p>
 						</div>
 					</div>
 
@@ -529,6 +553,22 @@ function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
 							<div class="mwb-tax-field__input">
 								<input type="checkbox" class="mwb-tax-toggle" id="mwb_mbfw_is_service_has_quantity" name="mwb_mbfw_is_service_has_quantity" value="yes" />
 								<p class="description"><?php esc_html_e( 'Either the service has quantity.', 'mwb-bookings-for-woocommerce' ); ?></p>
+							</div>
+						</div>
+
+						<div class="mwb-tax-field" style="display:none;">
+							<label for="mwb_mbfw_service_minimum_quantity"><?php esc_html_e( 'Minimum Quantity', 'mwb-bookings-for-woocommerce' ); ?></label>
+							<div class="mwb-tax-field__input">
+								<input type="number" id="mwb_mbfw_service_minimum_quantity" name="mwb_mbfw_service_minimum_quantity" disabled="disabled" style="width:10em;" />
+								<p class="description"><?php esc_html_e( 'Please Add Minimum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ); ?></p>
+							</div>
+						</div>
+
+						<div class="mwb-tax-field" style="display:none;">
+							<label for="mwb_mbfw_service_maximum_quantity"><?php esc_html_e( 'Maximum Quantity', 'mwb-bookings-for-woocommerce' ); ?></label>
+							<div class="mwb-tax-field__input">
+								<input type="number" id="mwb_mbfw_service_maximum_quantity" name="mwb_mbfw_service_maximum_quantity" disabled="disabled" style="width:10em;" />
+								<p class="description"><?php esc_html_e( 'Please Add Maximum Quantity of the Service Bookable.', 'mwb-bookings-for-woocommerce' ); ?></p>
 							</div>
 						</div>
 

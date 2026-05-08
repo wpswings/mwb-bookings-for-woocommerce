@@ -240,6 +240,7 @@ class Mwb_Bookings_For_Woocommerce_Talk_To_Expert_Form {
 								value="<?php echo esc_attr( $option_value ); ?>"
 								<?php checked( $checked ); ?>
 							/>
+							<span class="mbfw-expert-form__checkbox-box"></span>
 							<span><?php echo esc_html( $option_label ); ?></span>
 						</label>
 					<?php endforeach; ?>

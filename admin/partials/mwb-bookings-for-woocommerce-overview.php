@@ -111,9 +111,9 @@ do_action( 'mwb_mbfw_overview_content_top' );
 			<p class="wps-overview-cta__sub"><?php esc_html_e( 'We are ready to resolve your problems.', 'mwb-bookings-for-woocommerce' ); ?></p>
 		</div>
 		<div class="wps-overview-cta__actions">
-			<a href="https://wpswings.com/submit-query/" target="_blank" class="wps-overview-cta__btn"><?php esc_html_e( 'Contact us!', 'mwb-bookings-for-woocommerce' ); ?></a>
+			<a href="https://wpswings.com/contact-us/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-backend&utm_campaign=contact-us" target="_blank" class="wps-overview-cta__btn"><?php esc_html_e( 'Contact us!', 'mwb-bookings-for-woocommerce' ); ?></a>
 			<a href="https://demo.wpswings.com/bookings-for-woocommerce-pro/" target="_blank" class="wps-overview-cta__btn"><?php esc_html_e( 'Demo', 'mwb-bookings-for-woocommerce' ); ?></a>
-			<a href="https://wpswings.com/woocommerce-plugins/" target="_blank" class="wps-overview-cta__btn"><?php esc_html_e( 'Support', 'mwb-bookings-for-woocommerce' ); ?></a>
+			<a href="https://wpswings.com/contact-us/?utm_source=wpswings-bookings-org&utm_medium=bookings-org-backend&utm_campaign=contact-us" target="_blank" class="wps-overview-cta__btn"><?php esc_html_e( 'Support', 'mwb-bookings-for-woocommerce' ); ?></a>
 		</div>
 	</div>
 

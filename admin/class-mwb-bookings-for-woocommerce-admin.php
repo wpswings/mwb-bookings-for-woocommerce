@@ -160,6 +160,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'alert_booking'               => __( 'Booking cost should not be less than 0  !', 'mwb-bookings-for-woocommerce' ),
 					'end_date_validate_booking'   => __( 'End time should be greater than start time', 'mwb-bookings-for-woocommerce' ),
 					'start_date_validate_booking' => __( 'Start time should be less than end time', 'mwb-bookings-for-woocommerce' ),
+					'service_quantity_negative'   => __( 'Service quantity should not be less than 0.', 'mwb-bookings-for-woocommerce' ),
+					'service_quantity_invalid_range' => __( 'Minimum quantity cannot be greater than maximum quantity.', 'mwb-bookings-for-woocommerce' ),
 				)
 			);
 			wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js' );

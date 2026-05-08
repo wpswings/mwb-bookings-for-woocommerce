@@ -21,7 +21,7 @@ global $mbfw_mwb_mbfw_obj;
 <div class="wrap mwb_bfw_config_tab">
 		<?php
 		if ( class_exists( 'Mwb_Bookings_For_Woocommerce_Admin' ) ) {
-			$mwb_bfw_active_sub_tab;
+			$mwb_bfw_active_sub_tab='';
 			$mwb_bfw_taxonomies_array = Mwb_Bookings_For_Woocommerce_Admin::mwb_get_taxonomy_array();
 
 			$mwb_bfw_sub_tabs_array = $mbfw_mwb_mbfw_obj->mwb_bfw_plug_config_sub_tabs();

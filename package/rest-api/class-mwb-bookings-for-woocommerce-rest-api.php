@@ -208,19 +208,18 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
 						// WooCommerce default placeholder.
 						$image_url = wc_placeholder_img_src( 'woocommerce_thumbnail' );
 					}
-					if ( 'cancelled' !== $order->get_status() ) {
-						
-						$cancelled = wc_get_order_item_meta( $item->get_id(), '_item_cancelled', true );
-
-    
-						if ( 'yes' === $cancelled ) {
-							$can_cancel = false;
-						}else {
-							$can_cancel = true;
-						}
-					} else {
-						$can_cancel = false;
-					}
+					$cancel_allowed_product = get_post_meta( $product->get_id(), 'mwb_mbfw_cancellation_allowed', true );
+					$order_statuses         = get_post_meta( $product->get_id(), 'mwb_bfwp_order_statuses_to_cancel', true );
+					$order_statuses         = is_array( $order_statuses ) ? array_map( 'sanitize_text_field', $order_statuses ) : array();
+					$current_order_status   = 'wc-' . $order->get_status();
+					$cancelled              = wc_get_order_item_meta( $item->get_id(), '_item_cancelled', true );
+					$can_cancel             = (
+						'yes' === $cancel_allowed_product
+						&& 'cancelled' !== $order->get_status()
+						&& 'yes' !== $cancelled
+						&& ! empty( $order_statuses )
+						&& in_array( $current_order_status, $order_statuses, true )
+					);
 					
 				$results[] = [
 					'order_id'   => $order->get_id(),
@@ -233,7 +232,7 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
 					'image'      => $image_url,
 					'booking' => $wps_booking_details_,
 					'can_cancel' => $can_cancel,
-					'cancel_allowed' => get_post_meta( $product->get_id(), 'mwb_mbfw_cancellation_allowed', true ),
+					'cancel_allowed' => $cancel_allowed_product,
 					'view_order_url' => esc_url(
 									wc_get_endpoint_url(
 										'view-order',

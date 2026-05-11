@@ -844,7 +844,7 @@ class Mwb_Bookings_For_Woocommerce {
 											class="mwb-color-swatch-input <?php echo ( isset( $mbfw_component['class'] ) ? esc_attr( $mbfw_component['class'] ) : '' ); ?>"
 											name="<?php echo ( isset( $mbfw_component['name'] ) ? esc_html( $mbfw_component['name'] ) : esc_html( $mbfw_component['id'] ) ); ?>"
 											id="<?php echo esc_attr( $mbfw_component['id'] ); ?>"
-											value="<?php echo $mbfw_color_value; ?>"
+											value="<?php echo esc_attr( $mbfw_color_value ); ?>"
 											autocomplete="off"
 										>
 										<div class="mwb-color-input-details">

@@ -70,8 +70,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		$mwb_bfw_taxonomy_array = $this->mwb_get_taxonomy_array();
 		global $post_type;
 		$mbfw_is_plugin_page = ( ( isset( $screen->id ) && ( ( 'wp-swings_page_mwb_bookings_for_woocommerce_menu' === $screen->id ) || ( 'wp-swings_page_home' === $screen->id ) ) ) || ( in_array( get_current_screen()->taxonomy, $mwb_bfw_taxonomy_array ) ) );
-// var_dump($screen->id,$mbfw_is_plugin_page);die;
-
 		if ( $mbfw_is_plugin_page ) {
 
 			wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), $this->version, 'all' );

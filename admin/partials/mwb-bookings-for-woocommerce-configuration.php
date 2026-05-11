@@ -55,7 +55,7 @@ global $mbfw_mwb_mbfw_obj;
 			if ( in_array( $active_sub_tab, $mwb_bfw_taxonomies_array, true ) ) {
 				echo '<section class="mwb-section">';
 				echo '<div>';
-				$taxonomy = $active_sub_tab; // phpcs:ignore WordPress.WP.GlobalVariablesOverride
+				$mwb_taxonomy_slug = $active_sub_tab;
 				include MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-taxonomy-inline.php';
 				echo '</div></section>';
 				

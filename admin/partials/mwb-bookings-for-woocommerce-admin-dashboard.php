@@ -37,7 +37,7 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 	?>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<div class="mwb-header-branding">
-			<span class="mwb-header-badge"><?php esc_html_e( 'Free Active', 'mwb-bookings-for-woocommerce' ); ?></span>
+			<span class="mwb-header-badge" id="mwb-header-badge-id"><?php esc_html_e( 'Free Active', 'mwb-bookings-for-woocommerce' ); ?></span>
 			<h1 class="mwb-header-title">
 				<?php
 				$plugin_name = "WPS Bookings For WooCommerce";

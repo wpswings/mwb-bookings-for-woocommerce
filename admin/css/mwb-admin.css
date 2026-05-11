@@ -209,7 +209,7 @@ select {
   flex-wrap: wrap;
 }
 
-.mwb-header-container .mwb-header-badge {
+span#mwb-header-badge-id {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -218,7 +218,7 @@ select {
   border: 1px solid rgba(255, 255, 255, 0.30);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.10);
-  color: #ffffff;
+  color: #ffffff !important;
   font-family: "NunitoSans-Bold";
   font-size: 12px;
   line-height: 1;

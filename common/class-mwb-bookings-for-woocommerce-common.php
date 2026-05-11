@@ -1132,9 +1132,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				$item->set_taxes( array() );
 					
 					$item->save();
-
-
-				// break;
 			}
 			// 🔹 Now recalculate order totals.
 			$order->calculate_totals(false);
@@ -1356,7 +1353,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		check_ajax_referer( 'mbfw_common_nonce', 'nonce' );
 		$product_id    = array_key_exists( 'product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
 		$slot_selected = array_key_exists( 'slot_selected', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['slot_selected'] ) ) : '';
-		$slot_left = array_key_exists( 'slot_left', $_POST ) ? $this->sanitize_text_associative_array( wp_unslash( $_POST['slot_left'] ) ) : array();// phpcs:ignore
+		$slot_left     = array();
+		$raw_slot_left = isset( $_POST['slot_left'] ) ? wp_unslash( $_POST['slot_left'] ) : array();
+		if ( is_array( $raw_slot_left ) ) {
+			$slot_left = $this->sanitize_text_associative_array( $raw_slot_left );
+		}
 		$cart          = WC()->cart->get_cart();
 		$max           = '';
 		$max           = ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true ) ) ? get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true ) : '';

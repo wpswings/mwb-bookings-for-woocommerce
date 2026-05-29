@@ -1,14 +1,14 @@
 === WPS Bookings for WooCommerce ===
 Contributors: wpswings
-Donate link: https://wpswings.com/
+Donate link: https://wpswings.com
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 6.2
 Tested up to: 6.9
 WC requires at least: 6.5
 WC tested up to: 10.7
-Stable tag: 3.11.5
+Stable tag: 3.11.6
 Requires PHP: 7.4
-License: GNU General Public License v3.0 
+License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 This WordPress Booking Plugin lets you manage full-day bookings, service appointments, Accept/reject bookings, show booking availability & much more.
@@ -336,6 +336,12 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.11.6 - Released on 12 May 2026 =
+ 
+* New: Performance optimization.
+* New: Dashboard design change.
+* New: Latest Compatibility with WP [6.9] and WC [10.7].
+
 = 3.11.5 - Released on 20 April 2026 =
 
 * New: Latest compatibility With WP [6.9] and WC [10.7].
@@ -596,7 +602,8 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.11.5 - Released on 20 April 2026 =
-
-* New: Latest compatibility With WP [6.9] and WC [10.7].
-* Fix: Deprecated function removed.
+= 3.11.6 - Released on 12 May 2026 =
+ 
+* New: Performance optimization.
+* New: Dashboard design change.
+* New: Latest Compatibility with WP [6.9] and WC [10.7].

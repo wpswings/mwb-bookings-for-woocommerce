@@ -1100,7 +1100,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( ! $order ) {
 			wp_die();
 		}
-
+		if ( (int) $order->get_customer_id() !== get_current_user_id() && ! current_user_can( 'edit_shop_order', $order_id ) ) { 
+			wp_die();
+		}
 		$order_statuses = wps_booking_get_meta_data( $product_id, 'mwb_bfwp_order_statuses_to_cancel', true );
 		$order_statuses = preg_replace( '/wc-/', '', $order_statuses );
 

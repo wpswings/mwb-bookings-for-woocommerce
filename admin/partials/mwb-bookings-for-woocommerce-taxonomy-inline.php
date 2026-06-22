@@ -100,10 +100,10 @@ if ( isset( $_GET['mwb_tax_delete'] ) && isset( $_GET['_wpnonce'] ) ) {
 }
 
 // --- Handle Bulk Delete ---
-if ( isset( $_POST['mwb_bulk_action'] ) && 'delete' === $_POST['mwb_bulk_action'] && ! empty( $_POST['delete_tags'] ) ) {
+if ( isset( $_POST['mwb_bulk_action'] ) && 'delete' === $_POST['mwb_bulk_action'] && ! empty( $_POST['delete_tags'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	if ( isset( $_POST['_mwb_bulk_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_bulk_nonce'] ) ), 'mwb_bulk_action_terms_' . $mwb_taxonomy_slug ) ) {
-		foreach ( (array) $_POST['delete_tags'] as $bulk_term_id ) {
-			wp_delete_term( absint( $bulk_term_id ), $mwb_taxonomy_slug );
+		foreach ( array_map( 'absint', (array) wp_unslash( $_POST['delete_tags'] ) ) as $bulk_term_id ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			wp_delete_term( $bulk_term_id, $mwb_taxonomy_slug );
 		}
 		wp_safe_redirect( add_query_arg( 'mwb_tax_notice', 'deleted', $page_url ) );
 		exit;
@@ -135,11 +135,11 @@ if ( $edit_id_get ) {
 }
 
 // --- Search + terms (only for listing mode) ---
-$search = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+$mwb_search = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
 
 $query_args  = array( 'taxonomy' => $mwb_taxonomy_slug, 'hide_empty' => false );
-if ( ! empty( $search ) ) {
-	$query_args['search'] = $search;
+if ( ! empty( $mwb_search ) ) {
+	$query_args['search'] = $mwb_search;
 }
 $terms       = get_terms( $query_args );
 $total_items = is_array( $terms ) ? count( $terms ) : 0;
@@ -626,7 +626,7 @@ function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
 					<input type="hidden" name="page" value="mwb_bookings_for_woocommerce_menu" />
 					<input type="hidden" name="mbfw_tab" value="mwb-bookings-for-woocommerce-configuration" />
 					<input type="hidden" name="bfw_sub_nav" value="<?php echo esc_attr( $mwb_taxonomy_slug ); ?>" />
-					<input type="text" name="s" value="<?php echo esc_attr( $search ); ?>" class="mwb-inline-taxonomy__search-input" />
+					<input type="text" name="s" value="<?php echo esc_attr( $mwb_search ); ?>" class="mwb-inline-taxonomy__search-input" />
 					<button type="submit" class="button"><?php echo esc_html( $search_label ); ?></button>
 				</form>
 
@@ -641,7 +641,10 @@ function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
 						</select>
 						<button type="submit" class="button mwb-inline-taxonomy__apply-btn"><?php esc_html_e( 'Apply', 'mwb-bookings-for-woocommerce' ); ?></button>
 						<span class="mwb-inline-taxonomy__count">
-							<?php echo esc_html( sprintf( _n( '%d item', '%d items', $total_items, 'mwb-bookings-for-woocommerce' ), $total_items ) ); ?>
+							<?php
+							/* translators: %d: number of items */
+							echo esc_html( sprintf( _n( '%d item', '%d items', $total_items, 'mwb-bookings-for-woocommerce' ), $total_items ) );
+							?>
 						</span>
 					</div>
 
@@ -671,23 +674,23 @@ function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
 						</thead>
 						<tbody>
 							<?php if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) : ?>
-								<?php foreach ( $terms as $term ) : ?>
+								<?php foreach ( $terms as $mwb_term ) : ?>
 									<?php
-									$row_edit_url = add_query_arg( 'mwb_tax_edit', $term->term_id, $page_url );
+									$row_edit_url = add_query_arg( 'mwb_tax_edit', $mwb_term->term_id, $page_url );
 									$row_del_url  = add_query_arg(
 										array(
-											'mwb_tax_delete' => $term->term_id,
-											'_wpnonce'       => wp_create_nonce( 'mwb_delete_term_' . $term->term_id ),
+											'mwb_tax_delete' => $mwb_term->term_id,
+											'_wpnonce'       => wp_create_nonce( 'mwb_delete_term_' . $mwb_term->term_id ),
 										),
 										$page_url
 									);
 									?>
 									<tr class="mwb-inline-taxonomy__row">
 										<th class="check-column">
-											<input type="checkbox" name="delete_tags[]" value="<?php echo esc_attr( $term->term_id ); ?>" />
+											<input type="checkbox" name="delete_tags[]" value="<?php echo esc_attr( $mwb_term->term_id ); ?>" />
 										</th>
 										<td class="column-name">
-											<strong><a href="<?php echo esc_url( $row_edit_url ); ?>"><?php echo esc_html( $term->name ); ?></a></strong>
+											<strong><a href="<?php echo esc_url( $row_edit_url ); ?>"><?php echo esc_html( $mwb_term->name ); ?></a></strong>
 											<div class="row-actions">
 												<span class="edit"><a href="<?php echo esc_url( $row_edit_url ); ?>"><?php esc_html_e( 'Edit', 'mwb-bookings-for-woocommerce' ); ?></a> | </span>
 												<span class="delete">
@@ -699,21 +702,21 @@ function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
 											</div>
 										</td>
 										<?php if ( 'mwb_booking_cost' === $mwb_taxonomy_slug ) : ?>
-											<td><?php echo esc_html( get_term_meta( $term->term_id, 'mwb_mbfw_booking_cost', true ) ); ?></td>
-											<td><?php echo ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
-											<td><?php echo ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_booking_cost_multiply_duration', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
+											<td><?php echo esc_html( get_term_meta( $mwb_term->term_id, 'mwb_mbfw_booking_cost', true ) ); ?></td>
+											<td><?php echo ( 'yes' === get_term_meta( $mwb_term->term_id, 'mwb_mbfw_is_booking_cost_multiply_people', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
+											<td><?php echo ( 'yes' === get_term_meta( $mwb_term->term_id, 'mwb_mbfw_is_booking_cost_multiply_duration', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
 										<?php elseif ( 'mwb_booking_people' === $mwb_taxonomy_slug ) : ?>
-											<td><?php echo esc_html( get_term_meta( $term->term_id, 'mwb_bfwp_booking_people_unit_cost', true ) ); ?></td>
-											<td><?php echo esc_html( get_term_meta( $term->term_id, 'mwb_bfwp_booking_people_base_cost', true ) ); ?></td>
-											<td><?php echo esc_html( get_term_meta( $term->term_id, 'mwb_mbfw_minimum_people_per_booking', true ) ); ?></td>
-											<td><?php echo esc_html( get_term_meta( $term->term_id, 'mwb_bfwp_booking_people_maximum_quantity', true ) ); ?></td>
+											<td><?php echo esc_html( get_term_meta( $mwb_term->term_id, 'mwb_bfwp_booking_people_unit_cost', true ) ); ?></td>
+											<td><?php echo esc_html( get_term_meta( $mwb_term->term_id, 'mwb_bfwp_booking_people_base_cost', true ) ); ?></td>
+											<td><?php echo esc_html( get_term_meta( $mwb_term->term_id, 'mwb_mbfw_minimum_people_per_booking', true ) ); ?></td>
+											<td><?php echo esc_html( get_term_meta( $mwb_term->term_id, 'mwb_bfwp_booking_people_maximum_quantity', true ) ); ?></td>
 										<?php else : ?>
-											<td><?php echo esc_html( get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true ) ); ?></td>
-											<td><?php echo ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
-											<td><?php echo ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
-											<td><?php echo ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
-											<td><?php echo ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_hidden', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
-											<td><?php echo ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
+											<td><?php echo esc_html( get_term_meta( $mwb_term->term_id, 'mwb_mbfw_service_cost', true ) ); ?></td>
+											<td><?php echo ( 'yes' === get_term_meta( $mwb_term->term_id, 'mwb_mbfw_is_service_cost_multiply_people', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
+											<td><?php echo ( 'yes' === get_term_meta( $mwb_term->term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
+											<td><?php echo ( 'yes' === get_term_meta( $mwb_term->term_id, 'mwb_mbfw_is_service_optional', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
+											<td><?php echo ( 'yes' === get_term_meta( $mwb_term->term_id, 'mwb_mbfw_is_service_hidden', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
+											<td><?php echo ( 'yes' === get_term_meta( $mwb_term->term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) ? wp_kses_post( $icon_yes ) : wp_kses_post( $icon_no ); ?></td>
 										<?php endif; ?>
 									</tr>
 								<?php endforeach; ?>
@@ -757,7 +760,10 @@ function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
 						</select>
 						<button type="submit" class="button mwb-inline-taxonomy__apply-btn"><?php esc_html_e( 'Apply', 'mwb-bookings-for-woocommerce' ); ?></button>
 						<span class="mwb-inline-taxonomy__count">
-							<?php echo esc_html( sprintf( _n( '%d item', '%d items', $total_items, 'mwb-bookings-for-woocommerce' ), $total_items ) ); ?>
+							<?php
+							/* translators: %d: number of items */
+							echo esc_html( sprintf( _n( '%d item', '%d items', $total_items, 'mwb-bookings-for-woocommerce' ), $total_items ) );
+							?>
 						</span>
 					</div>
 

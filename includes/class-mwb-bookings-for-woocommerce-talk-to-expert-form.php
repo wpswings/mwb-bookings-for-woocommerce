@@ -363,7 +363,7 @@ class Mwb_Bookings_For_Woocommerce_Talk_To_Expert_Form {
 			);
 		}
 
-		$form_payload = isset( $_POST['form_data'] ) ? wp_unslash( $_POST['form_data'] ) : '';
+		$form_payload = isset( $_POST['form_data'] ) ? sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) : '';
 		$form_data    = ! empty( $form_payload ) ? json_decode( $form_payload, true ) : array();
 
 		if ( empty( $form_data ) || ! is_array( $form_data ) ) {
@@ -554,7 +554,7 @@ class Mwb_Bookings_For_Woocommerce_Talk_To_Expert_Form {
 			return null;
 		}
 
-		$table_name = $wpdb->prefix . 'wc_order_stats';
+		$table_name = esc_sql( $wpdb->prefix . 'wc_order_stats' );
 
 		if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) !== $table_name ) {
 			return null;
@@ -582,7 +582,7 @@ class Mwb_Bookings_For_Woocommerce_Talk_To_Expert_Form {
 				AND date_paid != '0000-00-00 00:00:00'
 				AND date_paid >= %s
 		";
-		$revenue      = $wpdb->get_var( $wpdb->prepare( $query, array_merge( $paid_statuses, array( $cutoff_date ) ) ) );
+		$revenue      = $wpdb->get_var( $wpdb->prepare( $query, array_merge( $paid_statuses, array( $cutoff_date ) ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 		if ( ! is_numeric( $revenue ) ) {
 			return null;

@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 6.2
-Tested up to: 6.9
+Tested up to: 7.8
 WC requires at least: 6.5
-WC tested up to: 10.7
-Stable tag: 3.11.6
+WC tested up to: 10.8.1
+Stable tag: 3.11.7
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -268,26 +268,25 @@ https://policies.google.com/privacy
 
 ==Screenshots==
 
-1. General Settings Tab
-2. Configuration settings Tab (Bookings Form Settings)
-3. Configuration settings Tab (Availability Settings)
-4. Configuration settings Tab (Additional Cost  Settings)
-5. Configuration settings Tab (Additional Service  Settings)
-6. Booking Calendar Setting Tab
-7. Product Data (general settings tab) 
-8. Product Data (Cost settings tab) 
-9. Product Data (People Type  settings tab) 
-10. Product Data (Service  settings tab) 
-11. Product Data (Availability Settings Tab) – Single Calendar 
-12. My Booking Tab (My Account Section)
-13. Add Booking to Google Calendar (My Account Tab)
-14. Multi Calendar Booking (general settings tab) 
-15. Product Data (Availability Settings Tab) – Dual Calendar
-16. Compatibility With Points and Rewards – Allow customers to earn points.
-17. Global Calendar 
-18. Sync Global Calendar With AirBnb.
-19. Global Calendar Form: The admins can create forms for global calendars to collect relevant customer information.
-20. Set limit for booking for particular date in global calendar
+1. General Settings 
+2. Configuration Settings (Bookings Form Settings)
+3. Configuration Settings (Additional Cost  Settings)
+4. Configuration Settings (Additional Service  Settings)
+5. Booking Calendar Setting 
+6. Availability Settings
+7. Product Data (General settings)
+8. Product Data (Cost settings) 
+9. Product Data (People Type Settings) 
+10. Product Data (Service Settings) 
+11. Product Data (Availability Settings) – Single Calendar 
+12. Add Booking to Google Calendar (My Account)
+13. Multi Calendar Booking  
+14. Product Data (Availability Settings) – Dual Calendar
+15. Compatibility With Points and Rewards – Allow customers to earn points.
+16. Global Calendar 
+17. Sync Global Calendar With Airbnb.
+18. Global Calendar Form: The admins can create forms for global calendars to collect relevant customer information.
+19. Set a limit for booking for a particular date in the global calendar
 
 == Frequently Asked Questions ==
 
@@ -336,13 +335,18 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.11.7 - Released on 24 June 2026 =
+ 
+* Fix: Vulnerability issues fixed
+* New: Latest Compatibility with WP [7.8] and WC [10.8.1]
+
 = 3.11.6 - Released on 12 May 2026 =
  
 * New: Performance optimization.
 * New: Dashboard design change.
 * New: Latest Compatibility with WP [6.9] and WC [10.7].
 
-= 3.11.5 - Released on 20 April 2026 =
+= 3.11.5 - Released on 17 April 2026 =
 
 * New: Latest compatibility With WP [6.9] and WC [10.7].
 * Fix: Deprecated function removed.
@@ -602,8 +606,7 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.11.6 - Released on 12 May 2026 =
+= 3.11.7 - Released on 24 June 2026 =
  
-* New: Performance optimization.
-* New: Dashboard design change.
-* New: Latest Compatibility with WP [6.9] and WC [10.7].
+* Fix: Vulnerability issues fixed
+* New: Latest Compatibility with WP [7.8] and WC [10.8.1]

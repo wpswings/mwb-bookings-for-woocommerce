@@ -503,17 +503,19 @@ select {
 
         .select2-selection__choice {
             margin: 0 !important;
-            padding: 6px 10px 6px 24px !important;
+            padding: 6px 24px 6px 10px !important;
             border: 1px solid #d8cff6 !important;
             border-radius: 999px !important;
             background: #f6f2ff !important;
             color: #32126d !important;
             font-size: 14px;
+            position: relative !important;
         }
 
         .select2-selection__choice__remove {
-            left: 8px !important;
-            right: auto !important;
+            position: absolute !important;
+            right: 8px !important;
+            left: auto !important;
             top: 50%;
             margin-top: -9px;
             border: none !important;

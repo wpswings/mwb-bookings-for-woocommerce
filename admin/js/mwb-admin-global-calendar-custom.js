@@ -80,13 +80,28 @@ jQuery(function ($) {
             $field.on('keypress', function(e){
 
                 // Block minus, plus, E/e (exponential), decimal
-                if (e.key === '-' || 
-                    e.key === '+' || 
-                    e.key === 'e' || 
-                    e.key === 'E' || 
+                if (e.key === '-' ||
+                    e.key === '+' ||
+                    e.key === 'e' ||
+                    e.key === 'E' ||
                     e.key === '.' ) {
                     e.preventDefault();
                 }
+            });
+
+            // Toggle Maximum Bookings Per Order field visibility
+            var $orderLimitCheckbox = $('#wps_enable_booking_limit_per_order');
+            var $orderLimitWrap     = $('#wps_booking_limit_per_order_wrap');
+
+            $orderLimitCheckbox.on('change', function() {
+                $orderLimitWrap.toggle( this.checked );
+            });
+
+            // Initialise Select2 on Weekly Off multi-select
+            $('#wps_weekly_off_days').select2({
+                placeholder: 'Select days',
+                allowClear: true,
+                width: '100%',
             });
 	});
 

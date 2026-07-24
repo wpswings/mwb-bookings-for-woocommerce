@@ -562,6 +562,26 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$status_id    = 'booking-status-' . esc_attr($post_id);
 				$events = [];
 
+				$enable_order_limit = get_post_meta( $post_id, '_wps_enable_booking_limit_per_order', true );
+				$order_limit        = intval( get_post_meta( $post_id, '_wps_booking_limit_per_order', true ) );
+				$weekly_off_days    = get_post_meta( $post_id, '_wps_weekly_off_days', true );
+				$weekly_off_days    = is_array( $weekly_off_days ) ? $weekly_off_days : array();
+
+				// Filter out dates that fall on a weekly off day.
+				$is_weekly_off = function( $date ) use ( $weekly_off_days ) {
+					if ( empty( $weekly_off_days ) ) {
+						return false;
+					}
+					return in_array( strtolower( date( 'l', strtotime( $date ) ) ), $weekly_off_days, true );
+				};
+
+				$available_days   = array_values( array_filter( $available_days, function( $date ) use ( $is_weekly_off ) {
+					return ! $is_weekly_off( $date );
+				} ) );
+				$unavailable_days = array_values( array_filter( $unavailable_days, function( $date ) use ( $is_weekly_off ) {
+					return ! $is_weekly_off( $date );
+				} ) );
+
 				$available_days = array_diff($available_days, $unavailable_days);
 
 				// Available days (clickable).
@@ -587,22 +607,49 @@ class Mwb_Bookings_For_Woocommerce_Public {
 
 				$form_heading_color = get_post_meta($selected_form, '_form_heading_color', true) ? get_post_meta($selected_form, '_form_heading_color', true): '#00aaff';
 
+				// Map day names to JS getDay() values (0=Sunday … 6=Saturday).
+				$day_name_to_index = array(
+					'sunday'    => 0,
+					'monday'    => 1,
+					'tuesday'   => 2,
+					'wednesday' => 3,
+					'thursday'  => 4,
+					'friday'    => 5,
+					'saturday'  => 6,
+				);
+				$weekly_off_indexes = array_values(
+					array_map(
+						function( $day ) use ( $day_name_to_index ) {
+							return $day_name_to_index[ $day ];
+						},
+						array_filter( $weekly_off_days, function( $day ) use ( $day_name_to_index ) {
+							return isset( $day_name_to_index[ $day ] );
+						} )
+					)
+				);
+
 				wp_localize_script(
 					'booking-calendar-js', 'bookingCalendarData', [
-					'postId'           => ($post_id),
-					'containerId'      => $container_id,
-					'statusId'         => $status_id,
-					'events'           => $events,
-					'availableDates'   => $available_days,
-					'unavailableDates' => $unavailable_days,
-					'baseUrl'          => esc_url(site_url('/')),
-					'defaultPrice'     => $default_price,
-					'addToCartNonce'   => wp_create_nonce( 'mwb_booking_add_to_cart' ),
-					'form_color' 	  	=> $form_heading_color,
-					'required_msg'   => __('required', 'mwb-bookings-for-woocommerce'),
-					'date_select_msg'   => __('Please select at least one date to book.', 'mwb-bookings-for-woocommerce'),
-					'passed_dates_msg' => __('You cannot book past dates.', 'mwb-bookings-for-woocommerce'),
-					'unavailable_msg' => __( 'This date is not available for booking.', 'mwb-bookings-for-woocommerce'),
+					'postId'              => ($post_id),
+					'containerId'         => $container_id,
+					'statusId'            => $status_id,
+					'events'              => $events,
+					'availableDates'      => $available_days,
+					'unavailableDates'    => $unavailable_days,
+					'baseUrl'             => esc_url(site_url('/')),
+					'defaultPrice'        => $default_price,
+					'addToCartNonce'      => wp_create_nonce( 'mwb_booking_add_to_cart' ),
+					'form_color'          => $form_heading_color,
+					'required_msg'        => __('required', 'mwb-bookings-for-woocommerce'),
+					'date_select_msg'     => __('Please select at least one date to book.', 'mwb-bookings-for-woocommerce'),
+					'passed_dates_msg'    => __('You cannot book past dates.', 'mwb-bookings-for-woocommerce'),
+					'unavailable_msg'     => __( 'This date is not available for booking.', 'mwb-bookings-for-woocommerce'),
+					'orderLimitEnabled'   => ( '1' === $enable_order_limit ),
+					'orderLimit'          => $order_limit,
+					/* translators: %d: maximum number of dates allowed per order */
+					'order_limit_msg'     => sprintf( __( 'You can only select up to %d date(s) per order.', 'mwb-bookings-for-woocommerce' ), $order_limit ),
+					'weeklyOffDays'       => $weekly_off_indexes,
+					'weekly_off_msg'      => __( 'This day is not available for booking.', 'mwb-bookings-for-woocommerce' ),
 				]);
 			}
 		}

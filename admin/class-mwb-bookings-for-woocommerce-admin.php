@@ -92,6 +92,8 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		if ( 'wps_global_booking' === $post_type ) {
 			wp_enqueue_style( 'flatpickercss', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'mwb-mbfw-select2-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'wps-global-booking-admin-css', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-global-booking-admin.css', array( 'mwb-mbfw-select2-css' ), filemtime( MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/css/wps-global-booking-admin.css' ), 'all' );
 		}
 		if ( 'wps_dynamic_form' === $post_type ) {
 			wp_enqueue_style( 'wps_global_booking_form_design', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-global-booking-form-design.min.css', array(), $this->version, 'all' );
@@ -167,8 +169,9 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 		if ( 'wps_global_booking' === $post_type ) {
 
 			wp_enqueue_script( 'flatpicker_js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/flatpickr/dist/flatpickr.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( 'mwb-mbfw-select2', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-bookings-for-woocommerce-select2.js', array( 'jquery' ), $this->version, true );
 
-			wp_enqueue_script( 'mwb-mbfw-admin-global-calendar-custom-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-calendar-custom.js', array( 'jquery', 'flatpicker_js' ), $this->version, true );
+			wp_enqueue_script( 'mwb-mbfw-admin-global-calendar-custom-js', MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin-global-calendar-custom.js', array( 'jquery', 'flatpicker_js', 'mwb-mbfw-select2' ), $this->version, true );
 			global $post;
 			if ( isset( $post ) && is_object( $post ) ) {
 				$available_days     = get_post_meta( $post->ID, '_available_days', true ) ? get_post_meta( $post->ID, '_available_days', true ) : array();
@@ -2831,6 +2834,23 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				intval( $_POST['wps_booking_limit_per_date'] )
 			);
 		}
+
+		$enable_order_limit = isset( $_POST['wps_enable_booking_limit_per_order'] ) ? '1' : '0';
+		update_post_meta( $post_id, '_wps_enable_booking_limit_per_order', $enable_order_limit );
+
+		if ( '1' === $enable_order_limit && isset( $_POST['wps_booking_limit_per_order'] ) ) {
+			update_post_meta(
+				$post_id,
+				'_wps_booking_limit_per_order',
+				intval( $_POST['wps_booking_limit_per_order'] )
+			);
+		}
+
+		$allowed_days    = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday' );
+		$weekly_off_days = isset( $_POST['wps_weekly_off_days'] ) && is_array( $_POST['wps_weekly_off_days'] )
+			? array_intersect( array_map( 'sanitize_key', wp_unslash( $_POST['wps_weekly_off_days'] ) ), $allowed_days )
+			: array();
+		update_post_meta( $post_id, '_wps_weekly_off_days', array_values( $weekly_off_days ) );
 	}
 
 	/**
@@ -3110,12 +3130,25 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 
 		wp_nonce_field( 'wps_global_booking_global_limit_nonce', 'wps_global_booking_global_limit_nonce_field' );
 
-		$limit = get_post_meta( $post->ID, '_wps_booking_limit_per_date', true );
+		$limit              = get_post_meta( $post->ID, '_wps_booking_limit_per_date', true );
+		$order_limit        = get_post_meta( $post->ID, '_wps_booking_limit_per_order', true );
+		$enable_order_limit = get_post_meta( $post->ID, '_wps_enable_booking_limit_per_order', true );
+		$weekly_off_days    = get_post_meta( $post->ID, '_wps_weekly_off_days', true );
+		$weekly_off_days    = is_array( $weekly_off_days ) ? $weekly_off_days : array();
+		$all_days           = array(
+			'monday'    => __( 'Monday', 'mwb-bookings-for-woocommerce' ),
+			'tuesday'   => __( 'Tuesday', 'mwb-bookings-for-woocommerce' ),
+			'wednesday' => __( 'Wednesday', 'mwb-bookings-for-woocommerce' ),
+			'thursday'  => __( 'Thursday', 'mwb-bookings-for-woocommerce' ),
+			'friday'    => __( 'Friday', 'mwb-bookings-for-woocommerce' ),
+			'saturday'  => __( 'Saturday', 'mwb-bookings-for-woocommerce' ),
+			'sunday'    => __( 'Sunday', 'mwb-bookings-for-woocommerce' ),
+		);
 		?>
 
 		<label for="wps_booking_limit_per_date"><strong><?php echo esc_html__( 'Maximum Bookings Per Date', 'mwb-bookings-for-woocommerce' ); ?></strong></label>
-		<input 
-			type="number" 
+		<input
+			type="number"
 			id="wps_booking_limit_per_date"
 			name="wps_booking_limit_per_date"
 			value="<?php echo esc_attr( $limit ); ?>"
@@ -3123,6 +3156,53 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			style="width:100%; margin-top:8px;"
 		>
 		<p class="description"><?php echo esc_html__('This limit will apply to every date.','mwb-bookings-for-woocommerce'); ?></p>
+
+		<p style="margin-top:12px;">
+			<label>
+				<input
+					type="checkbox"
+					id="wps_enable_booking_limit_per_order"
+					name="wps_enable_booking_limit_per_order"
+					value="1"
+					<?php checked( '1', $enable_order_limit ); ?>
+				>
+				<strong><?php echo esc_html__( 'Enable Booking Limit Per Order', 'mwb-bookings-for-woocommerce' ); ?></strong>
+			</label>
+		</p>
+
+		<div id="wps_booking_limit_per_order_wrap" style="<?php echo $enable_order_limit ? '' : 'display:none;'; ?>">
+			<label for="wps_booking_limit_per_order"><strong><?php echo esc_html__( 'Maximum Bookings Per Order', 'mwb-bookings-for-woocommerce' ); ?></strong></label>
+			<input
+				type="number"
+				id="wps_booking_limit_per_order"
+				name="wps_booking_limit_per_order"
+				value="<?php echo esc_attr( $order_limit ); ?>"
+				min="1"
+				style="width:100%; margin-top:8px;"
+			>
+			<p class="description"><?php echo esc_html__('This limit will apply to every order, which means that maximum four dates can be added at a time.','mwb-bookings-for-woocommerce'); ?></p>
+		</div>
+
+		<p style="margin-top:16px;">
+			<label for="wps_weekly_off_days"><strong><?php echo esc_html__( 'Weekly Off', 'mwb-bookings-for-woocommerce' ); ?></strong></label>
+			<span class="description" style="display:block; margin-top:4px;"><?php echo esc_html__( 'Select the days of the week that are unavailable for booking.', 'mwb-bookings-for-woocommerce' ); ?></span>
+		</p>
+		<select
+			id="wps_weekly_off_days"
+			name="wps_weekly_off_days[]"
+			multiple="multiple"
+			style="width:100%; margin-top:4px;"
+			size="7"
+		>
+			<?php foreach ( $all_days as $day_key => $day_label ) : ?>
+				<option
+					value="<?php echo esc_attr( $day_key ); ?>"
+					<?php selected( in_array( $day_key, $weekly_off_days, true ), true ); ?>
+				>
+					<?php echo esc_html( $day_label ); ?>
+				</option>
+			<?php endforeach; ?>
+		</select>
 
 		<?php
 	}

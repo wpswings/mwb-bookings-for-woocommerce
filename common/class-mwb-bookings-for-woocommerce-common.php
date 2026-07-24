@@ -1678,7 +1678,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$min = ( '' === $min ) ? null : (int) $min;
 		$max = ( '' === $max || 0 === (int) $max ) ? null : (int) $max;
 
-		if ( null !== $min && $qty < $min ) {
+		if ( $min !== null && $qty < $min ) {
 			wp_send_json_error( array(
 				/* translators: %d: minimum allowed quantity. */
 				'message' => sprintf( __( 'Minimum allowed quantity is %d.', 'mwb-bookings-for-woocommerce' ), $min ),

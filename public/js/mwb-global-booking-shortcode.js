@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const defaultPrice = bookingCalendarData.defaultPrice;
     const required = bookingCalendarData.required_msg;
     const dateSelectMsg = bookingCalendarData.date_select_msg;
+    const weeklyOffDays = bookingCalendarData.weeklyOffDays || [];
 
     today.setHours(0, 0, 0, 0);
 
@@ -34,6 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 arg.el.style.cursor = 'not-allowed';
                 arg.el.classList.add('fc-disabled-date');
             }
+
+            // Disable weekly off days
+            if (weeklyOffDays.includes(cellDate.getDay())) {
+                arg.el.style.backgroundColor = '#f0f0f0';
+                arg.el.style.pointerEvents = 'none';
+                arg.el.style.cursor = 'not-allowed';
+                arg.el.classList.add('fc-weekly-off');
+            }
         },
 
         dateClick: function(info) {
@@ -42,6 +51,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (clickedDate < today) {
                 alert(bookingCalendarData.passed_dates_msg);
+                return;
+            }
+
+            // Block weekly off days
+            if (weeklyOffDays.includes(clickedDate.getDay())) {
+                alert(bookingCalendarData.weekly_off_msg);
                 return;
             }
 
@@ -66,6 +81,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectedDates = selectedDates.filter(d => d !== clickedDateStr);
                 info.dayEl.style.backgroundColor = ''; // reset highlight
             } else {
+                // Enforce per-order booking limit if enabled
+                if (
+                    bookingCalendarData.orderLimitEnabled &&
+                    bookingCalendarData.orderLimit > 0 &&
+                    selectedDates.length >= bookingCalendarData.orderLimit
+                ) {
+                    alert(bookingCalendarData.order_limit_msg);
+                    return;
+                }
                 selectedDates.push(clickedDateStr);
                 info.dayEl.style.backgroundColor = '#90EE90'; // highlight selected
             }

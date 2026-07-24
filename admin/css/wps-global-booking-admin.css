@@ -1,0 +1,54 @@
+/* Styles for the wps_global_booking CPT edit screen */
+
+/* Weekly Off Select2 — match height and tag size of adjacent number inputs */
+#wps_weekly_off_days + .select2-container .select2-selection--multiple {
+	min-height: 28px;
+	height: auto;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+}
+
+#wps_weekly_off_days + .select2-container .select2-selection__rendered {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 2px 6px;
+	gap: 4px;
+	width: 100%;
+}
+
+#wps_weekly_off_days + .select2-container .select2-selection__choice {
+	font-size: 13px;
+	padding: 3px 8px;
+	line-height: 1.5;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+
+#wps_weekly_off_days + .select2-container .select2-selection__choice__display {
+	order: 1;
+}
+
+#wps_weekly_off_days + .select2-container .select2-selection__choice__remove {
+	order: 2;
+	margin-left: 5px;
+	margin-right: 0;
+}
+
+#wps_weekly_off_days + .select2-container .select2-search--inline {
+	margin: 0;
+}
+
+#wps_weekly_off_days + .select2-container .select2-search__field {
+	padding-left: 8px;
+}
+
+#wps_weekly_off_days + .select2-container .select2-selection__clear {
+	order: 99;
+	margin-left: auto;
+	margin-right: 6px;
+	float: none;
+}

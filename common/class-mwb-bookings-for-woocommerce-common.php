@@ -362,10 +362,14 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 						$date_time_from = array_key_exists( 'single_cal_date_time_from', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['single_cal_date_time_from'] ) ) : '';
 						$date_time_to   = array_key_exists( 'single_cal_date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['single_cal_date_time_to'] ) ) : '';
-						if('d/m/Y' == wc_date_format()){
-
-							$date_time_from         = str_replace('/', '-', $date_time_from);// custom.
-							$date_time_to           = str_replace('/', '-', $date_time_to);// custom.
+						if ( 'd/m/Y' === wc_date_format() ) {
+							// DD/MM/YYYY → DD-MM-YYYY so strtotime() parses day-first correctly.
+							$date_time_from = str_replace( '/', '-', $date_time_from );
+							$date_time_to   = str_replace( '/', '-', $date_time_to );
+						} elseif ( 'm/d/Y' === wc_date_format() ) {
+							// MM/DD/YYYY: ensure slashes so strtotime() reads it as month-first.
+							$date_time_from = preg_replace( '/^(\d{2})-(\d{2})-(\d{4})/', '$1/$2/$3', $date_time_from );
+							$date_time_to   = preg_replace( '/^(\d{2})-(\d{2})-(\d{4})/', '$1/$2/$3', $date_time_to );
 						}
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp   = strtotime( $date_time_to );
@@ -381,13 +385,16 @@ class Mwb_Bookings_For_Woocommerce_Common {
 				} else {
 
 					if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
-						$date_from         = array_key_exists( 'date_time_from', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_from'] ) ) : '';
-						$date_to           = array_key_exists( 'date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_to'] ) ) : '';
-
-						if('d/m/Y' == wc_date_format()){
-
-							$date_from         = str_replace('/', '-', $date_from);// custom.
-							$date_to           = str_replace('/', '-', $date_to);// custom.
+						$date_from = array_key_exists( 'date_time_from', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_from'] ) ) : '';
+						$date_to   = array_key_exists( 'date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_to'] ) ) : '';
+						if ( 'd/m/Y' === wc_date_format() ) {
+							// DD/MM/YYYY → DD-MM-YYYY so strtotime() parses day-first correctly.
+							$date_from = str_replace( '/', '-', $date_from );
+							$date_to   = str_replace( '/', '-', $date_to );
+						} elseif ( 'm/d/Y' === wc_date_format() ) {
+							// MM/DD/YYYY: ensure slashes so strtotime() reads it as month-first.
+							$date_from = preg_replace( '/^(\d{2})-(\d{2})-(\d{4})/', '$1/$2/$3', $date_from );
+							$date_to   = preg_replace( '/^(\d{2})-(\d{2})-(\d{4})/', '$1/$2/$3', $date_to );
 						}
 						$date_from         = gmdate( 'd-m-Y', strtotime( $date_from ) );
 						$date_to           = gmdate( 'd-m-Y', strtotime( $date_to ) );
@@ -402,10 +409,14 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					} elseif ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 						$date_time_from = array_key_exists( 'date_time_from', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_from'] ) ) : '';
 						$date_time_to   = array_key_exists( 'date_time_to', $custom_cart_data ) ? sanitize_text_field( wp_unslash( $custom_cart_data['date_time_to'] ) ) : '';
-						if('d/m/Y' == wc_date_format()){
-
-							$date_time_from         = str_replace('/', '-', $date_time_from);// custom.
-							$date_time_to           = str_replace('/', '-', $date_time_to);// custom.
+						if ( 'd/m/Y' === wc_date_format() ) {
+							// DD/MM/YYYY → DD-MM-YYYY so strtotime() parses day-first correctly.
+							$date_time_from = str_replace( '/', '-', $date_time_from );
+							$date_time_to   = str_replace( '/', '-', $date_time_to );
+						} elseif ( 'm/d/Y' === wc_date_format() ) {
+							// MM/DD/YYYY: ensure slashes so strtotime() reads it as month-first.
+							$date_time_from = preg_replace( '/^(\d{2})-(\d{2})-(\d{4})/', '$1/$2/$3', $date_time_from );
+							$date_time_to   = preg_replace( '/^(\d{2})-(\d{2})-(\d{4})/', '$1/$2/$3', $date_time_to );
 						}
 						$from_timestamp = strtotime( $date_time_from );
 						$to_timestamp   = strtotime( $date_time_to );

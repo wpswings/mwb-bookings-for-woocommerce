@@ -455,6 +455,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				'today_date_check'             => $today_date_check,
 				'single_unavailable_dates'     => $single_unavailable_dates,
 				'date_format'                  => get_option( 'date_format' ),
+				'flatpickr_date_format'        => wc_date_format(),
 				'single_unavailable_prices'    => $single_unavailable_prices,
 				'wps_single_dates_temp'        => $wps_single_dates_temp,
 				'wps_single_dates_temp_dual'   => $wps_single_dates_temp_dual,
@@ -984,12 +985,21 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 
+			// Normalize d/m/Y POST dates (slash-separated DD/MM/YYYY) before strtotime() since
+			// PHP misreads them as m/d/Y. Convert to DD-MM-YYYY which strtotime handles correctly.
+			$wps_raw_from = array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? str_replace( array( 'ДП', 'ПП' ), array( 'AM', 'PM' ), sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) ) : '';
+			$wps_raw_to   = array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? str_replace( array( 'ДП', 'ПП' ), array( 'AM', 'PM' ), sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) ) : '';
+			if ( 'd/m/Y' === wc_date_format() ) {
+				$wps_raw_from = preg_replace( '/^(\d{2})\/(\d{2})\/(\d{4})/', '$1-$2-$3', $wps_raw_from );
+				$wps_raw_to   = preg_replace( '/^(\d{2})\/(\d{2})\/(\d{4})/', '$1-$2-$3', $wps_raw_to );
+			}
+
 			$custom_data = array(
 				'people_number'             => array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : '',
 				'service_option'            => array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array(),
 				'service_quantity'          => array_key_exists( 'mwb_mbfw_service_quantity', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_quantity'] ), 'sanitize_text_field' ) : array(),
-				'date_time_from'            => array_key_exists( 'mwb_mbfw_booking_from_time', $_POST ) ? gmdate( $date_format, strtotime( str_replace(['ДП', 'ПП'], ['AM', 'PM'], sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_from_time'] ) ) ) ) ) : '',
-				'date_time_to'              => array_key_exists( 'mwb_mbfw_booking_to_time', $_POST ) ? gmdate( $date_format, strtotime( str_replace(['ДП', 'ПП'], ['AM', 'PM'], sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_to_time'] ) ) ) ) ) : '',
+				'date_time_from'            => ! empty( $wps_raw_from ) ? gmdate( $date_format, strtotime( $wps_raw_from ) ) : '',
+				'date_time_to'              => ! empty( $wps_raw_to ) ? gmdate( $date_format, strtotime( $wps_raw_to ) ) : '',
 				'single_cal_booking_dates'  => $single_cal_booking_dates,
 				'single_cal_date_time_from' => $date_time_from,
 				'single_cal_date_time_to'   => $date_time_to,

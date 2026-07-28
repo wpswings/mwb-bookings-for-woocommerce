@@ -269,6 +269,7 @@ class Mwb_Bookings_For_Woocommerce {
 		}
 
 		$this->loader->add_action( 'wp_ajax_mwb_mbfw_get_all_events_date', $mbfw_plugin_admin, 'mwb_mbfw_get_all_events_date' );
+		$this->loader->add_action( 'wp_ajax_wps_sync_product_airbnb_calendar', $mbfw_plugin_admin, 'wps_ajax_sync_product_airbnb_calendar' );
 	}
 
 	/**

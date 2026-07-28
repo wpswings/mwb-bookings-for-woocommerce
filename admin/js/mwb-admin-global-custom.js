@@ -580,5 +580,39 @@ jQuery(document).ready(function($){
     
 }
 
+    // Airbnb iCal Sync Now button.
+    $(document).on('click', '#wps_sync_airbnb_now', function () {
+        var $btn    = $(this);
+        var $status = $('#wps_airbnb_sync_status');
+        var url     = $('#wps_airbnb_ical_url').val();
+        var pid     = $btn.data('product-id');
+        var nonce   = $('#_mwb_nonce').val();
+
+        if (!url) {
+            $status.text(mbfw_product_ajax.airbnb_url_required || 'Please enter an Airbnb iCal URL first.').css('color', 'red');
+            return;
+        }
+
+        $btn.prop('disabled', true);
+        $status.text(mbfw_product_ajax.airbnb_syncing || 'Syncing…').css('color', '#888');
+
+        $.post(ajaxurl, {
+            action:      'wps_sync_product_airbnb_calendar',
+            product_id:  pid,
+            ical_url:    url,
+            _mwb_nonce:  nonce
+        }, function (res) {
+            if (res.success) {
+                $status.text(res.data.message + ' (' + res.data.dates.length + ' dates)').css('color', 'green');
+            } else {
+                $status.text(res.data.message || 'Sync failed.').css('color', 'red');
+            }
+        }).fail(function () {
+            $status.text('Request failed.').css('color', 'red');
+        }).always(function () {
+            $btn.prop('disabled', false);
+        });
+    });
+
 
 });

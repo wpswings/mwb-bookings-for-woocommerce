@@ -434,11 +434,8 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
-		// Merge Airbnb iCal unavailable dates into the unavailable dates array.
-		$wps_airbnb_dates = wps_booking_get_meta_data( get_the_ID(), '_wps_airbnb_unavailable_dates', true );
-		if ( ! empty( $wps_airbnb_dates ) && is_array( $wps_airbnb_dates ) ) {
-			$single_unavailable_dates = array_values( array_unique( array_merge( $single_unavailable_dates, $wps_airbnb_dates ) ) );
-		}
+		// Allow pro plugin (or other extensions) to merge additional unavailable dates (e.g. Airbnb iCal).
+		$single_unavailable_dates = apply_filters( 'wps_mbfw_single_unavailable_dates', $single_unavailable_dates, get_the_ID() );
 
 		wp_localize_script(
 			$this->plugin_name . 'public',

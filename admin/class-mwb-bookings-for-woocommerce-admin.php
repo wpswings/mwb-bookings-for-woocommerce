@@ -162,8 +162,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'start_date_validate_booking' => __( 'Start time should be less than end time', 'mwb-bookings-for-woocommerce' ),
 					'service_quantity_negative'   => __( 'Service quantity should not be less than 0.', 'mwb-bookings-for-woocommerce' ),
 					'service_quantity_invalid_range' => __( 'Minimum quantity cannot be greater than maximum quantity.', 'mwb-bookings-for-woocommerce' ),
-					'airbnb_url_required'            => __( 'Please enter an Airbnb iCal URL first.', 'mwb-bookings-for-woocommerce' ),
-					'airbnb_syncing'                 => __( 'Syncing…', 'mwb-bookings-for-woocommerce' ),
 				)
 			);
 			wp_enqueue_script( 'mwb-mbfw-admin-custom-global-js' );
@@ -803,12 +801,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 					'class'    => array( 'show_if_mwb_booking' ),
 					'priority' => 50,
 				),
-				'airbnb_calendar'  => array(
-					'label'    => __( 'Airbnb Calendar', 'mwb-bookings-for-woocommerce' ),
-					'target'   => 'mwb_booking_airbnb_data',
-					'class'    => array( 'show_if_mwb_booking' ),
-					'priority' => 60,
-				),
 			)
 		);
 
@@ -1240,37 +1232,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . '/admin/partials/mwb-bookings-for-woocommerce-time-slot.php';
 			?>
 		</div>
-
-		<div id="mwb_booking_airbnb_data" class="panel woocommerce_options_panel show_if_mwb_booking">
-			<div class="options_group">
-				<p class="form-field">
-					<label for="wps_airbnb_ical_url"><?php esc_html_e( 'Airbnb iCal URL', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<input type="url" id="wps_airbnb_ical_url" name="wps_airbnb_ical_url" class="short" style="width:60%"
-						value="<?php echo esc_url( wps_booking_get_meta_data( get_the_ID(), '_wps_airbnb_ical_url', true ) ); ?>"
-						placeholder="https://www.airbnb.com/calendar/ical/...">
-					<span class="woocommerce-help-tip" data-tip="<?php esc_attr_e( 'Paste your Airbnb iCal export URL here. Booked dates from Airbnb will be made unavailable for this product.', 'mwb-bookings-for-woocommerce' ); ?>"></span>
-				</p>
-				<p class="form-field">
-					<label>&nbsp;</label>
-					<button type="button" id="wps_sync_airbnb_now" class="button" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>">
-						<?php esc_html_e( 'Sync Now', 'mwb-bookings-for-woocommerce' ); ?>
-					</button>
-					<span id="wps_airbnb_sync_status" style="margin-left:10px;"></span>
-				</p>
-				<p class="form-field">
-					<label><?php esc_html_e( 'Synced Unavailable Dates', 'mwb-bookings-for-woocommerce' ); ?></label>
-					<?php
-					$wps_airbnb_dates = wps_booking_get_meta_data( get_the_ID(), '_wps_airbnb_unavailable_dates', true );
-					if ( ! empty( $wps_airbnb_dates ) && is_array( $wps_airbnb_dates ) ) {
-						echo '<span class="description">' . esc_html( implode( ', ', $wps_airbnb_dates ) ) . '</span>';
-					} else {
-						echo '<span class="description">' . esc_html__( 'No dates synced yet.', 'mwb-bookings-for-woocommerce' ) . '</span>';
-					}
-					?>
-				</p>
-			</div>
-		</div>
-
 		<?php
 	}
 
@@ -1422,15 +1383,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				} else {
 
 					wps_booking_update_meta_data( $id, $meta_key, $meta_value );
-				}
-			}
-
-			// Save Airbnb iCal URL.
-			if ( isset( $_POST['wps_airbnb_ical_url'] ) ) {
-				$wps_airbnb_url = esc_url_raw( wp_unslash( $_POST['wps_airbnb_ical_url'] ) );
-				wps_booking_update_meta_data( $id, '_wps_airbnb_ical_url', $wps_airbnb_url );
-				if ( ! empty( $wps_airbnb_url ) ) {
-					$this->wps_sync_product_airbnb_calendar( $id, $wps_airbnb_url );
 				}
 			}
 
@@ -3103,83 +3055,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Parse an Airbnb iCal URL and return an array of unavailable dates (Y-m-d).
-	 *
-	 * @param string $ical_url URL of the Airbnb iCal feed.
-	 * @return array
-	 */
-	private function wps_parse_airbnb_ical_dates( $ical_url ) {
-		$response = wp_remote_get( $ical_url, array( 'timeout' => 15 ) );
-		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			return array();
-		}
-		$ical_data = wp_remote_retrieve_body( $response );
-		preg_match_all( '/BEGIN:VEVENT(.*?)END:VEVENT/s', $ical_data, $events );
-		if ( empty( $events[1] ) ) {
-			return array();
-		}
-		$unavailable_dates = array();
-		foreach ( $events[1] as $event ) {
-			preg_match( '/DTSTART(;VALUE=DATE)?:(.*?)\s/', $event, $start_match );
-			preg_match( '/DTEND(;VALUE=DATE)?:(.*?)\s/', $event, $end_match );
-			$start_date = isset( $start_match[2] ) ? trim( $start_match[2] ) : null;
-			$end_date   = isset( $end_match[2] ) ? trim( $end_match[2] ) : null;
-			if ( $start_date && $end_date ) {
-				// Strip time component if present (e.g. 20240101T120000Z -> 20240101).
-				$start_date = substr( $start_date, 0, 8 );
-				$end_date   = substr( $end_date, 0, 8 );
-				$start      = DateTime::createFromFormat( 'Ymd', $start_date );
-				$end        = DateTime::createFromFormat( 'Ymd', $end_date );
-				if ( $start && $end ) {
-					$interval = new DateInterval( 'P1D' );
-					$period   = new DatePeriod( $start, $interval, $end );
-					foreach ( $period as $date ) {
-						$unavailable_dates[] = $date->format( 'Y-m-d' );
-					}
-				}
-			}
-		}
-		return array_values( array_unique( $unavailable_dates ) );
-	}
-
-	/**
-	 * Fetch and save Airbnb unavailable dates for a booking product.
-	 *
-	 * @param int    $product_id Product ID.
-	 * @param string $ical_url   Airbnb iCal URL.
-	 * @return void
-	 */
-	public function wps_sync_product_airbnb_calendar( $product_id, $ical_url ) {
-		$dates = $this->wps_parse_airbnb_ical_dates( $ical_url );
-		wps_booking_update_meta_data( $product_id, '_wps_airbnb_unavailable_dates', $dates );
-	}
-
-	/**
-	 * AJAX handler: sync Airbnb calendar for a single product.
-	 *
-	 * @return void
-	 */
-	public function wps_ajax_sync_product_airbnb_calendar() {
-		check_ajax_referer( 'mwb_booking_product_meta', '_mwb_nonce' );
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'mwb-bookings-for-woocommerce' ) ) );
-		}
-		$product_id = isset( $_POST['product_id'] ) ? absint( $_POST['product_id'] ) : 0;
-		$ical_url   = isset( $_POST['ical_url'] ) ? esc_url_raw( wp_unslash( $_POST['ical_url'] ) ) : '';
-		if ( ! $product_id || ! $ical_url ) {
-			wp_send_json_error( array( 'message' => __( 'Missing product ID or URL.', 'mwb-bookings-for-woocommerce' ) ) );
-		}
-		$this->wps_sync_product_airbnb_calendar( $product_id, $ical_url );
-		$dates = wps_booking_get_meta_data( $product_id, '_wps_airbnb_unavailable_dates', true );
-		wp_send_json_success(
-			array(
-				'message' => __( 'Synced successfully.', 'mwb-bookings-for-woocommerce' ),
-				'dates'   => is_array( $dates ) ? $dates : array(),
-			)
-		);
 	}
 
 	/**

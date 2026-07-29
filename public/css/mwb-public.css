@@ -457,6 +457,22 @@ button.wps_timeslot_button {
   opacity: 0.3;
 }
 
+.wps_global_calendar_class.fc table td.fc-day.fc-available-date {
+  /* background-color: #e6f4ea; */
+}
+
+.wps_global_calendar_class.fc table td.fc-day.fc-unavailable-date {
+  /* background-color: #fde8e8; */
+}
+
+.wps_global_calendar_class.fc table td.fc-day.fc-weekly-off {
+  /* background-color: #fde8e8; */
+}
+
+.wps_global_calendar_class.fc table td.fc-day.fc-weekly-off .fc-daygrid-day-number {
+  color: #ff4d4d !important;
+}
+
 .wps_global_calendar_class.fc table td.fc-day a.fc-h-event {
   padding: 0 3px;
   font-size: 11px;

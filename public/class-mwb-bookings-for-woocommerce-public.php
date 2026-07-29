@@ -434,6 +434,9 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				}
 			}
 		}
+		// Allow pro plugin (or other extensions) to merge additional unavailable dates (e.g. Airbnb iCal).
+		$single_unavailable_dates = apply_filters( 'wps_mbfw_single_unavailable_dates', $single_unavailable_dates, get_the_ID() );
+
 		wp_localize_script(
 			$this->plugin_name . 'public',
 			'mwb_mbfw_public_obj',

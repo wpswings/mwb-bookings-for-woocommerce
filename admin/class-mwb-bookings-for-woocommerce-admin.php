@@ -1232,8 +1232,6 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 			require_once MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . '/admin/partials/mwb-bookings-for-woocommerce-time-slot.php';
 			?>
 		</div>
-		
-
 		<?php
 	}
 

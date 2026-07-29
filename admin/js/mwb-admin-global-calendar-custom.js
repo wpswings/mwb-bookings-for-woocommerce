@@ -24,15 +24,18 @@ jQuery(function ($) {
             dateFormat: "Y-m-d",
             allowInput: false,
             defaultDate: availableDates,
-                disable: nonAvailableDates,           // disable non-available dates
+            disable: nonAvailableDates,
+
+            onOpen: function(selectedDates, dateStr, instance) {
+                instance.jumpToDate(new Date());
+            },
 
             onChange: function(selectedDates, dateStr, instance) {
                 // Sync available dates
                 availableDates = selectedDates.map(d => instance.formatDate(d, "Y-m-d"));
 
                 // Remove from non-available if overlapping
-                        nonAvailablePicker.set('disable', availableDates);
-
+                nonAvailablePicker.set('disable', availableDates);
             }
         });
 
@@ -41,15 +44,18 @@ jQuery(function ($) {
             dateFormat: "Y-m-d",
             allowInput: false,
             defaultDate: nonAvailableDates,
-                disable: availableDates,           // disable non-available dates
+            disable: availableDates,
+
+            onOpen: function(selectedDates, dateStr, instance) {
+                instance.jumpToDate(new Date());
+            },
 
             onChange: function(selectedDates, dateStr, instance) {
                 // Sync non-available dates
                 nonAvailableDates = selectedDates.map(d => instance.formatDate(d, "Y-m-d"));
 
                 // Remove from available if overlapping
-                        availablePicker.set('disable', nonAvailableDates);
-
+                availablePicker.set('disable', nonAvailableDates);
             }
         });
 

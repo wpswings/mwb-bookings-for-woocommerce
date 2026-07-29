@@ -16,6 +16,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     today.setHours(0, 0, 0, 0);
 
+    // Pre-process available/unavailable dates into plain arrays once.
+    const unavailableDates = bookingCalendarData.unavailableDates || [];
+    let availableDates;
+    if ( Array.isArray( bookingCalendarData.availableDates ) ) {
+        availableDates = bookingCalendarData.availableDates;
+    } else if ( typeof bookingCalendarData.availableDates === 'object' && bookingCalendarData.availableDates !== null ) {
+        availableDates = Object.values( bookingCalendarData.availableDates );
+    } else {
+        availableDates = [];
+    }
+
     let selectedDates = []; // store all chosen dates
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -28,6 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const cellDate = new Date(arg.date);
             cellDate.setHours(0, 0, 0, 0);
 
+            // Build YYYY-MM-DD using LOCAL time (FullCalendar all-day dates are local midnight).
+            const d = arg.date;
+            const cellDateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
             // Disable past dates
             if (cellDate < today) {
                 arg.el.style.filter = 'blur(2px)';
@@ -36,12 +51,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 arg.el.classList.add('fc-disabled-date');
             }
 
-            // Disable weekly off days
+            // Weekly off days — red background
             if (weeklyOffDays.includes(cellDate.getDay())) {
                 arg.el.style.backgroundColor = '#f0f0f0';
                 arg.el.style.pointerEvents = 'none';
                 arg.el.style.cursor = 'not-allowed';
                 arg.el.classList.add('fc-weekly-off');
+            }
+
+            // Highlight available dates
+            if (availableDates.includes(cellDateStr)) {
+                arg.el.classList.add('fc-available-date');
+            }
+
+            // Highlight unavailable dates
+            if (unavailableDates.includes(cellDateStr)) {
+                arg.el.classList.add('fc-unavailable-date');
             }
         },
 
@@ -60,15 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const clickedDateStr = info.dateStr;debugger;
-            const unavailableDates = bookingCalendarData.unavailableDates;
-            let availableDates;
-
-            if (typeof bookingCalendarData.availableDates === 'object' && bookingCalendarData.availableDates !== null) {
-                availableDates = Object.values(bookingCalendarData.availableDates);
-            } else {
-                availableDates = bookingCalendarData.availableDates;
-            }
+            const clickedDateStr = info.dateStr;
 
             if (unavailableDates.includes(clickedDateStr) || ! availableDates.includes(clickedDateStr)) {
                 alert(bookingCalendarData.unavailable_msg);

@@ -51,12 +51,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 arg.el.classList.add('fc-disabled-date');
             }
 
-            // Weekly off days — red background
+            // Weekly off days — gray background + red number
             if (weeklyOffDays.includes(cellDate.getDay())) {
                 arg.el.style.backgroundColor = '#f0f0f0';
                 arg.el.style.pointerEvents = 'none';
                 arg.el.style.cursor = 'not-allowed';
                 arg.el.classList.add('fc-weekly-off');
+
+                // FullCalendar sets opacity:0.3 on .fc-daygrid-day-top for outside-month days.
+                // Reset it so the red number stays fully visible on those cells too.
+                const dayTop = arg.el.querySelector('.fc-daygrid-day-top');
+                if (dayTop) {
+                    dayTop.style.opacity = '1';
+                }
+                // Set the day number color directly so it's red regardless of CSS
+                // specificity issues (e.g. today's date, outside-month days).
+                const dayNumber = arg.el.querySelector('.fc-daygrid-day-number');
+                if (dayNumber) {
+                    dayNumber.style.color = '#ff4d4d';
+                }
             }
 
             // Highlight available dates

@@ -576,7 +576,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					if ( empty( $weekly_off_days ) ) {
 						return false;
 					}
-					return in_array( strtolower( date( 'l', strtotime( $date ) ) ), $weekly_off_days, true );
+					return in_array( strtolower( gmdate( 'l', strtotime( $date ) ) ), $weekly_off_days, true );
 				};
 
 				$available_days   = array_values( array_filter( $available_days, function( $date ) use ( $is_weekly_off ) {

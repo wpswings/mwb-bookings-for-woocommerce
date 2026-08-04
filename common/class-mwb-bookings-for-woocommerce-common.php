@@ -1367,7 +1367,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$product_id    = array_key_exists( 'product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
 		$slot_selected = array_key_exists( 'slot_selected', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['slot_selected'] ) ) : '';
 		$slot_left     = array();
-		$raw_slot_left = isset( $_POST['slot_left'] ) ? wp_unslash( $_POST['slot_left'] ) : array();
+		$raw_slot_left = isset( $_POST['slot_left'] ) ? wp_unslash( $_POST['slot_left'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( is_array( $raw_slot_left ) ) {
 			$slot_left = $this->sanitize_text_associative_array( $raw_slot_left );
 		}
@@ -1689,7 +1689,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$min = ( '' === $min ) ? null : (int) $min;
 		$max = ( '' === $max || 0 === (int) $max ) ? null : (int) $max;
 
-		if ( $min !== null && $qty < $min ) {
+		if ( null !== $min && $qty < $min ) {
 			wp_send_json_error( array(
 				/* translators: %d: minimum allowed quantity. */
 				'message' => sprintf( __( 'Minimum allowed quantity is %d.', 'mwb-bookings-for-woocommerce' ), $min ),

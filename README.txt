@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 6.2
-Tested up to: 7.8
+Tested up to: 7.0
 WC requires at least: 6.5
-WC tested up to: 10.8.1
-Stable tag: 3.11.7
+WC tested up to: 11.0.0
+Stable tag: 3.12.0
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -47,47 +47,50 @@ Customers can view their bookings in a centralized manner. They can see the name
 ####2) Sync Global Calendar With Airbnb 
 Merchants can sync their [global booking](https://docs.wpswings.com/sync-global-calendar-with-airbnb/#sync-global-calendar-with-airbnb) calendar with their Airbnb listing calendar. If specific dates are set as unavailable on Airbnb, an automated cron job that runs every 5 minutes will update the bookings calendar( listed on your WooCommerce store) to block those same dates, and vice versa. Similarly, any changes made in your store’s global calendar will reflect on Airbnb’s calendar too, ensuring both stay perfectly in sync.
 
-####3) Global Calendar Booking 
+####3) Set Booking Limit  & Weekoffs for Global Calendar
+Merchants can now set a limit per date and per order for bookings over the Global Calendar. They can also mark particular days off for the week. This helps them manage overbooking by capping the total number of bookings allowed in a given period.
+
+####4) Global Calendar Booking 
 By utilizing this feature of the booking plugin, merchants can easily integrate the [global calendar](https://docs.wpswings.com/sync-global-calendar-with-airbnb/#global-calendar) into any page on their booking website. This eliminates the hassle of creating multiple calendars. Merchants can also add unique forms to the global calendars; these forms are there to collect relevant information that will help you process the bookings more efficiently. Once a date is marked unavailable, the same date can not be marked available, and vice-versa.
 
 **NOTE:** Merchants can only add up to 5 fields while creating the form if you’re using the Free version of the plugin, and the “required” action is only accessible for users with the Premium Version.  
 
-####4) Choose Your Week’s Starting Day
+####5) Choose Your Week’s Starting Day
 The admins can conveniently select the start day for the week suiting the requirements of your booking website. 
 
-####5) Multi-Language Support for Calendars
+####6) Multi-Language Support for Calendars
 Merchants can select the language that aligns well with their target audience. This functionality helps merchants make their booking websites familiar to their customers.
 
-####6) Booking Spotlight
+####7) Booking Spotlight
 Enhance your customer's online booking experience with this intuitive feature. Whenever a customer selects a particular date or slot for booking, it visually gets highlighted, making it easier for the customers to track their choices. 
 
-####7) Offer Bookings Availability Settings
+####8) Offer Bookings Availability Settings
 With the Bookings for WooCommerce Plugin, admins can effortlessly manage availability and scheduling for WooCommerce appointments. They can set daily availability as well as specific booking deadlines, simply by adjusting Start and End times in the plugin’s Availability tab within settings. This flexibility allows for more than 10 slots based on individual needs. Marketers can leverage this feature to customize availability for particular days, weeks, or even months.
 
 For instance, Marketers can set Mondays and Tuesdays as available until December.
 
-####8) Flexible Bookings
+####9) Flexible Bookings
 With the booking and appointment plugin for WooCommerce, customers can tailor their WP booking criteria to their specific booking unit (hour, day, and minutes), budget, event, and requirements. You can make reservations without bothering to place a call, thus you can do so from the comfort of your home following easy booking management.
 
-####9) WordPress Bookings Confirmations & Cancellation Offered
+####10) WordPress Bookings Confirmations & Cancellation Offered
 With the WooCommerce appointments plugin, Admin managers can easily offer confirmations for booking requests made by customers, as well as easy booking cancellations, by utilizing the plugin’s capabilities.
 
-####10) Booking Listing and Sorting by Tag
+####11) Booking Listing and Sorting by Tag
 All requested booking plugin-based orders made by the customers are to be listed in the WooCommerce Order Listing table. Admin managers can conveniently sort the booking out of the orders using the Bookings tag available there.
 
 By utilizing this feature, you can ensure that your customers are only able to submit complete and accurate booking requests, leading to a more efficient and streamlined booking process.
 
-####11) Add your Bookings to Google Calendar
+####12) Add your Bookings to Google Calendar
 With the click of a button, you can now instantly add your WP Booking requests utilizing our plugin-based setting option to your Google Calendar.
 Isn’t this a WOW feature? It goes without saying that this enables you to take pleasure in your reservations while also keeping you informed of their status and serving as a virtual reminder of them.
 
-####12) Offered Services & Additional Costs
+####13) Offered Services & Additional Costs
 With the WooCommerce appointments plugin, admin managers can easily create booking services and additional costs using the backend settings, and also can easily display them over the checkout page as well as over the individual bookable resource page.
 
-####13) Responsive Interface
+####14) Responsive Interface
 WordPress Online Booking provides an online mobile-friendly WooCommerce easy free online booking system, i.e. a responsive UI that works on a variety of devices. In short, they offer ease of access for their customers for online appointment booking products.
 
-####14) Avoid Unwanted Bookings
+####15) Avoid Unwanted Bookings
 Prior to a day, admin managers can easily determine the maximum amount of WooCommerce appointments that can be made. So that they may provide easy booking management for their items, avoid unnecessary bookings, and easily indicate unavailability with the WordPress booking plugin.
 
 == BOOKING APPOINTMENT WORDPRESS PLUGIN MEETS YOUR REQUIREMENT, SO ==
@@ -286,7 +289,7 @@ https://policies.google.com/privacy
 16. Global Calendar 
 17. Sync Global Calendar With Airbnb.
 18. Global Calendar Form: The admins can create forms for global calendars to collect relevant customer information.
-19. Set a limit for booking for a particular date in the global calendar
+19. Set a limit for bookings for a particular date, order, and week off for Global Calendar
 
 == Frequently Asked Questions ==
 
@@ -335,10 +338,18 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.12.0 - Released on 06 August 2026 =
+
+* New: Latest Compatibility with WP [7.0.2] and WC [11.0.0]
+* Fix : Need to enhance dual calender feature for airbnb compatibility
+* Fix : Slot/capacity limit not enforced
+* Fix : Booking amount showing $0.00 in WooCommerce order emails
+* Fix : Date format (MM-DD-YYYY) conflict with Flatpickr
+
 = 3.11.7 - Released on 24 June 2026 =
  
 * Fix: Vulnerability issues fixed
-* New: Latest Compatibility with WP [7.8] and WC [10.8.1]
+* New: Latest Compatibility with WP [7.0] and WC [10.8.1]
 
 = 3.11.6 - Released on 12 May 2026 =
  
@@ -606,7 +617,10 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.11.7 - Released on 24 June 2026 =
- 
-* Fix: Vulnerability issues fixed
-* New: Latest Compatibility with WP [7.8] and WC [10.8.1]
+= 3.12.0 - Released on 06 August 2026 =
+
+* New: Latest Compatibility with WP [7.0.2] and WC [11.0.0]
+* Fix : Need to enhance dual calender feature for airbnb compatibility
+* Fix : Slot/capacity limit not enforced
+* Fix : Booking amount showing $0.00 in WooCommerce order emails
+* Fix : Date format (MM-DD-YYYY) conflict with Flatpickr

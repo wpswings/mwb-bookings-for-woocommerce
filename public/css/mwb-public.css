@@ -474,11 +474,12 @@ button.wps_timeslot_button {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 24px;
     font-weight: 500;
     color: #111827;
     text-decoration: none !important;
     padding: 0;
+    margin-top: 1rem;
 }
 
 /* Today — green outline, no fill */
@@ -520,7 +521,12 @@ button.wps_timeslot_button {
 .wps_global_calendar_class.fc .fc-day-other .fc-daygrid-day-number {
     color: #9ca3af;
 }
-
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events{
+    min-height: 1rem !important;
+}
+.fc .fc-daygrid-body-natural .fc-daygrid-day-events{
+    margin-bottom: 0 !important;
+}
 /* Hide event bars in dayGrid (dots are added via JS) */
 .wps_global_calendar_class.fc .fc-daygrid-event-harness {
     display: none;
@@ -536,7 +542,7 @@ button.wps_timeslot_button {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    margin: 1px auto 0;
+    margin: 3px auto 0;
     display: block;
     flex-shrink: 0;
 }

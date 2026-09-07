@@ -134,6 +134,7 @@ class Mwb_Bookings_For_Woocommerce {
 			// The class responsible for defining all actions that occur in the admin area.
 			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-mwb-bookings-for-woocommerce-admin.php';
 			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-bookings-for-woocommerce-talk-to-expert-form.php';
+			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-mwb-bookings-for-woocommerce-analytics.php';
 
 			// The class responsible for on-boarding steps for plugin.
 			if ( is_dir( plugin_dir_path( dirname( __FILE__ ) ) . 'onboarding' ) && ! class_exists( 'Mwb_Bookings_For_Woocommerce_Onboarding_Steps' ) ) {
@@ -183,6 +184,7 @@ class Mwb_Bookings_For_Woocommerce {
 	private function mwb_bookings_for_woocommerce_admin_hooks() {
 		$mbfw_plugin_admin = new Mwb_Bookings_For_Woocommerce_Admin( $this->mbfw_get_plugin_name(), $this->mbfw_get_version() );
 		new Mwb_Bookings_For_Woocommerce_Talk_To_Expert_Form();
+		new Mwb_Bookings_For_Woocommerce_Analytics();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_admin, 'mbfw_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $mbfw_plugin_admin, 'mbfw_admin_enqueue_scripts' );
@@ -443,6 +445,12 @@ class Mwb_Bookings_For_Woocommerce {
 			'title'     => esc_html__( 'Configuration Settings', 'mwb-bookings-for-woocommerce' ),
 			'name'      => 'mwb-bookings-for-woocommerce-configuration',
 			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-configuration.php',
+		);
+
+		$mbfw_default_tabs['mwb-bookings-for-woocommerce-analytics'] = array(
+			'title'     => esc_html__( 'Analytics', 'mwb-bookings-for-woocommerce' ),
+			'name'      => 'mwb-bookings-for-woocommerce-analytics',
+			'file_path' => MWB_BOOKINGS_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/mwb-bookings-for-woocommerce-analytics.php',
 		);
 
 		$mbfw_default_tabs =

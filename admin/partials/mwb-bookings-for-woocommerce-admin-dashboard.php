@@ -118,6 +118,12 @@ $mbfw_default_tabs = $mbfw_mwb_mbfw_obj->mwb_mbfw_plug_default_tabs();
 						'description' => esc_html__( 'Set up booking forms, additional costs, people types, and other configuration options.', 'mwb-bookings-for-woocommerce' ),
 						'doc_url'     => 'https://docs.wpswings.com/bookings-for-woocommerce/',
 					),
+					'mwb-bookings-for-woocommerce-analytics'                     => array(
+						'category'    => esc_html__( 'INSIGHTS', 'mwb-bookings-for-woocommerce' ),
+						'title'       => esc_html__( 'Analytics', 'mwb-bookings-for-woocommerce' ),
+						'description' => esc_html__( 'Track occupancy rates, peak slots, cancellation trends, and revenue breakdown across your booking products.', 'mwb-bookings-for-woocommerce' ),
+						'doc_url'     => 'https://docs.wpswings.com/bookings-for-woocommerce/',
+					),
 					'mwb-bookings-for-woocommerce-booking-calendar-listing'      => array(
 						'category'    => esc_html__( 'CALENDAR VIEW', 'mwb-bookings-for-woocommerce' ),
 						'title'       => esc_html__( 'Bookings Calendar', 'mwb-bookings-for-woocommerce' ),

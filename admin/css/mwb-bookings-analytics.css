@@ -1,0 +1,350 @@
+/* =========================================================
+   WPS Bookings Analytics Tab Styles
+   ========================================================= */
+
+/* ----- Layout wrapper ----- */
+.wps-analytics-wrap {
+	padding: 20px 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ----- Filter bar ----- */
+.wps-analytics-filter-bar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	padding: 14px 18px;
+	margin-bottom: 24px;
+	box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+.wps-analytics-filter-bar label {
+	font-weight: 600;
+	font-size: 13px;
+	color: #374151;
+	margin-right: 4px;
+}
+
+.wps-analytics-filter-bar select,
+.wps-analytics-filter-bar input[type="date"] {
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+	padding: 6px 10px;
+	font-size: 13px;
+	color: #374151;
+	background: #f9fafb;
+	outline: none;
+	transition: border-color .15s;
+}
+
+.wps-analytics-filter-bar select:focus,
+.wps-analytics-filter-bar input[type="date"]:focus {
+	border-color: #4E73DF;
+	background: #fff;
+}
+
+.wps-analytics-filter-bar .wps-custom-range {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.wps-analytics-filter-bar .wps-custom-range span {
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.wps-btn-apply {
+	background: #4E73DF;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	padding: 7px 16px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background .15s;
+}
+
+.wps-btn-apply:hover {
+	background: #3a5fc8;
+}
+
+.wps-btn-export {
+	background: #1CC88A;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	padding: 7px 16px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	margin-left: auto;
+	transition: background .15s;
+}
+
+.wps-btn-export:hover {
+	background: #17a673;
+}
+
+/* ----- Loading overlay ----- */
+.wps-analytics-loading {
+	text-align: center;
+	padding: 40px 0;
+	color: #6b7280;
+	font-size: 14px;
+}
+
+.wps-analytics-spinner {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	border: 3px solid #e5e7eb;
+	border-top-color: #4E73DF;
+	border-radius: 50%;
+	animation: wps-spin .7s linear infinite;
+	vertical-align: middle;
+	margin-right: 8px;
+}
+
+@keyframes wps-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* ----- Stat cards grid ----- */
+.wps-stat-cards {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 18px;
+	margin-bottom: 24px;
+}
+
+.wps-stat-card {
+	background: #fff;
+	border-radius: 10px;
+	padding: 20px 22px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	box-shadow: 0 2px 8px rgba(0,0,0,.07);
+	border-left: 5px solid #4E73DF;
+	transition: box-shadow .15s;
+}
+
+.wps-stat-card:hover {
+	box-shadow: 0 4px 14px rgba(0,0,0,.12);
+}
+
+.wps-stat-card--primary  { border-left-color: #4E73DF; }
+.wps-stat-card--success  { border-left-color: #1CC88A; }
+.wps-stat-card--danger   { border-left-color: #E74A3B; }
+.wps-stat-card--warning  { border-left-color: #F6C23E; }
+.wps-stat-card--info     { border-left-color: #36B9CC; }
+.wps-stat-card--purple   { border-left-color: #8B5CF6; }
+.wps-stat-card--teal     { border-left-color: #14B8A6; }
+.wps-stat-card--orange   { border-left-color: #F97316; }
+
+.wps-stat-card__icon {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	font-size: 22px;
+}
+
+.wps-stat-card--primary  .wps-stat-card__icon { background: #EBF0FF; color: #4E73DF; }
+.wps-stat-card--success  .wps-stat-card__icon { background: #E6FAF4; color: #1CC88A; }
+.wps-stat-card--danger   .wps-stat-card__icon { background: #FDEEEC; color: #E74A3B; }
+.wps-stat-card--warning  .wps-stat-card__icon { background: #FEF9EC; color: #F6C23E; }
+.wps-stat-card--info     .wps-stat-card__icon { background: #E8F7FA; color: #36B9CC; }
+.wps-stat-card--purple   .wps-stat-card__icon { background: #F0EBFF; color: #8B5CF6; }
+.wps-stat-card--teal     .wps-stat-card__icon { background: #E5F8F7; color: #14B8A6; }
+.wps-stat-card--orange   .wps-stat-card__icon { background: #FEF0E7; color: #F97316; }
+
+.wps-stat-card__body {
+	flex: 1;
+	min-width: 0;
+}
+
+.wps-stat-card__value {
+	font-size: 26px;
+	font-weight: 700;
+	color: #1f2937;
+	line-height: 1.1;
+	word-break: break-all;
+}
+
+.wps-stat-card__label {
+	font-size: 12px;
+	color: #6b7280;
+	margin-top: 4px;
+	text-transform: uppercase;
+	letter-spacing: .5px;
+	font-weight: 500;
+}
+
+/* ----- Chart row (2-column grid) ----- */
+.wps-chart-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 18px;
+	margin-bottom: 24px;
+}
+
+.wps-chart-row--full {
+	grid-template-columns: 1fr;
+}
+
+.wps-chart-box {
+	background: #fff;
+	border-radius: 10px;
+	padding: 20px 22px;
+	box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+
+.wps-chart-box h3 {
+	font-size: 14px;
+	font-weight: 700;
+	color: #374151;
+	margin: 0 0 16px;
+	text-transform: uppercase;
+	letter-spacing: .5px;
+	border-bottom: 1px solid #f3f4f6;
+	padding-bottom: 10px;
+}
+
+.wps-chart-box canvas {
+	max-height: 280px;
+}
+
+/* ----- Top products table ----- */
+.wps-analytics-table-wrap {
+	background: #fff;
+	border-radius: 10px;
+	padding: 20px 22px;
+	box-shadow: 0 2px 8px rgba(0,0,0,.07);
+	margin-bottom: 24px;
+}
+
+.wps-analytics-table-wrap h3 {
+	font-size: 14px;
+	font-weight: 700;
+	color: #374151;
+	margin: 0 0 16px;
+	text-transform: uppercase;
+	letter-spacing: .5px;
+	border-bottom: 1px solid #f3f4f6;
+	padding-bottom: 10px;
+}
+
+.wps-analytics-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+}
+
+.wps-analytics-table thead th {
+	background: #f9fafb;
+	color: #374151;
+	font-weight: 600;
+	padding: 10px 14px;
+	text-align: left;
+	border-bottom: 2px solid #e5e7eb;
+}
+
+.wps-analytics-table tbody tr:nth-child(even) {
+	background: #f9fafb;
+}
+
+.wps-analytics-table tbody td {
+	padding: 10px 14px;
+	border-bottom: 1px solid #f3f4f6;
+	color: #374151;
+}
+
+.wps-analytics-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.wps-analytics-table .wps-revenue-cell {
+	font-weight: 600;
+	color: #1CC88A;
+}
+
+.wps-table-loading {
+	text-align: center;
+	color: #9ca3af;
+	padding: 20px;
+}
+
+/* ----- Pro section ----- */
+.wps-analytics-pro-section {
+	margin-top: 8px;
+}
+
+.wps-pro-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: linear-gradient(135deg, #8B5CF6, #6366F1);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	padding: 4px 10px;
+	border-radius: 20px;
+	letter-spacing: .5px;
+	text-transform: uppercase;
+	margin-bottom: 18px;
+}
+
+.wps-pro-section-title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 16px;
+	font-weight: 700;
+	color: #1f2937;
+	margin: 0 0 20px;
+}
+
+.wps-pro-section-title::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: #e5e7eb;
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 1200px) {
+	.wps-stat-cards {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 900px) {
+	.wps-chart-row {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 600px) {
+	.wps-stat-cards {
+		grid-template-columns: 1fr;
+	}
+
+	.wps-analytics-filter-bar {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.wps-btn-export {
+		margin-left: 0;
+	}
+}

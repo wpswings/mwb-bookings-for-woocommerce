@@ -159,6 +159,9 @@ class Mwb_Bookings_For_Woocommerce {
 		 */
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-mwb-bookings-for-woocommerce-common.php';
 
+		// Dynamic pricing feature — included always; class guards admin-only hooks internally.
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mwb-bookings-dynamic-pricing.php';
+
 		$this->loader = new Mwb_Bookings_For_Woocommerce_Loader();
 
 	}
@@ -280,6 +283,10 @@ class Mwb_Bookings_For_Woocommerce {
 	 * @since 2.0.0
 	 */
 	private function mwb_bookings_for_woocommerce_common_hooks() {
+		// Dynamic pricing: registers admin UI hooks when is_admin(), and always
+		// registers the price-adjustment filters for cart and AJAX preview.
+		new Mwb_Bookings_Dynamic_Pricing();
+
 		$mbfw_plugin_common = new Mwb_Bookings_For_Woocommerce_Common( $this->mbfw_get_plugin_name(), $this->mbfw_get_version() );
 		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $mbfw_plugin_common, 'mbfw_common_enqueue_scripts' );

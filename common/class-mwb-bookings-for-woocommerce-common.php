@@ -767,13 +767,26 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			$charges = array_merge( $charges, $mfw_additional_cost_check );
 		}
 
+		// Collect all booking dates into one array for hooks that need them
+		// (e.g. dynamic pricing). Covers single-cal (array) and dual-cal (from/to).
+		$dp_booking_dates = is_array( $booking_dates ) ? $booking_dates : ( ! empty( $booking_dates ) ? array( $booking_dates ) : array() );
+		// Only add the derived $date_from when $date_time_from was actually submitted;
+		// for single_cal+day bookings $date_time_from is empty and $date_from would
+		// resolve to the Unix epoch string ('01-01-1970'), corrupting the date list.
+		if ( ! empty( $date_time_from ) ) {
+			$dp_booking_dates[] = $date_from;
+		}
+		if ( ! empty( $date_time_from ) && ! in_array( $date_time_from, $dp_booking_dates, true ) ) {
+			$dp_booking_dates[] = $date_time_from;
+		}
+
 		$charges =
 		/**
 		 * Filter is for returning something.
 		 *
 		 * @since 1.0.0
 		 */
-		apply_filters( 'mbfw_ajax_load_total_booking_charge_individually', $charges, $product_id );
+		apply_filters( 'mbfw_ajax_load_total_booking_charge_individually', $charges, $product_id, $dp_booking_dates, (float) $unit, (int) $people_number );
 		$this->mbfw_booking_total_listing_single_page( $charges, $quantity, $product_id );
 		wp_die();
 

@@ -24,7 +24,7 @@ module.exports = async () => {
   await page.fill('#user_pass', password);
   await page.click('#wp-submit');
 
-  await expect(page.locator('#wpadminbar')).toBeVisible({ timeout: 15000 });
+  await page.waitForURL(`${baseURL}/wp-admin/**`, { timeout: 15000 });
 
   // Dismiss the "Welcome to WP Swings" onboarding modal (shown on the plugin's settings
   // page) via its own "Skip For Now" AJAX handler, which suppresses it for 2 days server

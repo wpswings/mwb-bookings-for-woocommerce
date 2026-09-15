@@ -732,10 +732,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 		$charges__ = array();
 		if ( 'yes' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_is_add_extra_services', true ) ) {
+			$service_items = $this->mbfw_extra_service_charge_items( $product_id, $services_checked, $service_quantity, $people_number, $unit );
 			$charges__ = array(
 				'service_cost' => array(
 					'title' => __( 'Service Cost', 'mwb-bookings-for-woocommerce' ),
 					'value' => $services_cost,
+					'items' => $service_items,
 				),
 
 			);
@@ -836,6 +838,8 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							} else {
 								echo wp_kses_post( $title );
 							}
+						} elseif ( 'Service Cost' == $title && ! empty( $types['items'] ) ) {
+							echo '<strong>' . wp_kses_post( $title ) . '</strong>';
 						} else {
 							echo wp_kses_post( $title );
 						}
@@ -873,6 +877,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 								$this->mwb_mbfw_show_additional_booking_cost_details_on_form( $product_id );
 
 							}
+						}
+						if ( 'Service Cost' == $title && ! empty( $types['items'] ) ) {
+							$this->mwb_mbfw_show_service_cost_details_inline( $types['items'] );
 						}
 							
 						?>
@@ -999,6 +1006,91 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		}
 
 		return $services_cost;
+	}
+
+	/**
+	 * Get individual service charge items for display.
+	 *
+	 * @param int   $product_id product id.
+	 * @param array $services_checked checked optional service term ids.
+	 * @param array $service_quantity quantities keyed by term id.
+	 * @param int   $people_number number of people.
+	 * @param float $unit booking unit (hours/days).
+	 * @return array Array of ['name' => string, 'cost' => float].
+	 */
+	public function mbfw_extra_service_charge_items( $product_id, $services_checked, $service_quantity, $people_number, $unit ) {
+		$items = array();
+
+		if ( is_array( $services_checked ) ) {
+			foreach ( $services_checked as $term_id ) {
+				$term = get_term( $term_id, 'mwb_booking_service' );
+				if ( ! $term || is_wp_error( $term ) ) {
+					continue;
+				}
+				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
+				$service_price = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
+				$service_price = ( ! empty( $service_price ) && $service_price > 0 ) ? (float) $service_price : 0;
+				if ( 'yes' == get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
+					$service_price = $service_price * $unit;
+				}
+				if ( ! empty( $service_count ) ) {
+					$cost = 'yes' === get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', true )
+						? $service_count * $service_price * $people_number
+						: $service_count * $service_price;
+					$items[] = array(
+						'name' => $term->name,
+						'cost' => $cost,
+					);
+				}
+			}
+		}
+
+		$terms = get_the_terms( $product_id, 'mwb_booking_service' );
+		if ( is_array( $terms ) ) {
+			foreach ( $terms as $term ) {
+				if ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) ) {
+					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
+					$service_price = (float) get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true );
+					$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
+					if ( 'yes' == get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
+						$service_price = $service_price * $unit;
+					}
+					$cost = 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_people', true )
+						? $service_count * $service_price * $people_number
+						: (float) $service_count * (float) $service_price;
+					$items[] = array(
+						'name' => $term->name,
+						'cost' => $cost,
+					);
+				}
+			}
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Display individual service cost breakdown on the booking form.
+	 *
+	 * @param array $items Array of ['name' => string, 'cost' => float].
+	 * @return void
+	 */
+	public function mwb_mbfw_show_service_cost_details_inline( $items ) {
+		?>
+		<div class="mbfw-additionl-detail-listing-section__wrapper mbfw-additionl-detail-listing-section__wrapper_costs">
+			<?php foreach ( $items as $item ) { ?>
+				<div class="mwb_mbfw_detail-listing-wrap mwb_mbfw_detail-listing-wrap-costs">
+					<div class="mbfw-additionl-detail-listing-section-cost mbfw-additionl-detail-listing-section">
+						<?php echo esc_html( $item['name'] ); ?>
+					</div>
+					<div class="mbfw-additionl-detail-listing-section-cost mbfw-additionl-detail-listing-section">
+						<?php echo wp_kses_post( wc_price( $item['cost'] ) ); ?>
+					</div>
+				</div>
+			<?php } ?>
+			<?php esc_html_e( 'Service Cost Subtotal : ', 'mwb-bookings-for-woocommerce' ); ?>
+		</div>
+		<?php
 	}
 
 	/**

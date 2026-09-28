@@ -132,11 +132,25 @@ document.addEventListener('DOMContentLoaded', function () {
         events: bookingCalendarData.events,
         selectable: true,
 
+        // Called on every render cycle — correct hook for classes that must stay in sync
+        // across month navigation (including DOM element reuse by FullCalendar).
+        dayCellClassNames: function (arg) {
+            if (!arg.isOther && weeklyOffDays.includes(arg.date.getDay())) {
+                return ['fc-weekly-off'];
+            }
+            return [];
+        },
+
         dayCellDidMount: function (arg) {
             const d = arg.date;
             const cellDateStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
             const cellDate    = new Date(d.getFullYear(), d.getMonth(), d.getDate());
             const frame       = arg.el.querySelector('.fc-daygrid-day-frame');
+
+            // Prev/next month overflow cells — no custom styling
+            if (arg.el.classList.contains('fc-day-other')) {
+                return;
+            }
 
             // Past dates — fade out, no interaction
             if (cellDate < today) {
@@ -144,12 +158,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Weekly off days — red number, not clickable
+            // Weekly off days — class handled by dayCellClassNames, pointer-events via CSS
             if (weeklyOffDays.includes(cellDate.getDay())) {
-                arg.el.style.pointerEvents = 'none';
-                arg.el.classList.add('fc-weekly-off');
-                const dayTop = arg.el.querySelector('.fc-daygrid-day-top');
-                if (dayTop) dayTop.style.opacity = '1';
                 return;
             }
 

@@ -506,7 +506,7 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'description' => sprintf(
 					/* translators:%s booking services link */
 					__( 'Enable this to show %s on the booking form.', 'mwb-bookings-for-woocommerce' ),
-					'<a href="' . admin_url( 'edit-tags.php?taxonomy=mwb_booking_service&post_type=product' ) . '" class="mwb-bfwp-helper-link__admin" target="_blank">' . __( 'booking services', 'mwb-bookings-for-woocommerce' ) . '</a>'
+					'<a href="' . admin_url( 'admin.php?page=mwb_bookings_for_woocommerce_menu&mbfw_tab=mwb-bookings-for-woocommerce-configuration&bfw_sub_nav=mwb_booking_service' ) . '" class="mwb-bfwp-helper-link__admin" target="_blank">' . __( 'booking services', 'mwb-bookings-for-woocommerce' ) . '</a>'
 				),
 				'id'          => 'mwb_mbfw_is_show_included_service',
 				'value'       => get_option( 'mwb_mbfw_is_show_included_service' ),

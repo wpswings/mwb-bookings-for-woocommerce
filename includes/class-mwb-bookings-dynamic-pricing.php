@@ -15,7 +15,7 @@
  *
  * @package    Mwb_Bookings_For_Woocommerce
  * @subpackage Mwb_Bookings_For_Woocommerce/includes
- * @since      3.12.1
+ * @since      3.13.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

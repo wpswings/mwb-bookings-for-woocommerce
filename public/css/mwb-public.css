@@ -512,9 +512,13 @@ button.wps_timeslot_button {
     cursor: not-allowed;
 }
 
-/* Weekly off — red day number */
+/* Weekly off — red day number, not clickable */
+.wps_global_calendar_class.fc .fc-daygrid-day.fc-weekly-off {
+    pointer-events: none;
+}
 .wps_global_calendar_class.fc .fc-daygrid-day.fc-weekly-off .fc-daygrid-day-number {
     color: #ef4444 !important;
+    opacity: 1;
 }
 
 /* Outside-month days — faded */

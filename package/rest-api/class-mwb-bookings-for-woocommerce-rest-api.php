@@ -142,12 +142,20 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
 			foreach ( $order->get_items() as $item ) {
 
 				$product = $item->get_product();
-				
+
 				if ( ! $product ) continue;
+
+				$is_mwb_booking      = $product instanceof WC_Product && $product->is_type( 'mwb_booking' );
+				$is_calendar_booking = 'yes' === get_post_meta( $product->get_id(), '_is_calendar_booking_product', 'no' );
+
+				// Only include booking products in the dashboard.
+				if ( ! $is_mwb_booking && ! $is_calendar_booking ) {
+					continue;
+				}
 
 				$wps_booking_details_ = "";
 				$calendar_url       = '';
-				if ( $product instanceof WC_Product && $product->is_type( 'mwb_booking' ) ) {
+				if ( $is_mwb_booking ) {
 						$booking_name     = $product->get_name();
 						$event_venue     = wps_booking_get_meta_data( $product->get_id(), 'mwb_mbfw_booking_location', true );
 						$date_time_from   = $item->get_meta( '_wps_single_cal_date_time_from', true );
@@ -181,8 +189,8 @@ class Mwb_Bookings_For_Woocommerce_Rest_Api {
 							$wps_booking_details_ = ( $date_time_from ).' '.esc_html( ' To ', 'mwb-bookings-for-woocommerce' ).' '.( $date_time_to );
 
 						}
-					} else if ( 'yes' === get_post_meta($product->get_id(), '_is_calendar_booking_product', 'no')) {
-					
+					} else if ( $is_calendar_booking ) {
+
 						$wps_booking_details_ = wc_get_order_item_meta($item->get_id(), 'Booking Date', true);
 
 					}

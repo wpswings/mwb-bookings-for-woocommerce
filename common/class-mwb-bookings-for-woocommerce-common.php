@@ -1812,4 +1812,47 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		wp_send_json_success();
 	}
 
+	/**
+	 * Check whether every item in an order is a booking product.
+	 *
+	 * @param WC_Order $order The WooCommerce order object.
+	 * @return bool True if all items are booking products, false otherwise.
+	 */
+	public function mwb_mbfw_order_is_all_bookings( $order ) {
+		$items = $order->get_items();
+		if ( empty( $items ) ) {
+			return false;
+		}
+		foreach ( $items as $item ) {
+			$product = $item->get_product();
+			if ( ! $product ) {
+				return false;
+			}
+			$is_mwb_booking      = $product->is_type( 'mwb_booking' );
+			$is_calendar_booking = 'yes' === get_post_meta( $product->get_id(), '_is_calendar_booking_product', 'no' );
+			if ( ! $is_mwb_booking && ! $is_calendar_booking ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Automatically mark an order as "completed" after payment when all items
+	 * are booking products (no physical fulfilment required).
+	 *
+	 * Hooked to: woocommerce_payment_complete_order_status
+	 *
+	 * @param string   $status   The default post-payment order status.
+	 * @param int      $order_id The order ID.
+	 * @param WC_Order $order    The order object.
+	 * @return string The (possibly modified) order status.
+	 */
+	public function mwb_mbfw_payment_complete_order_status( $status, $order_id, $order ) {
+		if ( $this->mwb_mbfw_order_is_all_bookings( $order ) ) {
+			return 'completed';
+		}
+		return $status;
+	}
+
 }

@@ -998,6 +998,16 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$wps_raw_to   = preg_replace( '/^(\d{2})\/(\d{2})\/(\d{4})/', '$1-$2-$3', $wps_raw_to );
 			}
 
+			// Validate that the end date is not before the start date for dual-calendar bookings.
+			if ( 'dual_cal' === $booking_type && ! empty( $wps_raw_from ) && ! empty( $wps_raw_to ) ) {
+				$ts_from = strtotime( $wps_raw_from );
+				$ts_to   = strtotime( $wps_raw_to );
+				if ( $ts_from && $ts_to && $ts_to < $ts_from ) {
+					wc_add_notice( __( 'The end date cannot be before the start date.', 'mwb-bookings-for-woocommerce' ), 'error' );
+					return $cart_item_data;
+				}
+			}
+
 			$custom_data = array(
 				'people_number'             => array_key_exists( 'mwb_mbfw_people_number', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_people_number'] ) ) : '',
 				'service_option'            => array_key_exists( 'mwb_mbfw_service_option_checkbox', $_POST ) ? map_deep( wp_unslash( $_POST['mwb_mbfw_service_option_checkbox'] ), 'sanitize_text_field' ) : array(),
@@ -1531,10 +1541,17 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$form_data = [];
 			}
 
-			$product_id = $this->create_private_booking_product();
+			$product_id   = $this->create_private_booking_product();
 			$booking_date = isset( $_GET['booking_date'] ) ? sanitize_text_field( wp_unslash( $_GET['booking_date'] ) ) : '';
-			$booking_price = isset( $_GET['booking_price'] ) ? floatval( wp_unslash( $_GET['booking_price'] ) ) : 0;
-			$calendar_id = isset( $_GET['global_calendar_id'] ) ? sanitize_text_field( wp_unslash( $_GET['global_calendar_id'] ) ) : '';
+			$calendar_id  = isset( $_GET['global_calendar_id'] ) ? absint( wp_unslash( $_GET['global_calendar_id'] ) ) : 0;
+
+			// Calculate price server-side; never trust the client-supplied booking_price.
+			$default_price_per_day = 0;
+			if ( $calendar_id && 'wps_global_booking' === get_post_type( $calendar_id ) ) {
+				$default_price_per_day = floatval( get_post_meta( $calendar_id, '_booking_default_price', true ) );
+			}
+			$date_count    = ( ! empty( $booking_date ) ) ? count( array_filter( explode( ',', $booking_date ) ) ) : 1;
+			$booking_price = $default_price_per_day * max( 1, $date_count );
 
 			if ( $product_id && $booking_date ) {
 				// Remove existing booking items (optional).

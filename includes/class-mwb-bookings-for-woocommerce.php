@@ -307,6 +307,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_thankyou', $mbfw_plugin_common, 'mwb_bfwp_change_order_status' );
 			$this->loader->add_action( 'woocommerce_order_item_meta_end', $mbfw_plugin_common, 'mbfw_show_booking_details_on_my_account_page_user', 10, 3 );
 			$this->loader->add_filter( 'woocommerce_valid_order_statuses_for_order_again', $mbfw_plugin_common, 'mwb_mbfw_hide_reorder_button_my_account_orders' );
+			$this->loader->add_filter( 'woocommerce_payment_complete_order_status', $mbfw_plugin_common, 'mwb_mbfw_payment_complete_order_status', 10, 3 );
 			$this->loader->add_action( 'wp_ajax_bfw_cancelled_booked_order', $mbfw_plugin_common, 'wps_bfw_cancelled_booked_order' );
 
 			$this->loader->add_action( 'wp_ajax_mbfw_get_cart_data', $mbfw_plugin_common, 'mwb_mbfw_get_cart_items' );

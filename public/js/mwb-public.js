@@ -1292,5 +1292,30 @@ jQuery(document).ready(function($){
     });
 
     }
-    
+
+    // Prevent reverse date selection in dual-calendar (booking type: dual, unit: day).
+    // Runs after all conditional flatpickr initialisations above.
+    var fromEl = document.getElementById( 'mwb-mbfw-booking-from-time' );
+    var toEl   = document.getElementById( 'mwb-mbfw-booking-to-time' );
+
+    if ( fromEl && toEl ) {
+        fromEl.addEventListener( 'change', function () {
+            var fromFp = fromEl._flatpickr;
+            var toFp   = toEl._flatpickr;
+
+            if ( ! fromFp || ! toFp ) return;
+
+            if ( fromFp.selectedDates.length > 0 ) {
+                toFp.set( 'minDate', fromFp.selectedDates[0] );
+
+                // If a to-date was already chosen and is now before the from-date, clear it.
+                if ( toFp.selectedDates.length > 0 && toFp.selectedDates[0] < fromFp.selectedDates[0] ) {
+                    toFp.clear();
+                }
+            } else {
+                toFp.set( 'minDate', null );
+            }
+        } );
+    }
+
 });

@@ -138,7 +138,7 @@
 									to_time = convertTimeFormatDual(to_time);
 								}
 
-								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+								if ( moment( from_time, mwbGetMomentDateFormat() + ' HH:mm' ) >= moment( to_time, mwbGetMomentDateFormat() + ' HH:mm' ) ) {
 									$(this).val('');
 								
 									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
@@ -171,7 +171,7 @@
 									to_time = convertTimeFormatDual(to_time);
 								}
 
-								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+								if ( moment( from_time, mwbGetMomentDateFormat() + ' HH:mm' ) >= moment( to_time, mwbGetMomentDateFormat() + ' HH:mm' ) ) {
 									$(this).val('');
 								
 									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
@@ -195,7 +195,7 @@
 					from_time = convertTimeFormatDual(from_time);
 					to_time = convertTimeFormatDual(to_time);
 				}
-				if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+				if ( moment( from_time, mwbGetMomentDateFormat() + ' HH:mm' ) >= moment( to_time, mwbGetMomentDateFormat() + ' HH:mm' ) ) {
 					$(this).val('');
 				
 					if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
@@ -234,7 +234,7 @@
 									from_time = convertTimeFormatDual(from_time);
 									to_time = convertTimeFormatDual(to_time);
 								}
-								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+								if ( moment( from_time, mwbGetMomentDateFormat() + ' HH:mm' ) >= moment( to_time, mwbGetMomentDateFormat() + ' HH:mm' ) ) {
 									$('#mwb-mbfw-booking-to-time').val('');
 
 									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
@@ -266,7 +266,7 @@
 									from_time = convertTimeFormatDual(from_time);
 									to_time = convertTimeFormatDual(to_time);
 								}
-								if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+								if ( moment( from_time, mwbGetMomentDateFormat() + ' HH:mm' ) >= moment( to_time, mwbGetMomentDateFormat() + ' HH:mm' ) ) {
 									$('#mwb-mbfw-booking-to-time').val('');
 
 									if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
@@ -291,7 +291,7 @@
 						from_time = convertTimeFormatDual(from_time);
 						to_time = convertTimeFormatDual(to_time);
 					}
-					if ( moment( from_time, 'DD-MM-YYYY HH:mm' ) >= moment( to_time, 'DD-MM-YYYY HH:mm' ) ) {
+					if ( moment( from_time, mwbGetMomentDateFormat() + ' HH:mm' ) >= moment( to_time, mwbGetMomentDateFormat() + ' HH:mm' ) ) {
 						$('#mwb-mbfw-booking-to-time').val('');
 						
 						if (jQuery(jQuery('.flatpickr-calendar')).length > 1 ) {
@@ -481,9 +481,30 @@ function convertTimeFormatDual(input) {
     return `${date} ${startTime}`;
 }
 
+// The from/to booking fields are formatted using mwb_mbfw_public_obj.flatpickr_date_format,
+// which is a PHP date() format string (e.g. "Y-m-d") pulled from wc_date_format() — not
+// hardcoded to "d-m-Y". Parsing with a mismatched moment format silently scrambles the date
+// (e.g. "2026-09-30" read as DD-MM-YYYY becomes day 20 of month 09 year 2030) which can flip
+// from/to comparisons. Convert the configured PHP format to the equivalent moment format so
+// parsing always matches what's actually in the field.
+function mwbGetMomentDateFormat() {
+    var phpFormat = ( typeof mwb_mbfw_public_obj !== 'undefined' && mwb_mbfw_public_obj.flatpickr_date_format )
+        ? mwb_mbfw_public_obj.flatpickr_date_format
+        : 'd-m-Y';
+    var tokenMap = {
+        'd': 'DD', 'j': 'D',
+        'm': 'MM', 'n': 'M',
+        'Y': 'YYYY', 'y': 'YY',
+        'F': 'MMMM', 'M': 'MMM'
+    };
+    return phpFormat.replace( /[a-zA-Z]/g, function ( token ) {
+        return tokenMap.hasOwnProperty( token ) ? tokenMap[ token ] : token;
+    } );
+}
+
 function isToday(dateTimeStr) {
-    // Parse the input using the known format
-    const inputDate = moment(dateTimeStr, "DD-MM-YYYY");
+    // Parse the input using the actual configured date format
+    const inputDate = moment(dateTimeStr, mwbGetMomentDateFormat());
 
     // Compare only the date (ignores time)
     return inputDate.isSame(moment(), 'day');
@@ -491,7 +512,7 @@ function isToday(dateTimeStr) {
 
 function isDateInArray(dateStr, dateArray) {
     // Convert input date to the array's format: YYYY-MM-DD
-    const formatted = moment(dateStr, "DD-MM-YYYY").format("YYYY-MM-DD");
+    const formatted = moment(dateStr, mwbGetMomentDateFormat()).format("YYYY-MM-DD");
 
     return dateArray.includes(formatted);
 }
@@ -507,13 +528,18 @@ function retrieve_booking_total_ajax( form_data ) {
 		data_to = (undefined == data_to ) ? undefined :convertTimeFormatDual( data_to );
 	}
 
-	if ( data_from != undefined && data_to != undefined ){	
+	if ( data_from != undefined && data_to != undefined ){
 		var datesBetween = getDatesBetween(data_from, data_to);
+		// Prefer the Pro plugin's full multi-holiday array when available; it's the source
+		// merchants actually configure holidays through. Fall back to the free plugin's
+		// single-holiday array for sites without Pro active.
+		var upcoming_holiday = ( typeof bfwp_public_param !== 'undefined' && bfwp_public_param.upcoming_holiday )
+			? bfwp_public_param.upcoming_holiday
+			: mwb_mbfw_public_obj.upcoming_holiday;
 		for (let index = 0; index < datesBetween.length; index++) {
 			var originalDate = datesBetween[index];
-			var upcoming_holiday = mwb_mbfw_public_obj.upcoming_holiday[0];
 			var formattedDate = convertDateFormat(originalDate);
-			
+
 			if (upcoming_holiday.includes(formattedDate)) {
 				condition = false;
 			}
@@ -541,7 +567,8 @@ function retrieve_booking_total_ajax( form_data ) {
 						$('#mwb-mbfw-booking-to-time').val('');
 						jQuery('.cart .single_add_to_cart_button').prop('disabled', true);
 					if ( $('#alert_msg_client').val() == undefined){
-						jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		
+						jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')
+						alert( mwb_mbfw_common_obj.holiday_alert );
 
 						return;
 					}
@@ -571,8 +598,9 @@ function retrieve_booking_total_ajax( form_data ) {
 		
 		if ( condition == false ){
 			if ( $('#alert_msg_client').val() == undefined){
-				jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')		
+				jQuery('.mwb-mbfw-cart-page-data').append('<span id="alert_msg_client" style="color:red">'+mwb_mbfw_common_obj.holiday_alert+'</span>')
 				$('#mwb-mbfw-booking-to-time').val('');
+				alert( mwb_mbfw_common_obj.holiday_alert );
 			}
 		}
 	}

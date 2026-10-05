@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com
 Tags: Bookings, Appointments, Appointment Booking, Booking System, Scheduling
 Requires at least: 6.2
-Tested up to: 7.0
+Tested up to: 7.1.2
 WC requires at least: 6.5
-WC tested up to: 11.0.0
-Stable tag: 3.12.0
+WC tested up to: 11.1.2
+Stable tag: 3.13.0
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -338,6 +338,16 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Changelog ==
 
+= 3.13.0 - Released on 05 Oct 2026 =
+
+* New : Global calendar front-end design changes
+* New : Calculation table display for additional people and services
+* New : Booking analytics dashboard — occupancy rate, peak slots, etc.
+* New : Dynamic/demand-based pricing — automatic price increase for peak dates
+* New : Latest WordPress and WooCommerce compatibility
+* New : PHP 8.3 compatibility audit and fixes
+* New: Latest Compatibility with WP [7.1.2] and WC [11.1.2]
+
 = 3.12.0 - Released on 06 August 2026 =
 
 * New: Latest Compatibility with WP [7.0.2] and WC [11.0.0]
@@ -617,10 +627,11 @@ Check out [**WooCommerce Bookings knowledge base**](https://support.wpswings.com
 
 == Upgrade Notice ==
 
-= 3.12.0 - Released on 06 August 2026 =
+= 3.13.0 - Released on 05 Oct 2026 =
 
-* New: Latest Compatibility with WP [7.0.2] and WC [11.0.0]
-* Fix : Need to enhance dual calender feature for airbnb compatibility
-* Fix : Slot/capacity limit not enforced
-* Fix : Booking amount showing $0.00 in WooCommerce order emails
-* Fix : Date format (MM-DD-YYYY) conflict with Flatpickr
+* New : Global calendar front-end design changes
+* New : Calculation table display for additional people and services
+* New : Booking analytics dashboard — occupancy rate, peak slots, etc.
+* New : Dynamic/demand-based pricing — automatic price increase for peak dates
+* New : PHP 8.3 compatibility audit and fixes
+* New: Latest Compatibility with WP [7.1.2] and WC [11.1.2]

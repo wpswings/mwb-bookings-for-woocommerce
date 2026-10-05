@@ -1526,7 +1526,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	/**
 	 * Function to add to cart global.
 	 */
-	public function mwb_handle_booking_add_to_cart() {
+	public function mwb_handle_global_booking_add_to_cart() {
 		if ( isset( $_GET['add-booking-to-cart'] ) && '1' === $_GET['add-booking-to-cart'] ) {
 			$nonce = isset( $_GET['mwb_booking_nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['mwb_booking_nonce'] ) ) : '';
 			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'mwb_booking_add_to_cart' ) ) {
@@ -1541,28 +1541,28 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				$form_data = [];
 			}
 
-			$product_id   = $this->create_private_booking_product();
 			$booking_date = isset( $_GET['booking_date'] ) ? sanitize_text_field( wp_unslash( $_GET['booking_date'] ) ) : '';
 			$calendar_id  = isset( $_GET['global_calendar_id'] ) ? absint( wp_unslash( $_GET['global_calendar_id'] ) ) : 0;
 
-			// Calculate price server-side; never trust the client-supplied booking_price.
-			$default_price_per_day = 0;
-			if ( $calendar_id && 'wps_global_booking' === get_post_type( $calendar_id ) ) {
-				$default_price_per_day = floatval( get_post_meta( $calendar_id, '_booking_default_price', true ) );
+			// Price is derived server-side from the calendar; any client-supplied booking_price is ignored.
+			// Reject outright when the calendar or dates do not resolve, so nothing is added to the cart.
+			$resolved = Mwb_Bookings_For_Woocommerce_Common::mwb_mbfw_get_global_calendar_booking_price( $calendar_id, $booking_date );
+			if ( false === $resolved ) {
+				wc_add_notice( __( 'This booking could not be added to the cart. Please select your dates from the booking calendar again.', 'mwb-bookings-for-woocommerce' ), 'error' );
+				return;
 			}
-			$date_count    = ( ! empty( $booking_date ) ) ? count( array_filter( explode( ',', $booking_date ) ) ) : 1;
-			$booking_price = $default_price_per_day * max( 1, $date_count );
 
-			if ( $product_id && $booking_date ) {
+			$product_id = $this->create_private_booking_product();
+
+			if ( $product_id ) {
 				// Remove existing booking items (optional).
 				WC()->cart->empty_cart();
 
-				// Add to cart with booking date as custom data.
+				// Add to cart with booking date as custom data; the price is set from the calendar in the cart totals hook.
 				WC()->cart->add_to_cart( $product_id, 1, 0, [], [
-					'booking_date'  => $booking_date,
-					'booking_price' => $booking_price,
-					'form_data'     => $form_data,
-					'calendar_id'   => $calendar_id,
+					'booking_date' => implode( ',', $resolved['dates'] ),
+					'form_data'    => $form_data,
+					'calendar_id'  => $calendar_id,
 				] );
 
 				// Redirect to cart.

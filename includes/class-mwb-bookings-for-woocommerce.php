@@ -302,7 +302,9 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'admin_bar_menu', $mbfw_plugin_common, 'mbfw_add_admin_menu_custom_tab', 100 );
 			$this->loader->add_action( 'wp_ajax_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
 			$this->loader->add_action( 'wp_ajax_nopriv_mbfw_retrieve_booking_total_single_page', $mbfw_plugin_common, 'mbfw_retrieve_booking_total_single_page' );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_common, 'mwb_mbfw_enforce_global_calendar_cart_price', 5 );
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mbfw_plugin_common, 'mwb_mbfw_show_extra_charges_in_total' );
+			$this->loader->add_filter( 'woocommerce_add_to_cart_validation', $mbfw_plugin_common, 'mwb_mbfw_block_direct_global_calendar_add_to_cart', 10, 2 );
 			$this->loader->add_action( 'woocommerce_new_order', $mbfw_plugin_common, 'mwb_bfwp_set_order_as_mwb_booking', 10, 2 );
 			$this->loader->add_action( 'woocommerce_thankyou', $mbfw_plugin_common, 'mwb_bfwp_change_order_status' );
 			$this->loader->add_action( 'woocommerce_order_item_meta_end', $mbfw_plugin_common, 'mbfw_show_booking_details_on_my_account_page_user', 10, 3 );
@@ -360,7 +362,7 @@ class Mwb_Bookings_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_store_api_product_quantity_minimum', $mbfw_plugin_public, 'mwb_mbfw_woocommerce_store_api_product_quantity_maximum', 10, 3 );
 			$this->loader->add_action( 'woocommerce_checkout_create_order', $mbfw_plugin_public, 'mwb_mbfw_custom_reduce_stock_of_booking', 10, 3 );
 			$this->loader->add_action( 'plugins_loaded', $mbfw_plugin_public, 'mwb_mbfw_shortcode_search_page' );
-			$this->loader->add_action('template_redirect', $mbfw_plugin_public, 'mwb_handle_booking_add_to_cart');
+			$this->loader->add_action('template_redirect', $mbfw_plugin_public, 'mwb_handle_global_booking_add_to_cart');
 			$this->loader->add_action('woocommerce_add_order_item_meta',$mbfw_plugin_public, 'mwb_add_global_order_item_meta', 10, 3);
 			$this->loader->add_action( 'wps_before_global_booking_form ', $mbfw_plugin_public, 'wps_display_selected_form_before_booking', 10, 1);
 		}

@@ -316,6 +316,96 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	}
 
 	/**
+	 * Resolve the server-side price of a global calendar booking.
+	 *
+	 * The price is derived only from the calendar's stored configuration and the
+	 * validated booking dates; nothing from the request is trusted as a price.
+	 *
+	 * @param int    $calendar_id  Global booking calendar post ID.
+	 * @param string $booking_date Comma separated list of Y-m-d dates.
+	 * @return array|false Array with 'dates' and 'price' keys, or false if the calendar or dates are invalid.
+	 */
+	public static function mwb_mbfw_get_global_calendar_booking_price( $calendar_id, $booking_date ) {
+		$calendar_id = absint( $calendar_id );
+		if ( ! $calendar_id || 'wps_global_booking' !== get_post_type( $calendar_id ) || 'publish' !== get_post_status( $calendar_id ) ) {
+			return false;
+		}
+
+		$dates = array_unique( array_filter( array_map( 'trim', explode( ',', (string) $booking_date ) ) ) );
+		if ( empty( $dates ) ) {
+			return false;
+		}
+		foreach ( $dates as $date ) {
+			$parsed = DateTime::createFromFormat( '!Y-m-d', $date );
+			if ( ! $parsed || $parsed->format( 'Y-m-d' ) !== $date ) {
+				return false;
+			}
+		}
+
+		$price_per_day = (float) get_post_meta( $calendar_id, '_booking_default_price', true );
+
+		return array(
+			'dates' => array_values( $dates ),
+			'price' => max( 0, $price_per_day ) * count( $dates ),
+		);
+	}
+
+	/**
+	 * Check whether a product is the private global calendar booking product.
+	 *
+	 * @param int $product_id Product ID.
+	 * @return bool
+	 */
+	public static function mwb_mbfw_is_global_calendar_product( $product_id ) {
+		return 'yes' === get_post_meta( $product_id, '_is_calendar_booking_product', true );
+	}
+
+	/**
+	 * Block the global calendar product from being added through the regular add-to-cart flow.
+	 *
+	 * It may only enter the cart through the validated calendar booking handler.
+	 *
+	 * @param bool $passed     Whether validation passed.
+	 * @param int  $product_id Product ID.
+	 * @return bool
+	 */
+	public function mwb_mbfw_block_direct_global_calendar_add_to_cart( $passed, $product_id ) {
+		if ( self::mwb_mbfw_is_global_calendar_product( $product_id ) ) {
+			wc_add_notice( __( 'Please book this service from its booking calendar.', 'mwb-bookings-for-woocommerce' ), 'error' );
+			return false;
+		}
+		return $passed;
+	}
+
+	/**
+	 * Set the price of global calendar bookings in the cart from server-side data.
+	 *
+	 * Items that do not resolve to a valid booking calendar and dates are removed.
+	 *
+	 * @param WC_Cart $cart_object Cart object.
+	 * @return void
+	 */
+	public function mwb_mbfw_enforce_global_calendar_cart_price( $cart_object ) {
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+		foreach ( $cart_object->get_cart() as $cart_item_key => $cart ) {
+			if ( ! self::mwb_mbfw_is_global_calendar_product( $cart['product_id'] ) ) {
+				continue;
+			}
+			$resolved = self::mwb_mbfw_get_global_calendar_booking_price(
+				isset( $cart['calendar_id'] ) ? $cart['calendar_id'] : 0,
+				isset( $cart['booking_date'] ) ? $cart['booking_date'] : ''
+			);
+			if ( false === $resolved ) {
+				$cart_object->remove_cart_item( $cart_item_key );
+				continue;
+			}
+			$cart['data']->set_price( $resolved['price'] );
+		}
+	}
+
+	/**
 	 * Showing extra charges on cart listing total(calculate total on cart page).
 	 *
 	 * @param object $cart_object cart object.
@@ -331,9 +421,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$unit      = 0;
 		$cart_data = $cart_object->get_cart();
 		foreach ( $cart_data as $cart ) {
-			 if (!empty($cart['booking_price'])) {
-				$cart['data']->set_price($cart['booking_price']);
-			}
 			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
 				$new_price        = (float) $cart['data']->get_price();
 				$base_price       = 0;

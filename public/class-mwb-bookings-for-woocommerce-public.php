@@ -642,7 +642,7 @@ class Mwb_Bookings_For_Woocommerce_Public {
 					'unavailableDates'    => $unavailable_days,
 					'baseUrl'             => esc_url(site_url('/')),
 					'defaultPrice'        => $default_price,
-					'addToCartNonce'      => wp_create_nonce( 'mwb_booking_add_to_cart' ),
+					'addToCartNonce'      => wp_create_nonce( 'mwb_booking_add_to_cart_' . $post_id ),
 					'form_color'          => $form_heading_color,
 					'required_msg'        => __('required', 'mwb-bookings-for-woocommerce'),
 					'date_select_msg'     => __('Please select at least one date to book.', 'mwb-bookings-for-woocommerce'),
@@ -1528,8 +1528,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 	 */
 	public function mwb_handle_global_booking_add_to_cart() {
 		if ( isset( $_GET['add-booking-to-cart'] ) && '1' === $_GET['add-booking-to-cart'] ) {
+			// Extract calendar_id first so the nonce can be bound to it, preventing calendar-swapping attacks.
+			$calendar_id = isset( $_GET['global_calendar_id'] ) ? absint( wp_unslash( $_GET['global_calendar_id'] ) ) : 0;
+			if ( ! $calendar_id ) {
+				return;
+			}
+
 			$nonce = isset( $_GET['mwb_booking_nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['mwb_booking_nonce'] ) ) : '';
-			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'mwb_booking_add_to_cart' ) ) {
+			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'mwb_booking_add_to_cart_' . $calendar_id ) ) {
 				return;
 			}
 
@@ -1542,7 +1548,6 @@ class Mwb_Bookings_For_Woocommerce_Public {
 			}
 
 			$booking_date = isset( $_GET['booking_date'] ) ? sanitize_text_field( wp_unslash( $_GET['booking_date'] ) ) : '';
-			$calendar_id  = isset( $_GET['global_calendar_id'] ) ? absint( wp_unslash( $_GET['global_calendar_id'] ) ) : 0;
 
 			// Price is derived server-side from the calendar; any client-supplied booking_price is ignored.
 			// Reject outright when the calendar or dates do not resolve, so nothing is added to the cart.
@@ -1558,12 +1563,14 @@ class Mwb_Bookings_For_Woocommerce_Public {
 				// Remove existing booking items (optional).
 				WC()->cart->empty_cart();
 
-				// Add to cart with booking date as custom data; the price is set from the calendar in the cart totals hook.
+				// Temporarily bypass the direct-add block filter; this is the validated handler, not a raw client request.
+				Mwb_Bookings_For_Woocommerce_Common::set_bypass_cart_validation( true );
 				WC()->cart->add_to_cart( $product_id, 1, 0, [], [
 					'booking_date' => implode( ',', $resolved['dates'] ),
 					'form_data'    => $form_data,
 					'calendar_id'  => $calendar_id,
 				] );
+				Mwb_Bookings_For_Woocommerce_Common::set_bypass_cart_validation( false );
 
 				// Redirect to cart.
 				wp_safe_redirect( wc_get_cart_url() );

@@ -37,6 +37,22 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	private $version;
 
 	/**
+	 * When true, the direct-add block filter lets the handler's programmatic add_to_cart through.
+	 *
+	 * @var bool
+	 */
+	private static $bypass_cart_validation = false;
+
+	/**
+	 * Allow or restore the direct-add block filter.
+	 *
+	 * @param bool $bypass True to bypass, false to restore.
+	 */
+	public static function set_bypass_cart_validation( $bypass ) {
+		self::$bypass_cart_validation = (bool) $bypass;
+	}
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since 2.0.0
@@ -342,7 +358,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			}
 		}
 
-		$price_per_day = (float) get_post_meta( $calendar_id, '_booking_default_price', true );
+		$price_meta = get_post_meta( $calendar_id, '_booking_default_price', true );
+		if ( '' === $price_meta ) {
+			// Price not configured for this calendar; reject to prevent free bookings of unconfigured services.
+			return false;
+		}
+		$price_per_day = (float) $price_meta;
 
 		return array(
 			'dates' => array_values( $dates ),
@@ -370,6 +391,9 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @return bool
 	 */
 	public function mwb_mbfw_block_direct_global_calendar_add_to_cart( $passed, $product_id ) {
+		if ( self::$bypass_cart_validation ) {
+			return $passed;
+		}
 		if ( self::mwb_mbfw_is_global_calendar_product( $product_id ) ) {
 			wc_add_notice( __( 'Please book this service from its booking calendar.', 'mwb-bookings-for-woocommerce' ), 'error' );
 			return false;

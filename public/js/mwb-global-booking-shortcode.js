@@ -357,8 +357,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        var price = selectedDates.length * defaultPrice;
-        var url   = baseUrl + '?add-booking-to-cart=1&booking_date=' + selectedDates.join(',') + '&booking_price=' + price + '&global_booking_form=' + JSON.stringify(entries) + '&global_calendar_id=' + postId + '&mwb_booking_nonce=' + encodeURIComponent(bookingCalendarData.addToCartNonce);
+        var url   = baseUrl + '?add-booking-to-cart=1&booking_date=' + selectedDates.join(',') + '&global_booking_form=' + JSON.stringify(entries) + '&global_calendar_id=' + postId + '&mwb_booking_nonce=' + encodeURIComponent(bookingCalendarData.addToCartNonce);
         window.location.href = url;
     });
 });

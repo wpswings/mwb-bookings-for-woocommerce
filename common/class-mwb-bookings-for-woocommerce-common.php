@@ -37,6 +37,22 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	private $version;
 
 	/**
+	 * When true, the direct-add block filter lets the handler's programmatic add_to_cart through.
+	 *
+	 * @var bool
+	 */
+	private static $bypass_cart_validation = false;
+
+	/**
+	 * Allow or restore the direct-add block filter.
+	 *
+	 * @param bool $bypass True to bypass, false to restore.
+	 */
+	public static function set_bypass_cart_validation( $bypass ) {
+		self::$bypass_cart_validation = (bool) $bypass;
+	}
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since 2.0.0
@@ -316,6 +332,104 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	}
 
 	/**
+	 * Resolve the server-side price of a global calendar booking.
+	 *
+	 * The price is derived only from the calendar's stored configuration and the
+	 * validated booking dates; nothing from the request is trusted as a price.
+	 *
+	 * @param int    $calendar_id  Global booking calendar post ID.
+	 * @param string $booking_date Comma separated list of Y-m-d dates.
+	 * @return array|false Array with 'dates' and 'price' keys, or false if the calendar or dates are invalid.
+	 */
+	public static function mwb_mbfw_get_global_calendar_booking_price( $calendar_id, $booking_date ) {
+		$calendar_id = absint( $calendar_id );
+		if ( ! $calendar_id || 'wps_global_booking' !== get_post_type( $calendar_id ) || 'publish' !== get_post_status( $calendar_id ) ) {
+			return false;
+		}
+
+		$dates = array_unique( array_filter( array_map( 'trim', explode( ',', (string) $booking_date ) ) ) );
+		if ( empty( $dates ) ) {
+			return false;
+		}
+		foreach ( $dates as $date ) {
+			$parsed = DateTime::createFromFormat( '!Y-m-d', $date );
+			if ( ! $parsed || $parsed->format( 'Y-m-d' ) !== $date ) {
+				return false;
+			}
+		}
+
+		$price_meta = get_post_meta( $calendar_id, '_booking_default_price', true );
+		if ( '' === $price_meta ) {
+			// Price not configured for this calendar; reject to prevent free bookings of unconfigured services.
+			return false;
+		}
+		$price_per_day = (float) $price_meta;
+
+		return array(
+			'dates' => array_values( $dates ),
+			'price' => max( 0, $price_per_day ) * count( $dates ),
+		);
+	}
+
+	/**
+	 * Check whether a product is the private global calendar booking product.
+	 *
+	 * @param int $product_id Product ID.
+	 * @return bool
+	 */
+	public static function mwb_mbfw_is_global_calendar_product( $product_id ) {
+		return 'yes' === get_post_meta( $product_id, '_is_calendar_booking_product', true );
+	}
+
+	/**
+	 * Block the global calendar product from being added through the regular add-to-cart flow.
+	 *
+	 * It may only enter the cart through the validated calendar booking handler.
+	 *
+	 * @param bool $passed     Whether validation passed.
+	 * @param int  $product_id Product ID.
+	 * @return bool
+	 */
+	public function mwb_mbfw_block_direct_global_calendar_add_to_cart( $passed, $product_id ) {
+		if ( self::$bypass_cart_validation ) {
+			return $passed;
+		}
+		if ( self::mwb_mbfw_is_global_calendar_product( $product_id ) ) {
+			wc_add_notice( __( 'Please book this service from its booking calendar.', 'mwb-bookings-for-woocommerce' ), 'error' );
+			return false;
+		}
+		return $passed;
+	}
+
+	/**
+	 * Set the price of global calendar bookings in the cart from server-side data.
+	 *
+	 * Items that do not resolve to a valid booking calendar and dates are removed.
+	 *
+	 * @param WC_Cart $cart_object Cart object.
+	 * @return void
+	 */
+	public function mwb_mbfw_enforce_global_calendar_cart_price( $cart_object ) {
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+		foreach ( $cart_object->get_cart() as $cart_item_key => $cart ) {
+			if ( ! self::mwb_mbfw_is_global_calendar_product( $cart['product_id'] ) ) {
+				continue;
+			}
+			$resolved = self::mwb_mbfw_get_global_calendar_booking_price(
+				isset( $cart['calendar_id'] ) ? $cart['calendar_id'] : 0,
+				isset( $cart['booking_date'] ) ? $cart['booking_date'] : ''
+			);
+			if ( false === $resolved ) {
+				$cart_object->remove_cart_item( $cart_item_key );
+				continue;
+			}
+			$cart['data']->set_price( $resolved['price'] );
+		}
+	}
+
+	/**
 	 * Showing extra charges on cart listing total(calculate total on cart page).
 	 *
 	 * @param object $cart_object cart object.
@@ -331,9 +445,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		$unit      = 0;
 		$cart_data = $cart_object->get_cart();
 		foreach ( $cart_data as $cart ) {
-			 if (!empty($cart['booking_price'])) {
-				$cart['data']->set_price($cart['booking_price']);
-			}
 			if ( 'mwb_booking' === $cart['data']->get_type() && isset( $cart['mwb_mbfw_booking_values'] ) ) {
 				$new_price        = (float) $cart['data']->get_price();
 				$base_price       = 0;
@@ -1838,21 +1949,35 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	}
 
 	/**
-	 * Automatically mark an order as "completed" after payment when all items
-	 * are booking products (no physical fulfilment required).
+	 * Automatically move a booking-only order from "processing" to "completed".
 	 *
-	 * Hooked to: woocommerce_payment_complete_order_status
+	 * Runs at a late priority on woocommerce_order_status_changed so the normal
+	 * processing flow (New Order / Processing Order emails, invoice attachments,
+	 * third-party processing hooks) finishes first, then the order is completed
+	 * and the Completed Order email fires as a separate transition.
 	 *
-	 * @param string   $status   The default post-payment order status.
+	 * Hooked to: woocommerce_order_status_changed
+	 *
 	 * @param int      $order_id The order ID.
+	 * @param string   $from     Previous status.
+	 * @param string   $to       New status.
 	 * @param WC_Order $order    The order object.
-	 * @return string The (possibly modified) order status.
+	 * @return void
 	 */
-	public function mwb_mbfw_payment_complete_order_status( $status, $order_id, $order ) {
-		if ( $this->mwb_mbfw_order_is_all_bookings( $order ) ) {
-			return 'completed';
+	public function mwb_mbfw_autocomplete_processing_booking_order( $order_id, $from, $to, $order ) {
+		if ( 'processing' !== $to || ! $order instanceof WC_Order ) {
+			return;
 		}
-		return $status;
+		if ( ! $this->mwb_mbfw_order_is_all_bookings( $order ) ) {
+			return;
+		}
+		// Orders that need admin confirmation must not be completed automatically.
+		foreach ( $order->get_items() as $item ) {
+			if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_admin_confirmation', true ) ) {
+				return;
+			}
+		}
+		$order->update_status( 'completed', __( 'Booking order completed automatically after processing.', 'mwb-bookings-for-woocommerce' ) );
 	}
 
 }

@@ -1949,21 +1949,35 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	}
 
 	/**
-	 * Automatically mark an order as "completed" after payment when all items
-	 * are booking products (no physical fulfilment required).
+	 * Automatically move a booking-only order from "processing" to "completed".
 	 *
-	 * Hooked to: woocommerce_payment_complete_order_status
+	 * Runs at a late priority on woocommerce_order_status_changed so the normal
+	 * processing flow (New Order / Processing Order emails, invoice attachments,
+	 * third-party processing hooks) finishes first, then the order is completed
+	 * and the Completed Order email fires as a separate transition.
 	 *
-	 * @param string   $status   The default post-payment order status.
+	 * Hooked to: woocommerce_order_status_changed
+	 *
 	 * @param int      $order_id The order ID.
+	 * @param string   $from     Previous status.
+	 * @param string   $to       New status.
 	 * @param WC_Order $order    The order object.
-	 * @return string The (possibly modified) order status.
+	 * @return void
 	 */
-	public function mwb_mbfw_payment_complete_order_status( $status, $order_id, $order ) {
-		if ( $this->mwb_mbfw_order_is_all_bookings( $order ) ) {
-			return 'completed';
+	public function mwb_mbfw_autocomplete_processing_booking_order( $order_id, $from, $to, $order ) {
+		if ( 'processing' !== $to || ! $order instanceof WC_Order ) {
+			return;
 		}
-		return $status;
+		if ( ! $this->mwb_mbfw_order_is_all_bookings( $order ) ) {
+			return;
+		}
+		// Orders that need admin confirmation must not be completed automatically.
+		foreach ( $order->get_items() as $item ) {
+			if ( 'yes' === wps_booking_get_meta_data( $item->get_product_id(), 'mwb_mbfw_admin_confirmation', true ) ) {
+				return;
+			}
+		}
+		$order->update_status( 'completed', __( 'Booking order completed automatically after processing.', 'mwb-bookings-for-woocommerce' ) );
 	}
 
 }

@@ -906,6 +906,31 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	}
 
 	/**
+	 * Convert a booking amount to the price shown to the customer.
+	 *
+	 * Applies the product's tax status and tax class together with the WooCommerce
+	 * "Prices entered with tax" and "Display prices in the shop" settings, so the
+	 * booking form shows the same amounts as the cart.
+	 *
+	 * @param int   $product_id Product ID.
+	 * @param float $amount     Amount as entered in the booking settings.
+	 * @return float
+	 */
+	public function mbfw_get_price_to_display( $product_id, $amount ) {
+		$product = wc_get_product( $product_id );
+		if ( ! $product || ! wc_tax_enabled() ) {
+			return (float) $amount;
+		}
+		return (float) wc_get_price_to_display(
+			$product,
+			array(
+				'price' => (float) $amount,
+				'qty'   => 1,
+			)
+		);
+	}
+
+	/**
 	 * Booking total listing on single product page.
 	 *
 	 * @param array $charges array containing all the charges.
@@ -962,11 +987,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							if ( 'day' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
 
 								// for general unit cost.
-								echo wp_kses_post( wc_price( $general_price ) );
+								echo wp_kses_post( wc_price( $this->mbfw_get_price_to_display( $product_id, $general_price ) ) );
 								esc_html_e( '/day', 'mwb-bookings-for-woocommerce' );
 
 							} elseif ( 'hour' === wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_unit', true ) ) {
-								echo wp_kses_post( wc_price( $general_price ) );
+								echo wp_kses_post( wc_price( $this->mbfw_get_price_to_display( $product_id, $general_price ) ) );
 								esc_html_e( '/hour', 'mwb-bookings-for-woocommerce' );
 							}
 							?>
@@ -978,7 +1003,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							<strong>( 
 								<?php
 								$base_cost = wps_booking_get_meta_data( $product_id, 'mwb_mbfw_booking_base_cost', true );
-								echo wp_kses_post( wc_price( $base_cost ) );
+								echo wp_kses_post( wc_price( $this->mbfw_get_price_to_display( $product_id, $base_cost ) ) );
 								?>
 							)</strong>
 							<?php
@@ -990,7 +1015,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 							}
 						}
 						if ( 'Service Cost' == $title && ! empty( $types['items'] ) ) {
-							$this->mwb_mbfw_show_service_cost_details_inline( $types['items'] );
+							$this->mwb_mbfw_show_service_cost_details_inline( $types['items'], $product_id );
 						}
 							
 						?>
@@ -999,10 +1024,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 						<?php 
 						if ( 'General Cost' == $title ) {
-							echo wp_kses_post( wc_price( $price ) ) . ' x ' . wp_kses_post( $quantity ); // phpcs:ignore WordPress
+							echo wp_kses_post( wc_price( $this->mbfw_get_price_to_display( $product_id, $price ) ) ) . ' x ' . wp_kses_post( $quantity ); // phpcs:ignore WordPress
 
 						} else {
-							echo wp_kses_post( wc_price( $price ) );
+							echo wp_kses_post( wc_price( $this->mbfw_get_price_to_display( $product_id, $price ) ) );
 						}
 
 						?>
@@ -1016,7 +1041,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					<?php esc_html_e( 'Total', 'mwb-bookings-for-woocommerce' ); ?>
 				</div>
 				<div class="mbfw-total-listing-single-page">
-					<?php echo wp_kses_post( wc_price( $total ) ); ?>
+					<?php
+					// Convert the summed total once so it matches the tax the cart applies to the line.
+					$display_total = $this->mbfw_get_price_to_display( $product_id, $total );
+					$product       = wc_get_product( $product_id );
+					echo wp_kses_post( wc_price( $display_total ) . ( $product ? $product->get_price_suffix( $total ) : '' ) );
+					?>
 				</div>
 			</div>
 			<?php
@@ -1183,10 +1213,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	/**
 	 * Display individual service cost breakdown on the booking form.
 	 *
-	 * @param array $items Array of ['name' => string, 'cost' => float].
+	 * @param array $items      Array of ['name' => string, 'cost' => float].
+	 * @param int   $product_id Product ID, used to show the cost with or without tax.
 	 * @return void
 	 */
-	public function mwb_mbfw_show_service_cost_details_inline( $items ) {
+	public function mwb_mbfw_show_service_cost_details_inline( $items, $product_id = 0 ) {
 		?>
 		<div class="mbfw-additionl-detail-listing-section__wrapper mbfw-additionl-detail-listing-section__wrapper_costs">
 			<?php foreach ( $items as $item ) { ?>
@@ -1195,7 +1226,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 						<?php echo esc_html( $item['name'] ); ?>
 					</div>
 					<div class="mbfw-additionl-detail-listing-section-cost mbfw-additionl-detail-listing-section">
-						<?php echo wp_kses_post( wc_price( $item['cost'] ) ); ?>
+						<?php echo wp_kses_post( wc_price( $product_id ? $this->mbfw_get_price_to_display( $product_id, $item['cost'] ) : $item['cost'] ) ); ?>
 					</div>
 				</div>
 			<?php } ?>
@@ -1868,7 +1899,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 									</span>
 								</div>
 								<div class="mbfw-additionl-detail-listing-section-cost mbfw-additionl-detail-listing-section">
-									<?php echo wp_kses_post( wc_price( get_term_meta( $custom_term->term_id, 'mwb_mbfw_booking_cost', true ) ) ); ?>
+									<?php echo wp_kses_post( wc_price( $this->mbfw_get_price_to_display( $product_id, (float) get_term_meta( $custom_term->term_id, 'mwb_mbfw_booking_cost', true ) ) ) ); ?>
 								</div>
 								
 							</div>

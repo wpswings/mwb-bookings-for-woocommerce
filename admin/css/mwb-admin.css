@@ -3416,3 +3416,64 @@ body.mbfw-expert-modal-open {
   }
 }
 
+
+/* =============================================
+   Booking Calendar tab: keep the calendar inside the screen on mobile.
+   The filter row (status select + Filter + Clear) did not wrap, which stretched
+   the tab to ~590px and the calendar was cut off on the right.
+   ============================================= */
+.mbfw-secion-wrap:has(#mwb-mbfw-booking-calendar),
+#mwb-mbfw-booking-calendar {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.mbfw-secion-wrap:has(#mwb-mbfw-booking-calendar) .wps_main_wrapper {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .mwb-dashboard-body .mwb-section {
+    align-self: stretch;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mwb-section:has(#mwb-mbfw-booking-calendar) {
+    padding: 20px 12px;
+  }
+
+  .mbfw-secion-wrap:has(#mwb-mbfw-booking-calendar) .wps_main_wrapper {
+    padding: 10px 0;
+  }
+
+  .mbfw-secion-wrap:has(#mwb-mbfw-booking-calendar) .wps_sub_main_wrapper {
+    flex: 1 1 100%;
+  }
+
+  .mbfw-secion-wrap:has(#mwb-mbfw-booking-calendar) .wps_order_status_.wps-calendar-filter-select {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mbfw-secion-wrap:has(#mwb-mbfw-booking-calendar) .wps-calendar-action-btn.button {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 16px !important;
+  }
+
+  #mwb-mbfw-booking-calendar .fc-header-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #mwb-mbfw-booking-calendar .fc-toolbar-title {
+    font-size: 1.15em;
+  }
+
+  #mwb-mbfw-booking-calendar .fc-button {
+    padding: 0.3em 0.55em;
+    font-size: 0.85em;
+  }
+}

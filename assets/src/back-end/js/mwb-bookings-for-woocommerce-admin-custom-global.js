@@ -1,4 +1,16 @@
 jQuery(function($) {
+
+    // Show WooCommerce's Tax status / Tax class fields for booking products.
+    // WooCommerce only shows that group for simple, external and variable products;
+    // with show_if_mwb_booking its own product-type toggle shows it for bookings too.
+    var $taxGroup = $('#_tax_status').closest('.options_group');
+    if ($taxGroup.length) {
+        $taxGroup.addClass('show_if_mwb_booking');
+        if ('mwb_booking' === $('select#product-type').val()) {
+            $taxGroup.show();
+        }
+    }
+
     function toggleServiceQuantityFields($toggle) {
         var hasQuantity = $toggle.prop('checked');
         var $minimumQuantity = $('#mwb_mbfw_service_minimum_quantity');

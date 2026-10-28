@@ -1,10 +1,16 @@
 //code for datatable
 
 jQuery(document).ready(function($) {
+    // On phones let the month grid grow to its natural height; the default
+    // width/height ratio leaves too little room and forces an inner scroll.
+    function mbfwCalendarHeight() {
+        return window.matchMedia( '(max-width: 768px)' ).matches ? 'auto' : undefined;
+    }
     var calendarEl = document.getElementById('mwb-mbfw-booking-calendar');
     if ( calendarEl ) {
         var calendar = new FullCalendar.Calendar( calendarEl, {
             initialView: 'dayGridMonth',
+            height: mbfwCalendarHeight(),
             buttonText: {
                 today : mbfw_admin_param.full_cal_button_text.today,
                 month : mbfw_admin_param.full_cal_button_text.month,

@@ -466,6 +466,15 @@ class Mwb_Bookings_For_Woocommerce_Admin {
 				'class'       => 'mwb_mbfw_disable_book_now',
 				'name'        => 'mwb_mbfw_disable_book_now',
 			),
+			array(
+				'title'       => __( 'Enable auto status change to completion after the payment is processed', 'mwb-bookings-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'When enabled, a booking-only order is moved from Processing to Completed automatically once its payment is processed. When disabled (default), the order stays in Processing. Orders that need admin confirmation are never completed automatically.', 'mwb-bookings-for-woocommerce' ),
+				'id'          => 'mwb_mbfw_auto_complete_processing_order',
+				'value'       => get_option( 'mwb_mbfw_auto_complete_processing_order' ),
+				'class'       => 'mwb_mbfw_auto_complete_processing_order',
+				'name'        => 'mwb_mbfw_auto_complete_processing_order',
+			),
 
 		);
 		$mbfw_settings_general =

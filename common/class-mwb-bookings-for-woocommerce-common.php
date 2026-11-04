@@ -1987,6 +1987,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * third-party processing hooks) finishes first, then the order is completed
 	 * and the Completed Order email fires as a separate transition.
 	 *
+	 * Only runs when "Enable auto status change to completion after the payment is
+	 * processed" (mwb_mbfw_auto_complete_processing_order) is switched on in the
+	 * General settings tab. It is off by default.
+	 *
 	 * Hooked to: woocommerce_order_status_changed
 	 *
 	 * @param int      $order_id The order ID.
@@ -1996,6 +2000,11 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function mwb_mbfw_autocomplete_processing_booking_order( $order_id, $from, $to, $order ) {
+		
+		if ( 'yes' !== get_option( 'mwb_mbfw_auto_complete_processing_order' ) ) {
+			return;
+		}
+		
 		if ( 'processing' !== $to || ! $order instanceof WC_Order ) {
 			return;
 		}

@@ -1093,6 +1093,48 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	}
 
 	/**
+	 * Quantity of a service to charge, clamped to the service's configured range.
+	 *
+	 * The posted quantity comes from the booking form and cannot be trusted: a negative or oversized value would change the price.
+	 *
+	 * @param int   $term_id          Service term ID.
+	 * @param array $service_quantity Posted quantities keyed by term ID.
+	 * @param bool  $is_optional      Whether the service is optional.
+	 * @return int
+	 */
+	private function mbfw_service_count( $term_id, $service_quantity, $is_optional ) {
+		if ( ! get_term_meta( $term_id, 'mwb_mbfw_is_service_has_quantity', true ) ) {
+			return 1;
+		}
+		$count = is_array( $service_quantity ) && array_key_exists( $term_id, $service_quantity ) ? (int) $service_quantity[ $term_id ] : 1;
+		$min   = max( $is_optional ? 0 : 1, (int) get_term_meta( $term_id, 'mwb_mbfw_service_minimum_quantity', true ) );
+		$max   = (int) get_term_meta( $term_id, 'mwb_mbfw_service_maximum_quantity', true );
+		$count = max( $min, $count );
+		return $max > 0 ? min( $max, $count ) : $count;
+	}
+
+	/**
+	 * Optional services of a product among the posted checked ones.
+	 *
+	 * @param int   $product_id       Product ID.
+	 * @param array $services_checked Posted service term IDs.
+	 * @return array
+	 */
+	private function mbfw_valid_optional_services( $product_id, $services_checked ) {
+		$terms = get_the_terms( $product_id, 'mwb_booking_service' );
+		if ( ! is_array( $services_checked ) || ! is_array( $terms ) ) {
+			return array();
+		}
+		$valid = array();
+		foreach ( $terms as $term ) {
+			if ( 'yes' === get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) && in_array( (string) $term->term_id, array_map( 'strval', $services_checked ), true ) ) {
+				$valid[] = $term->term_id;
+			}
+		}
+		return $valid;
+	}
+
+	/**
 	 * Extra service charges calculation.
 	 *
 	 * @param int   $product_id current product id.
@@ -1105,9 +1147,10 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	public function mbfw_extra_service_charge( $product_id, $services_checked, $service_quantity, $people_number, $unit ) {
 		$services_cost = 0;
 
+		$services_checked = $this->mbfw_valid_optional_services( $product_id, $services_checked );
 		if ( is_array( $services_checked ) ) {
 			foreach ( $services_checked as $term_id ) {
-				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
+				$service_count = $this->mbfw_service_count( $term_id, $service_quantity, true );
 				$service_price = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
 				$service_price = ( ! empty( $service_price ) && $service_price > 0 ) ? (float) $service_price : 0;
 				if ( 'yes' == get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
@@ -1127,7 +1170,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( is_array( $terms ) ) {
 			foreach ( $terms as $term ) {
 				if ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) ) {
-					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
+					$service_count = $this->mbfw_service_count( $term->term_id, $service_quantity, false );
 					$service_price = (float) get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true );
 					$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
 					if ( 'yes' == get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
@@ -1162,13 +1205,14 @@ class Mwb_Bookings_For_Woocommerce_Common {
 	public function mbfw_extra_service_charge_items( $product_id, $services_checked, $service_quantity, $people_number, $unit ) {
 		$items = array();
 
+		$services_checked = $this->mbfw_valid_optional_services( $product_id, $services_checked );
 		if ( is_array( $services_checked ) ) {
 			foreach ( $services_checked as $term_id ) {
 				$term = get_term( $term_id, 'mwb_booking_service' );
 				if ( ! $term || is_wp_error( $term ) ) {
 					continue;
 				}
-				$service_count = array_key_exists( $term_id, $service_quantity ) ? $service_quantity[ $term_id ] : 1;
+				$service_count = $this->mbfw_service_count( $term_id, $service_quantity, true );
 				$service_price = get_term_meta( $term_id, 'mwb_mbfw_service_cost', true );
 				$service_price = ( ! empty( $service_price ) && $service_price > 0 ) ? (float) $service_price : 0;
 				if ( 'yes' == get_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
@@ -1190,7 +1234,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( is_array( $terms ) ) {
 			foreach ( $terms as $term ) {
 				if ( 'yes' !== get_term_meta( $term->term_id, 'mwb_mbfw_is_service_optional', true ) ) {
-					$service_count = array_key_exists( $term->term_id, $service_quantity ) ? $service_quantity[ $term->term_id ] : 1;
+					$service_count = $this->mbfw_service_count( $term->term_id, $service_quantity, false );
 					$service_price = (float) get_term_meta( $term->term_id, 'mwb_mbfw_service_cost', true );
 					$service_price = ! empty( $service_price ) ? (float) $service_price : 0;
 					if ( 'yes' == get_term_meta( $term->term_id, 'mwb_mbfw_is_service_cost_multiply_duration', true ) ) {
@@ -1272,6 +1316,13 @@ class Mwb_Bookings_For_Woocommerce_Common {
 			return;
 		}
 		$order = wc_get_order( $order_id );
+
+		// The thank-you page can be reloaded; act only on the first view so an order the admin has already confirmed is not put back on hold.
+		if ( ! $order || 'yes' === $order->get_meta( '_mbfw_thankyou_processed', true ) ) {
+			return;
+		}
+		$order->update_meta_data( '_mbfw_thankyou_processed', 'yes' );
+		$order->save();
 
 		if ( 'on-hold' === $order->get_status() ) {
 			return;
@@ -1381,28 +1432,67 @@ class Mwb_Bookings_For_Woocommerce_Common {
 					continue;
 				}
 
-				$refund_amount = $item->get_total() + $item->get_total_tax();
+				if ( $order->is_paid() ) {
+					// The customer has paid: give the money back with a real refund of this line, which also frees its seats.
+					$refund_qty    = $item->get_quantity() + $order->get_qty_refunded_for_item( $item_id );
+					$refund_total  = $item->get_total() - $order->get_total_refunded_for_item( $item_id );
+					$refund_taxes  = array();
+					$item_taxes    = $item->get_taxes();
+					foreach ( isset( $item_taxes['total'] ) ? $item_taxes['total'] : array() as $tax_id => $tax_total ) {
+						$refund_taxes[ $tax_id ] = (float) $tax_total - $order->get_tax_refunded_for_item( $item_id, $tax_id );
+					}
+					$refund_amount = wc_format_decimal( $refund_total + array_sum( $refund_taxes ), wc_get_price_decimals() );
+					if ( $refund_amount > 0 ) {
+						$payment_gateway = wc_get_payment_gateway_by_order( $order );
+						$refund          = wc_create_refund(
+							array(
+								'order_id'       => $order_id,
+								'amount'         => $refund_amount,
+								'reason'         => $reason,
+								'line_items'     => array(
+									$item_id => array(
+										'qty'          => max( 0, $refund_qty ),
+										'refund_total' => $refund_total,
+										'refund_tax'   => $refund_taxes,
+									),
+								),
+								'refund_payment' => $payment_gateway && $payment_gateway->supports( 'refunds' ),
+								'restock_items'  => false,
+							)
+						);
+						if ( is_wp_error( $refund ) ) {
+							$order->add_order_note( sprintf( 'Booking cancellation by the customer failed: %s', $refund->get_error_message() ) );
+							wp_send_json_error( array( 'message' => $refund->get_error_message() ) );
+						}
+						if ( ! $payment_gateway || ! $payment_gateway->supports( 'refunds' ) ) {
+							/* translators: %s: refund amount. */
+							$order->add_order_note( sprintf( __( 'Booking cancelled by the customer. Refund of %s recorded; the payment method cannot refund automatically, so return the money manually.', 'mwb-bookings-for-woocommerce' ), wc_price( $refund_amount, array( 'currency' => $order->get_currency() ) ) ) );
+						}
+					}
+					$item = $order->get_item( $item_id );
+					$item->add_meta_data( '_item_cancelled', 'yes', true );
+					$item->add_meta_data( '_cancel_reason', $reason, true );
+					$item->save();
+					continue;
+				}
 
-				// Add cancellation meta.
+				// Not paid yet: nothing to refund, take the line out of what is owed.
 				$item->add_meta_data( '_item_cancelled', 'yes', true );
 				$item->add_meta_data( '_cancel_reason', $reason, true );
-				// Set totals to 0.
 				$item->set_subtotal( 0 );
 				$item->set_total( 0 );
-
-				// Reset taxes.
 				$item->set_subtotal_tax( 0 );
 				$item->set_total_tax( 0 );
 				$item->set_taxes( array() );
-					
-					$item->save();
+				$item->save();
+				$order->calculate_totals( false );
+				$order->save();
 			}
-			// 🔹 Now recalculate order totals.
-			$order->calculate_totals(false);
-			$order->save();
 		}
-		if ( $order->get_total() <= 0 ) {
-			$order->update_status( 'wc-cancelled' );
+		$order = wc_get_order( $order_id );
+		// A fully refunded paid order is moved to Refunded by WooCommerce; an unpaid order with nothing left owed is cancelled.
+		if ( ! $order->is_paid() && $order->get_total() <= 0 ) {
+			$order->update_status( 'cancelled' );
 		}
 		wp_die();
 	}

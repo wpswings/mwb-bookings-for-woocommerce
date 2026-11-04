@@ -1361,8 +1361,12 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		if ( (int) $order->get_customer_id() !== get_current_user_id() && ! current_user_can( 'edit_shop_order', $order_id ) ) { 
 			wp_die();
 		}
+		if ( 'yes' !== wps_booking_get_meta_data( $product_id, 'mwb_mbfw_cancellation_allowed', true ) ) {
+			wp_die();
+		}
+		// Empty string when no statuses were saved for the product; then no status allows cancelling.
 		$order_statuses = wps_booking_get_meta_data( $product_id, 'mwb_bfwp_order_statuses_to_cancel', true );
-		$order_statuses = preg_replace( '/wc-/', '', $order_statuses );
+		$order_statuses = is_array( $order_statuses ) ? preg_replace( '/^wc-/', '', $order_statuses ) : array();
 
 		if ( ! in_array( $order->get_status(), $order_statuses, true ) ) {
 			wp_die();
@@ -1613,11 +1617,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		check_ajax_referer( 'mbfw_common_nonce', 'nonce' );
 		$product_id    = array_key_exists( 'product_id', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['product_id'] ) ) : '';
 		$slot_selected = array_key_exists( 'slot_selected', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['slot_selected'] ) ) : '';
-		$slot_left     = array();
-		$raw_slot_left = isset( $_POST['slot_left'] ) ? wp_unslash( $_POST['slot_left'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		if ( is_array( $raw_slot_left ) ) {
-			$slot_left = $this->sanitize_text_associative_array( $raw_slot_left );
-		}
+		$slot_left     = isset( $_POST['slot_left'] ) && is_array( $_POST['slot_left'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['slot_left'] ) ) : array();
 		$cart          = WC()->cart->get_cart();
 		$max           = '';
 		$max           = ! empty( get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true ) ) ? get_post_meta( $product_id, 'mwb_mbfw_booking_max_limit_for_hour', true ) : '';
@@ -1769,7 +1769,7 @@ class Mwb_Bookings_For_Woocommerce_Common {
 		}
 	}
 
-	//EXPORT code.
+	// EXPORT code.
 	/**
 	 * Export booking data as iCal.
 	 *
@@ -1779,7 +1779,6 @@ class Mwb_Bookings_For_Woocommerce_Common {
 
 
 		if ('1' ==(get_query_var('export_airbnb_ical')) && !empty(get_query_var('calendar_id'))) {
-			// 
 		$post_id = get_query_var('calendar_id');
 			if (!get_post($post_id)) {
 				status_header(404);

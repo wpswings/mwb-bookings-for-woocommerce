@@ -50,7 +50,7 @@ if ( isset( $_POST['mwb_inline_tax_action'] ) && 'add-tag' === $_POST['mwb_inlin
 		$result = wp_insert_term( $term_name, $mwb_taxonomy_slug, $insert_args );
 
 		if ( ! is_wp_error( $result ) ) {
-			mwb_tax_inline_save_meta( $result['term_id'], $mwb_taxonomy_slug );
+			mwb_tax_inline_save_meta( $result['term_id'], $mwb_taxonomy_slug, 'mwb_inline_add_term_' . $mwb_taxonomy_slug );
 			wp_safe_redirect( add_query_arg( 'mwb_tax_notice', 'added', $page_url ) );
 			exit;
 		} else {
@@ -79,7 +79,7 @@ if ( isset( $_POST['mwb_inline_tax_action'] ) && 'edit-tag' === $_POST['mwb_inli
 		$result = wp_update_term( $edit_id, $mwb_taxonomy_slug, $update_args );
 
 		if ( ! is_wp_error( $result ) ) {
-			mwb_tax_inline_save_meta( $edit_id, $mwb_taxonomy_slug );
+			mwb_tax_inline_save_meta( $edit_id, $mwb_taxonomy_slug, 'mwb_inline_edit_term_' . $mwb_taxonomy_slug );
 			wp_safe_redirect( add_query_arg( 'mwb_tax_notice', 'updated', $page_url ) );
 			exit;
 		} else {
@@ -169,28 +169,32 @@ $icon_no  = '<span class="mwb-tax-icon mwb-tax-icon--no">&#10005;</span>';
 /**
  * Save custom term meta from POST.
  *
- * @param int    $term_id  Term ID.
- * @param string $taxonomy Taxonomy slug.
+ * @param int    $term_id      Term ID.
+ * @param string $taxonomy     Taxonomy slug.
+ * @param string $nonce_action Action of the form's `_mwb_inline_nonce`.
  */
-function mwb_tax_inline_save_meta( $term_id, $taxonomy ) {
+function mwb_tax_inline_save_meta( $term_id, $taxonomy, $nonce_action ) {
+	if ( ! isset( $_POST['_mwb_inline_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_inline_nonce'] ) ), $nonce_action ) ) {
+		return;
+	}
 	if ( 'mwb_booking_cost' === $taxonomy ) {
-		update_term_meta( $term_id, 'mwb_mbfw_booking_cost', isset( $_POST['mwb_mbfw_booking_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_cost'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_people', isset( $_POST['mwb_mbfw_is_booking_cost_multiply_people'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_duration', isset( $_POST['mwb_mbfw_is_booking_cost_multiply_duration'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+		update_term_meta( $term_id, 'mwb_mbfw_booking_cost', isset( $_POST['mwb_mbfw_booking_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_booking_cost'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_people', isset( $_POST['mwb_mbfw_is_booking_cost_multiply_people'] ) ? 'yes' : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_is_booking_cost_multiply_duration', isset( $_POST['mwb_mbfw_is_booking_cost_multiply_duration'] ) ? 'yes' : '' );
 	} elseif ( 'mwb_booking_service' === $taxonomy ) {
-		update_term_meta( $term_id, 'mwb_mbfw_service_cost', isset( $_POST['mwb_mbfw_service_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_cost'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', isset( $_POST['mwb_mbfw_is_service_cost_multiply_people'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', isset( $_POST['mwb_mbfw_is_service_cost_multiply_duration'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_is_service_optional', isset( $_POST['mwb_mbfw_is_service_optional'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_is_service_hidden', isset( $_POST['mwb_mbfw_is_service_hidden'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_is_service_has_quantity', isset( $_POST['mwb_mbfw_is_service_has_quantity'] ) ? 'yes' : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_service_minimum_quantity', isset( $_POST['mwb_mbfw_service_minimum_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_minimum_quantity'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_service_maximum_quantity', isset( $_POST['mwb_mbfw_service_maximum_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_maximum_quantity'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+		update_term_meta( $term_id, 'mwb_mbfw_service_cost', isset( $_POST['mwb_mbfw_service_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_cost'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_people', isset( $_POST['mwb_mbfw_is_service_cost_multiply_people'] ) ? 'yes' : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_is_service_cost_multiply_duration', isset( $_POST['mwb_mbfw_is_service_cost_multiply_duration'] ) ? 'yes' : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_is_service_optional', isset( $_POST['mwb_mbfw_is_service_optional'] ) ? 'yes' : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_is_service_hidden', isset( $_POST['mwb_mbfw_is_service_hidden'] ) ? 'yes' : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_is_service_has_quantity', isset( $_POST['mwb_mbfw_is_service_has_quantity'] ) ? 'yes' : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_service_minimum_quantity', isset( $_POST['mwb_mbfw_service_minimum_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_minimum_quantity'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_service_maximum_quantity', isset( $_POST['mwb_mbfw_service_maximum_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_service_maximum_quantity'] ) ) : '' );
 	} elseif ( 'mwb_booking_people' === $taxonomy ) {
-		update_term_meta( $term_id, 'mwb_bfwp_booking_people_unit_cost', isset( $_POST['mwb_bfwp_booking_people_unit_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_booking_people_unit_cost'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_bfwp_booking_people_base_cost', isset( $_POST['mwb_bfwp_booking_people_base_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_booking_people_base_cost'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_mbfw_minimum_people_per_booking', isset( $_POST['mwb_mbfw_minimum_people_per_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_minimum_people_per_booking'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
-		update_term_meta( $term_id, 'mwb_bfwp_booking_people_maximum_quantity', isset( $_POST['mwb_bfwp_booking_people_maximum_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_booking_people_maximum_quantity'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+		update_term_meta( $term_id, 'mwb_bfwp_booking_people_unit_cost', isset( $_POST['mwb_bfwp_booking_people_unit_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_booking_people_unit_cost'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_bfwp_booking_people_base_cost', isset( $_POST['mwb_bfwp_booking_people_base_cost'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_booking_people_base_cost'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_mbfw_minimum_people_per_booking', isset( $_POST['mwb_mbfw_minimum_people_per_booking'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_mbfw_minimum_people_per_booking'] ) ) : '' );
+		update_term_meta( $term_id, 'mwb_bfwp_booking_people_maximum_quantity', isset( $_POST['mwb_bfwp_booking_people_maximum_quantity'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_bfwp_booking_people_maximum_quantity'] ) ) : '' );
 	}
 }
 ?>

@@ -199,21 +199,23 @@ class Mwb_Bookings_Dynamic_Pricing {
 	 * @return array
 	 */
 	public function save_meta( $product_meta_data, $product_id ) {
+		// Same nonce as mbfw_save_custom_product_meta_boxes_data(), checked again so this method never trusts unverified input.
+		if ( ! isset( $_POST['_mwb_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_mwb_nonce'] ) ), 'mwb_booking_product_meta' ) ) {
+			return $product_meta_data;
+		}
+
 		// Checkbox: absent from POST when unchecked → treat as empty string ('').
 		$product_meta_data['_dynamic_pricing_enabled'] = isset( $_POST['_dynamic_pricing_enabled'] ) ? 'yes' : '';
 
-		// Rules array.
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
-		// (nonce already verified by mbfw_save_custom_product_meta_boxes_data before this filter runs)
+		// Rules array; each field is validated further below.
 		$raw_rules = isset( $_POST['_dynamic_pricing_rules'] ) && is_array( $_POST['_dynamic_pricing_rules'] )
-			? wp_unslash( $_POST['_dynamic_pricing_rules'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+			? map_deep( wp_unslash( $_POST['_dynamic_pricing_rules'] ), 'sanitize_text_field' )
 			: array();
-		// phpcs:enable
 
 		$sanitized = array();
 		foreach ( $raw_rules as $rule ) {
 			// Dates arrive as a comma-separated string from the flatpickr input.
-			$dates_raw = isset( $rule['dates'] ) ? sanitize_text_field( wp_unslash( $rule['dates'] ) ) : '';
+			$dates_raw = isset( $rule['dates'] ) && is_string( $rule['dates'] ) ? $rule['dates'] : '';
 			$dates     = array_map( 'trim', explode( ',', $dates_raw ) );
 			// Keep only tokens that look like a valid Y-m-d date.
 			$dates = array_values( array_filter( $dates, function ( $d ) {
@@ -658,7 +660,7 @@ class Mwb_Bookings_Dynamic_Pricing {
 	private function extract_cart_dates( $custom_cart_data, $booking_dates ) {
 		$dates = array();
 
-		// Single-calendar multi-day: stored as "Date1 | Date2 | …"
+		// Single-calendar multi-day: stored as "Date1 | Date2 | …".
 		if ( ! empty( $custom_cart_data['single_cal_booking_dates'] ) ) {
 			foreach ( explode( ' | ', $custom_cart_data['single_cal_booking_dates'] ) as $d ) {
 				$dates[] = trim( $d );
